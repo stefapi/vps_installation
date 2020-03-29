@@ -485,13 +485,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_avant_propos">1. Avant propos</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p>Ce document est disponible sur le site <a href="https://vps-installation.readthedocs.io">ReadTheDocs</a>
+<span class="image"><a class="image" href="https://vps-installation.readthedocs.io"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iODYiIGhlaWdodD0iMjAiPjxsaW5lYXJHcmFkaWVudCBpZD0iYiIgeDI9IjAiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiYmIiIHN0b3Atb3BhY2l0eT0iLjEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3Atb3BhY2l0eT0iLjEiLz48L2xpbmVhckdyYWRpZW50PjxjbGlwUGF0aCBpZD0iYSI+PHJlY3Qgd2lkdGg9Ijg2IiBoZWlnaHQ9IjIwIiByeD0iMyIgZmlsbD0iI2ZmZiIvPjwvY2xpcFBhdGg+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj48cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDM1djIwSDB6Ii8+PHBhdGggZmlsbD0iIzRjMSIgZD0iTTM1IDBoNTF2MjBIMzV6Ii8+PHBhdGggZmlsbD0idXJsKCNiKSIgZD0iTTAgMGg4NnYyMEgweiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMTAiPjx0ZXh0IHg9IjE4NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iMjUwIj5kb2NzPC90ZXh0Pjx0ZXh0IHg9IjE4NSIgeT0iMTQwIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iMjUwIj5kb2NzPC90ZXh0Pjx0ZXh0IHg9IjU5NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iNDEwIj5wYXNzaW5nPC90ZXh0Pjx0ZXh0IHg9IjU5NSIgeT0iMTQwIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iNDEwIj5wYXNzaW5nPC90ZXh0PjwvZz4gPC9zdmc+" alt="badge"></a></span>
+et sur <a href="https://github.com/apiou/vps_installation">Github</a>.</p>
+</div>
+<div class="paragraph">
 <p>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer un serveur VPS sur la plate-forme OVH.
 Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
 Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation est facilement transposable pour des versions différentes de Debian ou à Ubuntu ou toute autre distribution basée sur l&#8217;un ou l&#8217;autre.
 En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus importantes notamment liées au gestionnaire de paquets <code>yum</code>, le nommage des paquets, les configurations par défaut et aux différences dans l&#8217;arborescence présente dans /etc.</p>
 </div>
 <div class="paragraph">
-<p>Dans ce document nous configurons un nom de domaine principal pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</p>
+<p>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</p>
 </div>
 <div class="paragraph">
 <p>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal.
@@ -502,7 +507,7 @@ Donc que vous savez vous servir de <code>ssh</code> pour Linux ou de <code>putty
 Si le texte ne doit pas contenir d&#8217;espace, la phrase contient elle même des _ ou des - pour l&#8217;indiquer en fonction de ce qui est autorisé.</p>
 </div>
 <div class="paragraph">
-<p>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'
+<p>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'.
 Le taux de complexité est bien meilleur et les mots de passe sont plus facile à retenir que 'Az3~1ym_a&amp;'</p>
 </div>
 <div class="paragraph">
@@ -2748,7 +2753,7 @@ Tous les autres paquets seront supprimés.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-03-29 15:55:33 +0200
+Last updated 2020-03-29 19:09:14 +0200
 </div>
 </div>
 <style>

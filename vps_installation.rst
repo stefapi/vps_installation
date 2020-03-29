@@ -1,6 +1,10 @@
 Avant propos
 ============
 
+Ce document est disponible sur le site
+`ReadTheDocs <https://vps-installation.readthedocs.io>`__ |badge| et sur
+`Github <https://github.com/apiou/vps_installation>`__.
+
 Cette documentation décrit la méthode que j’ai utilisé pour installer un
 serveur VPS sur la plate-forme OVH. Elle est le résultat de très
 nombreuses heures de travail pour collecter la documentation nécessaire.
@@ -12,7 +16,7 @@ plus importantes notamment liées au gestionnaire de paquets ``yum``, le
 nommage des paquets, les configurations par défaut et aux différences
 dans l’arborescence présente dans /etc.
 
-Dans ce document nous configurons un nom de domaine principal pour la
+Dans ce document nous configurons un nom de domaine principal. Pour la
 clarté du texte, il sera nommé "example.com". Il est à remplacer
 évidemment par votre nom de domaine principal.
 
@@ -29,7 +33,7 @@ est autorisé.
 A propos des mots de passe: il est conseillé de saisir des mots de passe
 de 10 caractères contenant des majuscules/minuscules/nombres/caractères
 spéciaux. Une autre façon de faire est de saisir de longues phrases. Par
-exemple: 'J’aime manger de la mousse au chocolat parfumée à la menthe'
+exemple: 'J’aime manger de la mousse au chocolat parfumée à la menthe'.
 Le taux de complexité est bien meilleur et les mots de passe sont plus
 facile à retenir que 'Az3~1ym\_a&'
 
@@ -1628,3 +1632,6 @@ que l’on souhaite installer.
    .. code:: bash
 
        apt install deselect
+
+.. |badge| image:: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iODYiIGhlaWdodD0iMjAiPjxsaW5lYXJHcmFkaWVudCBpZD0iYiIgeDI9IjAiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiYmIiIHN0b3Atb3BhY2l0eT0iLjEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3Atb3BhY2l0eT0iLjEiLz48L2xpbmVhckdyYWRpZW50PjxjbGlwUGF0aCBpZD0iYSI+PHJlY3Qgd2lkdGg9Ijg2IiBoZWlnaHQ9IjIwIiByeD0iMyIgZmlsbD0iI2ZmZiIvPjwvY2xpcFBhdGg+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj48cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDM1djIwSDB6Ii8+PHBhdGggZmlsbD0iIzRjMSIgZD0iTTM1IDBoNTF2MjBIMzV6Ii8+PHBhdGggZmlsbD0idXJsKCNiKSIgZD0iTTAgMGg4NnYyMEgweiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMTAiPjx0ZXh0IHg9IjE4NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iMjUwIj5kb2NzPC90ZXh0Pjx0ZXh0IHg9IjE4NSIgeT0iMTQwIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iMjUwIj5kb2NzPC90ZXh0Pjx0ZXh0IHg9IjU5NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iNDEwIj5wYXNzaW5nPC90ZXh0Pjx0ZXh0IHg9IjU5NSIgeT0iMTQwIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iNDEwIj5wYXNzaW5nPC90ZXh0PjwvZz4gPC9zdmc+
+
