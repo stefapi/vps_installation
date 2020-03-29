@@ -1,0 +1,2826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<meta name="author" content="Stéphane Apiou">
+<title>Installation d&#8217;un VPS</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment @import statement to use as custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite::before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+:not(pre)>code.nobreak{word-wrap:normal}
+:not(pre)>code.nowrap{white-space:nowrap}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details>summary:first-of-type{cursor:pointer;display:list-item;outline:none;margin-bottom:.75em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos{border-right:1px solid currentColor;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:1px solid currentColor;opacity:.35;display:inline-block;margin-right:.75em}
+pre.pygments .lineno::before{content:"";margin-right:-.125em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
+table.tableblock{max-width:100%;border-collapse:separate}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+td.tableblock>.content>:last-child.sidebarblock{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot,table.frame-ends{border-width:1px 0}
+table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.inline{display:-ms-flexbox;display:-webkit-box;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media print,amzn-kf8{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Installation d&#8217;un VPS</h1>
+<div class="details">
+<span id="author" class="author">Stéphane Apiou</span><br>
+<span id="email" class="email"><a href="mailto:stephane@apiou.org">stephane@apiou.org</a></span><br>
+<span id="revnumber">version 1.0,</span>
+<span id="revdate">2020-03-27</span>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_avant_propos">1. Avant propos</a></li>
+<li><a href="#_choix_du_vps">2. Choix du VPS</a></li>
+<li><a href="#_choix_du_registrar">3. Choix du registrar</a></li>
+<li><a href="#_se_loguer_root_sur_le_serveur">4. Se loguer root sur le serveur</a></li>
+<li><a href="#_installation_basique">5. Installation basique</a>
+<ul class="sectlevel2">
+<li><a href="#_vérification_du_nom_de_serveur">5.1. Vérification du nom de serveur</a></li>
+<li><a href="#_interdire_le_login_direct_en_root">5.2. Interdire le login direct en root</a></li>
+<li><a href="#_création_dune_clé_de_connexion_ssh">5.3. Création d&#8217;une clé de connexion ssh</a></li>
+<li><a href="#_sudo_sans_mot_de_passe">5.4. Sudo sans mot de passe</a></li>
+<li><a href="#_mise_à_jour_des_sources_de_paquets_debian">5.5. Mise à jour des sources de paquets Debian</a></li>
+<li><a href="#_ajouter_un_fichier_de_swap">5.6. Ajouter un fichier de swap</a></li>
+<li><a href="#_installation_des_paquets_de_base">5.7. Installation des paquets de base</a></li>
+<li><a href="#_installation_dun_panel">5.8. Installation d&#8217;un Panel</a></li>
+<li><a href="#_installation_de_hestia">5.9. Installation de Hestia</a></li>
+<li><a href="#_installation_de_ispconfig">5.10. Installation de ISPconfig</a></li>
+<li><a href="#_installation_et_configuration_de_phpmyadmin">5.11. Installation et configuration de phpmyadmin</a></li>
+<li><a href="#_installation_dun_scanner_de_vulnérabilités">5.12. Installation d&#8217;un scanner de vulnérabilités</a></li>
+<li><a href="#_installation_de_webmin">5.13. Installation de Webmin</a></li>
+</ul>
+</li>
+<li><a href="#_installer_quelques_outils_debian">6. Installer quelques outils Debian</a>
+<ul class="sectlevel2">
+<li><a href="#_installer_loutil_debfoster">6.1. Installer l&#8217;outil debfoster</a></li>
+<li><a href="#_installer_loutil_dselect">6.2. Installer l&#8217;outil dselect</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_avant_propos">1. Avant propos</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer un serveur VPS sur la plate-forme OVH.
+Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
+Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation est facilement transposable pour des versions différentes de Debian ou à Ubuntu ou toute autre distribution basée sur l&#8217;un ou l&#8217;autre.
+En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus importantes notamment liées au gestionnaire de paquets <code>yum</code>, le nommage des paquets, les configurations par défaut et aux différences dans l&#8217;arborescence présente dans /etc.</p>
+</div>
+<div class="paragraph">
+<p>Dans ce document nous configurons un nom de domaine principal pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</p>
+</div>
+<div class="paragraph">
+<p>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal.
+Donc que vous savez vous servir de <code>ssh</code> pour Linux ou de <code>putty</code> pour Windows</p>
+</div>
+<div class="paragraph">
+<p>Dans le document, on peut trouver des textes entourés de &lt;texte&gt;. Cela signifie que vous devez mettre ici votre propre texte selon vos préférences.
+Si le texte ne doit pas contenir d&#8217;espace, la phrase contient elle même des _ ou des - pour l&#8217;indiquer en fonction de ce qui est autorisé.</p>
+</div>
+<div class="paragraph">
+<p>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'
+Le taux de complexité est bien meilleur et les mots de passe sont plus facile à retenir que 'Az3~1ym_a&amp;'</p>
+</div>
+<div class="paragraph">
+<p>Le cout pour avoir ce type de serveur est relativement faible:
+* Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y avoir des promos)
+* Compter 5€TTC/mois pour un VPS de base.</p>
+</div>
+<div class="paragraph">
+<p>Le budget est donc de 6-7€TTC/mois pour une offre d&#8217;entrée de gamme</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_choix_du_vps">2. Choix du VPS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cette partie du guide s&#8217;adresse aux utilisateurs d&#8217;OVH.
+J&#8217;ai pour ma part choisi un serveur VPS SSD chez OVH avec 2Go de RAM. Au moment ou j&#8217;écris ce document il possède un seul coeur et 20 Go de disque.</p>
+</div>
+<div class="paragraph">
+<p>Choisissez d&#8217;installer une image Linux seule avec Debian 10.
+Une fois l&#8217;installation effectuée, vous recevez un Email sur l&#8217;adresse mail de votre compte OVH avec vos identifiants de login root. Ils serviront à vous connecter sur le serveur.</p>
+</div>
+<div class="paragraph">
+<p>En vous loguant sur la <a href="https://www.ovh.com/manager/web">plateforme d&#8217;administration d&#8217;OVH</a>, vous accèderez aux informations de votre serveur dans le menu Server&#8594;VPS. A cet endroit votre VPS doit y être indiqué.</p>
+</div>
+<div class="paragraph">
+<p>En cliquant dessus un ensemble de menus doivent apparaitre pour administrer celui-ci. Vous y trouverez notamment:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Son adresse &lt;IP&gt; et le nom de la machine chez OVH. Elle est du type "VPSxxxxxx.ovh.net"</p>
+</li>
+<li>
+<p>La possibilité de le redémarrer</p>
+</li>
+<li>
+<p>La possibilité de le reinstaller (avec perte complète de données)</p>
+</li>
+<li>
+<p>un KVM pour en prendre le controle console directement dans le navigateur</p>
+</li>
+<li>
+<p>un menu de configuration de reverse DNS (qui nous sera utile par la suite) pour définir le domaine par défaut</p>
+</li>
+<li>
+<p>le statut des services principaux (http, ftp, ssh &#8230;&#8203;)</p>
+</li>
+<li>
+<p>enfin des choix pour souscrire à un backup régulier, ajouter des disques ou effecter un snapshot de la VM associée au VPS.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_choix_du_registrar">3. Choix du registrar</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pour ma part j&#8217;ai choisi Gandi car il ne sont pas très cher et leur interface d&#8217;administration est simple d&#8217;usage. Vous pouvez très bien prendre aussi vos DNS chez OVH.
+Une fois votre domaine enregistré et votre compte créé vous pouvez vous loguer sur la <a href="https://admin.gandi.net/dashboard">plateforme de gestion de Gandi</a>.
+Allez dans Nom de domaine et sélectionnez le nom de domaine que vous voulez administrer.
+La vue générale vous montre les services actifs. Il faut une fois la configuration des DNS effectuée être dans le mode suivant:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Serveurs de noms: Externes</p>
+</li>
+<li>
+<p>Emails: Inactif</p>
+</li>
+<li>
+<p>DNSSEC: Actif (cela sera activé dans une seconde étape de ce guide)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Vous ne devez avoir aucune boite mail active sur ce domaine. A regardez dans le menu "Boites &amp; redirections Mails".
+Vous devez reconfigurer les 'Enregistrements DNS' en mode externes.
+Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms externe. Mettre 3 DNS:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>le nom de votre machine OVH: VPSxxxxxx.ovh.net</p>
+</li>
+<li>
+<p>et deux DNS de votre domaine: ns1.&lt;example.com&gt; et ns2.&lt;example.com&gt;</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Pour que tout cela fonctionne bien, ajoutez des Glue records:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>un pour ns1.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur OVH</p>
+</li>
+<li>
+<p>un pour ns2.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur OVH</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Je ne l&#8217;ai pas mis en oeuvre.</p>
+</div>
+<div class="paragraph">
+<p>Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_se_loguer_root_sur_le_serveur">4. Se loguer root sur le serveur</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A de nombreux endroit dans la documentation, il est demandé de se loguer root sur le serveur.
+Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte sudo:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>De votre machine locale, loguez vous avec votre compte <code>&lt;sudo_username&gt;</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh &lt;sudo_username&gt;@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine de votre VPS (pour ovh: VPSxxxxxx.ovh.net).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>ou utilisez putty si vous êtes sous Windows.</p>
+</div>
+</li>
+<li>
+<p>Tapez votre mot de passe s&#8217;il est demandé. Si vous avez installé une clé de connexion ce ne devrait pas être le cas.</p>
+</li>
+<li>
+<p>Loguez-vous <code>root</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo bash</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Un mot de passe vous est demandé. Tapez le mot de passe demandé.</p>
+</div>
+</li>
+<li>
+<p>Dans le cas contraire (pas de sudo créé et connexion en root directe sur le serveur):</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Se loguer root sur le serveur distant. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh root@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer ici &lt;example.com&gt; par votre nom de domaine.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Tapez ensuite votre mot de passe root</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_basique">5. Installation basique</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_vérification_du_nom_de_serveur">5.1. Vérification du nom de serveur</h3>
+<div class="paragraph">
+<p>Cette partie consiste à vérifier que le serveur a un hostname correctement configuré.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se loguer <code>root</code> sur le serveur</p>
+</li>
+<li>
+<p>vérifier que le hostname est bien celui attendu (c&#8217;est à dire configuré par votre hébergeur). Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cat /etc/hostname</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le nom du hostname (sans le domaine) doit s&#8217;afficher.</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Si ce n&#8217;est pas le cas, changer ce nom en éditant le fichier. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="shell"><span></span>vi /etc/hostname</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Changez la valeur, sauvegardez et rebootez. Tapez :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>reboot</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Se loguer`root` de nouveau sur le serveur</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Vérifier le fichier <code>hosts</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cat /etc/hosts</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Si le fichier contient plusieurs lignes avec la même adresse de loopback en <code>127.x.y.z</code>, en gardez une seule et celle avec le hostname et le nom de domaine complet.</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>si ce n&#8217;est pas le cas, changer les lignes en éditant le fichier. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/hosts</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Changez la ou les lignes, sauvegardez et rebootez. Tapez :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>reboot</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Se logger`root` de nouveau sur le serveur</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Vérifiez que tout est correctement configuré.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>hostname</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La sortie doit afficher le nom de host.</p>
+</div>
+</li>
+<li>
+<p>Tapez ensuite :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>hostname -f</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La sortie doit afficher le nom de host avec le nom de domaine.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_interdire_le_login_direct_en_root">5.2. Interdire le login direct en root</h3>
+<div class="paragraph">
+<p>Il est toujours vivement déconseillé d&#8217;autoriser la possibilité de se connecter directement en SSH en tant que root.
+De ce fait, notre première action sera de désactiver le login direct en root  et d&#8217;autoriser le sudo.
+Respectez bien les étapes de cette procédure:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se loguer <code>root</code> sur le serveur</p>
+</li>
+<li>
+<p>Ajoutez un utilisateur standard qui sera nommé par la suite en tant que &lt;sudo_username&gt;</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>adduser &lt;sudo_username&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Répondez aux questions qui vont sont posées: habituellement le nom complet d&#8217;utilisateur et le mot de passe.</p>
+</li>
+<li>
+<p>Donner les attributs sudo à l&#8217;utilisateur <code>&lt;sudo_username&gt;</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>usermod -a -G sudo &lt;sudo_username&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Dans une autre fenêtre, se connecter sur le serveur avec votre nouveau compte <code>&lt;sudo_username&gt;</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh &lt;sudo_username&gt;@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>une fois logué, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo bash</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tapez le mot de passe de votre utilisateur. Vous devez avoir accès au compte root. Si ce n&#8217;est pas le cas, revérifiez la procédure et repassez toutes les étapes.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Tout pendant que ces premières étapes ne donnent pas satisfaction ne passez pas à la suite sous peine de perdre la possibilité d’accéder à votre serveur.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Il faut maintenant modifier la configuration de sshd.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Editez le fichier <code>/etc/ssh/sshd_config</code>, Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/ssh/sshd_config</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>il faut rechercher la ligne: <code>PermitRootLogin yes</code> et la remplacer par: <code>PermitRootLogin no</code></p>
+</div>
+</li>
+<li>
+<p>Redémarrez le serveur ssh. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service sshd restart</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Faites maintenant l&#8217;essai de vous re-loguer avec le compte root.Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh root@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacer ici &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Ce ne devrait plus être possible: le serveur vous l&#8217;indique par un message <code>Permission denied, please try again.</code></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_dune_clé_de_connexion_ssh">5.3. Création d&#8217;une clé de connexion ssh</h3>
+<div class="paragraph">
+<p>Pour créer une clé et la déployer:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Créez une clé sur votre machine locale:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Ouvrir un terminal</p>
+</li>
+<li>
+<p>Créer un répertoire <code>~/.ssh</code> s&#8217;il n&#8217;existe pas. tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p <span class="tok-nv">$HOME</span>/.ssh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Allez dans le répertoire. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> ~/.ssh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Générez vous clés. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh-keygen -t rsa</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Un ensemble de questions apparaît. Si un texte vous explique que le fichier existe déjà, arrêtez la procédure. Cela signifie que vous avez déjà créé une clé et que vous risquez de perdre la connexion à d&#8217;autres serveurs si vous en générez une nouvelle. Sinon, appuyez sur Entrée à chaque fois pour accepter les valeurs par défaut.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Déployez votre clé:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Loguez vous sur votre serveur distant. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh &lt;sudo_username&gt;@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Entrez votre mot de passe</p>
+</div>
+</li>
+<li>
+<p>Créer un répertoire <code>~/.ssh</code> s&#8217;il n&#8217;existe pas. tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p <span class="tok-nv">$HOME</span>/.ssh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éditez le fichier <code>~/.ssh/authorized_keys</code> tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi ~/.ssh/authorized_keys</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et coller dans ce fichier le texte contenu dans le votre fichier local <code>~/.ssh/id_rsa.pub</code>. Remarque: il peut y avoir déjà des clés dans le fichier <code>authorized_keys</code>.</p>
+</div>
+</li>
+<li>
+<p>Sécurisez votre fichier de clés. Tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">600</span> ~/.ssh/authorized_keys</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sécurisez le répertoire SSH; Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">700</span> ~/.ssh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Déconnectez vous de votre session</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Vérifiez que tout fonctionne en vous connectant. Tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh &lt;sudo_username&gt;@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>La session doit s&#8217;ouvrir sans demander de mot de passe.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sudo_sans_mot_de_passe">5.4. Sudo sans mot de passe</h3>
+<div class="paragraph">
+<p>Avant tout, il faut bien se rendre compte que cela constitue potentiellement une faille de sécurité et qu&#8217;en conséquence, le compte possédant cette propriété devra être autant sécurisé qu&#8217;un compte root.
+L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en gardant la facilité de se loguer root sur le système au travers d&#8217;un super-compte.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ajoutez un groupe sudonp et y affecter un utilisateur. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>addgroup --system sudonp</code></pre>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Ajouter l&#8217;utilisateur: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>usermod -a -G sudonp &lt;sudo_username&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éventuellement retirez l&#8217;utilisateur du groupe sudo s&#8217;il a été ajouté auparavant :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>gpasswd -d -G sudo &lt;sudo_username&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éditez le fichier sudoers. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/sudoers</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajouter dans le fichier la ligne suivante: <code>%sudonp ALL=(ALL:ALL) NOPASSWD: ALL</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>L&#8217;utilisateur nom_d_utilisateur pourra se logger root sans mot de passe au travers de la commande <code>sudo bash</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mise_à_jour_des_sources_de_paquets_debian">5.5. Mise à jour des sources de paquets Debian</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se loguer <code>root</code> sur le serveur</p>
+</li>
+<li>
+<p>Modifier la liste standard de paquets</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Éditer le fichier <code>/etc/apt/sources.list</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apt/sources.list</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Dé-commenter les lignes débutant par <code>deb</code> et contenant le terme <code>backports</code>. Par exemple pour <code>#deb <a href="http://deb.debian.org/debian" class="bare">http://deb.debian.org/debian</a> buster-backports main contrib non-free</code> enlever le # en début de ligne</p>
+</li>
+<li>
+<p>Ajouter sur toutes les lignes les paquets <code>contrib</code> et <code>non-free</code> . en ajoutant ces textes après chaque mot <code>main</code> du fichier <code>source.list</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Effectuer une mise à niveau du système</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Mettez à jour la liste des paquets. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt update</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installez les nouveautés. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt dist-upgrade</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Effectuez du ménage. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt autoremove</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ajouter_un_fichier_de_swap">5.6. Ajouter un fichier de swap</h3>
+<div class="paragraph">
+<p>Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de 1 Go:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>fallocate -l 1G /swapfile
+chmod <span class="tok-m">600</span> /swapfile
+mkswap /swapfile
+swapon /swapfile</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enfin ajoutez une entrée dans le fichier fstab. Tapez <code>vi /etc/fstab</code> et ajoutez la ligne: <code>/swapfile swap swap defaults 0 0</code></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_des_paquets_de_base">5.7. Installation des paquets de base</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Si vous souhaitez installer automatiquement les paquets Debian de correction de bugs de sécurité, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install unattended-upgrades</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_dun_panel">5.8. Installation d&#8217;un Panel</h3>
+<div class="paragraph">
+<p>Il existe plusieurs type de panel de contrôle pour les VPS. La plupart sont payant.</p>
+</div>
+<div class="paragraph">
+<p>Ci après nous allons en présenter 3 différents. Ils sont incompatibles entre eux. On peut faire cohabiter ISPConfig et Webmin en prenant les précautions suivantes:
+* ISPConfig est le maitre de la configuration: toute modification sur les sites webs, mailboxes et DNS doit impérativement être effectuées du coté d&#8217;ISPConfig
+* Les modifications réalisées au niveau de webmin pour ces sites webs, mailboxes et DNS seront au mieux écrasées par ISPConfig au pire elles risquent de conduire à des incompatibilités qui engendreront des dysfonctionnement d&#8217;ISPConfig (impossibilité de mettre à jour les configurations)
+* Le reste des modifications peuvent être configurées au niveau de webmin sans trop de contraintes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_hestia">5.9. Installation de Hestia</h3>
+<div class="paragraph">
+<p>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
+La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="bare">https://docs.hestiacp.com/</a></p>
+</div>
+<div class="paragraph">
+<p>Attention Hestia n&#8217;est pas compatible de Webmin dans le sens que webmin est incapable de lire et d&#8217;interpréter les fichiers créés par Hestia.</p>
+</div>
+<div class="paragraph">
+<p>De même, Hestia est principalement compatible de PHP. Si vous utilisez des système web basés sur des applicatifs écrits en Python ou en Ruby, la configuration sera à faire à la main avec tous les problèmes de compatibilité que cela impose.</p>
+</div>
+<div class="paragraph">
+<p>Pour installer:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se logger <code>root</code> sur le serveur</p>
+</li>
+<li>
+<p>Télécharger le package et lancez l’installeur</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install.sh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lancez l&#8217;installeur. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>bash hst-install.sh -g yes -o yes</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Si le système n&#8217;est pas compatible, HestiaCP vous le dira. Sinon,  il vous informe de la configuration qui sera installée. Tapez <code>Y</code> pour continuer.</p>
+</li>
+<li>
+<p>Entrez votre adresse mail standard et indépendante du futur serveur qui sera installé. ce peut être une adresse gmail.com par exemple.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Hestia est installé. Il est important de bien noter le mot de passe du compte admin de Hestia ainsi que le numéro de port du site web</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_ispconfig">5.10. Installation de ISPconfig</h3>
+<div class="sect3">
+<h4 id="_installation_initiale">5.10.1. Installation initiale</h4>
+<div class="paragraph">
+<p>ISPConfig est un système de configuration de sites web totalement compatible avec Webmin.</p>
+</div>
+<div class="paragraph">
+<p>La procédure d&#8217;installation ci-dessous configure ISPconfig avec les fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Amavisd, SPamAssassin, ClamAV, Apache, PHP, Let&#8217;s Encrypt, Mailman, PureFTPd, Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se loguer <code>root</code> sur le serveur</p>
+</li>
+<li>
+<p>Changez le Shell par défaut. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>dpkg-reconfigure dash.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A la question <code>utilisez dash comme shell par défaut</code> répondez <code>non</code>. C&#8217;est bash qui doit être utilisé.</p>
+</div>
+</li>
+<li>
+<p>Installation de quelques paquets debian. ;-)</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd amavisd-new spamassassin clamav clamav-daemon unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php7.3 php7.3-common php7.3-gd php7.3-mysql php7.3-imap php7.3-cli php7.3-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php7.3-curl php7.3-intl php7.3-pspell php7.3-recode php7.3-sqlite3 php7.3-tidy php7.3-xmlrpc php7.3-xsl memcached php-memcache php-imagick php-gettext php7.3-zip php7.3-mbstring memcached libapache2-mod-passenger php7.3-soap php7.3-fpm php7.3-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Aux questions posées répondez:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Type principal de configuration de mail</code>: &#8592; Sélectionnez <code>Site Internet</code></p>
+</li>
+<li>
+<p><code>Nom de courrier</code>: &#8592; Entrez votre nom de host. Par exemple: mail.example.com</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_de_postfix">5.10.2. Configuration de Postfix</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Editez le master.cf file de postfix. Tapez <code>vi /etc/postfix/master.cf</code></p>
+</li>
+<li>
+<p>Ajoutez dans le fichier:</p>
+<div class="listingblock">
+<div class="content">
+<pre>submission inet n - - - - smtpd
+ -o syslog_name=postfix/submission
+ -o smtpd_tls_security_level=encrypt
+ -o smtpd_sasl_auth_enable=yes
+ -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+
+smtps inet n - - - - smtpd
+ -o syslog_name=postfix/smtps
+ -o smtpd_tls_wrappermode=yes
+ -o smtpd_sasl_auth_enable=yes
+ -o smtpd_client_restrictions=permit_sasl_authenticated,reject</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sauvegardez et relancez Postfix: <code>systemctl restart postfix</code></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_de_mariadb">5.10.3. Configuration de MariaDB</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sécurisez votre installation MariaDB. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mysql_secure_installation.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Répondez au questions ainsi:</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Enter current password for root</code>: &#8592; Tapez Entrée</p>
+</li>
+<li>
+<p><code>Set root password? [Y/n]</code>: &#8592; Tapez <code>Y</code></p>
+</li>
+<li>
+<p><code>New password:</code>: &#8592; Tapez votre mot de passe root MariaDB</p>
+</li>
+<li>
+<p><code>Re-enter New password:</code>: &#8592; Tapez votre mot de passe root MariaDB</p>
+</li>
+<li>
+<p><code>Remove anonymous users? [Y/n]</code>: &#8592; Tapez <code>Y</code></p>
+</li>
+<li>
+<p><code>Disallow root login remotely? [Y/n]</code>: &#8592; Tapez <code>Y</code></p>
+</li>
+<li>
+<p><code>Remove test database and access to it? [Y/n]</code>: &#8592; Tapez <code>Y</code></p>
+</li>
+<li>
+<p><code>Reload privilege tables now? [Y/n]</code>: &#8592; Tapez <code>Y</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>MariaDB doit pouvoir être atteint par toutes les interfaces et pas seulement localhost.</p>
+</li>
+<li>
+<p>Éditez le fichier de configuration. :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/mysql/mariadb.conf.d/50-server.cnf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Commentez la ligne <code>bind-address</code>: <code>#bind-address           = 127.0.0.1</code></p>
+</li>
+<li>
+<p>Modifiez la méthode d&#8217;accès à la base MariaDB pour utiliser la méthode de login native.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;update mysql.user set plugin = &#39;mysql_native_password&#39; where user=&#39;root&#39;;&quot;</span> <span class="tok-p">|</span> mysql -u root</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Editez le fichier debian.cnf. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/mysql/debian.cnf</code></pre>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aux deux endroits du fichier ou le mot clé <code>password</code> est présent, mettez le mot de passe root de votre base de données.</p>
+</li>
+<li>
+<p><code>password = votre_mot_de_passe</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Pour éviter l&#8217;erreur <code>Error in accept: Too many open files</code>, augmenter la limite du nombre de fichiers ouverts.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Editer le fichier: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/security/limits.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez à la fin du fichier les deux lignes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mysql soft nofile <span class="tok-m">65535</span>
+mysql hard nofile <span class="tok-m">65535</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créez ensuite un nouveau répertoire. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /etc/systemd/system/mysql.service.d/</code></pre>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Editer le fichier limits.conf. :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systemd/system/mysql.service.d/limits.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez dans le fichier les lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[Service]
+LimitNOFILE=infinity</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Redémarrez votre serveur MariaDB. Tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl daemon-reload
+systemctl restart mariadb</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>vérifiez maintenant que MariaDB est accessible sur toutes les interfaces réseau. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>netstat -tap <span class="tok-p">|</span> grep mysql</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>La sortie doit être du type: <code>tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld</code></p>
+</li>
+<li>
+<p>Désactiver SpamAssassin puisque amavisd utilise celui ci en sous jacent. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop spamassassin
+systemctl disable spamassassin.</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_dapache">5.10.4. Configuration d&#8217;Apache</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Installez les modules Apache nécessaires. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2enmod suexec rewrite ssl proxy_http actions include dav_fs dav auth_digest cgi headers actions proxy_fcgi alias.</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour ne pas être confronté aux problèmes de sécurité  de type <a href="https://www.howtoforge.com/tutorial/httpoxy-protect-your-server/">HTTPOXY</a>, il est nécessaire de créer un petit module dans apache.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Éditez le fichier httpoxy.conf: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apache2/conf-available/httpoxy.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Collez les lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;IfModule</span> <span class="tok-s">mod_headers.c</span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">RequestHeader</span> unset Proxy early
+<span class="tok-nt">&lt;/IfModule&gt;</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Activez le module en tapant :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2enconf httpoxy
+systemctl restart apache2</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_installation_et_configuration_de_mailman">5.10.5. Installation et Configuration de Mailman</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install mailman</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sélectionnez un langage:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Languages to support:</code> &#8592; Tapez <code>en (English)</code></p>
+</li>
+<li>
+<p><code>Missing site list :</code> &#8592; Tapez <code>Ok</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créez une mailing list. Tapez: <code>newlist mailman</code></p>
+</li>
+<li>
+<p>ensuite éditez le fichier aliases: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/aliases</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et ajoutez les lignes affichées à l&#8217;écran:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>## mailman mailing list
+mailman:              "|/var/lib/mailman/mail/mailman post mailman"
+mailman-admin:        "|/var/lib/mailman/mail/mailman admin mailman"
+mailman-bounces:      "|/var/lib/mailman/mail/mailman bounces mailman"
+mailman-confirm:      "|/var/lib/mailman/mail/mailman confirm mailman"
+mailman-join:         "|/var/lib/mailman/mail/mailman join mailman"
+mailman-leave:        "|/var/lib/mailman/mail/mailman leave mailman"
+mailman-owner:        "|/var/lib/mailman/mail/mailman owner mailman"
+mailman-request:      "|/var/lib/mailman/mail/mailman request mailman"
+mailman-subscribe:    "|/var/lib/mailman/mail/mailman subscribe mailman"
+mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Exécutez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>newaliases</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et redémarrez postfix: :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart postfix</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez la page web de mailman dans apache: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ln -s /etc/mailman/apache.conf /etc/apache2/conf-enabled/mailman.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez apache :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart apache2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>puis redémarrez le demon mailman :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart mailman</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Le site web de mailman est accessible</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Vous pouvez accéder à la page admin Mailman à <a href="http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/" class="bare">http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/</a></p>
+</li>
+<li>
+<p>La page web utilisateur de la mailing list est accessible  ici <a href="http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/" class="bare">http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/</a>.</p>
+</li>
+<li>
+<p>Sous <a href="http://&lt;server1.example.com&gt;/pipermail/mailman" class="bare">http://&lt;server1.example.com&gt;/pipermail/mailman</a> vous avez accès aux archives.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_d_awstats">5.10.6. Configuration d' Awstats</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>configurer la tache cron d&#8217;awstats: Éditez le fichier :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/cron.d/awstats:</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Et commentez toutes les lignes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#MAILTO=root
+#*/10 * * * * www-data [ -x /usr/share/awstats/tools/update.sh ] &amp;&amp; /usr/share/awstats/tools/update.sh
+# Generate static reports:
+#10 03 * * * www-data [ -x /usr/share/awstats/tools/buildstatic.sh ] &amp;&amp; /usr/share/awstats/tools/buildstatic.sh</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_de_fail2ban">5.10.7. Configuration de Fail2ban</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Editez le fichier: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/fail2ban/jail.local.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ajoutez les lignes suivantes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-k">[dovecot]</span>
+<span class="tok-na">enabled</span> <span class="tok-o">=</span> <span class="tok-s">true</span>
+<span class="tok-na">filter</span> <span class="tok-o">=</span> <span class="tok-s">dovecot</span>
+<span class="tok-na">logpath</span> <span class="tok-o">=</span> <span class="tok-s">/var/log/mail.log</span>
+<span class="tok-na">maxretry</span> <span class="tok-o">=</span> <span class="tok-s">5</span>
+
+<span class="tok-k">[postfix-sasl]</span>
+<span class="tok-na">enabled</span> <span class="tok-o">=</span> <span class="tok-s">true</span>
+<span class="tok-na">port</span> <span class="tok-o">=</span> <span class="tok-s">smtp</span>
+<span class="tok-na">filter</span> <span class="tok-o">=</span> <span class="tok-s">postfix[mode=auth]</span>
+<span class="tok-na">logpath</span> <span class="tok-o">=</span> <span class="tok-s">/var/log/mail.log</span>
+<span class="tok-na">maxretry</span> <span class="tok-o">=</span> <span class="tok-s">3</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez Fail2ban: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart fail2ban</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_installation_et_configuration_de_pureftpd">5.10.8. Installation et configuration de PureFTPd</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install pure-ftpd-common pure-ftpd-mysql</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éditez le fichier de conf: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/default/pure-ftpd-common</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Changez les lignes ainsi: <code>STANDALONE_OR_INETD=standalone</code> et <code>VIRTUALCHROOT=true</code></p>
+</li>
+<li>
+<p>Autorisez les connexions TLS. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-m">1</span> &gt; /etc/pure-ftpd/conf/TLS</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez un certificat SSL.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /etc/ssl/private/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Puis créez le certificat auto signé. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>openssl req -x509 -nodes -days <span class="tok-m">7300</span> -newkey rsa:2048 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et répondez aux questions de la manière suivante:</p>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p><code>Country Name (2 letter code) [AU]:</code> &#8592; Entrez le code pays à 2 lettres</p>
+</li>
+<li>
+<p><code>State or Province Name (full name) [Some-State]:</code> &#8592; Entrer le nom d&#8217;état</p>
+</li>
+<li>
+<p><code>Locality Name (eg, city) []:</code> &#8592; Entrer votre ville</p>
+</li>
+<li>
+<p><code>Organization Name (eg, company) [Internet Widgits Pty Ltd]:</code> &#8592; Entrez votre entreprise ou tapez entrée</p>
+</li>
+<li>
+<p><code>Organizational Unit Name (eg, section) []:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</p>
+</li>
+<li>
+<p><code>Email Address []:</code> &#8592; Tapez entrée</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Puis tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">600</span> /etc/ssl/private/pure-ftpd.pem</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>et redémarrez pure-ftpd en tapant: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart pure-ftpd-mysql</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_phpmyadmin">5.11. Installation et configuration de phpmyadmin</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Installez phpmyadmin. Exécutez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir /usr/share/phpmyadmin
+mkdir /etc/phpmyadmin
+mkdir -p /var/lib/phpmyadmin/tmp
+chown -R www-data:www-data /var/lib/phpmyadmin
+touch /etc/phpmyadmin/htpasswd.setup
+<span class="tok-nb">cd</span> /tmp
+wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
+tar xfz phpMyAdmin-4.9.0.1-all-languages.tar.gz
+mv phpMyAdmin-4.9.0.1-all-languages/* /usr/share/phpmyadmin/
+rm phpMyAdmin-4.9.0.1-all-languages.tar.gz
+rm -rf phpMyAdmin-4.9.0.1-all-languages
+cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éditez le fichier :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /usr/share/phpmyadmin/config.inc.php</code></pre>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Modifier l’entrée <code>blowfish_secret</code> en ajoutant votre propre chaîne de 32 caractères.</p>
+</li>
+<li>
+<p>Éditez le fichier: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apache2/conf-available/phpmyadmin.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez les lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-c"># phpMyAdmin default Apache configuration</span>
+
+<span class="tok-nb">Alias</span> <span class="tok-sx">/phpmyadmin</span> <span class="tok-sx">/usr/share/phpmyadmin</span>
+
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/usr/share/phpmyadmin</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nb">Options</span> FollowSymLinks
+ <span class="tok-nb">DirectoryIndex</span> index.php
+
+ <span class="tok-nt">&lt;IfModule</span> <span class="tok-s">mod_php7.c</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nb">AddType</span> application/x-httpd-php .php
+
+ <span class="tok-nb">php_flag</span> magic_quotes_gpc <span class="tok-k">Off</span>
+ <span class="tok-nb">php_flag</span> track_vars <span class="tok-k">On</span>
+ <span class="tok-nb">php_flag</span> register_globals <span class="tok-k">Off</span>
+ <span class="tok-nb">php_value</span> include_path .
+ <span class="tok-nt">&lt;/IfModule&gt;</span>
+
+<span class="tok-nt">&lt;/Directory&gt;</span>
+
+<span class="tok-c"># Authorize for setup</span>
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/usr/share/phpmyadmin/setup</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nt">&lt;IfModule</span> <span class="tok-s">mod_authn_file.c</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nb">AuthType</span> Basic
+ <span class="tok-nb">AuthName</span> <span class="tok-s2">&quot;phpMyAdmin Setup&quot;</span>
+ <span class="tok-nb">AuthUserFile</span> <span class="tok-sx">/etc/phpmyadmin/htpasswd.setup</span>
+ <span class="tok-nt">&lt;/IfModule&gt;</span>
+ <span class="tok-nb">Require</span> valid-user
+<span class="tok-nt">&lt;/Directory&gt;</span>
+
+<span class="tok-c"># Disallow web access to directories that don&#39;t need it</span>
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/usr/share/phpmyadmin/libraries</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nb">Order</span> Deny,Allow
+ <span class="tok-nb">Deny</span> from <span class="tok-k">All</span>
+<span class="tok-nt">&lt;/Directory&gt;</span>
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/usr/share/phpmyadmin/setup/lib</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nb">Order</span> Deny,Allow
+ <span class="tok-nb">Deny</span> from <span class="tok-k">All</span>
+<span class="tok-nt">&lt;/Directory&gt;</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Activez le module et redémarrez apache. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2enconf phpmyadmin
+systemctl restart apache2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créer la base de donnée phpmyadmin.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mysql -u root -p.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>puis entrer le mot de passe root</p>
+</div>
+</li>
+<li>
+<p>Créez une base phpmyadmin. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>CREATE DATABASE phpmyadmin<span class="tok-p">;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez un utilisateur phpmyadmin. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>CREATE USER <span class="tok-s1">&#39;pma&#39;</span>@<span class="tok-s1">&#39;localhost&#39;</span> IDENTIFIED BY <span class="tok-s1">&#39;mypassword&#39;</span><span class="tok-p">;</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>mypassword</code> doit être remplacé par un mot de passe choisi.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Accordez des privilèges et sauvez: <code>GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION;</code> puis tapez <code>FLUSH PRIVILEGES;</code> et enfin <code>EXIT;</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Chargez les tables sql dans la base phpmyadmin: <code>mysql -u root -p phpmyadmin &lt; /usr/share/phpmyadmin/sql/create_tables.sql</code></p>
+</li>
+<li>
+<p>Enfin ajoutez les mots de passe nécessaires dans le fichier de config.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez: <code>vi /usr/share/phpmyadmin/config.inc.php</code></p>
+</li>
+<li>
+<p>Rechercher le texte contenant <code>controlhost</code> .  Ci-dessous, un exemple:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="php"><span></span><span class="tok-cm">/* User used to manipulate with storage */</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;controlhost&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;localhost&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;controlport&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;controluser&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;controlpass&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;mypassword&#39;</span><span class="tok-p">;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+
+<span class="tok-cm">/* Storage database and tables */</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;pmadb&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;phpmyadmin&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;bookmarktable&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__bookmark&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;relation&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__relation&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;table_info&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__table_info&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;table_coords&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__table_coords&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;pdf_pages&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__pdf_pages&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;column_info&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__column_info&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;history&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__history&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;table_uiprefs&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__table_uiprefs&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;tracking&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__tracking&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;userconfig&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__userconfig&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;recent&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__recent&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;favorite&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__favorite&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;users&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__users&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;usergroups&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__usergroups&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;navigationhiding&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__navigationhiding&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;savedsearches&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__savedsearches&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;central_columns&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__central_columns&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;designer_settings&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__designer_settings&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;export_templates&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__export_templates&#39;</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A tous les endroit ou vous voyez dans le texte ci dessus le mot <code>mypassword</code> mettez celui choisi. N&#8217;oubliez pas de dé-commenter les lignes.</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_installation_et_configuration_de_roundcube">5.11.1. Installation et configuration de Roundcube</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install roundcube roundcube-core roundcube-mysql roundcube-plugins</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éditez le fichier php de roundcube: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/roundcube/config.inc.php</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et définissez les hosts par défaut comme localhost</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="php"><span></span><span class="tok-nv">$config</span><span class="tok-p">[</span><span class="tok-s1">&#39;default_host&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;localhost&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$config</span><span class="tok-p">[</span><span class="tok-s1">&#39;smtp_server&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;localhost&#39;</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éditez la configuration apache pour roundcube: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apache2/conf-enabled/roundcube.conf</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et ajouter au début les lignes suivantes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">Alias</span> <span class="tok-sx">/roundcube</span> <span class="tok-sx">/var/lib/roundcube</span>
+<span class="tok-nb">Alias</span> <span class="tok-sx">/webmail</span> <span class="tok-sx">/var/lib/roundcube</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez Apache:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl reload apache2</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_installation_et_configuration_de_ispconfig">5.11.2. Installation et configuration de ISPConfig</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Cherchez la dernière version d&#8217;ISPConfig sur le site <a href="https://www.ispconfig.org/ispconfig/download/">ISPConfig</a></p>
+</li>
+<li>
+<p>Installez cette version en tapant: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>wget &lt;la_version_a_telecharger&gt;.tar.gz</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Décompressez la version en tapant: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>tar xfz &lt;la_version&gt;.tar.gz</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enfin allez dans le répertoire d&#8217;installation: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> ispconfig3_install/install/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lancez l&#8217;installation: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>php -q install.php</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et répondez aux questions:</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Select language (en,de) [en]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Installation mode (standard,expert) [standard]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL server hostname [localhost]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL server port [3306]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL root username [root]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL root password []:</code> &#8592; Enter your MySQL root password</p>
+</li>
+<li>
+<p><code>MySQL database to create [dbispconfig]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL charset [utf8]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Country Name (2 letter code) [AU]:</code> &#8592; Entrez le code pays à 2 lettres</p>
+</li>
+<li>
+<p><code>State or Province Name (full name) [Some-State]:</code> &#8592; Entrer le nom d&#8217;état</p>
+</li>
+<li>
+<p><code>Locality Name (eg, city) []:</code> &#8592; Entrer votre ville</p>
+</li>
+<li>
+<p><code>Organization Name (eg, company) [Internet Widgits Pty Ltd]:</code> &#8592; Entrez votre entreprise ou tapez entrée</p>
+</li>
+<li>
+<p><code>Organizational Unit Name (eg, section) []:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</p>
+</li>
+<li>
+<p><code>Email Address []:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>ISPConfig Port [8080]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Admin password [admin]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:</code> &#8592;- Tapez entrée</p>
+</li>
+<li>
+<p>une deuxième série de question du même type est posée répondre de la même manière !</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>L&#8217;installation est terminée. Vous accédez au serveur à l&#8217;adresse: <a href="https://&lt;server1.example.com&gt;:8080/" class="bare">https://&lt;server1.example.com&gt;:8080/</a></p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur. Pour OVH, elle s&#8217;écrit VPSxxxxxx.ovh.net
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Loguez vous comme admin et avec le mot de passe que vous avez choisi. Vous pouvez décider de le changer au premier login</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Si le message "Possible attack detected. This action has been logged.". Cela signifie que vous avez des cookies d&#8217;une précédent installation qui sont configurés. Effacer les cookies de ce site de votre navigateur.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_de_lets_encrypt">5.11.3. Configuration de Let&#8217;s Encrypt</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Installez Let&#8217;s Encrypt. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/bin
+wget https://dl.eff.org/certbot-auto
+chmod a+x certbot-auto
+./certbot-auto --install-only</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créer votre premier domaine avec SSL et let&#8217;s encrypt dans ISPConfig.</p>
+</li>
+<li>
+<p>Liez le certificat d&#8217;ISPconfig avec celui du domaine crée:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/ispconfig/interface/ssl/
+mv ispserver.crt ispserver.crt-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+mv ispserver.key ispserver.key-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+ln -s /etc/letsencrypt/live/&lt;example.com&gt;/fullchain.pem ispserver.crt <i class="conum" data-value="1"></i><b>(1)</b>
+ln -s /etc/letsencrypt/live/&lt;example.com&gt;/privkey.pem ispserver.key <i class="conum" data-value="1"></i><b>(1)</b>
+cat ispserver.<span class="tok-o">{</span>key,crt<span class="tok-o">}</span> &gt; ispserver.pem
+chmod <span class="tok-m">600</span> ispserver.pem
+systemctl restart apache2</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Liez le certificat Postfix avec celui de let&#8217;s encrypt</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/postfix/
+mv smtpd.cert smtpd.cert-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+mv smtpd.key smtpd.key-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+ln -s /usr/local/ispconfig/interface/ssl/ispserver.crt smtpd.cert
+ln -s /usr/local/ispconfig/interface/ssl/ispserver.key smtpd.key
+service postfix restart
+service dovecot restart</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Https pour Pureftd</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/ssl/private/
+mv pure-ftpd.pem pure-ftpd.pem-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+ln -s /usr/local/ispconfig/interface/ssl/ispserver.pem pure-ftpd.pem
+chmod <span class="tok-m">600</span> pure-ftpd.pem
+service pure-ftpd-mysql restart</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Pour Monit:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Editez Monitrc: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi  /etc/monit/monitrc</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez les lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">set httpd port 2812 and</span>
+<span class="tok-na">SSL ENABLE</span>
+<span class="tok-na">PEMFILE /etc/ssl/private/pure-ftpd.pem</span>
+<span class="tok-na">allow admin:&#39;secretpassword&#39;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service monit restart</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Création d&#8217;un script de renouvellement automatique du fichier pem</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Installez incron. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install -y incron</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez le fichier d&#8217;exécution périodique. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/init.d/le_ispc_pem.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et coller dans le fichier le code suivant:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/sh</span>
+<span class="tok-c1">### BEGIN INIT INFO</span>
+<span class="tok-c1"># Provides: LE ISPSERVER.PEM AUTO UPDATER</span>
+<span class="tok-c1"># Required-Start: $local_fs $network</span>
+<span class="tok-c1"># Required-Stop: $local_fs</span>
+<span class="tok-c1"># Default-Start: 2 3 4 5</span>
+<span class="tok-c1"># Default-Stop: 0 1 6</span>
+<span class="tok-c1"># Short-Description: LE ISPSERVER.PEM AUTO UPDATER</span>
+<span class="tok-c1"># Description: Update ispserver.pem automatically after ISPC LE SSL certs are renewed.</span>
+<span class="tok-c1">### END INIT INFO</span>
+<span class="tok-nb">cd</span> /usr/local/ispconfig/interface/ssl/
+mv ispserver.pem ispserver.pem-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+cat ispserver.<span class="tok-o">{</span>key,crt<span class="tok-o">}</span> &gt; ispserver.pem
+chmod <span class="tok-m">600</span> ispserver.pem
+chmod <span class="tok-m">600</span> /etc/ssl/private/pure-ftpd.pem
+service pure-ftpd-mysql restart
+service monit restart
+service postfix restart
+service dovecot restart
+service nginx restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sauvez et quittez. Tapez ensuite:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod +x /etc/init.d/le_ispc_pem.sh
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;root&quot;</span> &gt;&gt; /etc/incron.allow
+incrontab -e.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et ajoutez les lignes ci dessous dans le fichier:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>/etc/letsencrypt/archive/<span class="tok-k">$(</span>hostname -f<span class="tok-k">)</span>/ IN_MODIFY ./etc/init.d/le_ispc_pem.sh</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_dun_scanner_de_vulnérabilités">5.12. Installation d&#8217;un scanner de vulnérabilités</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>installer Git. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install git</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>installer Lynis</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>git clone https://github.com/CISOfy/lynis</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Executez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> lynis<span class="tok-p">;</span>./lynis audit system</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>L&#8217;outil vous listera dans une forme très synthétique la liste des vulnérabilités et des améliorations de sécurité à appliquer.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_webmin">5.13. Installation de Webmin</h3>
+<div class="paragraph">
+<p>Webmin est un outil généraliste de configuration de votre serveur. Son usage peut être assez complexe mais il permet une configuration plus précise des fonctionnalités.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se logger <code>root</code> sur le serveur</p>
+</li>
+<li>
+<p>Ajoutez le repository Webmin</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>allez dans le répertoire des repositories. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/apt/sources.list.d</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;deb http://download.webmin.com/download/repository sarge contrib&quot;</span> &gt;&gt; webmin.list</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez la clé. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>curl -fsSL http://www.webmin.com/jcameron-key.asc <span class="tok-p">|</span> sudo apt-key add -.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le message <code>OK</code> s&#8217;affiche</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Mise à jour. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt update</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installation de Webmin. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install Webmin</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Autorisation de Webmin au niveau du firewall</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Loguez vous Admin sur le site Hestia: <a href="https://&lt;example.com&gt;:8083" class="bare">https://&lt;example.com&gt;:8083</a></p>
+</li>
+<li>
+<p>Allez dans Server&#8594;Firewall, puis Add Rule</p>
+</li>
+<li>
+<p>Sélectionnez Action: <code>Allow</code>, Protocol: <code>TCP</code>, Port: <code>10000</code>, IP Address: <code>0.0.0.0/0</code>, Service: <code>WEBMIN</code></p>
+</li>
+<li>
+<p>Cliquez sur Save, puis Back</p>
+</li>
+<li>
+<p>Constatez que le service Webmin sur le port 10000 est autorisé</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Connectez vous avec votre navigateur sur l&#8217;url <a href="https://&lt;example.com&gt;:10000" class="bare">https://&lt;example.com&gt;:10000</a>. Un message indique un problème de sécurité. Cela vient du certificat auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et poursuivre'.</p>
+</li>
+<li>
+<p>Loguez-vous <code>root</code>. Tapez le mot de passe de <code>root</code>. Le dashboard s&#8217;affiche.</p>
+</li>
+<li>
+<p>Restreignez l&#8217;adressage IP</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Obtenez votre adresse IP en allant par exemples sur le site <a href="https://www.showmyip.com/" class="bare">https://www.showmyip.com/</a></p>
+</li>
+<li>
+<p>Sur votre URL Webmin ou vous êtes logué, allez dans Webmin&#8594;Webmin Configuration</p>
+</li>
+<li>
+<p>Dans l&#8217;écran choisir l’icône <code>Ip Access Control</code>.</p>
+</li>
+<li>
+<p>Choisissez <code>Only allow from listed addresses</code></p>
+</li>
+<li>
+<p>Puis dans le champ <code>Allowed IP addresses</code> tapez votre adresse IP récupérée sur showmyip</p>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+<li>
+<p>Vous devriez avoir une brève déconnexion le temps que le serveur Webmin redémarre puis une reconnexion.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Si vous n&#8217;arrivez pas à vous reconnecter c&#8217;est que l&#8217;adresse IP n&#8217;est pas la bonne. Le seul moyen de se reconnecter est de:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Loguez vous <code>root</code> sur serveur</p>
+</li>
+<li>
+<p>Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne <code>allow= &#8230;&#8203;</code></p>
+</li>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service webmin restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Connectez vous sur l&#8217;url de votre site Webmin. Tout doit fonctionner</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Passez en Français. Pour les personnes non anglophone. Les traductions française ont des problèmes d&#8217;encodage de caractère ce n&#8217;est donc pas recommandé. La suite de mon tutoriel suppose que vous êtes resté en anglais.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Sur votre url Webmin ou vous êtes logué, allez dans Webmin&#8594;Webmin Configuration</p>
+</li>
+<li>
+<p>Dans l&#8217;écran choisir l’icône <code>Language and Locale</code>.</p>
+</li>
+<li>
+<p>Choisir <code>Display Language</code> à <code>French (FR.UTF-8)</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installer_quelques_outils_debian">6. Installer quelques outils Debian</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installer_loutil_debfoster">6.1. Installer l&#8217;outil debfoster</h3>
+<div class="paragraph">
+<p>L&#8217;outil <code>debfoster</code> permet de ne conserver que les paquets essentiels.
+Il maintient un fichier <code>keepers</code> présent dans <code>/var/lib/debfoster</code></p>
+</div>
+<div class="paragraph">
+<p>En répondant aux questions de conservations de paquets, <code>debfoster</code> maintient la liste des paquets uniques nécessaires au système.
+Tous les autres paquets seront supprimés.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se loguer <code>root</code> sur le serveur</p>
+</li>
+<li>
+<p>Ajouter le paquet <code>debfoster</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install debfoster</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lancez debfoster. Tapez <code>debfoster</code>.</p>
+</li>
+<li>
+<p>Répondez au questions pour chaque paquet</p>
+</li>
+<li>
+<p>Acceptez la liste des modifications proposées à la fin. Les paquets superflus seront supprimés</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installer_loutil_dselect">6.2. Installer l&#8217;outil dselect</h3>
+<div class="paragraph">
+<p>L&#8217;outil <code>dselect</code> permet de choisir de façon interactive les paquets que l&#8217;on souhaite installer.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se loguer <code>root</code> sur le serveur</p>
+</li>
+<li>
+<p>Ajouter le paquet <code>deselect</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install deselect</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0<br>
+Last updated 2020-03-29 15:55:33 +0200
+</div>
+</div>
+<style>
+pre.pygments .hll { background-color: #ffffcc }
+pre.pygments  { background: #ffffff; }
+pre.pygments .tok-c { color: #888888 } /* Comment */
+pre.pygments .tok-err { color: #FF0000; background-color: #FFAAAA } /* Error */
+pre.pygments .tok-k { color: #008800; font-weight: bold } /* Keyword */
+pre.pygments .tok-o { color: #333333 } /* Operator */
+pre.pygments .tok-ch { color: #888888 } /* Comment.Hashbang */
+pre.pygments .tok-cm { color: #888888 } /* Comment.Multiline */
+pre.pygments .tok-cp { color: #557799 } /* Comment.Preproc */
+pre.pygments .tok-cpf { color: #888888 } /* Comment.PreprocFile */
+pre.pygments .tok-c1 { color: #888888 } /* Comment.Single */
+pre.pygments .tok-cs { color: #cc0000; font-weight: bold } /* Comment.Special */
+pre.pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+pre.pygments .tok-ge { font-style: italic } /* Generic.Emph */
+pre.pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+pre.pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+pre.pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+pre.pygments .tok-go { color: #888888 } /* Generic.Output */
+pre.pygments .tok-gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+pre.pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+pre.pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+pre.pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+pre.pygments .tok-kc { color: #008800; font-weight: bold } /* Keyword.Constant */
+pre.pygments .tok-kd { color: #008800; font-weight: bold } /* Keyword.Declaration */
+pre.pygments .tok-kn { color: #008800; font-weight: bold } /* Keyword.Namespace */
+pre.pygments .tok-kp { color: #003388; font-weight: bold } /* Keyword.Pseudo */
+pre.pygments .tok-kr { color: #008800; font-weight: bold } /* Keyword.Reserved */
+pre.pygments .tok-kt { color: #333399; font-weight: bold } /* Keyword.Type */
+pre.pygments .tok-m { color: #6600EE; font-weight: bold } /* Literal.Number */
+pre.pygments .tok-s { background-color: #fff0f0 } /* Literal.String */
+pre.pygments .tok-na { color: #0000CC } /* Name.Attribute */
+pre.pygments .tok-nb { color: #007020 } /* Name.Builtin */
+pre.pygments .tok-nc { color: #BB0066; font-weight: bold } /* Name.Class */
+pre.pygments .tok-no { color: #003366; font-weight: bold } /* Name.Constant */
+pre.pygments .tok-nd { color: #555555; font-weight: bold } /* Name.Decorator */
+pre.pygments .tok-ni { color: #880000; font-weight: bold } /* Name.Entity */
+pre.pygments .tok-ne { color: #FF0000; font-weight: bold } /* Name.Exception */
+pre.pygments .tok-nf { color: #0066BB; font-weight: bold } /* Name.Function */
+pre.pygments .tok-nl { color: #997700; font-weight: bold } /* Name.Label */
+pre.pygments .tok-nn { color: #0e84b5; font-weight: bold } /* Name.Namespace */
+pre.pygments .tok-nt { color: #007700 } /* Name.Tag */
+pre.pygments .tok-nv { color: #996633 } /* Name.Variable */
+pre.pygments .tok-ow { color: #000000; font-weight: bold } /* Operator.Word */
+pre.pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+pre.pygments .tok-mb { color: #6600EE; font-weight: bold } /* Literal.Number.Bin */
+pre.pygments .tok-mf { color: #6600EE; font-weight: bold } /* Literal.Number.Float */
+pre.pygments .tok-mh { color: #005588; font-weight: bold } /* Literal.Number.Hex */
+pre.pygments .tok-mi { color: #0000DD; font-weight: bold } /* Literal.Number.Integer */
+pre.pygments .tok-mo { color: #4400EE; font-weight: bold } /* Literal.Number.Oct */
+pre.pygments .tok-sa { background-color: #fff0f0 } /* Literal.String.Affix */
+pre.pygments .tok-sb { background-color: #fff0f0 } /* Literal.String.Backtick */
+pre.pygments .tok-sc { color: #0044DD } /* Literal.String.Char */
+pre.pygments .tok-dl { background-color: #fff0f0 } /* Literal.String.Delimiter */
+pre.pygments .tok-sd { color: #DD4422 } /* Literal.String.Doc */
+pre.pygments .tok-s2 { background-color: #fff0f0 } /* Literal.String.Double */
+pre.pygments .tok-se { color: #666666; font-weight: bold; background-color: #fff0f0 } /* Literal.String.Escape */
+pre.pygments .tok-sh { background-color: #fff0f0 } /* Literal.String.Heredoc */
+pre.pygments .tok-si { background-color: #eeeeee } /* Literal.String.Interpol */
+pre.pygments .tok-sx { color: #DD2200; background-color: #fff0f0 } /* Literal.String.Other */
+pre.pygments .tok-sr { color: #000000; background-color: #fff0ff } /* Literal.String.Regex */
+pre.pygments .tok-s1 { background-color: #fff0f0 } /* Literal.String.Single */
+pre.pygments .tok-ss { color: #AA6600 } /* Literal.String.Symbol */
+pre.pygments .tok-bp { color: #007020 } /* Name.Builtin.Pseudo */
+pre.pygments .tok-fm { color: #0066BB; font-weight: bold } /* Name.Function.Magic */
+pre.pygments .tok-vc { color: #336699 } /* Name.Variable.Class */
+pre.pygments .tok-vg { color: #dd7700; font-weight: bold } /* Name.Variable.Global */
+pre.pygments .tok-vi { color: #3333BB } /* Name.Variable.Instance */
+pre.pygments .tok-vm { color: #996633 } /* Name.Variable.Magic */
+pre.pygments .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Integer.Long */
+</style>
+</body>
+</html>

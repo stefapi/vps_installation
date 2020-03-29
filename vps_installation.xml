@@ -1,0 +1,1474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>Installation d&#8217;un VPS</title>
+<date>2020-03-27</date>
+<author>
+<personname>
+<firstname>Stéphane</firstname>
+<surname>Apiou</surname>
+</personname>
+<email>stephane@apiou.org</email>
+</author>
+<authorinitials>SA</authorinitials>
+<revhistory>
+<revision>
+<revnumber>1.0</revnumber>
+<date>2020-03-27</date>
+<authorinitials>SA</authorinitials>
+</revision>
+</revhistory>
+</info>
+<section xml:id="_avant_propos">
+<title>Avant propos</title>
+<simpara>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer un serveur VPS sur la plate-forme OVH.
+Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
+Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation est facilement transposable pour des versions différentes de Debian ou à Ubuntu ou toute autre distribution basée sur l&#8217;un ou l&#8217;autre.
+En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus importantes notamment liées au gestionnaire de paquets <literal>yum</literal>, le nommage des paquets, les configurations par défaut et aux différences dans l&#8217;arborescence présente dans /etc.</simpara>
+<simpara>Dans ce document nous configurons un nom de domaine principal pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</simpara>
+<simpara>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal.
+Donc que vous savez vous servir de <literal>ssh</literal> pour Linux ou de <literal>putty</literal> pour Windows</simpara>
+<simpara>Dans le document, on peut trouver des textes entourés de &lt;texte&gt;. Cela signifie que vous devez mettre ici votre propre texte selon vos préférences.
+Si le texte ne doit pas contenir d&#8217;espace, la phrase contient elle même des _ ou des - pour l&#8217;indiquer en fonction de ce qui est autorisé.</simpara>
+<simpara>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'
+Le taux de complexité est bien meilleur et les mots de passe sont plus facile à retenir que 'Az3~1ym_a&amp;'</simpara>
+<simpara>Le cout pour avoir ce type de serveur est relativement faible:
+* Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y avoir des promos)
+* Compter 5€TTC/mois pour un VPS de base.</simpara>
+<simpara>Le budget est donc de 6-7€TTC/mois pour une offre d&#8217;entrée de gamme</simpara>
+</section>
+<section xml:id="_choix_du_vps">
+<title>Choix du VPS</title>
+<simpara>Cette partie du guide s&#8217;adresse aux utilisateurs d&#8217;OVH.
+J&#8217;ai pour ma part choisi un serveur VPS SSD chez OVH avec 2Go de RAM. Au moment ou j&#8217;écris ce document il possède un seul coeur et 20 Go de disque.</simpara>
+<simpara>Choisissez d&#8217;installer une image Linux seule avec Debian 10.
+Une fois l&#8217;installation effectuée, vous recevez un Email sur l&#8217;adresse mail de votre compte OVH avec vos identifiants de login root. Ils serviront à vous connecter sur le serveur.</simpara>
+<simpara>En vous loguant sur la <link xl:href="https://www.ovh.com/manager/web">plateforme d&#8217;administration d&#8217;OVH</link>, vous accèderez aux informations de votre serveur dans le menu Server&#8594;VPS. A cet endroit votre VPS doit y être indiqué.</simpara>
+<simpara>En cliquant dessus un ensemble de menus doivent apparaitre pour administrer celui-ci. Vous y trouverez notamment:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Son adresse &lt;IP&gt; et le nom de la machine chez OVH. Elle est du type "VPSxxxxxx.ovh.net"</simpara>
+</listitem>
+<listitem>
+<simpara>La possibilité de le redémarrer</simpara>
+</listitem>
+<listitem>
+<simpara>La possibilité de le reinstaller (avec perte complète de données)</simpara>
+</listitem>
+<listitem>
+<simpara>un KVM pour en prendre le controle console directement dans le navigateur</simpara>
+</listitem>
+<listitem>
+<simpara>un menu de configuration de reverse DNS (qui nous sera utile par la suite) pour définir le domaine par défaut</simpara>
+</listitem>
+<listitem>
+<simpara>le statut des services principaux (http, ftp, ssh &#8230;&#8203;)</simpara>
+</listitem>
+<listitem>
+<simpara>enfin des choix pour souscrire à un backup régulier, ajouter des disques ou effecter un snapshot de la VM associée au VPS.</simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="_choix_du_registrar">
+<title>Choix du registrar</title>
+<simpara>Pour ma part j&#8217;ai choisi Gandi car il ne sont pas très cher et leur interface d&#8217;administration est simple d&#8217;usage. Vous pouvez très bien prendre aussi vos DNS chez OVH.
+Une fois votre domaine enregistré et votre compte créé vous pouvez vous loguer sur la <link xl:href="https://admin.gandi.net/dashboard">plateforme de gestion de Gandi</link>.
+Allez dans Nom de domaine et sélectionnez le nom de domaine que vous voulez administrer.
+La vue générale vous montre les services actifs. Il faut une fois la configuration des DNS effectuée être dans le mode suivant:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Serveurs de noms: Externes</simpara>
+</listitem>
+<listitem>
+<simpara>Emails: Inactif</simpara>
+</listitem>
+<listitem>
+<simpara>DNSSEC: Actif (cela sera activé dans une seconde étape de ce guide)</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Vous ne devez avoir aucune boite mail active sur ce domaine. A regardez dans le menu "Boites &amp; redirections Mails".
+Vous devez reconfigurer les 'Enregistrements DNS' en mode externes.
+Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms externe. Mettre 3 DNS:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>le nom de votre machine OVH: VPSxxxxxx.ovh.net</simpara>
+</listitem>
+<listitem>
+<simpara>et deux DNS de votre domaine: ns1.&lt;example.com&gt; et ns2.&lt;example.com&gt;</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Pour que tout cela fonctionne bien, ajoutez des Glue records:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>un pour ns1.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur OVH</simpara>
+</listitem>
+<listitem>
+<simpara>un pour ns2.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur OVH</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Je ne l&#8217;ai pas mis en oeuvre.</simpara>
+<simpara>Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.</simpara>
+</section>
+<section xml:id="_se_loguer_root_sur_le_serveur">
+<title>Se loguer root sur le serveur</title>
+<simpara>A de nombreux endroit dans la documentation, il est demandé de se loguer root sur le serveur.
+Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte sudo:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>De votre machine locale, loguez vous avec votre compte <literal>&lt;sudo_username&gt;</literal>. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO1-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO1-1">
+<para>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine de votre VPS (pour ovh: VPSxxxxxx.ovh.net).</para>
+</callout>
+</calloutlist>
+<simpara>ou utilisez putty si vous êtes sous Windows.</simpara>
+</listitem>
+<listitem>
+<simpara>Tapez votre mot de passe s&#8217;il est demandé. Si vous avez installé une clé de connexion ce ne devrait pas être le cas.</simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous <literal>root</literal>. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo bash</programlisting>
+<simpara>Un mot de passe vous est demandé. Tapez le mot de passe demandé.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans le cas contraire (pas de sudo créé et connexion en root directe sur le serveur):</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Se loguer root sur le serveur distant. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO2-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO2-1">
+<para>remplacer ici &lt;example.com&gt; par votre nom de domaine.</para>
+</callout>
+</calloutlist>
+<simpara>Tapez ensuite votre mot de passe root</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_basique">
+<title>Installation basique</title>
+<section xml:id="_vérification_du_nom_de_serveur">
+<title>Vérification du nom de serveur</title>
+<simpara>Cette partie consiste à vérifier que le serveur a un hostname correctement configuré.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Se loguer <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>vérifier que le hostname est bien celui attendu (c&#8217;est à dire configuré par votre hébergeur). Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cat /etc/hostname</programlisting>
+<simpara>Le nom du hostname (sans le domaine) doit s&#8217;afficher.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Si ce n&#8217;est pas le cas, changer ce nom en éditant le fichier. Tapez :</simpara>
+<programlisting language="shell" linenumbering="unnumbered">vi /etc/hostname</programlisting>
+<simpara>Changez la valeur, sauvegardez et rebootez. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">reboot</programlisting>
+</listitem>
+<listitem>
+<simpara>Se loguer`root` de nouveau sur le serveur</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Vérifier le fichier <literal>hosts</literal>. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cat /etc/hosts</programlisting>
+<simpara>Si le fichier contient plusieurs lignes avec la même adresse de loopback en <literal>127.x.y.z</literal>, en gardez une seule et celle avec le hostname et le nom de domaine complet.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>si ce n&#8217;est pas le cas, changer les lignes en éditant le fichier. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/hosts</programlisting>
+<simpara>Changez la ou les lignes, sauvegardez et rebootez. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">reboot</programlisting>
+</listitem>
+<listitem>
+<simpara>Se logger`root` de nouveau sur le serveur</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Vérifiez que tout est correctement configuré.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">hostname</programlisting>
+<simpara>La sortie doit afficher le nom de host.</simpara>
+</listitem>
+<listitem>
+<simpara>Tapez ensuite :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">hostname -f</programlisting>
+<simpara>La sortie doit afficher le nom de host avec le nom de domaine.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_interdire_le_login_direct_en_root">
+<title>Interdire le login direct en root</title>
+<simpara>Il est toujours vivement déconseillé d&#8217;autoriser la possibilité de se connecter directement en SSH en tant que root.
+De ce fait, notre première action sera de désactiver le login direct en root  et d&#8217;autoriser le sudo.
+Respectez bien les étapes de cette procédure:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Se loguer <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Ajoutez un utilisateur standard qui sera nommé par la suite en tant que &lt;sudo_username&gt;</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">adduser &lt;sudo_username&gt;</programlisting>
+</listitem>
+<listitem>
+<simpara>Répondez aux questions qui vont sont posées: habituellement le nom complet d&#8217;utilisateur et le mot de passe.</simpara>
+</listitem>
+<listitem>
+<simpara>Donner les attributs sudo à l&#8217;utilisateur <literal>&lt;sudo_username&gt;</literal>. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">usermod -a -G sudo &lt;sudo_username&gt;</programlisting>
+</listitem>
+<listitem>
+<simpara>Dans une autre fenêtre, se connecter sur le serveur avec votre nouveau compte <literal>&lt;sudo_username&gt;</literal>:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO3-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO3-1">
+<para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>une fois logué, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo bash</programlisting>
+<simpara>Tapez le mot de passe de votre utilisateur. Vous devez avoir accès au compte root. Si ce n&#8217;est pas le cas, revérifiez la procédure et repassez toutes les étapes.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+<important>
+<simpara>Tout pendant que ces premières étapes ne donnent pas satisfaction ne passez pas à la suite sous peine de perdre la possibilité d’accéder à votre serveur.</simpara>
+</important>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Il faut maintenant modifier la configuration de sshd.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Editez le fichier <literal>/etc/ssh/sshd_config</literal>, Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/ssh/sshd_config</programlisting>
+<simpara>il faut rechercher la ligne: <literal>PermitRootLogin yes</literal> et la remplacer par: <literal>PermitRootLogin no</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Redémarrez le serveur ssh. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service sshd restart</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Faites maintenant l&#8217;essai de vous re-loguer avec le compte root.Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO4-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO4-1">
+<para>Remplacer ici &lt;example.com&gt; par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Ce ne devrait plus être possible: le serveur vous l&#8217;indique par un message <literal>Permission denied, please try again.</literal></simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_dune_clé_de_connexion_ssh">
+<title>Création d&#8217;une clé de connexion ssh</title>
+<simpara>Pour créer une clé et la déployer:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créez une clé sur votre machine locale:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Ouvrir un terminal</simpara>
+</listitem>
+<listitem>
+<simpara>Créer un répertoire <literal>~/.ssh</literal> s&#8217;il n&#8217;existe pas. tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p $HOME/.ssh</programlisting>
+</listitem>
+<listitem>
+<simpara>Allez dans le répertoire. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd ~/.ssh</programlisting>
+</listitem>
+<listitem>
+<simpara>Générez vous clés. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh-keygen -t rsa</programlisting>
+</listitem>
+<listitem>
+<simpara>Un ensemble de questions apparaît. Si un texte vous explique que le fichier existe déjà, arrêtez la procédure. Cela signifie que vous avez déjà créé une clé et que vous risquez de perdre la connexion à d&#8217;autres serveurs si vous en générez une nouvelle. Sinon, appuyez sur Entrée à chaque fois pour accepter les valeurs par défaut.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Déployez votre clé:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Loguez vous sur votre serveur distant. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO5-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO5-1">
+<para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
+</callout>
+</calloutlist>
+<simpara>Entrez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara>Créer un répertoire <literal>~/.ssh</literal> s&#8217;il n&#8217;existe pas. tapez: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p $HOME/.ssh</programlisting>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier <literal>~/.ssh/authorized_keys</literal> tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi ~/.ssh/authorized_keys</programlisting>
+<simpara>et coller dans ce fichier le texte contenu dans le votre fichier local <literal>~/.ssh/id_rsa.pub</literal>. Remarque: il peut y avoir déjà des clés dans le fichier <literal>authorized_keys</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Sécurisez votre fichier de clés. Tapez: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 600 ~/.ssh/authorized_keys</programlisting>
+</listitem>
+<listitem>
+<simpara>Sécurisez le répertoire SSH; Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 700 ~/.ssh</programlisting>
+</listitem>
+<listitem>
+<simpara>Déconnectez vous de votre session</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Vérifiez que tout fonctionne en vous connectant. Tapez: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO6-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO6-1">
+<para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
+</callout>
+</calloutlist>
+<simpara>La session doit s&#8217;ouvrir sans demander de mot de passe.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_sudo_sans_mot_de_passe">
+<title>Sudo sans mot de passe</title>
+<simpara>Avant tout, il faut bien se rendre compte que cela constitue potentiellement une faille de sécurité et qu&#8217;en conséquence, le compte possédant cette propriété devra être autant sécurisé qu&#8217;un compte root.
+L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en gardant la facilité de se loguer root sur le système au travers d&#8217;un super-compte.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Ajoutez un groupe sudonp et y affecter un utilisateur. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">addgroup --system sudonp</programlisting>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Ajouter l&#8217;utilisateur: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">usermod -a -G sudonp &lt;sudo_username&gt;</programlisting>
+</listitem>
+<listitem>
+<simpara>Éventuellement retirez l&#8217;utilisateur du groupe sudo s&#8217;il a été ajouté auparavant :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">gpasswd -d -G sudo &lt;sudo_username&gt;</programlisting>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier sudoers. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/sudoers</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajouter dans le fichier la ligne suivante: <literal>%sudonp ALL=(ALL:ALL) NOPASSWD: ALL</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+<simpara>L&#8217;utilisateur nom_d_utilisateur pourra se logger root sans mot de passe au travers de la commande <literal>sudo bash</literal></simpara>
+</section>
+<section xml:id="_mise_à_jour_des_sources_de_paquets_debian">
+<title>Mise à jour des sources de paquets Debian</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Se loguer <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Modifier la liste standard de paquets</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Éditer le fichier <literal>/etc/apt/sources.list</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/apt/sources.list</programlisting>
+</listitem>
+<listitem>
+<simpara>Dé-commenter les lignes débutant par <literal>deb</literal> et contenant le terme <literal>backports</literal>. Par exemple pour <literal>#deb <link xl:href="http://deb.debian.org/debian">http://deb.debian.org/debian</link> buster-backports main contrib non-free</literal> enlever le # en début de ligne</simpara>
+</listitem>
+<listitem>
+<simpara>Ajouter sur toutes les lignes les paquets <literal>contrib</literal> et <literal>non-free</literal> . en ajoutant ces textes après chaque mot <literal>main</literal> du fichier <literal>source.list</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Effectuer une mise à niveau du système</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Mettez à jour la liste des paquets. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt update</programlisting>
+</listitem>
+<listitem>
+<simpara>Installez les nouveautés. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt dist-upgrade</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Effectuez du ménage. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt autoremove</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_ajouter_un_fichier_de_swap">
+<title>Ajouter un fichier de swap</title>
+<simpara>Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de 1 Go:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">fallocate -l 1G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile</programlisting>
+</listitem>
+<listitem>
+<simpara>Enfin ajoutez une entrée dans le fichier fstab. Tapez <literal>vi /etc/fstab</literal> et ajoutez la ligne: <literal>/swapfile swap swap defaults 0 0</literal></simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_des_paquets_de_base">
+<title>Installation des paquets de base</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends</programlisting>
+</listitem>
+<listitem>
+<simpara>Si vous souhaitez installer automatiquement les paquets Debian de correction de bugs de sécurité, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install unattended-upgrades</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_dun_panel">
+<title>Installation d&#8217;un Panel</title>
+<simpara>Il existe plusieurs type de panel de contrôle pour les VPS. La plupart sont payant.</simpara>
+<simpara>Ci après nous allons en présenter 3 différents. Ils sont incompatibles entre eux. On peut faire cohabiter ISPConfig et Webmin en prenant les précautions suivantes:
+* ISPConfig est le maitre de la configuration: toute modification sur les sites webs, mailboxes et DNS doit impérativement être effectuées du coté d&#8217;ISPConfig
+* Les modifications réalisées au niveau de webmin pour ces sites webs, mailboxes et DNS seront au mieux écrasées par ISPConfig au pire elles risquent de conduire à des incompatibilités qui engendreront des dysfonctionnement d&#8217;ISPConfig (impossibilité de mettre à jour les configurations)
+* Le reste des modifications peuvent être configurées au niveau de webmin sans trop de contraintes.</simpara>
+</section>
+<section xml:id="_installation_de_hestia">
+<title>Installation de Hestia</title>
+<simpara>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
+La documentation est proposée ici: <link xl:href="https://docs.hestiacp.com/">https://docs.hestiacp.com/</link></simpara>
+<simpara>Attention Hestia n&#8217;est pas compatible de Webmin dans le sens que webmin est incapable de lire et d&#8217;interpréter les fichiers créés par Hestia.</simpara>
+<simpara>De même, Hestia est principalement compatible de PHP. Si vous utilisez des système web basés sur des applicatifs écrits en Python ou en Ruby, la configuration sera à faire à la main avec tous les problèmes de compatibilité que cela impose.</simpara>
+<simpara>Pour installer:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Se logger <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Télécharger le package et lancez l’installeur</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Lancez l&#8217;installeur. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">bash hst-install.sh -g yes -o yes</programlisting>
+</listitem>
+<listitem>
+<simpara>Si le système n&#8217;est pas compatible, HestiaCP vous le dira. Sinon,  il vous informe de la configuration qui sera installée. Tapez <literal>Y</literal> pour continuer.</simpara>
+</listitem>
+<listitem>
+<simpara>Entrez votre adresse mail standard et indépendante du futur serveur qui sera installé. ce peut être une adresse gmail.com par exemple.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Hestia est installé. Il est important de bien noter le mot de passe du compte admin de Hestia ainsi que le numéro de port du site web</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_ispconfig">
+<title>Installation de ISPconfig</title>
+<section xml:id="_installation_initiale">
+<title>Installation initiale</title>
+<simpara>ISPConfig est un système de configuration de sites web totalement compatible avec Webmin.</simpara>
+<simpara>La procédure d&#8217;installation ci-dessous configure ISPconfig avec les fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Amavisd, SPamAssassin, ClamAV, Apache, PHP, Let&#8217;s Encrypt, Mailman, PureFTPd, Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Se loguer <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Changez le Shell par défaut. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">dpkg-reconfigure dash.</programlisting>
+<simpara>A la question <literal>utilisez dash comme shell par défaut</literal> répondez <literal>non</literal>. C&#8217;est bash qui doit être utilisé.</simpara>
+</listitem>
+<listitem>
+<simpara>Installation de quelques paquets debian. ;-)</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd amavisd-new spamassassin clamav clamav-daemon unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php7.3 php7.3-common php7.3-gd php7.3-mysql php7.3-imap php7.3-cli php7.3-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php7.3-curl php7.3-intl php7.3-pspell php7.3-recode php7.3-sqlite3 php7.3-tidy php7.3-xmlrpc php7.3-xsl memcached php-memcache php-imagick php-gettext php7.3-zip php7.3-mbstring memcached libapache2-mod-passenger php7.3-soap php7.3-fpm php7.3-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Aux questions posées répondez:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara><literal>Type principal de configuration de mail</literal>: &#8592; Sélectionnez <literal>Site Internet</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Nom de courrier</literal>: &#8592; Entrez votre nom de host. Par exemple: mail.example.com</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_de_postfix">
+<title>Configuration de Postfix</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Editez le master.cf file de postfix. Tapez <literal>vi /etc/postfix/master.cf</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Ajoutez dans le fichier:</simpara>
+<screen>submission inet n - - - - smtpd
+ -o syslog_name=postfix/submission
+ -o smtpd_tls_security_level=encrypt
+ -o smtpd_sasl_auth_enable=yes
+ -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+
+smtps inet n - - - - smtpd
+ -o syslog_name=postfix/smtps
+ -o smtpd_tls_wrappermode=yes
+ -o smtpd_sasl_auth_enable=yes
+ -o smtpd_client_restrictions=permit_sasl_authenticated,reject</screen>
+</listitem>
+<listitem>
+<simpara>Sauvegardez et relancez Postfix: <literal>systemctl restart postfix</literal></simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_de_mariadb">
+<title>Configuration de MariaDB</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Sécurisez votre installation MariaDB. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mysql_secure_installation.</programlisting>
+<simpara>Répondez au questions ainsi:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara><literal>Enter current password for root</literal>: &#8592; Tapez Entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Set root password? [Y/n]</literal>: &#8592; Tapez <literal>Y</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>New password:</literal>: &#8592; Tapez votre mot de passe root MariaDB</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Re-enter New password:</literal>: &#8592; Tapez votre mot de passe root MariaDB</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Remove anonymous users? [Y/n]</literal>: &#8592; Tapez <literal>Y</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Disallow root login remotely? [Y/n]</literal>: &#8592; Tapez <literal>Y</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Remove test database and access to it? [Y/n]</literal>: &#8592; Tapez <literal>Y</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Reload privilege tables now? [Y/n]</literal>: &#8592; Tapez <literal>Y</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>MariaDB doit pouvoir être atteint par toutes les interfaces et pas seulement localhost.</simpara>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier de configuration. :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/mysql/mariadb.conf.d/50-server.cnf</programlisting>
+</listitem>
+<listitem>
+<simpara>Commentez la ligne <literal>bind-address</literal>: <literal>#bind-address           = 127.0.0.1</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Modifiez la méthode d&#8217;accès à la base MariaDB pour utiliser la méthode de login native.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo "update mysql.user set plugin = 'mysql_native_password' where user='root';" | mysql -u root</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Editez le fichier debian.cnf. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/mysql/debian.cnf</programlisting>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Aux deux endroits du fichier ou le mot clé <literal>password</literal> est présent, mettez le mot de passe root de votre base de données.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>password = votre_mot_de_passe</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Pour éviter l&#8217;erreur <literal>Error in accept: Too many open files</literal>, augmenter la limite du nombre de fichiers ouverts.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Editer le fichier: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/security/limits.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez à la fin du fichier les deux lignes:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mysql soft nofile 65535
+mysql hard nofile 65535</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créez ensuite un nouveau répertoire. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /etc/systemd/system/mysql.service.d/</programlisting>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Editer le fichier limits.conf. :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/systemd/system/mysql.service.d/limits.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez dans le fichier les lignes suivantes:</simpara>
+<screen>[Service]
+LimitNOFILE=infinity</screen>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Redémarrez votre serveur MariaDB. Tapez: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl daemon-reload
+systemctl restart mariadb</programlisting>
+</listitem>
+<listitem>
+<simpara>vérifiez maintenant que MariaDB est accessible sur toutes les interfaces réseau. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">netstat -tap | grep mysql</programlisting>
+</listitem>
+<listitem>
+<simpara>La sortie doit être du type: <literal>tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Désactiver SpamAssassin puisque amavisd utilise celui ci en sous jacent. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop spamassassin
+systemctl disable spamassassin.</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_dapache">
+<title>Configuration d&#8217;Apache</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Installez les modules Apache nécessaires. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">a2enmod suexec rewrite ssl proxy_http actions include dav_fs dav auth_digest cgi headers actions proxy_fcgi alias.</programlisting>
+</listitem>
+<listitem>
+<simpara>Pour ne pas être confronté aux problèmes de sécurité  de type <link xl:href="https://www.howtoforge.com/tutorial/httpoxy-protect-your-server/">HTTPOXY</link>, il est nécessaire de créer un petit module dans apache.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Éditez le fichier httpoxy.conf: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/apache2/conf-available/httpoxy.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Collez les lignes suivantes:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">&lt;IfModule mod_headers.c&gt;
+    RequestHeader unset Proxy early
+&lt;/IfModule&gt;</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Activez le module en tapant :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">a2enconf httpoxy
+systemctl restart apache2</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_et_configuration_de_mailman">
+<title>Installation et Configuration de Mailman</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install mailman</programlisting>
+</listitem>
+<listitem>
+<simpara>Sélectionnez un langage:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara><literal>Languages to support:</literal> &#8592; Tapez <literal>en (English)</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Missing site list :</literal> &#8592; Tapez <literal>Ok</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créez une mailing list. Tapez: <literal>newlist mailman</literal></simpara>
+</listitem>
+<listitem>
+<simpara>ensuite éditez le fichier aliases: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/aliases</programlisting>
+<simpara>et ajoutez les lignes affichées à l&#8217;écran:</simpara>
+<screen>## mailman mailing list
+mailman:              "|/var/lib/mailman/mail/mailman post mailman"
+mailman-admin:        "|/var/lib/mailman/mail/mailman admin mailman"
+mailman-bounces:      "|/var/lib/mailman/mail/mailman bounces mailman"
+mailman-confirm:      "|/var/lib/mailman/mail/mailman confirm mailman"
+mailman-join:         "|/var/lib/mailman/mail/mailman join mailman"
+mailman-leave:        "|/var/lib/mailman/mail/mailman leave mailman"
+mailman-owner:        "|/var/lib/mailman/mail/mailman owner mailman"
+mailman-request:      "|/var/lib/mailman/mail/mailman request mailman"
+mailman-subscribe:    "|/var/lib/mailman/mail/mailman subscribe mailman"
+mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</screen>
+</listitem>
+<listitem>
+<simpara>Exécutez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">newaliases</programlisting>
+<simpara>et redémarrez postfix: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart postfix</programlisting>
+</listitem>
+<listitem>
+<simpara>Activez la page web de mailman dans apache: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ln -s /etc/mailman/apache.conf /etc/apache2/conf-enabled/mailman.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez apache :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart apache2</programlisting>
+<simpara>puis redémarrez le demon mailman :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart mailman</programlisting>
+</listitem>
+<listitem>
+<simpara>Le site web de mailman est accessible</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Vous pouvez accéder à la page admin Mailman à <link xl:href="http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/">http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/</link></simpara>
+</listitem>
+<listitem>
+<simpara>La page web utilisateur de la mailing list est accessible  ici <link xl:href="http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/">http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Sous <link xl:href="http://&lt;server1.example.com&gt;/pipermail/mailman">http://&lt;server1.example.com&gt;/pipermail/mailman</link> vous avez accès aux archives.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_d_awstats">
+<title>Configuration d' Awstats</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>configurer la tache cron d&#8217;awstats: Éditez le fichier :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/cron.d/awstats:</programlisting>
+<simpara>Et commentez toutes les lignes:</simpara>
+<screen>#MAILTO=root
+#*/10 * * * * www-data [ -x /usr/share/awstats/tools/update.sh ] &amp;&amp; /usr/share/awstats/tools/update.sh
+# Generate static reports:
+#10 03 * * * www-data [ -x /usr/share/awstats/tools/buildstatic.sh ] &amp;&amp; /usr/share/awstats/tools/buildstatic.sh</screen>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_de_fail2ban">
+<title>Configuration de Fail2ban</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Editez le fichier: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/fail2ban/jail.local.</programlisting>
+<simpara>Ajoutez les lignes suivantes:</simpara>
+<programlisting language="ini" linenumbering="unnumbered">[dovecot]
+enabled = true
+filter = dovecot
+logpath = /var/log/mail.log
+maxretry = 5
+
+[postfix-sasl]
+enabled = true
+port = smtp
+filter = postfix[mode=auth]
+logpath = /var/log/mail.log
+maxretry = 3</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez Fail2ban: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart fail2ban</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_et_configuration_de_pureftpd">
+<title>Installation et configuration de PureFTPd</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install pure-ftpd-common pure-ftpd-mysql</programlisting>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier de conf: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/default/pure-ftpd-common</programlisting>
+</listitem>
+<listitem>
+<simpara>Changez les lignes ainsi: <literal>STANDALONE_OR_INETD=standalone</literal> et <literal>VIRTUALCHROOT=true</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Autorisez les connexions TLS. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo 1 &gt; /etc/pure-ftpd/conf/TLS</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez un certificat SSL.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /etc/ssl/private/</programlisting>
+</listitem>
+<listitem>
+<simpara>Puis créez le certificat auto signé. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">openssl req -x509 -nodes -days 7300 -newkey rsa:2048 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem</programlisting>
+<simpara>et répondez aux questions de la manière suivante:</simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara><literal>Country Name (2 letter code) [AU]:</literal> &#8592; Entrez le code pays à 2 lettres</simpara>
+</listitem>
+<listitem>
+<simpara><literal>State or Province Name (full name) [Some-State]:</literal> &#8592; Entrer le nom d&#8217;état</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Locality Name (eg, city) []:</literal> &#8592; Entrer votre ville</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Organization Name (eg, company) [Internet Widgits Pty Ltd]:</literal> &#8592; Entrez votre entreprise ou tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Organizational Unit Name (eg, section) []:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Common Name (e.g. server FQDN or YOUR name) []:</literal> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Email Address []:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Puis tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 600 /etc/ssl/private/pure-ftpd.pem</programlisting>
+</listitem>
+<listitem>
+<simpara>et redémarrez pure-ftpd en tapant: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart pure-ftpd-mysql</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_et_configuration_de_phpmyadmin">
+<title>Installation et configuration de phpmyadmin</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Installez phpmyadmin. Exécutez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir /usr/share/phpmyadmin
+mkdir /etc/phpmyadmin
+mkdir -p /var/lib/phpmyadmin/tmp
+chown -R www-data:www-data /var/lib/phpmyadmin
+touch /etc/phpmyadmin/htpasswd.setup
+cd /tmp
+wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
+tar xfz phpMyAdmin-4.9.0.1-all-languages.tar.gz
+mv phpMyAdmin-4.9.0.1-all-languages/* /usr/share/phpmyadmin/
+rm phpMyAdmin-4.9.0.1-all-languages.tar.gz
+rm -rf phpMyAdmin-4.9.0.1-all-languages
+cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php</programlisting>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/share/phpmyadmin/config.inc.php</programlisting>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Modifier l’entrée <literal>blowfish_secret</literal> en ajoutant votre propre chaîne de 32 caractères.</simpara>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/apache2/conf-available/phpmyadmin.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez les lignes suivantes:</simpara>
+<programlisting language="apache" linenumbering="unnumbered"># phpMyAdmin default Apache configuration
+
+Alias /phpmyadmin /usr/share/phpmyadmin
+
+&lt;Directory /usr/share/phpmyadmin&gt;
+ Options FollowSymLinks
+ DirectoryIndex index.php
+
+ &lt;IfModule mod_php7.c&gt;
+ AddType application/x-httpd-php .php
+
+ php_flag magic_quotes_gpc Off
+ php_flag track_vars On
+ php_flag register_globals Off
+ php_value include_path .
+ &lt;/IfModule&gt;
+
+&lt;/Directory&gt;
+
+# Authorize for setup
+&lt;Directory /usr/share/phpmyadmin/setup&gt;
+ &lt;IfModule mod_authn_file.c&gt;
+ AuthType Basic
+ AuthName "phpMyAdmin Setup"
+ AuthUserFile /etc/phpmyadmin/htpasswd.setup
+ &lt;/IfModule&gt;
+ Require valid-user
+&lt;/Directory&gt;
+
+# Disallow web access to directories that don't need it
+&lt;Directory /usr/share/phpmyadmin/libraries&gt;
+ Order Deny,Allow
+ Deny from All
+&lt;/Directory&gt;
+&lt;Directory /usr/share/phpmyadmin/setup/lib&gt;
+ Order Deny,Allow
+ Deny from All
+&lt;/Directory&gt;</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Activez le module et redémarrez apache. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">a2enconf phpmyadmin
+systemctl restart apache2</programlisting>
+</listitem>
+<listitem>
+<simpara>Créer la base de donnée phpmyadmin.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mysql -u root -p.</programlisting>
+<simpara>puis entrer le mot de passe root</simpara>
+</listitem>
+<listitem>
+<simpara>Créez une base phpmyadmin. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">CREATE DATABASE phpmyadmin;</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez un utilisateur phpmyadmin. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; <co xml:id="CO7-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO7-1">
+<para><literal>mypassword</literal> doit être remplacé par un mot de passe choisi.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Accordez des privilèges et sauvez: <literal>GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION;</literal> puis tapez <literal>FLUSH PRIVILEGES;</literal> et enfin <literal>EXIT;</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Chargez les tables sql dans la base phpmyadmin: <literal>mysql -u root -p phpmyadmin &lt; /usr/share/phpmyadmin/sql/create_tables.sql</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Enfin ajoutez les mots de passe nécessaires dans le fichier de config.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez: <literal>vi /usr/share/phpmyadmin/config.inc.php</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Rechercher le texte contenant <literal>controlhost</literal> .  Ci-dessous, un exemple:</simpara>
+<programlisting language="php" linenumbering="unnumbered">/* User used to manipulate with storage */
+$cfg['Servers'][$i]['controlhost'] = 'localhost';
+$cfg['Servers'][$i]['controlport'] = '';
+$cfg['Servers'][$i]['controluser'] = 'pma';
+$cfg['Servers'][$i]['controlpass'] = 'mypassword'; <co xml:id="CO8-1"/>
+
+
+/* Storage database and tables */
+$cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
+$cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
+$cfg['Servers'][$i]['relation'] = 'pma__relation';
+$cfg['Servers'][$i]['table_info'] = 'pma__table_info';
+$cfg['Servers'][$i]['table_coords'] = 'pma__table_coords';
+$cfg['Servers'][$i]['pdf_pages'] = 'pma__pdf_pages';
+$cfg['Servers'][$i]['column_info'] = 'pma__column_info';
+$cfg['Servers'][$i]['history'] = 'pma__history';
+$cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
+$cfg['Servers'][$i]['tracking'] = 'pma__tracking';
+$cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
+$cfg['Servers'][$i]['recent'] = 'pma__recent';
+$cfg['Servers'][$i]['favorite'] = 'pma__favorite';
+$cfg['Servers'][$i]['users'] = 'pma__users';
+$cfg['Servers'][$i]['usergroups'] = 'pma__usergroups';
+$cfg['Servers'][$i]['navigationhiding'] = 'pma__navigationhiding';
+$cfg['Servers'][$i]['savedsearches'] = 'pma__savedsearches';
+$cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
+$cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
+$cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';</programlisting>
+<calloutlist>
+<callout arearefs="CO8-1">
+<para>A tous les endroit ou vous voyez dans le texte ci dessus le mot <literal>mypassword</literal> mettez celui choisi. N&#8217;oubliez pas de dé-commenter les lignes.</para>
+</callout>
+</calloutlist>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+<section xml:id="_installation_et_configuration_de_roundcube">
+<title>Installation et configuration de Roundcube</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install roundcube roundcube-core roundcube-mysql roundcube-plugins</programlisting>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier php de roundcube: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/roundcube/config.inc.php</programlisting>
+<simpara>et définissez les hosts par défaut comme localhost</simpara>
+<programlisting language="php" linenumbering="unnumbered">$config['default_host'] = 'localhost';
+$config['smtp_server'] = 'localhost';</programlisting>
+</listitem>
+<listitem>
+<simpara>Éditez la configuration apache pour roundcube: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/apache2/conf-enabled/roundcube.conf</programlisting>
+<simpara>et ajouter au début les lignes suivantes:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">Alias /roundcube /var/lib/roundcube
+Alias /webmail /var/lib/roundcube</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez Apache:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl reload apache2</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_et_configuration_de_ispconfig">
+<title>Installation et configuration de ISPConfig</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /tmp</programlisting>
+</listitem>
+<listitem>
+<simpara>Cherchez la dernière version d&#8217;ISPConfig sur le site <link xl:href="https://www.ispconfig.org/ispconfig/download/">ISPConfig</link></simpara>
+</listitem>
+<listitem>
+<simpara>Installez cette version en tapant: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">wget &lt;la_version_a_telecharger&gt;.tar.gz</programlisting>
+</listitem>
+<listitem>
+<simpara>Décompressez la version en tapant: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">tar xfz &lt;la_version&gt;.tar.gz</programlisting>
+</listitem>
+<listitem>
+<simpara>Enfin allez dans le répertoire d&#8217;installation: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd ispconfig3_install/install/</programlisting>
+</listitem>
+<listitem>
+<simpara>Lancez l&#8217;installation: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">php -q install.php</programlisting>
+<simpara>et répondez aux questions:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara><literal>Select language (en,de) [en]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Installation mode (standard,expert) [standard]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL server hostname [localhost]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL server port [3306]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL root username [root]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL root password []:</literal> &#8592; Enter your MySQL root password</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL database to create [dbispconfig]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL charset [utf8]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Country Name (2 letter code) [AU]:</literal> &#8592; Entrez le code pays à 2 lettres</simpara>
+</listitem>
+<listitem>
+<simpara><literal>State or Province Name (full name) [Some-State]:</literal> &#8592; Entrer le nom d&#8217;état</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Locality Name (eg, city) []:</literal> &#8592; Entrer votre ville</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Organization Name (eg, company) [Internet Widgits Pty Ltd]:</literal> &#8592; Entrez votre entreprise ou tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Organizational Unit Name (eg, section) []:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Common Name (e.g. server FQDN or YOUR name) []:</literal> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Email Address []:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>ISPConfig Port [8080]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Admin password [admin]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:</literal> &#8592;- Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara>une deuxième série de question du même type est posée répondre de la même manière !</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>L&#8217;installation est terminée. Vous accédez au serveur à l&#8217;adresse: <link xl:href="https://&lt;server1.example.com&gt;:8080/">https://&lt;server1.example.com&gt;:8080/</link></simpara>
+<note>
+<simpara>Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur. Pour OVH, elle s&#8217;écrit VPSxxxxxx.ovh.net</simpara>
+</note>
+</listitem>
+<listitem>
+<simpara>Loguez vous comme admin et avec le mot de passe que vous avez choisi. Vous pouvez décider de le changer au premier login</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Si le message "Possible attack detected. This action has been logged.". Cela signifie que vous avez des cookies d&#8217;une précédent installation qui sont configurés. Effacer les cookies de ce site de votre navigateur.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_de_lets_encrypt">
+<title>Configuration de Let&#8217;s Encrypt</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Installez Let&#8217;s Encrypt. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/bin
+wget https://dl.eff.org/certbot-auto
+chmod a+x certbot-auto
+./certbot-auto --install-only</programlisting>
+</listitem>
+<listitem>
+<simpara>Créer votre premier domaine avec SSL et let&#8217;s encrypt dans ISPConfig.</simpara>
+</listitem>
+<listitem>
+<simpara>Liez le certificat d&#8217;ISPconfig avec celui du domaine crée:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/ispconfig/interface/ssl/
+mv ispserver.crt ispserver.crt-$(date +"%y%m%d%H%M%S").bak
+mv ispserver.key ispserver.key-$(date +"%y%m%d%H%M%S").bak
+ln -s /etc/letsencrypt/live/&lt;example.com&gt;/fullchain.pem ispserver.crt <co xml:id="CO9-1"/>
+ln -s /etc/letsencrypt/live/&lt;example.com&gt;/privkey.pem ispserver.key <co xml:id="CO9-2"/>
+cat ispserver.{key,crt} &gt; ispserver.pem
+chmod 600 ispserver.pem
+systemctl restart apache2</programlisting>
+<calloutlist>
+<callout arearefs="CO9-1 CO9-2">
+<para>remplacer &lt;example.com&gt; par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Liez le certificat Postfix avec celui de let&#8217;s encrypt</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /etc/postfix/
+mv smtpd.cert smtpd.cert-$(date +"%y%m%d%H%M%S").bak
+mv smtpd.key smtpd.key-$(date +"%y%m%d%H%M%S").bak
+ln -s /usr/local/ispconfig/interface/ssl/ispserver.crt smtpd.cert
+ln -s /usr/local/ispconfig/interface/ssl/ispserver.key smtpd.key
+service postfix restart
+service dovecot restart</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Https pour Pureftd</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /etc/ssl/private/
+mv pure-ftpd.pem pure-ftpd.pem-$(date +"%y%m%d%H%M%S").bak
+ln -s /usr/local/ispconfig/interface/ssl/ispserver.pem pure-ftpd.pem
+chmod 600 pure-ftpd.pem
+service pure-ftpd-mysql restart</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Pour Monit:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Editez Monitrc: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi  /etc/monit/monitrc</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez les lignes suivantes:</simpara>
+<programlisting language="ini" linenumbering="unnumbered">set httpd port 2812 and
+SSL ENABLE
+PEMFILE /etc/ssl/private/pure-ftpd.pem
+allow admin:'secretpassword'</programlisting>
+</listitem>
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service monit restart</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Création d&#8217;un script de renouvellement automatique du fichier pem</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Installez incron. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install -y incron</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez le fichier d&#8217;exécution périodique. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/init.d/le_ispc_pem.sh</programlisting>
+<simpara>et coller dans le fichier le code suivant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
+### BEGIN INIT INFO
+# Provides: LE ISPSERVER.PEM AUTO UPDATER
+# Required-Start: $local_fs $network
+# Required-Stop: $local_fs
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: LE ISPSERVER.PEM AUTO UPDATER
+# Description: Update ispserver.pem automatically after ISPC LE SSL certs are renewed.
+### END INIT INFO
+cd /usr/local/ispconfig/interface/ssl/
+mv ispserver.pem ispserver.pem-$(date +"%y%m%d%H%M%S").bak
+cat ispserver.{key,crt} &gt; ispserver.pem
+chmod 600 ispserver.pem
+chmod 600 /etc/ssl/private/pure-ftpd.pem
+service pure-ftpd-mysql restart
+service monit restart
+service postfix restart
+service dovecot restart
+service nginx restart</programlisting>
+</listitem>
+<listitem>
+<simpara>Sauvez et quittez. Tapez ensuite:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod +x /etc/init.d/le_ispc_pem.sh
+echo "root" &gt;&gt; /etc/incron.allow
+incrontab -e.</programlisting>
+<simpara>et ajoutez les lignes ci dessous dans le fichier:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">/etc/letsencrypt/archive/$(hostname -f)/ IN_MODIFY ./etc/init.d/le_ispc_pem.sh</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_dun_scanner_de_vulnérabilités">
+<title>Installation d&#8217;un scanner de vulnérabilités</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>installer Git. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install git</programlisting>
+</listitem>
+<listitem>
+<simpara>installer Lynis</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">git clone https://github.com/CISOfy/lynis</programlisting>
+</listitem>
+<listitem>
+<simpara>Executez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd lynis;./lynis audit system</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>L&#8217;outil vous listera dans une forme très synthétique la liste des vulnérabilités et des améliorations de sécurité à appliquer.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_webmin">
+<title>Installation de Webmin</title>
+<simpara>Webmin est un outil généraliste de configuration de votre serveur. Son usage peut être assez complexe mais il permet une configuration plus précise des fonctionnalités.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Se logger <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Ajoutez le repository Webmin</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>allez dans le répertoire des repositories. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /etc/apt/sources.list.d</programlisting>
+</listitem>
+<listitem>
+<simpara>Tapez: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo "deb http://download.webmin.com/download/repository sarge contrib" &gt;&gt; webmin.list</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez la clé. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">curl -fsSL http://www.webmin.com/jcameron-key.asc | sudo apt-key add -.</programlisting>
+<simpara>Le message <literal>OK</literal> s&#8217;affiche</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Mise à jour. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt update</programlisting>
+</listitem>
+<listitem>
+<simpara>Installation de Webmin. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install Webmin</programlisting>
+</listitem>
+<listitem>
+<simpara>Autorisation de Webmin au niveau du firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Loguez vous Admin sur le site Hestia: <link xl:href="https://&lt;example.com&gt;:8083">https://&lt;example.com&gt;:8083</link></simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans Server&#8594;Firewall, puis Add Rule</simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionnez Action: <literal>Allow</literal>, Protocol: <literal>TCP</literal>, Port: <literal>10000</literal>, IP Address: <literal>0.0.0.0/0</literal>, Service: <literal>WEBMIN</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur Save, puis Back</simpara>
+</listitem>
+<listitem>
+<simpara>Constatez que le service Webmin sur le port 10000 est autorisé</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Connectez vous avec votre navigateur sur l&#8217;url <link xl:href="https://&lt;example.com&gt;:10000">https://&lt;example.com&gt;:10000</link>. Un message indique un problème de sécurité. Cela vient du certificat auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et poursuivre'.</simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous <literal>root</literal>. Tapez le mot de passe de <literal>root</literal>. Le dashboard s&#8217;affiche.</simpara>
+</listitem>
+<listitem>
+<simpara>Restreignez l&#8217;adressage IP</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Obtenez votre adresse IP en allant par exemples sur le site <link xl:href="https://www.showmyip.com/">https://www.showmyip.com/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Sur votre URL Webmin ou vous êtes logué, allez dans Webmin&#8594;Webmin Configuration</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;écran choisir l’icône <literal>Ip Access Control</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez <literal>Only allow from listed addresses</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Puis dans le champ <literal>Allowed IP addresses</literal> tapez votre adresse IP récupérée sur showmyip</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Vous devriez avoir une brève déconnexion le temps que le serveur Webmin redémarre puis une reconnexion.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Si vous n&#8217;arrivez pas à vous reconnecter c&#8217;est que l&#8217;adresse IP n&#8217;est pas la bonne. Le seul moyen de se reconnecter est de:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Loguez vous <literal>root</literal> sur serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne <literal>allow= &#8230;&#8203;</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service webmin restart</programlisting>
+</listitem>
+<listitem>
+<simpara>Connectez vous sur l&#8217;url de votre site Webmin. Tout doit fonctionner</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Passez en Français. Pour les personnes non anglophone. Les traductions française ont des problèmes d&#8217;encodage de caractère ce n&#8217;est donc pas recommandé. La suite de mon tutoriel suppose que vous êtes resté en anglais.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Sur votre url Webmin ou vous êtes logué, allez dans Webmin&#8594;Webmin Configuration</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;écran choisir l’icône <literal>Language and Locale</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Choisir <literal>Display Language</literal> à <literal>French (FR.UTF-8)</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installer_quelques_outils_debian">
+<title>Installer quelques outils Debian</title>
+<section xml:id="_installer_loutil_debfoster">
+<title>Installer l&#8217;outil debfoster</title>
+<simpara>L&#8217;outil <literal>debfoster</literal> permet de ne conserver que les paquets essentiels.
+Il maintient un fichier <literal>keepers</literal> présent dans <literal>/var/lib/debfoster</literal></simpara>
+<simpara>En répondant aux questions de conservations de paquets, <literal>debfoster</literal> maintient la liste des paquets uniques nécessaires au système.
+Tous les autres paquets seront supprimés.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Se loguer <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Ajouter le paquet <literal>debfoster</literal>. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install debfoster</programlisting>
+</listitem>
+<listitem>
+<simpara>Lancez debfoster. Tapez <literal>debfoster</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Répondez au questions pour chaque paquet</simpara>
+</listitem>
+<listitem>
+<simpara>Acceptez la liste des modifications proposées à la fin. Les paquets superflus seront supprimés</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installer_loutil_dselect">
+<title>Installer l&#8217;outil dselect</title>
+<simpara>L&#8217;outil <literal>dselect</literal> permet de choisir de façon interactive les paquets que l&#8217;on souhaite installer.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Se loguer <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Ajouter le paquet <literal>deselect</literal>. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install deselect</programlisting>
+</listitem>
+</orderedlist>
+</section>
+</section>
+</article>
