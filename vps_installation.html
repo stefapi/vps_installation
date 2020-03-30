@@ -463,18 +463,53 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_mise_à_jour_des_sources_de_paquets_debian">5.5. Mise à jour des sources de paquets Debian</a></li>
 <li><a href="#_ajouter_un_fichier_de_swap">5.6. Ajouter un fichier de swap</a></li>
 <li><a href="#_installation_des_paquets_de_base">5.7. Installation des paquets de base</a></li>
-<li><a href="#_installation_dun_panel">5.8. Installation d&#8217;un Panel</a></li>
-<li><a href="#_installation_de_hestia">5.9. Installation de Hestia</a></li>
-<li><a href="#_installation_de_ispconfig">5.10. Installation de ISPconfig</a></li>
-<li><a href="#_installation_et_configuration_de_phpmyadmin">5.11. Installation et configuration de phpmyadmin</a></li>
-<li><a href="#_installation_dun_scanner_de_vulnérabilités">5.12. Installation d&#8217;un scanner de vulnérabilités</a></li>
-<li><a href="#_installation_de_webmin">5.13. Installation de Webmin</a></li>
 </ul>
 </li>
-<li><a href="#_installer_quelques_outils_debian">6. Installer quelques outils Debian</a>
+<li><a href="#_installation_initiale_des_outils">6. Installation initiale des outils</a>
 <ul class="sectlevel2">
-<li><a href="#_installer_loutil_debfoster">6.1. Installer l&#8217;outil debfoster</a></li>
-<li><a href="#_installer_loutil_dselect">6.2. Installer l&#8217;outil dselect</a></li>
+<li><a href="#_configuration_de_postfix">6.1. Configuration de Postfix</a></li>
+<li><a href="#_configuration_de_mariadb">6.2. Configuration de MariaDB</a></li>
+<li><a href="#_configuration_dapache">6.3. Configuration d&#8217;Apache</a></li>
+<li><a href="#_installation_et_configuration_de_mailman">6.4. Installation et Configuration de Mailman</a></li>
+<li><a href="#_configuration_d_awstats">6.5. Configuration d' Awstats</a></li>
+<li><a href="#_configuration_de_fail2ban">6.6. Configuration de Fail2ban</a></li>
+<li><a href="#_installation_et_configuration_de_pureftpd">6.7. Installation et configuration de PureFTPd</a></li>
+<li><a href="#_installation_et_configuration_de_phpmyadmin">6.8. Installation et configuration de phpmyadmin</a></li>
+<li><a href="#_installation_et_configuration_de_roundcube">6.9. Installation et configuration de Roundcube</a></li>
+<li><a href="#_installation_dun_scanner_de_vulnérabilités">6.10. Installation d&#8217;un scanner de vulnérabilités</a></li>
+</ul>
+</li>
+<li><a href="#_installer_quelques_outils_debian">7. Installer quelques outils Debian</a>
+<ul class="sectlevel2">
+<li><a href="#_installer_loutil_debfoster">7.1. Installer l&#8217;outil debfoster</a></li>
+<li><a href="#_installer_loutil_dselect">7.2. Installer l&#8217;outil dselect</a></li>
+</ul>
+</li>
+<li><a href="#_installation_dun_panel">8. Installation d&#8217;un Panel</a>
+<ul class="sectlevel2">
+<li><a href="#_installation_de_webmin">8.1. Installation de Webmin</a></li>
+<li><a href="#_installation_et_configuration_de_ispconfig">8.2. Installation et configuration de ISPConfig</a></li>
+</ul>
+</li>
+<li><a href="#_configuration_dun_premier_domaine">9. Configuration d&#8217;un premier domaine</a>
+<ul class="sectlevel2">
+<li><a href="#_login_initial">9.1. Login initial</a></li>
+<li><a href="#_création_de_la_zone_dns_dun_domaine">9.2. Création de la zone DNS d&#8217;un domaine</a></li>
+<li><a href="#_ajout_denregistrements_dns">9.3. Ajout d&#8217;enregistrements DNS</a></li>
+<li><a href="#_activation_de_dnssec">9.4. Activation de DNSSEC</a></li>
+<li><a href="#_exemple_de_configuration_de_domaine">9.5. Exemple de configuration de domaine</a></li>
+</ul>
+</li>
+<li><a href="#_création_dun_site_web">10. Création d’un site web</a></li>
+<li><a href="#_création_dun_sous_domaine_vhost">11. Création d’un sous-domaine (vhost)</a></li>
+<li><a href="#_configuration_de_la_messagerie">12. Configuration de la messagerie</a>
+<ul class="sectlevel2">
+<li><a href="#_création_du_serveur_de_messagerie">12.1. Création du serveur de messagerie</a></li>
+</ul>
+</li>
+<li><a href="#_annexe">13. Annexe</a>
+<ul class="sectlevel2">
+<li><a href="#_installation_de_hestia">13.1. Installation de Hestia</a></li>
 </ul>
 </li>
 </ul>
@@ -486,7 +521,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="paragraph">
 <p>Ce document est disponible sur le site <a href="https://vps-installation.readthedocs.io">ReadTheDocs</a>
-<span class="image"><a class="image" href="https://vps-installation.readthedocs.io"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iODYiIGhlaWdodD0iMjAiPjxsaW5lYXJHcmFkaWVudCBpZD0iYiIgeDI9IjAiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiYmIiIHN0b3Atb3BhY2l0eT0iLjEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3Atb3BhY2l0eT0iLjEiLz48L2xpbmVhckdyYWRpZW50PjxjbGlwUGF0aCBpZD0iYSI+PHJlY3Qgd2lkdGg9Ijg2IiBoZWlnaHQ9IjIwIiByeD0iMyIgZmlsbD0iI2ZmZiIvPjwvY2xpcFBhdGg+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj48cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDM1djIwSDB6Ii8+PHBhdGggZmlsbD0iIzRjMSIgZD0iTTM1IDBoNTF2MjBIMzV6Ii8+PHBhdGggZmlsbD0idXJsKCNiKSIgZD0iTTAgMGg4NnYyMEgweiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMTAiPjx0ZXh0IHg9IjE4NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iMjUwIj5kb2NzPC90ZXh0Pjx0ZXh0IHg9IjE4NSIgeT0iMTQwIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iMjUwIj5kb2NzPC90ZXh0Pjx0ZXh0IHg9IjU5NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iNDEwIj5wYXNzaW5nPC90ZXh0Pjx0ZXh0IHg9IjU5NSIgeT0iMTQwIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iNDEwIj5wYXNzaW5nPC90ZXh0PjwvZz4gPC9zdmc+" alt="badge"></a></span>
 et sur <a href="https://github.com/apiou/vps_installation">Github</a>.</p>
 </div>
 <div class="paragraph">
@@ -494,6 +528,27 @@ et sur <a href="https://github.com/apiou/vps_installation">Github</a>.</p>
 Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
 Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation est facilement transposable pour des versions différentes de Debian ou à Ubuntu ou toute autre distribution basée sur l&#8217;un ou l&#8217;autre.
 En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus importantes notamment liées au gestionnaire de paquets <code>yum</code>, le nommage des paquets, les configurations par défaut et aux différences dans l&#8217;arborescence présente dans /etc.</p>
+</div>
+<div class="paragraph">
+<p>Dans ce document, je configure de nombreux sites web et services de mon domaine en utilisant ISPConfig.</p>
+</div>
+<div class="paragraph">
+<p>Sont installés:
+* un serveur de mail avec antispam,
+* un webmail <a href="https://roundcube.net">roundcube</a>,
+* un serveur de mailing list <a href="https://www.list.org">mailman</a>,
+* un serveur ftp et sftp sécurisé.
+* un serveur de base de données et son interface web d&#8217;administration phpmyadmin.
+* un serveur et un site  de partage de fichiers <a href="https://www.seafile.com">Seafile</a>,
+* un site sous <a href="https://www.joomla.fr/">Joomla</a>,
+* un sous domaine pointant sur un site autohébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <a href="https://yunohost.org">Yunohost</a>),
+* un site <a href="https://gitea.io">Gitea</a> et son repository GIT,
+* un serveur de VPN <a href="https://pritunl.com/">pritunl</a>,
+* un site <a href="https://www.mediawiki.org">Mediawiki</a>,
+* un site <a href="https://nextcloud.com">Nextcloud</a>
+* un site <a href="https://wordpress.com">Wordpress</a>
+* des outils de sécurisation, mise à jour automatique et d&#8217;audit du serveur
+* A venir: strut, <a href="https://www.concrete5.org/">concrete5</a>, <a href="https://gitlab.com/">gitlab</a>, <a href="https://piwigo.org/">piwigo</a>, <a href="https://www.borgbackup.org/">borg</a></p>
 </div>
 <div class="paragraph">
 <p>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</p>
@@ -513,10 +568,10 @@ Le taux de complexité est bien meilleur et les mots de passe sont plus facile �
 <div class="paragraph">
 <p>Le cout pour avoir ce type de serveur est relativement faible:
 * Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y avoir des promos)
-* Compter 5€TTC/mois pour un VPS de base.</p>
+* Compter 5€TTC/mois pour un VPS de base. Une machine plus sérieuse sera à 15€/mois</p>
 </div>
 <div class="paragraph">
-<p>Le budget est donc de 6-7€TTC/mois pour une offre d&#8217;entrée de gamme</p>
+<p>Le budget est donc de 6-7€TTC/mois pour une offre d&#8217;entrée de gamme. Il faut plus sérieusement compter sur 15€/mois tout compris.</p>
 </div>
 </div>
 </div>
@@ -540,7 +595,7 @@ Une fois l&#8217;installation effectuée, vous recevez un Email sur l&#8217;adre
 <div class="ulist">
 <ul>
 <li>
-<p>Son adresse &lt;IP&gt; et le nom de la machine chez OVH. Elle est du type "VPSxxxxxx.ovh.net"</p>
+<p>Son adresse &lt;IP&gt; et le nom de la machine chez OVH. Elle est du type "VPSxxxxxx.ovh.net".</p>
 </li>
 <li>
 <p>La possibilité de le redémarrer</p>
@@ -568,9 +623,16 @@ Une fois l&#8217;installation effectuée, vous recevez un Email sur l&#8217;adre
 <h2 id="_choix_du_registrar">3. Choix du registrar</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Pour ma part j&#8217;ai choisi Gandi car il ne sont pas très cher et leur interface d&#8217;administration est simple d&#8217;usage. Vous pouvez très bien prendre aussi vos DNS chez OVH.
-Une fois votre domaine enregistré et votre compte créé vous pouvez vous loguer sur la <a href="https://admin.gandi.net/dashboard">plateforme de gestion de Gandi</a>.
-Allez dans Nom de domaine et sélectionnez le nom de domaine que vous voulez administrer.
+<p>Pour rappel,un registrar est une société auprès de laquelle vous pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez fournir pour votre enregistrement un ensemble de données personnelles qui permettront de vous identifier en tant que propriétaire de ce nom de domaine.</p>
+</div>
+<div class="paragraph">
+<p>Pour ma part j&#8217;ai choisi Gandi car il ne sont pas très cher et leur interface d&#8217;administration est simple d&#8217;usage. Vous pouvez très bien prendre aussi vos DNS chez OVH.</p>
+</div>
+<div class="paragraph">
+<p>Une fois votre domaine enregistré et votre compte créé vous pouvez vous loguer sur la <a href="https://admin.gandi.net/dashboard">plateforme de gestion de Gandi</a>.</p>
+</div>
+<div class="paragraph">
+<p>Allez dans Nom de domaine et sélectionnez le nom de domaine que vous voulez administrer.
 La vue générale vous montre les services actifs. Il faut une fois la configuration des DNS effectuée être dans le mode suivant:</p>
 </div>
 <div class="ulist">
@@ -1228,80 +1290,11 @@ swapon /swapfile</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_dun_panel">5.8. Installation d&#8217;un Panel</h3>
-<div class="paragraph">
-<p>Il existe plusieurs type de panel de contrôle pour les VPS. La plupart sont payant.</p>
-</div>
-<div class="paragraph">
-<p>Ci après nous allons en présenter 3 différents. Ils sont incompatibles entre eux. On peut faire cohabiter ISPConfig et Webmin en prenant les précautions suivantes:
-* ISPConfig est le maitre de la configuration: toute modification sur les sites webs, mailboxes et DNS doit impérativement être effectuées du coté d&#8217;ISPConfig
-* Les modifications réalisées au niveau de webmin pour ces sites webs, mailboxes et DNS seront au mieux écrasées par ISPConfig au pire elles risquent de conduire à des incompatibilités qui engendreront des dysfonctionnement d&#8217;ISPConfig (impossibilité de mettre à jour les configurations)
-* Le reste des modifications peuvent être configurées au niveau de webmin sans trop de contraintes.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_de_hestia">5.9. Installation de Hestia</h3>
-<div class="paragraph">
-<p>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
-La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="bare">https://docs.hestiacp.com/</a></p>
-</div>
-<div class="paragraph">
-<p>Attention Hestia n&#8217;est pas compatible de Webmin dans le sens que webmin est incapable de lire et d&#8217;interpréter les fichiers créés par Hestia.</p>
-</div>
-<div class="paragraph">
-<p>De même, Hestia est principalement compatible de PHP. Si vous utilisez des système web basés sur des applicatifs écrits en Python ou en Ruby, la configuration sera à faire à la main avec tous les problèmes de compatibilité que cela impose.</p>
-</div>
-<div class="paragraph">
-<p>Pour installer:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Se logger <code>root</code> sur le serveur</p>
-</li>
-<li>
-<p>Télécharger le package et lancez l’installeur</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install.sh</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Lancez l&#8217;installeur. Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>bash hst-install.sh -g yes -o yes</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Si le système n&#8217;est pas compatible, HestiaCP vous le dira. Sinon,  il vous informe de la configuration qui sera installée. Tapez <code>Y</code> pour continuer.</p>
-</li>
-<li>
-<p>Entrez votre adresse mail standard et indépendante du futur serveur qui sera installé. ce peut être une adresse gmail.com par exemple.</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Hestia est installé. Il est important de bien noter le mot de passe du compte admin de Hestia ainsi que le numéro de port du site web</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_installation_de_ispconfig">5.10. Installation de ISPconfig</h3>
-<div class="sect3">
-<h4 id="_installation_initiale">5.10.1. Installation initiale</h4>
-<div class="paragraph">
-<p>ISPConfig est un système de configuration de sites web totalement compatible avec Webmin.</p>
-</div>
+<div class="sect1">
+<h2 id="_installation_initiale_des_outils">6. Installation initiale des outils</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>La procédure d&#8217;installation ci-dessous configure ISPconfig avec les fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Amavisd, SPamAssassin, ClamAV, Apache, PHP, Let&#8217;s Encrypt, Mailman, PureFTPd, Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.</p>
 </div>
@@ -1351,9 +1344,8 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 </li>
 </ol>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_configuration_de_postfix">5.10.2. Configuration de Postfix</h4>
+<div class="sect2">
+<h3 id="_configuration_de_postfix">6.1. Configuration de Postfix</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1383,8 +1375,8 @@ smtps inet n - - - - smtpd
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_configuration_de_mariadb">5.10.3. Configuration de MariaDB</h4>
+<div class="sect2">
+<h3 id="_configuration_de_mariadb">6.2. Configuration de MariaDB</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1558,8 +1550,8 @@ systemctl disable spamassassin.</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_configuration_dapache">5.10.4. Configuration d&#8217;Apache</h4>
+<div class="sect2">
+<h3 id="_configuration_dapache">6.3. Configuration d&#8217;Apache</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1607,8 +1599,8 @@ systemctl restart apache2</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_installation_et_configuration_de_mailman">5.10.5. Installation et Configuration de Mailman</h4>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_mailman">6.4. Installation et Configuration de Mailman</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1720,8 +1712,8 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_configuration_d_awstats">5.10.6. Configuration d' Awstats</h4>
+<div class="sect2">
+<h3 id="_configuration_d_awstats">6.5. Configuration d' Awstats</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1746,8 +1738,8 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_configuration_de_fail2ban">5.10.7. Configuration de Fail2ban</h4>
+<div class="sect2">
+<h3 id="_configuration_de_fail2ban">6.6. Configuration de Fail2ban</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1788,8 +1780,8 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_installation_et_configuration_de_pureftpd">5.10.8. Installation et configuration de PureFTPd</h4>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_pureftpd">6.7. Installation et configuration de PureFTPd</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1889,9 +1881,8 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
 </ol>
 </div>
 </div>
-</div>
 <div class="sect2">
-<h3 id="_installation_et_configuration_de_phpmyadmin">5.11. Installation et configuration de phpmyadmin</h3>
+<h3 id="_installation_et_configuration_de_phpmyadmin">6.8. Installation et configuration de phpmyadmin</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2093,8 +2084,9 @@ systemctl restart apache2</code></pre>
 </li>
 </ol>
 </div>
-<div class="sect3">
-<h4 id="_installation_et_configuration_de_roundcube">5.11.1. Installation et configuration de Roundcube</h4>
+</div>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_roundcube">6.9. Installation et configuration de Roundcube</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2150,344 +2142,8 @@ systemctl restart apache2</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_installation_et_configuration_de_ispconfig">5.11.2. Installation et configuration de ISPConfig</h4>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Cherchez la dernière version d&#8217;ISPConfig sur le site <a href="https://www.ispconfig.org/ispconfig/download/">ISPConfig</a></p>
-</li>
-<li>
-<p>Installez cette version en tapant: :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>wget &lt;la_version_a_telecharger&gt;.tar.gz</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Décompressez la version en tapant: :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>tar xfz &lt;la_version&gt;.tar.gz</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Enfin allez dans le répertoire d&#8217;installation: :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> ispconfig3_install/install/</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Lancez l&#8217;installation: :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>php -q install.php</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>et répondez aux questions:</p>
-</div>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p><code>Select language (en,de) [en]:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>Installation mode (standard,expert) [standard]:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>MySQL server hostname [localhost]:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>MySQL server port [3306]:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>MySQL root username [root]:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>MySQL root password []:</code> &#8592; Enter your MySQL root password</p>
-</li>
-<li>
-<p><code>MySQL database to create [dbispconfig]:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>MySQL charset [utf8]:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>Country Name (2 letter code) [AU]:</code> &#8592; Entrez le code pays à 2 lettres</p>
-</li>
-<li>
-<p><code>State or Province Name (full name) [Some-State]:</code> &#8592; Entrer le nom d&#8217;état</p>
-</li>
-<li>
-<p><code>Locality Name (eg, city) []:</code> &#8592; Entrer votre ville</p>
-</li>
-<li>
-<p><code>Organization Name (eg, company) [Internet Widgits Pty Ltd]:</code> &#8592; Entrez votre entreprise ou tapez entrée</p>
-</li>
-<li>
-<p><code>Organizational Unit Name (eg, section) []:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</p>
-</li>
-<li>
-<p><code>Email Address []:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>ISPConfig Port [8080]:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>Admin password [admin]:</code> &#8592; Tapez entrée</p>
-</li>
-<li>
-<p><code>Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:</code> &#8592;- Tapez entrée</p>
-</li>
-<li>
-<p>une deuxième série de question du même type est posée répondre de la même manière !</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>L&#8217;installation est terminée. Vous accédez au serveur à l&#8217;adresse: <a href="https://&lt;server1.example.com&gt;:8080/" class="bare">https://&lt;server1.example.com&gt;:8080/</a></p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur. Pour OVH, elle s&#8217;écrit VPSxxxxxx.ovh.net
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Loguez vous comme admin et avec le mot de passe que vous avez choisi. Vous pouvez décider de le changer au premier login</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Si le message "Possible attack detected. This action has been logged.". Cela signifie que vous avez des cookies d&#8217;une précédent installation qui sont configurés. Effacer les cookies de ce site de votre navigateur.</p>
-</li>
-</ol>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_configuration_de_lets_encrypt">5.11.3. Configuration de Let&#8217;s Encrypt</h4>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Installez Let&#8217;s Encrypt. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/bin
-wget https://dl.eff.org/certbot-auto
-chmod a+x certbot-auto
-./certbot-auto --install-only</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Créer votre premier domaine avec SSL et let&#8217;s encrypt dans ISPConfig.</p>
-</li>
-<li>
-<p>Liez le certificat d&#8217;ISPconfig avec celui du domaine crée:</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/ispconfig/interface/ssl/
-mv ispserver.crt ispserver.crt-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
-mv ispserver.key ispserver.key-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
-ln -s /etc/letsencrypt/live/&lt;example.com&gt;/fullchain.pem ispserver.crt <i class="conum" data-value="1"></i><b>(1)</b>
-ln -s /etc/letsencrypt/live/&lt;example.com&gt;/privkey.pem ispserver.key <i class="conum" data-value="1"></i><b>(1)</b>
-cat ispserver.<span class="tok-o">{</span>key,crt<span class="tok-o">}</span> &gt; ispserver.pem
-chmod <span class="tok-m">600</span> ispserver.pem
-systemctl restart apache2</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer &lt;example.com&gt; par votre nom de domaine</td>
-</tr>
-</table>
-</div>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Liez le certificat Postfix avec celui de let&#8217;s encrypt</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/postfix/
-mv smtpd.cert smtpd.cert-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
-mv smtpd.key smtpd.key-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
-ln -s /usr/local/ispconfig/interface/ssl/ispserver.crt smtpd.cert
-ln -s /usr/local/ispconfig/interface/ssl/ispserver.key smtpd.key
-service postfix restart
-service dovecot restart</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Https pour Pureftd</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/ssl/private/
-mv pure-ftpd.pem pure-ftpd.pem-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
-ln -s /usr/local/ispconfig/interface/ssl/ispserver.pem pure-ftpd.pem
-chmod <span class="tok-m">600</span> pure-ftpd.pem
-service pure-ftpd-mysql restart</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Pour Monit:</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Editez Monitrc: :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi  /etc/monit/monitrc</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Ajoutez les lignes suivantes:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">set httpd port 2812 and</span>
-<span class="tok-na">SSL ENABLE</span>
-<span class="tok-na">PEMFILE /etc/ssl/private/pure-ftpd.pem</span>
-<span class="tok-na">allow admin:&#39;secretpassword&#39;</span></code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>service monit restart</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Création d&#8217;un script de renouvellement automatique du fichier pem</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Installez incron. Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install -y incron</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Créez le fichier d&#8217;exécution périodique. Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/init.d/le_ispc_pem.sh</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>et coller dans le fichier le code suivant:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/sh</span>
-<span class="tok-c1">### BEGIN INIT INFO</span>
-<span class="tok-c1"># Provides: LE ISPSERVER.PEM AUTO UPDATER</span>
-<span class="tok-c1"># Required-Start: $local_fs $network</span>
-<span class="tok-c1"># Required-Stop: $local_fs</span>
-<span class="tok-c1"># Default-Start: 2 3 4 5</span>
-<span class="tok-c1"># Default-Stop: 0 1 6</span>
-<span class="tok-c1"># Short-Description: LE ISPSERVER.PEM AUTO UPDATER</span>
-<span class="tok-c1"># Description: Update ispserver.pem automatically after ISPC LE SSL certs are renewed.</span>
-<span class="tok-c1">### END INIT INFO</span>
-<span class="tok-nb">cd</span> /usr/local/ispconfig/interface/ssl/
-mv ispserver.pem ispserver.pem-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
-cat ispserver.<span class="tok-o">{</span>key,crt<span class="tok-o">}</span> &gt; ispserver.pem
-chmod <span class="tok-m">600</span> ispserver.pem
-chmod <span class="tok-m">600</span> /etc/ssl/private/pure-ftpd.pem
-service pure-ftpd-mysql restart
-service monit restart
-service postfix restart
-service dovecot restart
-service nginx restart</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Sauvez et quittez. Tapez ensuite:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod +x /etc/init.d/le_ispc_pem.sh
-<span class="tok-nb">echo</span> <span class="tok-s2">&quot;root&quot;</span> &gt;&gt; /etc/incron.allow
-incrontab -e.</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>et ajoutez les lignes ci dessous dans le fichier:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>/etc/letsencrypt/archive/<span class="tok-k">$(</span>hostname -f<span class="tok-k">)</span>/ IN_MODIFY ./etc/init.d/le_ispc_pem.sh</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
 <div class="sect2">
-<h3 id="_installation_dun_scanner_de_vulnérabilités">5.12. Installation d&#8217;un scanner de vulnérabilités</h3>
+<h3 id="_installation_dun_scanner_de_vulnérabilités">6.10. Installation d&#8217;un scanner de vulnérabilités</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2527,8 +2183,94 @@ incrontab -e.</code></pre>
 </ol>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installer_quelques_outils_debian">7. Installer quelques outils Debian</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_de_webmin">5.13. Installation de Webmin</h3>
+<h3 id="_installer_loutil_debfoster">7.1. Installer l&#8217;outil debfoster</h3>
+<div class="paragraph">
+<p>L&#8217;outil <code>debfoster</code> permet de ne conserver que les paquets essentiels.
+Il maintient un fichier <code>keepers</code> présent dans <code>/var/lib/debfoster</code></p>
+</div>
+<div class="paragraph">
+<p>En répondant aux questions de conservations de paquets, <code>debfoster</code> maintient la liste des paquets uniques nécessaires au système.
+Tous les autres paquets seront supprimés.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se loguer <code>root</code> sur le serveur</p>
+</li>
+<li>
+<p>Ajouter le paquet <code>debfoster</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install debfoster</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lancez debfoster. Tapez <code>debfoster</code>.</p>
+</li>
+<li>
+<p>Répondez au questions pour chaque paquet</p>
+</li>
+<li>
+<p>Acceptez la liste des modifications proposées à la fin. Les paquets superflus seront supprimés</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installer_loutil_dselect">7.2. Installer l&#8217;outil dselect</h3>
+<div class="paragraph">
+<p>L&#8217;outil <code>dselect</code> permet de choisir de façon interactive les paquets que l&#8217;on souhaite installer.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se loguer <code>root</code> sur le serveur</p>
+</li>
+<li>
+<p>Ajouter le paquet <code>deselect</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install deselect</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_dun_panel">8. Installation d&#8217;un Panel</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Il existe plusieurs type de panel de contrôle pour les VPS. La plupart sont payant.</p>
+</div>
+<div class="paragraph">
+<p>Pour citer les plus connus:
+    - payant: cPanel (leader du type), Plesk
+    - gratuit: Yunohost ( un excellent système d&#8217;autohébergement packagé) , Ajenti, Froxlor, Centos web panel, Webmin et Usermin, ISPConfig, HestiaCP, VestaCP ,</p>
+</div>
+<div class="paragraph">
+<p>Ci après nous allons en présenter 3 différents (ISPConfig, Webmin et HestiaCP). Ils sont incompatibles entre eux.</p>
+</div>
+<div class="paragraph">
+<p>On peut faire cohabiter ISPConfig et Webmin en prenant les précautions suivantes:
+* ISPConfig est le maitre de la configuration: toute modification sur les sites webs, mailboxes et DNS doit impérativement être effectuées du coté d&#8217;ISPConfig
+* Les modifications réalisées au niveau de webmin pour ces sites webs, mailboxes et DNS seront au mieux écrasées par ISPConfig au pire elles risquent de conduire à des incompatibilités qui engendreront des dysfonctionnement d&#8217;ISPConfig (impossibilité de mettre à jour les configurations)
+* Le reste des modifications peuvent être configurées au niveau de webmin sans trop de contraintes.</p>
+</div>
+<div class="paragraph">
+<p>Pour rappel, HestiaCP (tout comme VestaCP) sont incompatibles d&#8217;ISPConfig et de Webmin. Ils doivent être utilisés seuls</p>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_webmin">8.1. Installation de Webmin</h3>
 <div class="paragraph">
 <p>Webmin est un outil généraliste de configuration de votre serveur. Son usage peut être assez complexe mais il permet une configuration plus précise des fonctionnalités.</p>
 </div>
@@ -2686,63 +2428,837 @@ incrontab -e.</code></pre>
 </ol>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_installer_quelques_outils_debian">6. Installer quelques outils Debian</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_installer_loutil_debfoster">6.1. Installer l&#8217;outil debfoster</h3>
+<h3 id="_installation_et_configuration_de_ispconfig">8.2. Installation et configuration de ISPConfig</h3>
 <div class="paragraph">
-<p>L&#8217;outil <code>debfoster</code> permet de ne conserver que les paquets essentiels.
-Il maintient un fichier <code>keepers</code> présent dans <code>/var/lib/debfoster</code></p>
+<p>ISPConfig est un système de configuration de sites web totalement compatible avec Webmin.</p>
 </div>
 <div class="paragraph">
-<p>En répondant aux questions de conservations de paquets, <code>debfoster</code> maintient la liste des paquets uniques nécessaires au système.
-Tous les autres paquets seront supprimés.</p>
+<p>Pour installer ISPConfig, vous devez suivre la procédure ci-dessous. ISPConfig 3.1 a été utilisé dans ce tutoriel.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Se loguer <code>root</code> sur le serveur</p>
-</li>
-<li>
-<p>Ajouter le paquet <code>debfoster</code>. Tapez :</p>
+<p>Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install debfoster</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Lancez debfoster. Tapez <code>debfoster</code>.</p>
+<p>Cherchez la dernière version d&#8217;ISPConfig sur le site <a href="https://www.ispconfig.org/ispconfig/download/">ISPConfig</a></p>
 </li>
 <li>
-<p>Répondez au questions pour chaque paquet</p>
+<p>Installez cette version en tapant: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>wget &lt;la_version_a_telecharger&gt;.tar.gz</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Acceptez la liste des modifications proposées à la fin. Les paquets superflus seront supprimés</p>
+<p>Décompressez la version en tapant: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>tar xfz &lt;la_version&gt;.tar.gz</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enfin allez dans le répertoire d&#8217;installation: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> ispconfig3_install/install/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lancez l&#8217;installation: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>php -q install.php</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et répondez aux questions:</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Select language (en,de) [en]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Installation mode (standard,expert) [standard]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL server hostname [localhost]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL server port [3306]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL root username [root]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL root password []:</code> &#8592; Enter your MySQL root password</p>
+</li>
+<li>
+<p><code>MySQL database to create [dbispconfig]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL charset [utf8]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Country Name (2 letter code) [AU]:</code> &#8592; Entrez le code pays à 2 lettres</p>
+</li>
+<li>
+<p><code>State or Province Name (full name) [Some-State]:</code> &#8592; Entrer le nom d&#8217;état</p>
+</li>
+<li>
+<p><code>Locality Name (eg, city) []:</code> &#8592; Entrer votre ville</p>
+</li>
+<li>
+<p><code>Organization Name (eg, company) [Internet Widgits Pty Ltd]:</code> &#8592; Entrez votre entreprise ou tapez entrée</p>
+</li>
+<li>
+<p><code>Organizational Unit Name (eg, section) []:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</p>
+</li>
+<li>
+<p><code>Email Address []:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>ISPConfig Port [8080]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Admin password [admin]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:</code> &#8592;- Tapez entrée</p>
+</li>
+<li>
+<p>une deuxième série de question du même type est posée répondre de la même manière !</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>L&#8217;installation est terminée. Vous accédez au serveur à l&#8217;adresse: <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a> .</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur. Pour OVH, elle s&#8217;écrit VPSxxxxxx.ovh.net
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Loguez vous comme admin et avec le mot de passe que vous avez choisi. Vous pouvez décider de le changer au premier login</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Si le message "Possible attack detected. This action has been logged.". Cela signifie que vous avez des cookies d&#8217;une précédente installation qui sont configurés. Effacer les cookies de ce site de votre navigateur.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration_dun_premier_domaine">9. Configuration d&#8217;un premier domaine</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cette configuration est réalisée avec le Panel ISPConfig installé dans le chapitre précédent.
+L&#8217;étape "login initial" n&#8217;est à appliquer qu&#8217;une seule fois. Une fois votre premier domaine configuré, vous pourrez vous loguer à ISPconfig en utilisant ce domaine à l&#8217;adresse: <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a> .</p>
+</div>
+<div class="sect2">
+<h3 id="_login_initial">9.1. Login initial</h3>
+<div class="paragraph">
+<p>Vous devrez tout d&#8217;abord vous loguer sur le serveur ISPConfig.
+Comme vous n&#8217;avez pas encore configuré de nom de de domaine, vous devrez vous loguer de prime abord sur le site <a href="http://vpsxxxxxx.ovh.net:8080/" class="bare">http://vpsxxxxxx.ovh.net:8080/</a> .</p>
+</div>
+<div class="paragraph">
+<p>Utiliser le login: Admin et le mot de passe que vous avez configuré lors de l&#8217;installation d&#8217;ISPConfig</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Aller dans l&#8217;onglet <code>System</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Dans le menu <code>Main config</code></p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Dans l’onglet <code>Sites</code>, configurer:</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p><code>Create subdomains as web site:</code> &#8592; Yes</p>
+</li>
+<li>
+<p><code>Create aliasdomains as web site:</code> &#8592; Yes</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Dans l&#8217;onglet <code>Mail</code> :</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p><code>Administrator&#8217;s e-mail :</code> &#8592; adresse mail de l’administrateur. par exemple <a href="mailto:admin@example.com">admin@example.com</a></p>
+</li>
+<li>
+<p><code>Administrator&#8217;s name :</code> &#8592; nom de l’administrateur</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Il est possible de basculer le site ISPConfig entièrement en Français. J&#8217;ai pour ma part gardé la version anglaise du site.
+Vous trouverez donc tous les libellés dans la suite de la documentation en anglais.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_de_la_zone_dns_dun_domaine">9.2. Création de la zone DNS d&#8217;un domaine</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans <code>DNS</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>Add dns-zone</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Dns zone wizard</code></p>
+</li>
+<li>
+<p>Choisir le template par défaut.</p>
+</li>
+<li>
+<p>Remplissez les champs:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Domain :</code> &#8592; tapez le nom de votre domaine <code>example.com</code></p>
+</li>
+<li>
+<p><code>IP Address:</code> &#8592; prendre l’adresse du serveur sélectionnée</p>
+</li>
+<li>
+<p><code>NS1 :</code> &#8592; ns1.example.com</p>
+</li>
+<li>
+<p><code>NS2 :</code> &#8592; ns2.example.com</p>
+</li>
+<li>
+<p><code>Email:</code> &#8592; votre Email valide exemple <a href="mailto:admin@example.com">admin@example.com</a></p>
+</li>
+<li>
+<p><code>DKIM:</code> &#8592; Yes</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Create DNS-record</code></p>
+</li>
+</ol>
+</div>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installer_loutil_dselect">6.2. Installer l&#8217;outil dselect</h3>
+<h3 id="_ajout_denregistrements_dns">9.3. Ajout d&#8217;enregistrements DNS</h3>
 <div class="paragraph">
-<p>L&#8217;outil <code>dselect</code> permet de choisir de façon interactive les paquets que l&#8217;on souhaite installer.</p>
+<p>Allez maintenant dans l&#8217;onglet <code>Records</code> de la zone DNS.
+J&#8217;y ai ajouté quelques enregistrements complémentaires:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Se loguer <code>root</code> sur le serveur</p>
+<p>Des enregistrements de type A (définissent des domaines principaux) :</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; <code>autoconfig</code> et <code>IP-Address:</code> &#8592; &lt;IP&gt; de votre serveur</p>
 </li>
 <li>
-<p>Ajouter le paquet <code>deselect</code>. Tapez :</p>
+<p><code>Hostname:</code> &#8592; <code>autodicover</code> et <code>IP-Address:</code> &#8592; &lt;IP&gt; de votre serveur</p>
+</li>
+<li>
+<p><code>Hostname:</code> &#8592; <code>webmail</code> et <code>IP-Address:</code> &#8592; &lt;IP&gt; de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Des enregistrements de type CNAME (définissent des alias de domaines) :</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; <code>ftp</code> et <code>IP-Address:</code> &#8592; <code>example.com</code></p>
+</li>
+<li>
+<p><code>Hostname:</code> &#8592; <code>smtp</code> et <code>IP-Address:</code> &#8592; <code>example.com</code></p>
+</li>
+<li>
+<p><code>Hostname:</code> &#8592; <code>pop3</code> et <code>IP-Address:</code> &#8592; <code>example.com</code></p>
+</li>
+<li>
+<p><code>Hostname:</code> &#8592; <code>imap</code> et <code>IP-Address:</code> &#8592; <code>example.com</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Des enregistrements de type SRV (définissent des services) :</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; <code>_pop3._tcp</code>, <code>Target:</code> &#8592; <code>.</code>, <code>Weight:</code> &#8592; 0, <code>Port:</code> &#8592; 0</p>
+</li>
+<li>
+<p><code>Hostname:</code> &#8592; <code>_imap._tcp</code>, <code>Target:</code> &#8592; <code>.</code>, <code>Weight:</code> &#8592; 0, <code>Port:</code> &#8592; 0</p>
+</li>
+<li>
+<p><code>Hostname:</code> &#8592; <code>_pop3s._tcp</code>, <code>Target:</code> &#8592; <code>mail.example.com</code>, <code>Weight:</code> &#8592; 1, <code>Port:</code> &#8592; 995, <code>Priority:</code> &#8592; 10</p>
+</li>
+<li>
+<p><code>Hostname:</code> &#8592; <code>_imaps._tcp</code>, <code>Target:</code> &#8592; <code>mail.example.com</code>, <code>Weight:</code> &#8592; 1, <code>Port:</code> &#8592; 993</p>
+</li>
+<li>
+<p><code>Hostname:</code> &#8592; <code>_submission._tcp</code>, <code>Target:</code> &#8592; <code>mail.example.com</code>, <code>Weight:</code> &#8592; 1, <code>Port:</code> &#8592; 465</p>
+</li>
+<li>
+<p><code>Hostname:</code> &#8592; <code>_autodiscover._tcp</code>, <code>Target:</code> &#8592; <code>autoconfig.example.com</code>, <code>Weight:</code> &#8592; 0, <code>Port:</code> &#8592; 443</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Attendez quelques minutes le temps que les enregistrements DNS se propagent et faites une essai de votre nom de domaine sur le site <a href="https://zonemaster.fr/domain_check">ZoneMaster</a>.</p>
+</div>
+<div class="paragraph">
+<p>Dans le champ Nom de domaine saisissez votre nom de domaine et tapez sur check. Tout doit est OK sauf pour les serveurs de noms ns1 et ns2. Si ce n&#8217;est pas le cas, votre nom de domaine doit être mal configuré chez votre registrar. Il vous faut vérifier la configuration initiale.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Zonemaster a bien repéré que l&#8217;on a essayé de mettre des noms de host différents pour les serveurs de DNS. Ils ont cependant tous la même adresse IP. Cela apparait comme une erreur suite au test.
+De la même manière, il indique dans la rubrique connectivité qu&#8217;il n&#8217;y a pas de redondance de serveur DNS.
+Une manière de corriger ce problème est de définir un DNS secondaire chez OVH en utilisant le service qu&#8217;ils mettent à disposition.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Vous pouvez maintenant essayer les différents Hostname munis de leur nom de domaine dans votre navigateur. Par exemple: <a href="http://webmail.example.com" class="bare">http://webmail.example.com</a></p>
+</div>
+<div class="paragraph">
+<p>Ils doivent afficher une page web basique (Apache2, ou de parking).Si ce n&#8217;est pas le cas revérifier la configuration du DNS dans ISPConfig.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_activation_de_dnssec">9.4. Activation de DNSSEC</h3>
+<div class="paragraph">
+<p>Vous pouvez maintenant activer DNSSEC afin d&#8217;augmenter la sécurité de résolution de nom de domaine:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans la rubrique <code>DNS</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>puis dans le menu <code>Zones</code></p>
+</li>
+<li>
+<p>choisissez la zone correspondant à votre domaine</p>
+</li>
+<li>
+<p>dans l&#8217;onglet <code>DNS Zone</code> allez tout en bas et activer la coche <code>Sign Zone (DNSSEC)</code></p>
+</li>
+<li>
+<p>cliquez sur <code>Save</code></p>
+</li>
+<li>
+<p>Une fois fait, retourner dans le même onglet. La boite `DNSSEC DS-Data for registry: `contient les informations que vous devez coller dans le site web de votre registrar pour sécuriser votre zone.</p>
+</li>
+<li>
+<p>Gardez cette fenêtre ouverte dans votre navigateur et ouvrez un autre onglet sur le site de votre registrar.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Si vous êtes chez <a href="https://admin.gandi.net/">Gandi</a>, il vous faut:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sélectionner le menu <code>nom de domaine</code></p>
+</li>
+<li>
+<p>Choisir votre nom de domaine "example.com"</p>
+</li>
+<li>
+<p>Allez dans l&#8217;onglet DNSSEC. Il doit permettre d&#8217;ajouter des clés puisque vous fonctionner avec des DNS externes.</p>
+</li>
+<li>
+<p>Effacez éventuellement toutes les clés si vous n&#8217;êtes pas sur de celles-ci.</p>
+</li>
+<li>
+<p>puis cliquez sur <code>Ajouter une clé externe</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Sélectionnez d&#8217;abord le flag <code>257 (KSK)</code>. puis l&#8217;algorithme <code>7 (RSASHA1-NSEC3-SHA1)</code></p>
+</li>
+<li>
+<p>Collez ensuite la clé de votre site ISPConfig. Elle doit ressembler à cela:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install deselect</code></pre>
+<pre>example.com. IN DNSKEY 257 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn</pre>
 </div>
 </div>
+</li>
+<li>
+<p>Cliquez sur <code>Ajouter</code></p>
+</li>
+<li>
+<p>Entrez la deuxième clé. Cliquez sur <code>Ajouter une clé externe</code></p>
+</li>
+<li>
+<p>Sélectionnez d&#8217;abord le flag <code>256 (ZSK)</code>. puis l&#8217;algorithme <code>7 (RSASHA1-NSEC3-SHA1)</code></p>
+</li>
+<li>
+<p>Collez ensuite la clé de votre site ISPConfig. Elle doit ressembler à cela:</p>
+<div class="listingblock">
+<div class="content">
+<pre>example.com. IN DNSKEY 256 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Ajouter</code></p>
+</li>
+<li>
+<p>Les deux clés doivent maintenant apparaître dans l&#8217;onglet <code>DNSSEC</code></p>
+</li>
+<li>
+<p>Vous devez attendre quelques minutes (une heure dans certains cas) pour que les clés se propagent. Pendant ce temps vous pouvez avoir quelques problèmes d&#8217;accès à vos sites webs</p>
+</li>
+<li>
+<p>Allez sur le site <a href="https://dnssec-debugger.verisignlabs.com/">DNSSEC Analyzer</a>.</p>
+</li>
+<li>
+<p>Entrez votre nom de domaine "example.com" et tapez sur "entrée".</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Le site doit afficher pour les différentes zones le statut des certificats. Tout doit être au vert.
+Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore des problèmes vérifiez votre configuration dans ISPConfig, chez votre registrar (rubrique DNSSEC) ou regardez les logs d&#8217;ISPConfig sur votre serveur pour y débusquer une erreur.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Une erreur classique est de croiser les certificats avec leurs types. Vérifiez bien que vous avez mis les bons certificats avec les bons types.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Une fois que vous activez DNSSEC, vous pourriez faire face au problème suivant: les nouveaux enregistrements que vous renseignez ne sont pas actifs.
+Une analyse des logs montre que la commande <code>dnssec-signzone</code> retourne l&#8217;erreur <code>fatal: 'example.com': found DS RRset without NS RRset</code>.
+Cela signifie que vous avez saisi une ou deux entrées DS dans vos enregistrements. Il faut les supprimer pour que tout redevienne fonctionnel.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exemple_de_configuration_de_domaine">9.5. Exemple de configuration de domaine</h3>
+<div class="paragraph">
+<p>Une fois la configuration terminé, les différents enregistrements du domaines ressemblent à l&#8217;exemple ci-dessous.
+Il peut y avoir des enregistrements supplémentaires pour les configurations SPF, DKIM et Let&#8217;s encrypt.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>example.com.         3600 A              1.2.3.4
+www                  3600 A              1.2.3.4
+mail                 3600 A              1.2.3.4
+ns1                  3600 A              1.2.3.4
+ns2                  3600 A              1.2.3.4
+webmail              3600 A              1.2.3.4
+autoconfig           3600 A              1.2.3.4
+autodiscover         3600 A              1.2.3.4
+ftp                  3600 CNAME          example.com.
+smtp                 3600 CNAME          mail.example.com.
+pop3                 3600 CNAME          mail.example.com.
+imap                 3600 CNAME          mail.example.com.
+example.com.         3600 NS             ns1.example.com.
+example.com.         3600 NS             ns2.example.com.
+example.com.         3600 MX    10       mail.example.com.
+_pop3s._tcp          3600 SRV   10 1 995 mail.example.com.
+_imaps._tcp          3600 SRV   0  1 993 mail.example.com.
+_submission._tcp     3600 SRV   0  1 465 mail.example.com.
+_imap._tcp           3600 SRV   0  0 0   .
+_pop3._tcp           3600 SRV   0  0 0   .
+_autodiscover._tcp   3600 SRV   0 0 443  autoconfig.example.com.
+example.com.         3600 TXT            "v=spf1 mx a ~all"</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_création_dun_site_web">10. Création d’un site web</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Dans la suite le site web sera nommé "example.com".</p>
+</div>
+<div class="paragraph">
+<p>Vous devez avoir avant tout défini le "record" DNS associé au site.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Aller dans "Sites"</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aller dans le menu "Website" pour définir un site web</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur "Add new website"</p>
+</li>
+<li>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Domain:</code> &#8592; mettre <code>example.com</code></p>
+</li>
+<li>
+<p><code>Auto-subdomain:</code> &#8592; sélectionner <code>wwww</code> ou <code>*</code> si l’on veut un certificat let’s encrypt wildcard</p>
+</li>
+<li>
+<p><code>SSL:</code> &#8592; yes</p>
+</li>
+<li>
+<p><code>Let’s Encrypt:</code> &#8592; yes</p>
+</li>
+<li>
+<p><code>Php:</code> &#8592; Sélectionez <code>php-fpm</code></p>
+</li>
+<li>
+<p>Sélectionnez éventuellement aussi les coches <code>Perl</code>, <code>Python</code>, <code>Ruby</code> en fonction des technologies déployées sur votre site. Cela est indiqué dans la procédure d&#8217;installation du site.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l’onglet <code>redirect</code> du même écran</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SEO Redirect:</code> &#8592; Sélectionner <code>domain.tld &#8658;www.domain.tld</code></p>
+</li>
+<li>
+<p><code>Rewrite http to https:</code> &#8592; yes</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l’onglet <code>Statistics</code> du même écran</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Set Webstatistics password:</code> &#8592; saisissez un mot de passe</p>
+</li>
+<li>
+<p><code>Repeat Password:</code> &#8592; ressaisissez le mot de passe</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l’onglet <code>Backup</code> du même écran</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Backup interval:</code> &#8592; saisir <code>weekly</code></p>
+</li>
+<li>
+<p><code>Number of backup copies:</code> &#8592; saisir <code>1</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l&#8217;onglet <code>Options</code>, il peut être utile pour certains types de site qui sont des redirections d&#8217;autres sites de saisir dans la zone <code>Apache Directives:</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://127.0.0.1:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://127.0.0.1:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+
+<span class="tok-c"># redirect from server</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> / http://127.0.0.1[:port_number_if_any]/[path_if_any]
+<span class="tok-nb">ProxyPassReverse</span> / http://127.0.0.1[:port_number_if_any]/[path_if_any]</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_création_dun_sous_domaine_vhost">11. Création d’un sous-domaine (vhost)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Dans la suite le sous-domaine sera nommé "site.example.com".</p>
+</div>
+<div class="paragraph">
+<p>Vous devez avoir avant tout défini le "record" DNS associé au site.
+Vous ne pouvez définir un sous-domaine que si vous avez défini le site web racine auparavant.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Aller dans "Sites"</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aller dans le menu "Subdomain(vhost)" pour définir un sous-domaine</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur "Add Subdomain" pour un nouveau sous domaine</p>
+</li>
+<li>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592;  saisir <code>site</code></p>
+</li>
+<li>
+<p><code>Domain:</code> &#8592; mettre <code>example.com</code></p>
+</li>
+<li>
+<p><code>web folder:</code> &#8592; saisir <code>site</code></p>
+</li>
+<li>
+<p><code>Auto-subdomain:</code> &#8592; sélectionner <code>wwww</code> ou <code>*</code> si l’on veut un certificat let’s encrypt wildcard</p>
+</li>
+<li>
+<p><code>SSL:</code> &#8592; yes</p>
+</li>
+<li>
+<p><code>Let’s Encrypt:</code> &#8592; yes</p>
+</li>
+<li>
+<p><code>Php:</code> &#8592; Sélectionez <code>php-fpm</code></p>
+</li>
+<li>
+<p>Sélectionnez éventuellement aussi les coches <code>Perl</code>, <code>Python</code>, <code>Ruby</code> en fonction des technologies déployées sur votre site. Cela est indiqué dans la procédure d&#8217;installation du site.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l’onglet <code>redirect</code> du même écran</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Rewrite http to https:</code> &#8592; yes</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l’onglet <code>Statistics</code> du même écran</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Set Webstatistics password:</code> &#8592; saisissez un mot de passe</p>
+</li>
+<li>
+<p><code>Repeat Password:</code> &#8592; ressaisissez le mot de passe</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l&#8217;onglet <code>Options</code>, il peut être utile pour certains types de site qui sont des redirections d&#8217;autres sites de saisir dans la zone <code>Apache Directives:</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://127.0.0.1:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://127.0.0.1:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+
+<span class="tok-c"># redirect from server</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> / http://127.0.0.1[:port_number_if_any]/[path_if_any]
+<span class="tok-nb">ProxyPassReverse</span> / http://127.0.0.1[:port_number_if_any]/[path_if_any]</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration_de_la_messagerie">12. Configuration de la messagerie</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_création_du_serveur_de_messagerie">12.1. Création du serveur de messagerie</h3>
+<div class="paragraph">
+<p>Pour créer la messagerie, aller dans email→domain→cliquez sur add new domain.
+Sélectionner le nom de domaine et créer des identifiants DKIM.
+Une fois cela fait, retourner dans la gestion des records de domaine et activer le type DMARC. Garder le paramétrage par défaut et sauvegardez.
+Faites de même pour les enregistrements SPF et sélectionner le mécanisme softfail.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_annexe">13. Annexe</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_de_hestia">13.1. Installation de Hestia</h3>
+<div class="paragraph">
+<p>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
+La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="bare">https://docs.hestiacp.com/</a></p>
+</div>
+<div class="paragraph">
+<p>Attention Hestia n&#8217;est pas compatible de Webmin dans le sens que webmin est incapable de lire et d&#8217;interpréter les fichiers créés par Hestia.</p>
+</div>
+<div class="paragraph">
+<p>De même, Hestia est principalement compatible de PHP. Si vous utilisez des système web basés sur des applicatifs écrits en Python ou en Ruby, la configuration sera à faire à la main avec tous les problèmes de compatibilité que cela impose.</p>
+</div>
+<div class="paragraph">
+<p>Pour installer:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se logger <code>root</code> sur le serveur</p>
+</li>
+<li>
+<p>Télécharger le package et lancez l’installeur</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install.sh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lancez l&#8217;installeur. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>bash hst-install.sh -g yes -o yes</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Si le système n&#8217;est pas compatible, HestiaCP vous le dira. Sinon,  il vous informe de la configuration qui sera installée. Tapez <code>Y</code> pour continuer.</p>
+</li>
+<li>
+<p>Entrez votre adresse mail standard et indépendante du futur serveur qui sera installé. ce peut être une adresse gmail.com par exemple.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Hestia est installé. Il est important de bien noter le mot de passe du compte admin de Hestia ainsi que le numéro de port du site web</p>
 </li>
 </ol>
 </div>
@@ -2753,7 +3269,7 @@ Tous les autres paquets seront supprimés.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-03-29 19:09:14 +0200
+Last updated 2020-03-30 02:00:29 +0200
 </div>
 </div>
 <style>

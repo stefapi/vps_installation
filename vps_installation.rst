@@ -2,7 +2,7 @@ Avant propos
 ============
 
 Ce document est disponible sur le site
-`ReadTheDocs <https://vps-installation.readthedocs.io>`__ |badge| et sur
+`ReadTheDocs <https://vps-installation.readthedocs.io>`__ et sur
 `Github <https://github.com/apiou/vps_installation>`__.
 
 Cette documentation décrit la méthode que j’ai utilisé pour installer un
@@ -15,6 +15,28 @@ revanche si vous utilisez CentOS, il y aura des différences beaucoup
 plus importantes notamment liées au gestionnaire de paquets ``yum``, le
 nommage des paquets, les configurations par défaut et aux différences
 dans l’arborescence présente dans /etc.
+
+Dans ce document, je configure de nombreux sites web et services de mon
+domaine en utilisant ISPConfig.
+
+Sont installés: \* un serveur de mail avec antispam, \* un webmail
+`roundcube <https://roundcube.net>`__, \* un serveur de mailing list
+`mailman <https://www.list.org>`__, \* un serveur ftp et sftp sécurisé.
+\* un serveur de base de données et son interface web d’administration
+phpmyadmin. \* un serveur et un site de partage de fichiers
+`Seafile <https://www.seafile.com>`__, \* un site sous
+`Joomla <https://www.joomla.fr/>`__, \* un sous domaine pointant sur un
+site autohébergé (l’installation du site n’est pas décrite ici; Se
+référer à `Yunohost <https://yunohost.org>`__), \* un site
+`Gitea <https://gitea.io>`__ et son repository GIT, \* un serveur de VPN
+`pritunl <https://pritunl.com/>`__, \* un site
+`Mediawiki <https://www.mediawiki.org>`__, \* un site
+`Nextcloud <https://nextcloud.com>`__ \* un site
+`Wordpress <https://wordpress.com>`__ \* des outils de sécurisation,
+mise à jour automatique et d’audit du serveur \* A venir: strut,
+`concrete5 <https://www.concrete5.org/>`__,
+`gitlab <https://gitlab.com/>`__, `piwigo <https://piwigo.org/>`__,
+`borg <https://www.borgbackup.org/>`__
 
 Dans ce document nous configurons un nom de domaine principal. Pour la
 clarté du texte, il sera nommé "example.com". Il est à remplacer
@@ -39,9 +61,11 @@ facile à retenir que 'Az3~1ym\_a&'
 
 Le cout pour avoir ce type de serveur est relativement faible: \*
 Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y
-avoir des promos) \* Compter 5€TTC/mois pour un VPS de base.
+avoir des promos) \* Compter 5€TTC/mois pour un VPS de base. Une machine
+plus sérieuse sera à 15€/mois
 
-Le budget est donc de 6-7€TTC/mois pour une offre d’entrée de gamme
+Le budget est donc de 6-7€TTC/mois pour une offre d’entrée de gamme. Il
+faut plus sérieusement compter sur 15€/mois tout compris.
 
 Choix du VPS
 ============
@@ -64,7 +88,7 @@ En cliquant dessus un ensemble de menus doivent apparaitre pour
 administrer celui-ci. Vous y trouverez notamment:
 
 -  Son adresse <IP> et le nom de la machine chez OVH. Elle est du type
-   "VPSxxxxxx.ovh.net"
+   "VPSxxxxxx.ovh.net".
 
 -  La possibilité de le redémarrer
 
@@ -84,14 +108,24 @@ administrer celui-ci. Vous y trouverez notamment:
 Choix du registrar
 ==================
 
+Pour rappel,un registrar est une société auprès de laquelle vous pourrez
+acheter un nom de domaine sur une durée déterminée. Vous devrez fournir
+pour votre enregistrement un ensemble de données personnelles qui
+permettront de vous identifier en tant que propriétaire de ce nom de
+domaine.
+
 Pour ma part j’ai choisi Gandi car il ne sont pas très cher et leur
 interface d’administration est simple d’usage. Vous pouvez très bien
-prendre aussi vos DNS chez OVH. Une fois votre domaine enregistré et
-votre compte créé vous pouvez vous loguer sur la `plateforme de gestion
-de Gandi <https://admin.gandi.net/dashboard>`__. Allez dans Nom de
-domaine et sélectionnez le nom de domaine que vous voulez administrer.
-La vue générale vous montre les services actifs. Il faut une fois la
-configuration des DNS effectuée être dans le mode suivant:
+prendre aussi vos DNS chez OVH.
+
+Une fois votre domaine enregistré et votre compte créé vous pouvez vous
+loguer sur la `plateforme de gestion de
+Gandi <https://admin.gandi.net/dashboard>`__.
+
+Allez dans Nom de domaine et sélectionnez le nom de domaine que vous
+voulez administrer. La vue générale vous montre les services actifs. Il
+faut une fois la configuration des DNS effectuée être dans le mode
+suivant:
 
 -  Serveurs de noms: Externes
 
@@ -532,76 +566,8 @@ Installation des paquets de base
 
        apt install unattended-upgrades
 
-Installation d’un Panel
------------------------
-
-Il existe plusieurs type de panel de contrôle pour les VPS. La plupart
-sont payant.
-
-Ci après nous allons en présenter 3 différents. Ils sont incompatibles
-entre eux. On peut faire cohabiter ISPConfig et Webmin en prenant les
-précautions suivantes: \* ISPConfig est le maitre de la configuration:
-toute modification sur les sites webs, mailboxes et DNS doit
-impérativement être effectuées du coté d’ISPConfig \* Les modifications
-réalisées au niveau de webmin pour ces sites webs, mailboxes et DNS
-seront au mieux écrasées par ISPConfig au pire elles risquent de
-conduire à des incompatibilités qui engendreront des dysfonctionnement
-d’ISPConfig (impossibilité de mettre à jour les configurations) \* Le
-reste des modifications peuvent être configurées au niveau de webmin
-sans trop de contraintes.
-
-Installation de Hestia
-----------------------
-
-Hestia est basé sur VestaCP. C’est une alternative opensource et plus
-moderne de cet outiL. La documentation est proposée ici:
-https://docs.hestiacp.com/
-
-Attention Hestia n’est pas compatible de Webmin dans le sens que webmin
-est incapable de lire et d’interpréter les fichiers créés par Hestia.
-
-De même, Hestia est principalement compatible de PHP. Si vous utilisez
-des système web basés sur des applicatifs écrits en Python ou en Ruby,
-la configuration sera à faire à la main avec tous les problèmes de
-compatibilité que cela impose.
-
-Pour installer:
-
-1. Se logger ``root`` sur le serveur
-
-2. Télécharger le package et lancez l’installeur
-
-   a. Tapez :
-
-      .. code:: bash
-
-          wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install.sh
-
-   b. Lancez l’installeur. Tapez :
-
-      .. code:: bash
-
-          bash hst-install.sh -g yes -o yes
-
-   c. Si le système n’est pas compatible, HestiaCP vous le dira. Sinon,
-      il vous informe de la configuration qui sera installée. Tapez
-      ``Y`` pour continuer.
-
-   d. Entrez votre adresse mail standard et indépendante du futur
-      serveur qui sera installé. ce peut être une adresse gmail.com par
-      exemple.
-
-3. Hestia est installé. Il est important de bien noter le mot de passe
-   du compte admin de Hestia ainsi que le numéro de port du site web
-
-Installation de ISPconfig
--------------------------
-
-Installation initiale
-~~~~~~~~~~~~~~~~~~~~~
-
-ISPConfig est un système de configuration de sites web totalement
-compatible avec Webmin.
+Installation initiale des outils
+================================
 
 La procédure d’installation ci-dessous configure ISPconfig avec les
 fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Amavisd,
@@ -636,7 +602,7 @@ Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.
       mail.example.com
 
 Configuration de Postfix
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 1. Editez le master.cf file de postfix. Tapez
    ``vi /etc/postfix/master.cf``
@@ -660,7 +626,7 @@ Configuration de Postfix
 3. Sauvegardez et relancez Postfix: ``systemctl restart postfix``
 
 Configuration de MariaDB
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 1.  Sécurisez votre installation MariaDB. Tapez :
 
@@ -780,7 +746,7 @@ Configuration de MariaDB
         systemctl disable spamassassin.
 
 Configuration d’Apache
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 1. Installez les modules Apache nécessaires. Tapez :
 
@@ -814,7 +780,7 @@ Configuration d’Apache
        systemctl restart apache2
 
 Installation et Configuration de Mailman
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 1. Tapez :
 
@@ -895,7 +861,7 @@ Installation et Configuration de Mailman
       vous avez accès aux archives.
 
 Configuration d' Awstats
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 1. configurer la tache cron d’awstats: Éditez le fichier :
 
@@ -913,7 +879,7 @@ Configuration d' Awstats
        #10 03 * * * www-data [ -x /usr/share/awstats/tools/buildstatic.sh ] && /usr/share/awstats/tools/buildstatic.sh
 
 Configuration de Fail2ban
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 1. Editez le fichier: :
 
@@ -945,7 +911,7 @@ Configuration de Fail2ban
        systemctl restart fail2ban
 
 Installation et configuration de PureFTPd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 1. Tapez: :
 
@@ -1175,7 +1141,7 @@ Installation et configuration de phpmyadmin
          dé-commenter les lignes.
 
 Installation et configuration de Roundcube
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 1. Tapez:
 
@@ -1215,241 +1181,6 @@ Installation et configuration de Roundcube
 
        systemctl reload apache2
 
-Installation et configuration de ISPConfig
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. Tapez:
-
-   .. code:: bash
-
-       cd /tmp
-
-2. Cherchez la dernière version d’ISPConfig sur le site
-   `ISPConfig <https://www.ispconfig.org/ispconfig/download/>`__
-
-3. Installez cette version en tapant: :
-
-   .. code:: bash
-
-       wget <la_version_a_telecharger>.tar.gz
-
-4. Décompressez la version en tapant: :
-
-   .. code:: bash
-
-       tar xfz <la_version>.tar.gz
-
-5. Enfin allez dans le répertoire d’installation: :
-
-   .. code:: bash
-
-       cd ispconfig3_install/install/
-
-6. Lancez l’installation: :
-
-   .. code:: bash
-
-       php -q install.php
-
-   et répondez aux questions:
-
-   a. ``Select language (en,de) [en]:`` ← Tapez entrée
-
-   b. ``Installation mode (standard,expert) [standard]:`` ← Tapez entrée
-
-   c. ``Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:``
-      ← Tapez entrée
-
-   d. ``MySQL server hostname [localhost]:`` ← Tapez entrée
-
-   e. ``MySQL server port [3306]:`` ← Tapez entrée
-
-   f. ``MySQL root username [root]:`` ← Tapez entrée
-
-   g. ``MySQL root password []:`` ← Enter your MySQL root password
-
-   h. ``MySQL database to create [dbispconfig]:`` ← Tapez entrée
-
-   i. ``MySQL charset [utf8]:`` ← Tapez entrée
-
-   j. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
-      lettres
-
-   k. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
-      nom d’état
-
-   l. ``Locality Name (eg, city) []:`` ← Entrer votre ville
-
-   m. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
-      Entrez votre entreprise ou tapez entrée
-
-   n. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
-
-   o. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le nom
-      d’hôte de votre serveur. Dans notre cas: server1.example.com
-
-   p. ``Email Address []:`` ← Tapez entrée
-
-   q. ``ISPConfig Port [8080]:`` ← Tapez entrée
-
-   r. ``Admin password [admin]:`` ← Tapez entrée
-
-   s. ``Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:``
-      ←- Tapez entrée
-
-   t. une deuxième série de question du même type est posée répondre de
-      la même manière !
-
-7. L’installation est terminée. Vous accédez au serveur à l’adresse:
-   `https://<server1.example.com>:8080/ <https://<server1.example.com>:8080/>`__
-
-       **Note**
-
-       Lors de votre première connexion, votre domaine n’est pas encore
-       configuré. Il faudra alors utiliser le nom DNS donné par votre
-       hébergeur. Pour OVH, elle s’écrit VPSxxxxxx.ovh.net
-
-8. Loguez vous comme admin et avec le mot de passe que vous avez choisi.
-   Vous pouvez décider de le changer au premier login
-
-   a. Si le message "Possible attack detected. This action has been
-      logged.". Cela signifie que vous avez des cookies d’une précédent
-      installation qui sont configurés. Effacer les cookies de ce site
-      de votre navigateur.
-
-Configuration de Let’s Encrypt
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. Installez Let’s Encrypt. Tapez:
-
-   .. code:: bash
-
-       cd /usr/local/bin
-       wget https://dl.eff.org/certbot-auto
-       chmod a+x certbot-auto
-       ./certbot-auto --install-only
-
-2. Créer votre premier domaine avec SSL et let’s encrypt dans ISPConfig.
-
-3. Liez le certificat d’ISPconfig avec celui du domaine crée:
-
-   a. Tapez :
-
-      .. code:: bash
-
-          cd /usr/local/ispconfig/interface/ssl/
-          mv ispserver.crt ispserver.crt-$(date +"%y%m%d%H%M%S").bak
-          mv ispserver.key ispserver.key-$(date +"%y%m%d%H%M%S").bak
-          ln -s /etc/letsencrypt/live/<example.com>/fullchain.pem ispserver.crt 
-          ln -s /etc/letsencrypt/live/<example.com>/privkey.pem ispserver.key 
-          cat ispserver.{key,crt} > ispserver.pem
-          chmod 600 ispserver.pem
-          systemctl restart apache2
-
-      -  remplacer <example.com> par votre nom de domaine
-
-4. Liez le certificat Postfix avec celui de let’s encrypt
-
-   a. Tapez :
-
-      .. code:: bash
-
-          cd /etc/postfix/
-          mv smtpd.cert smtpd.cert-$(date +"%y%m%d%H%M%S").bak
-          mv smtpd.key smtpd.key-$(date +"%y%m%d%H%M%S").bak
-          ln -s /usr/local/ispconfig/interface/ssl/ispserver.crt smtpd.cert
-          ln -s /usr/local/ispconfig/interface/ssl/ispserver.key smtpd.key
-          service postfix restart
-          service dovecot restart
-
-5. Https pour Pureftd
-
-   a. Tapez :
-
-      .. code:: bash
-
-          cd /etc/ssl/private/
-          mv pure-ftpd.pem pure-ftpd.pem-$(date +"%y%m%d%H%M%S").bak
-          ln -s /usr/local/ispconfig/interface/ssl/ispserver.pem pure-ftpd.pem
-          chmod 600 pure-ftpd.pem
-          service pure-ftpd-mysql restart
-
-6. Pour Monit:
-
-   a. Editez Monitrc: :
-
-      .. code:: bash
-
-          vi  /etc/monit/monitrc
-
-   b. Ajoutez les lignes suivantes:
-
-      .. code:: ini
-
-          set httpd port 2812 and
-          SSL ENABLE
-          PEMFILE /etc/ssl/private/pure-ftpd.pem
-          allow admin:'secretpassword'
-
-   c. Tapez :
-
-      .. code:: bash
-
-          service monit restart
-
-7. Création d’un script de renouvellement automatique du fichier pem
-
-   a. Installez incron. Tapez :
-
-      .. code:: bash
-
-          apt install -y incron
-
-   b. Créez le fichier d’exécution périodique. Tapez :
-
-      .. code:: bash
-
-          vi /etc/init.d/le_ispc_pem.sh
-
-      et coller dans le fichier le code suivant:
-
-      .. code:: bash
-
-          #!/bin/sh
-          ### BEGIN INIT INFO
-          # Provides: LE ISPSERVER.PEM AUTO UPDATER
-          # Required-Start: $local_fs $network
-          # Required-Stop: $local_fs
-          # Default-Start: 2 3 4 5
-          # Default-Stop: 0 1 6
-          # Short-Description: LE ISPSERVER.PEM AUTO UPDATER
-          # Description: Update ispserver.pem automatically after ISPC LE SSL certs are renewed.
-          ### END INIT INFO
-          cd /usr/local/ispconfig/interface/ssl/
-          mv ispserver.pem ispserver.pem-$(date +"%y%m%d%H%M%S").bak
-          cat ispserver.{key,crt} > ispserver.pem
-          chmod 600 ispserver.pem
-          chmod 600 /etc/ssl/private/pure-ftpd.pem
-          service pure-ftpd-mysql restart
-          service monit restart
-          service postfix restart
-          service dovecot restart
-          service nginx restart
-
-   c. Sauvez et quittez. Tapez ensuite:
-
-      .. code:: bash
-
-          chmod +x /etc/init.d/le_ispc_pem.sh
-          echo "root" >> /etc/incron.allow
-          incrontab -e.
-
-      et ajoutez les lignes ci dessous dans le fichier:
-
-      .. code:: bash
-
-          /etc/letsencrypt/archive/$(hostname -f)/ IN_MODIFY ./etc/init.d/le_ispc_pem.sh
-
 Installation d’un scanner de vulnérabilités
 -------------------------------------------
 
@@ -1475,6 +1206,76 @@ Installation d’un scanner de vulnérabilités
 
 3. L’outil vous listera dans une forme très synthétique la liste des
    vulnérabilités et des améliorations de sécurité à appliquer.
+
+Installer quelques outils Debian
+================================
+
+Installer l’outil debfoster
+---------------------------
+
+L’outil ``debfoster`` permet de ne conserver que les paquets essentiels.
+Il maintient un fichier ``keepers`` présent dans ``/var/lib/debfoster``
+
+En répondant aux questions de conservations de paquets, ``debfoster``
+maintient la liste des paquets uniques nécessaires au système. Tous les
+autres paquets seront supprimés.
+
+1. Se loguer ``root`` sur le serveur
+
+2. Ajouter le paquet ``debfoster``. Tapez :
+
+   .. code:: bash
+
+       apt install debfoster
+
+3. Lancez debfoster. Tapez ``debfoster``.
+
+4. Répondez au questions pour chaque paquet
+
+5. Acceptez la liste des modifications proposées à la fin. Les paquets
+   superflus seront supprimés
+
+Installer l’outil dselect
+-------------------------
+
+L’outil ``dselect`` permet de choisir de façon interactive les paquets
+que l’on souhaite installer.
+
+1. Se loguer ``root`` sur le serveur
+
+2. Ajouter le paquet ``deselect``. Tapez :
+
+   .. code:: bash
+
+       apt install deselect
+
+Installation d’un Panel
+=======================
+
+Il existe plusieurs type de panel de contrôle pour les VPS. La plupart
+sont payant.
+
+Pour citer les plus connus: - payant: cPanel (leader du type), Plesk -
+gratuit: Yunohost ( un excellent système d’autohébergement packagé) ,
+Ajenti, Froxlor, Centos web panel, Webmin et Usermin, ISPConfig,
+HestiaCP, VestaCP ,
+
+Ci après nous allons en présenter 3 différents (ISPConfig, Webmin et
+HestiaCP). Ils sont incompatibles entre eux.
+
+On peut faire cohabiter ISPConfig et Webmin en prenant les précautions
+suivantes: \* ISPConfig est le maitre de la configuration: toute
+modification sur les sites webs, mailboxes et DNS doit impérativement
+être effectuées du coté d’ISPConfig \* Les modifications réalisées au
+niveau de webmin pour ces sites webs, mailboxes et DNS seront au mieux
+écrasées par ISPConfig au pire elles risquent de conduire à des
+incompatibilités qui engendreront des dysfonctionnement d’ISPConfig
+(impossibilité de mettre à jour les configurations) \* Le reste des
+modifications peuvent être configurées au niveau de webmin sans trop de
+contraintes.
+
+Pour rappel, HestiaCP (tout comme VestaCP) sont incompatibles
+d’ISPConfig et de Webmin. Ils doivent être utilisés seuls
 
 Installation de Webmin
 ----------------------
@@ -1591,47 +1392,584 @@ précise des fonctionnalités.
 
     c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
 
-Installer quelques outils Debian
-================================
+Installation et configuration de ISPConfig
+------------------------------------------
 
-Installer l’outil debfoster
+ISPConfig est un système de configuration de sites web totalement
+compatible avec Webmin.
+
+Pour installer ISPConfig, vous devez suivre la procédure ci-dessous.
+ISPConfig 3.1 a été utilisé dans ce tutoriel.
+
+1. Tapez:
+
+   .. code:: bash
+
+       cd /tmp
+
+2. Cherchez la dernière version d’ISPConfig sur le site
+   `ISPConfig <https://www.ispconfig.org/ispconfig/download/>`__
+
+3. Installez cette version en tapant: :
+
+   .. code:: bash
+
+       wget <la_version_a_telecharger>.tar.gz
+
+4. Décompressez la version en tapant: :
+
+   .. code:: bash
+
+       tar xfz <la_version>.tar.gz
+
+5. Enfin allez dans le répertoire d’installation: :
+
+   .. code:: bash
+
+       cd ispconfig3_install/install/
+
+6. Lancez l’installation: :
+
+   .. code:: bash
+
+       php -q install.php
+
+   et répondez aux questions:
+
+   a. ``Select language (en,de) [en]:`` ← Tapez entrée
+
+   b. ``Installation mode (standard,expert) [standard]:`` ← Tapez entrée
+
+   c. ``Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:``
+      ← Tapez entrée
+
+   d. ``MySQL server hostname [localhost]:`` ← Tapez entrée
+
+   e. ``MySQL server port [3306]:`` ← Tapez entrée
+
+   f. ``MySQL root username [root]:`` ← Tapez entrée
+
+   g. ``MySQL root password []:`` ← Enter your MySQL root password
+
+   h. ``MySQL database to create [dbispconfig]:`` ← Tapez entrée
+
+   i. ``MySQL charset [utf8]:`` ← Tapez entrée
+
+   j. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
+      lettres
+
+   k. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
+      nom d’état
+
+   l. ``Locality Name (eg, city) []:`` ← Entrer votre ville
+
+   m. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
+      Entrez votre entreprise ou tapez entrée
+
+   n. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
+
+   o. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le nom
+      d’hôte de votre serveur. Dans notre cas: server1.example.com
+
+   p. ``Email Address []:`` ← Tapez entrée
+
+   q. ``ISPConfig Port [8080]:`` ← Tapez entrée
+
+   r. ``Admin password [admin]:`` ← Tapez entrée
+
+   s. ``Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:``
+      ←- Tapez entrée
+
+   t. une deuxième série de question du même type est posée répondre de
+      la même manière !
+
+7. L’installation est terminée. Vous accédez au serveur à l’adresse:
+   https://example.com:8080/ .
+
+       **Note**
+
+       Lors de votre première connexion, votre domaine n’est pas encore
+       configuré. Il faudra alors utiliser le nom DNS donné par votre
+       hébergeur. Pour OVH, elle s’écrit VPSxxxxxx.ovh.net
+
+8. Loguez vous comme admin et avec le mot de passe que vous avez choisi.
+   Vous pouvez décider de le changer au premier login
+
+       **Note**
+
+       Si le message "Possible attack detected. This action has been
+       logged.". Cela signifie que vous avez des cookies d’une
+       précédente installation qui sont configurés. Effacer les cookies
+       de ce site de votre navigateur.
+
+Configuration d’un premier domaine
+==================================
+
+Cette configuration est réalisée avec le Panel ISPConfig installé dans
+le chapitre précédent. L’étape "login initial" n’est à appliquer qu’une
+seule fois. Une fois votre premier domaine configuré, vous pourrez vous
+loguer à ISPconfig en utilisant ce domaine à l’adresse:
+https://example.com:8080/ .
+
+Login initial
+-------------
+
+Vous devrez tout d’abord vous loguer sur le serveur ISPConfig. Comme
+vous n’avez pas encore configuré de nom de de domaine, vous devrez vous
+loguer de prime abord sur le site http://vpsxxxxxx.ovh.net:8080/ .
+
+Utiliser le login: Admin et le mot de passe que vous avez configuré lors
+de l’installation d’ISPConfig
+
+1. Aller dans l’onglet ``System``
+
+   a. Dans le menu ``Main config``
+
+      i.  Dans l’onglet ``Sites``, configurer:
+
+          A. ``Create subdomains as web site:`` ← Yes
+
+          B. ``Create aliasdomains as web site:`` ← Yes
+
+      ii. Dans l’onglet ``Mail`` :
+
+          A. ``Administrator’s e-mail :`` ← adresse mail de
+             l’administrateur. par exemple admin@example.com
+
+          B. ``Administrator’s name :`` ← nom de l’administrateur
+
+    **Note**
+
+    Il est possible de basculer le site ISPConfig entièrement en
+    Français. J’ai pour ma part gardé la version anglaise du site. Vous
+    trouverez donc tous les libellés dans la suite de la documentation
+    en anglais.
+
+Création de la zone DNS d’un domaine
+------------------------------------
+
+1. Allez dans ``DNS``
+
+   a. Cliquez sur ``Add dns-zone``
+
+   b. Cliquez sur ``Dns zone wizard``
+
+   c. Choisir le template par défaut.
+
+   d. Remplissez les champs:
+
+      -  ``Domain :`` ← tapez le nom de votre domaine ``example.com``
+
+      -  ``IP Address:`` ← prendre l’adresse du serveur sélectionnée
+
+      -  ``NS1 :`` ← ns1.example.com
+
+      -  ``NS2 :`` ← ns2.example.com
+
+      -  ``Email:`` ← votre Email valide exemple admin@example.com
+
+      -  ``DKIM:`` ← Yes
+
+   e. Cliquez sur ``Create DNS-record``
+
+Ajout d’enregistrements DNS
 ---------------------------
 
-L’outil ``debfoster`` permet de ne conserver que les paquets essentiels.
-Il maintient un fichier ``keepers`` présent dans ``/var/lib/debfoster``
+Allez maintenant dans l’onglet ``Records`` de la zone DNS. J’y ai ajouté
+quelques enregistrements complémentaires:
 
-En répondant aux questions de conservations de paquets, ``debfoster``
-maintient la liste des paquets uniques nécessaires au système. Tous les
-autres paquets seront supprimés.
+1. Des enregistrements de type A (définissent des domaines principaux) :
 
-1. Se loguer ``root`` sur le serveur
+   -  ``Hostname:`` ← ``autoconfig`` et ``IP-Address:`` ← <IP> de votre
+      serveur
 
-2. Ajouter le paquet ``debfoster``. Tapez :
+   -  ``Hostname:`` ← ``autodicover`` et ``IP-Address:`` ← <IP> de votre
+      serveur
 
-   .. code:: bash
+   -  ``Hostname:`` ← ``webmail`` et ``IP-Address:`` ← <IP> de votre
+      serveur
 
-       apt install debfoster
+2. Des enregistrements de type CNAME (définissent des alias de domaines)
+   :
 
-3. Lancez debfoster. Tapez ``debfoster``.
+   -  ``Hostname:`` ← ``ftp`` et ``IP-Address:`` ← ``example.com``
 
-4. Répondez au questions pour chaque paquet
+   -  ``Hostname:`` ← ``smtp`` et ``IP-Address:`` ← ``example.com``
 
-5. Acceptez la liste des modifications proposées à la fin. Les paquets
-   superflus seront supprimés
+   -  ``Hostname:`` ← ``pop3`` et ``IP-Address:`` ← ``example.com``
 
-Installer l’outil dselect
--------------------------
+   -  ``Hostname:`` ← ``imap`` et ``IP-Address:`` ← ``example.com``
 
-L’outil ``dselect`` permet de choisir de façon interactive les paquets
-que l’on souhaite installer.
+3. Des enregistrements de type SRV (définissent des services) :
 
-1. Se loguer ``root`` sur le serveur
+   -  ``Hostname:`` ← ``_pop3._tcp``, ``Target:`` ← ``.``, ``Weight:`` ←
+      0, ``Port:`` ← 0
 
-2. Ajouter le paquet ``deselect``. Tapez :
+   -  ``Hostname:`` ← ``_imap._tcp``, ``Target:`` ← ``.``, ``Weight:`` ←
+      0, ``Port:`` ← 0
 
-   .. code:: bash
+   -  ``Hostname:`` ← ``_pop3s._tcp``, ``Target:`` ←
+      ``mail.example.com``, ``Weight:`` ← 1, ``Port:`` ← 995,
+      ``Priority:`` ← 10
 
-       apt install deselect
+   -  ``Hostname:`` ← ``_imaps._tcp``, ``Target:`` ←
+      ``mail.example.com``, ``Weight:`` ← 1, ``Port:`` ← 993
 
-.. |badge| image:: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iODYiIGhlaWdodD0iMjAiPjxsaW5lYXJHcmFkaWVudCBpZD0iYiIgeDI9IjAiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiYmIiIHN0b3Atb3BhY2l0eT0iLjEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3Atb3BhY2l0eT0iLjEiLz48L2xpbmVhckdyYWRpZW50PjxjbGlwUGF0aCBpZD0iYSI+PHJlY3Qgd2lkdGg9Ijg2IiBoZWlnaHQ9IjIwIiByeD0iMyIgZmlsbD0iI2ZmZiIvPjwvY2xpcFBhdGg+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj48cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDM1djIwSDB6Ii8+PHBhdGggZmlsbD0iIzRjMSIgZD0iTTM1IDBoNTF2MjBIMzV6Ii8+PHBhdGggZmlsbD0idXJsKCNiKSIgZD0iTTAgMGg4NnYyMEgweiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMTAiPjx0ZXh0IHg9IjE4NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iMjUwIj5kb2NzPC90ZXh0Pjx0ZXh0IHg9IjE4NSIgeT0iMTQwIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iMjUwIj5kb2NzPC90ZXh0Pjx0ZXh0IHg9IjU5NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iNDEwIj5wYXNzaW5nPC90ZXh0Pjx0ZXh0IHg9IjU5NSIgeT0iMTQwIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iNDEwIj5wYXNzaW5nPC90ZXh0PjwvZz4gPC9zdmc+
+   -  ``Hostname:`` ← ``_submission._tcp``, ``Target:`` ←
+      ``mail.example.com``, ``Weight:`` ← 1, ``Port:`` ← 465
 
+   -  ``Hostname:`` ← ``_autodiscover._tcp``, ``Target:`` ←
+      ``autoconfig.example.com``, ``Weight:`` ← 0, ``Port:`` ← 443
+
+Attendez quelques minutes le temps que les enregistrements DNS se
+propagent et faites une essai de votre nom de domaine sur le site
+`ZoneMaster <https://zonemaster.fr/domain_check>`__.
+
+Dans le champ Nom de domaine saisissez votre nom de domaine et tapez sur
+check. Tout doit est OK sauf pour les serveurs de noms ns1 et ns2. Si ce
+n’est pas le cas, votre nom de domaine doit être mal configuré chez
+votre registrar. Il vous faut vérifier la configuration initiale.
+
+    **Note**
+
+    Zonemaster a bien repéré que l’on a essayé de mettre des noms de
+    host différents pour les serveurs de DNS. Ils ont cependant tous la
+    même adresse IP. Cela apparait comme une erreur suite au test. De la
+    même manière, il indique dans la rubrique connectivité qu’il n’y a
+    pas de redondance de serveur DNS. Une manière de corriger ce
+    problème est de définir un DNS secondaire chez OVH en utilisant le
+    service qu’ils mettent à disposition.
+
+Vous pouvez maintenant essayer les différents Hostname munis de leur nom
+de domaine dans votre navigateur. Par exemple:
+http://webmail.example.com
+
+Ils doivent afficher une page web basique (Apache2, ou de parking).Si ce
+n’est pas le cas revérifier la configuration du DNS dans ISPConfig.
+
+Activation de DNSSEC
+--------------------
+
+Vous pouvez maintenant activer DNSSEC afin d’augmenter la sécurité de
+résolution de nom de domaine:
+
+1. Allez dans la rubrique ``DNS``
+
+   a. puis dans le menu ``Zones``
+
+   b. choisissez la zone correspondant à votre domaine
+
+   c. dans l’onglet ``DNS Zone`` allez tout en bas et activer la coche
+      ``Sign Zone (DNSSEC)``
+
+   d. cliquez sur ``Save``
+
+   e. Une fois fait, retourner dans le même onglet. La boite \`DNSSEC
+      DS-Data for registry: \`contient les informations que vous devez
+      coller dans le site web de votre registrar pour sécuriser votre
+      zone.
+
+   f. Gardez cette fenêtre ouverte dans votre navigateur et ouvrez un
+      autre onglet sur le site de votre registrar.
+
+Si vous êtes chez `Gandi <https://admin.gandi.net/>`__, il vous faut:
+
+1. Sélectionner le menu ``nom de domaine``
+
+2. Choisir votre nom de domaine "example.com"
+
+3. Allez dans l’onglet DNSSEC. Il doit permettre d’ajouter des clés
+   puisque vous fonctionner avec des DNS externes.
+
+4. Effacez éventuellement toutes les clés si vous n’êtes pas sur de
+   celles-ci.
+
+5. puis cliquez sur ``Ajouter une clé externe``
+
+   a. Sélectionnez d’abord le flag ``257 (KSK)``. puis l’algorithme
+      ``7 (RSASHA1-NSEC3-SHA1)``
+
+   b. Collez ensuite la clé de votre site ISPConfig. Elle doit
+      ressembler à cela:
+
+      ::
+
+          example.com. IN DNSKEY 257 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn
+
+   c. Cliquez sur ``Ajouter``
+
+   d. Entrez la deuxième clé. Cliquez sur ``Ajouter une clé externe``
+
+   e. Sélectionnez d’abord le flag ``256 (ZSK)``. puis l’algorithme
+      ``7 (RSASHA1-NSEC3-SHA1)``
+
+   f. Collez ensuite la clé de votre site ISPConfig. Elle doit
+      ressembler à cela:
+
+      ::
+
+          example.com. IN DNSKEY 256 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn
+
+   g. Cliquez sur ``Ajouter``
+
+   h. Les deux clés doivent maintenant apparaître dans l’onglet
+      ``DNSSEC``
+
+   i. Vous devez attendre quelques minutes (une heure dans certains cas)
+      pour que les clés se propagent. Pendant ce temps vous pouvez avoir
+      quelques problèmes d’accès à vos sites webs
+
+   j. Allez sur le site `DNSSEC
+      Analyzer <https://dnssec-debugger.verisignlabs.com/>`__.
+
+   k. Entrez votre nom de domaine "example.com" et tapez sur "entrée".
+
+Le site doit afficher pour les différentes zones le statut des
+certificats. Tout doit être au vert. Si ce n’est pas le cas, réessayer
+dans une heure. S’il y a encore des problèmes vérifiez votre
+configuration dans ISPConfig, chez votre registrar (rubrique DNSSEC) ou
+regardez les logs d’ISPConfig sur votre serveur pour y débusquer une
+erreur.
+
+    **Tip**
+
+    Une erreur classique est de croiser les certificats avec leurs
+    types. Vérifiez bien que vous avez mis les bons certificats avec les
+    bons types.
+
+    **Warning**
+
+    Une fois que vous activez DNSSEC, vous pourriez faire face au
+    problème suivant: les nouveaux enregistrements que vous renseignez
+    ne sont pas actifs. Une analyse des logs montre que la commande
+    ``dnssec-signzone`` retourne l’erreur
+    ``fatal: 'example.com': found DS RRset without NS RRset``. Cela
+    signifie que vous avez saisi une ou deux entrées DS dans vos
+    enregistrements. Il faut les supprimer pour que tout redevienne
+    fonctionnel.
+
+Exemple de configuration de domaine
+-----------------------------------
+
+Une fois la configuration terminé, les différents enregistrements du
+domaines ressemblent à l’exemple ci-dessous. Il peut y avoir des
+enregistrements supplémentaires pour les configurations SPF, DKIM et
+Let’s encrypt.
+
+::
+
+    example.com.         3600 A              1.2.3.4
+    www                  3600 A              1.2.3.4
+    mail                 3600 A              1.2.3.4
+    ns1                  3600 A              1.2.3.4
+    ns2                  3600 A              1.2.3.4
+    webmail              3600 A              1.2.3.4
+    autoconfig           3600 A              1.2.3.4
+    autodiscover         3600 A              1.2.3.4
+    ftp                  3600 CNAME          example.com.
+    smtp                 3600 CNAME          mail.example.com.
+    pop3                 3600 CNAME          mail.example.com.
+    imap                 3600 CNAME          mail.example.com.
+    example.com.         3600 NS             ns1.example.com.
+    example.com.         3600 NS             ns2.example.com.
+    example.com.         3600 MX    10       mail.example.com.
+    _pop3s._tcp          3600 SRV   10 1 995 mail.example.com.
+    _imaps._tcp          3600 SRV   0  1 993 mail.example.com.
+    _submission._tcp     3600 SRV   0  1 465 mail.example.com.
+    _imap._tcp           3600 SRV   0  0 0   .
+    _pop3._tcp           3600 SRV   0  0 0   .
+    _autodiscover._tcp   3600 SRV   0 0 443  autoconfig.example.com.
+    example.com.         3600 TXT            "v=spf1 mx a ~all"
+
+Création d’un site web
+======================
+
+Dans la suite le site web sera nommé "example.com".
+
+Vous devez avoir avant tout défini le "record" DNS associé au site.
+
+1. Aller dans "Sites"
+
+   a. Aller dans le menu "Website" pour définir un site web
+
+      i.   Cliquez sur "Add new website"
+
+      ii.  Saisissez les informations:
+
+           -  ``Domain:`` ← mettre ``example.com``
+
+           -  ``Auto-subdomain:`` ← sélectionner ``wwww`` ou ``*`` si
+              l’on veut un certificat let’s encrypt wildcard
+
+           -  ``SSL:`` ← yes
+
+           -  ``Let’s Encrypt:`` ← yes
+
+           -  ``Php:`` ← Sélectionez ``php-fpm``
+
+           -  Sélectionnez éventuellement aussi les coches ``Perl``,
+              ``Python``, ``Ruby`` en fonction des technologies
+              déployées sur votre site. Cela est indiqué dans la
+              procédure d’installation du site.
+
+      iii. Dans l’onglet ``redirect`` du même écran
+
+           -  ``SEO Redirect:`` ← Sélectionner
+              ``domain.tld ⇒www.domain.tld``
+
+           -  ``Rewrite http to https:`` ← yes
+
+      iv.  Dans l’onglet ``Statistics`` du même écran
+
+           -  ``Set Webstatistics password:`` ← saisissez un mot de
+              passe
+
+           -  ``Repeat Password:`` ← ressaisissez le mot de passe
+
+      v.   Dans l’onglet ``Backup`` du même écran
+
+           -  ``Backup interval:`` ← saisir ``weekly``
+
+           -  ``Number of backup copies:`` ← saisir ``1``
+
+      vi.  Dans l’onglet ``Options``, il peut être utile pour certains
+           types de site qui sont des redirections d’autres sites de
+           saisir dans la zone ``Apache Directives:``
+
+           .. code:: apache
+
+               ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+               ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+               RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+               # redirect from server
+               #
+
+               SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+               ProxyPass / http://127.0.0.1[:port_number_if_any]/[path_if_any]
+               ProxyPassReverse / http://127.0.0.1[:port_number_if_any]/[path_if_any]
+
+Création d’un sous-domaine (vhost)
+==================================
+
+Dans la suite le sous-domaine sera nommé "site.example.com".
+
+Vous devez avoir avant tout défini le "record" DNS associé au site. Vous
+ne pouvez définir un sous-domaine que si vous avez défini le site web
+racine auparavant.
+
+1. Aller dans "Sites"
+
+   a. Aller dans le menu "Subdomain(vhost)" pour définir un sous-domaine
+
+      i.   Cliquez sur "Add Subdomain" pour un nouveau sous domaine
+
+      ii.  Saisissez les informations:
+
+           -  ``Hostname:`` ← saisir ``site``
+
+           -  ``Domain:`` ← mettre ``example.com``
+
+           -  ``web folder:`` ← saisir ``site``
+
+           -  ``Auto-subdomain:`` ← sélectionner ``wwww`` ou ``*`` si
+              l’on veut un certificat let’s encrypt wildcard
+
+           -  ``SSL:`` ← yes
+
+           -  ``Let’s Encrypt:`` ← yes
+
+           -  ``Php:`` ← Sélectionez ``php-fpm``
+
+           -  Sélectionnez éventuellement aussi les coches ``Perl``,
+              ``Python``, ``Ruby`` en fonction des technologies
+              déployées sur votre site. Cela est indiqué dans la
+              procédure d’installation du site.
+
+      iii. Dans l’onglet ``redirect`` du même écran
+
+           -  ``Rewrite http to https:`` ← yes
+
+      iv.  Dans l’onglet ``Statistics`` du même écran
+
+           -  ``Set Webstatistics password:`` ← saisissez un mot de
+              passe
+
+           -  ``Repeat Password:`` ← ressaisissez le mot de passe
+
+      v.   Dans l’onglet ``Options``, il peut être utile pour certains
+           types de site qui sont des redirections d’autres sites de
+           saisir dans la zone ``Apache Directives:``
+
+           .. code:: apache
+
+               ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+               ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+               RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+               # redirect from server
+               #
+
+               SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+               ProxyPass / http://127.0.0.1[:port_number_if_any]/[path_if_any]
+               ProxyPassReverse / http://127.0.0.1[:port_number_if_any]/[path_if_any]
+
+Configuration de la messagerie
+==============================
+
+Création du serveur de messagerie
+---------------------------------
+
+Pour créer la messagerie, aller dans email→domain→cliquez sur add new
+domain. Sélectionner le nom de domaine et créer des identifiants DKIM.
+Une fois cela fait, retourner dans la gestion des records de domaine et
+activer le type DMARC. Garder le paramétrage par défaut et sauvegardez.
+Faites de même pour les enregistrements SPF et sélectionner le mécanisme
+softfail.
+
+Annexe
+======
+
+Installation de Hestia
+----------------------
+
+Hestia est basé sur VestaCP. C’est une alternative opensource et plus
+moderne de cet outiL. La documentation est proposée ici:
+https://docs.hestiacp.com/
+
+Attention Hestia n’est pas compatible de Webmin dans le sens que webmin
+est incapable de lire et d’interpréter les fichiers créés par Hestia.
+
+De même, Hestia est principalement compatible de PHP. Si vous utilisez
+des système web basés sur des applicatifs écrits en Python ou en Ruby,
+la configuration sera à faire à la main avec tous les problèmes de
+compatibilité que cela impose.
+
+Pour installer:
+
+1. Se logger ``root`` sur le serveur
+
+2. Télécharger le package et lancez l’installeur
+
+   a. Tapez :
+
+      .. code:: bash
+
+          wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install.sh
+
+   b. Lancez l’installeur. Tapez :
+
+      .. code:: bash
+
+          bash hst-install.sh -g yes -o yes
+
+   c. Si le système n’est pas compatible, HestiaCP vous le dira. Sinon,
+      il vous informe de la configuration qui sera installée. Tapez
+      ``Y`` pour continuer.
+
+   d. Entrez votre adresse mail standard et indépendante du futur
+      serveur qui sera installé. ce peut être une adresse gmail.com par
+      exemple.
+
+3. Hestia est installé. Il est important de bien noter le mot de passe
+   du compte admin de Hestia ainsi que le numéro de port du site web
