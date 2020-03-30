@@ -19,24 +19,48 @@ dans l’arborescence présente dans /etc.
 Dans ce document, je configure de nombreux sites web et services de mon
 domaine en utilisant ISPConfig.
 
-Sont installés: \* un serveur de mail avec antispam, \* un webmail
-`roundcube <https://roundcube.net>`__, \* un serveur de mailing list
-`mailman <https://www.list.org>`__, \* un serveur ftp et sftp sécurisé.
-\* un serveur de base de données et son interface web d’administration
-phpmyadmin. \* un serveur et un site de partage de fichiers
-`Seafile <https://www.seafile.com>`__, \* un site sous
-`Joomla <https://www.joomla.fr/>`__, \* un sous domaine pointant sur un
-site autohébergé (l’installation du site n’est pas décrite ici; Se
-référer à `Yunohost <https://yunohost.org>`__), \* un site
-`Gitea <https://gitea.io>`__ et son repository GIT, \* un serveur de VPN
-`pritunl <https://pritunl.com/>`__, \* un site
-`Mediawiki <https://www.mediawiki.org>`__, \* un site
-`Nextcloud <https://nextcloud.com>`__ \* un site
-`Wordpress <https://wordpress.com>`__ \* des outils de sécurisation,
-mise à jour automatique et d’audit du serveur \* A venir: strut,
-`concrete5 <https://www.concrete5.org/>`__,
-`gitlab <https://gitlab.com/>`__, `piwigo <https://piwigo.org/>`__,
-`borg <https://www.borgbackup.org/>`__
+Sont installés:
+
+-  un serveur de mail avec antispam,
+
+-  un webmail `roundcube <https://roundcube.net>`__,
+
+-  un serveur de mailing list `mailman <https://www.list.org>`__,
+
+-  un serveur ftp et sftp sécurisé.
+
+-  un serveur de base de données et son interface web d’administration
+   phpmyadmin.
+
+-  un serveur et un site de partage de fichiers
+   `Seafile <https://www.seafile.com>`__,
+
+-  un site sous `Joomla <https://www.joomla.fr/>`__,
+
+-  un sous domaine pointant sur un site autohébergé (l’installation du
+   site n’est pas décrite ici; Se référer à
+   `Yunohost <https://yunohost.org>`__),
+
+-  Un outil de Monitoring `Munin <http://munin-monitoring.org/>`__
+
+-  Un outil de Monitoring `Monit <http://mmonit.com/monit/>`__
+
+-  un site `Gitea <https://gitea.io>`__ et son repository GIT,
+
+-  un serveur de VPN `pritunl <https://pritunl.com/>`__,
+
+-  un site `Mediawiki <https://www.mediawiki.org>`__,
+
+-  un site `Nextcloud <https://nextcloud.com>`__
+
+-  un site `Wordpress <https://wordpress.com>`__
+
+-  des outils de sécurisation, mise à jour automatique et d’audit du
+   serveur
+
+-  A venir: strut, `concrete5 <https://www.concrete5.org/>`__,
+   `gitlab <https://gitlab.com/>`__, `piwigo <https://piwigo.org/>`__,
+   `borg <https://www.borgbackup.org/>`__
 
 Dans ce document nous configurons un nom de domaine principal. Pour la
 clarté du texte, il sera nommé "example.com". Il est à remplacer
@@ -1483,7 +1507,29 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
    t. une deuxième série de question du même type est posée répondre de
       la même manière !
 
-7. L’installation est terminée. Vous accédez au serveur à l’adresse:
+7. Sécurisez Apache
+
+   a. Il est maintenant recommandé de désactiver les protocoles TLS 1.0
+      et TLS 1.1. Ce n’est pas la configuration par défaut d’ISPconfig
+
+   b. Se loguer ``root`` sur le serveur.
+
+   c. Copier le fichier ``vhost.conf.master`` dans la zone custom
+
+      .. code:: bash
+
+          cp /usr/local/ispconfig/server/conf/vhost.conf.master /usr/local/ispconfig/server/conf-custom/vhost.conf.master
+
+   d. Editer le fichier dans la zone custom. Tapez
+      ``vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master``.
+
+   e. Remplacez la ligne ``SSLProtocol All`` par
+      ``SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1``
+
+   f. Régénérez la configuration des serveurs web. Allez dans ``Tools``
+      → ``Resync``. Sélectionnez ``Websites``.cliquez sur ``start``
+
+8. L’installation est terminée. Vous accédez au serveur à l’adresse:
    https://example.com:8080/ .
 
        **Note**
@@ -1492,7 +1538,7 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
        configuré. Il faudra alors utiliser le nom DNS donné par votre
        hébergeur. Pour OVH, elle s’écrit VPSxxxxxx.ovh.net
 
-8. Loguez vous comme admin et avec le mot de passe que vous avez choisi.
+9. Loguez vous comme admin et avec le mot de passe que vous avez choisi.
    Vous pouvez décider de le changer au premier login
 
        **Note**
@@ -1913,6 +1959,487 @@ racine auparavant.
                SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
                ProxyPass / http://127.0.0.1[:port_number_if_any]/[path_if_any]
                ProxyPassReverse / http://127.0.0.1[:port_number_if_any]/[path_if_any]
+
+Configuration de Let’s Encrypt
+------------------------------
+
+Installez Let’s Encrypt. Tapez:
+
+.. code:: bash
+
+    cd /usr/local/bin
+    wget https://dl.eff.org/certbot-auto
+    chmod a+x certbot-auto
+    ./certbot-auto --install-only
+
+Associer un certificat reconnu à vos outils
+-------------------------------------------
+
+Comme vous avec créé votre premier domaine avec SSL et let’s encrypt
+dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux
+services de base:
+
+1. Liez le certificat d’ISPconfig avec celui du domaine crée
+
+   -  Tapez :
+
+      .. code:: bash
+
+          cd /usr/local/ispconfig/interface/ssl/
+          mv ispserver.crt ispserver.crt-$(date +"%y%m%d%H%M%S").bak
+          mv ispserver.key ispserver.key-$(date +"%y%m%d%H%M%S").bak
+          ln -s /etc/letsencrypt/live/<example.com>/fullchain.pem ispserver.crt 
+          ln -s /etc/letsencrypt/live/<example.com>/privkey.pem ispserver.key 
+          cat ispserver.{key,crt} > ispserver.pem
+          chmod 600 ispserver.pem
+          systemctl restart apache2
+
+      -  remplacer <example.com> par votre nom de domaine
+
+2. Liez le certificat Postfix et Dovecot avec celui de let’s encrypt
+
+   -  Tapez :
+
+      .. code:: bash
+
+          cd /etc/postfix/
+          mv smtpd.cert smtpd.cert-$(date +"%y%m%d%H%M%S").bak
+          mv smtpd.key smtpd.key-$(date +"%y%m%d%H%M%S").bak
+          ln -s /usr/local/ispconfig/interface/ssl/ispserver.crt smtpd.cert
+          ln -s /usr/local/ispconfig/interface/ssl/ispserver.key smtpd.key
+          service postfix restart
+          service dovecot restart
+
+3. Liez le certificat pour Pureftd
+
+   -  Tapez :
+
+      .. code:: bash
+
+          cd /etc/ssl/private/
+          mv pure-ftpd.pem pure-ftpd.pem-$(date +"%y%m%d%H%M%S").bak
+          ln -s /usr/local/ispconfig/interface/ssl/ispserver.pem pure-ftpd.pem
+          chmod 600 pure-ftpd.pem
+          service pure-ftpd-mysql restart
+
+4. Création d’un script de renouvellement automatique du fichier pem
+
+   a. Installez incron. Tapez :
+
+      .. code:: bash
+
+          apt install -y incron
+
+   b. Créez le fichier d’exécution périodique. Tapez :
+
+      .. code:: bash
+
+          vi /etc/init.d/le_ispc_pem.sh
+
+      et coller dans le fichier le code suivant:
+
+      .. code:: bash
+
+          #!/bin/sh
+          ### BEGIN INIT INFO
+          # Provides: LE ISPSERVER.PEM AUTO UPDATER
+          # Required-Start: $local_fs $network
+          # Required-Stop: $local_fs
+          # Default-Start: 2 3 4 5
+          # Default-Stop: 0 1 6
+          # Short-Description: LE ISPSERVER.PEM AUTO UPDATER
+          # Description: Update ispserver.pem automatically after ISPC LE SSL certs are renewed.
+          ### END INIT INFO
+          cd /usr/local/ispconfig/interface/ssl/
+          mv ispserver.pem ispserver.pem-$(date +"%y%m%d%H%M%S").bak
+          cat ispserver.{key,crt} > ispserver.pem
+          chmod 600 ispserver.pem
+          chmod 600 /etc/ssl/private/pure-ftpd.pem
+          service pure-ftpd-mysql restart
+          service monit restart
+          service postfix restart
+          service dovecot restart
+          service nginx restart
+
+   c. Sauvez et quittez. Tapez ensuite:
+
+      .. code:: bash
+
+          chmod +x /etc/init.d/le_ispc_pem.sh
+          echo "root" >> /etc/incron.allow
+          incrontab -e.
+
+      et ajoutez les lignes ci dessous dans le fichier:
+
+      .. code:: bash
+
+          /etc/letsencrypt/archive/example.com/ IN_MODIFY ./etc/init.d/le_ispc_pem.sh 
+
+      -  Remplacer example.com par votre nom de domaine.
+
+Surveillance du serveur avec Munin et Monit
+===========================================
+
+Note préliminaire
+-----------------
+
+Installez tout d’abord les paquets insdispensables pour faire
+fonctionner Munin avec Apache puis activez le module fcgid:
+
+.. code:: bash
+
+    apt-get install apache2 libcgi-fast-perl libapache2-mod-fcgid
+    a2enmod fcgid
+
+Installation et configuration de Munin
+--------------------------------------
+
+Suivez les étapes ci-après: . Installer le paquet Munin:
+
++
+
+.. code:: bash
+
+    apt-get install munin munin-node munin-plugins-extra
+
+1.  Votre configuration de Munin va utiliser une base de données
+    MariaDB. Vous devez activer quelques plugins. Tapez:
+
+    .. code:: bash
+
+        cd /etc/munin/plugins
+        ln -s /usr/share/munin/plugins/mysql_ mysql_
+        ln -s /usr/share/munin/plugins/mysql_bytes mysql_bytes
+        ln -s /usr/share/munin/plugins/mysql_innodb mysql_innodb
+        ln -s /usr/share/munin/plugins/mysql_isam_space_ mysql_isam_space_
+        ln -s /usr/share/munin/plugins/mysql_queries mysql_queries
+        ln -s /usr/share/munin/plugins/mysql_slowqueries mysql_slowqueries
+        ln -s /usr/share/munin/plugins/mysql_threads mysql_threads
+
+2.  Editez ensuite le fichier de configuration de Munin. Tapez:
+
+    .. code:: bash
+
+        vi /etc/munin/munin.conf
+
+3.  Décommentez les lignes débutant par: ``bdir``, ``htmldir``,
+    ``logdir``, ``rundir``, and ``tmpldir``. Les valeurs par défaut sont
+    correctes.
+
+4.  Munin utilisera l’adresse ``munin.example.com``. Toujours dans le
+    fichier de configuration de munin, remplacer la directive
+    ``[localhost.localdomain]`` par ``[munin.example.com]``.
+
+5.  Un fois les commentaires enlevés et la ligne modifiée, le fichier de
+    configuration doit ressembler à celui-ci:
+
+    ::
+
+        # Example configuration file for Munin, generated by 'make build'
+        # The next three variables specifies where the location of the RRD
+        # databases, the HTML output, logs and the lock/pid files. They all
+        # must be writable by the user running munin-cron. They are all
+        # defaulted to the values you see here.
+        #
+        dbdir /var/lib/munin
+        htmldir /var/cache/munin/www
+        logdir /var/log/munin
+        rundir /var/run/munin
+        # Where to look for the HTML templates
+        #
+        tmpldir /etc/munin/templates
+        # Where to look for the static www files
+        #
+        #staticdir /etc/munin/static
+        # temporary cgi files are here. note that it has to be writable by
+        # the cgi user (usually nobody or httpd).
+        #
+        # cgitmpdir /var/lib/munin/cgi-tmp
+
+        # (Exactly one) directory to include all files from.
+        includedir /etc/munin/munin-conf.d
+        [...]
+        # a simple host tree
+        [server1.example.com]
+         address 127.0.0.1
+         use_node_name yes
+        [...]
+
+6.  Activez Munin dans Apache. Tapez:
+
+    .. code:: bash
+
+        a2enconf munin
+
+7.  Editez le fichier munin.conf d’Apache:
+
+    .. code:: bash
+
+        vi /etc/apache2/conf-enable/munin.conf
+
+8.  Nous allons maintenant activer le module Munin dans Apache et
+    définir une authentification basique.
+
+9.  Modifiez le fichier pour qu’il ressemble à celui ci-dessous:
+
+    .. code:: apache
+
+        ScriptAlias /munin-cgi/munin-cgi-graph /usr/lib/munin/cgi/munin-cgi-graph
+        Alias /munin/static/ /var/cache/munin/www/static/
+
+        <Directory /var/cache/munin/www>
+            Options FollowSymLinks SymLinksIfOwnerMatch
+            AuthUserFile /etc/munin/munin-htpasswd
+            AuthName "Munin"
+            AuthType Basic
+            Require valid-user
+
+        </Directory>
+
+        <Directory /usr/lib/munin/cgi>
+            AuthUserFile /etc/munin/munin-htpasswd
+            AuthName "Munin"
+            AuthType Basic
+            Require valid-user
+            Options FollowSymLinks SymLinksIfOwnerMatch
+            <IfModule mod_fcgid.c>
+                SetHandler fcgid-script
+            </IfModule>
+            <IfModule !mod_fcgid.c>
+                SetHandler cgi-script
+            </IfModule>
+        </Directory>
+
+        # ***** SETTINGS FOR CGI/CRON STRATEGIES *****
+
+        # pick _one_ of the following lines depending on your "html_strategy"
+        # html_strategy: cron (default)
+        Alias /munin /var/cache/munin/www
+        # html_strategy: cgi (requires the apache module "cgid" or "fcgid")
+        #ScriptAlias /munin /usr/lib/munin/cgi/munin-cgi-html
+
+10. Créez ensuite le fichier de mot de passe de munin:
+
+    .. code:: bash
+
+        htpasswd -c /etc/munin/munin-htpasswd admin
+
+11. Tapez votre mot de passe
+
+12. Redémarrez apache. Tapez:
+
+    .. code:: bash
+
+        service apache2 restart
+
+13. Redémarrez Munin. Tapez:
+
+    .. code:: bash
+
+        service munin-node restart
+
+14. Attendez quelques minutes afin que Munin produise ses premiers
+    fichiers de sortie. et allez ensuite sur l’URL:
+    http://example.com/munin/.
+
+Activez les plugins de Munin
+----------------------------
+
+Dans Debian 10, tous les plugins complémentaires sont déjà activés.Vous
+pouvez être tenté de vérifier:
+
+1. Pour vérifier que la configuration est correcte. Tapez:
+
+   .. code:: bash
+
+       munin-node-configure --suggest
+
+2. Une liste de plugins doit s’afficher à l’écran. La colonne ``used``
+   indique que le plugins est activé. La colonne ``Suggestions`` indique
+   que le serveur fait fonctionner un service qui peut être monitoré par
+   ce module. Il faut créer un lien symbolique du module
+   dans\`/etc/munin/plugins\` pour l’activer.
+
+3. Par exemple pour activer les modules apache\_\*:
+
+   .. code:: bash
+
+       cd /etc/munin/plugins
+       ln -s /usr/share/munin/plugins/apache_accesses
+       ln -s /usr/share/munin/plugins/apache_processes
+       ln -s /usr/share/munin/plugins/apache_volume
+
+4. Redémarrez ensuite le service Munin. Tapez:
+
+   .. code:: bash
+
+       service munin-node restart
+
+Installer et configurer Monit
+-----------------------------
+
+Pour installer et configurer Monit, vous devez appliquer la procédure
+suivante:
+
+1.  Tapez:
+
+    .. code:: bash
+
+        apt install monit
+
+2.  Maintenant nous devons éditer le fichier ``monitrc`` qui définira
+    les services que l’on souhaite monitorer. Il existe de nombreux
+    exemples sur le web et vous pourrez trouver de nombreuses
+    configuration sur http://mmonit.com/monit/documentation/.
+
+3.  Editez le fichier monitrc. Tapez:
+
+    .. code:: bash
+
+        cp /etc/monit/monitrc /etc/monit/monitrc_orig
+        vi /etc/monit/monitrc
+
+4.  Le fichier contient déjà de nombreux exemples. Nous configurer une
+    surveillance de sshd, apache, mysql, proftpd, postfix, memcached,
+    named, ntpd, mailman, amavisd, dovecot. Monit sera activé sur le
+    port 2812 et nous allons donner à l’utilisateur admin un mot de
+    passe. Le certificat HTTPS sera celui généré avec let’s encrypt pour
+    le site ISPConfig. Collez le contenu ci dessous dans le fichier
+    monitrc:
+
+    ::
+
+        set daemon 60
+        set logfile syslog facility log_daemon
+        set mailserver localhost
+        set mail-format { from: monit@fpvview.site }
+        set alert stef@fpvview.site
+        set httpd port 2812 and
+         SSL ENABLE
+         PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
+         allow admin:"my_password" 
+
+        check process sshd with pidfile /var/run/sshd.pid
+         start program "/usr/sbin/service ssh start"
+         stop program "/usr/sbin/service ssh stop"
+         if failed port 22 protocol ssh then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process apache with pidfile /var/run/apache2/apache2.pid
+         group www
+         start program = "/usr/sbin/service apache2 start"
+         stop program = "/usr/sbin/service apache2 stop"
+         if failed host localhost port 80 protocol http
+         and request "/monit/token" then restart
+         if cpu is greater than 60% for 2 cycles then alert
+         if cpu > 80% for 5 cycles then restart
+         if totalmem > 500 MB for 5 cycles then restart
+         if children > 250 then restart
+         if loadavg(5min) greater than 10 for 8 cycles then stop
+         if 3 restarts within 5 cycles then timeout
+
+        # ---------------------------------------------------------------------------------------------
+        # NOTE: Replace example.pid with the pid name of your server, the name depends on the hostname
+        # ---------------------------------------------------------------------------------------------
+        check process mysql with pidfile /var/run/mysqld/mysqld.pid
+         group database
+         start program = "/usr/sbin/service mysql start"
+         stop program = "/usr/sbin/service mysql stop"
+         if failed host 127.0.0.1 port 3306 then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process proftpd with pidfile /var/run/pure-ftpd/pure-ftpd.pid
+         start program = "/usr/sbin/service pure-ftpd-mysql start"
+         stop program = "/usr/sbin/service pure-ftpd-mysql stop"
+         if failed port 21 protocol ftp then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process postfix with pidfile /var/spool/postfix/pid/master.pid
+         group mail
+         start program = "/usr/sbin/service postfix start"
+         stop program = "/usr/sbin/service postfix stop"
+         if failed port 25 protocol smtp then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process memcached with pidfile /var/run/memcached/memcached.pid
+         start program = "/usr/sbin/service memcached start"
+         stop program = "/usr/sbin/service memcached stop"
+         if failed host 127.0.0.1 port 11211 then restart
+
+        check process named with pidfile /var/run/named/named.pid
+         start program = "/usr/sbin/service bind9 start"
+         stop program = "/usr/sbin/service bind9 stop"
+         if failed host 127.0.0.1 port 53 type tcp protocol dns then restart
+         if failed host 127.0.0.1 port 53 type udp protocol dns then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process ntpd with pidfile /var/run/ntpd.pid
+         start program = "/usr/sbin/service ntp start"
+         stop program = "/usr/sbin/service ntp stop"
+         if failed host 127.0.0.1 port 123 type udp then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process mailman with pidfile /var/run/mailman/mailman.pid
+         group mail
+         start program = "/usr/sbin/service mailman start"
+         stop program = "/usr/sbin/service mailman stop"
+
+        check process amavisd with pidfile /var/run/amavis/amavisd.pid
+         group mail
+         start program = "/usr/sbin/service amavis start"
+         stop program = "/usr/sbin/service amavis stop"
+         if failed port 10024 protocol smtp then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process dovecot with pidfile /var/run/dovecot/master.pid
+         group mail
+         start program = "/usr/sbin/service dovecot start"
+         stop program = "/usr/sbin/service dovecot stop"
+         if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
+         if 5 restarts within 5 cycles then timeout
+
+    -  remplacez my\_password par votre mot de passe
+
+5.  La configuration est assez claire à lire. pour obtenir des
+    précisions, référez vous à la documentation de monit
+    http://mmonit.com/monit/documentation/monit.html.
+
+6.  Dans la configuration pour apache, la configuration indique que
+    monit doit allez chercher sur le port 80 un fichier dans
+    ``/monit/token``. Nous devons donc créer ce fichier. Tapez:
+
+    .. code:: bash
+
+        mkdir /var/www/html/monit
+        echo "hello" > /var/www/html/monit/token
+
+7.  Tapez :
+
+    .. code:: bash
+
+        service monit restart
+
+8.  Pour monitorer le statut des process en ligne de commande, tapez:
+
+    .. code:: bash
+
+        monit status
+
+9.  Débloquez le port 2812 dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 2812
+
+    d. Cliquez sur ``save``
+
+10. Maintenant naviguez sur le site https://example.com:2812/
+
+11. Rentrez le login ``admin`` et votre mot de passe ``my_password``.
+    Monit affiche alors les informations de monitoring du serveur.
 
 Configuration de la messagerie
 ==============================

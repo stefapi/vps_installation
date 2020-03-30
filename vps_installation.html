@@ -501,15 +501,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#_création_dun_site_web">10. Création d’un site web</a></li>
-<li><a href="#_création_dun_sous_domaine_vhost">11. Création d’un sous-domaine (vhost)</a></li>
-<li><a href="#_configuration_de_la_messagerie">12. Configuration de la messagerie</a>
+<li><a href="#_création_dun_sous_domaine_vhost">11. Création d’un sous-domaine (vhost)</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_serveur_de_messagerie">12.1. Création du serveur de messagerie</a></li>
+<li><a href="#_configuration_de_lets_encrypt">11.1. Configuration de Let&#8217;s Encrypt</a></li>
+<li><a href="#_associer_un_certificat_reconnu_à_vos_outils">11.2. Associer un certificat reconnu à vos outils</a></li>
 </ul>
 </li>
-<li><a href="#_annexe">13. Annexe</a>
+<li><a href="#_surveillance_du_serveur_avec_munin_et_monit">12. Surveillance du serveur avec Munin et Monit</a>
 <ul class="sectlevel2">
-<li><a href="#_installation_de_hestia">13.1. Installation de Hestia</a></li>
+<li><a href="#_note_préliminaire">12.1. Note préliminaire</a></li>
+<li><a href="#_installation_et_configuration_de_munin">12.2. Installation et configuration de Munin</a></li>
+<li><a href="#_activez_les_plugins_de_munin">12.3. Activez les plugins de Munin</a></li>
+<li><a href="#_installer_et_configurer_monit">12.4. Installer et configurer Monit</a></li>
+</ul>
+</li>
+<li><a href="#_configuration_de_la_messagerie">13. Configuration de la messagerie</a>
+<ul class="sectlevel2">
+<li><a href="#_création_du_serveur_de_messagerie">13.1. Création du serveur de messagerie</a></li>
+</ul>
+</li>
+<li><a href="#_annexe">14. Annexe</a>
+<ul class="sectlevel2">
+<li><a href="#_installation_de_hestia">14.1. Installation de Hestia</a></li>
 </ul>
 </li>
 </ul>
@@ -533,22 +546,62 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <p>Dans ce document, je configure de nombreux sites web et services de mon domaine en utilisant ISPConfig.</p>
 </div>
 <div class="paragraph">
-<p>Sont installés:
-* un serveur de mail avec antispam,
-* un webmail <a href="https://roundcube.net">roundcube</a>,
-* un serveur de mailing list <a href="https://www.list.org">mailman</a>,
-* un serveur ftp et sftp sécurisé.
-* un serveur de base de données et son interface web d&#8217;administration phpmyadmin.
-* un serveur et un site  de partage de fichiers <a href="https://www.seafile.com">Seafile</a>,
-* un site sous <a href="https://www.joomla.fr/">Joomla</a>,
-* un sous domaine pointant sur un site autohébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <a href="https://yunohost.org">Yunohost</a>),
-* un site <a href="https://gitea.io">Gitea</a> et son repository GIT,
-* un serveur de VPN <a href="https://pritunl.com/">pritunl</a>,
-* un site <a href="https://www.mediawiki.org">Mediawiki</a>,
-* un site <a href="https://nextcloud.com">Nextcloud</a>
-* un site <a href="https://wordpress.com">Wordpress</a>
-* des outils de sécurisation, mise à jour automatique et d&#8217;audit du serveur
-* A venir: strut, <a href="https://www.concrete5.org/">concrete5</a>, <a href="https://gitlab.com/">gitlab</a>, <a href="https://piwigo.org/">piwigo</a>, <a href="https://www.borgbackup.org/">borg</a></p>
+<p>Sont installés:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>un serveur de mail avec antispam,</p>
+</li>
+<li>
+<p>un webmail <a href="https://roundcube.net">roundcube</a>,</p>
+</li>
+<li>
+<p>un serveur de mailing list <a href="https://www.list.org">mailman</a>,</p>
+</li>
+<li>
+<p>un serveur ftp et sftp sécurisé.</p>
+</li>
+<li>
+<p>un serveur de base de données et son interface web d&#8217;administration phpmyadmin.</p>
+</li>
+<li>
+<p>un serveur et un site  de partage de fichiers <a href="https://www.seafile.com">Seafile</a>,</p>
+</li>
+<li>
+<p>un site sous <a href="https://www.joomla.fr/">Joomla</a>,</p>
+</li>
+<li>
+<p>un sous domaine pointant sur un site autohébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <a href="https://yunohost.org">Yunohost</a>),</p>
+</li>
+<li>
+<p>Un outil de Monitoring <a href="http://munin-monitoring.org/">Munin</a></p>
+</li>
+<li>
+<p>Un outil de Monitoring <a href="http://mmonit.com/monit/">Monit</a></p>
+</li>
+<li>
+<p>un site <a href="https://gitea.io">Gitea</a> et son repository GIT,</p>
+</li>
+<li>
+<p>un serveur de VPN <a href="https://pritunl.com/">pritunl</a>,</p>
+</li>
+<li>
+<p>un site <a href="https://www.mediawiki.org">Mediawiki</a>,</p>
+</li>
+<li>
+<p>un site <a href="https://nextcloud.com">Nextcloud</a></p>
+</li>
+<li>
+<p>un site <a href="https://wordpress.com">Wordpress</a></p>
+</li>
+<li>
+<p>des outils de sécurisation, mise à jour automatique et d&#8217;audit du serveur</p>
+</li>
+<li>
+<p>A venir: strut, <a href="https://www.concrete5.org/">concrete5</a>, <a href="https://gitlab.com/">gitlab</a>, <a href="https://piwigo.org/">piwigo</a>, <a href="https://www.borgbackup.org/">borg</a></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</p>
@@ -2549,6 +2602,36 @@ Tous les autres paquets seront supprimés.</p>
 </div>
 </li>
 <li>
+<p>Sécurisez Apache</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Il est maintenant recommandé de désactiver les protocoles TLS 1.0 et TLS 1.1. Ce n&#8217;est pas la configuration par défaut d&#8217;ISPconfig</p>
+</li>
+<li>
+<p>Se loguer <code>root</code> sur le serveur.</p>
+</li>
+<li>
+<p>Copier le fichier <code>vhost.conf.master</code> dans la zone custom</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cp /usr/local/ispconfig/server/conf/vhost.conf.master /usr/local/ispconfig/server/conf-custom/vhost.conf.master</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editer le fichier dans la zone custom. Tapez <code>vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master</code>.</p>
+</li>
+<li>
+<p>Remplacez la ligne <code>SSLProtocol All</code> par <code>SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1</code></p>
+</li>
+<li>
+<p>Régénérez la configuration des serveurs web. Allez dans <code>Tools</code> &#8594; <code>Resync</code>. Sélectionnez <code>Websites</code>.cliquez sur <code>start</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
 <p>L&#8217;installation est terminée. Vous accédez au serveur à l&#8217;adresse: <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a> .</p>
 <div class="admonitionblock note">
 <table>
@@ -3189,13 +3272,599 @@ Vous ne pouvez définir un sous-domaine que si vous avez défini le site web rac
 </li>
 </ol>
 </div>
+<div class="sect2">
+<h3 id="_configuration_de_lets_encrypt">11.1. Configuration de Let&#8217;s Encrypt</h3>
+<div class="paragraph">
+<p>Installez Let&#8217;s Encrypt. Tapez:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/bin
+wget https://dl.eff.org/certbot-auto
+chmod a+x certbot-auto
+./certbot-auto --install-only</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_associer_un_certificat_reconnu_à_vos_outils">11.2. Associer un certificat reconnu à vos outils</h3>
+<div class="paragraph">
+<p>Comme vous avec créé votre premier domaine avec SSL et let&#8217;s encrypt dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux services de base:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Liez le certificat d&#8217;ISPconfig avec celui du domaine crée</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/ispconfig/interface/ssl/
+mv ispserver.crt ispserver.crt-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+mv ispserver.key ispserver.key-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+ln -s /etc/letsencrypt/live/&lt;example.com&gt;/fullchain.pem ispserver.crt <i class="conum" data-value="1"></i><b>(1)</b>
+ln -s /etc/letsencrypt/live/&lt;example.com&gt;/privkey.pem ispserver.key <i class="conum" data-value="1"></i><b>(1)</b>
+cat ispserver.<span class="tok-o">{</span>key,crt<span class="tok-o">}</span> &gt; ispserver.pem
+chmod <span class="tok-m">600</span> ispserver.pem
+systemctl restart apache2</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Liez le certificat Postfix et Dovecot avec celui de let&#8217;s encrypt</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/postfix/
+mv smtpd.cert smtpd.cert-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+mv smtpd.key smtpd.key-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+ln -s /usr/local/ispconfig/interface/ssl/ispserver.crt smtpd.cert
+ln -s /usr/local/ispconfig/interface/ssl/ispserver.key smtpd.key
+service postfix restart
+service dovecot restart</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Liez le certificat pour Pureftd</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/ssl/private/
+mv pure-ftpd.pem pure-ftpd.pem-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+ln -s /usr/local/ispconfig/interface/ssl/ispserver.pem pure-ftpd.pem
+chmod <span class="tok-m">600</span> pure-ftpd.pem
+service pure-ftpd-mysql restart</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Création d&#8217;un script de renouvellement automatique du fichier pem</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Installez incron. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install -y incron</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez le fichier d&#8217;exécution périodique. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/init.d/le_ispc_pem.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et coller dans le fichier le code suivant:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/sh</span>
+<span class="tok-c1">### BEGIN INIT INFO</span>
+<span class="tok-c1"># Provides: LE ISPSERVER.PEM AUTO UPDATER</span>
+<span class="tok-c1"># Required-Start: $local_fs $network</span>
+<span class="tok-c1"># Required-Stop: $local_fs</span>
+<span class="tok-c1"># Default-Start: 2 3 4 5</span>
+<span class="tok-c1"># Default-Stop: 0 1 6</span>
+<span class="tok-c1"># Short-Description: LE ISPSERVER.PEM AUTO UPDATER</span>
+<span class="tok-c1"># Description: Update ispserver.pem automatically after ISPC LE SSL certs are renewed.</span>
+<span class="tok-c1">### END INIT INFO</span>
+<span class="tok-nb">cd</span> /usr/local/ispconfig/interface/ssl/
+mv ispserver.pem ispserver.pem-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+cat ispserver.<span class="tok-o">{</span>key,crt<span class="tok-o">}</span> &gt; ispserver.pem
+chmod <span class="tok-m">600</span> ispserver.pem
+chmod <span class="tok-m">600</span> /etc/ssl/private/pure-ftpd.pem
+service pure-ftpd-mysql restart
+service monit restart
+service postfix restart
+service dovecot restart
+service nginx restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sauvez et quittez. Tapez ensuite:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod +x /etc/init.d/le_ispc_pem.sh
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;root&quot;</span> &gt;&gt; /etc/incron.allow
+incrontab -e.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et ajoutez les lignes ci dessous dans le fichier:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>/etc/letsencrypt/archive/example.com/ IN_MODIFY ./etc/init.d/le_ispc_pem.sh <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacer example.com par votre nom de domaine.</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration_de_la_messagerie">12. Configuration de la messagerie</h2>
+<h2 id="_surveillance_du_serveur_avec_munin_et_monit">12. Surveillance du serveur avec Munin et Monit</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_création_du_serveur_de_messagerie">12.1. Création du serveur de messagerie</h3>
+<h3 id="_note_préliminaire">12.1. Note préliminaire</h3>
+<div class="paragraph">
+<p>Installez tout d&#8217;abord les paquets insdispensables pour faire fonctionner Munin avec Apache puis activez le module fcgid:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install apache2 libcgi-fast-perl libapache2-mod-fcgid
+a2enmod fcgid</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_munin">12.2. Installation et configuration de Munin</h3>
+<div class="paragraph">
+<p>Suivez les étapes ci-après:
+. Installer le paquet Munin:</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install munin munin-node munin-plugins-extra</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Votre configuration de Munin va utiliser une base de données MariaDB. Vous devez activer quelques plugins. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/munin/plugins
+ln -s /usr/share/munin/plugins/mysql_ mysql_
+ln -s /usr/share/munin/plugins/mysql_bytes mysql_bytes
+ln -s /usr/share/munin/plugins/mysql_innodb mysql_innodb
+ln -s /usr/share/munin/plugins/mysql_isam_space_ mysql_isam_space_
+ln -s /usr/share/munin/plugins/mysql_queries mysql_queries
+ln -s /usr/share/munin/plugins/mysql_slowqueries mysql_slowqueries
+ln -s /usr/share/munin/plugins/mysql_threads mysql_threads</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez ensuite le fichier de configuration de Munin. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/munin/munin.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Décommentez les lignes débutant par: <code>bdir</code>, <code>htmldir</code>, <code>logdir</code>, <code>rundir</code>, and <code>tmpldir</code>. Les valeurs par défaut sont correctes.</p>
+</li>
+<li>
+<p>Munin utilisera l&#8217;adresse <code>munin.example.com</code>. Toujours dans le fichier de configuration de munin, remplacer la directive <code>[localhost.localdomain]</code> par <code>[munin.example.com]</code>.</p>
+</li>
+<li>
+<p>Un fois les commentaires enlevés et la ligne modifiée, le fichier de configuration doit ressembler à celui-ci:</p>
+<div class="listingblock">
+<div class="content">
+<pre># Example configuration file for Munin, generated by 'make build'
+# The next three variables specifies where the location of the RRD
+# databases, the HTML output, logs and the lock/pid files. They all
+# must be writable by the user running munin-cron. They are all
+# defaulted to the values you see here.
+#
+dbdir /var/lib/munin
+htmldir /var/cache/munin/www
+logdir /var/log/munin
+rundir /var/run/munin
+# Where to look for the HTML templates
+#
+tmpldir /etc/munin/templates
+# Where to look for the static www files
+#
+#staticdir /etc/munin/static
+# temporary cgi files are here. note that it has to be writable by
+# the cgi user (usually nobody or httpd).
+#
+# cgitmpdir /var/lib/munin/cgi-tmp
+
+# (Exactly one) directory to include all files from.
+includedir /etc/munin/munin-conf.d
+[...]
+# a simple host tree
+[server1.example.com]
+ address 127.0.0.1
+ use_node_name yes
+[...]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez Munin dans Apache. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2enconf munin</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez le fichier munin.conf d&#8217;Apache:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apache2/conf-enable/munin.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Nous allons maintenant activer le module Munin dans Apache et définir une authentification basique.</p>
+</li>
+<li>
+<p>Modifiez le fichier pour qu&#8217;il ressemble à celui ci-dessous:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ScriptAlias</span> <span class="tok-sx">/munin-cgi/munin-cgi-graph</span> <span class="tok-sx">/usr/lib/munin/cgi/munin-cgi-graph</span>
+<span class="tok-nb">Alias</span> <span class="tok-sx">/munin/static/</span> <span class="tok-sx">/var/cache/munin/www/static/</span>
+
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/var/cache/munin/www</span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">Options</span> FollowSymLinks SymLinksIfOwnerMatch
+    <span class="tok-nb">AuthUserFile</span> <span class="tok-sx">/etc/munin/munin-htpasswd</span>
+    <span class="tok-nb">AuthName</span> <span class="tok-s2">&quot;Munin&quot;</span>
+    <span class="tok-nb">AuthType</span> Basic
+    <span class="tok-nb">Require</span> valid-user
+
+<span class="tok-nt">&lt;/Directory&gt;</span>
+
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/usr/lib/munin/cgi</span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthUserFile</span> <span class="tok-sx">/etc/munin/munin-htpasswd</span>
+    <span class="tok-nb">AuthName</span> <span class="tok-s2">&quot;Munin&quot;</span>
+    <span class="tok-nb">AuthType</span> Basic
+    <span class="tok-nb">Require</span> valid-user
+    <span class="tok-nb">Options</span> FollowSymLinks SymLinksIfOwnerMatch
+    <span class="tok-nt">&lt;IfModule</span> <span class="tok-s">mod_fcgid.c</span><span class="tok-nt">&gt;</span>
+        <span class="tok-nb">SetHandler</span> fcgid-script
+    <span class="tok-nt">&lt;/IfModule&gt;</span>
+    <span class="tok-nt">&lt;IfModule</span> <span class="tok-s">!mod_fcgid.c</span><span class="tok-nt">&gt;</span>
+        <span class="tok-nb">SetHandler</span> cgi-script
+    <span class="tok-nt">&lt;/IfModule&gt;</span>
+<span class="tok-nt">&lt;/Directory&gt;</span>
+
+<span class="tok-c"># ***** SETTINGS FOR CGI/CRON STRATEGIES *****</span>
+
+<span class="tok-c"># pick _one_ of the following lines depending on your &quot;html_strategy&quot;</span>
+<span class="tok-c"># html_strategy: cron (default)</span>
+<span class="tok-nb">Alias</span> <span class="tok-sx">/munin</span> <span class="tok-sx">/var/cache/munin/www</span>
+<span class="tok-c"># html_strategy: cgi (requires the apache module &quot;cgid&quot; or &quot;fcgid&quot;)</span>
+<span class="tok-c">#ScriptAlias /munin /usr/lib/munin/cgi/munin-cgi-html</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez ensuite le fichier de mot de passe de munin:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>htpasswd -c /etc/munin/munin-htpasswd admin</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez votre mot de passe</p>
+</li>
+<li>
+<p>Redémarrez apache. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service apache2 restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez Munin. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service munin-node restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Attendez quelques minutes afin que Munin produise ses premiers fichiers de sortie. et allez ensuite sur l&#8217;URL: <a href="http://example.com/munin/" class="bare">http://example.com/munin/</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_activez_les_plugins_de_munin">12.3. Activez les plugins de Munin</h3>
+<div class="paragraph">
+<p>Dans Debian 10, tous les plugins complémentaires sont déjà activés.Vous pouvez être tenté de vérifier:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pour vérifier que la configuration est correcte. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>munin-node-configure --suggest</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Une liste de plugins doit s&#8217;afficher à l&#8217;écran. La colonne <code>used</code> indique que le plugins est activé. La colonne <code>Suggestions</code> indique que le serveur fait fonctionner un service qui peut être monitoré par ce module. Il faut créer un lien symbolique du module dans`/etc/munin/plugins` pour l&#8217;activer.</p>
+</li>
+<li>
+<p>Par exemple pour activer les modules apache_*:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/munin/plugins
+ln -s /usr/share/munin/plugins/apache_accesses
+ln -s /usr/share/munin/plugins/apache_processes
+ln -s /usr/share/munin/plugins/apache_volume</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez ensuite le service Munin. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service munin-node restart</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installer_et_configurer_monit">12.4. Installer et configurer Monit</h3>
+<div class="paragraph">
+<p>Pour installer et configurer Monit, vous devez appliquer la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install monit</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Maintenant nous devons éditer le fichier <code>monitrc</code> qui définira les services que l&#8217;on souhaite monitorer. Il existe de nombreux exemples sur le web et vous pourrez trouver de nombreuses configuration sur <a href="http://mmonit.com/monit/documentation/" class="bare">http://mmonit.com/monit/documentation/</a>.</p>
+</li>
+<li>
+<p>Editez le fichier monitrc. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cp /etc/monit/monitrc /etc/monit/monitrc_orig
+vi /etc/monit/monitrc</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Le fichier contient déjà de nombreux exemples. Nous configurer une surveillance de sshd, apache, mysql, proftpd, postfix, memcached, named, ntpd, mailman, amavisd, dovecot. Monit  sera activé sur le port 2812 et nous allons donner à l&#8217;utilisateur  admin un mot de passe. Le certificat HTTPS sera celui généré avec let&#8217;s encrypt pour le site ISPConfig. Collez le contenu ci dessous dans le fichier monitrc:</p>
+<div class="listingblock">
+<div class="content">
+<pre>set daemon 60
+set logfile syslog facility log_daemon
+set mailserver localhost
+set mail-format { from: monit@fpvview.site }
+set alert stef@fpvview.site
+set httpd port 2812 and
+ SSL ENABLE
+ PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
+ allow admin:"my_password" <i class="conum" data-value="1"></i><b>(1)</b>
+
+check process sshd with pidfile /var/run/sshd.pid
+ start program "/usr/sbin/service ssh start"
+ stop program "/usr/sbin/service ssh stop"
+ if failed port 22 protocol ssh then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process apache with pidfile /var/run/apache2/apache2.pid
+ group www
+ start program = "/usr/sbin/service apache2 start"
+ stop program = "/usr/sbin/service apache2 stop"
+ if failed host localhost port 80 protocol http
+ and request "/monit/token" then restart
+ if cpu is greater than 60% for 2 cycles then alert
+ if cpu &gt; 80% for 5 cycles then restart
+ if totalmem &gt; 500 MB for 5 cycles then restart
+ if children &gt; 250 then restart
+ if loadavg(5min) greater than 10 for 8 cycles then stop
+ if 3 restarts within 5 cycles then timeout
+
+# ---------------------------------------------------------------------------------------------
+# NOTE: Replace example.pid with the pid name of your server, the name depends on the hostname
+# ---------------------------------------------------------------------------------------------
+check process mysql with pidfile /var/run/mysqld/mysqld.pid
+ group database
+ start program = "/usr/sbin/service mysql start"
+ stop program = "/usr/sbin/service mysql stop"
+ if failed host 127.0.0.1 port 3306 then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process proftpd with pidfile /var/run/pure-ftpd/pure-ftpd.pid
+ start program = "/usr/sbin/service pure-ftpd-mysql start"
+ stop program = "/usr/sbin/service pure-ftpd-mysql stop"
+ if failed port 21 protocol ftp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process postfix with pidfile /var/spool/postfix/pid/master.pid
+ group mail
+ start program = "/usr/sbin/service postfix start"
+ stop program = "/usr/sbin/service postfix stop"
+ if failed port 25 protocol smtp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process memcached with pidfile /var/run/memcached/memcached.pid
+ start program = "/usr/sbin/service memcached start"
+ stop program = "/usr/sbin/service memcached stop"
+ if failed host 127.0.0.1 port 11211 then restart
+
+check process named with pidfile /var/run/named/named.pid
+ start program = "/usr/sbin/service bind9 start"
+ stop program = "/usr/sbin/service bind9 stop"
+ if failed host 127.0.0.1 port 53 type tcp protocol dns then restart
+ if failed host 127.0.0.1 port 53 type udp protocol dns then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process ntpd with pidfile /var/run/ntpd.pid
+ start program = "/usr/sbin/service ntp start"
+ stop program = "/usr/sbin/service ntp stop"
+ if failed host 127.0.0.1 port 123 type udp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process mailman with pidfile /var/run/mailman/mailman.pid
+ group mail
+ start program = "/usr/sbin/service mailman start"
+ stop program = "/usr/sbin/service mailman stop"
+
+check process amavisd with pidfile /var/run/amavis/amavisd.pid
+ group mail
+ start program = "/usr/sbin/service amavis start"
+ stop program = "/usr/sbin/service amavis stop"
+ if failed port 10024 protocol smtp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process dovecot with pidfile /var/run/dovecot/master.pid
+ group mail
+ start program = "/usr/sbin/service dovecot start"
+ stop program = "/usr/sbin/service dovecot stop"
+ if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
+ if 5 restarts within 5 cycles then timeout</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacez my_password par votre mot de passe</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>La configuration est assez claire à lire. pour obtenir des précisions, référez vous à la documentation de monit <a href="http://mmonit.com/monit/documentation/monit.html" class="bare">http://mmonit.com/monit/documentation/monit.html</a>.</p>
+</li>
+<li>
+<p>Dans la configuration pour apache, la configuration indique que monit doit allez chercher sur le port 80 un fichier dans <code>/monit/token</code>. Nous devons donc créer ce fichier. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir /var/www/html/monit
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;hello&quot;</span> &gt; /var/www/html/monit/token</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service monit restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour monitorer le statut des process en ligne de commande, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>monit status</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Débloquez le port 2812 dans votre firewall</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+</li>
+<li>
+<p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
+</li>
+<li>
+<p>dans la rubrique <code>Open TCP ports:</code>, ajoutez le port 2812</p>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Maintenant naviguez sur le site <a href="https://example.com:2812/" class="bare">https://example.com:2812/</a></p>
+</li>
+<li>
+<p>Rentrez le login <code>admin</code> et votre mot de passe <code>my_password</code>. Monit affiche alors les informations de monitoring du serveur.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration_de_la_messagerie">13. Configuration de la messagerie</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_création_du_serveur_de_messagerie">13.1. Création du serveur de messagerie</h3>
 <div class="paragraph">
 <p>Pour créer la messagerie, aller dans email→domain→cliquez sur add new domain.
 Sélectionner le nom de domaine et créer des identifiants DKIM.
@@ -3206,10 +3875,10 @@ Faites de même pour les enregistrements SPF et sélectionner le mécanisme soft
 </div>
 </div>
 <div class="sect1">
-<h2 id="_annexe">13. Annexe</h2>
+<h2 id="_annexe">14. Annexe</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_de_hestia">13.1. Installation de Hestia</h3>
+<h3 id="_installation_de_hestia">14.1. Installation de Hestia</h3>
 <div class="paragraph">
 <p>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
 La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="bare">https://docs.hestiacp.com/</a></p>
@@ -3269,7 +3938,7 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-03-30 02:00:29 +0200
+Last updated 2020-03-31 01:42:46 +0200
 </div>
 </div>
 <style>
