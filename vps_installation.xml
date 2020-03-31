@@ -33,7 +33,13 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <simpara>Sont installés:</simpara>
 <itemizedlist>
 <listitem>
-<simpara>un serveur de mail avec antispam,</simpara>
+<simpara>un panel ISPConfig</simpara>
+</listitem>
+<listitem>
+<simpara>un configurateur Webmin</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur de mail avec antispam, sécurisation d&#8217;envoi des mails et autoconfiguration pour Outlook, Thunderbird, Android.</simpara>
 </listitem>
 <listitem>
 <simpara>un webmail <link xl:href="https://roundcube.net">roundcube</link>,</simpara>
@@ -45,22 +51,25 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <simpara>un serveur ftp et sftp sécurisé.</simpara>
 </listitem>
 <listitem>
-<simpara>un serveur de base de données et son interface web d&#8217;administration phpmyadmin.</simpara>
+<simpara>un serveur de base de données et son interface web d&#8217;administration <link xl:href="https://www.phpmyadmin.net/">phpmyadmin</link>.</simpara>
 </listitem>
 <listitem>
-<simpara>un serveur et un site  de partage de fichiers <link xl:href="https://www.seafile.com">Seafile</link>,</simpara>
+<simpara>des outils de sécurisation, de mise à jour automatique et d&#8217;audit du serveur</simpara>
 </listitem>
 <listitem>
-<simpara>un site sous <link xl:href="https://www.joomla.fr/">Joomla</link>,</simpara>
+<simpara>un outil de Monitoring <link xl:href="http://munin-monitoring.org/">Munin</link></simpara>
+</listitem>
+<listitem>
+<simpara>un outil de Monitoring <link xl:href="http://mmonit.com/monit/">Monit</link></simpara>
 </listitem>
 <listitem>
 <simpara>un sous domaine pointant sur un site autohébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <link xl:href="https://yunohost.org">Yunohost</link>),</simpara>
 </listitem>
 <listitem>
-<simpara>Un outil de Monitoring <link xl:href="http://munin-monitoring.org/">Munin</link></simpara>
+<simpara>un site sous <link xl:href="https://www.joomla.fr/">Joomla</link>,</simpara>
 </listitem>
 <listitem>
-<simpara>Un outil de Monitoring <link xl:href="http://mmonit.com/monit/">Monit</link></simpara>
+<simpara>un serveur et un site  de partage de fichiers <link xl:href="https://www.seafile.com">Seafile</link>,</simpara>
 </listitem>
 <listitem>
 <simpara>un site <link xl:href="https://gitea.io">Gitea</link> et son repository GIT,</simpara>
@@ -78,23 +87,17 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <simpara>un site <link xl:href="https://wordpress.com">Wordpress</link></simpara>
 </listitem>
 <listitem>
-<simpara>des outils de sécurisation, mise à jour automatique et d&#8217;audit du serveur</simpara>
-</listitem>
-<listitem>
-<simpara>A venir: strut, <link xl:href="https://www.concrete5.org/">concrete5</link>, <link xl:href="https://gitlab.com/">gitlab</link>, <link xl:href="https://piwigo.org/">piwigo</link>, <link xl:href="https://www.borgbackup.org/">borg</link></simpara>
+<simpara>à venir: strut, <link xl:href="https://www.concrete5.org/">concrete5</link>, <link xl:href="https://gitlab.com/">gitlab</link>, <link xl:href="https://piwigo.org/">piwigo</link>, <link xl:href="https://www.borgbackup.org/">borg</link></simpara>
 </listitem>
 </itemizedlist>
 <simpara>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</simpara>
-<simpara>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal.
-Donc que vous savez vous servir de <literal>ssh</literal> pour Linux ou de <literal>putty</literal> pour Windows</simpara>
-<simpara>Dans le document, on peut trouver des textes entourés de &lt;texte&gt;. Cela signifie que vous devez mettre ici votre propre texte selon vos préférences.
-Si le texte ne doit pas contenir d&#8217;espace, la phrase contient elle même des _ ou des - pour l&#8217;indiquer en fonction de ce qui est autorisé.</simpara>
-<simpara>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'.
-Le taux de complexité est bien meilleur et les mots de passe sont plus facile à retenir que 'Az3~1ym_a&amp;'</simpara>
-<simpara>Le cout pour avoir ce type de serveur est relativement faible:
+<simpara>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal, que vous savez vous servir de <literal>ssh</literal> pour Linux ou de <literal>putty</literal> pour Windows, que vous avez des notions élémentaires de Shell Unix et que vous savez vous servir de l&#8217;éditeur <literal>vi</literal>. Si <literal>vi</literal> est trop compliqué pour vous, je vous suggère d&#8217;utiliser l&#8217;éditeur de commande <literal>nano</literal> à la place.</simpara>
+<simpara>Dans le document, on peut trouver des textes entourés de &lt;texte&gt;. Cela signifie que vous devez mettre ici votre propre texte selon vos préférences.</simpara>
+<simpara>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'. Ce dernier exemple a un taux de complexité est bien meilleur et les mots de passe classiques. Il est aussi plus facile à retenir que 'Az3~1ym_a&amp;'.</simpara>
+<simpara>Le coût pour mettre en oeuvre ce type de serveur est relativement faible:
 * Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y avoir des promos)
 * Compter 5€TTC/mois pour un VPS de base. Une machine plus sérieuse sera à 15€/mois</simpara>
-<simpara>Le budget est donc de 6-7€TTC/mois pour une offre d&#8217;entrée de gamme. Il faut plus sérieusement compter sur 15€/mois tout compris.</simpara>
+<simpara>Le budget est donc de 6-7€TTC/mois pour une offre d&#8217;entrée de gamme. Il faut plus sérieusement compter sur 16€/mois tout compris.</simpara>
 </section>
 <section xml:id="_choix_du_vps">
 <title>Choix du VPS</title>
@@ -211,6 +214,218 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 </section>
 <section xml:id="_installation_basique">
 <title>Installation basique</title>
+<section xml:id="_mise_à_jour_des_sources_de_paquets_debian">
+<title>Mise à jour des sources de paquets Debian</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Se loguer <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Modifier la liste standard de paquets</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Éditer le fichier <literal>/etc/apt/sources.list</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/apt/sources.list</programlisting>
+</listitem>
+<listitem>
+<simpara>Dé-commenter les lignes débutant par <literal>deb</literal> et contenant le terme <literal>backports</literal>. Par exemple pour <literal>#deb <link xl:href="http://deb.debian.org/debian">http://deb.debian.org/debian</link> buster-backports main contrib non-free</literal> enlever le # en début de ligne</simpara>
+</listitem>
+<listitem>
+<simpara>Ajouter sur toutes les lignes les paquets <literal>contrib</literal> et <literal>non-free</literal> . en ajoutant ces textes après chaque mot <literal>main</literal> du fichier <literal>source.list</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Effectuer une mise à niveau du système</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Mettez à jour la liste des paquets. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt update</programlisting>
+</listitem>
+<listitem>
+<simpara>Installez les nouveautés. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt dist-upgrade</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Effectuez du ménage. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt autoremove</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_des_paquets_de_base">
+<title>Installation des paquets de base</title>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends</programlisting>
+</section>
+<section xml:id="_installation_dun_repository_pour_etc">
+<title>Installation d&#8217;un repository pour <literal>/etc</literal></title>
+<simpara>Si vous souhaitez gérer en gestion de configuration le contenu de votre répertoire <literal>/etc</literal>, installez <literal>etckeeper</literal>.</simpara>
+<simpara>Cette installation est optionnelle.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install etckeeper</programlisting>
+</listitem>
+<listitem>
+<simpara>Vous pouvez créer un repository privé dans le cloud pour stocker votre configuration de serveur (autre serveur privé de confiance ou repository privé  <literal>Gitlab</literal> ou <literal>Github</literal>).</simpara>
+</listitem>
+<listitem>
+<simpara>Ajoutez ce repository distant. Pour <literal>Gitlab</literal> et <literal>Github</literal>, une fois le repository créé, demandez l&#8217;affichage de la commande git pour une communication en ssh. Tapez ensuite sur votre serveur :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /etc
+git remote add origin git@github.com:username/etc_keeper.git <co xml:id="CO3-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO3-1">
+<para>remplacer l&#8217;url par celle qui correspond au chemin de votre repository</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>modifier le fichier de configuration de <literal>etckeeper</literal>. tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/etckeeper/etckeeper.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Recherchez la ligne contenant <literal>PUSH_REMOTE</literal> et ajoutez y tous les repositories distant sur lesquels vous souhaitez pousser les modifications. Pour notre configuration, mettez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">PUSH_REMOTE="origin"</programlisting>
+</listitem>
+<listitem>
+<simpara>Pour éviter demandes de mot de passe de la part de <literal>github</literal> ou <literal>gitlab</literal>, il est nécessaire de déclarer une clé publique sur leur site. Créez une clé sur votre serveur pour l&#8217;utilisateur root:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Créer un répertoire <literal>/root/.ssh</literal> s&#8217;il n&#8217;existe pas. tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /root
+mkdir -p .ssh</programlisting>
+</listitem>
+<listitem>
+<simpara>Allez dans le répertoire. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /root/.ssh</programlisting>
+</listitem>
+<listitem>
+<simpara>Générez vous clés. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh-keygen -t rsa</programlisting>
+</listitem>
+<listitem>
+<simpara>Un ensemble de questions apparaît. Si un texte vous explique que le fichier existe déjà, arrêtez la procédure. Cela signifie que vous avez déjà créé une clé et que vous risquez de perdre la connexion à d&#8217;autres serveurs si vous en générez une nouvelle. Sinon, appuyez sur Entrée à chaque fois pour accepter les valeurs par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Allez sur <literal>gitlab</literal> ou <literal>github</literal> dans la rubriques "settings" et le menu "SSH keys". Ajoutez la clé que vous aurez affiché avec la commande suivante:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cat /root/.ssh/id_rsa.pub</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Effectuez un premier push. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">git push -u origin master</programlisting>
+</listitem>
+<listitem>
+<simpara>aucun mot de passe ne doit vous être demandé. Si ce n&#8217;est pas le cas, re-vérifier les étapes précédentes.</simpara>
+</listitem>
+<listitem>
+<simpara>Lancer <literal>etckeeper</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">etckeeper commit</programlisting>
+</listitem>
+<listitem>
+<simpara>Tout le contenu de <literal>/etc</literal> est poussé sur le repository. Saisissez un commentaire.</simpara>
+</listitem>
+<listitem>
+<simpara>C&#8217;est fait !</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installer_loutil_debfoster">
+<title>Installer l&#8217;outil Debfoster</title>
+<simpara>L&#8217;outil <literal>debfoster</literal> permet de ne conserver que les paquets essentiels.</simpara>
+<simpara>Cette installation est optionnelle.</simpara>
+<simpara>Il maintient un fichier <literal>keepers</literal> présent dans <literal>/var/lib/debfoster</literal></simpara>
+<simpara>En répondant aux questions de conservations de paquets, <literal>debfoster</literal> maintient la liste des paquets uniques nécessaires au système.
+Tous les autres paquets seront supprimés.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Se loguer <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Ajouter le paquet <literal>debfoster</literal>. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install debfoster</programlisting>
+</listitem>
+<listitem>
+<simpara>Lancez <literal>debfoster</literal>. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">debfoster</programlisting>
+</listitem>
+<listitem>
+<simpara>Répondez au questions pour chaque paquet</simpara>
+</listitem>
+<listitem>
+<simpara>Acceptez la liste des modifications proposées à la fin. Les paquets superflus seront supprimés</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_dun_fichier_keeper_dans_etc">
+<title>Création d&#8217;un fichier keeper dans /etc</title>
+<simpara>Vous pourriez être intéressé après l&#8217;installation de <literal>debfoster</literal> et de <literal>etckeeper</literal> de construire automatiquement un fichier qui contient la liste des paquets qui permettent de réinstaller le systeme:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Loguez vous comme <literal>root</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/etckeeper/pre-commit.d/35debfoster</programlisting>
+</listitem>
+<listitem>
+<simpara>Saisissez dans le fichier:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
+set -e
+
+# Make sure sort always sorts in same order.
+LANG=C
+export LANG
+
+shellquote() {
+        # Single quotes text, escaping existing single quotes.
+        sed -e "s/'/'\"'\"'/g" -e "s/^/'/" -e "s/$/'/"
+}
+
+
+if [ "$VCS" = git ] || [ "$VCS" = hg ] || [ "$VCS" = bzr ] || [ "$VCS" = darcs ]; then
+        # Make sure the file is not readable by others, since it can leak
+        # information about contents of non-readable directories in /etc.
+        debfoster -q -k /etc/keepers
+        chmod 600 /etc/keepers
+        sed -i "1i\\# debfoster file" /etc/keepers
+        sed -i "1i\\# Generated by etckeeper.  Do not edit."  /etc/keepers
+
+        # stage the file as part of the current commit
+        if [ "$VCS" = git ]; then
+                # this will do nothing if the keepers file is unchanged.
+                git add keepers
+        fi
+        # hg, bzr and darcs add not done, they will automatically
+        # include the file in the current commit
+fi</programlisting>
+</listitem>
+<listitem>
+<simpara>Sauvez et tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 755 /etc/etckeeper/pre-commit.d/35debfoster</programlisting>
+</listitem>
+<listitem>
+<simpara>Exécutez maintenant <literal>etckeeper</literal></simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/etckeeper/pre-commit.d/35debfoster</programlisting>
+</listitem>
+<listitem>
+<simpara>Le fichier keepers est créé et sauvegardé automatiquement.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_des_mises_à_jours_automatiques">
+<title>Installation des mises à jours automatiques</title>
+<simpara>Si vous souhaitez installer automatiquement les paquets Debian de correction de bugs de sécurité, cette installation est pour vous.</simpara>
+<simpara>Cette installation est optionnelle.</simpara>
+<warning>
+<simpara>L&#8217;installation automatique de paquets peut conduire dans certains cas très rare à des dysfonctionnements du serveur. Il est important de regarder périodiquement les logs d&#8217;installation</simpara>
+</warning>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install unattended-upgrades</programlisting>
+</section>
 <section xml:id="_vérification_du_nom_de_serveur">
 <title>Vérification du nom de serveur</title>
 <simpara>Cette partie consiste à vérifier que le serveur a un hostname correctement configuré.</simpara>
@@ -292,9 +507,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Dans une autre fenêtre, se connecter sur le serveur avec votre nouveau compte <literal>&lt;sudo_username&gt;</literal>:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO3-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO4-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO3-1">
+<callout arearefs="CO4-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -327,9 +542,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Faites maintenant l&#8217;essai de vous re-loguer avec le compte root.Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO4-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO5-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO4-1">
+<callout arearefs="CO5-1">
 <para>Remplacer ici &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -339,12 +554,12 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="_création_dune_clé_de_connexion_ssh">
-<title>Création d&#8217;une clé de connexion ssh</title>
+<section xml:id="_création_dune_clé_de_connexion_ssh_locale">
+<title>Création d&#8217;une clé de connexion ssh locale</title>
 <simpara>Pour créer une clé et la déployer:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara>Créez une clé sur votre machine locale:</simpara>
+<simpara>Créez une clé sur votre machine locale (et pas sur le serveur distant!):</simpara>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Ouvrir un terminal</simpara>
@@ -371,9 +586,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Loguez vous sur votre serveur distant. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO5-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO6-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO5-1">
+<callout arearefs="CO6-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -403,9 +618,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Vérifiez que tout fonctionne en vous connectant. Tapez: :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO6-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO7-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO6-1">
+<callout arearefs="CO7-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -442,43 +657,16 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 </orderedlist>
 <simpara>L&#8217;utilisateur nom_d_utilisateur pourra se logger root sans mot de passe au travers de la commande <literal>sudo bash</literal></simpara>
 </section>
-<section xml:id="_mise_à_jour_des_sources_de_paquets_debian">
-<title>Mise à jour des sources de paquets Debian</title>
+<section xml:id="_installer_loutil_dselect">
+<title>Installer l&#8217;outil dselect</title>
+<simpara>L&#8217;outil <literal>dselect</literal> permet de choisir de façon interactive les paquets que l&#8217;on souhaite installer.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Se loguer <literal>root</literal> sur le serveur</simpara>
 </listitem>
 <listitem>
-<simpara>Modifier la liste standard de paquets</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Éditer le fichier <literal>/etc/apt/sources.list</literal>. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /etc/apt/sources.list</programlisting>
-</listitem>
-<listitem>
-<simpara>Dé-commenter les lignes débutant par <literal>deb</literal> et contenant le terme <literal>backports</literal>. Par exemple pour <literal>#deb <link xl:href="http://deb.debian.org/debian">http://deb.debian.org/debian</link> buster-backports main contrib non-free</literal> enlever le # en début de ligne</simpara>
-</listitem>
-<listitem>
-<simpara>Ajouter sur toutes les lignes les paquets <literal>contrib</literal> et <literal>non-free</literal> . en ajoutant ces textes après chaque mot <literal>main</literal> du fichier <literal>source.list</literal></simpara>
-</listitem>
-</orderedlist>
-</listitem>
-<listitem>
-<simpara>Effectuer une mise à niveau du système</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Mettez à jour la liste des paquets. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt update</programlisting>
-</listitem>
-<listitem>
-<simpara>Installez les nouveautés. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt dist-upgrade</programlisting>
-</listitem>
-</orderedlist>
-</listitem>
-<listitem>
-<simpara>Effectuez du ménage. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt autoremove</programlisting>
+<simpara>Ajouter le paquet <literal>dselect</literal>. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install dselect</programlisting>
 </listitem>
 </orderedlist>
 </section>
@@ -494,20 +682,8 @@ mkswap /swapfile
 swapon /swapfile</programlisting>
 </listitem>
 <listitem>
-<simpara>Enfin ajoutez une entrée dans le fichier fstab. Tapez <literal>vi /etc/fstab</literal> et ajoutez la ligne: <literal>/swapfile swap swap defaults 0 0</literal></simpara>
-</listitem>
-</orderedlist>
-</section>
-<section xml:id="_installation_des_paquets_de_base">
-<title>Installation des paquets de base</title>
-<orderedlist numeration="arabic">
-<listitem>
-<simpara>tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends</programlisting>
-</listitem>
-<listitem>
-<simpara>Si vous souhaitez installer automatiquement les paquets Debian de correction de bugs de sécurité, tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install unattended-upgrades</programlisting>
+<simpara>Enfin ajoutez une entrée dans le fichier fstab. Tapez <literal>vi /etc/fstab</literal> et ajoutez la ligne:</simpara>
+<screen>/swapfile swap swap defaults 0 0</screen>
 </listitem>
 </orderedlist>
 </section>
@@ -688,7 +864,7 @@ systemctl disable spamassassin.</programlisting>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Installez les modules Apache nécessaires. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">a2enmod suexec rewrite ssl proxy_http actions include dav_fs dav auth_digest cgi headers actions proxy_fcgi alias.</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">a2enmod suexec rewrite ssl proxy_http actions include dav_fs dav auth_digest cgi headers actions proxy_fcgi alias speling</programlisting>
 </listitem>
 <listitem>
 <simpara>Pour ne pas être confronté aux problèmes de sécurité  de type <link xl:href="https://www.howtoforge.com/tutorial/httpoxy-protect-your-server/">HTTPOXY</link>, il est nécessaire de créer un petit module dans apache.</simpara>
@@ -977,9 +1153,9 @@ systemctl restart apache2</programlisting>
 </listitem>
 <listitem>
 <simpara>Créez un utilisateur phpmyadmin. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; <co xml:id="CO7-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; <co xml:id="CO8-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO7-1">
+<callout arearefs="CO8-1">
 <para><literal>mypassword</literal> doit être remplacé par un mot de passe choisi.</para>
 </callout>
 </calloutlist>
@@ -1004,7 +1180,7 @@ systemctl restart apache2</programlisting>
 $cfg['Servers'][$i]['controlhost'] = 'localhost';
 $cfg['Servers'][$i]['controlport'] = '';
 $cfg['Servers'][$i]['controluser'] = 'pma';
-$cfg['Servers'][$i]['controlpass'] = 'mypassword'; <co xml:id="CO8-1"/>
+$cfg['Servers'][$i]['controlpass'] = 'mypassword'; <co xml:id="CO9-1"/>
 
 
 /* Storage database and tables */
@@ -1029,7 +1205,7 @@ $cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
 $cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
 $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';</programlisting>
 <calloutlist>
-<callout arearefs="CO8-1">
+<callout arearefs="CO9-1">
 <para>A tous les endroit ou vous voyez dans le texte ci dessus le mot <literal>mypassword</literal> mettez celui choisi. N&#8217;oubliez pas de dé-commenter les lignes.</para>
 </callout>
 </calloutlist>
@@ -1065,6 +1241,14 @@ Alias /webmail /var/lib/roundcube</programlisting>
 </listitem>
 </orderedlist>
 </section>
+<section xml:id="_installation_de_lets_encrypt">
+<title>Installation de Let&#8217;s Encrypt</title>
+<simpara>Installez Let&#8217;s Encrypt. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/bin
+wget https://dl.eff.org/certbot-auto
+chmod a+x certbot-auto
+./certbot-auto --install-only</programlisting>
+</section>
 <section xml:id="_installation_dun_scanner_de_vulnérabilités">
 <title>Installation d&#8217;un scanner de vulnérabilités</title>
 <orderedlist numeration="arabic">
@@ -1087,47 +1271,6 @@ Alias /webmail /var/lib/roundcube</programlisting>
 </listitem>
 <listitem>
 <simpara>L&#8217;outil vous listera dans une forme très synthétique la liste des vulnérabilités et des améliorations de sécurité à appliquer.</simpara>
-</listitem>
-</orderedlist>
-</section>
-</section>
-<section xml:id="_installer_quelques_outils_debian">
-<title>Installer quelques outils Debian</title>
-<section xml:id="_installer_loutil_debfoster">
-<title>Installer l&#8217;outil debfoster</title>
-<simpara>L&#8217;outil <literal>debfoster</literal> permet de ne conserver que les paquets essentiels.
-Il maintient un fichier <literal>keepers</literal> présent dans <literal>/var/lib/debfoster</literal></simpara>
-<simpara>En répondant aux questions de conservations de paquets, <literal>debfoster</literal> maintient la liste des paquets uniques nécessaires au système.
-Tous les autres paquets seront supprimés.</simpara>
-<orderedlist numeration="arabic">
-<listitem>
-<simpara>Se loguer <literal>root</literal> sur le serveur</simpara>
-</listitem>
-<listitem>
-<simpara>Ajouter le paquet <literal>debfoster</literal>. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install debfoster</programlisting>
-</listitem>
-<listitem>
-<simpara>Lancez debfoster. Tapez <literal>debfoster</literal>.</simpara>
-</listitem>
-<listitem>
-<simpara>Répondez au questions pour chaque paquet</simpara>
-</listitem>
-<listitem>
-<simpara>Acceptez la liste des modifications proposées à la fin. Les paquets superflus seront supprimés</simpara>
-</listitem>
-</orderedlist>
-</section>
-<section xml:id="_installer_loutil_dselect">
-<title>Installer l&#8217;outil dselect</title>
-<simpara>L&#8217;outil <literal>dselect</literal> permet de choisir de façon interactive les paquets que l&#8217;on souhaite installer.</simpara>
-<orderedlist numeration="arabic">
-<listitem>
-<simpara>Se loguer <literal>root</literal> sur le serveur</simpara>
-</listitem>
-<listitem>
-<simpara>Ajouter le paquet <literal>deselect</literal>. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install deselect</programlisting>
 </listitem>
 </orderedlist>
 </section>
@@ -1393,12 +1536,15 @@ Tous les autres paquets seront supprimés.</simpara>
 </orderedlist>
 </section>
 </section>
-<section xml:id="_configuration_dun_premier_domaine">
-<title>Configuration d&#8217;un premier domaine</title>
+<section xml:id="domain-config">
+<title>Configuration d&#8217;un domaine</title>
 <simpara>Cette configuration est réalisée avec le Panel ISPConfig installé dans le chapitre précédent.
 L&#8217;étape "login initial" n&#8217;est à appliquer qu&#8217;une seule fois. Une fois votre premier domaine configuré, vous pourrez vous loguer à ISPconfig en utilisant ce domaine à l&#8217;adresse: <link xl:href="https://example.com:8080/">https://example.com:8080/</link> .</simpara>
 <section xml:id="_login_initial">
 <title>Login initial</title>
+<note>
+<simpara>Cette procédure n&#8217;est à appliquer que lorsqu&#8217;aucun domaine n&#8217;est encore créé.</simpara>
+</note>
 <simpara>Vous devrez tout d&#8217;abord vous loguer sur le serveur ISPConfig.
 Comme vous n&#8217;avez pas encore configuré de nom de de domaine, vous devrez vous loguer de prime abord sur le site <link xl:href="http://vpsxxxxxx.ovh.net:8080/">http://vpsxxxxxx.ovh.net:8080/</link> .</simpara>
 <simpara>Utiliser le login: Admin et le mot de passe que vous avez configuré lors de l&#8217;installation d&#8217;ISPConfig</simpara>
@@ -1677,8 +1823,7 @@ _pop3._tcp           3600 SRV   0  0 0   .
 _autodiscover._tcp   3600 SRV   0 0 443  autoconfig.example.com.
 example.com.         3600 TXT            "v=spf1 mx a ~all"</screen>
 </section>
-</section>
-<section xml:id="_création_dun_site_web">
+<section xml:id="domain-site">
 <title>Création d’un site web</title>
 <simpara>Dans la suite le site web sera nommé "example.com".</simpara>
 <simpara>Vous devez avoir avant tout défini le "record" DNS associé au site.</simpara>
@@ -1765,10 +1910,13 @@ ProxyPassReverse / http://127.0.0.1[:port_number_if_any]/[path_if_any]</programl
 </listitem>
 </orderedlist>
 </listitem>
+<listitem>
+<simpara>Vous pouvez maintenant tester la qualité de la  connexion de votre site en allant sur: <link xl:href="https://www.ssllabs.com/ssltest">SSL Server Test</link>. Saisissez votre nom de domaine et cliquez sur <literal>Submit</literal>. Votre site doit au moins être de <literal>Grade A</literal>.</simpara>
+</listitem>
 </orderedlist>
 </section>
-<section xml:id="_création_dun_sous_domaine_vhost">
-<title>Création d’un sous-domaine (vhost)</title>
+<section xml:id="subdomain-site">
+<title>Création d’un Site Vhost</title>
 <simpara>Dans la suite le sous-domaine sera nommé "site.example.com".</simpara>
 <simpara>Vous devez avoir avant tout défini le "record" DNS associé au site.
 Vous ne pouvez définir un sous-domaine que si vous avez défini le site web racine auparavant.</simpara>
@@ -1847,19 +1995,18 @@ ProxyPassReverse / http://127.0.0.1[:port_number_if_any]/[path_if_any]</programl
 </listitem>
 </orderedlist>
 </listitem>
+<listitem>
+<simpara>Vous pouvez maintenant tester la qualité de la  connexion de votre site en allant sur: <link xl:href="https://www.ssllabs.com/ssltest">SSL Server Test</link>. Saisissez votre nom de domaine et cliquez sur <literal>Submit</literal>. Votre site doit au moins être de <literal>Grade A</literal>.</simpara>
+</listitem>
 </orderedlist>
-<section xml:id="_configuration_de_lets_encrypt">
-<title>Configuration de Let&#8217;s Encrypt</title>
-<simpara>Installez Let&#8217;s Encrypt. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/bin
-wget https://dl.eff.org/certbot-auto
-chmod a+x certbot-auto
-./certbot-auto --install-only</programlisting>
 </section>
-<section xml:id="_associer_un_certificat_reconnu_à_vos_outils">
-<title>Associer un certificat reconnu à vos outils</title>
+<section xml:id="_associer_des_certificats_reconnu_à_vos_outils">
+<title>Associer des certificats reconnu à vos outils</title>
 <simpara>Comme vous avec créé votre premier domaine avec SSL et let&#8217;s encrypt dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux services de base:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara>Vous devez avoir créé au préalable un site pour les domaines</simpara>
+</listitem>
 <listitem>
 <simpara>Liez le certificat d&#8217;ISPconfig avec celui du domaine crée</simpara>
 <itemizedlist>
@@ -1868,13 +2015,13 @@ chmod a+x certbot-auto
 <programlisting language="bash" linenumbering="unnumbered">cd /usr/local/ispconfig/interface/ssl/
 mv ispserver.crt ispserver.crt-$(date +"%y%m%d%H%M%S").bak
 mv ispserver.key ispserver.key-$(date +"%y%m%d%H%M%S").bak
-ln -s /etc/letsencrypt/live/&lt;example.com&gt;/fullchain.pem ispserver.crt <co xml:id="CO9-1"/>
-ln -s /etc/letsencrypt/live/&lt;example.com&gt;/privkey.pem ispserver.key <co xml:id="CO9-2"/>
+ln -s /etc/letsencrypt/live/example.com/fullchain.pem ispserver.crt <co xml:id="CO10-1"/>
+ln -s /etc/letsencrypt/live/example.com/privkey.pem ispserver.key <co xml:id="CO10-2"/>
 cat ispserver.{key,crt} &gt; ispserver.pem
 chmod 600 ispserver.pem
 systemctl restart apache2</programlisting>
 <calloutlist>
-<callout arearefs="CO9-1 CO9-2">
+<callout arearefs="CO10-1 CO10-2">
 <para>remplacer &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -1889,8 +2036,8 @@ systemctl restart apache2</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">cd /etc/postfix/
 mv smtpd.cert smtpd.cert-$(date +"%y%m%d%H%M%S").bak
 mv smtpd.key smtpd.key-$(date +"%y%m%d%H%M%S").bak
-ln -s /usr/local/ispconfig/interface/ssl/ispserver.crt smtpd.cert
-ln -s /usr/local/ispconfig/interface/ssl/ispserver.key smtpd.key
+ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert
+ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key
 service postfix restart
 service dovecot restart</programlisting>
 </listitem>
@@ -1939,7 +2086,7 @@ service pure-ftpd-mysql restart
 service monit restart
 service postfix restart
 service dovecot restart
-service nginx restart</programlisting>
+service apache2 restart</programlisting>
 </listitem>
 <listitem>
 <simpara>Sauvez et quittez. Tapez ensuite:</simpara>
@@ -1947,9 +2094,9 @@ service nginx restart</programlisting>
 echo "root" &gt;&gt; /etc/incron.allow
 incrontab -e.</programlisting>
 <simpara>et ajoutez les lignes ci dessous dans le fichier:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/etc/letsencrypt/archive/example.com/ IN_MODIFY ./etc/init.d/le_ispc_pem.sh <co xml:id="CO10-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <co xml:id="CO11-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO10-1">
+<callout arearefs="CO11-1">
 <para>Remplacer example.com par votre nom de domaine.</para>
 </callout>
 </calloutlist>
@@ -2144,7 +2291,7 @@ set alert stef@fpvview.site
 set httpd port 2812 and
  SSL ENABLE
  PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
- allow admin:"my_password" <co xml:id="CO11-1"/>
+ allow admin:"my_password" <co xml:id="CO12-1"/>
 
 check process sshd with pidfile /var/run/sshd.pid
  start program "/usr/sbin/service ssh start"
@@ -2225,7 +2372,7 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
  if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
  if 5 restarts within 5 cycles then timeout</screen>
 <calloutlist>
-<callout arearefs="CO11-1">
+<callout arearefs="CO12-1">
 <para>remplacez my_password par votre mot de passe</para>
 </callout>
 </calloutlist>
@@ -2276,10 +2423,763 @@ echo "hello" &gt; /var/www/html/monit/token</programlisting>
 <title>Configuration de la messagerie</title>
 <section xml:id="_création_du_serveur_de_messagerie">
 <title>Création du serveur de messagerie</title>
-<simpara>Pour créer la messagerie, aller dans email→domain→cliquez sur add new domain.
-Sélectionner le nom de domaine et créer des identifiants DKIM.
-Une fois cela fait, retourner dans la gestion des records de domaine et activer le type DMARC. Garder le paramétrage par défaut et sauvegardez.
-Faites de même pour les enregistrements SPF et sélectionner le mécanisme softfail.</simpara>
+<simpara>Pour créer un serveur de messagerie:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Assurez vous d&#8217;avoir créé le domaine DNS. Si ce n&#8217;est pas le cas déroulez tout d&#8217;abord la procédure de <link linkend="domain-config">création de domaines</link></simpara>
+</listitem>
+<listitem>
+<simpara>Aller dans la rubrique <literal>Email</literal>. Sélectionnez ensuite le menu <literal>Domain</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add new Domain</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez le nom de domaine.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>DomainKeys Indentified Mail (DKIM)</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>enable DKIM</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Generate DKIM Private-key</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Une fois cela fait, retourner dans la gestion des <literal>Records</literal> de domaine et activer le type DMARC</simpara>
+</listitem>
+<listitem>
+<simpara>Garder le paramétrage par défaut et sauvegardez.</simpara>
+</listitem>
+<listitem>
+<simpara>Faites de même pour les enregistrements SPF mais sélectionnez le mécanisme softfail.</simpara>
+</listitem>
+<listitem>
+<simpara>Votre serveur est créé et protégé Contre les spams (entrants et sortants).</simpara>
+</listitem>
+<listitem>
+<simpara>Vous pouvez le tester en allant sur le site <link xl:href="https://mxtoolbox.com/diagnostic.aspx">MxToolbox</link>.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Entrez le nom de host de votre serveur de mail: mail.example.com.</simpara>
+</listitem>
+<listitem>
+<simpara>cliquez sur <literal>test Email Server</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Tout doit être correct sauf éventuellement le reverse DNS qui ne doit pas pointer sur le nom de domaine.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_de_lautoconfig_pour_thunderbird_et_android">
+<title>Création de l’autoconfig pour Thunderbird et Android</title>
+<simpara>La procédure est utilisé par Thunderbird et Android pour configurer automatiquement les paramètres de la messagerie.</simpara>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>autoconfig</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>autoconfig</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>php-FPM</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">AddType application/x-httpd-php .php .php3 .php4 .php5 .xml
+
+CheckSpelling On
+CheckCaseOnly Off</programlisting>
+</listitem>
+<listitem>
+<simpara>Sauver.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Loguez vous sur le serveur en tant que <literal>root</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Dans le répertoire <literal>/var/www/autoconfig.example.com/autoconfig/</literal> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/www/autoconfig.example.com/autoconfig/
+chmod 755 /var/www/autoconfig.example.com/autoconfig/
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/ <co xml:id="CO13-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO13-1">
+<para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>A l’intérieur de ce répertoire, Editez un fichier <literal>config-v1.1.xml</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /var/www/autoconfig.example.com/autoconfig/config-v1.1.xml</programlisting>
+</listitem>
+</orderedlist>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Y coller:</simpara>
+<programlisting language="xml" linenumbering="unnumbered">&lt;?php
+header('Content-Type: application/xml');
+?&gt;
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;clientConfig version="1.1"&gt;
+ &lt;emailProvider id="example.com"&gt; <co xml:id="CO14-1"/>
+   &lt;domain&gt;example.com&lt;/domain&gt; <co xml:id="CO14-2"/>
+   &lt;displayName&gt;Example Mail&lt;/displayName&gt; <co xml:id="CO14-3"/>
+   &lt;displayShortName&gt;Example&lt;/displayShortName&gt; <co xml:id="CO14-4"/>
+   &lt;incomingServer type="imap"&gt;
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO14-5"/>
+     &lt;port&gt;993&lt;/port&gt;
+     &lt;socketType&gt;SSL&lt;/socketType&gt;
+     &lt;authentication&gt;password-encrypted&lt;/authentication&gt;
+     &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
+   &lt;/incomingServer&gt;
+   &lt;incomingServer type="pop3"&gt;
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO14-6"/>
+     &lt;port&gt;995&lt;/port&gt;
+     &lt;socketType&gt;SSL&lt;/socketType&gt;
+     &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
+     &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
+   &lt;/incomingServer&gt;
+   &lt;outgoingServer type="smtp"&gt;
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO14-7"/>
+     &lt;port&gt;465&lt;/port&gt;
+     &lt;socketType&gt;SSL&lt;/socketType&gt;
+     &lt;authentication&gt;password-encrypted&lt;/authentication&gt;
+     &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
+   &lt;/outgoingServer&gt;
+   &lt;outgoingServer type="smtp"&gt;
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO14-8"/>
+     &lt;port&gt;587&lt;/port&gt;
+     &lt;socketType&gt;STARTTLS&lt;/socketType&gt;
+     &lt;authentication&gt;password-encrypted&lt;/authentication&gt;
+     &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
+   &lt;/outgoingServer&gt;
+ &lt;/emailProvider&gt;
+&lt;/clientConfig&gt;</programlisting>
+<calloutlist>
+<callout arearefs="CO14-1 CO14-2 CO14-5 CO14-6 CO14-7 CO14-8">
+<para>mettre à la place de example.com votre nom de domaine</para>
+</callout>
+<callout arearefs="CO14-3">
+<para>mettre ici votre libellé long pour votre nom de messagerie</para>
+</callout>
+<callout arearefs="CO14-4">
+<para>mettre ici un libellé court pour votre nom de messagerie</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Donner la permission en lecture seule et affecter les groupes d&#8217;appartenance. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 600 /var/www/autoconfig.example.com/autoconfig/config-v1.1.xml
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/config-v1.1.xml <co xml:id="CO15-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO15-1">
+<para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
+</callout>
+</calloutlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_dautodiscover_pour_outlook">
+<title>Création d’autodiscover pour Outlook</title>
+<simpara>Outlook utilise un autre mécanisme pour se configurer automatiquement. Il est basé sur l&#8217;utilisation du nom de sous-domaine <literal>autodiscover</literal>.</simpara>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>autodiscover</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>autodiscover</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>php-FPM</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">CheckSpelling On
+CheckCaseOnly On
+RewriteEngine On
+ProxyPass "/" http://autoconfig.example.com/ <co xml:id="CO16-1"/>
+ProxyPassReverse "/" http://autoconfig.example.com/ <co xml:id="CO16-2"/>
+RewriteRule ^/ - [QSA,L]</programlisting>
+<calloutlist>
+<callout arearefs="CO16-1 CO16-2">
+<para>remplacer example.com par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Sauver.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Loguez vous sur le serveur en tant que <literal>root</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Dans le répertoire <literal>/var/www/autoconfig.example.com/autoconfig/</literal>, créer un répertoire <literal>Autodiscover</literal>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/
+chmod 755 /var/www/autoconfig.example.com/autoconfig/Autodiscover/
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co xml:id="CO17-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO17-1">
+<para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>A l’intérieur de ce répertoire, Editez un fichier <literal>Autodiscover.xml</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml</programlisting>
+</listitem>
+</orderedlist>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Y coller:</simpara>
+<programlisting language="xml" linenumbering="unnumbered">&lt;?php
+ $raw = file_get_contents('php://input');
+ $matches = array();
+ preg_match('/&lt;EMailAddress&gt;(.*)&lt;\/EMailAddress&gt;/', $raw, $matches);
+ header('Content-Type: application/xml');
+?&gt;
+ &lt;Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006"&gt;
+   &lt;Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a"&gt;
+     &lt;User&gt;
+       &lt;DisplayName&gt;Example Mail&lt;/DisplayName&gt; <co xml:id="CO18-1"/>
+     &lt;/User&gt;
+     &lt;Account&gt;
+       &lt;AccountType&gt;email&lt;/AccountType&gt;
+       &lt;Action&gt;settings&lt;/Action&gt;
+       &lt;Protocol&gt;
+         &lt;Type&gt;IMAP&lt;/Type&gt;
+         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO18-2"/>
+         &lt;Port&gt;993&lt;/Port&gt;
+         &lt;DomainRequired&gt;off&lt;/DomainRequired&gt;
+         &lt;SPA&gt;off&lt;/SPA&gt;
+         &lt;SSL&gt;on&lt;/SSL&gt;
+         &lt;AuthRequired&gt;on&lt;/AuthRequired&gt;
+         &lt;LoginName&gt;&lt;?php echo $matches[1]; ?&gt;&lt;/LoginName&gt;
+       &lt;/Protocol&gt;
+       &lt;Protocol&gt;
+         &lt;Type&gt;SMTP&lt;/Type&gt;
+         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO18-3"/>
+         &lt;Port&gt;465&lt;/Port&gt;
+         &lt;DomainRequired&gt;off&lt;/DomainRequired&gt;
+         &lt;SPA&gt;off&lt;/SPA&gt;
+         &lt;SSL&gt;on&lt;/SSL&gt;
+         &lt;AuthRequired&gt;on&lt;/AuthRequired&gt;
+         &lt;LoginName&gt;&lt;?php echo $matches[1]; ?&gt;&lt;/LoginName&gt;
+       &lt;/Protocol&gt;
+     &lt;/Account&gt;
+   &lt;/Response&gt;
+ &lt;/Autodiscover&gt;</programlisting>
+<calloutlist>
+<callout arearefs="CO18-2 CO18-3">
+<para>mettre à la place de example.com votre nom de domaine</para>
+</callout>
+<callout arearefs="CO18-1">
+<para>mettre ici votre libellé long pour votre nom de messagerie</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Pointer votre navigateur sur le site <link xl:href="https://autodiscover.example.com/Autodiscover/Autodiscover.xml">https://autodiscover.example.com/Autodiscover/Autodiscover.xml</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le contenu du fichier xml doit s&#8217;afficher</simpara>
+</listitem>
+<listitem>
+<simpara>Vous pouvez faire aussi un test sur le <link xl:href="https://testconnectivity.microsoft.com">Testeur de connectivité Microsoft</link>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>choisissez: <literal>Découverte automatique Outlook</literal></simpara>
+</listitem>
+<listitem>
+<simpara>cliquez sur <literal>suivant</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Entrez votre adresse de courrier: <literal>user@example.com</literal>, un domain: <literal>example\user</literal>, un mot de passe tiré au hazard, Cochez les deux cases en dessous.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>effectuer un test</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Le résultat doit être: <literal>Test de connectivité réussi</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_dune_boite_mail">
+<title>Création d’une boite mail</title>
+<simpara>Pour créer une boite de messagerie:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Aller dans la rubrique <literal>Email</literal>. Sélectionnez ensuite le menu <literal>Email Mailbox</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add new Mailbox</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez les champs suivants:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara><literal>Name:</literal> &#8592; mettez votre prénom et votre nom</simpara>
+</listitem>
+<listitem>
+<simpara><literal>`Email:</literal> &#8592; mail_name @ votre_domaine</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password:</literal> &#8592; saisissez un mot de passe ou générez en un</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password</literal> &#8592; saisissez une deuxième fois votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Quota (0 for unlimited):</literal> &#8592; mettez éventuellement un quota ou laissez 0 pour illimité.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Spamfilter:</literal> &#8592; Sélectionnez <literal>Normal</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Backup:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara><literal>Backup interval:</literal> Sélectionnez <literal>Daily</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Number of backup copies:</literal> Sélectionnez 1</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_de_votre_client_de_messagerie">
+<title>Configuration de votre client de messagerie.</title>
+<simpara>Saisir l&#8217;adresse mail et votre mot de passe doit suffire pour configurer automatiquement votre client de messagerie.</simpara>
+<simpara>Si vous avez besoin de configurer votre client manuellement, voici les informations à saisir:</simpara>
+<informaltable frame="all" rowsep="1" colsep="1">
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="50*"/>
+<colspec colname="col_2" colwidth="50*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Paramètre</entry>
+<entry align="left" valign="top">Valeur</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top"><simpara>Type de serveur</simpara></entry>
+<entry align="left" valign="top"><simpara>IMAP</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Nom de serveur IMAP</simpara></entry>
+<entry align="left" valign="top"><simpara>mail.example.com</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Nom d&#8217;utilisateur IMAP</simpara></entry>
+<entry align="left" valign="top"><simpara><link xl:href="mailto:user@example.com">user@example.com</link></simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Port IMAP</simpara></entry>
+<entry align="left" valign="top"><simpara>993</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Sécurité IMAP</simpara></entry>
+<entry align="left" valign="top"><simpara>SSL/TLS</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Authentification IMAP</simpara></entry>
+<entry align="left" valign="top"><simpara>Normal Password</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Nom de serveur SMTP</simpara></entry>
+<entry align="left" valign="top"><simpara>mail.example.com</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Nom d&#8217;utilisateur SMTP</simpara></entry>
+<entry align="left" valign="top"><simpara><link xl:href="mailto:user@example.com">user@example.com</link></simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Port SMTP</simpara></entry>
+<entry align="left" valign="top"><simpara>465</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Sécurité SMTP</simpara></entry>
+<entry align="left" valign="top"><simpara>SSL/TLS</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Authentification SMTP</simpara></entry>
+<entry align="left" valign="top"><simpara>Normal Password</simpara></entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+</section>
+</section>
+<section xml:id="_installation_de_seafile">
+<title>Installation de Seafile</title>
+<section xml:id="_création_du_site_web_de_seafile">
+<title>Création du site web de Seafile</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>seafile</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>seafile</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">Alias /media {DOCROOT}/private/seafile/seafile-server-latest/seahub/media
+RewriteEngine On
+
+&lt;Location /media&gt;
+Require all granted
+&lt;/Location&gt;
+
+Alias /.well-known {DOCROOT}/private/seafile/.well-known
+RewriteEngine On
+
+&lt;Location /.well-known&gt;
+Require all granted
+&lt;/Location&gt;
+
+ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# seafile httpserver
+#
+ProxyPass /seafhttp http://127.0.0.1:8092
+ProxyPassReverse /seafhttp http://127.0.0.1:8092
+RewriteRule ^/seafhttp - [QSA,L]
+#
+# seahub
+#
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / http://127.0.0.1:8090/
+ProxyPassReverse / http://127.0.0.1:8090/</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_de_bases_de_données">
+<title>Création de bases de données</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Loguez vous sur ISPConfig</simpara>
+</listitem>
+<listitem>
+<simpara>Aller dans la rubrique <literal>Sites</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Aller dans le menu <literal>Database users</literal> pour définir un utilisateur MariaDB</simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add new User</literal> pour créer un nouvel utilisateur</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>seafile</literal> par exemple</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Aller dans le menu <literal>Database</literal> pour définir un utilisateur MariaDB</simpara>
+</listitem>
+<listitem>
+<simpara>Appliquer l&#8217;opération ci après 3 fois d&#8217;affilée pour créer les trois bases suivantes: <literal>ccnetdb</literal>, <literal>seafiledb</literal>, <literal>seahubdb</literal></simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add new Database</literal> pour créer une nouvelle base de données</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Site:</literal> &#8592; sélectionner le site <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database name:</literal> &#8592; Saisissez le nom de la base de données</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <literal>cxseafile</literal>. x: est le numéro de client.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Les trois bases de données doivent apparaitre dans la liste des bases</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_téléchargez_et_installez_seafile">
+<title>Téléchargez et installez Seafile</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Loguez vous comme <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Installez quelques paquets Debian complémentaires. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install python2.7 python-setuptools python-simplejson python-pil python-mysqldb python-flup</programlisting>
+</listitem>
+<listitem>
+<simpara>Je préfère faire tourner mes serveurs dans le répertoire privé plutot que dans le répertoire web pour des questions de sécurité. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private
+mkdir seafile
+cd seafile
+wget https://download.seadrive.org/seafile-server_7.0.5_x86-64.tar.gz
+tar zxvf seafile-server_7.0.5_x86-64.tar.gz
+mkdir installed
+mv seafile-server_* installed
+cd seafile-server-*
+./setup-seafile-mysql.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>A ce moment, vous devez répondre à un certain nombre de questions.</simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez le mode de configuration 2) pour indiquer vous même les informations sur les bases de données créées.</simpara>
+</listitem>
+<listitem>
+<simpara>Vous devrez ensuite donner le nom d&#8217;utilisateur pour la base de données, le mot de passe ainsi que le nom des 3 bases de données.</simpara>
+</listitem>
+<listitem>
+<simpara>Si tout est saisi correctement le programme doit donner une synthèse de ce qui a été configuré</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_lancement_initial">
+<title>Lancement initial</title>
+<simpara>Nous allons effectuer un premier lancement du serveur Seafile:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>allez dans le répertoire contenant les configurations et éditez <literal>gunicorn.conf</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile/conf
+vi gunicorn.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Repèrez le texte <literal>bind=</literal> et mettez un numéro de port 8090 à la place de 8000. Comme ceci:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">bind = "127.0.0.1:8090"</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez le fichier <literal>seafile.conf</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi seafile.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>mettez un port 8092 au lieu du port 8080 saisi pour l&#8217;entrée <literal>fileserver</literal>. Le fichier doit contenir ceci:</simpara>
+<programlisting language="ini" linenumbering="unnumbered">[fileserver]
+port = 8092</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez le fichier <literal>ccnet.conf</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi ccnet.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>modifier l&#8217;entrée SERVICE_URL. Le fichier doit contenir ceci:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez le fichier <literal>seahub_settings.py</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi seahub_settings.py</programlisting>
+</listitem>
+<listitem>
+<simpara>modifier l&#8217;entrée FILE_SERVER_ROOT. Le fichier doit contenir ceci:</simpara>
+<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp'</programlisting>
+</listitem>
+<listitem>
+<simpara>Démarrez Seafile. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">./seafile.sh start
+./seahub.sh start 8090</programlisting>
+</listitem>
+<listitem>
+<simpara>Faites pointer votre navigateur sur <link xl:href="https://seafile.example.com">https://seafile.example.com</link></simpara>
+</listitem>
+<listitem>
+<simpara>La page de login de Seafile doit s&#8217;afficher</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_lancement_automatique_de_seafile">
+<title>Lancement automatique de Seafile</title>
+<simpara>Afin de s&#8217;assurer que Seafile tourne en permanence, on doit créer un script de lancement automatique de Seafile:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créer un script de lancement automatique. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile
+touch startseafile.sh
+chmod +x startseafile.sh
+vi startseafile.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Coller le texte suivant de le fichier ouvert:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/bash
+
+# Change the value of "seafile_dir" to your path of seafile installation
+seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO19-1"/>
+script_path=${seafile_dir}/seafile-server-latest
+seafile_init_log=${seafile_dir}/logs/seafile.init.log
+seahub_init_log=${seafile_dir}/logs/seahub.init.log
+
+case "$1" in
+start)
+${script_path}/seafile.sh start &gt;&gt; ${seafile_init_log}
+${script_path}/seahub.sh start 8090 &gt;&gt; ${seahub_init_log}
+;;
+restart)
+${script_path}/seafile.sh restart &gt;&gt; ${seafile_init_log}
+${script_path}/seahub.sh restart 8090 &gt;&gt; ${seahub_init_log}
+;;
+stop)
+${script_path}/seahub.sh stop &gt;&gt; ${seahub_init_log}
+${script_path}/seafile.sh stop &gt;&gt; ${seafile_init_log}
+;;
+*)
+echo "Usage: /etc/init.d/seafile {start|stop|restart}"
+exit 1
+;;
+esac</programlisting>
+<calloutlist>
+<callout arearefs="CO19-1">
+<para>remplacer example.com par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Créer un job cron dans ISPConfig pour démarrer Seafile au démarrage</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal> puis dans le menu <literal>Cron Jobs</literal>. Cliquez sur <literal>Add cron Job</literal>. Saisisssez les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Parent Website:</literal> &#8592; mettre <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Minutes:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Hours:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Days of month:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Months:</literal> &#8592; mettre <literal>@reboot</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Days of week:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/www/seafile.example.com/private/seafile/startseafile.sh start</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un second job cron dans ISPConfig pour redémarrer Seafile tous les jours</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal> puis dans le menu <literal>Cron Jobs</literal>. Cliquez sur <literal>Add cron Job</literal>. Saisisssez les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Parent Website:</literal> &#8592; mettre <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Minutes:</literal> &#8592; mettre 45</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Hours:</literal> &#8592; mettre 20</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Days of month:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Months:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Days of week:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/www/seafile.example.com/private/seafile/startseafile.sh restart</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Enjoy !</simpara>
+</listitem>
+</orderedlist>
 </section>
 </section>
 <section xml:id="_annexe">

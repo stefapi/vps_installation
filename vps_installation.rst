@@ -21,7 +21,12 @@ domaine en utilisant ISPConfig.
 
 Sont installés:
 
--  un serveur de mail avec antispam,
+-  un panel ISPConfig
+
+-  un configurateur Webmin
+
+-  un serveur de mail avec antispam, sécurisation d’envoi des mails et
+   autoconfiguration pour Outlook, Thunderbird, Android.
 
 -  un webmail `roundcube <https://roundcube.net>`__,
 
@@ -30,20 +35,23 @@ Sont installés:
 -  un serveur ftp et sftp sécurisé.
 
 -  un serveur de base de données et son interface web d’administration
-   phpmyadmin.
+   `phpmyadmin <https://www.phpmyadmin.net/>`__.
 
--  un serveur et un site de partage de fichiers
-   `Seafile <https://www.seafile.com>`__,
+-  des outils de sécurisation, de mise à jour automatique et d’audit du
+   serveur
 
--  un site sous `Joomla <https://www.joomla.fr/>`__,
+-  un outil de Monitoring `Munin <http://munin-monitoring.org/>`__
+
+-  un outil de Monitoring `Monit <http://mmonit.com/monit/>`__
 
 -  un sous domaine pointant sur un site autohébergé (l’installation du
    site n’est pas décrite ici; Se référer à
    `Yunohost <https://yunohost.org>`__),
 
--  Un outil de Monitoring `Munin <http://munin-monitoring.org/>`__
+-  un site sous `Joomla <https://www.joomla.fr/>`__,
 
--  Un outil de Monitoring `Monit <http://mmonit.com/monit/>`__
+-  un serveur et un site de partage de fichiers
+   `Seafile <https://www.seafile.com>`__,
 
 -  un site `Gitea <https://gitea.io>`__ et son repository GIT,
 
@@ -55,10 +63,7 @@ Sont installés:
 
 -  un site `Wordpress <https://wordpress.com>`__
 
--  des outils de sécurisation, mise à jour automatique et d’audit du
-   serveur
-
--  A venir: strut, `concrete5 <https://www.concrete5.org/>`__,
+-  à venir: strut, `concrete5 <https://www.concrete5.org/>`__,
    `gitlab <https://gitlab.com/>`__, `piwigo <https://piwigo.org/>`__,
    `borg <https://www.borgbackup.org/>`__
 
@@ -67,29 +72,31 @@ clarté du texte, il sera nommé "example.com". Il est à remplacer
 évidemment par votre nom de domaine principal.
 
 Je suppose dans ce document que vous savez vous connecter à distance sur
-un serveur en mode terminal. Donc que vous savez vous servir de ``ssh``
-pour Linux ou de ``putty`` pour Windows
+un serveur en mode terminal, que vous savez vous servir de ``ssh`` pour
+Linux ou de ``putty`` pour Windows, que vous avez des notions
+élémentaires de Shell Unix et que vous savez vous servir de l’éditeur
+``vi``. Si ``vi`` est trop compliqué pour vous, je vous suggère
+d’utiliser l’éditeur de commande ``nano`` à la place.
 
 Dans le document, on peut trouver des textes entourés de <texte>. Cela
 signifie que vous devez mettre ici votre propre texte selon vos
-préférences. Si le texte ne doit pas contenir d’espace, la phrase
-contient elle même des \_ ou des - pour l’indiquer en fonction de ce qui
-est autorisé.
+préférences.
 
 A propos des mots de passe: il est conseillé de saisir des mots de passe
 de 10 caractères contenant des majuscules/minuscules/nombres/caractères
 spéciaux. Une autre façon de faire est de saisir de longues phrases. Par
 exemple: 'J’aime manger de la mousse au chocolat parfumée à la menthe'.
-Le taux de complexité est bien meilleur et les mots de passe sont plus
-facile à retenir que 'Az3~1ym\_a&'
+Ce dernier exemple a un taux de complexité est bien meilleur et les mots
+de passe classiques. Il est aussi plus facile à retenir que
+'Az3~1ym\_a&'.
 
-Le cout pour avoir ce type de serveur est relativement faible: \*
-Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y
-avoir des promos) \* Compter 5€TTC/mois pour un VPS de base. Une machine
-plus sérieuse sera à 15€/mois
+Le coût pour mettre en oeuvre ce type de serveur est relativement
+faible: \* Compter 15-18€TTC/an pour un nom de domaine classique (mais
+il peut y avoir des promos) \* Compter 5€TTC/mois pour un VPS de base.
+Une machine plus sérieuse sera à 15€/mois
 
 Le budget est donc de 6-7€TTC/mois pour une offre d’entrée de gamme. Il
-faut plus sérieusement compter sur 15€/mois tout compris.
+faut plus sérieusement compter sur 16€/mois tout compris.
 
 Choix du VPS
 ============
@@ -224,6 +231,274 @@ avez mis en place un compte sudo:
 
 Installation basique
 ====================
+
+Mise à jour des sources de paquets Debian
+-----------------------------------------
+
+1. Se loguer ``root`` sur le serveur
+
+2. Modifier la liste standard de paquets
+
+   a. Éditer le fichier ``/etc/apt/sources.list``. Tapez:
+
+      .. code:: bash
+
+          vi /etc/apt/sources.list
+
+   b. Dé-commenter les lignes débutant par ``deb`` et contenant le terme
+      ``backports``. Par exemple pour
+      ``#deb http://deb.debian.org/debian buster-backports main contrib non-free``
+      enlever le # en début de ligne
+
+   c. Ajouter sur toutes les lignes les paquets ``contrib`` et
+      ``non-free`` . en ajoutant ces textes après chaque mot ``main`` du
+      fichier ``source.list``
+
+3. Effectuer une mise à niveau du système
+
+   a. Mettez à jour la liste des paquets. Tapez:
+
+      .. code:: bash
+
+          apt update
+
+   b. Installez les nouveautés. Tapez:
+
+      .. code:: bash
+
+          apt dist-upgrade
+
+4. Effectuez du ménage. Tapez:
+
+   .. code:: bash
+
+       apt autoremove
+
+Installation des paquets de base
+--------------------------------
+
+Tapez:
+
+.. code:: bash
+
+    apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends
+
+Installation d’un repository pour ``/etc``
+------------------------------------------
+
+Si vous souhaitez gérer en gestion de configuration le contenu de votre
+répertoire ``/etc``, installez ``etckeeper``.
+
+Cette installation est optionnelle.
+
+1.  Tapez :
+
+    .. code:: bash
+
+        apt install etckeeper
+
+2.  Vous pouvez créer un repository privé dans le cloud pour stocker
+    votre configuration de serveur (autre serveur privé de confiance ou
+    repository privé ``Gitlab`` ou ``Github``).
+
+3.  Ajoutez ce repository distant. Pour ``Gitlab`` et ``Github``, une
+    fois le repository créé, demandez l’affichage de la commande git
+    pour une communication en ssh. Tapez ensuite sur votre serveur :
+
+    .. code:: bash
+
+        cd /etc
+        git remote add origin git@github.com:username/etc_keeper.git 
+
+    -  remplacer l’url par celle qui correspond au chemin de votre
+       repository
+
+4.  modifier le fichier de configuration de ``etckeeper``. tapez:
+
+    .. code:: bash
+
+        vi /etc/etckeeper/etckeeper.conf
+
+5.  Recherchez la ligne contenant ``PUSH_REMOTE`` et ajoutez y tous les
+    repositories distant sur lesquels vous souhaitez pousser les
+    modifications. Pour notre configuration, mettez:
+
+    .. code:: bash
+
+        PUSH_REMOTE="origin"
+
+6.  Pour éviter demandes de mot de passe de la part de ``github`` ou
+    ``gitlab``, il est nécessaire de déclarer une clé publique sur leur
+    site. Créez une clé sur votre serveur pour l’utilisateur root:
+
+    a. Créer un répertoire ``/root/.ssh`` s’il n’existe pas. tapez :
+
+       .. code:: bash
+
+           cd /root
+           mkdir -p .ssh
+
+    b. Allez dans le répertoire. Tapez :
+
+       .. code:: bash
+
+           cd /root/.ssh
+
+    c. Générez vous clés. Tapez :
+
+       .. code:: bash
+
+           ssh-keygen -t rsa
+
+    d. Un ensemble de questions apparaît. Si un texte vous explique que
+       le fichier existe déjà, arrêtez la procédure. Cela signifie que
+       vous avez déjà créé une clé et que vous risquez de perdre la
+       connexion à d’autres serveurs si vous en générez une nouvelle.
+       Sinon, appuyez sur Entrée à chaque fois pour accepter les valeurs
+       par défaut.
+
+    e. Allez sur ``gitlab`` ou ``github`` dans la rubriques "settings"
+       et le menu "SSH keys". Ajoutez la clé que vous aurez affiché avec
+       la commande suivante:
+
+       .. code:: bash
+
+           cat /root/.ssh/id_rsa.pub
+
+7.  Effectuez un premier push. Tapez:
+
+    .. code:: bash
+
+        git push -u origin master
+
+8.  aucun mot de passe ne doit vous être demandé. Si ce n’est pas le
+    cas, re-vérifier les étapes précédentes.
+
+9.  Lancer ``etckeeper``. Tapez:
+
+    .. code:: bash
+
+        etckeeper commit
+
+10. Tout le contenu de ``/etc`` est poussé sur le repository. Saisissez
+    un commentaire.
+
+11. C’est fait !
+
+Installer l’outil Debfoster
+---------------------------
+
+L’outil ``debfoster`` permet de ne conserver que les paquets essentiels.
+
+Cette installation est optionnelle.
+
+Il maintient un fichier ``keepers`` présent dans ``/var/lib/debfoster``
+
+En répondant aux questions de conservations de paquets, ``debfoster``
+maintient la liste des paquets uniques nécessaires au système. Tous les
+autres paquets seront supprimés.
+
+1. Se loguer ``root`` sur le serveur
+
+2. Ajouter le paquet ``debfoster``. Tapez :
+
+   .. code:: bash
+
+       apt install debfoster
+
+3. Lancez ``debfoster``. Tapez :
+
+   .. code:: bash
+
+       debfoster
+
+4. Répondez au questions pour chaque paquet
+
+5. Acceptez la liste des modifications proposées à la fin. Les paquets
+   superflus seront supprimés
+
+Création d’un fichier keeper dans /etc
+--------------------------------------
+
+Vous pourriez être intéressé après l’installation de ``debfoster`` et de
+``etckeeper`` de construire automatiquement un fichier qui contient la
+liste des paquets qui permettent de réinstaller le systeme:
+
+1. Loguez vous comme ``root``
+
+2. Tapez:
+
+   .. code:: bash
+
+       vi /etc/etckeeper/pre-commit.d/35debfoster
+
+3. Saisissez dans le fichier:
+
+   .. code:: bash
+
+       #!/bin/sh
+       set -e
+
+       # Make sure sort always sorts in same order.
+       LANG=C
+       export LANG
+
+       shellquote() {
+               # Single quotes text, escaping existing single quotes.
+               sed -e "s/'/'\"'\"'/g" -e "s/^/'/" -e "s/$/'/"
+       }
+
+
+       if [ "$VCS" = git ] || [ "$VCS" = hg ] || [ "$VCS" = bzr ] || [ "$VCS" = darcs ]; then
+               # Make sure the file is not readable by others, since it can leak
+               # information about contents of non-readable directories in /etc.
+               debfoster -q -k /etc/keepers
+               chmod 600 /etc/keepers
+               sed -i "1i\\# debfoster file" /etc/keepers
+               sed -i "1i\\# Generated by etckeeper.  Do not edit."  /etc/keepers
+
+               # stage the file as part of the current commit
+               if [ "$VCS" = git ]; then
+                       # this will do nothing if the keepers file is unchanged.
+                       git add keepers
+               fi
+               # hg, bzr and darcs add not done, they will automatically
+               # include the file in the current commit
+       fi
+
+4. Sauvez et tapez:
+
+   .. code:: bash
+
+       chmod 755 /etc/etckeeper/pre-commit.d/35debfoster
+
+5. Exécutez maintenant ``etckeeper``
+
+   .. code:: bash
+
+       vi /etc/etckeeper/pre-commit.d/35debfoster
+
+6. Le fichier keepers est créé et sauvegardé automatiquement.
+
+Installation des mises à jours automatiques
+-------------------------------------------
+
+Si vous souhaitez installer automatiquement les paquets Debian de
+correction de bugs de sécurité, cette installation est pour vous.
+
+Cette installation est optionnelle.
+
+    **Warning**
+
+    L’installation automatique de paquets peut conduire dans certains
+    cas très rare à des dysfonctionnements du serveur. Il est important
+    de regarder périodiquement les logs d’installation
+
+Tapez:
+
+.. code:: bash
+
+    apt install unattended-upgrades
 
 Vérification du nom de serveur
 ------------------------------
@@ -384,12 +659,13 @@ d’autoriser le sudo. Respectez bien les étapes de cette procédure:
 3. Ce ne devrait plus être possible: le serveur vous l’indique par un
    message ``Permission denied, please try again.``
 
-Création d’une clé de connexion ssh
------------------------------------
+Création d’une clé de connexion ssh locale
+------------------------------------------
 
 Pour créer une clé et la déployer:
 
-1. Créez une clé sur votre machine locale:
+1. Créez une clé sur votre machine locale (et pas sur le serveur
+   distant!):
 
    a. Ouvrir un terminal
 
@@ -513,47 +789,19 @@ super-compte.
 L’utilisateur nom\_d\_utilisateur pourra se logger root sans mot de
 passe au travers de la commande ``sudo bash``
 
-Mise à jour des sources de paquets Debian
------------------------------------------
+Installer l’outil dselect
+-------------------------
+
+L’outil ``dselect`` permet de choisir de façon interactive les paquets
+que l’on souhaite installer.
 
 1. Se loguer ``root`` sur le serveur
 
-2. Modifier la liste standard de paquets
-
-   a. Éditer le fichier ``/etc/apt/sources.list``. Tapez:
-
-      .. code:: bash
-
-          vi /etc/apt/sources.list
-
-   b. Dé-commenter les lignes débutant par ``deb`` et contenant le terme
-      ``backports``. Par exemple pour
-      ``#deb http://deb.debian.org/debian buster-backports main contrib non-free``
-      enlever le # en début de ligne
-
-   c. Ajouter sur toutes les lignes les paquets ``contrib`` et
-      ``non-free`` . en ajoutant ces textes après chaque mot ``main`` du
-      fichier ``source.list``
-
-3. Effectuer une mise à niveau du système
-
-   a. Mettez à jour la liste des paquets. Tapez:
-
-      .. code:: bash
-
-          apt update
-
-   b. Installez les nouveautés. Tapez:
-
-      .. code:: bash
-
-          apt dist-upgrade
-
-4. Effectuez du ménage. Tapez:
+2. Ajouter le paquet ``dselect``. Tapez :
 
    .. code:: bash
 
-       apt autoremove
+       apt install dselect
 
 Ajouter un fichier de swap
 --------------------------
@@ -572,23 +820,10 @@ Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de
 
 2. Enfin ajoutez une entrée dans le fichier fstab. Tapez
    ``vi /etc/fstab`` et ajoutez la ligne:
-   ``/swapfile swap swap defaults 0 0``
 
-Installation des paquets de base
---------------------------------
+   ::
 
-1. tapez:
-
-   .. code:: bash
-
-       apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends
-
-2. Si vous souhaitez installer automatiquement les paquets Debian de
-   correction de bugs de sécurité, tapez:
-
-   .. code:: bash
-
-       apt install unattended-upgrades
+       /swapfile swap swap defaults 0 0
 
 Installation initiale des outils
 ================================
@@ -776,7 +1011,7 @@ Configuration d’Apache
 
    .. code:: bash
 
-       a2enmod suexec rewrite ssl proxy_http actions include dav_fs dav auth_digest cgi headers actions proxy_fcgi alias.
+       a2enmod suexec rewrite ssl proxy_http actions include dav_fs dav auth_digest cgi headers actions proxy_fcgi alias speling
 
 2. Pour ne pas être confronté aux problèmes de sécurité de type
    `HTTPOXY <https://www.howtoforge.com/tutorial/httpoxy-protect-your-server/>`__,
@@ -1205,6 +1440,18 @@ Installation et configuration de Roundcube
 
        systemctl reload apache2
 
+Installation de Let’s Encrypt
+-----------------------------
+
+Installez Let’s Encrypt. Tapez:
+
+.. code:: bash
+
+    cd /usr/local/bin
+    wget https://dl.eff.org/certbot-auto
+    chmod a+x certbot-auto
+    ./certbot-auto --install-only
+
 Installation d’un scanner de vulnérabilités
 -------------------------------------------
 
@@ -1230,48 +1477,6 @@ Installation d’un scanner de vulnérabilités
 
 3. L’outil vous listera dans une forme très synthétique la liste des
    vulnérabilités et des améliorations de sécurité à appliquer.
-
-Installer quelques outils Debian
-================================
-
-Installer l’outil debfoster
----------------------------
-
-L’outil ``debfoster`` permet de ne conserver que les paquets essentiels.
-Il maintient un fichier ``keepers`` présent dans ``/var/lib/debfoster``
-
-En répondant aux questions de conservations de paquets, ``debfoster``
-maintient la liste des paquets uniques nécessaires au système. Tous les
-autres paquets seront supprimés.
-
-1. Se loguer ``root`` sur le serveur
-
-2. Ajouter le paquet ``debfoster``. Tapez :
-
-   .. code:: bash
-
-       apt install debfoster
-
-3. Lancez debfoster. Tapez ``debfoster``.
-
-4. Répondez au questions pour chaque paquet
-
-5. Acceptez la liste des modifications proposées à la fin. Les paquets
-   superflus seront supprimés
-
-Installer l’outil dselect
--------------------------
-
-L’outil ``dselect`` permet de choisir de façon interactive les paquets
-que l’on souhaite installer.
-
-1. Se loguer ``root`` sur le serveur
-
-2. Ajouter le paquet ``deselect``. Tapez :
-
-   .. code:: bash
-
-       apt install deselect
 
 Installation d’un Panel
 =======================
@@ -1548,8 +1753,8 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
        précédente installation qui sont configurés. Effacer les cookies
        de ce site de votre navigateur.
 
-Configuration d’un premier domaine
-==================================
+Configuration d’un domaine
+==========================
 
 Cette configuration est réalisée avec le Panel ISPConfig installé dans
 le chapitre précédent. L’étape "login initial" n’est à appliquer qu’une
@@ -1559,6 +1764,11 @@ https://example.com:8080/ .
 
 Login initial
 -------------
+
+    **Note**
+
+    Cette procédure n’est à appliquer que lorsqu’aucun domaine n’est
+    encore créé.
 
 Vous devrez tout d’abord vous loguer sur le serveur ISPConfig. Comme
 vous n’avez pas encore configuré de nom de de domaine, vous devrez vous
@@ -1828,7 +2038,7 @@ Let’s encrypt.
     example.com.         3600 TXT            "v=spf1 mx a ~all"
 
 Création d’un site web
-======================
+----------------------
 
 Dans la suite le site web sera nommé "example.com".
 
@@ -1895,8 +2105,14 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
                ProxyPass / http://127.0.0.1[:port_number_if_any]/[path_if_any]
                ProxyPassReverse / http://127.0.0.1[:port_number_if_any]/[path_if_any]
 
-Création d’un sous-domaine (vhost)
-==================================
+2. Vous pouvez maintenant tester la qualité de la connexion de votre
+   site en allant sur: `SSL Server
+   Test <https://www.ssllabs.com/ssltest>`__. Saisissez votre nom de
+   domaine et cliquez sur ``Submit``. Votre site doit au moins être de
+   ``Grade A``.
+
+Création d’un Site Vhost
+------------------------
 
 Dans la suite le sous-domaine sera nommé "site.example.com".
 
@@ -1960,26 +2176,22 @@ racine auparavant.
                ProxyPass / http://127.0.0.1[:port_number_if_any]/[path_if_any]
                ProxyPassReverse / http://127.0.0.1[:port_number_if_any]/[path_if_any]
 
-Configuration de Let’s Encrypt
-------------------------------
+2. Vous pouvez maintenant tester la qualité de la connexion de votre
+   site en allant sur: `SSL Server
+   Test <https://www.ssllabs.com/ssltest>`__. Saisissez votre nom de
+   domaine et cliquez sur ``Submit``. Votre site doit au moins être de
+   ``Grade A``.
 
-Installez Let’s Encrypt. Tapez:
-
-.. code:: bash
-
-    cd /usr/local/bin
-    wget https://dl.eff.org/certbot-auto
-    chmod a+x certbot-auto
-    ./certbot-auto --install-only
-
-Associer un certificat reconnu à vos outils
--------------------------------------------
+Associer des certificats reconnu à vos outils
+---------------------------------------------
 
 Comme vous avec créé votre premier domaine avec SSL et let’s encrypt
 dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux
 services de base:
 
-1. Liez le certificat d’ISPconfig avec celui du domaine crée
+1. Vous devez avoir créé au préalable un site pour les domaines
+
+2. Liez le certificat d’ISPconfig avec celui du domaine crée
 
    -  Tapez :
 
@@ -1988,15 +2200,15 @@ services de base:
           cd /usr/local/ispconfig/interface/ssl/
           mv ispserver.crt ispserver.crt-$(date +"%y%m%d%H%M%S").bak
           mv ispserver.key ispserver.key-$(date +"%y%m%d%H%M%S").bak
-          ln -s /etc/letsencrypt/live/<example.com>/fullchain.pem ispserver.crt 
-          ln -s /etc/letsencrypt/live/<example.com>/privkey.pem ispserver.key 
+          ln -s /etc/letsencrypt/live/example.com/fullchain.pem ispserver.crt 
+          ln -s /etc/letsencrypt/live/example.com/privkey.pem ispserver.key 
           cat ispserver.{key,crt} > ispserver.pem
           chmod 600 ispserver.pem
           systemctl restart apache2
 
       -  remplacer <example.com> par votre nom de domaine
 
-2. Liez le certificat Postfix et Dovecot avec celui de let’s encrypt
+3. Liez le certificat Postfix et Dovecot avec celui de let’s encrypt
 
    -  Tapez :
 
@@ -2005,12 +2217,12 @@ services de base:
           cd /etc/postfix/
           mv smtpd.cert smtpd.cert-$(date +"%y%m%d%H%M%S").bak
           mv smtpd.key smtpd.key-$(date +"%y%m%d%H%M%S").bak
-          ln -s /usr/local/ispconfig/interface/ssl/ispserver.crt smtpd.cert
-          ln -s /usr/local/ispconfig/interface/ssl/ispserver.key smtpd.key
+          ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert
+          ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key
           service postfix restart
           service dovecot restart
 
-3. Liez le certificat pour Pureftd
+4. Liez le certificat pour Pureftd
 
    -  Tapez :
 
@@ -2022,7 +2234,7 @@ services de base:
           chmod 600 pure-ftpd.pem
           service pure-ftpd-mysql restart
 
-4. Création d’un script de renouvellement automatique du fichier pem
+5. Création d’un script de renouvellement automatique du fichier pem
 
    a. Installez incron. Tapez :
 
@@ -2059,7 +2271,7 @@ services de base:
           service monit restart
           service postfix restart
           service dovecot restart
-          service nginx restart
+          service apache2 restart
 
    c. Sauvez et quittez. Tapez ensuite:
 
@@ -2073,7 +2285,7 @@ services de base:
 
       .. code:: bash
 
-          /etc/letsencrypt/archive/example.com/ IN_MODIFY ./etc/init.d/le_ispc_pem.sh 
+          /etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh 
 
       -  Remplacer example.com par votre nom de domaine.
 
@@ -2447,12 +2659,661 @@ Configuration de la messagerie
 Création du serveur de messagerie
 ---------------------------------
 
-Pour créer la messagerie, aller dans email→domain→cliquez sur add new
-domain. Sélectionner le nom de domaine et créer des identifiants DKIM.
-Une fois cela fait, retourner dans la gestion des records de domaine et
-activer le type DMARC. Garder le paramétrage par défaut et sauvegardez.
-Faites de même pour les enregistrements SPF et sélectionner le mécanisme
-softfail.
+Pour créer un serveur de messagerie:
+
+1.  Assurez vous d’avoir créé le domaine DNS. Si ce n’est pas le cas
+    déroulez tout d’abord la procédure de `création de
+    domaines <#domain-config>`__
+
+2.  Aller dans la rubrique ``Email``. Sélectionnez ensuite le menu
+    ``Domain``
+
+3.  Cliquez sur ``Add new Domain``
+
+4.  Saisissez le nom de domaine.
+
+5.  Cliquez sur ``DomainKeys Indentified Mail (DKIM)``
+
+6.  Cliquez sur ``enable DKIM``
+
+7.  Cliquez sur ``Generate DKIM Private-key``
+
+8.  Une fois cela fait, retourner dans la gestion des ``Records`` de
+    domaine et activer le type DMARC
+
+9.  Garder le paramétrage par défaut et sauvegardez.
+
+10. Faites de même pour les enregistrements SPF mais sélectionnez le
+    mécanisme softfail.
+
+11. Votre serveur est créé et protégé Contre les spams (entrants et
+    sortants).
+
+12. Vous pouvez le tester en allant sur le site
+    `MxToolbox <https://mxtoolbox.com/diagnostic.aspx>`__.
+
+    -  Entrez le nom de host de votre serveur de mail: mail.example.com.
+
+    -  cliquez sur ``test Email Server``
+
+    -  Tout doit être correct sauf éventuellement le reverse DNS qui ne
+       doit pas pointer sur le nom de domaine.
+
+Création de l’autoconfig pour Thunderbird et Android
+----------------------------------------------------
+
+La procédure est utilisé par Thunderbird et Android pour configurer
+automatiquement les paramètres de la messagerie.
+
+Appliquez la procédure suivante:
+
+1. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``autoconfig``.
+
+   b. Le faire pointer vers le web folder ``autoconfig``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``php-FPM``
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          AddType application/x-httpd-php .php .php3 .php4 .php5 .xml
+
+          CheckSpelling On
+          CheckCaseOnly Off
+
+   h. Sauver.
+
+2. Loguez vous sur le serveur en tant que ``root``
+
+3. Dans le répertoire ``/var/www/autoconfig.example.com/autoconfig/``
+   créer un répertoire mail. Lui donner les permissions 755 et affecter
+   les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:
+
+   .. code:: bash
+
+       mkdir -p /var/www/autoconfig.example.com/autoconfig/
+       chmod 755 /var/www/autoconfig.example.com/autoconfig/
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/ 
+
+   -  remplacer web1:client0 par les permissions du répertoire
+      ``/var/www/autoconfig.example.com``
+
+      a. A l’intérieur de ce répertoire, Editez un fichier
+         ``config-v1.1.xml``. Tapez:
+
+         .. code:: bash
+
+             vi /var/www/autoconfig.example.com/autoconfig/config-v1.1.xml
+
+4. Y coller:
+
+   .. code:: xml
+
+       <?php
+       header('Content-Type: application/xml');
+       ?>
+       <?xml version="1.0" encoding="UTF-8"?>
+
+       <clientConfig version="1.1">
+        <emailProvider id="example.com"> 
+          <domain>example.com</domain> 
+          <displayName>Example Mail</displayName> 
+          <displayShortName>Example</displayShortName> 
+          <incomingServer type="imap">
+            <hostname>mail.example.com</hostname> 
+            <port>993</port>
+            <socketType>SSL</socketType>
+            <authentication>password-encrypted</authentication>
+            <username>%EMAILADDRESS%</username>
+          </incomingServer>
+          <incomingServer type="pop3">
+            <hostname>mail.example.com</hostname> 
+            <port>995</port>
+            <socketType>SSL</socketType>
+            <authentication>password-cleartext</authentication>
+            <username>%EMAILADDRESS%</username>
+          </incomingServer>
+          <outgoingServer type="smtp">
+            <hostname>mail.example.com</hostname> 
+            <port>465</port>
+            <socketType>SSL</socketType>
+            <authentication>password-encrypted</authentication>
+            <username>%EMAILADDRESS%</username>
+          </outgoingServer>
+          <outgoingServer type="smtp">
+            <hostname>mail.example.com</hostname> 
+            <port>587</port>
+            <socketType>STARTTLS</socketType>
+            <authentication>password-encrypted</authentication>
+            <username>%EMAILADDRESS%</username>
+          </outgoingServer>
+        </emailProvider>
+       </clientConfig>
+
+   -  mettre à la place de example.com votre nom de domaine
+
+   -  mettre ici votre libellé long pour votre nom de messagerie
+
+   -  mettre ici un libellé court pour votre nom de messagerie
+
+5. Donner la permission en lecture seule et affecter les groupes
+   d’appartenance. Tapez:
+
+   .. code:: bash
+
+       chmod 600 /var/www/autoconfig.example.com/autoconfig/config-v1.1.xml
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/config-v1.1.xml 
+
+   -  remplacer web1:client0 par les permissions du répertoire
+      ``/var/www/autoconfig.example.com``
+
+Création d’autodiscover pour Outlook
+------------------------------------
+
+Outlook utilise un autre mécanisme pour se configurer automatiquement.
+Il est basé sur l’utilisation du nom de sous-domaine ``autodiscover``.
+
+Appliquez la procédure suivante:
+
+1. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``autodiscover``.
+
+   b. Le faire pointer vers le web folder ``autodiscover``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``php-FPM``
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          CheckSpelling On
+          CheckCaseOnly On
+          RewriteEngine On
+          ProxyPass "/" http://autoconfig.example.com/ 
+          ProxyPassReverse "/" http://autoconfig.example.com/ 
+          RewriteRule ^/ - [QSA,L]
+
+      -  remplacer example.com par votre nom de domaine
+
+   h. Sauver.
+
+2. Loguez vous sur le serveur en tant que ``root``
+
+3. Dans le répertoire ``/var/www/autoconfig.example.com/autoconfig/``,
+   créer un répertoire ``Autodiscover``. Lui donner les permissions 755
+   et affecter les mêmes possesseurs que pour autres fichiers du
+   répertoire. Tapez:
+
+   .. code:: bash
+
+       mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/
+       chmod 755 /var/www/autoconfig.example.com/autoconfig/Autodiscover/
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ 
+
+   -  remplacer web1:client0 par les permissions du répertoire
+      ``/var/www/autoconfig.example.com``
+
+      a. A l’intérieur de ce répertoire, Editez un fichier
+         ``Autodiscover.xml``. Tapez:
+
+         .. code:: bash
+
+             vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml
+
+4. Y coller:
+
+   .. code:: xml
+
+       <?php
+        $raw = file_get_contents('php://input');
+        $matches = array();
+        preg_match('/<EMailAddress>(.*)<\/EMailAddress>/', $raw, $matches);
+        header('Content-Type: application/xml');
+       ?>
+        <Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006">
+          <Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a">
+            <User>
+              <DisplayName>Example Mail</DisplayName> 
+            </User>
+            <Account>
+              <AccountType>email</AccountType>
+              <Action>settings</Action>
+              <Protocol>
+                <Type>IMAP</Type>
+                <Server>mail.example.com</Server> 
+                <Port>993</Port>
+                <DomainRequired>off</DomainRequired>
+                <SPA>off</SPA>
+                <SSL>on</SSL>
+                <AuthRequired>on</AuthRequired>
+                <LoginName><?php echo $matches[1]; ?></LoginName>
+              </Protocol>
+              <Protocol>
+                <Type>SMTP</Type>
+                <Server>mail.example.com</Server> 
+                <Port>465</Port>
+                <DomainRequired>off</DomainRequired>
+                <SPA>off</SPA>
+                <SSL>on</SSL>
+                <AuthRequired>on</AuthRequired>
+                <LoginName><?php echo $matches[1]; ?></LoginName>
+              </Protocol>
+            </Account>
+          </Response>
+        </Autodiscover>
+
+   -  mettre à la place de example.com votre nom de domaine
+
+   -  mettre ici votre libellé long pour votre nom de messagerie
+
+5. Pointer votre navigateur sur le site
+   https://autodiscover.example.com/Autodiscover/Autodiscover.xml.
+
+6. Le contenu du fichier xml doit s’afficher
+
+7. Vous pouvez faire aussi un test sur le `Testeur de connectivité
+   Microsoft <https://testconnectivity.microsoft.com>`__.
+
+   a. choisissez: ``Découverte automatique Outlook``
+
+   b. cliquez sur ``suivant``
+
+   c. Entrez votre adresse de courrier: ``user@example.com``, un domain:
+      ``example\user``, un mot de passe tiré au hazard, Cochez les deux
+      cases en dessous.
+
+   d. Cliquez sur ``effectuer un test``
+
+   e. Le résultat doit être: ``Test de connectivité réussi``
+
+Création d’une boite mail
+-------------------------
+
+Pour créer une boite de messagerie:
+
+1. Aller dans la rubrique ``Email``. Sélectionnez ensuite le menu
+   ``Email Mailbox``
+
+2. Cliquez sur ``Add new Mailbox``
+
+3. Remplissez les champs suivants:
+
+   a. ``Name:`` ← mettez votre prénom et votre nom
+
+   b. ```Email:`` ← mail\_name @ votre\_domaine
+
+   c. ``Password:`` ← saisissez un mot de passe ou générez en un
+
+   d. ``Repeat Password`` ← saisissez une deuxième fois votre mot de
+      passe
+
+   e. ``Quota (0 for unlimited):`` ← mettez éventuellement un quota ou
+      laissez 0 pour illimité.
+
+   f. ``Spamfilter:`` ← Sélectionnez ``Normal``
+
+4. Dans l’onglet Backup:
+
+   a. ``Backup interval:`` Sélectionnez ``Daily``
+
+   b. ``Number of backup copies:`` Sélectionnez 1
+
+5. Cliquez sur ``Save``
+
+Configuration de votre client de messagerie.
+--------------------------------------------
+
+Saisir l’adresse mail et votre mot de passe doit suffire pour configurer
+automatiquement votre client de messagerie.
+
+Si vous avez besoin de configurer votre client manuellement, voici les
+informations à saisir:
+
++--------------------------------------+--------------------------------------+
+| Paramètre                            | Valeur                               |
++======================================+======================================+
+| Type de serveur                      | IMAP                                 |
++--------------------------------------+--------------------------------------+
+| Nom de serveur IMAP                  | mail.example.com                     |
++--------------------------------------+--------------------------------------+
+| Nom d’utilisateur IMAP               | user@example.com                     |
++--------------------------------------+--------------------------------------+
+| Port IMAP                            | 993                                  |
++--------------------------------------+--------------------------------------+
+| Sécurité IMAP                        | SSL/TLS                              |
++--------------------------------------+--------------------------------------+
+| Authentification IMAP                | Normal Password                      |
++--------------------------------------+--------------------------------------+
+| Nom de serveur SMTP                  | mail.example.com                     |
++--------------------------------------+--------------------------------------+
+| Nom d’utilisateur SMTP               | user@example.com                     |
++--------------------------------------+--------------------------------------+
+| Port SMTP                            | 465                                  |
++--------------------------------------+--------------------------------------+
+| Sécurité SMTP                        | SSL/TLS                              |
++--------------------------------------+--------------------------------------+
+| Authentification SMTP                | Normal Password                      |
++--------------------------------------+--------------------------------------+
+
+Installation de Seafile
+=======================
+
+Création du site web de Seafile
+-------------------------------
+
+Appliquez la procédure suivante:
+
+1. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``seafile``.
+
+   b. Le faire pointer vers le web folder ``seafile``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          Alias /media {DOCROOT}/private/seafile/seafile-server-latest/seahub/media
+          RewriteEngine On
+
+          <Location /media>
+          Require all granted
+          </Location>
+
+          Alias /.well-known {DOCROOT}/private/seafile/.well-known
+          RewriteEngine On
+
+          <Location /.well-known>
+          Require all granted
+          </Location>
+
+          ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          # seafile httpserver
+          #
+          ProxyPass /seafhttp http://127.0.0.1:8092
+          ProxyPassReverse /seafhttp http://127.0.0.1:8092
+          RewriteRule ^/seafhttp - [QSA,L]
+          #
+          # seahub
+          #
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass / http://127.0.0.1:8090/
+          ProxyPassReverse / http://127.0.0.1:8090/
+
+Création de bases de données
+----------------------------
+
+1. Loguez vous sur ISPConfig
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``seafile`` par exemple
+
+          -  ``Database password:`` ← saisir un mot de passe ou en
+             générer un en cliquant sur le bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Aller dans le menu ``Database`` pour définir un utilisateur
+      MariaDB
+
+   c. Appliquer l’opération ci après 3 fois d’affilée pour créer les
+      trois bases suivantes: ``ccnetdb``, ``seafiledb``, ``seahubdb``
+
+      i.   Cliquez sur ``Add new Database`` pour créer une nouvelle base
+           de données
+
+      ii.  Saisissez les informations:
+
+           -  ``Site:`` ← sélectionner le site ``example.com``
+
+           -  ``Database name:`` ← Saisissez le nom de la base de
+              données
+
+           -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+              ``cxseafile``. x: est le numéro de client.
+
+      iii. Cliquez sur ``save``
+
+   d. Les trois bases de données doivent apparaitre dans la liste des
+      bases
+
+Téléchargez et installez Seafile
+--------------------------------
+
+Appliquez la procédure suivante:
+
+1. Loguez vous comme ``root`` sur le serveur
+
+2. Installez quelques paquets Debian complémentaires. Tapez:
+
+   .. code:: bash
+
+       apt-get install python2.7 python-setuptools python-simplejson python-pil python-mysqldb python-flup
+
+3. Je préfère faire tourner mes serveurs dans le répertoire privé plutot
+   que dans le répertoire web pour des questions de sécurité. Tapez:
+
+   .. code:: bash
+
+       cd /var/www/seafile.example.com/private
+       mkdir seafile
+       cd seafile
+       wget https://download.seadrive.org/seafile-server_7.0.5_x86-64.tar.gz
+       tar zxvf seafile-server_7.0.5_x86-64.tar.gz
+       mkdir installed
+       mv seafile-server_* installed
+       cd seafile-server-*
+       ./setup-seafile-mysql.sh
+
+4. A ce moment, vous devez répondre à un certain nombre de questions.
+
+5. Choisissez le mode de configuration 2) pour indiquer vous même les
+   informations sur les bases de données créées.
+
+6. Vous devrez ensuite donner le nom d’utilisateur pour la base de
+   données, le mot de passe ainsi que le nom des 3 bases de données.
+
+7. Si tout est saisi correctement le programme doit donner une synthèse
+   de ce qui a été configuré
+
+Lancement initial
+-----------------
+
+Nous allons effectuer un premier lancement du serveur Seafile:
+
+1.  allez dans le répertoire contenant les configurations et éditez
+    ``gunicorn.conf``. Tapez:
+
+    .. code:: bash
+
+        cd /var/www/seafile.example.com/private/seafile/conf
+        vi gunicorn.conf
+
+2.  Repèrez le texte ``bind=`` et mettez un numéro de port 8090 à la
+    place de 8000. Comme ceci:
+
+    .. code:: bash
+
+        bind = "127.0.0.1:8090"
+
+3.  Editez le fichier ``seafile.conf``. Tapez:
+
+    .. code:: bash
+
+        vi seafile.conf
+
+4.  mettez un port 8092 au lieu du port 8080 saisi pour l’entrée
+    ``fileserver``. Le fichier doit contenir ceci:
+
+    .. code:: ini
+
+        [fileserver]
+        port = 8092
+
+5.  Editez le fichier ``ccnet.conf``. Tapez:
+
+    .. code:: bash
+
+        vi ccnet.conf
+
+6.  modifier l’entrée SERVICE\_URL. Le fichier doit contenir ceci:
+
+    .. code:: bash
+
+        SERVICE_URL = https://seafile.example.com
+
+7.  Editez le fichier ``seahub_settings.py``. Tapez:
+
+    .. code:: bash
+
+        vi seahub_settings.py
+
+8.  modifier l’entrée FILE\_SERVER\_ROOT. Le fichier doit contenir ceci:
+
+    .. code:: python
+
+        FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp'
+
+9.  Démarrez Seafile. Tapez:
+
+    .. code:: bash
+
+        ./seafile.sh start
+        ./seahub.sh start 8090
+
+10. Faites pointer votre navigateur sur https://seafile.example.com
+
+11. La page de login de Seafile doit s’afficher
+
+Lancement automatique de Seafile
+--------------------------------
+
+Afin de s’assurer que Seafile tourne en permanence, on doit créer un
+script de lancement automatique de Seafile:
+
+1. Créer un script de lancement automatique. Tapez:
+
+   .. code:: bash
+
+       cd /var/www/seafile.example.com/private/seafile
+       touch startseafile.sh
+       chmod +x startseafile.sh
+       vi startseafile.sh
+
+2. Coller le texte suivant de le fichier ouvert:
+
+   .. code:: bash
+
+       #!/bin/bash
+
+       # Change the value of "seafile_dir" to your path of seafile installation
+       seafile_dir=/var/www/seafile.example.com/private/seafile 
+       script_path=${seafile_dir}/seafile-server-latest
+       seafile_init_log=${seafile_dir}/logs/seafile.init.log
+       seahub_init_log=${seafile_dir}/logs/seahub.init.log
+
+       case "$1" in
+       start)
+       ${script_path}/seafile.sh start >> ${seafile_init_log}
+       ${script_path}/seahub.sh start 8090 >> ${seahub_init_log}
+       ;;
+       restart)
+       ${script_path}/seafile.sh restart >> ${seafile_init_log}
+       ${script_path}/seahub.sh restart 8090 >> ${seahub_init_log}
+       ;;
+       stop)
+       ${script_path}/seahub.sh stop >> ${seahub_init_log}
+       ${script_path}/seafile.sh stop >> ${seafile_init_log}
+       ;;
+       *)
+       echo "Usage: /etc/init.d/seafile {start|stop|restart}"
+       exit 1
+       ;;
+       esac
+
+   -  remplacer example.com par votre nom de domaine
+
+3. Créer un job cron dans ISPConfig pour démarrer Seafile au démarrage
+
+   a. Allez dans la rubrique ``Sites`` puis dans le menu ``Cron Jobs``.
+      Cliquez sur ``Add cron Job``. Saisisssez les champs:
+
+      -  ``Parent Website:`` ← mettre ``example.com``
+
+      -  ``Minutes:`` ← mettre \*
+
+      -  ``Hours:`` ← mettre \*
+
+      -  ``Days of month:`` ← mettre \*
+
+      -  ``Months:`` ← mettre ``@reboot``
+
+      -  ``Days of week:`` ← mettre \*
+
+      -  ``Command to run:`` ← mettre
+         ``/var/www/seafile.example.com/private/seafile/startseafile.sh start``
+
+4. Créer un second job cron dans ISPConfig pour redémarrer Seafile tous
+   les jours
+
+   a. Allez dans la rubrique ``Sites`` puis dans le menu ``Cron Jobs``.
+      Cliquez sur ``Add cron Job``. Saisisssez les champs:
+
+      -  ``Parent Website:`` ← mettre ``example.com``
+
+      -  ``Minutes:`` ← mettre 45
+
+      -  ``Hours:`` ← mettre 20
+
+      -  ``Days of month:`` ← mettre \*
+
+      -  ``Months:`` ← mettre \*
+
+      -  ``Days of week:`` ← mettre \*
+
+      -  ``Command to run:`` ← mettre
+         ``/var/www/seafile.example.com/private/seafile/startseafile.sh restart``
+
+5. Enjoy !
 
 Annexe
 ======
