@@ -1513,113 +1513,112 @@ Webmin est un outil généraliste de configuration de votre serveur. Son
 usage peut être assez complexe mais il permet une configuration plus
 précise des fonctionnalités.
 
-1.  Se logger ``root`` sur le serveur
+1. Se logger ``root`` sur le serveur
 
-2.  Ajoutez le repository Webmin
+2. Ajoutez le repository Webmin
 
-    a. allez dans le répertoire des repositories. Tapez :
+   a. allez dans le répertoire des repositories. Tapez :
 
-       .. code:: bash
+      .. code:: bash
 
-           cd /etc/apt/sources.list.d
+          cd /etc/apt/sources.list.d
 
-    b. Tapez: :
+   b. Tapez: :
 
-       .. code:: bash
+      .. code:: bash
 
-           echo "deb http://download.webmin.com/download/repository sarge contrib" >> webmin.list
+          echo "deb http://download.webmin.com/download/repository sarge contrib" >> webmin.list
 
-    c. Ajoutez la clé. Tapez :
+   c. Ajoutez la clé. Tapez :
 
-       .. code:: bash
+      .. code:: bash
 
-           curl -fsSL http://www.webmin.com/jcameron-key.asc | sudo apt-key add -.
+          curl -fsSL http://www.webmin.com/jcameron-key.asc | sudo apt-key add -.
 
-       Le message ``OK`` s’affiche
+      Le message ``OK`` s’affiche
 
-3.  Mise à jour. Tapez :
+3. Mise à jour. Tapez :
 
-    .. code:: bash
+   .. code:: bash
 
-        apt update
+       apt update
 
-4.  Installation de Webmin. Tapez :
+4. Installation de Webmin. Tapez :
 
-    .. code:: bash
+   .. code:: bash
 
-        apt install Webmin
+       apt install Webmin
 
-5.  Autorisation de Webmin au niveau du firewall
+   ::
 
-    a. Loguez vous Admin sur le site Hestia:
-       `https://<example.com>:8083 <https://<example.com>:8083>`__
+       Débloquez le port 10000 dans votre firewall
 
-    b. Allez dans Server→Firewall, puis Add Rule
+   a. Allez sur le site ispconfig https://example.com:8080/
 
-    c. Sélectionnez Action: ``Allow``, Protocol: ``TCP``, Port:
-       ``10000``, IP Address: ``0.0.0.0/0``, Service: ``WEBMIN``
+   b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+      ``Firewall``. Cliquez sur votre serveur.
 
-    d. Cliquez sur Save, puis Back
+   c. dans la rubrique ``Open TCP ports:``, ajoutez le port 10000
 
-    e. Constatez que le service Webmin sur le port 10000 est autorisé
+   d. Cliquez sur ``save``
 
-6.  Connectez vous avec votre navigateur sur l’url
-    `https://<example.com>:10000 <https://<example.com>:10000>`__. Un
-    message indique un problème de sécurité. Cela vient du certificat
-    auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et
-    poursuivre'.
+5. Connectez vous avec votre navigateur sur l’url
+   `https://<example.com>:10000 <https://<example.com>:10000>`__. Un
+   message indique un problème de sécurité. Cela vient du certificat
+   auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et
+   poursuivre'.
 
-7.  Loguez-vous ``root``. Tapez le mot de passe de ``root``. Le
-    dashboard s’affiche.
+6. Loguez-vous ``root``. Tapez le mot de passe de ``root``. Le dashboard
+   s’affiche.
 
-8.  Restreignez l’adressage IP
+7. Restreignez l’adressage IP
 
-    a. Obtenez votre adresse IP en allant par exemples sur le site
-       https://www.showmyip.com/
+   a. Obtenez votre adresse IP en allant par exemples sur le site
+      https://www.showmyip.com/
 
-    b. Sur votre URL Webmin ou vous êtes logué, allez dans Webmin→Webmin
-       Configuration
+   b. Sur votre URL Webmin ou vous êtes logué, allez dans Webmin→Webmin
+      Configuration
 
-    c. Dans l’écran choisir l’icône ``Ip Access Control``.
+   c. Dans l’écran choisir l’icône ``Ip Access Control``.
 
-    d. Choisissez ``Only allow from listed addresses``
+   d. Choisissez ``Only allow from listed addresses``
 
-    e. Puis dans le champ ``Allowed IP addresses`` tapez votre adresse
-       IP récupérée sur showmyip
+   e. Puis dans le champ ``Allowed IP addresses`` tapez votre adresse IP
+      récupérée sur showmyip
 
-    f. Cliquez sur ``Save``
+   f. Cliquez sur ``Save``
 
-    g. Vous devriez avoir une brève déconnexion le temps que le serveur
-       Webmin redémarre puis une reconnexion.
+   g. Vous devriez avoir une brève déconnexion le temps que le serveur
+      Webmin redémarre puis une reconnexion.
 
-9.  Si vous n’arrivez pas à vous reconnecter c’est que l’adresse IP
-    n’est pas la bonne. Le seul moyen de se reconnecter est de:
+8. Si vous n’arrivez pas à vous reconnecter c’est que l’adresse IP n’est
+   pas la bonne. Le seul moyen de se reconnecter est de:
 
-    a. Loguez vous ``root`` sur serveur
+   a. Loguez vous ``root`` sur serveur
 
-    b. Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne
-       ``allow= …​``
+   b. Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne
+      ``allow= …​``
 
-    c. Tapez :
+   c. Tapez :
 
-       .. code:: bash
+      .. code:: bash
 
-           service webmin restart
+          service webmin restart
 
-    d. Connectez vous sur l’url de votre site Webmin. Tout doit
-       fonctionner
+   d. Connectez vous sur l’url de votre site Webmin. Tout doit
+      fonctionner
 
-10. Passez en Français. Pour les personnes non anglophone. Les
-    traductions française ont des problèmes d’encodage de caractère ce
-    n’est donc pas recommandé. La suite de mon tutoriel suppose que vous
-    êtes resté en anglais.
+9. Passez en Français. Pour les personnes non anglophone. Les
+   traductions française ont des problèmes d’encodage de caractère ce
+   n’est donc pas recommandé. La suite de mon tutoriel suppose que vous
+   êtes resté en anglais.
 
-    a. Sur votre url Webmin ou vous êtes logué, allez dans Webmin→Webmin
-       Configuration
+   a. Sur votre url Webmin ou vous êtes logué, allez dans Webmin→Webmin
+      Configuration
 
-    b. Dans l’écran choisir l’icône ``Language and Locale``.
+   b. Dans l’écran choisir l’icône ``Language and Locale``.
 
-    c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
+   c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
 
 Installation et configuration de ISPConfig
 ------------------------------------------
@@ -2272,6 +2271,7 @@ services de base:
           service postfix restart
           service dovecot restart
           service apache2 restart
+          exit 1
 
    c. Sauvez et quittez. Tapez ensuite:
 
@@ -2306,15 +2306,15 @@ fonctionner Munin avec Apache puis activez le module fcgid:
 Installation et configuration de Munin
 --------------------------------------
 
-Suivez les étapes ci-après: . Installer le paquet Munin:
+Suivez les étapes ci-après:
 
-+
+1.  Installer le paquet Munin:
 
-.. code:: bash
+    .. code:: bash
 
-    apt-get install munin munin-node munin-plugins-extra
+        apt-get install munin munin-node munin-plugins-extra
 
-1.  Votre configuration de Munin va utiliser une base de données
+2.  Votre configuration de Munin va utiliser une base de données
     MariaDB. Vous devez activer quelques plugins. Tapez:
 
     .. code:: bash
@@ -2328,21 +2328,21 @@ Suivez les étapes ci-après: . Installer le paquet Munin:
         ln -s /usr/share/munin/plugins/mysql_slowqueries mysql_slowqueries
         ln -s /usr/share/munin/plugins/mysql_threads mysql_threads
 
-2.  Editez ensuite le fichier de configuration de Munin. Tapez:
+3.  Editez ensuite le fichier de configuration de Munin. Tapez:
 
     .. code:: bash
 
         vi /etc/munin/munin.conf
 
-3.  Décommentez les lignes débutant par: ``bdir``, ``htmldir``,
+4.  Décommentez les lignes débutant par: ``bdir``, ``htmldir``,
     ``logdir``, ``rundir``, and ``tmpldir``. Les valeurs par défaut sont
     correctes.
 
-4.  Munin utilisera l’adresse ``munin.example.com``. Toujours dans le
+5.  Munin utilisera l’adresse ``munin.example.com``. Toujours dans le
     fichier de configuration de munin, remplacer la directive
     ``[localhost.localdomain]`` par ``[munin.example.com]``.
 
-5.  Un fois les commentaires enlevés et la ligne modifiée, le fichier de
+6.  Un fois les commentaires enlevés et la ligne modifiée, le fichier de
     configuration doit ressembler à celui-ci:
 
     ::
@@ -2377,22 +2377,22 @@ Suivez les étapes ci-après: . Installer le paquet Munin:
          use_node_name yes
         [...]
 
-6.  Activez Munin dans Apache. Tapez:
+7.  Activez Munin dans Apache. Tapez:
 
     .. code:: bash
 
         a2enconf munin
 
-7.  Editez le fichier munin.conf d’Apache:
+8.  Editez le fichier munin.conf d’Apache:
 
     .. code:: bash
 
         vi /etc/apache2/conf-enable/munin.conf
 
-8.  Nous allons maintenant activer le module Munin dans Apache et
+9.  Nous allons maintenant activer le module Munin dans Apache et
     définir une authentification basique.
 
-9.  Modifiez le fichier pour qu’il ressemble à celui ci-dessous:
+10. Modifiez le fichier pour qu’il ressemble à celui ci-dessous:
 
     .. code:: apache
 
@@ -2430,27 +2430,27 @@ Suivez les étapes ci-après: . Installer le paquet Munin:
         # html_strategy: cgi (requires the apache module "cgid" or "fcgid")
         #ScriptAlias /munin /usr/lib/munin/cgi/munin-cgi-html
 
-10. Créez ensuite le fichier de mot de passe de munin:
+11. Créez ensuite le fichier de mot de passe de munin:
 
     .. code:: bash
 
         htpasswd -c /etc/munin/munin-htpasswd admin
 
-11. Tapez votre mot de passe
+12. Tapez votre mot de passe
 
-12. Redémarrez apache. Tapez:
+13. Redémarrez apache. Tapez:
 
     .. code:: bash
 
         service apache2 restart
 
-13. Redémarrez Munin. Tapez:
+14. Redémarrez Munin. Tapez:
 
     .. code:: bash
 
         service munin-node restart
 
-14. Attendez quelques minutes afin que Munin produise ses premiers
+15. Attendez quelques minutes afin que Munin produise ses premiers
     fichiers de sortie. et allez ensuite sur l’URL:
     http://example.com/munin/.
 
@@ -2655,6 +2655,145 @@ suivante:
 
 Configuration de la messagerie
 ==============================
+
+Installation de rspamd à la place d' Amavis-new
+-----------------------------------------------
+
+``rspamd`` est réputé de meilleure qualité que ``Amavis`` dans la chasse
+aux spams. Vous pouvez décider de l’installer à la place d’Amavis. Cette
+installation reste optionnelle.
+
+Suivez la procédure suivante:
+
+1.  Loguez vous sur le serveur en tant que ``root``
+
+2.  Installez les paquets debian. tapez:
+
+    .. code:: bash
+
+        apt-get install rspamd redis-server
+
+    **Activez Redis dans la configuration de Rspamd. Tapez:.**
+
+    .. code:: bash
+
+        echo 'servers = "127.0.0.1";' > /etc/rspamd/local.d/redis.conf
+
+3.  Augmentez la taille de l’historique de Rspamd, activez la
+    compression.
+
+    .. code:: bash
+
+        echo "nrows = 2500;" > /etc/rspamd/local.d/history_redis.conf
+        echo "compress = true;" >> /etc/rspamd/local.d/history_redis.conf
+        echo "subject_privacy = false;" >> /etc/rspamd/local.d/history_redis.conf
+
+4.  Créez un mot de passe:
+
+    .. code:: bash
+
+        rspamadm pw
+
+5.  Entrez votre mot de passe. Une hashphrase est générée.
+
+6.  Copiez la.
+
+7.  Remplacez celle déjà présente dans
+    ``/etc/rspamd/local.d/worker-controller.inc``
+
+    .. code:: bash
+
+        vi /etc/rspamd/local.d/worker-controller.inc
+
+8.  Remplacez le texte entre guillemets sur la ligne
+    ``password = "$2$g95yw…​…​dq3c5byy";`` par le texte copié.
+
+9.  Sauvez
+
+10. Redémarrez Rspamd
+
+    .. code:: bash
+
+        systemctl restart rspamd
+
+11. Loguez vous dans ISPConfig
+
+12. Activer Rspamd dans ISPConfig
+
+    a. Allez dans la rubrique ``system`` → menu ``Server Config`` →
+       Sélectionnez votre serveur → Onglet ``Mail``
+
+    b. Dans le champ ``Content Filter``, sélectionnez ``Rspamd``
+
+    c. Cliquez sur ``Save``
+
+    d. Revenez dans la rubrique ``system`` → menu ``Server Config`` →
+       Sélectionnez votre serveur → Onglet ``Mail``
+
+    e. Vous pouvez voir le mot de passe de connexion au serveur web
+       Rspamd.
+
+13. Rendre le site rspamd accessible dans un host
+
+14. Activez le module proxy dans apache
+
+    .. code:: bash
+
+        a2enmod proxy
+        systemctl restart apache2
+
+15. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+    Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+    a. Cliquez sur ``A`` et saisissez:
+
+       -  ``Hostname:`` ← Tapez ``rspamd``
+
+       -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+          de votre serveur
+
+    b. Cliquez sur ``Save``
+
+16. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+    configurateur de ``sites``.
+
+    a. Lui donner le nom ``rspamd``.
+
+    b. Le faire pointer vers le web folder ``rspamd``.
+
+    c. Activer let’s encrypt ssl
+
+    d. Activer ``Fast CGI`` pour PHP
+
+    e. Laisser le reste par défaut.
+
+    f. Dans l’onglet Options:
+
+    g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+       .. code:: apache
+
+           ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+           ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+           RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+           # rspamd httpserver
+           #
+
+           SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+           ProxyPass / http://127.0.0.1:11334/
+           ProxyPassReverse / http://127.0.0.1:11334/
+
+17. en pointant sur le site rspampd.example.com, et en utilisant le mot
+    de passe saisi plus haut vous pouvez accèder aux fonctions de
+    l’outil.
+
+18. Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:
+
+    .. code:: bash
+
+        systemctl stop amavisd-new
+        systemctl disable amavisd-new
 
 Création du serveur de messagerie
 ---------------------------------
@@ -3013,15 +3152,309 @@ informations à saisir:
 | Authentification SMTP                | Normal Password                      |
 +--------------------------------------+--------------------------------------+
 
+Installation et configuration de Gitea
+======================================
+
+Gitea est un système simple d’hébergement de code basé sur Git. C’est un
+fork de Gogs. Il montre des fonctionnalités similaires à gitlab ou
+github tout en gardant un code plus simple.
+
+Appliquez les opérations suivantes:
+
+1.  Créez un utilisateur ``Gitea``. Tapez:
+
+    .. code:: bash
+
+        adduser --system --disabled-password --group --shell /bin/bash --home /home/gitea gitea
+
+2.  Créez la structure de répertoire de ``Gitea``. Tapez:
+
+    .. code:: bash
+
+        mkdir -p /var/lib/gitea/{data,log} /etc/gitea /run/gitea
+
+3.  Donnez les bonnes permissions aux répertoires. Tapez:
+
+    .. code:: bash
+
+        chown -R gitea:gitea /var/lib/gitea
+        chown -R gitea:gitea /run/gitea
+        chown -R root:gitea /etc/gitea
+        chmod -R 750 /var/lib/gitea
+        chmod 770 /etc/gitea
+
+4.  Créez une base de données mysql. Aller dans le menu ``Database``
+    pour définir un utilisateur MariaDB
+
+5.  Aller dans la rubrique ``Sites``
+
+    a. Aller dans le menu ``Database users`` pour définir un utilisateur
+       MariaDB
+
+       i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+       ii. Saisissez les informations:
+
+           -  ``Database user:`` ← saisir votre nom d’utilisateur
+              ``gitea`` par exemple
+
+           -  ``Database password:`` ← saisir un mot de passe ou en
+              générer un en cliquant sur le bouton
+
+           -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+    b. Cliquez sur ``save``
+
+    c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+       données
+
+    d. Saisissez les informations:
+
+       -  ``Site:`` ← sélectionner le site ``example.com``
+
+       -  ``Database name:`` ← Saisissez le nom de la base de données
+          ``gitea``
+
+       -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+          ``cxgitea``. x: est le numéro de client.
+
+    e. Cliquez sur ``save``
+
+6.  Téléchargez gitea du `site de
+    chargement <https://dl.gitea.io/gitea/>`__. Tapez pour un système 64
+    bits:
+
+    .. code:: bash
+
+        wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
+        chmod 755 /usr/local/bin/gitea
+
+7.  Créez maintenant une entrée pour le launcher systemd. Tapez:
+
+    .. code:: bash
+
+        vi /etc/systemd/system/gitea.service
+
+8.  y Coller le texte suivant:
+
+    .. code:: ini
+
+        [Unit]
+        Description=Gitea (Git with a cup of tea)
+        After=syslog.target
+        After=network.target
+        Requires=postgresql.service
+        [Service]
+        Type=simple
+        User=gitea
+        Group=gitea
+        WorkingDirectory=/var/lib/gitea/
+        RuntimeDirectory=gitea
+        ExecStart=/usr/local/bin/gitea web -c /etc/gitea/app.ini
+        Restart=always
+        Environment=USER=gitea HOME=/home/gitea GITEA_WORK_DIR=/var/lib/gitea
+        [Install]
+        WantedBy=multi-user.target
+
+9.  Recharge la base de systemd. Tapez:
+
+    .. code:: bash
+
+        systemctl daemon-reload
+
+10. Activez et démarrez ``Gitea``. Tapez:
+
+    .. code:: bash
+
+        systemctl enable gitea.service
+        systemctl start gitea.service
+
+11. Débloquez le port 3000 dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 3000
+
+    d. Cliquez sur ``save``
+
+12. Ouvrez votre navigateur sur l’url: http://example.com:3000/install
+    et remplissez les paramètres comme ci-après :
+
+    -  ``Type de base de données:`` ← Sélectionnez ``MySQL``
+
+    -  ``Nom d’utilisateur:`` ← Tapez ``c0gitea``
+
+    -  ``Mot de passe:`` ← Tapez le mot de passe saisi lors de la
+       création de la base
+
+    -  ``Nom de base de données:`` ← Tapez ``c0gitea``
+
+    -  ``Titre du site:`` ← mettez une titre de votre choix
+
+    -  ``Emplacement racine des dépôts:`` ← saisissez
+       ``/home/gitea/gitea-repositories``
+
+    -  ``Répertoire racine Git LFS:`` ← Tapez
+       ``/var/lib/gitea/data/lfs``
+
+    -  ``Exécuter avec le compte d’un autre utilisateur :`` ← Tapez
+       ``gitea``
+
+    -  ``Domaine du serveur SSH:`` ← Tapez votre domaine. exemple :
+       ``gitea.example.com``
+
+    -  ``Port du serveur SSH:`` ← Tapez 22
+
+    -  ``Port d’écoute HTTP de Gitea:`` ← Tapez 3000
+
+    -  ``URL de base de Gitea:`` ← Tapez l’URL de votre domaine.
+       Exemple: ``https://gitea.example.com``
+
+    -  ``Chemin des fichiers log:`` ← Tapez ``/var/lib/gitea/log``
+
+    -  ``Hôte SMTP:`` ← Tapez ``localhost``
+
+    -  ``Envoyer les e-mails en tant que:`` ← Tapez
+       ``gitea@gitea.example.com``
+
+    -  ``Exiger la confirmation de l’e-mail lors de l’inscription:`` ←
+       cochez la case
+
+    -  ``Activez les notifications par e-mail:`` ← cochez la case
+
+    -  ``Désactiver le formulaire d’inscription:`` ← cochez la case
+
+    -  ``Masquer les adresses e-mail par défaut:`` ← cochez la case
+
+13. Laissez le reste et cliquez sur ``Install Gitea``.
+
+14. Vous allez être redirigé vers une URL en erreur. C’est normal
+    puisque le site web n’est pas encore configuré.
+
+15. Restreignez les permissions sur le fichier de configuration de
+    gitea. Tapez:
+
+    .. code:: bash
+
+        chmod 750 /etc/gitea
+        chown root:gitea /etc/gitea/app.ini
+        chmod 640 /etc/gitea/app.ini
+
+16. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+    Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+    a. Cliquez sur ``A`` et saisissez:
+
+       -  ``Hostname:`` ← Tapez ``gitea``
+
+       -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+          de votre serveur
+
+    b. Cliquez sur ``Save``
+
+17. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+    configurateur de sites.
+
+    a. Lui donner le nom ``gitea``.
+
+    b. Le faire pointer vers le web folder ``gitea``.
+
+    c. Activer let’s encrypt ssl
+
+    d. Activer ``Fast CGI`` pour PHP
+
+    e. Laisser le reste par défaut.
+
+    f. Dans l’onglet Options:
+
+    g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+       .. code:: apache
+
+           ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+           ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+           RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+           # gitea httpserver
+           #
+
+           SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+           ProxyPass / http://example.com:3000/ 
+           ProxyPassReverse / http://example.com:3000/ 
+
+       -  mettez le nom de votre domaine à la place de example.com
+
+18. Redémarrez ``gitea``. Tapez:
+
+    .. code:: bash
+
+        systemctl restart nginx.service
+
+19. Si vous souhaitez avoir un serveur ssh dédié pour gitea. Editez le
+    fichier de configuration. Tapez:
+
+    .. code:: bash
+
+        vi /etc/gitea/app.ini
+
+20. Trouvez les lignes suivantes et les remplacer dans le fichier.
+    Chercher et remplacez:
+
+    .. code:: bash
+
+        START_SSH_SERVER = true
+        SSH_PORT = 2222 
+
+    -  mettez ici le numéro de port que vous souhaitez
+
+21. Débloquez le port 2222 dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 222
+
+    d. Cliquez sur ``save``
+
+22. Redémarrez ``gitea``. Tapez:
+
+    .. code:: bash
+
+        systemctl restart nginx.service
+
+23. Enjoy !
+
 Installation de Seafile
 =======================
+
+Seafile est un système de partage de fichier simple et efficace. Il
+existe des clients de connexion pour Windows, Linux, Android, IOS.
+
+Cette installation est optionnelle.
 
 Création du site web de Seafile
 -------------------------------
 
 Appliquez la procédure suivante:
 
-1. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``seafile``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
    configurateur de sites.
 
    a. Lui donner le nom ``seafile``.
@@ -3092,8 +3525,7 @@ Création de bases de données
 
           -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
 
-   b. Aller dans le menu ``Database`` pour définir un utilisateur
-      MariaDB
+   b. Aller dans le menu ``Database`` pour définir les bases de données
 
    c. Appliquer l’opération ci après 3 fois d’affilée pour créer les
       trois bases suivantes: ``ccnetdb``, ``seafiledb``, ``seahubdb``
@@ -3143,6 +3575,13 @@ Appliquez la procédure suivante:
        mv seafile-server_* installed
        cd seafile-server-*
        ./setup-seafile-mysql.sh
+       cd ../..
+       chown -R web1:client0 seafile 
+
+   -  choisissez le user et le groupe de votre site web. Ces
+      informations sont consultables dans ISPConfig en consultant les
+      informations du Web Domain→onlget ``Options``\ →champs Linux User
+      et Linux Group.
 
 4. A ce moment, vous devez répondre à un certain nombre de questions.
 
@@ -3217,12 +3656,29 @@ Nous allons effectuer un premier lancement du serveur Seafile:
 
     .. code:: bash
 
-        ./seafile.sh start
-        ./seahub.sh start 8090
+        sudo -u web1 ./seafile.sh start 
+        sudo -u web1 ./seahub.sh start 8090 
 
-10. Faites pointer votre navigateur sur https://seafile.example.com
+    -  remplacer le nom de user web1 par celui correspondant à celui du
+       site web installé (indiqué dans le champ ``Options``\ →\`linux
+       user\` du web domain). (Si vous n’avez qu’un site, web1 est le
+       bon).
 
-11. La page de login de Seafile doit s’afficher
+10. Débloquez le port 8090 et 8092 dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 8090 et
+       8092
+
+    d. Cliquez sur ``save``
+
+11. Faites pointer votre navigateur sur https://seafile.example.com
+
+12. La page de login de Seafile doit s’afficher
 
 Lancement automatique de Seafile
 --------------------------------
@@ -3313,7 +3769,9 @@ script de lancement automatique de Seafile:
       -  ``Command to run:`` ← mettre
          ``/var/www/seafile.example.com/private/seafile/startseafile.sh restart``
 
-5. Enjoy !
+5. Arretez le serveur précédemment lancé en tant que root. Tapez:
+
+6. Enjoy !
 
 Annexe
 ======

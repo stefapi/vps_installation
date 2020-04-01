@@ -513,25 +513,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_configuration_de_la_messagerie">10. Configuration de la messagerie</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_serveur_de_messagerie">10.1. Création du serveur de messagerie</a></li>
-<li><a href="#_création_de_lautoconfig_pour_thunderbird_et_android">10.2. Création de l’autoconfig pour Thunderbird et Android</a></li>
-<li><a href="#_création_dautodiscover_pour_outlook">10.3. Création d’autodiscover pour Outlook</a></li>
-<li><a href="#_création_dune_boite_mail">10.4. Création d’une boite mail</a></li>
-<li><a href="#_configuration_de_votre_client_de_messagerie">10.5. Configuration de votre client de messagerie.</a></li>
+<li><a href="#_installation_de_rspamd_à_la_place_d_amavis_new">10.1. Installation de rspamd à la place d' Amavis-new</a></li>
+<li><a href="#_création_du_serveur_de_messagerie">10.2. Création du serveur de messagerie</a></li>
+<li><a href="#_création_de_lautoconfig_pour_thunderbird_et_android">10.3. Création de l’autoconfig pour Thunderbird et Android</a></li>
+<li><a href="#_création_dautodiscover_pour_outlook">10.4. Création d’autodiscover pour Outlook</a></li>
+<li><a href="#_création_dune_boite_mail">10.5. Création d’une boite mail</a></li>
+<li><a href="#_configuration_de_votre_client_de_messagerie">10.6. Configuration de votre client de messagerie.</a></li>
 </ul>
 </li>
-<li><a href="#_installation_de_seafile">11. Installation de Seafile</a>
+<li><a href="#_installation_et_configuration_de_gitea">11. Installation et configuration de Gitea</a></li>
+<li><a href="#_installation_de_seafile">12. Installation de Seafile</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_seafile">11.1. Création du site web de Seafile</a></li>
-<li><a href="#_création_de_bases_de_données">11.2. Création de bases de données</a></li>
-<li><a href="#_téléchargez_et_installez_seafile">11.3. Téléchargez et installez Seafile</a></li>
-<li><a href="#_lancement_initial">11.4. Lancement initial</a></li>
-<li><a href="#_lancement_automatique_de_seafile">11.5. Lancement automatique de Seafile</a></li>
+<li><a href="#_création_du_site_web_de_seafile">12.1. Création du site web de Seafile</a></li>
+<li><a href="#_création_de_bases_de_données">12.2. Création de bases de données</a></li>
+<li><a href="#_téléchargez_et_installez_seafile">12.3. Téléchargez et installez Seafile</a></li>
+<li><a href="#_lancement_initial">12.4. Lancement initial</a></li>
+<li><a href="#_lancement_automatique_de_seafile">12.5. Lancement automatique de Seafile</a></li>
 </ul>
 </li>
-<li><a href="#_annexe">12. Annexe</a>
+<li><a href="#_annexe">13. Annexe</a>
 <ul class="sectlevel2">
-<li><a href="#_installation_de_hestia">12.1. Installation de Hestia</a></li>
+<li><a href="#_installation_de_hestia">13.1. Installation de Hestia</a></li>
 </ul>
 </li>
 </ul>
@@ -2635,25 +2637,24 @@ chmod a+x certbot-auto
 <pre class="pygments highlight"><code data-lang="bash"><span></span>apt install Webmin</code></pre>
 </div>
 </div>
-</li>
-<li>
-<p>Autorisation de Webmin au niveau du firewall</p>
+<div class="literalblock">
+<div class="content">
+<pre>Débloquez le port 10000 dans votre firewall</pre>
+</div>
+</div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Loguez vous Admin sur le site Hestia: <a href="https://&lt;example.com&gt;:8083" class="bare">https://&lt;example.com&gt;:8083</a></p>
+<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
 </li>
 <li>
-<p>Allez dans Server&#8594;Firewall, puis Add Rule</p>
+<p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
 </li>
 <li>
-<p>Sélectionnez Action: <code>Allow</code>, Protocol: <code>TCP</code>, Port: <code>10000</code>, IP Address: <code>0.0.0.0/0</code>, Service: <code>WEBMIN</code></p>
+<p>dans la rubrique <code>Open TCP ports:</code>, ajoutez le port 10000</p>
 </li>
 <li>
-<p>Cliquez sur Save, puis Back</p>
-</li>
-<li>
-<p>Constatez que le service Webmin sur le port 10000 est autorisé</p>
+<p>Cliquez sur <code>save</code></p>
 </li>
 </ol>
 </div>
@@ -3663,7 +3664,8 @@ service pure-ftpd-mysql restart
 service monit restart
 service postfix restart
 service dovecot restart
-service apache2 restart</code></pre>
+service apache2 restart
+<span class="tok-nb">exit</span> <span class="tok-m">1</span></code></pre>
 </div>
 </div>
 </li>
@@ -3719,19 +3721,18 @@ a2enmod fcgid</code></pre>
 <div class="sect2">
 <h3 id="_installation_et_configuration_de_munin">9.2. Installation et configuration de Munin</h3>
 <div class="paragraph">
-<p>Suivez les étapes ci-après:
-. Installer le paquet Munin:</p>
+<p>Suivez les étapes ci-après:</p>
 </div>
-<div class="paragraph">
-<p>+</p>
-</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Installer le paquet Munin:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install munin munin-node munin-plugins-extra</code></pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>Votre configuration de Munin va utiliser une base de données MariaDB. Vous devez activer quelques plugins. Tapez:</p>
 <div class="listingblock">
@@ -4121,7 +4122,197 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 <h2 id="_configuration_de_la_messagerie">10. Configuration de la messagerie</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_création_du_serveur_de_messagerie">10.1. Création du serveur de messagerie</h3>
+<h3 id="_installation_de_rspamd_à_la_place_d_amavis_new">10.1. Installation de rspamd à la place d' Amavis-new</h3>
+<div class="paragraph">
+<p><code>rspamd</code> est réputé de meilleure qualité que <code>Amavis</code> dans la chasse aux spams. Vous pouvez décider de l&#8217;installer à la place d&#8217;Amavis. Cette installation reste optionnelle.</p>
+</div>
+<div class="paragraph">
+<p>Suivez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Loguez vous sur le serveur en tant que <code>root</code></p>
+</li>
+<li>
+<p>Installez les paquets debian. tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install rspamd redis-server</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Activez Redis dans la configuration de Rspamd. Tapez:</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;servers = &quot;127.0.0.1&quot;;&#39;</span> &gt; /etc/rspamd/local.d/redis.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Augmentez la taille de l&#8217;historique de Rspamd, activez la compression.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;nrows = 2500;&quot;</span> &gt; /etc/rspamd/local.d/history_redis.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;compress = true;&quot;</span> &gt;&gt; /etc/rspamd/local.d/history_redis.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;subject_privacy = false;&quot;</span> &gt;&gt; /etc/rspamd/local.d/history_redis.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez un mot de passe:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>rspamadm pw</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Entrez votre mot de passe. Une hashphrase est générée.</p>
+</li>
+<li>
+<p>Copiez la.</p>
+</li>
+<li>
+<p>Remplacez celle déjà présente dans <code>/etc/rspamd/local.d/worker-controller.inc</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/rspamd/local.d/worker-controller.inc</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Remplacez le texte entre guillemets sur la ligne <code>password = "$2$g95yw&#8230;&#8203;&#8230;&#8203;dq3c5byy";</code> par le texte copié.</p>
+</li>
+<li>
+<p>Sauvez</p>
+</li>
+<li>
+<p>Redémarrez Rspamd</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart rspamd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Loguez vous dans ISPConfig</p>
+</li>
+<li>
+<p>Activer Rspamd dans ISPConfig</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
+</li>
+<li>
+<p>Dans le champ <code>Content Filter</code>, sélectionnez <code>Rspamd</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+<li>
+<p>Revenez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
+</li>
+<li>
+<p>Vous pouvez voir le mot de passe de connexion au serveur web Rspamd.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Rendre le site rspamd accessible dans un host</p>
+</li>
+<li>
+<p>Activez le module proxy dans apache</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2enmod proxy
+systemctl restart apache2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Allez dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>rspamd</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de <code>sites</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>rspamd</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>rspamd</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>Fast CGI</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://127.0.0.1:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://127.0.0.1:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+
+<span class="tok-c"># rspamd httpserver</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> / http://127.0.0.1:11334/
+<span class="tok-nb">ProxyPassReverse</span> / http://127.0.0.1:11334/</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>en pointant sur le site rspampd.example.com, et en utilisant le mot de passe saisi plus haut vous pouvez accèder aux fonctions de l&#8217;outil.</p>
+</li>
+<li>
+<p>Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop amavisd-new
+systemctl disable amavisd-new</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_du_serveur_de_messagerie">10.2. Création du serveur de messagerie</h3>
 <div class="paragraph">
 <p>Pour créer un serveur de messagerie:</p>
 </div>
@@ -4180,7 +4371,7 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_de_lautoconfig_pour_thunderbird_et_android">10.2. Création de l’autoconfig pour Thunderbird et Android</h3>
+<h3 id="_création_de_lautoconfig_pour_thunderbird_et_android">10.3. Création de l’autoconfig pour Thunderbird et Android</h3>
 <div class="paragraph">
 <p>La procédure est utilisé par Thunderbird et Android pour configurer automatiquement les paramètres de la messagerie.</p>
 </div>
@@ -4346,7 +4537,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/config-v1.1.xml <i
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_dautodiscover_pour_outlook">10.3. Création d’autodiscover pour Outlook</h3>
+<h3 id="_création_dautodiscover_pour_outlook">10.4. Création d’autodiscover pour Outlook</h3>
 <div class="paragraph">
 <p>Outlook utilise un autre mécanisme pour se configurer automatiquement. Il est basé sur l&#8217;utilisation du nom de sous-domaine <code>autodiscover</code>.</p>
 </div>
@@ -4525,7 +4716,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_dune_boite_mail">10.4. Création d’une boite mail</h3>
+<h3 id="_création_dune_boite_mail">10.5. Création d’une boite mail</h3>
 <div class="paragraph">
 <p>Pour créer une boite de messagerie:</p>
 </div>
@@ -4582,7 +4773,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuration_de_votre_client_de_messagerie">10.5. Configuration de votre client de messagerie.</h3>
+<h3 id="_configuration_de_votre_client_de_messagerie">10.6. Configuration de votre client de messagerie.</h3>
 <div class="paragraph">
 <p>Saisir l&#8217;adresse mail et votre mot de passe doit suffire pour configurer automatiquement votre client de messagerie.</p>
 </div>
@@ -4651,15 +4842,441 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i c
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_de_seafile">11. Installation de Seafile</h2>
+<h2 id="_installation_et_configuration_de_gitea">11. Installation et configuration de Gitea</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Gitea est un système simple d&#8217;hébergement de code basé sur Git. C&#8217;est un fork de Gogs.
+Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un code plus simple.</p>
+</div>
+<div class="paragraph">
+<p>Appliquez les opérations suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Créez un utilisateur <code>Gitea</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>adduser --system --disabled-password --group --shell /bin/bash --home /home/gitea gitea</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez la structure de répertoire de <code>Gitea</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/lib/gitea/<span class="tok-o">{</span>data,log<span class="tok-o">}</span> /etc/gitea /run/gitea</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Donnez les bonnes permissions aux répertoires. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chown -R gitea:gitea /var/lib/gitea
+chown -R gitea:gitea /run/gitea
+chown -R root:gitea /etc/gitea
+chmod -R <span class="tok-m">750</span> /var/lib/gitea
+chmod <span class="tok-m">770</span> /etc/gitea</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez une base de données mysql. Aller dans le menu <code>Database</code> pour définir un utilisateur MariaDB</p>
+</li>
+<li>
+<p>Aller dans la rubrique <code>Sites</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aller dans le menu <code>Database users</code> pour définir un utilisateur MariaDB</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur <code>Add new User</code> pour créer un nouvel utilisateur</p>
+</li>
+<li>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Database user:</code> &#8592;  saisir votre nom d&#8217;utilisateur <code>gitea</code> par exemple</p>
+</li>
+<li>
+<p><code>Database password:</code> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</p>
+</li>
+<li>
+<p><code>Repeat Password:</code> &#8592; saisir de nouveau le mot de passe</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Add new Database</code> pour créer une nouvelle base de données</p>
+</li>
+<li>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Site:</code> &#8592; sélectionner le site <code>example.com</code></p>
+</li>
+<li>
+<p><code>Database name:</code> &#8592; Saisissez le nom de la base de données <code>gitea</code></p>
+</li>
+<li>
+<p><code>Database user:</code> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <code>cxgitea</code>. x: est le numéro de client.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Téléchargez gitea du <a href="https://dl.gitea.io/gitea/">site de chargement</a>. Tapez pour un système 64 bits:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
+chmod <span class="tok-m">755</span> /usr/local/bin/gitea</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez maintenant une entrée pour le launcher systemd. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systemd/system/gitea.service</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>y Coller le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-k">[Unit]</span>
+<span class="tok-na">Description</span><span class="tok-o">=</span><span class="tok-s">Gitea (Git with a cup of tea)</span>
+<span class="tok-na">After</span><span class="tok-o">=</span><span class="tok-s">syslog.target</span>
+<span class="tok-na">After</span><span class="tok-o">=</span><span class="tok-s">network.target</span>
+<span class="tok-na">Requires</span><span class="tok-o">=</span><span class="tok-s">postgresql.service</span>
+<span class="tok-k">[Service]</span>
+<span class="tok-na">Type</span><span class="tok-o">=</span><span class="tok-s">simple</span>
+<span class="tok-na">User</span><span class="tok-o">=</span><span class="tok-s">gitea</span>
+<span class="tok-na">Group</span><span class="tok-o">=</span><span class="tok-s">gitea</span>
+<span class="tok-na">WorkingDirectory</span><span class="tok-o">=</span><span class="tok-s">/var/lib/gitea/</span>
+<span class="tok-na">RuntimeDirectory</span><span class="tok-o">=</span><span class="tok-s">gitea</span>
+<span class="tok-na">ExecStart</span><span class="tok-o">=</span><span class="tok-s">/usr/local/bin/gitea web -c /etc/gitea/app.ini</span>
+<span class="tok-na">Restart</span><span class="tok-o">=</span><span class="tok-s">always</span>
+<span class="tok-na">Environment</span><span class="tok-o">=</span><span class="tok-s">USER=gitea HOME=/home/gitea GITEA_WORK_DIR=/var/lib/gitea</span>
+<span class="tok-k">[Install]</span>
+<span class="tok-na">WantedBy</span><span class="tok-o">=</span><span class="tok-s">multi-user.target</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Recharge la base de systemd. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl daemon-reload</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez et démarrez <code>Gitea</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl <span class="tok-nb">enable</span> gitea.service
+systemctl start gitea.service</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Débloquez le port 3000 dans votre firewall</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+</li>
+<li>
+<p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
+</li>
+<li>
+<p>dans la rubrique <code>Open TCP ports:</code>, ajoutez le port 3000</p>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Ouvrez votre navigateur sur l&#8217;url: <a href="http://example.com:3000/install" class="bare">http://example.com:3000/install</a> et remplissez les paramètres comme ci-après :</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Type de base de données:</code> &#8592; Sélectionnez <code>MySQL</code></p>
+</li>
+<li>
+<p><code>Nom d&#8217;utilisateur:</code> &#8592; Tapez <code>c0gitea</code></p>
+</li>
+<li>
+<p><code>Mot de passe:</code> &#8592;  Tapez le mot de passe saisi lors de la création de la base</p>
+</li>
+<li>
+<p><code>Nom de base de données:</code> &#8592; Tapez <code>c0gitea</code></p>
+</li>
+<li>
+<p><code>Titre du site:</code> &#8592; mettez une titre de votre choix</p>
+</li>
+<li>
+<p><code>Emplacement racine des dépôts:</code> &#8592; saisissez <code>/home/gitea/gitea-repositories</code></p>
+</li>
+<li>
+<p><code>Répertoire racine Git LFS:</code> &#8592; Tapez <code>/var/lib/gitea/data/lfs</code></p>
+</li>
+<li>
+<p><code>Exécuter avec le compte d&#8217;un autre utilisateur :</code> &#8592; Tapez <code>gitea</code></p>
+</li>
+<li>
+<p><code>Domaine du serveur SSH:</code> &#8592; Tapez votre domaine. exemple : <code>gitea.example.com</code></p>
+</li>
+<li>
+<p><code>Port du serveur SSH:</code> &#8592; Tapez 22</p>
+</li>
+<li>
+<p><code>Port d&#8217;écoute HTTP de Gitea:</code> &#8592; Tapez 3000</p>
+</li>
+<li>
+<p><code>URL de base de Gitea:</code> &#8592; Tapez l&#8217;URL de votre domaine. Exemple: <code><a href="https://gitea.example.com" class="bare">https://gitea.example.com</a></code></p>
+</li>
+<li>
+<p><code>Chemin des fichiers log:</code> &#8592; Tapez  <code>/var/lib/gitea/log</code></p>
+</li>
+<li>
+<p><code>Hôte SMTP:</code> &#8592; Tapez <code>localhost</code></p>
+</li>
+<li>
+<p><code>Envoyer les e-mails en tant que:</code> &#8592; Tapez <code>gitea@gitea.example.com</code></p>
+</li>
+<li>
+<p><code>Exiger la confirmation de l&#8217;e-mail lors de l&#8217;inscription:</code> &#8592; cochez la case</p>
+</li>
+<li>
+<p><code>Activez les notifications par e-mail:</code> &#8592; cochez la case</p>
+</li>
+<li>
+<p><code>Désactiver le formulaire d&#8217;inscription:</code> &#8592; cochez la case</p>
+</li>
+<li>
+<p><code>Masquer les adresses e-mail par défaut:</code> &#8592; cochez la case</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Laissez le reste et cliquez sur <code>Install Gitea</code>.</p>
+</li>
+<li>
+<p>Vous allez être redirigé vers une URL en erreur. C&#8217;est normal puisque le site web n&#8217;est pas encore configuré.</p>
+</li>
+<li>
+<p>Restreignez les permissions sur le fichier de configuration de gitea. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">750</span> /etc/gitea
+chown root:gitea /etc/gitea/app.ini
+chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Allez dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>gitea</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>gitea</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>gitea</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>Fast CGI</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://127.0.0.1:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://127.0.0.1:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+
+<span class="tok-c"># gitea httpserver</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> / http://example.com:3000/ <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nb">ProxyPassReverse</span> / http://example.com:3000/ <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettez le nom de votre domaine à la place de example.com</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Redémarrez <code>gitea</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart nginx.service</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Si vous souhaitez avoir un serveur ssh dédié pour gitea. Editez le fichier de configuration. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/gitea/app.ini</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Trouvez les lignes suivantes et les remplacer dans le fichier. Chercher et remplacez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">START_SSH_SERVER</span> <span class="tok-o">=</span> <span class="tok-nb">true</span>
+<span class="tok-nv">SSH_PORT</span> <span class="tok-o">=</span> <span class="tok-m">2222</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettez ici le numéro de port que vous souhaitez</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Débloquez le port 2222 dans votre firewall</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+</li>
+<li>
+<p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
+</li>
+<li>
+<p>dans la rubrique <code>Open TCP ports:</code>, ajoutez le port 222</p>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Redémarrez <code>gitea</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart nginx.service</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enjoy !</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_de_seafile">12. Installation de Seafile</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Seafile est un système de partage de fichier simple et efficace. Il existe des clients de connexion pour Windows, Linux, Android, IOS.</p>
+</div>
+<div class="paragraph">
+<p>Cette installation est optionnelle.</p>
+</div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_seafile">11.1. Création du site web de Seafile</h3>
+<h3 id="_création_du_site_web_de_seafile">12.1. Création du site web de Seafile</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
+<li>
+<p>Allez dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>seafile</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
 <li>
 <p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
 <div class="olist loweralpha">
@@ -4725,7 +5342,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_de_bases_de_données">11.2. Création de bases de données</h3>
+<h3 id="_création_de_bases_de_données">12.2. Création de bases de données</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -4762,7 +5379,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i c
 </div>
 </li>
 <li>
-<p>Aller dans le menu <code>Database</code> pour définir un utilisateur MariaDB</p>
+<p>Aller dans le menu <code>Database</code> pour définir les bases de données</p>
 </li>
 <li>
 <p>Appliquer l&#8217;opération ci après 3 fois d&#8217;affilée pour créer les trois bases suivantes: <code>ccnetdb</code>, <code>seafiledb</code>, <code>seahubdb</code></p>
@@ -4803,7 +5420,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_téléchargez_et_installez_seafile">11.3. Téléchargez et installez Seafile</h3>
+<h3 id="_téléchargez_et_installez_seafile">12.3. Téléchargez et installez Seafile</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -4832,8 +5449,18 @@ tar zxvf seafile-server_7.0.5_x86-64.tar.gz
 mkdir installed
 mv seafile-server_* installed
 <span class="tok-nb">cd</span> seafile-server-*
-./setup-seafile-mysql.sh</code></pre>
+./setup-seafile-mysql.sh
+<span class="tok-nb">cd</span> ../..
+chown -R web1:client0 seafile <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onlget <code>Options</code>&#8594;champs Linux User et Linux Group.</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -4852,7 +5479,7 @@ mv seafile-server_* installed
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lancement_initial">11.4. Lancement initial</h3>
+<h3 id="_lancement_initial">12.4. Lancement initial</h3>
 <div class="paragraph">
 <p>Nous allons effectuer un premier lancement du serveur Seafile:</p>
 </div>
@@ -4928,9 +5555,36 @@ vi gunicorn.conf</code></pre>
 <p>Démarrez Seafile. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>./seafile.sh start
-./seahub.sh start <span class="tok-m">8090</span></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo -u web1 ./seafile.sh start <i class="conum" data-value="1"></i><b>(1)</b>
+sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <code>Options</code>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Débloquez le port 8090 et 8092 dans votre firewall</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+</li>
+<li>
+<p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
+</li>
+<li>
+<p>dans la rubrique <code>Open TCP ports:</code>, ajoutez le port 8090 et 8092</p>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
 </div>
 </li>
 <li>
@@ -4943,7 +5597,7 @@ vi gunicorn.conf</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lancement_automatique_de_seafile">11.5. Lancement automatique de Seafile</h3>
+<h3 id="_lancement_automatique_de_seafile">12.5. Lancement automatique de Seafile</h3>
 <div class="paragraph">
 <p>Afin de s&#8217;assurer que Seafile tourne en permanence, on doit créer un script de lancement automatique de Seafile:</p>
 </div>
@@ -5072,6 +5726,9 @@ stop<span class="tok-o">)</span>
 </div>
 </li>
 <li>
+<p>Arretez le serveur précédemment lancé en tant que root. Tapez:</p>
+</li>
+<li>
 <p>Enjoy !</p>
 </li>
 </ol>
@@ -5080,10 +5737,10 @@ stop<span class="tok-o">)</span>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_annexe">12. Annexe</h2>
+<h2 id="_annexe">13. Annexe</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_de_hestia">12.1. Installation de Hestia</h3>
+<h3 id="_installation_de_hestia">13.1. Installation de Hestia</h3>
 <div class="paragraph">
 <p>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
 La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="bare">https://docs.hestiacp.com/</a></p>
@@ -5143,7 +5800,7 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-03-31 22:44:27 +0200
+Last updated 2020-04-01 23:39:12 +0200
 </div>
 </div>
 <style>
