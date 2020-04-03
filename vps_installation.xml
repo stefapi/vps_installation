@@ -33,10 +33,10 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <simpara>Sont installés:</simpara>
 <itemizedlist>
 <listitem>
-<simpara>un panel ISPConfig</simpara>
+<simpara>un panel <link xl:href="https://www.ispconfig.org/">ISPConfig</link></simpara>
 </listitem>
 <listitem>
-<simpara>un configurateur Webmin</simpara>
+<simpara>un configurateur <link xl:href="http://www.webmin.com/">Webmin</link></simpara>
 </listitem>
 <listitem>
 <simpara>un serveur de mail avec antispam, sécurisation d&#8217;envoi des mails et autoconfiguration pour Outlook, Thunderbird, Android.</simpara>
@@ -63,31 +63,31 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <simpara>un outil de Monitoring <link xl:href="http://mmonit.com/monit/">Monit</link></simpara>
 </listitem>
 <listitem>
-<simpara>un sous domaine pointant sur un site autohébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <link xl:href="https://yunohost.org">Yunohost</link>),</simpara>
+<simpara>un sous domaine pointant sur un site auto-hébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <link xl:href="https://yunohost.org">Yunohost</link>),</simpara>
 </listitem>
 <listitem>
 <simpara>un site sous <link xl:href="https://www.joomla.fr/">Joomla</link>,</simpara>
 </listitem>
 <listitem>
-<simpara>un serveur et un site  de partage de fichiers <link xl:href="https://www.seafile.com">Seafile</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un site <link xl:href="https://gitea.io">Gitea</link> et son repository GIT,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur de VPN <link xl:href="https://pritunl.com/">pritunl</link>,</simpara>
-</listitem>
-<listitem>
 <simpara>un site <link xl:href="https://www.mediawiki.org">Mediawiki</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un site <link xl:href="https://nextcloud.com">Nextcloud</link></simpara>
 </listitem>
 <listitem>
 <simpara>un site <link xl:href="https://wordpress.com">Wordpress</link></simpara>
 </listitem>
 <listitem>
-<simpara>à venir: strut, <link xl:href="https://www.concrete5.org/">concrete5</link>, <link xl:href="https://gitlab.com/">gitlab</link>, <link xl:href="https://piwigo.org/">piwigo</link>, <link xl:href="https://www.borgbackup.org/">borg</link></simpara>
+<simpara>un site <link xl:href="https://gitea.io">Gitea</link> et son repository GIT,</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur et un site  de partage de fichiers <link xl:href="https://www.seafile.com">Seafile</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur de VPN <link xl:href="https://pritunl.com/">pritunl</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un site <link xl:href="https://nextcloud.com">Nextcloud</link></simpara>
+</listitem>
+<listitem>
+<simpara>à venir: <link xl:href="https://www.concrete5.org/">concrete5</link>, <link xl:href="https://gitlab.com/">gitlab</link>, <link xl:href="https://piwigo.org/">piwigo</link>, <link xl:href="https://www.borgbackup.org/">borg</link></simpara>
 </listitem>
 </itemizedlist>
 <simpara>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</simpara>
@@ -705,7 +705,7 @@ swapon /swapfile</programlisting>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd amavisd-new spamassassin clamav clamav-daemon unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php7.3 php7.3-common php7.3-gd php7.3-mysql php7.3-imap php7.3-cli php7.3-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php7.3-curl php7.3-intl php7.3-pspell php7.3-recode php7.3-sqlite3 php7.3-tidy php7.3-xmlrpc php7.3-xsl memcached php-memcache php-imagick php-gettext php7.3-zip php7.3-mbstring memcached libapache2-mod-passenger php7.3-soap php7.3-fpm php7.3-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd amavisd-new spamassassin clamav clamav-daemon unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php7.3 php7.3-common php7.3-gd php7.3-mysql php7.3-imap php7.3-cli php7.3-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php7.3-curl php7.3-intl php7.3-pspell php7.3-recode php7.3-sqlite3 php7.3-tidy php7.3-xmlrpc php7.3-xsl memcached php-memcache php-imagick php-gettext php7.3-zip php7.3-mbstring memcached libapache2-mod-passenger php7.3-soap php7.3-fpm php7.3-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron</programlisting>
 </listitem>
 </orderedlist>
 </listitem>
@@ -2992,13 +2992,506 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co 
 </tgroup>
 </informaltable>
 </section>
+<section xml:id="_mise_en_oeuvre_du_site_web_de_webmail">
+<title>Mise en oeuvre du site web de webmail</title>
+<simpara>On suppose que vous avez install roundcube lors de la procédure d&#8217;installation initiale et que vous avez déjà créé le host mail.example.com.</simpara>
+<simpara>Il vous reste à appliquer la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>mail</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>mail</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# roundcube httpserver
+
+SSLProxyEngine On
+SSLProxyCheckPeerCN Off
+SSLProxyCheckPeerName Off
+SSLProxyVerify none
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / https://localhost:8080/webmail/
+ProxyPassReverse / https://localhost:8080/webmail/
+ProxyPreserveHost On</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>C&#8217;est fait, vous pouvez accéder à Roundcube directement sur <link xl:href="https://mail.example.com">https://mail.example.com</link></simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_transfert_de_vos_boites_mails_imap">
+<title>Transfert de vos boites mails IMAP</title>
+<simpara>Si vous faites une migration d&#8217;un ancien serveur vers un nouveau serveur vous souhaiterez probablement migrer aussi vos boites mail.</simpara>
+<simpara>La procédure ci dessous est à appliquer pour chaque compte mail IMAP. Elle peut facilement être scriptée:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Téléchargez imapsync du repository. Tapez:</simpara>
+<screen>wget https://raw.githubusercontent.com/imapsync/imapsync/master/imapsync
+chmod 755 imapsync</screen>
+</listitem>
+<listitem>
+<simpara>Installez les packages perls éventuellement manquants:</simpara>
+<screen>apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl</screen>
+</listitem>
+<listitem>
+<simpara>Créez deux fichiers temporaires qui contiennent les mots de passe du 1er et  2eme serveur. Tapez:</simpara>
+<screen>echo "passwdsrc" &gt; secretsrc <co xml:id="CO19-1"/>
+echo "passwddst" &gt; secretdst <co xml:id="CO19-2"/>
+chmod 600 secretsrc
+chmod 600 secretdst</screen>
+<calloutlist>
+<callout arearefs="CO19-1">
+<para>passwdsrc est à remplacer par le mot de passe du compte sur le serveur source</para>
+</callout>
+<callout arearefs="CO19-2">
+<para>passwddst est à remplacer par le mot de passe du compte sur le serveur destination</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Nous pouvons maintenant lancer la commande. Tapez:</simpara>
+<screen>./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst</screen>
+</listitem>
+<listitem>
+<simpara>Un fois la synchronisation effectuée, vous pouvez supprimer le fichier des mots de passe. tapez:</simpara>
+<screen>rm secretsrc
+rm secretdst</screen>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_de_joomla">
+<title>Installation de Joomla</title>
+<simpara>Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour.</simpara>
+<simpara>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</simpara>
+<section xml:id="_création_du_site_web_de_joomla">
+<title>Création du site web de Joomla</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>joomla</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>joomla</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>joomla</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_de_lapplication_joomla">
+<title>Création de l&#8217;application Joomla</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Update Packagelist</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Update Packagelist</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Available packages</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Faites une recherche par <literal>Name</literal>. Tapez <literal>joomla</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur le package <literal>joomla</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install this package</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez tous les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Install location:</literal> &#8592; choisissez votre domain (<literal>example.com</literal>) et laissez vide le chemin.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>New database password</literal> &#8592; gardez ce qui est remplit</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Administrator&#8217;s login</literal> &#8592; gardez ce qui est remplit: <literal>admin</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password</literal> et <literal>Repeat Password</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Default site language:</literal> &#8592; choisissez <literal>French</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>I accept the license</literal> &#8592; cochez la case</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Pointez votre navigateur sur <link xl:href="https://example.com/">https://example.com/</link> et loguez vous <literal>admin</literal> avec votre mot de passe saisi, c&#8217;est fait !</simpara>
+</listitem>
+<listitem>
+<simpara>N&#8217;oubliez pas d&#8217;administrer le site et de le mettre à jour avec la dernière version de Joomla.</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_de_mediawiki">
+<title>Installation de Mediawiki</title>
+<simpara>Mediawiki est le portail wiki mondialement connu et utilisé notamment pour le site wikipedia.</simpara>
+<simpara>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</simpara>
+<section xml:id="_création_du_site_web_de_mediawiki">
+<title>Création du site web de Mediawiki</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>mediawiki</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>mediawiki</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>mediawiki</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_de_lapplication_mediawiki">
+<title>Création de l&#8217;application Mediawiki</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Update Packagelist</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Update Packagelist</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Available packages</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Faites une recherche par <literal>Name</literal>. Tapez <literal>mediawiki</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur le package <literal>mediawiki</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install this package</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez tous les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Install location:</literal> &#8592; choisissez votre domain (<literal>example.com</literal>) et laissez vide le chemin.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>New database password</literal> &#8592; gardez ce qui est remplit</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Administrator&#8217;s login</literal> &#8592; gardez ce qui est remplit: <literal>admin</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password</literal> et <literal>Repeat Password</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Default site language:</literal> &#8592; choisissez <literal>French</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>I accept the license</literal> &#8592; cochez la case</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Pointez votre navigateur sur <link xl:href="https://example.com/">https://example.com/</link> et loguez vous <literal>admin</literal> avec votre mot de passe saisi, c&#8217;est fait !</simpara>
+</listitem>
+<listitem>
+<simpara>N&#8217;oubliez pas d&#8217;administrer le site et de le mettre à jour avec la dernière version de Mediawiki.</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_de_wordpress">
+<title>Installation de Wordpress</title>
+<simpara>Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à jour.</simpara>
+<simpara>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</simpara>
+<section xml:id="_création_du_site_web_de_wordpress">
+<title>Création du site web de Wordpress</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>wordpress</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>wordpress</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>wordpress</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_de_lapplication_wordpress">
+<title>Création de l&#8217;application Wordpress</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Update Packagelist</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Update Packagelist</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Available packages</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Faites une recherche par <literal>Name</literal>. Tapez <literal>wordpress</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur le package <literal>wordpress</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install this package</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez tous les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Install location:</literal> &#8592; choisissez votre domain (<literal>example.com</literal>) et laissez vide le chemin.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>New database password</literal> &#8592; gardez ce qui est remplit</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Administrator&#8217;s login</literal> &#8592; gardez ce qui est remplit: <literal>admin</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password</literal> et <literal>Repeat Password</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Default site language:</literal> &#8592; choisissez <literal>French</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>I accept the license</literal> &#8592; cochez la case</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Pointez votre navigateur sur <link xl:href="https://example.com/">https://example.com/</link> et loguez vous <literal>admin</literal> avec votre mot de passe saisi, c&#8217;est fait !</simpara>
+</listitem>
+<listitem>
+<simpara>N&#8217;oubliez pas d&#8217;administrer le site et de le mettre à jour avec la dernière version de Wordpress.</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_pritunl">
+<title>Pritunl</title>
+<simpara>sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list &lt;&lt; EOF
+deb <link xl:href="http://repo.mongodb.org/apt/debian">http://repo.mongodb.org/apt/debian</link> buster/mongodb-org/4.2 main
+EOF</simpara>
+<simpara>sudo tee /etc/apt/sources.list.d/pritunl.list &lt;&lt; EOF
+deb <link xl:href="http://repo.pritunl.com/stable/apt">http://repo.pritunl.com/stable/apt</link> buster main
+EOF</simpara>
+<simpara>sudo apt-get install dirmngr
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
+sudo apt-get update
+sudo apt-get --assume-yes install pritunl mongodb-org
+sudo systemctl start mongod pritunl
+sudo systemctl enable mongod pritunl</simpara>
 </section>
 <section xml:id="_installation_et_configuration_de_gitea">
 <title>Installation et configuration de Gitea</title>
 <simpara>Gitea est un système simple d&#8217;hébergement de code basé sur Git. C&#8217;est un fork de Gogs.
 Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un code plus simple.</simpara>
-<simpara>Appliquez les opérations suivantes:</simpara>
+<section xml:id="_création_du_site_web_de_gitea">
+<title>Création du site web de Gitea</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>gitea</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>gitea</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>gitea</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# gitea httpserver
+#
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / http://localhost:3000/ <co xml:id="CO20-1"/>
+ProxyPassReverse / http://localhost:3000/ <co xml:id="CO20-2"/></programlisting>
+<calloutlist>
+<callout arearefs="CO20-1 CO20-2">
+<para>mettez le nom de votre domaine à la place de example.com</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Loguez vous <literal>root</literal> sur le serveur</simpara>
+</listitem>
 <listitem>
 <simpara>Créez un utilisateur <literal>Gitea</literal>. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">adduser --system --disabled-password --group --shell /bin/bash --home /home/gitea gitea</programlisting>
@@ -3015,6 +3508,12 @@ chown -R root:gitea /etc/gitea
 chmod -R 750 /var/lib/gitea
 chmod 770 /etc/gitea</programlisting>
 </listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_des_bases_de_données">
+<title>Création des bases de données</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig :</simpara>
+<orderedlist numeration="arabic">
 <listitem>
 <simpara>Créez une base de données mysql. Aller dans le menu <literal>Database</literal> pour définir un utilisateur MariaDB</simpara>
 </listitem>
@@ -3068,6 +3567,12 @@ chmod 770 /etc/gitea</programlisting>
 </listitem>
 </orderedlist>
 </listitem>
+</orderedlist>
+</section>
+<section xml:id="_téléchargez_et_installez_gitea">
+<title>Téléchargez et installez Gitea</title>
+<simpara>Appliquez les opérations suivantes:</simpara>
+<orderedlist numeration="arabic">
 <listitem>
 <simpara>Téléchargez gitea du <link xl:href="https://dl.gitea.io/gitea/">site de chargement</link>. Tapez pour un système 64 bits:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
@@ -3083,7 +3588,7 @@ chmod 755 /usr/local/bin/gitea</programlisting>
 Description=Gitea (Git with a cup of tea)
 After=syslog.target
 After=network.target
-Requires=postgresql.service
+Requires=mysqld.service
 [Service]
 Type=simple
 User=gitea
@@ -3106,24 +3611,7 @@ WantedBy=multi-user.target</programlisting>
 systemctl start gitea.service</programlisting>
 </listitem>
 <listitem>
-<simpara>Débloquez le port 3000 dans votre firewall</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
-</listitem>
-<listitem>
-<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
-</listitem>
-<listitem>
-<simpara>dans la rubrique <literal>Open TCP ports:</literal>, ajoutez le port 3000</simpara>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>save</literal></simpara>
-</listitem>
-</orderedlist>
-</listitem>
-<listitem>
-<simpara>Ouvrez votre navigateur sur l&#8217;url: <link xl:href="http://example.com:3000/install">http://example.com:3000/install</link> et remplissez les paramètres comme ci-après :</simpara>
+<simpara>Ouvrez votre navigateur sur l&#8217;url: <link xl:href="https://gitea.example.com/install">https://gitea.example.com/install</link> et remplissez les paramètres comme ci-après :</simpara>
 <itemizedlist>
 <listitem>
 <simpara><literal>Type de base de données:</literal> &#8592; Sélectionnez <literal>MySQL</literal></simpara>
@@ -3188,88 +3676,34 @@ systemctl start gitea.service</programlisting>
 <simpara>Laissez le reste et cliquez sur <literal>Install Gitea</literal>.</simpara>
 </listitem>
 <listitem>
-<simpara>Vous allez être redirigé vers une URL en erreur. C&#8217;est normal puisque le site web n&#8217;est pas encore configuré.</simpara>
-</listitem>
-<listitem>
 <simpara>Restreignez les permissions sur le fichier de configuration de gitea. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">chmod 750 /etc/gitea
 chown root:gitea /etc/gitea/app.ini
 chmod 640 /etc/gitea/app.ini</programlisting>
 </listitem>
 <listitem>
-<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
-<itemizedlist>
-<listitem>
-<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>gitea</literal></simpara>
-</listitem>
-<listitem>
-<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
-</listitem>
-</itemizedlist>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>Save</literal></simpara>
+<simpara>Redémarrez <literal>gitea</literal>. Sur le serveur en tant que <literal>root</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart gitea.service</programlisting>
 </listitem>
 </orderedlist>
+</section>
+<section xml:id="_activer_une_connexion_ssh_dédiée">
+<title>Activer une connexion SSH dédiée</title>
+<simpara>En option, vous pouvez avoir envie de dédier une connexion SSH pour Gitea:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Loguez vous comme <literal>root</literal> sur le serveur.</simpara>
 </listitem>
 <listitem>
-<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Lui donner le nom <literal>gitea</literal>.</simpara>
-</listitem>
-<listitem>
-<simpara>Le faire pointer vers le web folder <literal>gitea</literal>.</simpara>
-</listitem>
-<listitem>
-<simpara>Activer let’s encrypt ssl</simpara>
-</listitem>
-<listitem>
-<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
-</listitem>
-<listitem>
-<simpara>Laisser le reste par défaut.</simpara>
-</listitem>
-<listitem>
-<simpara>Dans l’onglet Options:</simpara>
-</listitem>
-<listitem>
-<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
-<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
-ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
-RewriteRule ^/.well-known/acme-challenge - [QSA,L]
-
-# gitea httpserver
-#
-
-SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-ProxyPass / http://example.com:3000/ <co xml:id="CO19-1"/>
-ProxyPassReverse / http://example.com:3000/ <co xml:id="CO19-2"/></programlisting>
-<calloutlist>
-<callout arearefs="CO19-1 CO19-2">
-<para>mettez le nom de votre domaine à la place de example.com</para>
-</callout>
-</calloutlist>
-</listitem>
-</orderedlist>
-</listitem>
-<listitem>
-<simpara>Redémarrez <literal>gitea</literal>. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl restart nginx.service</programlisting>
-</listitem>
-<listitem>
-<simpara>Si vous souhaitez avoir un serveur ssh dédié pour gitea. Editez le fichier de configuration. Tapez:</simpara>
+<simpara>Éditez le fichier de configuration. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /etc/gitea/app.ini</programlisting>
 </listitem>
 <listitem>
 <simpara>Trouvez les lignes suivantes et les remplacer dans le fichier. Chercher et remplacez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">START_SSH_SERVER = true
-SSH_PORT = 2222 <co xml:id="CO20-1"/></programlisting>
+SSH_PORT = 2222 <co xml:id="CO21-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO20-1">
+<callout arearefs="CO21-1">
 <para>mettez ici le numéro de port que vous souhaitez</para>
 </callout>
 </calloutlist>
@@ -3293,12 +3727,13 @@ SSH_PORT = 2222 <co xml:id="CO20-1"/></programlisting>
 </listitem>
 <listitem>
 <simpara>Redémarrez <literal>gitea</literal>. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl restart nginx.service</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart gitea.service</programlisting>
 </listitem>
 <listitem>
 <simpara>Enjoy !</simpara>
 </listitem>
 </orderedlist>
+</section>
 </section>
 <section xml:id="_installation_de_seafile">
 <title>Installation de Seafile</title>
@@ -3473,9 +3908,9 @@ mv seafile-server_* installed
 cd seafile-server-*
 ./setup-seafile-mysql.sh
 cd ../..
-chown -R web1:client0 seafile <co xml:id="CO21-1"/></programlisting>
+chown -R web1:client0 seafile <co xml:id="CO22-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO21-1">
+<callout arearefs="CO22-1">
 <para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onlget <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
 </calloutlist>
@@ -3534,10 +3969,10 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>Démarrez Seafile. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">sudo -u web1 ./seafile.sh start <co xml:id="CO22-1"/>
-sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO22-2"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">sudo -u web1 ./seafile.sh start <co xml:id="CO23-1"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO23-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO22-1 CO22-2">
+<callout arearefs="CO23-1 CO23-2">
 <para>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <literal>Options</literal>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</para>
 </callout>
 </calloutlist>
@@ -3583,7 +4018,7 @@ vi startseafile.sh</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/bash
 
 # Change the value of "seafile_dir" to your path of seafile installation
-seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO23-1"/>
+seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO24-1"/>
 script_path=${seafile_dir}/seafile-server-latest
 seafile_init_log=${seafile_dir}/logs/seafile.init.log
 seahub_init_log=${seafile_dir}/logs/seahub.init.log
@@ -3607,7 +4042,7 @@ exit 1
 ;;
 esac</programlisting>
 <calloutlist>
-<callout arearefs="CO23-1">
+<callout arearefs="CO24-1">
 <para>remplacer example.com par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -3681,6 +4116,282 @@ esac</programlisting>
 <simpara>Enjoy !</simpara>
 </listitem>
 </orderedlist>
+</section>
+</section>
+<section xml:id="_installation_dun_serveur_de_vpn_pritunl">
+<title>Installation d&#8217;un serveur de VPN Pritunl</title>
+<simpara>Pritunl est un serveur VPN basé sur OpenVPN.</simpara>
+<section xml:id="_création_du_site_web_de_pritunl">
+<title>Création du site web de Pritunl</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>pritunl</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>pritunl</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>pritunl</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# Pritunl httpserver
+#
+  SSLProxyEngine On
+  SSLProxyCheckPeerCN Off
+  SSLProxyCheckPeerName Off
+  SSLProxyVerify none
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / https://127.0.0.1:8070/
+ProxyPassReverse / https://127.0.0.1:8070/
+ProxyPreserveHost On</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_pritunl">
+<title>Installation de Pritunl</title>
+<simpara>Veuillez suivre la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Loguez vous comme <literal>root</literal> sur le serveur</simpara>
+</listitem>
+<listitem>
+<simpara>Ajoutez des repositories Debian. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">tee /etc/apt/sources.list.d/mongodb-org.list &lt;&lt; EOF
+deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main
+EOF
+tee /etc/apt/sources.list.d/pritunl.list &lt;&lt; EOF
+deb http://repo.pritunl.com/stable/apt buster main
+EOF
+apt-get install dirmngr
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
+apt-get update
+apt-get --assume-yes install pritunl mongodb-org</programlisting>
+</listitem>
+<listitem>
+<simpara>Pritunl utilise en standard le port 80 et 443. Ces deux ports sont utilisés dans notre configuration par le serveur apache</simpara>
+</listitem>
+<listitem>
+<simpara>On commence par arrêter apache. Tapez:</simpara>
+<warning>
+<simpara>Plus aucun site web ne sera servit. Danger donc.</simpara>
+</warning>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop apache2</programlisting>
+</listitem>
+<listitem>
+<simpara>Démarrez Mongodb ainsi que Pritunl. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl start mongod pritunl
+systemctl enable mongod pritunl</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_de_pritunl">
+<title>Configuration de Pritunl</title>
+<simpara>Votre service Pritunl est actif. Vous devez maitenant le configurer pour qu&#8217;il fonctionne:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>pointez votre navigateur sur le site web de Pritunl: <link xl:href="https://example.com">https://example.com</link></simpara>
+</listitem>
+<listitem>
+<simpara>Accepter le certificat non sécurisé. La page de setup de Pritunl s&#8217;affiche.</simpara>
+</listitem>
+<listitem>
+<simpara>Obtenez la clé d&#8217;activation. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl setup-key</programlisting>
+</listitem>
+<listitem>
+<simpara>copier la clé dans la page web. Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>La page web s&#8217;affiche en erreur. Pas d&#8217;inquiétude à avoir.</simpara>
+</listitem>
+<listitem>
+<simpara>Arrêtez le serveur Pritunl. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop pritunl</programlisting>
+</listitem>
+<listitem>
+<simpara>Configurez le serveur pour qu&#8217;il n&#8217;utilise plus le port 80 et le port 443</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl set app.server_port 8070
+pritunl set app.redirect_server false</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez apache et pritunl</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl start apache2
+systemctl start pritunl</programlisting>
+</listitem>
+<listitem>
+<simpara>Pointez maintenant votre navigateur sur le site <link xl:href="https://pritunl.example.com">https://pritunl.example.com</link> . La page de login de pritunl doit s&#8217;afficher. Si ce n&#8217;est pas le cas, revérifier votre configuration de site web dans ISPConfig et que le port 8070 est bien activé.</simpara>
+</listitem>
+<listitem>
+<simpara>Sur le serveur, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl default-password</programlisting>
+</listitem>
+<listitem>
+<simpara>Entrez dans la page web la valeur de <literal>username</literal> et de <literal>password</literal> affichés dans le terminal.</simpara>
+</listitem>
+<listitem>
+<simpara>Une boite de dialogue <literal>initial setup</literal> s&#8217;affiche. Ne changez rien mais tapez votre mot de passe.</simpara>
+</listitem>
+<listitem>
+<simpara>Vous êtes maintenant connecté sur le site web.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur l&#8217;onglet <literal>Users</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>Add Organization</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Entrez votre nom d&#8217;organisation. Par exemple <literal>Personnel</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add User</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>`Name: ` &#8592; Tapez votre nom de login (pas de caractère accentué pas d&#8217;espace)</simpara>
+</listitem>
+<listitem>
+<simpara>`Select an organization: ` &#8592; sélectionnez votre organisation</simpara>
+</listitem>
+<listitem>
+<simpara>`Email: ` &#8592; Tapez votre adresse Email</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Pin:</literal> &#8592; entrez votre code Pin (que des nombres; au moins 6 chiffres)</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Allez sur l&#8217;onglet <literal>Servers</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>Add Server</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Name:</literal> &#8592; donnez un nom à votre serveur (pas de caractère accentué pas d&#8217;espace)</simpara>
+</listitem>
+<listitem>
+<simpara>laissez le reste tel quel mais notez bien le numéro de port UDP indiqué</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Attach Organization</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionnez le <literal>server</literal> et l' <literal>organization</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Attach</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Débloquez le port VPN dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open UDP ports:</literal>, ajoutez le port UDP du VPN que vous avez noté.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Retourner dans l&#8217;interface de Pritunl. retournez sur l&#8217;onglet <literal>Servers</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>Start server</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Votre serveur de VPN est opérationnel.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_se_connecter_au_serveur_de_vpn">
+<title>Se connecter au serveur de VPN</title>
+<simpara>Comme Pritunl est compatible OpenVPN n&#8217;importe quel logiciel compatible OpenVPN peut être utilisé.
+Pritunl founit un <link xl:href="https://client.pritunl.com/">client</link> compatible pour Linux, macOS, and Windows.</simpara>
+<simpara>Pour se connecter à l&#8217;aide du client, vous devez charger un fichier de configuration qui est téléchargeable dans l&#8217;onglet utilisateur du serveur web.
+Ce fichier est à importer dans le logiciel client de Pritunl.
+Une fois fait, une compte apparait dans le logiciel client. Vous pourrez vous connecter en cliquant sur le bouton <literal>Connect</literal> du compte utilisateur.</simpara>
+</section>
+<section xml:id="_réparer_une_base_pritunl">
+<title>Réparer une base Pritunl</title>
+<simpara>Si jamais votre base est corrompue, vous pourrez la réparer en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop pritunl
+pritunl repair-database
+systemctl start pritunl</programlisting>
+</section>
+<section xml:id="_mot_de_passe_perdu">
+<title>Mot de passe perdu</title>
+<simpara>Vous pouvez regénérer un mot de passe en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl reset-password</programlisting>
 </section>
 </section>
 <section xml:id="_annexe">

@@ -21,9 +21,9 @@ domaine en utilisant ISPConfig.
 
 Sont installés:
 
--  un panel ISPConfig
+-  un panel `ISPConfig <https://www.ispconfig.org/>`__
 
--  un configurateur Webmin
+-  un configurateur `Webmin <http://www.webmin.com/>`__
 
 -  un serveur de mail avec antispam, sécurisation d’envoi des mails et
    autoconfiguration pour Outlook, Thunderbird, Android.
@@ -44,26 +44,26 @@ Sont installés:
 
 -  un outil de Monitoring `Monit <http://mmonit.com/monit/>`__
 
--  un sous domaine pointant sur un site autohébergé (l’installation du
+-  un sous domaine pointant sur un site auto-hébergé (l’installation du
    site n’est pas décrite ici; Se référer à
    `Yunohost <https://yunohost.org>`__),
 
 -  un site sous `Joomla <https://www.joomla.fr/>`__,
 
--  un serveur et un site de partage de fichiers
-   `Seafile <https://www.seafile.com>`__,
-
--  un site `Gitea <https://gitea.io>`__ et son repository GIT,
-
--  un serveur de VPN `pritunl <https://pritunl.com/>`__,
-
 -  un site `Mediawiki <https://www.mediawiki.org>`__,
-
--  un site `Nextcloud <https://nextcloud.com>`__
 
 -  un site `Wordpress <https://wordpress.com>`__
 
--  à venir: strut, `concrete5 <https://www.concrete5.org/>`__,
+-  un site `Gitea <https://gitea.io>`__ et son repository GIT,
+
+-  un serveur et un site de partage de fichiers
+   `Seafile <https://www.seafile.com>`__,
+
+-  un serveur de VPN `pritunl <https://pritunl.com/>`__,
+
+-  un site `Nextcloud <https://nextcloud.com>`__
+
+-  à venir: `concrete5 <https://www.concrete5.org/>`__,
    `gitlab <https://gitlab.com/>`__, `piwigo <https://piwigo.org/>`__,
    `borg <https://www.borgbackup.org/>`__
 
@@ -850,7 +850,7 @@ Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.
 
       .. code:: bash
 
-          apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd amavisd-new spamassassin clamav clamav-daemon unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php7.3 php7.3-common php7.3-gd php7.3-mysql php7.3-imap php7.3-cli php7.3-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php7.3-curl php7.3-intl php7.3-pspell php7.3-recode php7.3-sqlite3 php7.3-tidy php7.3-xmlrpc php7.3-xsl memcached php-memcache php-imagick php-gettext php7.3-zip php7.3-mbstring memcached libapache2-mod-passenger php7.3-soap php7.3-fpm php7.3-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw
+          apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd amavisd-new spamassassin clamav clamav-daemon unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php7.3 php7.3-common php7.3-gd php7.3-mysql php7.3-imap php7.3-cli php7.3-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php7.3-curl php7.3-intl php7.3-pspell php7.3-recode php7.3-sqlite3 php7.3-tidy php7.3-xmlrpc php7.3-xsl memcached php-memcache php-imagick php-gettext php7.3-zip php7.3-mbstring memcached libapache2-mod-passenger php7.3-soap php7.3-fpm php7.3-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron
 
 4. Aux questions posées répondez:
 
@@ -3152,6 +3152,356 @@ informations à saisir:
 | Authentification SMTP                | Normal Password                      |
 +--------------------------------------+--------------------------------------+
 
+Mise en oeuvre du site web de webmail
+-------------------------------------
+
+On suppose que vous avez install roundcube lors de la procédure
+d’installation initiale et que vous avez déjà créé le host
+mail.example.com.
+
+Il vous reste à appliquer la procédure suivante:
+
+1. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``mail``.
+
+   b. Le faire pointer vers le web folder ``mail``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          # roundcube httpserver
+
+          SSLProxyEngine On
+          SSLProxyCheckPeerCN Off
+          SSLProxyCheckPeerName Off
+          SSLProxyVerify none
+
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass / https://localhost:8080/webmail/
+          ProxyPassReverse / https://localhost:8080/webmail/
+          ProxyPreserveHost On
+
+2. C’est fait, vous pouvez accéder à Roundcube directement sur
+   https://mail.example.com
+
+Transfert de vos boites mails IMAP
+----------------------------------
+
+Si vous faites une migration d’un ancien serveur vers un nouveau serveur
+vous souhaiterez probablement migrer aussi vos boites mail.
+
+La procédure ci dessous est à appliquer pour chaque compte mail IMAP.
+Elle peut facilement être scriptée:
+
+1. Téléchargez imapsync du repository. Tapez:
+
+   ::
+
+       wget https://raw.githubusercontent.com/imapsync/imapsync/master/imapsync
+       chmod 755 imapsync
+
+2. Installez les packages perls éventuellement manquants:
+
+   ::
+
+       apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl
+
+3. Créez deux fichiers temporaires qui contiennent les mots de passe du
+   1er et 2eme serveur. Tapez:
+
+   ::
+
+       echo "passwdsrc" > secretsrc 
+       echo "passwddst" > secretdst 
+       chmod 600 secretsrc
+       chmod 600 secretdst
+
+   -  passwdsrc est à remplacer par le mot de passe du compte sur le
+      serveur source
+
+   -  passwddst est à remplacer par le mot de passe du compte sur le
+      serveur destination
+
+4. Nous pouvons maintenant lancer la commande. Tapez:
+
+   ::
+
+       ./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst
+
+5. Un fois la synchronisation effectuée, vous pouvez supprimer le
+   fichier des mots de passe. tapez:
+
+   ::
+
+       rm secretsrc
+       rm secretdst
+
+Installation de Joomla
+======================
+
+Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à
+jour.
+
+L’installation s’effectue à 100% avec ISPConfig.
+
+Création du site web de Joomla
+------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``joomla``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``joomla``.
+
+   b. Le faire pointer vers le web folder ``joomla``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``PHP-FPM`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+Création de l’application Joomla
+--------------------------------
+
+Appliquez les opérations suivantes dans ISPConfig:
+
+1.  Allez dans la rubrique ``Sites``, le menu ``Update Packagelist``.
+
+2.  Cliquez sur ``Update Packagelist``
+
+3.  Allez dans la rubrique ``Sites``, le menu ``Available packages``.
+
+4.  Faites une recherche par ``Name``. Tapez ``joomla``
+
+5.  Cliquez sur le package ``joomla``
+
+6.  Cliquez sur ``Install this package``
+
+7.  Remplissez tous les champs:
+
+    -  ``Install location:`` ← choisissez votre domain (``example.com``)
+       et laissez vide le chemin.
+
+    -  ``New database password`` ← gardez ce qui est remplit
+
+    -  ``Administrator’s login`` ← gardez ce qui est remplit: ``admin``
+
+    -  ``Password`` et ``Repeat Password`` ← Tapez votre mot de passe
+
+    -  ``Default site language:`` ← choisissez ``French``
+
+    -  ``I accept the license`` ← cochez la case
+
+8.  Cliquez sur ``Install``
+
+9.  Pointez votre navigateur sur https://example.com/ et loguez vous
+    ``admin`` avec votre mot de passe saisi, c’est fait !
+
+10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
+    dernière version de Joomla.
+
+Installation de Mediawiki
+=========================
+
+Mediawiki est le portail wiki mondialement connu et utilisé notamment
+pour le site wikipedia.
+
+L’installation s’effectue à 100% avec ISPConfig.
+
+Création du site web de Mediawiki
+---------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``mediawiki``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``mediawiki``.
+
+   b. Le faire pointer vers le web folder ``mediawiki``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``PHP-FPM`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+Création de l’application Mediawiki
+-----------------------------------
+
+Appliquez les opérations suivantes dans ISPConfig:
+
+1.  Allez dans la rubrique ``Sites``, le menu ``Update Packagelist``.
+
+2.  Cliquez sur ``Update Packagelist``
+
+3.  Allez dans la rubrique ``Sites``, le menu ``Available packages``.
+
+4.  Faites une recherche par ``Name``. Tapez ``mediawiki``
+
+5.  Cliquez sur le package ``mediawiki``
+
+6.  Cliquez sur ``Install this package``
+
+7.  Remplissez tous les champs:
+
+    -  ``Install location:`` ← choisissez votre domain (``example.com``)
+       et laissez vide le chemin.
+
+    -  ``New database password`` ← gardez ce qui est remplit
+
+    -  ``Administrator’s login`` ← gardez ce qui est remplit: ``admin``
+
+    -  ``Password`` et ``Repeat Password`` ← Tapez votre mot de passe
+
+    -  ``Default site language:`` ← choisissez ``French``
+
+    -  ``I accept the license`` ← cochez la case
+
+8.  Cliquez sur ``Install``
+
+9.  Pointez votre navigateur sur https://example.com/ et loguez vous
+    ``admin`` avec votre mot de passe saisi, c’est fait !
+
+10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
+    dernière version de Mediawiki.
+
+Installation de Wordpress
+=========================
+
+Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à
+jour.
+
+L’installation s’effectue à 100% avec ISPConfig.
+
+Création du site web de Wordpress
+---------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``wordpress``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``wordpress``.
+
+   b. Le faire pointer vers le web folder ``wordpress``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``PHP-FPM`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+Création de l’application Wordpress
+-----------------------------------
+
+Appliquez les opérations suivantes dans ISPConfig:
+
+1.  Allez dans la rubrique ``Sites``, le menu ``Update Packagelist``.
+
+2.  Cliquez sur ``Update Packagelist``
+
+3.  Allez dans la rubrique ``Sites``, le menu ``Available packages``.
+
+4.  Faites une recherche par ``Name``. Tapez ``wordpress``
+
+5.  Cliquez sur le package ``wordpress``
+
+6.  Cliquez sur ``Install this package``
+
+7.  Remplissez tous les champs:
+
+    -  ``Install location:`` ← choisissez votre domain (``example.com``)
+       et laissez vide le chemin.
+
+    -  ``New database password`` ← gardez ce qui est remplit
+
+    -  ``Administrator’s login`` ← gardez ce qui est remplit: ``admin``
+
+    -  ``Password`` et ``Repeat Password`` ← Tapez votre mot de passe
+
+    -  ``Default site language:`` ← choisissez ``French``
+
+    -  ``I accept the license`` ← cochez la case
+
+8.  Cliquez sur ``Install``
+
+9.  Pointez votre navigateur sur https://example.com/ et loguez vous
+    ``admin`` avec votre mot de passe saisi, c’est fait !
+
+10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
+    dernière version de Wordpress.
+
+Pritunl
+=======
+
+sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list << EOF deb
+http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main EOF
+
+sudo tee /etc/apt/sources.list.d/pritunl.list << EOF deb
+http://repo.pritunl.com/stable/apt buster main EOF
+
+sudo apt-get install dirmngr sudo apt-key adv --keyserver
+hkp://keyserver.ubuntu.com --recv
+E162F504A20CDF15827F718D4B7C549A058F8B6B sudo apt-key adv --keyserver
+hkp://keyserver.ubuntu.com --recv
+7568D9BB55FF9E5287D586017AE645C0CF8E292A sudo apt-get update sudo
+apt-get --assume-yes install pritunl mongodb-org sudo systemctl start
+mongod pritunl sudo systemctl enable mongod pritunl
+
 Installation et configuration de Gitea
 ======================================
 
@@ -3159,275 +3509,284 @@ Gitea est un système simple d’hébergement de code basé sur Git. C’est un
 fork de Gogs. Il montre des fonctionnalités similaires à gitlab ou
 github tout en gardant un code plus simple.
 
+Création du site web de Gitea
+-----------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``gitea``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``gitea``.
+
+   b. Le faire pointer vers le web folder ``gitea``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          # gitea httpserver
+          #
+
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass / http://localhost:3000/ 
+          ProxyPassReverse / http://localhost:3000/ 
+
+      -  mettez le nom de votre domaine à la place de example.com
+
+   h. Cliquez sur ``Save``
+
+3. Loguez vous ``root`` sur le serveur
+
+4. Créez un utilisateur ``Gitea``. Tapez:
+
+   .. code:: bash
+
+       adduser --system --disabled-password --group --shell /bin/bash --home /home/gitea gitea
+
+5. Créez la structure de répertoire de ``Gitea``. Tapez:
+
+   .. code:: bash
+
+       mkdir -p /var/lib/gitea/{data,log} /etc/gitea /run/gitea
+
+6. Donnez les bonnes permissions aux répertoires. Tapez:
+
+   .. code:: bash
+
+       chown -R gitea:gitea /var/lib/gitea
+       chown -R gitea:gitea /run/gitea
+       chown -R root:gitea /etc/gitea
+       chmod -R 750 /var/lib/gitea
+       chmod 770 /etc/gitea
+
+Création des bases de données
+-----------------------------
+
+Appliquez les opérations suivantes dans ISPConfig :
+
+1. Créez une base de données mysql. Aller dans le menu ``Database`` pour
+   définir un utilisateur MariaDB
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``gitea`` par exemple
+
+          -  ``Database password:`` ← saisir un mot de passe ou en
+             générer un en cliquant sur le bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Cliquez sur ``save``
+
+   c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+      données
+
+   d. Saisissez les informations:
+
+      -  ``Site:`` ← sélectionner le site ``example.com``
+
+      -  ``Database name:`` ← Saisissez le nom de la base de données
+         ``gitea``
+
+      -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+         ``cxgitea``. x: est le numéro de client.
+
+   e. Cliquez sur ``save``
+
+Téléchargez et installez Gitea
+------------------------------
+
 Appliquez les opérations suivantes:
 
-1.  Créez un utilisateur ``Gitea``. Tapez:
+1. Téléchargez gitea du `site de
+   chargement <https://dl.gitea.io/gitea/>`__. Tapez pour un système 64
+   bits:
 
-    .. code:: bash
+   .. code:: bash
 
-        adduser --system --disabled-password --group --shell /bin/bash --home /home/gitea gitea
+       wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
+       chmod 755 /usr/local/bin/gitea
 
-2.  Créez la structure de répertoire de ``Gitea``. Tapez:
+2. Créez maintenant une entrée pour le launcher systemd. Tapez:
 
-    .. code:: bash
+   .. code:: bash
 
-        mkdir -p /var/lib/gitea/{data,log} /etc/gitea /run/gitea
+       vi /etc/systemd/system/gitea.service
 
-3.  Donnez les bonnes permissions aux répertoires. Tapez:
+3. y Coller le texte suivant:
 
-    .. code:: bash
+   .. code:: ini
 
-        chown -R gitea:gitea /var/lib/gitea
-        chown -R gitea:gitea /run/gitea
-        chown -R root:gitea /etc/gitea
-        chmod -R 750 /var/lib/gitea
-        chmod 770 /etc/gitea
+       [Unit]
+       Description=Gitea (Git with a cup of tea)
+       After=syslog.target
+       After=network.target
+       Requires=mysqld.service
+       [Service]
+       Type=simple
+       User=gitea
+       Group=gitea
+       WorkingDirectory=/var/lib/gitea/
+       RuntimeDirectory=gitea
+       ExecStart=/usr/local/bin/gitea web -c /etc/gitea/app.ini
+       Restart=always
+       Environment=USER=gitea HOME=/home/gitea GITEA_WORK_DIR=/var/lib/gitea
+       [Install]
+       WantedBy=multi-user.target
 
-4.  Créez une base de données mysql. Aller dans le menu ``Database``
-    pour définir un utilisateur MariaDB
+4. Recharge la base de systemd. Tapez:
 
-5.  Aller dans la rubrique ``Sites``
+   .. code:: bash
 
-    a. Aller dans le menu ``Database users`` pour définir un utilisateur
-       MariaDB
+       systemctl daemon-reload
 
-       i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+5. Activez et démarrez ``Gitea``. Tapez:
 
-       ii. Saisissez les informations:
+   .. code:: bash
 
-           -  ``Database user:`` ← saisir votre nom d’utilisateur
-              ``gitea`` par exemple
+       systemctl enable gitea.service
+       systemctl start gitea.service
 
-           -  ``Database password:`` ← saisir un mot de passe ou en
-              générer un en cliquant sur le bouton
+6. Ouvrez votre navigateur sur l’url: https://gitea.example.com/install
+   et remplissez les paramètres comme ci-après :
 
-           -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+   -  ``Type de base de données:`` ← Sélectionnez ``MySQL``
 
-    b. Cliquez sur ``save``
+   -  ``Nom d’utilisateur:`` ← Tapez ``c0gitea``
 
-    c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
-       données
+   -  ``Mot de passe:`` ← Tapez le mot de passe saisi lors de la
+      création de la base
 
-    d. Saisissez les informations:
+   -  ``Nom de base de données:`` ← Tapez ``c0gitea``
 
-       -  ``Site:`` ← sélectionner le site ``example.com``
+   -  ``Titre du site:`` ← mettez une titre de votre choix
 
-       -  ``Database name:`` ← Saisissez le nom de la base de données
-          ``gitea``
+   -  ``Emplacement racine des dépôts:`` ← saisissez
+      ``/home/gitea/gitea-repositories``
 
-       -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
-          ``cxgitea``. x: est le numéro de client.
+   -  ``Répertoire racine Git LFS:`` ← Tapez ``/var/lib/gitea/data/lfs``
 
-    e. Cliquez sur ``save``
+   -  ``Exécuter avec le compte d’un autre utilisateur :`` ← Tapez
+      ``gitea``
 
-6.  Téléchargez gitea du `site de
-    chargement <https://dl.gitea.io/gitea/>`__. Tapez pour un système 64
-    bits:
+   -  ``Domaine du serveur SSH:`` ← Tapez votre domaine. exemple :
+      ``gitea.example.com``
 
-    .. code:: bash
+   -  ``Port du serveur SSH:`` ← Tapez 22
 
-        wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
-        chmod 755 /usr/local/bin/gitea
+   -  ``Port d’écoute HTTP de Gitea:`` ← Tapez 3000
 
-7.  Créez maintenant une entrée pour le launcher systemd. Tapez:
+   -  ``URL de base de Gitea:`` ← Tapez l’URL de votre domaine. Exemple:
+      ``https://gitea.example.com``
 
-    .. code:: bash
+   -  ``Chemin des fichiers log:`` ← Tapez ``/var/lib/gitea/log``
 
-        vi /etc/systemd/system/gitea.service
+   -  ``Hôte SMTP:`` ← Tapez ``localhost``
 
-8.  y Coller le texte suivant:
+   -  ``Envoyer les e-mails en tant que:`` ← Tapez
+      ``gitea@gitea.example.com``
 
-    .. code:: ini
+   -  ``Exiger la confirmation de l’e-mail lors de l’inscription:`` ←
+      cochez la case
 
-        [Unit]
-        Description=Gitea (Git with a cup of tea)
-        After=syslog.target
-        After=network.target
-        Requires=postgresql.service
-        [Service]
-        Type=simple
-        User=gitea
-        Group=gitea
-        WorkingDirectory=/var/lib/gitea/
-        RuntimeDirectory=gitea
-        ExecStart=/usr/local/bin/gitea web -c /etc/gitea/app.ini
-        Restart=always
-        Environment=USER=gitea HOME=/home/gitea GITEA_WORK_DIR=/var/lib/gitea
-        [Install]
-        WantedBy=multi-user.target
+   -  ``Activez les notifications par e-mail:`` ← cochez la case
 
-9.  Recharge la base de systemd. Tapez:
+   -  ``Désactiver le formulaire d’inscription:`` ← cochez la case
 
-    .. code:: bash
+   -  ``Masquer les adresses e-mail par défaut:`` ← cochez la case
 
-        systemctl daemon-reload
+7. Laissez le reste et cliquez sur ``Install Gitea``.
 
-10. Activez et démarrez ``Gitea``. Tapez:
+8. Restreignez les permissions sur le fichier de configuration de gitea.
+   Tapez:
 
-    .. code:: bash
+   .. code:: bash
 
-        systemctl enable gitea.service
-        systemctl start gitea.service
+       chmod 750 /etc/gitea
+       chown root:gitea /etc/gitea/app.ini
+       chmod 640 /etc/gitea/app.ini
 
-11. Débloquez le port 3000 dans votre firewall
+9. Redémarrez ``gitea``. Sur le serveur en tant que ``root``. Tapez:
 
-    a. Allez sur le site ispconfig https://example.com:8080/
+   .. code:: bash
 
-    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-       ``Firewall``. Cliquez sur votre serveur.
+       systemctl restart gitea.service
 
-    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 3000
+Activer une connexion SSH dédiée
+--------------------------------
 
-    d. Cliquez sur ``save``
+En option, vous pouvez avoir envie de dédier une connexion SSH pour
+Gitea:
 
-12. Ouvrez votre navigateur sur l’url: http://example.com:3000/install
-    et remplissez les paramètres comme ci-après :
+1. Loguez vous comme ``root`` sur le serveur.
 
-    -  ``Type de base de données:`` ← Sélectionnez ``MySQL``
+2. Éditez le fichier de configuration. Tapez:
 
-    -  ``Nom d’utilisateur:`` ← Tapez ``c0gitea``
+   .. code:: bash
 
-    -  ``Mot de passe:`` ← Tapez le mot de passe saisi lors de la
-       création de la base
+       vi /etc/gitea/app.ini
 
-    -  ``Nom de base de données:`` ← Tapez ``c0gitea``
+3. Trouvez les lignes suivantes et les remplacer dans le fichier.
+   Chercher et remplacez:
 
-    -  ``Titre du site:`` ← mettez une titre de votre choix
+   .. code:: bash
 
-    -  ``Emplacement racine des dépôts:`` ← saisissez
-       ``/home/gitea/gitea-repositories``
+       START_SSH_SERVER = true
+       SSH_PORT = 2222 
 
-    -  ``Répertoire racine Git LFS:`` ← Tapez
-       ``/var/lib/gitea/data/lfs``
+   -  mettez ici le numéro de port que vous souhaitez
 
-    -  ``Exécuter avec le compte d’un autre utilisateur :`` ← Tapez
-       ``gitea``
+4. Débloquez le port 2222 dans votre firewall
 
-    -  ``Domaine du serveur SSH:`` ← Tapez votre domaine. exemple :
-       ``gitea.example.com``
+   a. Allez sur le site ispconfig https://example.com:8080/
 
-    -  ``Port du serveur SSH:`` ← Tapez 22
+   b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+      ``Firewall``. Cliquez sur votre serveur.
 
-    -  ``Port d’écoute HTTP de Gitea:`` ← Tapez 3000
+   c. dans la rubrique ``Open TCP ports:``, ajoutez le port 222
 
-    -  ``URL de base de Gitea:`` ← Tapez l’URL de votre domaine.
-       Exemple: ``https://gitea.example.com``
+   d. Cliquez sur ``save``
 
-    -  ``Chemin des fichiers log:`` ← Tapez ``/var/lib/gitea/log``
+5. Redémarrez ``gitea``. Tapez:
 
-    -  ``Hôte SMTP:`` ← Tapez ``localhost``
+   .. code:: bash
 
-    -  ``Envoyer les e-mails en tant que:`` ← Tapez
-       ``gitea@gitea.example.com``
+       systemctl restart gitea.service
 
-    -  ``Exiger la confirmation de l’e-mail lors de l’inscription:`` ←
-       cochez la case
-
-    -  ``Activez les notifications par e-mail:`` ← cochez la case
-
-    -  ``Désactiver le formulaire d’inscription:`` ← cochez la case
-
-    -  ``Masquer les adresses e-mail par défaut:`` ← cochez la case
-
-13. Laissez le reste et cliquez sur ``Install Gitea``.
-
-14. Vous allez être redirigé vers une URL en erreur. C’est normal
-    puisque le site web n’est pas encore configuré.
-
-15. Restreignez les permissions sur le fichier de configuration de
-    gitea. Tapez:
-
-    .. code:: bash
-
-        chmod 750 /etc/gitea
-        chown root:gitea /etc/gitea/app.ini
-        chmod 640 /etc/gitea/app.ini
-
-16. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
-    Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
-
-    a. Cliquez sur ``A`` et saisissez:
-
-       -  ``Hostname:`` ← Tapez ``gitea``
-
-       -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
-          de votre serveur
-
-    b. Cliquez sur ``Save``
-
-17. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
-    configurateur de sites.
-
-    a. Lui donner le nom ``gitea``.
-
-    b. Le faire pointer vers le web folder ``gitea``.
-
-    c. Activer let’s encrypt ssl
-
-    d. Activer ``Fast CGI`` pour PHP
-
-    e. Laisser le reste par défaut.
-
-    f. Dans l’onglet Options:
-
-    g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
-
-       .. code:: apache
-
-           ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
-           ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
-           RewriteRule ^/.well-known/acme-challenge - [QSA,L]
-
-           # gitea httpserver
-           #
-
-           SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-           ProxyPass / http://example.com:3000/ 
-           ProxyPassReverse / http://example.com:3000/ 
-
-       -  mettez le nom de votre domaine à la place de example.com
-
-18. Redémarrez ``gitea``. Tapez:
-
-    .. code:: bash
-
-        systemctl restart nginx.service
-
-19. Si vous souhaitez avoir un serveur ssh dédié pour gitea. Editez le
-    fichier de configuration. Tapez:
-
-    .. code:: bash
-
-        vi /etc/gitea/app.ini
-
-20. Trouvez les lignes suivantes et les remplacer dans le fichier.
-    Chercher et remplacez:
-
-    .. code:: bash
-
-        START_SSH_SERVER = true
-        SSH_PORT = 2222 
-
-    -  mettez ici le numéro de port que vous souhaitez
-
-21. Débloquez le port 2222 dans votre firewall
-
-    a. Allez sur le site ispconfig https://example.com:8080/
-
-    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-       ``Firewall``. Cliquez sur votre serveur.
-
-    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 222
-
-    d. Cliquez sur ``save``
-
-22. Redémarrez ``gitea``. Tapez:
-
-    .. code:: bash
-
-        systemctl restart nginx.service
-
-23. Enjoy !
+6. Enjoy !
 
 Installation de Seafile
 =======================
@@ -3772,6 +4131,266 @@ script de lancement automatique de Seafile:
 5. Arretez le serveur précédemment lancé en tant que root. Tapez:
 
 6. Enjoy !
+
+Installation d’un serveur de VPN Pritunl
+========================================
+
+Pritunl est un serveur VPN basé sur OpenVPN.
+
+Création du site web de Pritunl
+-------------------------------
+
+Appliquez la procédure suivante:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``pritunl``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``pritunl``.
+
+   b. Le faire pointer vers le web folder ``pritunl``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          # Pritunl httpserver
+          #
+            SSLProxyEngine On
+            SSLProxyCheckPeerCN Off
+            SSLProxyCheckPeerName Off
+            SSLProxyVerify none
+
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass / https://127.0.0.1:8070/
+          ProxyPassReverse / https://127.0.0.1:8070/
+          ProxyPreserveHost On
+
+Installation de Pritunl
+-----------------------
+
+Veuillez suivre la procédure suivante:
+
+1. Loguez vous comme ``root`` sur le serveur
+
+2. Ajoutez des repositories Debian. Tapez:
+
+   .. code:: bash
+
+       tee /etc/apt/sources.list.d/mongodb-org.list << EOF
+       deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main
+       EOF
+       tee /etc/apt/sources.list.d/pritunl.list << EOF
+       deb http://repo.pritunl.com/stable/apt buster main
+       EOF
+       apt-get install dirmngr
+       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
+       apt-get update
+       apt-get --assume-yes install pritunl mongodb-org
+
+3. Pritunl utilise en standard le port 80 et 443. Ces deux ports sont
+   utilisés dans notre configuration par le serveur apache
+
+4. On commence par arrêter apache. Tapez:
+
+       **Warning**
+
+       Plus aucun site web ne sera servit. Danger donc.
+
+   .. code:: bash
+
+       systemctl stop apache2
+
+5. Démarrez Mongodb ainsi que Pritunl. Tapez:
+
+   .. code:: bash
+
+       systemctl start mongod pritunl
+       systemctl enable mongod pritunl
+
+Configuration de Pritunl
+------------------------
+
+Votre service Pritunl est actif. Vous devez maitenant le configurer pour
+qu’il fonctionne:
+
+1.  pointez votre navigateur sur le site web de Pritunl:
+    https://example.com
+
+2.  Accepter le certificat non sécurisé. La page de setup de Pritunl
+    s’affiche.
+
+3.  Obtenez la clé d’activation. Tapez:
+
+    .. code:: bash
+
+        pritunl setup-key
+
+4.  copier la clé dans la page web. Cliquez sur ``Save``
+
+5.  La page web s’affiche en erreur. Pas d’inquiétude à avoir.
+
+6.  Arrêtez le serveur Pritunl. Tapez:
+
+    .. code:: bash
+
+        systemctl stop pritunl
+
+7.  Configurez le serveur pour qu’il n’utilise plus le port 80 et le
+    port 443
+
+    .. code:: bash
+
+        pritunl set app.server_port 8070
+        pritunl set app.redirect_server false
+
+8.  Redémarrez apache et pritunl
+
+    .. code:: bash
+
+        systemctl start apache2
+        systemctl start pritunl
+
+9.  Pointez maintenant votre navigateur sur le site
+    https://pritunl.example.com . La page de login de pritunl doit
+    s’afficher. Si ce n’est pas le cas, revérifier votre configuration
+    de site web dans ISPConfig et que le port 8070 est bien activé.
+
+10. Sur le serveur, tapez:
+
+    .. code:: bash
+
+        pritunl default-password
+
+11. Entrez dans la page web la valeur de ``username`` et de ``password``
+    affichés dans le terminal.
+
+12. Une boite de dialogue ``initial setup`` s’affiche. Ne changez rien
+    mais tapez votre mot de passe.
+
+13. Vous êtes maintenant connecté sur le site web.
+
+14. Cliquez sur l’onglet ``Users``
+
+    a. Cliquez sur ``Add Organization``
+
+    b. Entrez votre nom d’organisation. Par exemple ``Personnel``
+
+    c. Cliquez sur ``Add``
+
+    d. Cliquez sur ``Add User``
+
+    e. Remplissez les champs:
+
+       -  \`Name: \` ← Tapez votre nom de login (pas de caractère
+          accentué pas d’espace)
+
+       -  \`Select an organization: \` ← sélectionnez votre organisation
+
+       -  \`Email: \` ← Tapez votre adresse Email
+
+       -  ``Pin:`` ← entrez votre code Pin (que des nombres; au moins 6
+          chiffres)
+
+    f. Cliquez sur ``Add``
+
+15. Allez sur l’onglet ``Servers``
+
+    a. Cliquez sur ``Add Server``
+
+    b. Remplissez les champs:
+
+       -  ``Name:`` ← donnez un nom à votre serveur (pas de caractère
+          accentué pas d’espace)
+
+       -  laissez le reste tel quel mais notez bien le numéro de port
+          UDP indiqué
+
+    c. Cliquez sur ``Add``
+
+    d. Cliquez sur ``Attach Organization``
+
+    e. Sélectionnez le ``server`` et l' ``organization``.
+
+    f. Cliquez sur ``Attach``
+
+16. Débloquez le port VPN dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open UDP ports:``, ajoutez le port UDP du VPN
+       que vous avez noté.
+
+    d. Cliquez sur ``save``
+
+17. Retourner dans l’interface de Pritunl. retournez sur l’onglet
+    ``Servers``
+
+    a. Cliquez sur ``Start server``
+
+18. Votre serveur de VPN est opérationnel.
+
+Se connecter au serveur de VPN
+------------------------------
+
+Comme Pritunl est compatible OpenVPN n’importe quel logiciel compatible
+OpenVPN peut être utilisé. Pritunl founit un
+`client <https://client.pritunl.com/>`__ compatible pour Linux, macOS,
+and Windows.
+
+Pour se connecter à l’aide du client, vous devez charger un fichier de
+configuration qui est téléchargeable dans l’onglet utilisateur du
+serveur web. Ce fichier est à importer dans le logiciel client de
+Pritunl. Une fois fait, une compte apparait dans le logiciel client.
+Vous pourrez vous connecter en cliquant sur le bouton ``Connect`` du
+compte utilisateur.
+
+Réparer une base Pritunl
+------------------------
+
+Si jamais votre base est corrompue, vous pourrez la réparer en tapant:
+
+.. code:: bash
+
+    systemctl stop pritunl
+    pritunl repair-database
+    systemctl start pritunl
+
+Mot de passe perdu
+------------------
+
+Vous pouvez regénérer un mot de passe en tapant:
+
+.. code:: bash
+
+    pritunl reset-password
 
 Annexe
 ======
