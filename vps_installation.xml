@@ -29,7 +29,7 @@ et sur <link xl:href="https://github.com/apiou/vps_installation">Github</link>.<
 Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
 Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation est facilement transposable pour des versions différentes de Debian ou à Ubuntu ou toute autre distribution basée sur l&#8217;un ou l&#8217;autre.
 En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus importantes notamment liées au gestionnaire de paquets <literal>yum</literal>, le nommage des paquets, les configurations par défaut et aux différences dans l&#8217;arborescence présente dans /etc.</simpara>
-<simpara>Dans ce document, je configure de nombreux sites web et services de mon domaine en utilisant ISPConfig.</simpara>
+<simpara>Dans ce document, je montre la configuration de nombreux types de sites web et services dans un domaine en utilisant ISPConfig.</simpara>
 <simpara>Sont installés:</simpara>
 <itemizedlist>
 <listitem>
@@ -66,13 +66,22 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <simpara>un sous domaine pointant sur un site auto-hébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <link xl:href="https://yunohost.org">Yunohost</link>),</simpara>
 </listitem>
 <listitem>
-<simpara>un site sous <link xl:href="https://www.joomla.fr/">Joomla</link>,</simpara>
+<simpara>un site CMS sous <link xl:href="https://www.joomla.fr/">Joomla</link>,</simpara>
 </listitem>
 <listitem>
-<simpara>un site <link xl:href="https://www.mediawiki.org">Mediawiki</link>,</simpara>
+<simpara>un site CMS sous <link xl:href="https://www.concrete5.org/">Concrete5</link>,</simpara>
 </listitem>
 <listitem>
-<simpara>un site <link xl:href="https://wordpress.com">Wordpress</link></simpara>
+<simpara>un site WIKI sous <link xl:href="https://www.mediawiki.org">Mediawiki</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un site <link xl:href="https://wordpress.com">Wordpress</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un site Photo sous <link xl:href="https://piwigo.org/">Piwigo</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un site Collaboratif sous <link xl:href="https://nextcloud.com">Nextcloud</link>,</simpara>
 </listitem>
 <listitem>
 <simpara>un site <link xl:href="https://gitea.io">Gitea</link> et son repository GIT,</simpara>
@@ -81,13 +90,7 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <simpara>un serveur et un site  de partage de fichiers <link xl:href="https://www.seafile.com">Seafile</link>,</simpara>
 </listitem>
 <listitem>
-<simpara>un serveur de VPN <link xl:href="https://pritunl.com/">pritunl</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un site <link xl:href="https://nextcloud.com">Nextcloud</link></simpara>
-</listitem>
-<listitem>
-<simpara>à venir: <link xl:href="https://www.concrete5.org/">concrete5</link>, <link xl:href="https://gitlab.com/">gitlab</link>, <link xl:href="https://piwigo.org/">piwigo</link>, <link xl:href="https://www.borgbackup.org/">borg</link></simpara>
+<simpara>un serveur de VPN <link xl:href="https://pritunl.com/">Pritunl</link>,</simpara>
 </listitem>
 </itemizedlist>
 <simpara>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</simpara>
@@ -96,7 +99,7 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <simpara>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'. Ce dernier exemple a un taux de complexité est bien meilleur et les mots de passe classiques. Il est aussi plus facile à retenir que 'Az3~1ym_a&amp;'.</simpara>
 <simpara>Le coût pour mettre en oeuvre ce type de serveur est relativement faible:
 * Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y avoir des promos)
-* Compter 5€TTC/mois pour un VPS de base. Une machine plus sérieuse sera à 15€/mois</simpara>
+* Compter 5€TTC/mois pour un VPS de base (2Go de Ram, un coeur, 20Go de SSD). Une machine plus sérieuse sera à 15€/mois (8Go de Ram, 2 coeurs, 80Go de SSD).</simpara>
 <simpara>Le budget est donc de 6-7€TTC/mois pour une offre d&#8217;entrée de gamme. Il faut plus sérieusement compter sur 16€/mois tout compris.</simpara>
 </section>
 <section xml:id="_choix_du_vps">
@@ -3084,10 +3087,12 @@ rm secretdst</screen>
 </orderedlist>
 </section>
 </section>
-<section xml:id="_installation_de_joomla">
-<title>Installation de Joomla</title>
-<simpara>Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour.</simpara>
-<simpara>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</simpara>
+<section xml:id="_installation_de_joomla_ou_de_concrete5">
+<title>Installation de Joomla ou de Concrete5</title>
+<simpara>Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour et inclut une foule de plugins
+Concrete5 est un autre CMS assez connu  avec un design plus moderne.</simpara>
+<simpara>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.
+Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;appliquer à l&#8217;identique pour concrete5 en remplacant les textes joomla par concrete5.</simpara>
 <section xml:id="_création_du_site_web_de_joomla">
 <title>Création du site web de Joomla</title>
 <simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
@@ -3402,21 +3407,386 @@ rm secretdst</screen>
 </orderedlist>
 </section>
 </section>
-<section xml:id="_pritunl">
-<title>Pritunl</title>
-<simpara>sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list &lt;&lt; EOF
-deb <link xl:href="http://repo.mongodb.org/apt/debian">http://repo.mongodb.org/apt/debian</link> buster/mongodb-org/4.2 main
-EOF</simpara>
-<simpara>sudo tee /etc/apt/sources.list.d/pritunl.list &lt;&lt; EOF
-deb <link xl:href="http://repo.pritunl.com/stable/apt">http://repo.pritunl.com/stable/apt</link> buster main
-EOF</simpara>
-<simpara>sudo apt-get install dirmngr
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
-sudo apt-get update
-sudo apt-get --assume-yes install pritunl mongodb-org
-sudo systemctl start mongod pritunl
-sudo systemctl enable mongod pritunl</simpara>
+<section xml:id="_piwigo">
+<title>Piwigo</title>
+<simpara>Piwigo est une application web pour gérer votre collection de photos, et autres médias. Doté de puissantes fonctionnalités, il gère des galeries partout dans le monde. Elle est écrite en PHP et nécessite une base de données MySQL.</simpara>
+<simpara>Piwigo était auparavant connu sous le nom PhpWebGallery.</simpara>
+<section xml:id="_création_du_site_web_de_piwigo">
+<title>Création du site web de Piwigo</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>piwigo</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>piwigo</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>piwigo</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Loguez vous <literal>root</literal> sur le serveur</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_des_bases_de_données">
+<title>Création des bases de données</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig :</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créez une base de données mysql. Aller dans le menu <literal>Database</literal> pour définir un utilisateur MariaDB</simpara>
+</listitem>
+<listitem>
+<simpara>Aller dans la rubrique <literal>Sites</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Aller dans le menu <literal>Database users</literal> pour définir un utilisateur MariaDB</simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add new User</literal> pour créer un nouvel utilisateur</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>piwigo</literal> par exemple</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add new Database</literal> pour créer une nouvelle base de données</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Site:</literal> &#8592; sélectionner le site <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database name:</literal> &#8592; Saisissez le nom de la base de données <literal>piwigo</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <literal>cxpiwigo</literal>. x: est le numéro de client.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_piwigo">
+<title>Installation de Piwigo</title>
+<simpara>Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez la commande suivante:</simpara>
+</listitem>
+</orderedlist>
+<screen>cd /var/www/piwigo.example.com/piwigo
+wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinstall.php</screen>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Un fois téléchargé, faites pointer votre navigateur vers <link xl:href="http://piwigo.example.com/piwigo-netinstall.php">http://piwigo.example.com/piwigo-netinstall.php</link></simpara>
+</listitem>
+<listitem>
+<simpara>Indique <literal>.</literal> comme répertoire d&#8217;installation et cliquez sur <literal>Téléharger et décompresser Piwigo</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Une fois le téléchargement terminé cliquez sur <literal>Installer Piwigo</literal>. Rechargez la page si besoin.</simpara>
+</listitem>
+<listitem>
+<simpara>Répondez aux questions suivantes:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hote</literal> &#8592; Laissez <literal>localhost</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Utilisateur</literal> &#8592; entrez <literal>cxpiwigo</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Mot de passe</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Nom de la Base de données</literal> &#8592; entrez <literal>cxpiwigo</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Préfix des noms de tables</literal> &#8592; Laissez le champ vide</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Nom d&#8217;Utilisateur</literal> &#8592; tapez <literal>admin</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Mot de passe</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Mot de passe [confirmer]</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Adresse e-mail</literal> &#8592; Tapez votre adresse mail d&#8217;administrateur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Tapez <literal>Démarrer l&#8217;installation</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer et commencer à utiliser l&#8217;outil</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_de_nextcloud">
+<title>Installation de Nextcloud</title>
+<simpara>NextCloud est un serveur d&#8217;hébergement et de partage de fichiers gratuit et open source, fork du projet ownCloud.
+Il est très similaire aux autres systèmes de partage de fichiers des services comme Google Drive, Dropbox et iCloud ou Seafile.
+NextCloud vous permet de stocker des fichiers, des documents, des photos, des films et des vidéos à partir de la centrale l&#8217;emplacement.
+Avec NextCloud, vous pouvez partager des fichiers, des contacts et tout autre les médias avec vos amis et vos clients.
+NextCloud s&#8217;intègre avec le courrier, calendrier, contacts et autres fonctionnalités qui aideront vos équipes à obtenir leur travail est plus rapide et plus facile.
+Vous pouvez installer le client NextCloud sur un  ou plusieurs PC pour synchroniser les fichiers avec votre serveur Nextcloud.
+Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation, y compris Windows, macOS, FreeBSD, et Linux.</simpara>
+<section xml:id="_installation_initiale">
+<title>Installation initiale</title>
+<simpara>NextCloud est écrit en PHP et utilise une base de données MariaDB pour stocker ses données.</simpara>
+<simpara>Pour installer, Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Installez quelques paquets de base. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install  php-cgi php-curl</programlisting>
+</listitem>
+<listitem>
+<simpara>Une fois installé, éditez le fichier php.ini pour changer quelques limitations. Tapez:</simpara>
+</listitem>
+</orderedlist>
+<screen>vi /etc/php/7.3/apache2/php.ini</screen>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Cherchez les champs ci dessous et changez les valeurs comme suit:</simpara>
+<programlisting language="ini" linenumbering="unnumbered">memory_limit = 512M
+upload_max_filesize = 500M
+post_max_size = 500M
+max_execution_time = 300
+date.timezone = Asia/Kolkata</programlisting>
+</listitem>
+<listitem>
+<simpara>Sauvez et redémarrez apache. Tapez:</simpara>
+<programlisting language="command" linenumbering="unnumbered">systemctl restart apache2</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_du_site_web_de_nextcloud">
+<title>Création du site web de Nextcloud</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>nextcloud</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>nextcloud</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>nextcloud</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Loguez vous <literal>root</literal> sur le serveur</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_des_bases_de_données_2">
+<title>Création des bases de données</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig :</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créez une base de données mysql. Aller dans le menu <literal>Database</literal> pour définir un utilisateur MariaDB</simpara>
+</listitem>
+<listitem>
+<simpara>Aller dans la rubrique <literal>Sites</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Aller dans le menu <literal>Database users</literal> pour définir un utilisateur MariaDB</simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add new User</literal> pour créer un nouvel utilisateur</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>nextcloud</literal> par exemple</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add new Database</literal> pour créer une nouvelle base de données</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Site:</literal> &#8592; sélectionner le site <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database name:</literal> &#8592; Saisissez le nom de la base de données <literal>nextcloud</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <literal>cxnextcloud</literal>. x: est le numéro de client.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_nextcloud_2">
+<title>Installation de Nextcloud</title>
+<simpara>Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez la commande suivante:</simpara>
+</listitem>
+</orderedlist>
+<screen>cd /var/www/nextcloud.example.com/nextcloud
+wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</screen>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Un fois téléchargé, faites pointer votre navigateur vers <link xl:href="http://nextcloud.example.com/setup-nextcloud.php">http://nextcloud.example.com/setup-nextcloud.php</link></simpara>
+</listitem>
+<listitem>
+<simpara>Indique <literal>.</literal> comme répertoire d&#8217;installation et cliquez sur <literal>Next</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Une fois le téléchargement terminé cliquez sur <literal>Next</literal>. Rechargez la page si besoin.</simpara>
+</listitem>
+<listitem>
+<simpara>Répondez aux questions suivantes:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Login Admin</literal> &#8592; tapez <literal>admin</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password Admin</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara>ouvrez <literal>Stockage et base de données</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Configurer la base de données</literal> &#8592; cliquez sur <literal>MariaDB</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Utilisateur de la Base de données</literal> &#8592; entrez <literal>cxnextcloud</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password de la Base de données</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Nom de la Base de données</literal> &#8592; entrez <literal>cxnextcloud</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+</listitem>
+<listitem>
+<simpara><literal>nom du serveur</literal> &#8592; Laissez <literal>Localhost</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Tapez <literal>Next</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Vous êtes redirigé sur le site nextcloud ou vous pourrez vous loguer et commencer à utliser l&#8217;outil</simpara>
+</listitem>
+</orderedlist>
+</section>
 </section>
 <section xml:id="_installation_et_configuration_de_gitea">
 <title>Installation et configuration de Gitea</title>
@@ -3510,7 +3880,7 @@ chmod 770 /etc/gitea</programlisting>
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="_création_des_bases_de_données">
+<section xml:id="_création_des_bases_de_données_3">
 <title>Création des bases de données</title>
 <simpara>Appliquez les opérations suivantes dans ISPConfig :</simpara>
 <orderedlist numeration="arabic">
@@ -3737,7 +4107,7 @@ SSH_PORT = 2222 <co xml:id="CO21-1"/></programlisting>
 </section>
 <section xml:id="_installation_de_seafile">
 <title>Installation de Seafile</title>
-<simpara>Seafile est un système de partage de fichier simple et efficace. Il existe des clients de connexion pour Windows, Linux, Android, IOS.</simpara>
+<simpara>Seafile est un système de partage de fichier simple et efficace écrit en Python. Il existe des clients de connexion pour Windows, Linux, Android, IOS.</simpara>
 <simpara>Cette installation est optionnelle.</simpara>
 <section xml:id="_création_du_site_web_de_seafile">
 <title>Création du site web de Seafile</title>
