@@ -76,7 +76,8 @@ un serveur en mode terminal, que vous savez vous servir de ``ssh`` pour
 Linux ou de ``putty`` pour Windows, que vous avez des notions
 élémentaires de Shell Unix et que vous savez vous servir de l’éditeur
 ``vi``. Si ``vi`` est trop compliqué pour vous, je vous suggère
-d’utiliser l’éditeur de commande ``nano`` à la place.
+d’utiliser l’éditeur de commande ``nano`` à la place et de remplacer
+``vi`` par ``nano`` dans toutes les lignes de commande.
 
 Dans le document, on peut trouver des textes entourés de <texte>. Cela
 signifie que vous devez mettre ici votre propre texte selon vos
@@ -233,56 +234,19 @@ avez mis en place un compte sudo:
 Installation basique
 ====================
 
-Mise à jour des sources de paquets Debian
------------------------------------------
+Mettre l’éditeur de votre choix
+-------------------------------
 
-1. Se loguer ``root`` sur le serveur
+En fonction de vos préférences en terme d’éditeur, choisissez celui qui
+vous convient.
 
-2. Modifier la liste standard de paquets
-
-   a. Éditer le fichier ``/etc/apt/sources.list``. Tapez:
-
-      .. code:: bash
-
-          vi /etc/apt/sources.list
-
-   b. Dé-commenter les lignes débutant par ``deb`` et contenant le terme
-      ``backports``. Par exemple pour
-      ``#deb http://deb.debian.org/debian buster-backports main contrib non-free``
-      enlever le # en début de ligne
-
-   c. Ajouter sur toutes les lignes les paquets ``contrib`` et
-      ``non-free`` . en ajoutant ces textes après chaque mot ``main`` du
-      fichier ``source.list``
-
-3. Effectuer une mise à niveau du système
-
-   a. Mettez à jour la liste des paquets. Tapez:
-
-      .. code:: bash
-
-          apt update
-
-   b. Installez les nouveautés. Tapez:
-
-      .. code:: bash
-
-          apt dist-upgrade
-
-4. Effectuez du ménage. Tapez:
-
-   .. code:: bash
-
-       apt autoremove
-
-Installation des paquets de base
---------------------------------
-
-Tapez:
+`Loguez vous comme ``root`` <#root_login>`__ et tapez:
 
 .. code:: bash
 
-    apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends
+    update-alternatives  --config editor
+
+Pour les débutants, il est conseillé d’utiliser nano
 
 Installation d’un repository pour ``/etc``
 ------------------------------------------
@@ -292,17 +256,20 @@ répertoire ``/etc``, installez ``etckeeper``.
 
 Cette installation est optionnelle.
 
-1.  Tapez :
+1.  `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+
+2.  Tapez :
 
     .. code:: bash
 
+        apt update
         apt install etckeeper
 
-2.  Vous pouvez créer un repository privé dans le cloud pour stocker
+3.  Vous pouvez créer un repository privé dans le cloud pour stocker
     votre configuration de serveur (autre serveur privé de confiance ou
     repository privé ``Gitlab`` ou ``Github``).
 
-3.  Ajoutez ce repository distant. Pour ``Gitlab`` et ``Github``, une
+4.  Ajoutez ce repository distant. Pour ``Gitlab`` et ``Github``, une
     fois le repository créé, demandez l’affichage de la commande git
     pour une communication en ssh. Tapez ensuite sur votre serveur :
 
@@ -314,13 +281,13 @@ Cette installation est optionnelle.
     -  remplacer l’url par celle qui correspond au chemin de votre
        repository
 
-4.  modifier le fichier de configuration de ``etckeeper``. tapez:
+5.  modifier le fichier de configuration de ``etckeeper``. tapez:
 
     .. code:: bash
 
         vi /etc/etckeeper/etckeeper.conf
 
-5.  Recherchez la ligne contenant ``PUSH_REMOTE`` et ajoutez y tous les
+6.  Recherchez la ligne contenant ``PUSH_REMOTE`` et ajoutez y tous les
     repositories distant sur lesquels vous souhaitez pousser les
     modifications. Pour notre configuration, mettez:
 
@@ -328,7 +295,7 @@ Cette installation est optionnelle.
 
         PUSH_REMOTE="origin"
 
-6.  Pour éviter demandes de mot de passe de la part de ``github`` ou
+7.  Pour éviter demandes de mot de passe de la part de ``github`` ou
     ``gitlab``, il est nécessaire de déclarer une clé publique sur leur
     site. Créez une clé sur votre serveur pour l’utilisateur root:
 
@@ -366,25 +333,99 @@ Cette installation est optionnelle.
 
            cat /root/.ssh/id_rsa.pub
 
-7.  Effectuez un premier push. Tapez:
+8.  Effectuez un premier push. Tapez:
 
     .. code:: bash
 
+        cd /etc
         git push -u origin master
 
-8.  aucun mot de passe ne doit vous être demandé. Si ce n’est pas le
+9.  aucun mot de passe ne doit vous être demandé. Si ce n’est pas le
     cas, re-vérifier les étapes précédentes.
 
-9.  Lancer ``etckeeper``. Tapez:
+10. Lancer ``etckeeper``. Tapez:
 
     .. code:: bash
 
         etckeeper commit
 
-10. Tout le contenu de ``/etc`` est poussé sur le repository. Saisissez
+11. Tout le contenu de ``/etc`` est poussé sur le repository. Saisissez
     un commentaire.
 
-11. C’est fait !
+12. C’est fait !
+
+Mise à jour des sources de paquets Debian
+-----------------------------------------
+
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+
+2. Modifier la liste standard de paquets
+
+   a. Éditer le fichier ``/etc/apt/sources.list``. Tapez:
+
+      .. code:: bash
+
+          vi /etc/apt/sources.list
+
+   b. Dé-commenter les lignes débutant par ``deb`` et contenant le terme
+      ``backports``. Par exemple pour
+      ``#deb http://deb.debian.org/debian buster-backports main contrib non-free``
+      enlever le # en début de ligne
+
+   c. Ajouter sur toutes les lignes les paquets ``contrib`` et
+      ``non-free`` . en ajoutant ces textes après chaque mot ``main`` du
+      fichier ``source.list``
+
+   d. Le fichier doit ressembler à ceci:
+
+      .. code:: ini
+
+          deb http://deb.debian.org/debian buster main contrib non-free
+          deb-src http://deb.debian.org/debian buster main contrib non-free
+
+          ## Major bug fix updates produced after the final release of the
+          ## distribution.
+          deb http://security.debian.org/ buster/updates main contrib non-free
+          deb-src http://security.debian.org/ buster/updates main contrib non-free
+          deb http://deb.debian.org/debian buster-updates main contrib non-free
+          deb-src http://deb.debian.org/debian buster-updates main contrib non-free
+
+          ## N.B. software from this repository may not have been tested as
+          ## extensively as that contained in the main release, although it includes
+          ## newer versions of some applications which may provide useful features.
+          deb http://deb.debian.org/debian buster-backports main contrib non-free
+          deb-src http://deb.debian.org/debian buster-backports main contrib non-free
+
+3. Effectuer une mise à niveau du système
+
+   a. Mettez à jour la liste des paquets. Tapez:
+
+      .. code:: bash
+
+          apt update
+
+   b. Installez les nouveautés. Tapez:
+
+      .. code:: bash
+
+          apt dist-upgrade
+
+4. Effectuez du ménage. Tapez:
+
+   .. code:: bash
+
+       apt autoremove
+
+Installation des paquets de base
+--------------------------------
+
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+
+2. Tapez:
+
+.. code:: bash
+
+    apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends man
 
 Installer l’outil Debfoster
 ---------------------------
@@ -399,7 +440,7 @@ En répondant aux questions de conservations de paquets, ``debfoster``
 maintient la liste des paquets uniques nécessaires au système. Tous les
 autres paquets seront supprimés.
 
-1. Se loguer ``root`` sur le serveur
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 2. Ajouter le paquet ``debfoster``. Tapez :
 
@@ -425,7 +466,7 @@ Vous pourriez être intéressé après l’installation de ``debfoster`` et de
 ``etckeeper`` de construire automatiquement un fichier qui contient la
 liste des paquets qui permettent de réinstaller le systeme:
 
-1. Loguez vous comme ``root``
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 2. Tapez:
 
@@ -477,7 +518,7 @@ liste des paquets qui permettent de réinstaller le systeme:
 
    .. code:: bash
 
-       vi /etc/etckeeper/pre-commit.d/35debfoster
+       etckeeper commit
 
 6. Le fichier keepers est créé et sauvegardé automatiquement.
 
@@ -507,7 +548,7 @@ Vérification du nom de serveur
 Cette partie consiste à vérifier que le serveur a un hostname
 correctement configuré.
 
-1. Se loguer ``root`` sur le serveur
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 2. vérifier que le hostname est bien celui attendu (c’est à dire
    configuré par votre hébergeur). Tapez :
@@ -531,7 +572,7 @@ correctement configuré.
 
           reboot
 
-   b. Se loguer\`root\` de nouveau sur le serveur
+   b. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 3. Vérifier le fichier ``hosts``. Tapez :
 
@@ -556,7 +597,7 @@ correctement configuré.
 
           reboot
 
-   b. Se logger\`root\` de nouveau sur le serveur
+   b. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 4. Vérifiez que tout est correctement configuré.
 
@@ -576,6 +617,36 @@ correctement configuré.
 
       La sortie doit afficher le nom de host avec le nom de domaine.
 
+Configurer une IPV6
+-------------------
+
+OVH propose des adresses IPV6. Ces adresses sont indiquées sur le
+panneau de synthèse du VPS (Dashboard).
+
+La résolution par DHCP ne semble pas fonctionner. Il faut donc
+configurer l’adresse à la main:
+
+1. Tapez:
+
+   .. code:: bash
+
+       vi /etc/network/interfaces
+
+2. Ajoutez ces lignes à la fin:
+
+   .. code:: ini
+
+       iface eth0 inet6 static
+       address <IPV6_ADDRESS> 
+       post-up /sbin/ip -6 route add <GW_ADDRESS> dev eth0 
+       post-up /sbin/ip -6 route add default via <GW_ADDRESS> dev eth0 
+       pre-down /sbin/ip -6 route del default via <GW_ADDRESS> dev eth0 
+       pre-down /sbin/ip -6 route del <GW_ADDRESS> dev eth0 
+
+   -  Mettre ici l’adresse IPV6 proposée par OVH
+
+   -  Mettre ici l’adresse IPV6 du gateway proposé par OVH
+
 Interdire le login direct en root
 ---------------------------------
 
@@ -584,7 +655,7 @@ connecter directement en SSH en tant que root. De ce fait, notre
 première action sera de désactiver le login direct en root et
 d’autoriser le sudo. Respectez bien les étapes de cette procédure:
 
-1. Se loguer ``root`` sur le serveur
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 2. Ajoutez un utilisateur standard qui sera nommé par la suite en tant
    que <sudo\_username>
@@ -640,7 +711,11 @@ d’autoriser le sudo. Respectez bien les étapes de cette procédure:
           vi /etc/ssh/sshd_config
 
       il faut rechercher la ligne: ``PermitRootLogin yes`` et la
-      remplacer par: ``PermitRootLogin no``
+      remplacer par:
+
+      .. code:: ini
+
+          PermitRootLogin no
 
    b. Redémarrez le serveur ssh. Tapez :
 
@@ -695,7 +770,14 @@ Pour créer une clé et la déployer:
       Sinon, appuyez sur Entrée à chaque fois pour accepter les valeurs
       par défaut.
 
-2. Déployez votre clé:
+2. Sur votre PC local afficher la clé à l’écran. Elle sera copiée-collée
+   par la suite:
+
+   .. code:: bash
+
+       cat /root/.ssh/id_rsa.pub
+
+3. Déployez votre clé:
 
    a. Loguez vous sur votre serveur distant. Tapez :
 
@@ -738,7 +820,7 @@ Pour créer une clé et la déployer:
 
    f. Déconnectez vous de votre session
 
-3. Vérifiez que tout fonctionne en vous connectant. Tapez: :
+4. Vérifiez que tout fonctionne en vous connectant. Tapez: :
 
    .. code:: bash
 
@@ -759,7 +841,9 @@ L’intérêt étant d’interdire le compte root en connexion ssh tout en
 gardant la facilité de se loguer root sur le système au travers d’un
 super-compte.
 
-1. Ajoutez un groupe sudonp et y affecter un utilisateur. Tapez :
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+
+2. Ajoutez un groupe sudonp et y affecter un utilisateur. Tapez :
 
    .. code:: bash
 
@@ -776,7 +860,7 @@ super-compte.
 
       .. code:: bash
 
-          gpasswd -d -G sudo <sudo_username>
+          gpasswd -d <sudo_username> sudo
 
    c. Éditez le fichier sudoers. Tapez :
 
@@ -785,10 +869,13 @@ super-compte.
           vi /etc/sudoers
 
    d. Ajouter dans le fichier la ligne suivante:
-      ``%sudonp ALL=(ALL:ALL) NOPASSWD: ALL``
 
-L’utilisateur nom\_d\_utilisateur pourra se logger root sans mot de
-passe au travers de la commande ``sudo bash``
+      .. code:: ini
+
+          %sudonp ALL=(ALL:ALL) NOPASSWD: ALL`
+
+      L’utilisateur nom\_d\_utilisateur pourra se logger root sans mot
+      de passe au travers de la commande ``sudo bash``
 
 Installer l’outil dselect
 -------------------------
@@ -796,7 +883,7 @@ Installer l’outil dselect
 L’outil ``dselect`` permet de choisir de façon interactive les paquets
 que l’on souhaite installer.
 
-1. Se loguer ``root`` sur le serveur
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 2. Ajouter le paquet ``dselect``. Tapez :
 
@@ -810,17 +897,25 @@ Ajouter un fichier de swap
 Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de
 1 Go:
 
-1. Tapez:
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+
+2. Tapez:
 
    .. code:: bash
 
-       fallocate -l 1G /swapfile
+       cd /
+       fallocate -l 2G /swapfile
        chmod 600 /swapfile
        mkswap /swapfile
        swapon /swapfile
 
-2. Enfin ajoutez une entrée dans le fichier fstab. Tapez
-   ``vi /etc/fstab`` et ajoutez la ligne:
+3. Enfin ajoutez une entrée dans le fichier fstab. Tapez :
+
+   .. code:: bash
+
+       vi /etc/fstab
+
+4. Ajoutez la ligne:
 
    ::
 
@@ -834,13 +929,13 @@ fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Amavisd,
 SPamAssassin, ClamAV, Apache, PHP, Let’s Encrypt, Mailman, PureFTPd,
 Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.
 
-1. Se loguer ``root`` sur le serveur
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 2. Changez le Shell par défaut. Tapez :
 
    .. code:: bash
 
-       dpkg-reconfigure dash.
+       dpkg-reconfigure dash
 
    A la question ``utilisez dash comme shell par défaut`` répondez
    ``non``. C’est bash qui doit être utilisé.
@@ -851,7 +946,7 @@ Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.
 
       .. code:: bash
 
-          apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd amavisd-new spamassassin clamav clamav-daemon unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php7.3 php7.3-common php7.3-gd php7.3-mysql php7.3-imap php7.3-cli php7.3-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php7.3-curl php7.3-intl php7.3-pspell php7.3-recode php7.3-sqlite3 php7.3-tidy php7.3-xmlrpc php7.3-xsl memcached php-memcache php-imagick php-gettext php7.3-zip php7.3-mbstring memcached libapache2-mod-passenger php7.3-soap php7.3-fpm php7.3-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron
+          apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd amavisd-new spamassassin clamav clamav-daemon unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron
 
 4. Aux questions posées répondez:
 
@@ -864,8 +959,11 @@ Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.
 Configuration de Postfix
 ------------------------
 
-1. Editez le master.cf file de postfix. Tapez
-   ``vi /etc/postfix/master.cf``
+1. Editez le master.cf file de postfix. Tapez :
+
+   .. code:: bash
+
+       vi /etc/postfix/master.cf
 
 2. Ajoutez dans le fichier:
 
@@ -883,7 +981,11 @@ Configuration de Postfix
         -o smtpd_sasl_auth_enable=yes
         -o smtpd_client_restrictions=permit_sasl_authenticated,reject
 
-3. Sauvegardez et relancez Postfix: ``systemctl restart postfix``
+3. Sauvegardez et relancez Postfix:
+
+   .. code:: bash
+
+       systemctl restart postfix
 
 Configuration de MariaDB
 ------------------------
@@ -892,7 +994,7 @@ Configuration de MariaDB
 
     .. code:: bash
 
-        mysql_secure_installation.
+        mysql_secure_installation
 
     Répondez au questions ainsi:
 
@@ -923,7 +1025,10 @@ Configuration de MariaDB
         vi /etc/mysql/mariadb.conf.d/50-server.cnf
 
 4.  Commentez la ligne ``bind-address``:
-    ``#bind-address           = 127.0.0.1``
+
+    .. code:: bash
+
+        #bind-address           = 127.0.0.1
 
 5.  Modifiez la méthode d’accès à la base MariaDB pour utiliser la
     méthode de login native.
@@ -943,7 +1048,9 @@ Configuration de MariaDB
     a. Aux deux endroits du fichier ou le mot clé ``password`` est
        présent, mettez le mot de passe root de votre base de données.
 
-    b. ``password = votre_mot_de_passe``
+       .. code:: ini
+
+           password = votre_mot_de_passe
 
 7.  Pour éviter l’erreur ``Error in accept: Too many open files``,
     augmenter la limite du nombre de fichiers ouverts.
@@ -1003,7 +1110,7 @@ Configuration de MariaDB
     .. code:: bash
 
         systemctl stop spamassassin
-        systemctl disable spamassassin.
+        systemctl disable spamassassin
 
 Configuration d’Apache
 ----------------------
@@ -1054,7 +1161,11 @@ Installation et Configuration de Mailman
 
    b. ``Missing site list :`` ← Tapez ``Ok``
 
-3. Créez une mailing list. Tapez: ``newlist mailman``
+3. Créez une mailing list. Tapez:
+
+   .. code:: bash
+
+       newlist mailman
 
 4. ensuite éditez le fichier aliases: :
 
@@ -1127,7 +1238,7 @@ Configuration d' Awstats
 
    .. code:: bash
 
-       vi /etc/cron.d/awstats:
+       vi /etc/cron.d/awstats
 
    Et commentez toutes les lignes:
 
@@ -1141,11 +1252,11 @@ Configuration d' Awstats
 Configuration de Fail2ban
 -------------------------
 
-1. Editez le fichier: :
+1. Editez le fichier jail.local :
 
    .. code:: bash
 
-       vi /etc/fail2ban/jail.local.
+       vi /etc/fail2ban/jail.local
 
    Ajoutez les lignes suivantes:
 
@@ -1185,8 +1296,12 @@ Installation et configuration de PureFTPd
 
        vi /etc/default/pure-ftpd-common
 
-3. Changez les lignes ainsi: ``STANDALONE_OR_INETD=standalone`` et
-   ``VIRTUALCHROOT=true``
+3. Changez les lignes ainsi:
+
+   .. code:: ini
+
+       STANDALONE_OR_INETD=standalone
+       VIRTUALCHROOT=true
 
 4. Autorisez les connexions TLS. Tapez:
 
@@ -1332,35 +1447,58 @@ Installation et configuration de phpmyadmin
 
       .. code:: bash
 
-          mysql -u root -p.
+          mysql -u root -p
 
       puis entrer le mot de passe root
 
    b. Créez une base phpmyadmin. Tapez :
 
-      .. code:: bash
+      .. code:: sql
 
           CREATE DATABASE phpmyadmin;
 
    c. Créez un utilisateur phpmyadmin. Tapez :
 
-      .. code:: bash
+      .. code:: sql
 
           CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; 
 
       -  ``mypassword`` doit être remplacé par un mot de passe choisi.
 
    d. Accordez des privilèges et sauvez:
-      ``GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION;``
-      puis tapez ``FLUSH PRIVILEGES;`` et enfin ``EXIT;``
+
+      .. code:: sql
+
+          GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; 
+
+      -  ``mypassword`` doit être remplacé par un mot de passe choisi.
+
+   e. Flusher les privilèges:
+
+      .. code:: sql
+
+          FLUSH PRIVILEGES;
+
+   f. et enfin
+
+      .. code:: sql
+
+          EXIT;
 
 5. Chargez les tables sql dans la base phpmyadmin:
-   ``mysql -u root -p phpmyadmin < /usr/share/phpmyadmin/sql/create_tables.sql``
+
+   .. code:: bash
+
+       mysql -u root -p phpmyadmin < /usr/share/phpmyadmin/sql/create_tables.sql
 
 6. Enfin ajoutez les mots de passe nécessaires dans le fichier de
    config.
 
-   a. Tapez: ``vi /usr/share/phpmyadmin/config.inc.php``
+   a. Tapez:
+
+      .. code:: bash
+
+          vi /usr/share/phpmyadmin/config.inc.php
 
    b. Rechercher le texte contenant ``controlhost`` . Ci-dessous, un
       exemple:
@@ -1409,7 +1547,13 @@ Installation et configuration de Roundcube
 
        apt-get install roundcube roundcube-core roundcube-mysql roundcube-plugins
 
-2. Éditez le fichier php de roundcube: :
+2. Répondez aux question
+
+   -  ``Utiliser dbconfig_common`` ← Répondre ``Oui``
+
+   -  ``Mot de passe Mysql pour db Roundcube`` ← Tapez un mot de passe
+
+3. Éditez le fichier php de roundcube: :
 
    .. code:: bash
 
@@ -1422,7 +1566,7 @@ Installation et configuration de Roundcube
        $config['default_host'] = 'localhost';
        $config['smtp_server'] = 'localhost';
 
-3. Éditez la configuration apache pour roundcube: :
+4. Éditez la configuration apache pour roundcube: :
 
    .. code:: bash
 
@@ -1435,7 +1579,7 @@ Installation et configuration de Roundcube
        Alias /roundcube /var/lib/roundcube
        Alias /webmail /var/lib/roundcube
 
-4. Redémarrez Apache:
+5. Redémarrez Apache:
 
    .. code:: bash
 
@@ -1468,6 +1612,7 @@ Installation d’un scanner de vulnérabilités
 
       .. code:: bash
 
+          cd
           git clone https://github.com/CISOfy/lynis
 
    b. Executez :
@@ -1485,141 +1630,35 @@ Installation d’un Panel
 Il existe plusieurs type de panel de contrôle pour les VPS. La plupart
 sont payant.
 
-Pour citer les plus connus: - payant: cPanel (leader du type), Plesk -
-gratuit: Yunohost ( un excellent système d’autohébergement packagé) ,
-Ajenti, Froxlor, Centos web panel, Webmin et Usermin, ISPConfig,
-HestiaCP, VestaCP ,
+Pour citer les plus connus:
+
+-  payant: cPanel (leader du type), Plesk
+
+-  gratuit: Yunohost ( un excellent système d’autohébergement packagé) ,
+   Ajenti, Froxlor, Centos web panel, Webmin et Usermin, ISPConfig,
+   HestiaCP, VestaCP ,
 
 Ci après nous allons en présenter 3 différents (ISPConfig, Webmin et
 HestiaCP). Ils sont incompatibles entre eux.
 
 On peut faire cohabiter ISPConfig et Webmin en prenant les précautions
-suivantes: \* ISPConfig est le maitre de la configuration: toute
-modification sur les sites webs, mailboxes et DNS doit impérativement
-être effectuées du coté d’ISPConfig \* Les modifications réalisées au
-niveau de webmin pour ces sites webs, mailboxes et DNS seront au mieux
-écrasées par ISPConfig au pire elles risquent de conduire à des
-incompatibilités qui engendreront des dysfonctionnement d’ISPConfig
-(impossibilité de mettre à jour les configurations) \* Le reste des
-modifications peuvent être configurées au niveau de webmin sans trop de
-contraintes.
+suivantes:
+
+-  ISPConfig est le maitre de la configuration: toute modification sur
+   les sites webs, mailboxes et DNS doit impérativement être effectuées
+   du coté d’ISPConfig
+
+-  Les modifications réalisées au niveau de webmin pour ces sites webs,
+   mailboxes et DNS seront au mieux écrasées par ISPConfig au pire elles
+   risquent de conduire à des incompatibilités qui engendreront des
+   dysfonctionnement d’ISPConfig (impossibilité de mettre à jour les
+   configurations)
+
+-  Le reste des modifications peuvent être configurées au niveau de
+   webmin sans trop de contraintes.
 
 Pour rappel, HestiaCP (tout comme VestaCP) sont incompatibles
 d’ISPConfig et de Webmin. Ils doivent être utilisés seuls
-
-Installation de Webmin
-----------------------
-
-Webmin est un outil généraliste de configuration de votre serveur. Son
-usage peut être assez complexe mais il permet une configuration plus
-précise des fonctionnalités.
-
-1. Se logger ``root`` sur le serveur
-
-2. Ajoutez le repository Webmin
-
-   a. allez dans le répertoire des repositories. Tapez :
-
-      .. code:: bash
-
-          cd /etc/apt/sources.list.d
-
-   b. Tapez: :
-
-      .. code:: bash
-
-          echo "deb http://download.webmin.com/download/repository sarge contrib" >> webmin.list
-
-   c. Ajoutez la clé. Tapez :
-
-      .. code:: bash
-
-          curl -fsSL http://www.webmin.com/jcameron-key.asc | sudo apt-key add -.
-
-      Le message ``OK`` s’affiche
-
-3. Mise à jour. Tapez :
-
-   .. code:: bash
-
-       apt update
-
-4. Installation de Webmin. Tapez :
-
-   .. code:: bash
-
-       apt install Webmin
-
-   ::
-
-       Débloquez le port 10000 dans votre firewall
-
-   a. Allez sur le site ispconfig https://example.com:8080/
-
-   b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-      ``Firewall``. Cliquez sur votre serveur.
-
-   c. dans la rubrique ``Open TCP ports:``, ajoutez le port 10000
-
-   d. Cliquez sur ``save``
-
-5. Connectez vous avec votre navigateur sur l’url
-   `https://<example.com>:10000 <https://<example.com>:10000>`__. Un
-   message indique un problème de sécurité. Cela vient du certificat
-   auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et
-   poursuivre'.
-
-6. Loguez-vous ``root``. Tapez le mot de passe de ``root``. Le dashboard
-   s’affiche.
-
-7. Restreignez l’adressage IP
-
-   a. Obtenez votre adresse IP en allant par exemples sur le site
-      https://www.showmyip.com/
-
-   b. Sur votre URL Webmin ou vous êtes logué, allez dans Webmin→Webmin
-      Configuration
-
-   c. Dans l’écran choisir l’icône ``Ip Access Control``.
-
-   d. Choisissez ``Only allow from listed addresses``
-
-   e. Puis dans le champ ``Allowed IP addresses`` tapez votre adresse IP
-      récupérée sur showmyip
-
-   f. Cliquez sur ``Save``
-
-   g. Vous devriez avoir une brève déconnexion le temps que le serveur
-      Webmin redémarre puis une reconnexion.
-
-8. Si vous n’arrivez pas à vous reconnecter c’est que l’adresse IP n’est
-   pas la bonne. Le seul moyen de se reconnecter est de:
-
-   a. Loguez vous ``root`` sur serveur
-
-   b. Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne
-      ``allow= …​``
-
-   c. Tapez :
-
-      .. code:: bash
-
-          service webmin restart
-
-   d. Connectez vous sur l’url de votre site Webmin. Tout doit
-      fonctionner
-
-9. Passez en Français. Pour les personnes non anglophone. Les
-   traductions française ont des problèmes d’encodage de caractère ce
-   n’est donc pas recommandé. La suite de mon tutoriel suppose que vous
-   êtes resté en anglais.
-
-   a. Sur votre url Webmin ou vous êtes logué, allez dans Webmin→Webmin
-      Configuration
-
-   b. Dans l’écran choisir l’icône ``Language and Locale``.
-
-   c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
 
 Installation et configuration de ISPConfig
 ------------------------------------------
@@ -1709,15 +1748,30 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
    s. ``Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:``
       ←- Tapez entrée
 
-   t. une deuxième série de question du même type est posée répondre de
-      la même manière !
+   t. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
+      lettres
+
+   u. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
+      nom d’état
+
+   v. ``Locality Name (eg, city) []:`` ← Entrer votre ville
+
+   w. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
+      Entrez votre entreprise ou tapez entrée
+
+   x. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
+
+   y. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le nom
+      d’hôte de votre serveur. Dans notre cas: server1.example.com
+
+   z. ``Email Address []:`` ← Tapez entrée
 
 7. Sécurisez Apache
 
    a. Il est maintenant recommandé de désactiver les protocoles TLS 1.0
       et TLS 1.1. Ce n’est pas la configuration par défaut d’ISPconfig
 
-   b. Se loguer ``root`` sur le serveur.
+   b. `Loguez vous comme ``root`` sur le serveur <#root_login>`__.
 
    c. Copier le fichier ``vhost.conf.master`` dans la zone custom
 
@@ -1725,14 +1779,17 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
 
           cp /usr/local/ispconfig/server/conf/vhost.conf.master /usr/local/ispconfig/server/conf-custom/vhost.conf.master
 
-   d. Editer le fichier dans la zone custom. Tapez
-      ``vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master``.
+   d. Editer le fichier dans la zone custom. Tapez:
 
-   e. Remplacez la ligne ``SSLProtocol All`` par
-      ``SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1``
+      .. code:: bash
 
-   f. Régénérez la configuration des serveurs web. Allez dans ``Tools``
-      → ``Resync``. Sélectionnez ``Websites``.cliquez sur ``start``
+          vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master
+
+   e. Remplacez la ligne ``SSLProtocol All`` par:
+
+      .. code:: ini
+
+          SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
 
 8. L’installation est terminée. Vous accédez au serveur à l’adresse:
    https://example.com:8080/ .
@@ -1752,6 +1809,120 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
        logged.". Cela signifie que vous avez des cookies d’une
        précédente installation qui sont configurés. Effacer les cookies
        de ce site de votre navigateur.
+
+Installation de Webmin
+----------------------
+
+Webmin est un outil généraliste de configuration de votre serveur. Son
+usage peut être assez complexe mais il permet une configuration plus
+précise des fonctionnalités.
+
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+
+2. Ajoutez le repository Webmin
+
+   a. allez dans le répertoire des repositories. Tapez :
+
+      .. code:: bash
+
+          cd /etc/apt/sources.list.d
+
+   b. Tapez: :
+
+      .. code:: bash
+
+          echo "deb http://download.webmin.com/download/repository sarge contrib" >> webmin.list
+
+   c. Ajoutez la clé. Tapez :
+
+      .. code:: bash
+
+          curl -fsSL http://www.webmin.com/jcameron-key.asc | sudo apt-key add -
+
+      Le message ``OK`` s’affiche
+
+3. Mise à jour. Tapez :
+
+   .. code:: bash
+
+       apt update
+
+4. Installation de Webmin. Tapez :
+
+   .. code:: bash
+
+       apt install webmin
+
+   ::
+
+       Débloquez le port 10000 dans votre firewall
+
+   a. Allez sur le site ispconfig https://example.com:8080/
+
+   b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+      ``Firewall``. Cliquez sur votre serveur.
+
+   c. dans la rubrique ``Open TCP ports:``, ajoutez le port 10000
+
+   d. Cliquez sur ``save``
+
+5. Connectez vous avec votre navigateur sur l’url
+   `https://<example.com>:10000 <https://<example.com>:10000>`__. Un
+   message indique un problème de sécurité. Cela vient du certificat
+   auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et
+   poursuivre'.
+
+6. Loguez-vous ``root``. Tapez le mot de passe de ``root``. Le dashboard
+   s’affiche.
+
+7. Restreignez l’adressage IP
+
+   a. Obtenez votre adresse IP en allant par exemples sur le site
+      https://www.showmyip.com/
+
+   b. Sur votre URL Webmin ou vous êtes logué, allez dans Webmin→Webmin
+      Configuration
+
+   c. Dans l’écran choisir l’icône ``Ip Access Control``.
+
+   d. Choisissez ``Only allow from listed addresses``
+
+   e. Puis dans le champ ``Allowed IP addresses`` tapez votre adresse IP
+      récupérée sur showmyip
+
+   f. Cliquez sur ``Save``
+
+   g. Vous devriez avoir une brève déconnexion le temps que le serveur
+      Webmin redémarre puis une reconnexion.
+
+8. Si vous n’arrivez pas à vous reconnecter c’est que l’adresse IP n’est
+   pas la bonne. Le seul moyen de se reconnecter est de:
+
+   a. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+
+   b. Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne
+      ``allow= …​``
+
+   c. Tapez :
+
+      .. code:: bash
+
+          service webmin restart
+
+   d. Connectez vous sur l’url de votre site Webmin. Tout doit
+      fonctionner
+
+9. Passez en Français. Pour les personnes non anglophone. Les
+   traductions française ont des problèmes d’encodage de caractère ce
+   n’est donc pas recommandé. La suite de mon tutoriel suppose que vous
+   êtes resté en anglais.
+
+   a. Sur votre url Webmin ou vous êtes logué, allez dans Webmin→Webmin
+      Configuration
+
+   b. Dans l’écran choisir l’icône ``Language and Locale``.
+
+   c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
 
 Configuration d’un domaine
 ==========================
@@ -1777,7 +1948,7 @@ loguer de prime abord sur le site http://vpsxxxxxx.ovh.net:8080/ .
 Utiliser le login: Admin et le mot de passe que vous avez configuré lors
 de l’installation d’ISPConfig
 
-1. Aller dans l’onglet ``System``
+1. Aller dans la rubrique ``System``
 
    a. Dans le menu ``Main config``
 
@@ -1794,12 +1965,121 @@ de l’installation d’ISPConfig
 
           B. ``Administrator’s name :`` ← nom de l’administrateur
 
-    **Note**
+   b. Dans le menu ``Firewall``
 
-    Il est possible de basculer le site ISPConfig entièrement en
-    Français. J’ai pour ma part gardé la version anglaise du site. Vous
-    trouverez donc tous les libellés dans la suite de la documentation
-    en anglais.
+      i.  Cliquez sur ``Add Firewall Record``
+
+      ii. Acceptez les valeurs par défaut en cliquant sur ``Save``
+
+2. Aller dans la rubrique ``DNS``
+
+   a. Dans le menu ``Template``
+
+      i.   Cliquez sur ``Add new record``
+
+      ii.  Remplissez les champs comme ci-après:
+
+           -  ``Name`` ← Tapez ``Template IPV4 autoNS``
+
+           -  ``Fields`` ← Cochez ``Domain``, ``IP Address``, ``Email``,
+              ``DKIM``, ``DNSSEC``
+
+           -  ``Template`` ← remplissez comme ci dessous:
+
+              .. code:: bash
+
+                  [ZONE]
+                  origin={DOMAIN}.
+                  ns=ns1.{DOMAIN}.
+                  mbox={EMAIL}.
+                  refresh=7200
+                  retry=540
+                  expire=604800
+                  minimum=3600
+                  ttl=3600
+
+                  [DNS_RECORDS]
+                  A|{DOMAIN}.|{IP}|0|3600
+                  A|www|{IP}|0|3600
+                  A|mail|{IP}|0|3600
+                  A|autoconfig|{IP}|0|3600
+                  A|autodiscover|{IP}|0|3600
+                  A|webmail|{IP}|0|3600
+                  A|ns1|{IP}|0|3600
+                  CNAME|ftp|{DOMAIN}|0|3600
+                  CNAME|smtp|{DOMAIN}|0|3600
+                  CNAME|pop3|{DOMAIN}|0|3600
+                  CNAME|imap|{DOMAIN}|0|3600
+                  SRV|_pop3._tcp|0 0 .|0|3600
+                  SRV|_imap._tcp|0 0 .|0|3600
+                  SRV|_pop3s._tcp|1 995 mail.{DOMAIN}|0|3600
+                  SRV|_imaps._tcp|1 993 mail.{DOMAIN}|0|3600
+                  SRV|_submission._tcp|1 465 mail.{DOMAIN}|0|3600
+                  SRV|_autodiscover._tcp|1 443 autodiscover.{DOMAIN}|0|3600
+                  NS|{DOMAIN}.|ns1.{DOMAIN}.|0|3600
+                  MX|{DOMAIN}.|mail.{DOMAIN}.|10|3600
+                  TXT|{DOMAIN}.|v=spf1 mx a ~all|0|3600
+
+      iii. Cliquez sur ``Save``
+
+      iv.  Cliquez sur ``Add new record``
+
+      v.   Remplissez les champs comme ci-après:
+
+           -  ``Name`` ← Tapez ``Template IPV6 autoNS``
+
+           -  ``Fields`` ← Cochez ``Domain``, ``IP Address``,
+              ``IPV6 Address``, ``Email``, ``DKIM``, ``DNSSEC``
+
+           -  ``Template`` ← remplissez comme ci dessous:
+
+              .. code:: bash
+
+                  [ZONE]
+                  origin={DOMAIN}.
+                  ns=ns1.{DOMAIN}.
+                  mbox={EMAIL}.
+                  refresh=7200
+                  retry=540
+                  expire=604800
+                  minimum=3600
+                  ttl=3600
+
+                  [DNS_RECORDS]
+                  A|{DOMAIN}.|{IP}|0|3600
+                  A|www|{IP}|0|3600
+                  A|mail|{IP}|0|3600
+                  A|autoconfig|{IP}|0|3600
+                  A|autodiscover|{IP}|0|3600
+                  A|webmail|{IP}|0|3600
+                  A|ns1|{IP}|0|3600
+                  AAAA|{DOMAIN}.|{IPV6}|0|3600
+                  AAAA|www|{IPV6}|0|3600
+                  AAAA|mail|{IPV6}|0|3600
+                  AAAA|autoconfig|{IPV6}|0|3600
+                  AAAA|autodiscover|{IPV6}|0|3600
+                  AAAA|webmail|{IPV6}|0|3600
+                  AAAA|ns1|{IPV6}|0|3600
+                  CNAME|ftp|{DOMAIN}|0|3600
+                  CNAME|smtp|{DOMAIN}|0|3600
+                  CNAME|pop3|{DOMAIN}|0|3600
+                  CNAME|imap|{DOMAIN}|0|3600
+                  SRV|_pop3._tcp|0 0 .|0|3600
+                  SRV|_imap._tcp|0 0 .|0|3600
+                  SRV|_pop3s._tcp|1 995 mail.{DOMAIN}|0|3600
+                  SRV|_imaps._tcp|1 993 mail.{DOMAIN}|0|3600
+                  SRV|_submission._tcp|1 465 mail.{DOMAIN}|0|3600
+                  SRV|_autodiscover._tcp|1 443 autodiscover.{DOMAIN}|0|3600
+                  NS|{DOMAIN}.|ns1.{DOMAIN}.|0|3600
+                  MX|{DOMAIN}.|mail.{DOMAIN}.|10|3600
+                  TXT|{DOMAIN}.|v=spf1 mx a ~all|0|3600
+
+                  **Note**
+
+                  Il est possible de basculer le site ISPConfig
+                  entièrement en Français. J’ai pour ma part gardé la
+                  version anglaise du site. Vous trouverez donc tous les
+                  libellés dans la suite de la documentation en anglais.
 
 Création de la zone DNS d’un domaine
 ------------------------------------
@@ -1810,72 +2090,24 @@ Création de la zone DNS d’un domaine
 
    b. Cliquez sur ``Dns zone wizard``
 
-   c. Choisir le template par défaut.
+   c. Choisir le template ``IPV4 autoNS`` ou\`IPV6 autoNS\` selon que
+      vous soyez IPV4 ou IPV4+V6
 
    d. Remplissez les champs:
 
       -  ``Domain :`` ← tapez le nom de votre domaine ``example.com``
 
-      -  ``IP Address:`` ← prendre l’adresse du serveur sélectionnée
+      -  ``IP Address:`` ← prendre l’adresse IPV4 du serveur
+         sélectionnée
 
-      -  ``NS1 :`` ← ns1.example.com
-
-      -  ``NS2 :`` ← ns2.example.com
+      -  ``IPV6 Address:`` ← prendre l’adresse IPV6 du serveur
+         sélectionnée
 
       -  ``Email:`` ← votre Email valide exemple admin@example.com
 
       -  ``DKIM:`` ← Yes
 
    e. Cliquez sur ``Create DNS-record``
-
-Ajout d’enregistrements DNS
----------------------------
-
-Allez maintenant dans l’onglet ``Records`` de la zone DNS. J’y ai ajouté
-quelques enregistrements complémentaires:
-
-1. Des enregistrements de type A (définissent des domaines principaux) :
-
-   -  ``Hostname:`` ← ``autoconfig`` et ``IP-Address:`` ← <IP> de votre
-      serveur
-
-   -  ``Hostname:`` ← ``autodicover`` et ``IP-Address:`` ← <IP> de votre
-      serveur
-
-   -  ``Hostname:`` ← ``webmail`` et ``IP-Address:`` ← <IP> de votre
-      serveur
-
-2. Des enregistrements de type CNAME (définissent des alias de domaines)
-   :
-
-   -  ``Hostname:`` ← ``ftp`` et ``IP-Address:`` ← ``example.com``
-
-   -  ``Hostname:`` ← ``smtp`` et ``IP-Address:`` ← ``example.com``
-
-   -  ``Hostname:`` ← ``pop3`` et ``IP-Address:`` ← ``example.com``
-
-   -  ``Hostname:`` ← ``imap`` et ``IP-Address:`` ← ``example.com``
-
-3. Des enregistrements de type SRV (définissent des services) :
-
-   -  ``Hostname:`` ← ``_pop3._tcp``, ``Target:`` ← ``.``, ``Weight:`` ←
-      0, ``Port:`` ← 0
-
-   -  ``Hostname:`` ← ``_imap._tcp``, ``Target:`` ← ``.``, ``Weight:`` ←
-      0, ``Port:`` ← 0
-
-   -  ``Hostname:`` ← ``_pop3s._tcp``, ``Target:`` ←
-      ``mail.example.com``, ``Weight:`` ← 1, ``Port:`` ← 995,
-      ``Priority:`` ← 10
-
-   -  ``Hostname:`` ← ``_imaps._tcp``, ``Target:`` ←
-      ``mail.example.com``, ``Weight:`` ← 1, ``Port:`` ← 993
-
-   -  ``Hostname:`` ← ``_submission._tcp``, ``Target:`` ←
-      ``mail.example.com``, ``Weight:`` ← 1, ``Port:`` ← 465
-
-   -  ``Hostname:`` ← ``_autodiscover._tcp``, ``Target:`` ←
-      ``autoconfig.example.com``, ``Weight:`` ← 0, ``Port:`` ← 443
 
 Attendez quelques minutes le temps que les enregistrements DNS se
 propagent et faites une essai de votre nom de domaine sur le site
@@ -2094,16 +2326,16 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
 
            .. code:: apache
 
-               ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
-               ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+               ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+               ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
                RewriteRule ^/.well-known/acme-challenge - [QSA,L]
 
                # redirect from server
                #
 
                SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-               ProxyPass / http://127.0.0.1[:port_number_if_any]/[path_if_any]
-               ProxyPassReverse / http://127.0.0.1[:port_number_if_any]/[path_if_any]
+               ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
+               ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
 
 2. Vous pouvez maintenant tester la qualité de la connexion de votre
    site en allant sur: `SSL Server
@@ -2114,7 +2346,7 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
 Création d’un Site Vhost
 ------------------------
 
-Dans la suite le sous-domaine sera nommé "site.example.com".
+Dans la suite le sous-domaine sera nommé "mail.example.com".
 
 Vous devez avoir avant tout défini le "record" DNS associé au site. Vous
 ne pouvez définir un sous-domaine que si vous avez défini le site web
@@ -2128,11 +2360,11 @@ racine auparavant.
 
       ii.  Saisissez les informations:
 
-           -  ``Hostname:`` ← saisir ``site``
+           -  ``Hostname:`` ← saisir ``mail``
 
            -  ``Domain:`` ← mettre ``example.com``
 
-           -  ``web folder:`` ← saisir ``site``
+           -  ``web folder:`` ← saisir ``mail``
 
            -  ``Auto-subdomain:`` ← sélectionner ``wwww`` ou ``*`` si
               l’on veut un certificat let’s encrypt wildcard
@@ -2165,16 +2397,16 @@ racine auparavant.
 
            .. code:: apache
 
-               ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
-               ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+               ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+               ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
                RewriteRule ^/.well-known/acme-challenge - [QSA,L]
 
                # redirect from server
                #
 
                SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-               ProxyPass / http://127.0.0.1[:port_number_if_any]/[path_if_any]
-               ProxyPassReverse / http://127.0.0.1[:port_number_if_any]/[path_if_any]
+               ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
+               ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
 
 2. Vous pouvez maintenant tester la qualité de la connexion de votre
    site en allant sur: `SSL Server
@@ -2190,8 +2422,11 @@ dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux
 services de base:
 
 1. Vous devez avoir créé au préalable un site pour les domaines
+   example.com et mail.example.com
 
-2. Liez le certificat d’ISPconfig avec celui du domaine crée
+2. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+
+3. Liez le certificat d’ISPconfig avec celui du domaine crée.
 
    -  Tapez :
 
@@ -2208,7 +2443,7 @@ services de base:
 
       -  remplacer <example.com> par votre nom de domaine
 
-3. Liez le certificat Postfix et Dovecot avec celui de let’s encrypt
+4. Liez le certificat Postfix et Dovecot avec celui de let’s encrypt
 
    -  Tapez :
 
@@ -2217,12 +2452,14 @@ services de base:
           cd /etc/postfix/
           mv smtpd.cert smtpd.cert-$(date +"%y%m%d%H%M%S").bak
           mv smtpd.key smtpd.key-$(date +"%y%m%d%H%M%S").bak
-          ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert
-          ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key
+          ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert 
+          ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key 
           service postfix restart
           service dovecot restart
 
-4. Liez le certificat pour Pureftd
+      -  remplacer <example.com> par votre nom de domaine
+
+5. Liez le certificat pour Pureftd
 
    -  Tapez :
 
@@ -2234,7 +2471,7 @@ services de base:
           chmod 600 pure-ftpd.pem
           service pure-ftpd-mysql restart
 
-5. Création d’un script de renouvellement automatique du fichier pem
+6. Création d’un script de renouvellement automatique du fichier pem
 
    a. Installez incron. Tapez :
 
@@ -2313,7 +2550,7 @@ Suivez les étapes ci-après:
 
     .. code:: bash
 
-        apt-get install munin munin-node munin-plugins-extra
+        apt-get install munin munin-node munin-plugins-extra logtail
 
 2.  Votre configuration de Munin va utiliser une base de données
     MariaDB. Vous devez activer quelques plugins. Tapez:
@@ -2388,7 +2625,7 @@ Suivez les étapes ci-après:
 
     .. code:: bash
 
-        vi /etc/apache2/conf-enable/munin.conf
+        vi /etc/apache2/conf-enabled/munin.conf
 
 9.  Nous allons maintenant activer le module Munin dans Apache et
     définir une authentification basique.
@@ -2666,7 +2903,7 @@ installation reste optionnelle.
 
 Suivez la procédure suivante:
 
-1.  Loguez vous sur le serveur en tant que ``root``
+1.  `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 2.  Installez les paquets debian. tapez:
 
@@ -2726,12 +2963,14 @@ Suivez la procédure suivante:
 
     b. Dans le champ ``Content Filter``, sélectionnez ``Rspamd``
 
-    c. Cliquez sur ``Save``
+    c. Dans le champ ``Rspamd Password``, tapez votre mot de passe
 
-    d. Revenez dans la rubrique ``system`` → menu ``Server Config`` →
+    d. Cliquez sur ``Save``
+
+    e. Revenez dans la rubrique ``system`` → menu ``Server Config`` →
        Sélectionnez votre serveur → Onglet ``Mail``
 
-    e. Vous pouvez voir le mot de passe de connexion au serveur web
+    f. Vous pouvez voir le mot de passe de connexion au serveur web
        Rspamd.
 
 13. Rendre le site rspamd accessible dans un host
@@ -2774,16 +3013,16 @@ Suivez la procédure suivante:
 
        .. code:: apache
 
-           ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
-           ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+           ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+           ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
            RewriteRule ^/.well-known/acme-challenge - [QSA,L]
 
            # rspamd httpserver
            #
 
            SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-           ProxyPass / http://127.0.0.1:11334/
-           ProxyPassReverse / http://127.0.0.1:11334/
+           ProxyPass / http://localhost:11334/
+           ProxyPassReverse / http://localhost:11334/
 
 17. en pointant sur le site rspampd.example.com, et en utilisant le mot
     de passe saisi plus haut vous pouvez accèder aux fonctions de
@@ -2829,15 +3068,41 @@ Pour créer un serveur de messagerie:
 11. Votre serveur est créé et protégé Contre les spams (entrants et
     sortants).
 
-12. Vous pouvez le tester en allant sur le site
-    `MxToolbox <https://mxtoolbox.com/diagnostic.aspx>`__.
+Finaliser la sécurisation de votre serveur de mail
+--------------------------------------------------
 
-    -  Entrez le nom de host de votre serveur de mail: mail.example.com.
+Afin de mieux sécuriser votre serveur de mail, appliquez les opérations
+suivantes:
 
-    -  cliquez sur ``test Email Server``
+1. editez le fichier main.cf
 
-    -  Tout doit être correct sauf éventuellement le reverse DNS qui ne
-       doit pas pointer sur le nom de domaine.
+   .. code:: bash
+
+       vi /etc/postfix/main.cf
+
+2. Rechercher ``myhostname`` et replacer le texte par:
+
+   .. code:: ini
+
+       myhostname = mail.example.com 
+
+   -  Remplacer example.com par votre nom de domaine.
+
+3. Redémarrez Postfix. Tapez:
+
+   .. code:: bash
+
+       service postfix restart
+
+4. Vous pouvez le tester en allant sur le site
+   `MxToolbox <https://mxtoolbox.com/diagnostic.aspx>`__.
+
+   -  Entrez le nom de host de votre serveur de mail: mail.example.com .
+
+   -  cliquez sur ``test Email Server``
+
+   -  Tout doit être correct sauf éventuellement le reverse DNS qui doit
+      être configuré pour pointer vers mail.example.com .
 
 Création de l’autoconfig pour Thunderbird et Android
 ----------------------------------------------------
@@ -2873,7 +3138,7 @@ Appliquez la procédure suivante:
 
    h. Sauver.
 
-2. Loguez vous sur le serveur en tant que ``root``
+2. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 3. Dans le répertoire ``/var/www/autoconfig.example.com/autoconfig/``
    créer un répertoire mail. Lui donner les permissions 755 et affecter
@@ -2881,9 +3146,9 @@ Appliquez la procédure suivante:
 
    .. code:: bash
 
-       mkdir -p /var/www/autoconfig.example.com/autoconfig/
-       chmod 755 /var/www/autoconfig.example.com/autoconfig/
-       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/ 
+       mkdir -p /var/www/autoconfig.example.com/autoconfig/mail
+       chmod 755 /var/www/autoconfig.example.com/autoconfig/mail
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail 
 
    -  remplacer web1:client0 par les permissions du répertoire
       ``/var/www/autoconfig.example.com``
@@ -2893,7 +3158,7 @@ Appliquez la procédure suivante:
 
          .. code:: bash
 
-             vi /var/www/autoconfig.example.com/autoconfig/config-v1.1.xml
+             vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml
 
 4. Y coller:
 
@@ -2906,14 +3171,14 @@ Appliquez la procédure suivante:
 
        <clientConfig version="1.1">
         <emailProvider id="example.com"> 
-          <domain>example.com</domain> 
+          <domain>example.com</domain>
           <displayName>Example Mail</displayName> 
           <displayShortName>Example</displayShortName> 
           <incomingServer type="imap">
             <hostname>mail.example.com</hostname> 
             <port>993</port>
             <socketType>SSL</socketType>
-            <authentication>password-encrypted</authentication>
+            <authentication>password-cleartext</authentication>
             <username>%EMAILADDRESS%</username>
           </incomingServer>
           <incomingServer type="pop3">
@@ -2927,14 +3192,14 @@ Appliquez la procédure suivante:
             <hostname>mail.example.com</hostname> 
             <port>465</port>
             <socketType>SSL</socketType>
-            <authentication>password-encrypted</authentication>
+            <authentication>password-cleartext</authentication>
             <username>%EMAILADDRESS%</username>
           </outgoingServer>
           <outgoingServer type="smtp">
             <hostname>mail.example.com</hostname> 
             <port>587</port>
             <socketType>STARTTLS</socketType>
-            <authentication>password-encrypted</authentication>
+            <authentication>password-cleartext</authentication>
             <username>%EMAILADDRESS%</username>
           </outgoingServer>
         </emailProvider>
@@ -2951,8 +3216,8 @@ Appliquez la procédure suivante:
 
    .. code:: bash
 
-       chmod 600 /var/www/autoconfig.example.com/autoconfig/config-v1.1.xml
-       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/config-v1.1.xml 
+       chmod 644 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml 
 
    -  remplacer web1:client0 par les permissions du répertoire
       ``/var/www/autoconfig.example.com``
@@ -2995,7 +3260,7 @@ Appliquez la procédure suivante:
 
    h. Sauver.
 
-2. Loguez vous sur le serveur en tant que ``root``
+2. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 3. Dans le répertoire ``/var/www/autoconfig.example.com/autoconfig/``,
    créer un répertoire ``Autodiscover``. Lui donner les permissions 755
@@ -3064,12 +3329,22 @@ Appliquez la procédure suivante:
 
    -  mettre ici votre libellé long pour votre nom de messagerie
 
-5. Pointer votre navigateur sur le site
+5. Changez les permissions comme pour le répertoire
+
+   .. code:: bash
+
+       chmod 644 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml 
+
+   -  remplacer web1:client0 par les permissions du répertoire
+      ``/var/www/autoconfig.example.com``
+
+6. Pointer votre navigateur sur le site
    https://autodiscover.example.com/Autodiscover/Autodiscover.xml.
 
-6. Le contenu du fichier xml doit s’afficher
+7. Le contenu du fichier xml doit s’afficher
 
-7. Vous pouvez faire aussi un test sur le `Testeur de connectivité
+8. Vous pouvez faire aussi un test sur le `Testeur de connectivité
    Microsoft <https://testconnectivity.microsoft.com>`__.
 
    a. choisissez: ``Découverte automatique Outlook``
@@ -3181,8 +3456,8 @@ Il vous reste à appliquer la procédure suivante:
 
       .. code:: apache
 
-          ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
-          ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
           RewriteRule ^/.well-known/acme-challenge - [QSA,L]
 
           # roundcube httpserver
@@ -3490,6 +3765,140 @@ Appliquez les opérations suivantes dans ISPConfig:
 10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
     dernière version de Wordpress.
 
+Micro Weber
+===========
+
+Microweber est un système de gestion de contenu et un constructeur de
+sites web Open Source. Il est basé sur le langage de programmation PHP
+et le framework web Laravel 5, utilisant le glisser-déposer et
+permettant aux utilisateurs de créer rapidement du contenu, tout en
+programmant et en gérant plusieurs affichages. Il dispose d’une fonction
+d’édition en direct qui permet aux utilisateurs de visualiser leurs
+modifications telles qu’elles apparaîtraient.
+
+Création du site web de Microweber
+----------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``microweber``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``microweber``.
+
+   b. Le faire pointer vers le web folder ``microweber``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``PHP-FPM`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Cliquez sur ``Save``
+
+3. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+
+Création des bases de données
+-----------------------------
+
+Appliquez les opérations suivantes dans ISPConfig :
+
+1. Créez une base de données mysql. Aller dans le menu ``Database`` pour
+   définir un utilisateur MariaDB
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``microweber`` par exemple
+
+          -  ``Database password:`` ← saisir un mot de passe ou en
+             générer un en cliquant sur le bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Cliquez sur ``save``
+
+   c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+      données
+
+   d. Saisissez les informations:
+
+      -  ``Site:`` ← sélectionner le site ``example.com``
+
+      -  ``Database name:`` ← Saisissez le nom de la base de données
+         ``microweber``
+
+      -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+         ``cxmicroweber``. x: est le numéro de client.
+
+   e. Cliquez sur ``save``
+
+Installation de Microweber
+--------------------------
+
+Suivez la procédure suivante:
+
+1. Tapez la commande suivante:
+
+::
+
+    https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinstall.php
+
+1. Un fois téléchargé, faites pointer votre navigateur vers
+   http://microweber.example.com/netinstall.php
+
+2. Indique ``.`` comme répertoire d’installation et cliquez sur
+   ``Télécharger et décompresser Piwigo``
+
+3. Une fois le téléchargement terminé cliquez sur
+   ``Installer Microweber``. Rechargez la page si besoin.
+
+4. Répondez aux questions suivantes:
+
+   -  ``Hote`` ← Laissez ``localhost``
+
+   -  ``Utilisateur`` ← entrez ``cxmicroweber``. x est le numero de
+      client; habituellement c’est 0
+
+   -  ``Mot de passe`` ← Tapez votre mot de passe
+
+   -  ``Nom de la Base de données`` ← entrez ``cxmicroweber``. x est le
+      numero de client; habituellement c’est 0
+
+   -  ``Préfix des noms de tables`` ← Laissez le champ vide
+
+   -  ``Nom d’Utilisateur`` ← tapez ``admin``
+
+   -  ``Mot de passe`` ← Tapez votre mot de passe
+
+   -  ``Mot de passe [confirmer]`` ← Tapez votre mot de passe
+
+   -  ``Adresse e-mail`` ← Tapez votre adresse mail d’administrateur
+
+5. Tapez ``Démarrer l’installation``
+
+6. Vous êtes redirigé sur le site Microweber ou vous pourrez vous loguer
+   et commencer à utiliser l’outil
+
 Piwigo
 ======
 
@@ -3532,7 +3941,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    f. Cliquez sur ``Save``
 
-3. Loguez vous ``root`` sur le serveur
+3. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 Création des bases de données
 -----------------------------
@@ -3711,7 +4120,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    f. Cliquez sur ``Save``
 
-3. Loguez vous ``root`` sur le serveur
+3. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 Création des bases de données
 -----------------------------
@@ -3843,8 +4252,8 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
       .. code:: apache
 
-          ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
-          ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
           RewriteRule ^/.well-known/acme-challenge - [QSA,L]
 
           # gitea httpserver
@@ -3858,7 +4267,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    h. Cliquez sur ``Save``
 
-3. Loguez vous ``root`` sur le serveur
+3. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 4. Créez un utilisateur ``Gitea``. Tapez:
 
@@ -3929,119 +4338,124 @@ Téléchargez et installez Gitea
 
 Appliquez les opérations suivantes:
 
-1. Téléchargez gitea du `site de
-   chargement <https://dl.gitea.io/gitea/>`__. Tapez pour un système 64
-   bits:
+1.  Téléchargez gitea du `site de
+    chargement <https://dl.gitea.io/gitea/>`__. Tapez pour un système 64
+    bits:
 
-   .. code:: bash
+    .. code:: bash
 
-       wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
-       chmod 755 /usr/local/bin/gitea
+        wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
+        chmod 755 /usr/local/bin/gitea
 
-2. Créez maintenant une entrée pour le launcher systemd. Tapez:
+2.  Créez maintenant une entrée pour le launcher systemd. Tapez:
 
-   .. code:: bash
+    .. code:: bash
 
-       vi /etc/systemd/system/gitea.service
+        vi /etc/systemd/system/gitea.service
 
-3. y Coller le texte suivant:
+3.  y Coller le texte suivant:
 
-   .. code:: ini
+    .. code:: ini
 
-       [Unit]
-       Description=Gitea (Git with a cup of tea)
-       After=syslog.target
-       After=network.target
-       Requires=mysqld.service
-       [Service]
-       Type=simple
-       User=gitea
-       Group=gitea
-       WorkingDirectory=/var/lib/gitea/
-       RuntimeDirectory=gitea
-       ExecStart=/usr/local/bin/gitea web -c /etc/gitea/app.ini
-       Restart=always
-       Environment=USER=gitea HOME=/home/gitea GITEA_WORK_DIR=/var/lib/gitea
-       [Install]
-       WantedBy=multi-user.target
+        [Unit]
+        Description=Gitea (Git with a cup of tea)
+        After=syslog.target
+        After=network.target
+        Requires=mysqld.service
+        [Service]
+        Type=simple
+        User=gitea
+        Group=gitea
+        WorkingDirectory=/var/lib/gitea/
+        RuntimeDirectory=gitea
+        ExecStart=/usr/local/bin/gitea web -c /etc/gitea/app.ini
+        Restart=always
+        Environment=USER=gitea HOME=/home/gitea GITEA_WORK_DIR=/var/lib/gitea
+        [Install]
+        WantedBy=multi-user.target
 
-4. Recharge la base de systemd. Tapez:
+4.  Recharge la base de systemd. Tapez:
 
-   .. code:: bash
+    .. code:: bash
 
-       systemctl daemon-reload
+        systemctl daemon-reload
 
-5. Activez et démarrez ``Gitea``. Tapez:
+5.  Activez et démarrez ``Gitea``. Tapez:
 
-   .. code:: bash
+    .. code:: bash
 
-       systemctl enable gitea.service
-       systemctl start gitea.service
+        systemctl enable gitea.service
+        systemctl start gitea.service
 
-6. Ouvrez votre navigateur sur l’url: https://gitea.example.com/install
-   et remplissez les paramètres comme ci-après :
+6.  Ouvrez votre navigateur sur l’url: https://gitea.example.com/install
+    et remplissez les paramètres comme ci-après :
 
-   -  ``Type de base de données:`` ← Sélectionnez ``MySQL``
+    -  ``Type de base de données:`` ← Sélectionnez ``MySQL``
 
-   -  ``Nom d’utilisateur:`` ← Tapez ``c0gitea``
+    -  ``Nom d’utilisateur:`` ← Tapez ``c0gitea``
 
-   -  ``Mot de passe:`` ← Tapez le mot de passe saisi lors de la
-      création de la base
+    -  ``Mot de passe:`` ← Tapez le mot de passe saisi lors de la
+       création de la base
 
-   -  ``Nom de base de données:`` ← Tapez ``c0gitea``
+    -  ``Nom de base de données:`` ← Tapez ``c0gitea``
 
-   -  ``Titre du site:`` ← mettez une titre de votre choix
+    -  ``Titre du site:`` ← mettez une titre de votre choix
 
-   -  ``Emplacement racine des dépôts:`` ← saisissez
-      ``/home/gitea/gitea-repositories``
+    -  ``Emplacement racine des dépôts:`` ← saisissez
+       ``/home/gitea/gitea-repositories``
 
-   -  ``Répertoire racine Git LFS:`` ← Tapez ``/var/lib/gitea/data/lfs``
+    -  ``Répertoire racine Git LFS:`` ← Tapez
+       ``/var/lib/gitea/data/lfs``
 
-   -  ``Exécuter avec le compte d’un autre utilisateur :`` ← Tapez
-      ``gitea``
+    -  ``Exécuter avec le compte d’un autre utilisateur :`` ← Tapez
+       ``gitea``
 
-   -  ``Domaine du serveur SSH:`` ← Tapez votre domaine. exemple :
-      ``gitea.example.com``
+    -  ``Domaine du serveur SSH:`` ← Tapez votre domaine. exemple :
+       ``gitea.example.com``
 
-   -  ``Port du serveur SSH:`` ← Tapez 22
+    -  ``Port du serveur SSH:`` ← Tapez 22
 
-   -  ``Port d’écoute HTTP de Gitea:`` ← Tapez 3000
+    -  ``Port d’écoute HTTP de Gitea:`` ← Tapez 3000
 
-   -  ``URL de base de Gitea:`` ← Tapez l’URL de votre domaine. Exemple:
-      ``https://gitea.example.com``
+    -  ``URL de base de Gitea:`` ← Tapez l’URL de votre domaine.
+       Exemple: ``https://gitea.example.com``
 
-   -  ``Chemin des fichiers log:`` ← Tapez ``/var/lib/gitea/log``
+    -  ``Chemin des fichiers log:`` ← Tapez ``/var/lib/gitea/log``
 
-   -  ``Hôte SMTP:`` ← Tapez ``localhost``
+    -  ``Hôte SMTP:`` ← Tapez ``localhost``
 
-   -  ``Envoyer les e-mails en tant que:`` ← Tapez
-      ``gitea@gitea.example.com``
+    -  ``Envoyer les e-mails en tant que:`` ← Tapez
+       ``gitea@gitea.example.com``
 
-   -  ``Exiger la confirmation de l’e-mail lors de l’inscription:`` ←
-      cochez la case
+    -  ``Exiger la confirmation de l’e-mail lors de l’inscription:`` ←
+       cochez la case
 
-   -  ``Activez les notifications par e-mail:`` ← cochez la case
+    -  ``Activez les notifications par e-mail:`` ← cochez la case
 
-   -  ``Désactiver le formulaire d’inscription:`` ← cochez la case
+    -  ``Désactiver le formulaire d’inscription:`` ← cochez la case
 
-   -  ``Masquer les adresses e-mail par défaut:`` ← cochez la case
+    -  ``Masquer les adresses e-mail par défaut:`` ← cochez la case
 
-7. Laissez le reste et cliquez sur ``Install Gitea``.
+7.  Laissez le reste et cliquez sur ``Install Gitea``.
 
-8. Restreignez les permissions sur le fichier de configuration de gitea.
-   Tapez:
+8.  Restreignez les permissions sur le fichier de configuration de
+    gitea. Tapez:
 
-   .. code:: bash
+    .. code:: bash
 
-       chmod 750 /etc/gitea
-       chown root:gitea /etc/gitea/app.ini
-       chmod 640 /etc/gitea/app.ini
+        chmod 750 /etc/gitea
+        chown root:gitea /etc/gitea/app.ini
+        chmod 640 /etc/gitea/app.ini
 
-9. Redémarrez ``gitea``. Sur le serveur en tant que ``root``. Tapez:
+9.  Redémarrez ``gitea``.
 
-   .. code:: bash
+10. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
-       systemctl restart gitea.service
+11. Tapez:
+
+    .. code:: bash
+
+        systemctl restart gitea.service
 
 Activer une connexion SSH dédiée
 --------------------------------
@@ -4049,7 +4463,7 @@ Activer une connexion SSH dédiée
 En option, vous pouvez avoir envie de dédier une connexion SSH pour
 Gitea:
 
-1. Loguez vous comme ``root`` sur le serveur.
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 2. Éditez le fichier de configuration. Tapez:
 
@@ -4145,21 +4559,21 @@ Appliquez la procédure suivante:
           Require all granted
           </Location>
 
-          ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
-          ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
           RewriteRule ^/.well-known/acme-challenge - [QSA,L]
 
           # seafile httpserver
           #
-          ProxyPass /seafhttp http://127.0.0.1:8092
-          ProxyPassReverse /seafhttp http://127.0.0.1:8092
+          ProxyPass /seafhttp http://localhost:8092
+          ProxyPassReverse /seafhttp http://localhost:8092
           RewriteRule ^/seafhttp - [QSA,L]
           #
           # seahub
           #
           SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-          ProxyPass / http://127.0.0.1:8090/
-          ProxyPassReverse / http://127.0.0.1:8090/
+          ProxyPass / http://localhost:8090/
+          ProxyPassReverse / http://localhost:8090/
 
 Création de bases de données
 ----------------------------
@@ -4203,7 +4617,7 @@ Création de bases de données
 
       iii. Cliquez sur ``save``
 
-   d. Les trois bases de données doivent apparaitre dans la liste des
+   d. Les trois bases de données doivent apparaître dans la liste des
       bases
 
 Téléchargez et installez Seafile
@@ -4211,7 +4625,7 @@ Téléchargez et installez Seafile
 
 Appliquez la procédure suivante:
 
-1. Loguez vous comme ``root`` sur le serveur
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 2. Installez quelques paquets Debian complémentaires. Tapez:
 
@@ -4219,7 +4633,7 @@ Appliquez la procédure suivante:
 
        apt-get install python2.7 python-setuptools python-simplejson python-pil python-mysqldb python-flup
 
-3. Je préfère faire tourner mes serveurs dans le répertoire privé plutot
+3. Je préfère faire tourner mes serveurs dans le répertoire privé plutôt
    que dans le répertoire web pour des questions de sécurité. Tapez:
 
    .. code:: bash
@@ -4238,7 +4652,7 @@ Appliquez la procédure suivante:
 
    -  choisissez le user et le groupe de votre site web. Ces
       informations sont consultables dans ISPConfig en consultant les
-      informations du Web Domain→onlget ``Options``\ →champs Linux User
+      informations du Web Domain→onglet ``Options``\ →champs Linux User
       et Linux Group.
 
 4. A ce moment, vous devez répondre à un certain nombre de questions.
@@ -4410,7 +4824,7 @@ script de lancement automatique de Seafile:
    les jours
 
    a. Allez dans la rubrique ``Sites`` puis dans le menu ``Cron Jobs``.
-      Cliquez sur ``Add cron Job``. Saisisssez les champs:
+      Cliquez sur ``Add cron Job``. Saisissez les champs:
 
       -  ``Parent Website:`` ← mettre ``example.com``
 
@@ -4472,8 +4886,8 @@ Appliquez la procédure suivante:
 
       .. code:: apache
 
-          ProxyPass "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
-          ProxyPassReverse "/.well-known/acme-challenge" http://127.0.0.1:80/.well-known/acme-challenge
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
           RewriteRule ^/.well-known/acme-challenge - [QSA,L]
 
           # Pritunl httpserver
@@ -4484,8 +4898,8 @@ Appliquez la procédure suivante:
             SSLProxyVerify none
 
           SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-          ProxyPass / https://127.0.0.1:8070/
-          ProxyPassReverse / https://127.0.0.1:8070/
+          ProxyPass / https://localhost:8070/
+          ProxyPassReverse / https://localhost:8070/
           ProxyPreserveHost On
 
 Installation de Pritunl
@@ -4493,7 +4907,7 @@ Installation de Pritunl
 
 Veuillez suivre la procédure suivante:
 
-1. Loguez vous comme ``root`` sur le serveur
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 2. Ajoutez des repositories Debian. Tapez:
 
@@ -4534,8 +4948,8 @@ Veuillez suivre la procédure suivante:
 Configuration de Pritunl
 ------------------------
 
-Votre service Pritunl est actif. Vous devez maitenant le configurer pour
-qu’il fonctionne:
+Votre service Pritunl est actif. Vous devez maintenant le configurer
+pour qu’il fonctionne:
 
 1.  pointez votre navigateur sur le site web de Pritunl:
     https://example.com
@@ -4667,7 +5081,7 @@ and Windows.
 Pour se connecter à l’aide du client, vous devez charger un fichier de
 configuration qui est téléchargeable dans l’onglet utilisateur du
 serveur web. Ce fichier est à importer dans le logiciel client de
-Pritunl. Une fois fait, une compte apparait dans le logiciel client.
+Pritunl. Une fois fait, une compte apparaît dans le logiciel client.
 Vous pourrez vous connecter en cliquant sur le bouton ``Connect`` du
 compte utilisateur.
 
@@ -4685,7 +5099,7 @@ Si jamais votre base est corrompue, vous pourrez la réparer en tapant:
 Mot de passe perdu
 ------------------
 
-Vous pouvez regénérer un mot de passe en tapant:
+Vous pouvez re-générer un mot de passe en tapant:
 
 .. code:: bash
 
@@ -4711,7 +5125,7 @@ compatibilité que cela impose.
 
 Pour installer:
 
-1. Se logger ``root`` sur le serveur
+1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 2. Télécharger le package et lancez l’installeur
 
@@ -4737,3 +5151,34 @@ Pour installer:
 
 3. Hestia est installé. Il est important de bien noter le mot de passe
    du compte admin de Hestia ainsi que le numéro de port du site web
+
+Installation de Grafana
+-----------------------
+
+creez le DNS et le vhost grafana.
+
+Apache directive:
+
+::
+
+    ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+    ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+    RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+    # grafana httpserver
+    #
+
+    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+    ProxyPass / http://localhost:3000/
+    ProxyPassReverse / http://localhost:3000/
+
+installation de grafana:
+
+echo "deb https://packages.grafana.com/oss/deb stable main"
+>>/etc/apt/sources.list.d/grafana.list
+
+wget -q -O - https://packages.grafana.com/gpg.key \| sudo apt-key add -
+
+apt update
+
+apt install grafana
