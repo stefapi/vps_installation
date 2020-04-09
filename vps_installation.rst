@@ -25,6 +25,9 @@ Sont installés:
 
 -  un configurateur `Webmin <http://www.webmin.com/>`__
 
+-  un serveur apache avec sa configuration let’s encrypt et les plugins
+   PHP, python et ruby
+
 -  un serveur de mail avec antispam, sécurisation d’envoi des mails et
    autoconfiguration pour Outlook, Thunderbird, Android.
 
@@ -55,6 +58,8 @@ Sont installés:
 -  un site WIKI sous `Mediawiki <https://www.mediawiki.org>`__,
 
 -  un site `Wordpress <https://wordpress.com>`__,
+
+-  un site `Microweber <https://wordpress.com>`__,
 
 -  un site Photo sous `Piwigo <https://piwigo.org/>`__,
 
@@ -2911,13 +2916,32 @@ Suivez la procédure suivante:
 
         apt-get install rspamd redis-server
 
-    **Activez Redis dans la configuration de Rspamd. Tapez:.**
+3.  Activez l’apprentissage automatique
+
+    .. code:: bash
+
+        echo "autolearn = true;" > /etc/rspamd/local.d/classifier-bayes.conf
+        echo 'backend = "redis";' >> /etc/rspamd/local.d/classifier-bayes.conf
+        echo "new_schema = true;" >> /etc/rspamd/local.d/classifier-bayes.conf
+        echo "expire = 8640000;" >> /etc/rspamd/local.d/classifier-bayes.conf
+
+4.  Activez Redis dans la configuration de Rspamd. Tapez:
 
     .. code:: bash
 
         echo 'servers = "127.0.0.1";' > /etc/rspamd/local.d/redis.conf
 
-3.  Augmentez la taille de l’historique de Rspamd, activez la
+5.  Fixer des métriques assez élevées pour analyser les spams
+
+    .. code:: bash
+
+        echo "actions {" > /etc/rspamd/local.d/metrics.conf
+        echo 'add_header = 5;' >> /etc/rspamd/local.d/metrics.conf
+        echo "greylist = 25;" >> /etc/rspamd/local.d/metrics.conf
+        echo "reject = 50;" >> /etc/rspamd/local.d/metrics.conf
+        echo "}" >> /etc/rspamd/local.d/metrics.conf
+
+6.  Augmentez la taille de l’historique de Rspamd, activez la
     compression.
 
     .. code:: bash
@@ -2926,37 +2950,88 @@ Suivez la procédure suivante:
         echo "compress = true;" >> /etc/rspamd/local.d/history_redis.conf
         echo "subject_privacy = false;" >> /etc/rspamd/local.d/history_redis.conf
 
-4.  Créez un mot de passe:
+7.  Activez la mise à jour automatique de rspamd
+
+    .. code:: bash
+
+        echo 'enabled = true;' > /etc/rspamd/local.d/redis.conf
+
+8.  Enrichissez les headers des mails spams. Tapez:
+
+    .. code:: bash
+
+        vi /etc/rspamd/local.d/milter_headers.conf
+
+9.  inserez le texte suivant:
+
+    ::
+
+        # local.d/milter_headers.conf:
+
+        # Options
+
+        # Add "extended Rspamd headers" (default false) (enables x-spamd-result, x-rspamd-server & x-rspamd-queue-id routines)
+        extended_spam_headers = true;
+
+        # List of headers to be enabled for authenticated users (default empty)
+        # authenticated_headers = ["authentication-results"];
+
+        # List of headers to be enabled for local IPs (default empty)
+        local_headers = ["x-spamd-bar"];
+
+        # Set false to always add headers for local IPs (default true)
+        # skip_local = true;
+
+        # Set false to always add headers for authenticated users (default true)
+        # skip_authenticated = true;
+
+        # Routines to use- this is the only required setting (may be omitted if using extended_spam_headers)
+        use = ["x-spamd-bar", "x-spam-level", "authentication-results"];
+
+        # this is where we may configure our selected routines
+        routines {
+          # settings for x-spamd-bar routine
+          x-spamd-bar {
+            # effectively disables negative spambar
+            negative = "";
+          }
+          # other routines...
+        }
+        custom {
+          # user-defined routines: more on these later
+        }
+
+10. Créez un mot de passe. Tapez:
 
     .. code:: bash
 
         rspamadm pw
 
-5.  Entrez votre mot de passe. Une hashphrase est générée.
+11. Entrez votre mot de passe. Une hashphrase est générée.
 
-6.  Copiez la.
+12. Copiez la.
 
-7.  Remplacez celle déjà présente dans
+13. Remplacez celle déjà présente dans
     ``/etc/rspamd/local.d/worker-controller.inc``
 
     .. code:: bash
 
         vi /etc/rspamd/local.d/worker-controller.inc
 
-8.  Remplacez le texte entre guillemets sur la ligne
+14. Remplacez le texte entre guillemets sur la ligne
     ``password = "$2$g95yw…​…​dq3c5byy";`` par le texte copié.
 
-9.  Sauvez
+15. Sauvez
 
-10. Redémarrez Rspamd
+16. Redémarrez Rspamd
 
     .. code:: bash
 
         systemctl restart rspamd
 
-11. Loguez vous dans ISPConfig
+17. Loguez vous dans ISPConfig
 
-12. Activer Rspamd dans ISPConfig
+18. Activer Rspamd dans ISPConfig
 
     a. Allez dans la rubrique ``system`` → menu ``Server Config`` →
        Sélectionnez votre serveur → Onglet ``Mail``
@@ -2973,16 +3048,16 @@ Suivez la procédure suivante:
     f. Vous pouvez voir le mot de passe de connexion au serveur web
        Rspamd.
 
-13. Rendre le site rspamd accessible dans un host
+19. Rendre le site rspamd accessible dans un host
 
-14. Activez le module proxy dans apache
+20. Activez le module proxy dans apache
 
     .. code:: bash
 
         a2enmod proxy
         systemctl restart apache2
 
-15. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+21. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
     Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
 
     a. Cliquez sur ``A`` et saisissez:
@@ -2994,7 +3069,7 @@ Suivez la procédure suivante:
 
     b. Cliquez sur ``Save``
 
-16. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+22. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
     configurateur de ``sites``.
 
     a. Lui donner le nom ``rspamd``.
@@ -3024,11 +3099,126 @@ Suivez la procédure suivante:
            ProxyPass / http://localhost:11334/
            ProxyPassReverse / http://localhost:11334/
 
-17. en pointant sur le site rspampd.example.com, et en utilisant le mot
+23. en pointant sur le site rspampd.example.com, et en utilisant le mot
     de passe saisi plus haut vous pouvez accèder aux fonctions de
     l’outil.
 
-18. Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:
+24. Activer l’apprentissage par déplacement
+
+    a. Couplé avec Dovecot, Rspamd nous propose de pouvoir apprendre
+       également en fonction des actions des utilisateurs. Si un mail
+       est déplacé vers le répertoire Junk, il sera appris comme tel et
+       au contraire, s’il est sorti du répertoire Junk vers autre chose
+       que la corbeille, il sera appris comme Ham.
+
+    b. Editez le fichier Dovecot.conf (remarques ISPConfig n’utilise pas
+       aujourd’hui le contenu du répertoire conf.d). Tapez:
+
+       .. code:: bash
+
+           vi /etc/dovecot/dovecot.conf
+
+    c. Insérez dans le groupe plugin et le protocol imap déjà existants
+       dans le fichier :
+
+       ::
+
+           plugin {
+             sieve_plugins = sieve_imapsieve sieve_extprograms
+
+             imapsieve_mailbox1_name = Junk
+             imapsieve_mailbox1_causes = COPY
+             imapsieve_mailbox1_before = file:/etc/dovecot/sieve/report-spam.sieve
+
+             imapsieve_mailbox2_name = *
+             imapsieve_mailbox2_from = Junk
+             imapsieve_mailbox2_causes = COPY
+             imapsieve_mailbox2_before = file:/etc/dovecot/sieve/report-ham.sieve
+
+             sieve_pipe_bin_dir = /etc/dovecot/sieve
+
+             sieve_global_extensions = +vnd.dovecot.pipe
+           }
+
+           protocol imap {
+             mail_plugins = quota imap_quota imap_sieve
+           }
+
+    d. Redémarrez dovecot. Tapez:
+
+       .. code:: bash
+
+           service dovecot restart
+
+    e. Créez un répertoire sieve et éditez report-ham.sieve. Tapez:
+
+       .. code:: bash
+
+           mkdir -p /etc/dovecot/sieve/
+           vi /etc/dovecot/sieve/report-ham.sieve
+
+    f. Insérez le texte suivant:
+
+       ::
+
+           require ["vnd.dovecot.pipe", "copy", "imapsieve", "environment", "variables"];
+
+           if environment :matches "imap.mailbox" "*" {
+           set "mailbox" "${1}";
+           }
+
+           if string "${mailbox}" "Trash" {
+           stop;
+           }
+
+           if environment :matches "imap.email" "*" {
+           set "email" "${1}";
+           }
+
+           pipe :copy "train-ham.sh" [ "${email}" ];
+
+    g. Editez report-spam.sieve. Tapez:
+
+       .. code:: bash
+
+           vi /etc/dovecot/sieve/report-spam.sieve
+
+    h. Insérez le texte suivant:
+
+       ::
+
+           require ["vnd.dovecot.pipe", "copy", "imapsieve", "environment", "variables"];
+
+           if environment :matches "imap.email" "*" {
+           set "email" "${1}";
+           }
+
+           pipe :copy "train-spam.sh" [ "${email}" ];
+
+    i. Créez les scripts et rétablissez les droits et permissions.
+       Compilez les règles. Tapez:
+
+       .. code:: bash
+
+           echo "exec /usr/bin/rspamc learn_ham" > /etc/dovecot/sieve/train-ham.sh
+           echo "exec /usr/bin/rspamc learn_spam" > /etc/dovecot/sieve/train-spam.sh
+           sievec /etc/dovecot/sieve/report-ham.sieve
+           sievec /etc/dovecot/sieve/report-spam.sieve
+           chmod +x /etc/dovecot/sieve/train-*
+           chown -R vmail:vmail /etc/dovecot/sieve
+
+    j. Redémarrez dovecot. Tapez:
+
+       .. code:: bash
+
+           service dovecot restart
+
+    k. Lorsque vous déplacer un mail du répertoire Inbox vers le
+       répertoire Junk ou vice-versa, les fichiers ``/var/log/mail.log``
+       et ``/var/log/rspamd/rspamd.log`` doivent montrer les actions de
+       recalcul des spams.
+
+25. Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:
 
     .. code:: bash
 
@@ -3373,7 +3563,7 @@ Pour créer une boite de messagerie:
 
    a. ``Name:`` ← mettez votre prénom et votre nom
 
-   b. ```Email:`` ← mail\_name @ votre\_domaine
+   b. ```Email:`` ← mail\_name @ example.com
 
    c. ``Password:`` ← saisissez un mot de passe ou générez en un
 
@@ -3392,6 +3582,21 @@ Pour créer une boite de messagerie:
    b. ``Number of backup copies:`` Sélectionnez 1
 
 5. Cliquez sur ``Save``
+
+    **Note**
+
+    Notez que si vous créez une adresse mail nommée
+    mail_name@example.com, vous pouvez utilisez toutes les variantes
+    (nommées tag) derrière le caractère "+". Ainsi
+    mail_name+nospam@example.com sera bien redirigé vers votre boite et
+    l’extension +nospam vous permettre de trier automatiquement les
+    mails que vous ne voulez pas recevoir.
+
+    **Note**
+
+    Il est possible de changer ce caractère spécial en modifiant dans le
+    fichier ``/etc/postfix/main.cf`` la ligne commençant par
+    ``recipient_delimiter``.
 
 Configuration de votre client de messagerie.
 --------------------------------------------

@@ -630,6 +630,9 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <p>un configurateur <a href="http://www.webmin.com/">Webmin</a></p>
 </li>
 <li>
+<p>un serveur apache avec sa configuration let&#8217;s encrypt et les plugins PHP, python et ruby</p>
+</li>
+<li>
 <p>un serveur de mail avec antispam, sécurisation d&#8217;envoi des mails et autoconfiguration pour Outlook, Thunderbird, Android.</p>
 </li>
 <li>
@@ -667,6 +670,9 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 </li>
 <li>
 <p>un site <a href="https://wordpress.com">Wordpress</a>,</p>
+</li>
+<li>
+<p>un site <a href="https://wordpress.com">Microweber</a>,</p>
 </li>
 <li>
 <p>un site Photo sous <a href="https://piwigo.org/">Piwigo</a>,</p>
@@ -4542,10 +4548,35 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 <pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install rspamd redis-server</code></pre>
 </div>
 </div>
+</li>
+<li>
+<p>Activez l&#8217;apprentissage automatique</p>
 <div class="listingblock">
-<div class="title">Activez Redis dans la configuration de Rspamd. Tapez:</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;autolearn = true;&quot;</span> &gt; /etc/rspamd/local.d/classifier-bayes.conf
+<span class="tok-nb">echo</span> <span class="tok-s1">&#39;backend = &quot;redis&quot;;&#39;</span> &gt;&gt; /etc/rspamd/local.d/classifier-bayes.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;new_schema = true;&quot;</span> &gt;&gt; /etc/rspamd/local.d/classifier-bayes.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;expire = 8640000;&quot;</span> &gt;&gt; /etc/rspamd/local.d/classifier-bayes.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez Redis dans la configuration de Rspamd. Tapez:</p>
+<div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;servers = &quot;127.0.0.1&quot;;&#39;</span> &gt; /etc/rspamd/local.d/redis.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Fixer des métriques assez élevées pour analyser les spams</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;actions {&quot;</span> &gt; /etc/rspamd/local.d/metrics.conf
+<span class="tok-nb">echo</span> <span class="tok-s1">&#39;add_header = 5;&#39;</span> &gt;&gt; /etc/rspamd/local.d/metrics.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;greylist = 25;&quot;</span> &gt;&gt; /etc/rspamd/local.d/metrics.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;reject = 50;&quot;</span> &gt;&gt; /etc/rspamd/local.d/metrics.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;}&quot;</span> &gt;&gt; /etc/rspamd/local.d/metrics.conf</code></pre>
 </div>
 </div>
 </li>
@@ -4560,7 +4591,64 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 </div>
 </li>
 <li>
-<p>Créez un mot de passe:</p>
+<p>Activez la mise à jour automatique de rspamd</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;enabled = true;&#39;</span> &gt; /etc/rspamd/local.d/redis.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enrichissez les headers des mails spams. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/rspamd/local.d/milter_headers.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>inserez le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span># local.d/milter_headers.conf:
+
+# Options
+
+# Add &quot;extended Rspamd headers&quot; (default false) (enables x-spamd-result, x-rspamd-server &amp; x-rspamd-queue-id routines)
+extended_spam_headers = true;
+
+# List of headers to be enabled for authenticated users (default empty)
+# authenticated_headers = [&quot;authentication-results&quot;];
+
+# List of headers to be enabled for local IPs (default empty)
+local_headers = [&quot;x-spamd-bar&quot;];
+
+# Set false to always add headers for local IPs (default true)
+# skip_local = true;
+
+# Set false to always add headers for authenticated users (default true)
+# skip_authenticated = true;
+
+# Routines to use- this is the only required setting (may be omitted if using extended_spam_headers)
+use = [&quot;x-spamd-bar&quot;, &quot;x-spam-level&quot;, &quot;authentication-results&quot;];
+
+# this is where we may configure our selected routines
+routines {
+  # settings for x-spamd-bar routine
+  x-spamd-bar {
+    # effectively disables negative spambar
+    negative = &quot;&quot;;
+  }
+  # other routines...
+}
+custom {
+  # user-defined routines: more on these later
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez un mot de passe. Tapez:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>rspamadm pw</code></pre>
@@ -4702,6 +4790,136 @@ systemctl restart apache2</code></pre>
 </li>
 <li>
 <p>en pointant sur le site rspampd.example.com, et en utilisant le mot de passe saisi plus haut vous pouvez accèder aux fonctions de l&#8217;outil.</p>
+</li>
+<li>
+<p>Activer l&#8217;apprentissage par déplacement</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Couplé avec Dovecot, Rspamd nous propose de pouvoir apprendre également en fonction des actions des utilisateurs. Si un mail est déplacé vers le répertoire Junk, il sera appris comme tel et au contraire, s’il est sorti du répertoire Junk vers autre chose que la corbeille, il sera appris comme Ham.</p>
+</li>
+<li>
+<p>Editez le fichier Dovecot.conf (remarques ISPConfig n&#8217;utilise pas aujourd&#8217;hui le contenu du répertoire conf.d). Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/dovecot/dovecot.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Insérez dans le groupe plugin et le protocol imap déjà existants dans le fichier :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>plugin {
+  sieve_plugins = sieve_imapsieve sieve_extprograms
+
+  imapsieve_mailbox1_name = Junk
+  imapsieve_mailbox1_causes = COPY
+  imapsieve_mailbox1_before = file:/etc/dovecot/sieve/report-spam.sieve
+
+  imapsieve_mailbox2_name = *
+  imapsieve_mailbox2_from = Junk
+  imapsieve_mailbox2_causes = COPY
+  imapsieve_mailbox2_before = file:/etc/dovecot/sieve/report-ham.sieve
+
+  sieve_pipe_bin_dir = /etc/dovecot/sieve
+
+  sieve_global_extensions = +vnd.dovecot.pipe
+}
+
+protocol imap {
+  mail_plugins = quota imap_quota imap_sieve
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez dovecot. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service dovecot restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez un répertoire sieve et éditez report-ham.sieve. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /etc/dovecot/sieve/
+vi /etc/dovecot/sieve/report-ham.sieve</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Insérez le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>require [&quot;vnd.dovecot.pipe&quot;, &quot;copy&quot;, &quot;imapsieve&quot;, &quot;environment&quot;, &quot;variables&quot;];
+
+if environment :matches &quot;imap.mailbox&quot; &quot;*&quot; {
+set &quot;mailbox&quot; &quot;${1}&quot;;
+}
+
+if string &quot;${mailbox}&quot; &quot;Trash&quot; {
+stop;
+}
+
+if environment :matches &quot;imap.email&quot; &quot;*&quot; {
+set &quot;email&quot; &quot;${1}&quot;;
+}
+
+pipe :copy &quot;train-ham.sh&quot; [ &quot;${email}&quot; ];</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez report-spam.sieve. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/dovecot/sieve/report-spam.sieve</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Insérez le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>require [&quot;vnd.dovecot.pipe&quot;, &quot;copy&quot;, &quot;imapsieve&quot;, &quot;environment&quot;, &quot;variables&quot;];
+
+if environment :matches &quot;imap.email&quot; &quot;*&quot; {
+set &quot;email&quot; &quot;${1}&quot;;
+}
+
+pipe :copy &quot;train-spam.sh&quot; [ &quot;${email}&quot; ];</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez les scripts et rétablissez les droits et permissions. Compilez les règles. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;exec /usr/bin/rspamc learn_ham&quot;</span> &gt; /etc/dovecot/sieve/train-ham.sh
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;exec /usr/bin/rspamc learn_spam&quot;</span> &gt; /etc/dovecot/sieve/train-spam.sh
+sievec /etc/dovecot/sieve/report-ham.sieve
+sievec /etc/dovecot/sieve/report-spam.sieve
+chmod +x /etc/dovecot/sieve/train-*
+chown -R vmail:vmail /etc/dovecot/sieve</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez dovecot. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service dovecot restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lorsque vous déplacer un mail du répertoire Inbox vers le répertoire Junk ou vice-versa, les fichiers <code>/var/log/mail.log</code> et <code>/var/log/rspamd/rspamd.log</code> doivent montrer les actions de recalcul des spams.</p>
+</li>
+</ol>
+</div>
 </li>
 <li>
 <p>Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:</p>
@@ -5199,7 +5417,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 <p><code>Name:</code> &#8592; mettez votre prénom et votre nom</p>
 </li>
 <li>
-<p><code>`Email:</code> &#8592; mail_name @ votre_domaine</p>
+<p><code>`Email:</code> &#8592; mail_name @ example.com</p>
 </li>
 <li>
 <p><code>Password:</code> &#8592; saisissez un mot de passe ou générez en un</p>
@@ -5233,6 +5451,30 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 <p>Cliquez sur <code>Save</code></p>
 </li>
 </ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Notez que si vous créez une adresse mail nommée <a href="mailto:mail_name@example.com">mail_name@example.com</a>, vous pouvez utilisez toutes les variantes (nommées tag) derrière le caractère "+". Ainsi <a href="mailto:mail_name+nospam@example.com">mail_name+nospam@example.com</a> sera bien redirigé vers votre boite et l&#8217;extension +nospam vous permettre de trier automatiquement les mails que vous ne voulez pas recevoir.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Il est possible de changer ce caractère spécial en modifiant dans le fichier <code>/etc/postfix/main.cf</code> la ligne commençant par <code>recipient_delimiter</code>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -7911,7 +8153,7 @@ ProxyPassReverse / http://localhost:3000/</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-04-09 01:18:55 +0200
+Last updated 2020-04-09 23:08:26 +0200
 </div>
 </div>
 <style>
