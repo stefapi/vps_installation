@@ -96,6 +96,12 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <simpara>un serveur et un site  de partage de fichiers <link xl:href="https://www.seafile.com">Seafile</link>,</simpara>
 </listitem>
 <listitem>
+<simpara>un serveur <link xl:href="https://grafana.com/">Grafana</link>, <link xl:href="https://prometheus.io/">Prometheus</link>, <link xl:href="https://github.com/grafana/loki">Loki</link>, Promtail pour gérer les statistiques et les logs du serveur,</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur de sauvegardes <link xl:href="https://www.duplicati.com">Duplicati</link></simpara>
+</listitem>
+<listitem>
 <simpara>un serveur de VPN <link xl:href="https://pritunl.com/">Pritunl</link>,</simpara>
 </listitem>
 </itemizedlist>
@@ -2341,7 +2347,7 @@ a2enmod fcgid</programlisting>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Installer le paquet Munin:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt-get install munin munin-node munin-plugins-extra logtail</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install munin munin-node munin-plugins-extra logtail libcache-cache-perl</programlisting>
 </listitem>
 <listitem>
 <simpara>Votre configuration de Munin va utiliser une base de données MariaDB. Vous devez activer quelques plugins. Tapez:</simpara>
@@ -2353,6 +2359,19 @@ ln -s /usr/share/munin/plugins/mysql_isam_space_ mysql_isam_space_
 ln -s /usr/share/munin/plugins/mysql_queries mysql_queries
 ln -s /usr/share/munin/plugins/mysql_slowqueries mysql_slowqueries
 ln -s /usr/share/munin/plugins/mysql_threads mysql_threads</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez la base de données MariaDB de Munin. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mysql -p</programlisting>
+</listitem>
+<listitem>
+<simpara>Tapez le mot de passe mysql de root , puis dans mysql tapez:</simpara>
+<programlisting language="mysql" linenumbering="unnumbered">CREATE SCHEMA munin_innodb;
+USE munin_innodb
+CREATE TABLE something (anything int) ENGINE=InnoDB;
+GRANT SELECT ON munin_innodb.* TO 'munin'@'localhost' IDENTIFIED BY 'munin';
+FLUSH PRIVILEGES;
+EXIT;</programlisting>
 </listitem>
 <listitem>
 <simpara>Editez ensuite le fichier de configuration de Munin. Tapez:</simpara>
@@ -2472,14 +2491,15 @@ Alias /munin /var/cache/munin/www
 <programlisting language="bash" linenumbering="unnumbered">munin-node-configure --suggest</programlisting>
 </listitem>
 <listitem>
-<simpara>Une liste de plugins doit s&#8217;afficher à l&#8217;écran. La colonne <literal>used</literal> indique que le plugins est activé. La colonne <literal>Suggestions</literal> indique que le serveur fait fonctionner un service qui peut être monitoré par ce module. Il faut créer un lien symbolique du module dans`/etc/munin/plugins` pour l&#8217;activer.</simpara>
+<simpara>Une liste de plugins doit s&#8217;afficher à l&#8217;écran. La colonne <literal>used</literal> indique que le plugins est activé. La colonne <literal>Suggestions</literal> indique que le serveur fait fonctionner un service qui peut être monitoré par ce module. Il faut créer un lien symbolique du module de <literal>/usr/share/munin/plugins</literal> dans <literal>/etc/munin/plugins</literal> pour l&#8217;activer.</simpara>
 </listitem>
 <listitem>
 <simpara>Par exemple pour activer les modules apache_*:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /etc/munin/plugins
 ln -s /usr/share/munin/plugins/apache_accesses
 ln -s /usr/share/munin/plugins/apache_processes
-ln -s /usr/share/munin/plugins/apache_volume</programlisting>
+ln -s /usr/share/munin/plugins/apache_volume
+rm /usr/share/munin/plugins/mysql_</programlisting>
 </listitem>
 <listitem>
 <simpara>Redémarrez ensuite le service Munin. Tapez:</simpara>
@@ -3343,7 +3363,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 <simpara>Notez que si vous créez une adresse mail nommée <link xl:href="mailto:mail_name@example.com">mail_name@example.com</link>, vous pouvez utilisez toutes les variantes (nommées tag) derrière le caractère "+". Ainsi <link xl:href="mailto:mail_name+nospam@example.com">mail_name+nospam@example.com</link> sera bien redirigé vers votre boite et l&#8217;extension +nospam vous permettre de trier automatiquement les mails que vous ne voulez pas recevoir.</simpara>
 </note>
 <note>
-<simpara>Il est possible de changer ce caractère spécial en modifiant dans le fichier <literal>/etc/postfix/main.cf</literal> la ligne commençant par <literal>recipient_delimiter</literal>.</simpara>
+<simpara>Il est possible de changer ce caractère spécial en le modifiant dans le fichier <literal>/etc/postfix/main.cf</literal> sur la ligne commençant par <literal>recipient_delimiter</literal>.</simpara>
 </note>
 </section>
 <section xml:id="_configuration_de_votre_client_de_messagerie">
@@ -5357,6 +5377,449 @@ systemctl start pritunl</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">pritunl reset-password</programlisting>
 </section>
 </section>
+<section xml:id="_installation_de_grafana">
+<title>Installation de Grafana</title>
+<simpara>Grafana est un logiciel de visualisation et d&#8217;analyse à code source ouvert. Il vous permet d&#8217;interroger, de visualiser, d&#8217;alerter et d&#8217;explorer vos mesures, quel que soit l&#8217;endroit où elles sont stockées. En clair, il vous fournit des outils pour transformer vos données de base de données de séries chronologiques (TSDB) en de magnifiques graphiques et visualisations.
+Grafana s&#8217;appuie sur Prometheus afin d&#8217;obtenir des métriques.
+Loki est aussi installé pour réaliser une analyse précise des fichiers de logs.</simpara>
+<simpara>Cette installation est optionnelle puisque Munin est déjà installé sur votre système.</simpara>
+<section xml:id="_création_du_site_web_de_grafana">
+<title>Création du site web de Grafana</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>grafana</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>grafana</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>grafana</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# grafana httpserver
+#
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / http://localhost:3000/
+ProxyPassReverse / http://localhost:3000/</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_grafana_2">
+<title>Installation de Grafana</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo "deb https://packages.grafana.com/oss/deb stable main" &gt;&gt;/etc/apt/sources.list.d/grafana.list
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -</programlisting>
+</listitem>
+<listitem>
+<simpara>Installez les paquets. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt update
+apt install grafana prometheus prometheus-mysqld-exporter prometheus-apache-exporter prometheus-bind-exporter prometheus-process-exporter</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez la configuration de Prometheus. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/prometheus/prometheus.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez les lignes suivantes:</simpara>
+<programlisting language="yaml" linenumbering="unnumbered">  - job_name: 'prometheus'
+
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+    scrape_timeout: 5s
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: node
+    # If prometheus-node-exporter is installed, grab stats about the local
+    # machine by default.
+    static_configs:
+      - targets: ['localhost:9100']
+
+  - job_name: dns-master
+    static_configs:
+      - targets: ['localhost:9119']
+        labels:
+          alias: dns-master
+
+  - job_name: apache
+    static_configs:
+      - targets: ['localhost:9117']
+
+  - job_name: process
+    static_configs:
+      - targets: ['localhost:9256']
+
+  - job_name: mysql
+    static_configs:
+      - targets: ['localhost:9104']</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez la configuration de <literal>prometheus-process-exporter</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi etc/default/prometheus-process-exporter</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez les lignes suivantes:</simpara>
+<screen linenumbering="unnumbered">ARGS="-procnames postgres,dovecot,apache2,sshd,php-fpm7.3,rspamd,named,mysqld"</screen>
+</listitem>
+<listitem>
+<simpara>Editez la configuration de <literal>prometheus-mysqld-exporter</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi etc/default/prometheus-mysqld-exporter</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez les lignes suivantes:</simpara>
+<screen linenumbering="unnumbered">ARGS='--config.my-cnf /etc/mysql/debian.cnf --collect.info_schema.tables.databases="*" --collect.auto_increment.columns --collect.perf_schema.file_instances.filter=".*" --collect.info_schema.tablestats'</screen>
+</listitem>
+<listitem>
+<simpara>Ajuster les permissions du fichier de conf de mysql pour donner l&#8217;accès à prometheus. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 644 /etc/mysql/debian.cnf</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajustez la configuration de bind pour servir des statistiques. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/bind/named.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajouter dans le fichier:</simpara>
+<screen linenumbering="unnumbered">statistics-channels {
+  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};</screen>
+</listitem>
+<listitem>
+<simpara>Activez dans mysql quelques statistiques. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mysql -p</programlisting>
+</listitem>
+<listitem>
+<simpara>tapez votre mot de passe root pour mysql. puis taper:</simpara>
+<programlisting language="mysql" linenumbering="unnumbered">INSTALL PLUGIN QUERY_RESPONSE_TIME_AUDIT SONAME 'query_response_time.so';
+INSTALL PLUGIN QUERY_RESPONSE_TIME SONAME 'query_response_time.so';
+INSTALL PLUGIN QUERY_RESPONSE_TIME_READ SONAME 'query_response_time.so';
+INSTALL PLUGIN QUERY_RESPONSE_TIME_WRITE SONAME 'query_response_time.so';
+SET GLOBAL query_response_time_stats=ON;
+SET GLOBAL userstat=ON;</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez les services. Taper:</simpara>
+<programlisting language="mysql" linenumbering="unnumbered">service prometheus restart
+service prometheus-mysqld-exporter restart
+service prometheus-process-exporter restart</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_et_configuration_de_loki">
+<title>Installation et configuration de Loki</title>
+<simpara>Pour installer Loki, appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Allez sur le site de <link xl:href="https://github.com/grafana/loki/releases">loki</link> et repérez la dernière version à charger.</simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/bin
+curl -fSL -o loki.gz https://github.com/grafana/loki/releases/download/v1.4.1/loki-linux-amd64.zip
+gunzip loki.gz
+chmod a+x loki</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez le fichier de configuration de loki</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/config-loki.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez le texte ci dessous dans le fichier</simpara>
+<screen>auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  log_level: "warn"
+
+ingester:
+  lifecycler:
+    address: 127.0.0.1
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+    final_sleep: 0s
+  chunk_idle_period: 5m
+  chunk_retain_period: 30s
+
+schema_config:
+  configs:
+  - from: 2010-01-01
+    store: boltdb
+    object_store: filesystem
+    schema: v9
+    index:
+      prefix: index_
+      period: 168h
+
+storage_config:
+  boltdb:
+    directory: /tmp/loki/index
+
+  filesystem:
+    directory: /tmp/loki/chunks
+
+limits_config:
+  enforce_metric_name: false
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
+
+chunk_store_config:
+  max_look_back_period: 0
+
+table_manager:
+  chunk_tables_provisioning:
+    inactive_read_throughput: 0
+    inactive_write_throughput: 0
+    provisioned_read_throughput: 0
+    provisioned_write_throughput: 0
+  index_tables_provisioning:
+    inactive_read_throughput: 0
+    inactive_write_throughput: 0
+    provisioned_read_throughput: 0
+    provisioned_write_throughput: 0
+  retention_deletes_enabled: false
+  retention_period: 0</screen>
+</listitem>
+<listitem>
+<simpara>Débloquez le port 3100 dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, ajoutez le port 3100</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Testez maintenant la configuration de Loki. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">loki -config.file /etc/config-loki.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Ouvrez un navigateur et visitez: <link xl:href="http://example.com:3100/metrics">http://example.com:3100/metrics</link></simpara>
+</listitem>
+<listitem>
+<simpara>Maintenant arrêtez Loki en tapant <emphasis role="strong">CTRL-C</emphasis>.</simpara>
+</listitem>
+<listitem>
+<simpara>Bloquez par sécurité le port 3100 dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, Supprimer le port 3100</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Configurez un service Loki afin de le faire tourner en arrière plan. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/systemd/system/loki.service</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez le texte ci dessous et sauvez:</simpara>
+<screen linenumbering="unnumbered">[Unit]
+Description=Loki service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/loki -config.file /etc/config-loki.yml
+
+[Install]
+WantedBy=multi-user.target</screen>
+</listitem>
+<listitem>
+<simpara>Maintenant lancez le service et vérifiez que tout est fonctionnel. Tapez:
+Now start and check the service is running.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo service loki start
+sudo service loki status</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_et_configuration_de_promtail">
+<title>Installation et configuration de Promtail</title>
+<simpara>Installez maintenant Promtail:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/bin
+curl -fSL -o promtail.gz https://github.com/grafana/loki/releases/download/v1.4.1/promtail-linux-amd64.zip
+gunzip promtail.gz
+chmod a+x promtail</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez la configuration de Promtail. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/log/journal
+vi /etc/config-promtail.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Et ajoutez le texte suivant puis sauvez:</simpara>
+<screen linenumbering="unnumbered">server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://127.0.0.1:3100/api/prom/push
+
+scrape_configs:
+- job_name: system
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: varlogs
+      __path__: /var/log/{*.log,*/*.log}</screen>
+</listitem>
+<listitem>
+<simpara>Débloquez le port 9080 dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, ajoutez le port 9080</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>testez que Promtail fonctionne. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">promtail -config.file /etc/config-promtail.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Ouvrez un navigateur et visitez: <link xl:href="http://example.com:9080">http://example.com:9080</link></simpara>
+</listitem>
+<listitem>
+<simpara>Maintenant arrêtez Promtail en tapant <emphasis role="strong">CTRL-C</emphasis>.</simpara>
+</listitem>
+<listitem>
+<simpara>Bloquez par sécurité le port 9080 dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, Supprimer le port 9080</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Configurez un service Promtail afin de le faire tourner en arrière plan. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/systemd/system/promtail.service</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez le texte ci dessous et sauvez:</simpara>
+<screen linenumbering="unnumbered">[Unit]
+Description=Promtail service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/promtail -config.file /etc/config-promtail.yml
+
+[Install]
+WantedBy=multi-user.target</screen>
+</listitem>
+<listitem>
+<simpara>Maintenant lancez le service et vérifiez que tout est fonctionnel. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo service promtail start
+sudo service promtail status</programlisting>
+</listitem>
+<listitem>
+<simpara>Allez sur votre site grafana <link xl:href="http://grafana.example.com">http://grafana.example.com</link> et ajoutez une source de données de type loki</simpara>
+</listitem>
+<listitem>
+<simpara>Mettez l&#8217;URL suivante: <link xl:href="http://127.0.0.1:3100">http://127.0.0.1:3100</link> . Laissez tout le reste tel quel.</simpara>
+</listitem>
+<listitem>
+<simpara>vous pouvez maintenant explorer vos logs en utilisant le menu explore sur la gauche. Dans la zone texte "Log Labels" essayez ces examples un à un:</simpara>
+<screen linenumbering="unnumbered">{job="varlogs"}</screen>
+</listitem>
+</orderedlist>
+</section>
+</section>
 <section xml:id="_annexe">
 <title>Annexe</title>
 <section xml:id="_installation_de_hestia">
@@ -5393,26 +5856,6 @@ La documentation est proposée ici: <link xl:href="https://docs.hestiacp.com/">h
 <simpara>Hestia est installé. Il est important de bien noter le mot de passe du compte admin de Hestia ainsi que le numéro de port du site web</simpara>
 </listitem>
 </orderedlist>
-</section>
-<section xml:id="_installation_de_grafana">
-<title>Installation de Grafana</title>
-<simpara>creez le DNS et le vhost grafana.</simpara>
-<simpara>Apache directive:</simpara>
-<screen>ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-RewriteRule ^/.well-known/acme-challenge - [QSA,L]
-
-# grafana httpserver
-#
-
-SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-ProxyPass / http://localhost:3000/
-ProxyPassReverse / http://localhost:3000/</screen>
-<simpara>installation de grafana:</simpara>
-<simpara>echo "deb <link xl:href="https://packages.grafana.com/oss/deb">https://packages.grafana.com/oss/deb</link> stable main" &gt;&gt;/etc/apt/sources.list.d/grafana.list</simpara>
-<simpara>wget -q -O - <link xl:href="https://packages.grafana.com/gpg.key">https://packages.grafana.com/gpg.key</link> | sudo apt-key add -</simpara>
-<simpara>apt update</simpara>
-<simpara>apt install grafana</simpara>
 </section>
 </section>
 </article>

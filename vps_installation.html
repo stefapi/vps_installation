@@ -592,10 +592,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_mot_de_passe_perdu">19.6. Mot de passe perdu</a></li>
 </ul>
 </li>
-<li><a href="#_annexe">20. Annexe</a>
+<li><a href="#_installation_de_grafana">20. Installation de Grafana</a>
 <ul class="sectlevel2">
-<li><a href="#_installation_de_hestia">20.1. Installation de Hestia</a></li>
-<li><a href="#_installation_de_grafana">20.2. Installation de Grafana</a></li>
+<li><a href="#_création_du_site_web_de_grafana">20.1. Création du site web de Grafana</a></li>
+<li><a href="#_installation_de_grafana_2">20.2. Installation de Grafana</a></li>
+<li><a href="#_installation_et_configuration_de_loki">20.3. Installation et configuration de Loki</a></li>
+<li><a href="#_installation_et_configuration_de_promtail">20.4. Installation et configuration de Promtail</a></li>
+</ul>
+</li>
+<li><a href="#_annexe">21. Annexe</a>
+<ul class="sectlevel2">
+<li><a href="#_installation_de_hestia">21.1. Installation de Hestia</a></li>
 </ul>
 </li>
 </ul>
@@ -685,6 +692,12 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 </li>
 <li>
 <p>un serveur et un site  de partage de fichiers <a href="https://www.seafile.com">Seafile</a>,</p>
+</li>
+<li>
+<p>un serveur <a href="https://grafana.com/">Grafana</a>, <a href="https://prometheus.io/">Prometheus</a>, <a href="https://github.com/grafana/loki">Loki</a>, Promtail pour gérer les statistiques et les logs du serveur,</p>
+</li>
+<li>
+<p>un serveur de sauvegardes <a href="https://www.duplicati.com">Duplicati</a></p>
 </li>
 <li>
 <p>un serveur de VPN <a href="https://pritunl.com/">Pritunl</a>,</p>
@@ -4136,7 +4149,7 @@ a2enmod fcgid</code></pre>
 <p>Installer le paquet Munin:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install munin munin-node munin-plugins-extra logtail</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install munin munin-node munin-plugins-extra logtail libcache-cache-perl</code></pre>
 </div>
 </div>
 </li>
@@ -4152,6 +4165,27 @@ ln -s /usr/share/munin/plugins/mysql_isam_space_ mysql_isam_space_
 ln -s /usr/share/munin/plugins/mysql_queries mysql_queries
 ln -s /usr/share/munin/plugins/mysql_slowqueries mysql_slowqueries
 ln -s /usr/share/munin/plugins/mysql_threads mysql_threads</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez la base de données MariaDB de Munin. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mysql -p</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez le mot de passe mysql de root , puis dans mysql tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="mysql"><span></span><span class="tok-k">CREATE</span> <span class="tok-k">SCHEMA</span> <span class="tok-n">munin_innodb</span><span class="tok-p">;</span>
+<span class="tok-k">USE</span> <span class="tok-n">munin_innodb</span>
+<span class="tok-k">CREATE</span> <span class="tok-k">TABLE</span> <span class="tok-nf">something</span> <span class="tok-p">(</span><span class="tok-n">anything</span> <span class="tok-kt">int</span><span class="tok-p">)</span> <span class="tok-kp">ENGINE</span><span class="tok-o">=</span><span class="tok-n">InnoDB</span><span class="tok-p">;</span>
+<span class="tok-k">GRANT</span> <span class="tok-k">SELECT</span> <span class="tok-k">ON</span> <span class="tok-n">munin_innodb</span><span class="tok-p">.</span><span class="tok-o">*</span> <span class="tok-k">TO</span> <span class="tok-s1">&#39;munin&#39;</span><span class="tok-o">@</span><span class="tok-s1">&#39;localhost&#39;</span> <span class="tok-n">IDENTIFIED</span> <span class="tok-k">BY</span> <span class="tok-s1">&#39;munin&#39;</span><span class="tok-p">;</span>
+<span class="tok-k">FLUSH</span> <span class="tok-n">PRIVILEGES</span><span class="tok-p">;</span>
+<span class="tok-k">EXIT</span><span class="tok-p">;</span></code></pre>
 </div>
 </div>
 </li>
@@ -4313,7 +4347,7 @@ includedir /etc/munin/munin-conf.d
 </div>
 </li>
 <li>
-<p>Une liste de plugins doit s&#8217;afficher à l&#8217;écran. La colonne <code>used</code> indique que le plugins est activé. La colonne <code>Suggestions</code> indique que le serveur fait fonctionner un service qui peut être monitoré par ce module. Il faut créer un lien symbolique du module dans`/etc/munin/plugins` pour l&#8217;activer.</p>
+<p>Une liste de plugins doit s&#8217;afficher à l&#8217;écran. La colonne <code>used</code> indique que le plugins est activé. La colonne <code>Suggestions</code> indique que le serveur fait fonctionner un service qui peut être monitoré par ce module. Il faut créer un lien symbolique du module de <code>/usr/share/munin/plugins</code> dans <code>/etc/munin/plugins</code> pour l&#8217;activer.</p>
 </li>
 <li>
 <p>Par exemple pour activer les modules apache_*:</p>
@@ -4322,7 +4356,8 @@ includedir /etc/munin/munin-conf.d
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/munin/plugins
 ln -s /usr/share/munin/plugins/apache_accesses
 ln -s /usr/share/munin/plugins/apache_processes
-ln -s /usr/share/munin/plugins/apache_volume</code></pre>
+ln -s /usr/share/munin/plugins/apache_volume
+rm /usr/share/munin/plugins/mysql_</code></pre>
 </div>
 </div>
 </li>
@@ -5471,7 +5506,7 @@ Notez que si vous créez une adresse mail nommée <a href="mailto:mail_name@exam
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Il est possible de changer ce caractère spécial en modifiant dans le fichier <code>/etc/postfix/main.cf</code> la ligne commençant par <code>recipient_delimiter</code>.
+Il est possible de changer ce caractère spécial en le modifiant dans le fichier <code>/etc/postfix/main.cf</code> sur la ligne commençant par <code>recipient_delimiter</code>.
 </td>
 </tr>
 </table>
@@ -8052,10 +8087,607 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_annexe">20. Annexe</h2>
+<h2 id="_installation_de_grafana">20. Installation de Grafana</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Grafana est un logiciel de visualisation et d&#8217;analyse à code source ouvert. Il vous permet d&#8217;interroger, de visualiser, d&#8217;alerter et d&#8217;explorer vos mesures, quel que soit l&#8217;endroit où elles sont stockées. En clair, il vous fournit des outils pour transformer vos données de base de données de séries chronologiques (TSDB) en de magnifiques graphiques et visualisations.
+Grafana s&#8217;appuie sur Prometheus afin d&#8217;obtenir des métriques.
+Loki est aussi installé pour réaliser une analyse précise des fichiers de logs.</p>
+</div>
+<div class="paragraph">
+<p>Cette installation est optionnelle puisque Munin est déjà installé sur votre système.</p>
+</div>
+<div class="sect2">
+<h3 id="_création_du_site_web_de_grafana">20.1. Création du site web de Grafana</h3>
+<div class="paragraph">
+<p>Appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>grafana</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>grafana</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>grafana</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>Fast CGI</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+
+<span class="tok-c"># grafana httpserver</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> / http://localhost:3000/
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost:3000/</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_grafana_2">20.2. Installation de Grafana</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;deb https://packages.grafana.com/oss/deb stable main&quot;</span> &gt;&gt;/etc/apt/sources.list.d/grafana.list
+wget -q -O - https://packages.grafana.com/gpg.key <span class="tok-p">|</span> sudo apt-key add -</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installez les paquets. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt update
+apt install grafana prometheus prometheus-mysqld-exporter prometheus-apache-exporter prometheus-bind-exporter prometheus-process-exporter</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez la configuration de Prometheus. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/prometheus/prometheus.yml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez les lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="yaml"><span></span>  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">job_name</span><span class="tok-p">:</span> <span class="tok-s">&#39;prometheus&#39;</span>
+
+    <span class="tok-c1"># Override the global default and scrape targets from this job every 5 seconds.</span>
+    <span class="tok-nt">scrape_interval</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">5s</span>
+    <span class="tok-nt">scrape_timeout</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">5s</span>
+
+    <span class="tok-c1"># metrics_path defaults to &#39;/metrics&#39;</span>
+    <span class="tok-c1"># scheme defaults to &#39;http&#39;.</span>
+
+    <span class="tok-nt">static_configs</span><span class="tok-p">:</span>
+      <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">targets</span><span class="tok-p">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&#39;localhost:9090&#39;</span><span class="tok-p tok-p-Indicator">]</span>
+
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">job_name</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">node</span>
+    <span class="tok-c1"># If prometheus-node-exporter is installed, grab stats about the local</span>
+    <span class="tok-c1"># machine by default.</span>
+    <span class="tok-nt">static_configs</span><span class="tok-p">:</span>
+      <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">targets</span><span class="tok-p">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&#39;localhost:9100&#39;</span><span class="tok-p tok-p-Indicator">]</span>
+
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">job_name</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">dns-master</span>
+    <span class="tok-nt">static_configs</span><span class="tok-p">:</span>
+      <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">targets</span><span class="tok-p">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&#39;localhost:9119&#39;</span><span class="tok-p tok-p-Indicator">]</span>
+        <span class="tok-nt">labels</span><span class="tok-p">:</span>
+          <span class="tok-nt">alias</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">dns-master</span>
+
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">job_name</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">apache</span>
+    <span class="tok-nt">static_configs</span><span class="tok-p">:</span>
+      <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">targets</span><span class="tok-p">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&#39;localhost:9117&#39;</span><span class="tok-p tok-p-Indicator">]</span>
+
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">job_name</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">process</span>
+    <span class="tok-nt">static_configs</span><span class="tok-p">:</span>
+      <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">targets</span><span class="tok-p">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&#39;localhost:9256&#39;</span><span class="tok-p tok-p-Indicator">]</span>
+
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">job_name</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">mysql</span>
+    <span class="tok-nt">static_configs</span><span class="tok-p">:</span>
+      <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">targets</span><span class="tok-p">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&#39;localhost:9104&#39;</span><span class="tok-p tok-p-Indicator">]</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez la configuration de <code>prometheus-process-exporter</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi etc/default/prometheus-process-exporter</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez les lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>ARGS=&quot;-procnames postgres,dovecot,apache2,sshd,php-fpm7.3,rspamd,named,mysqld&quot;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez la configuration de <code>prometheus-mysqld-exporter</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi etc/default/prometheus-mysqld-exporter</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez les lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>ARGS=&#39;--config.my-cnf /etc/mysql/debian.cnf --collect.info_schema.tables.databases=&quot;*&quot; --collect.auto_increment.columns --collect.perf_schema.file_instances.filter=&quot;.*&quot; --collect.info_schema.tablestats&#39;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajuster les permissions du fichier de conf de mysql pour donner l&#8217;accès à prometheus. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">644</span> /etc/mysql/debian.cnf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajustez la configuration de bind pour servir des statistiques. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/bind/named.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajouter dans le fichier:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>statistics-channels {
+  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez dans mysql quelques statistiques. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mysql -p</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>tapez votre mot de passe root pour mysql. puis taper:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="mysql"><span></span><span class="tok-n">INSTALL</span> <span class="tok-n">PLUGIN</span> <span class="tok-n">QUERY_RESPONSE_TIME_AUDIT</span> <span class="tok-k">SONAME</span> <span class="tok-s1">&#39;query_response_time.so&#39;</span><span class="tok-p">;</span>
+<span class="tok-n">INSTALL</span> <span class="tok-n">PLUGIN</span> <span class="tok-n">QUERY_RESPONSE_TIME</span> <span class="tok-k">SONAME</span> <span class="tok-s1">&#39;query_response_time.so&#39;</span><span class="tok-p">;</span>
+<span class="tok-n">INSTALL</span> <span class="tok-n">PLUGIN</span> <span class="tok-n">QUERY_RESPONSE_TIME_READ</span> <span class="tok-k">SONAME</span> <span class="tok-s1">&#39;query_response_time.so&#39;</span><span class="tok-p">;</span>
+<span class="tok-n">INSTALL</span> <span class="tok-n">PLUGIN</span> <span class="tok-n">QUERY_RESPONSE_TIME_WRITE</span> <span class="tok-k">SONAME</span> <span class="tok-s1">&#39;query_response_time.so&#39;</span><span class="tok-p">;</span>
+<span class="tok-kt">SET</span> <span class="tok-n">GLOBAL</span> <span class="tok-n">query_response_time_stats</span><span class="tok-o">=</span><span class="tok-k">ON</span><span class="tok-p">;</span>
+<span class="tok-kt">SET</span> <span class="tok-n">GLOBAL</span> <span class="tok-n">userstat</span><span class="tok-o">=</span><span class="tok-k">ON</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez les services. Taper:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="mysql"><span></span><span class="tok-n">service</span> <span class="tok-n">prometheus</span> <span class="tok-n">restart</span>
+<span class="tok-n">service</span> <span class="tok-n">prometheus</span><span class="tok-o">-</span><span class="tok-n">mysqld</span><span class="tok-o">-</span><span class="tok-n">exporter</span> <span class="tok-n">restart</span>
+<span class="tok-n">service</span> <span class="tok-n">prometheus</span><span class="tok-o">-</span><span class="tok-n">process</span><span class="tok-o">-</span><span class="tok-n">exporter</span> <span class="tok-n">restart</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_loki">20.3. Installation et configuration de Loki</h3>
+<div class="paragraph">
+<p>Pour installer Loki, appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Allez sur le site de <a href="https://github.com/grafana/loki/releases">loki</a> et repérez la dernière version à charger.</p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/bin
+curl -fSL -o loki.gz https://github.com/grafana/loki/releases/download/v1.4.1/loki-linux-amd64.zip
+gunzip loki.gz
+chmod a+x loki</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez le fichier de configuration de loki</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/config-loki.yml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez le texte ci dessous dans le fichier</p>
+<div class="listingblock">
+<div class="content">
+<pre>auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  log_level: "warn"
+
+ingester:
+  lifecycler:
+    address: 127.0.0.1
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+    final_sleep: 0s
+  chunk_idle_period: 5m
+  chunk_retain_period: 30s
+
+schema_config:
+  configs:
+  - from: 2010-01-01
+    store: boltdb
+    object_store: filesystem
+    schema: v9
+    index:
+      prefix: index_
+      period: 168h
+
+storage_config:
+  boltdb:
+    directory: /tmp/loki/index
+
+  filesystem:
+    directory: /tmp/loki/chunks
+
+limits_config:
+  enforce_metric_name: false
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
+
+chunk_store_config:
+  max_look_back_period: 0
+
+table_manager:
+  chunk_tables_provisioning:
+    inactive_read_throughput: 0
+    inactive_write_throughput: 0
+    provisioned_read_throughput: 0
+    provisioned_write_throughput: 0
+  index_tables_provisioning:
+    inactive_read_throughput: 0
+    inactive_write_throughput: 0
+    provisioned_read_throughput: 0
+    provisioned_write_throughput: 0
+  retention_deletes_enabled: false
+  retention_period: 0</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Débloquez le port 3100 dans votre firewall</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+</li>
+<li>
+<p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
+</li>
+<li>
+<p>dans la rubrique <code>Open TCP ports:</code>, ajoutez le port 3100</p>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Testez maintenant la configuration de Loki. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>loki -config.file /etc/config-loki.yml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ouvrez un navigateur et visitez: <a href="http://example.com:3100/metrics" class="bare">http://example.com:3100/metrics</a></p>
+</li>
+<li>
+<p>Maintenant arrêtez Loki en tapant <strong>CTRL-C</strong>.</p>
+</li>
+<li>
+<p>Bloquez par sécurité le port 3100 dans votre firewall</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+</li>
+<li>
+<p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
+</li>
+<li>
+<p>dans la rubrique <code>Open TCP ports:</code>, Supprimer le port 3100</p>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Configurez un service Loki afin de le faire tourner en arrière plan. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systemd/system/loki.service</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez le texte ci dessous et sauvez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>[Unit]
+Description=Loki service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/loki -config.file /etc/config-loki.yml
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Maintenant lancez le service et vérifiez que tout est fonctionnel. Tapez:
+Now start and check the service is running.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo service loki start
+sudo service loki status</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_promtail">20.4. Installation et configuration de Promtail</h3>
+<div class="paragraph">
+<p>Installez maintenant Promtail:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/bin
+curl -fSL -o promtail.gz https://github.com/grafana/loki/releases/download/v1.4.1/promtail-linux-amd64.zip
+gunzip promtail.gz
+chmod a+x promtail</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez la configuration de Promtail. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/log/journal
+vi /etc/config-promtail.yml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Et ajoutez le texte suivant puis sauvez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://127.0.0.1:3100/api/prom/push
+
+scrape_configs:
+- job_name: system
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: varlogs
+      __path__: /var/log/{*.log,*/*.log}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Débloquez le port 9080 dans votre firewall</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+</li>
+<li>
+<p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
+</li>
+<li>
+<p>dans la rubrique <code>Open TCP ports:</code>, ajoutez le port 9080</p>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>testez que Promtail fonctionne. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>promtail -config.file /etc/config-promtail.yml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ouvrez un navigateur et visitez: <a href="http://example.com:9080" class="bare">http://example.com:9080</a></p>
+</li>
+<li>
+<p>Maintenant arrêtez Promtail en tapant <strong>CTRL-C</strong>.</p>
+</li>
+<li>
+<p>Bloquez par sécurité le port 9080 dans votre firewall</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+</li>
+<li>
+<p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
+</li>
+<li>
+<p>dans la rubrique <code>Open TCP ports:</code>, Supprimer le port 9080</p>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Configurez un service Promtail afin de le faire tourner en arrière plan. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systemd/system/promtail.service</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez le texte ci dessous et sauvez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>[Unit]
+Description=Promtail service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/promtail -config.file /etc/config-promtail.yml
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Maintenant lancez le service et vérifiez que tout est fonctionnel. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo service promtail start
+sudo service promtail status</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Allez sur votre site grafana <a href="http://grafana.example.com" class="bare">http://grafana.example.com</a> et ajoutez une source de données de type loki</p>
+</li>
+<li>
+<p>Mettez l&#8217;URL suivante: <a href="http://127.0.0.1:3100" class="bare">http://127.0.0.1:3100</a> . Laissez tout le reste tel quel.</p>
+</li>
+<li>
+<p>vous pouvez maintenant explorer vos logs en utilisant le menu explore sur la gauche. Dans la zone texte "Log Labels" essayez ces examples un à un:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>{job=&quot;varlogs&quot;}</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_annexe">21. Annexe</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_de_hestia">20.1. Installation de Hestia</h3>
+<h3 id="_installation_de_hestia">21.1. Installation de Hestia</h3>
 <div class="paragraph">
 <p>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
 La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="bare">https://docs.hestiacp.com/</a></p>
@@ -8109,51 +8741,13 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_de_grafana">20.2. Installation de Grafana</h3>
-<div class="paragraph">
-<p>creez le DNS et le vhost grafana.</p>
-</div>
-<div class="paragraph">
-<p>Apache directive:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-RewriteRule ^/.well-known/acme-challenge - [QSA,L]
-
-# grafana httpserver
-#
-
-SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-ProxyPass / http://localhost:3000/
-ProxyPassReverse / http://localhost:3000/</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>installation de grafana:</p>
-</div>
-<div class="paragraph">
-<p>echo "deb <a href="https://packages.grafana.com/oss/deb" class="bare">https://packages.grafana.com/oss/deb</a> stable main" &gt;&gt;/etc/apt/sources.list.d/grafana.list</p>
-</div>
-<div class="paragraph">
-<p>wget -q -O - <a href="https://packages.grafana.com/gpg.key" class="bare">https://packages.grafana.com/gpg.key</a> | sudo apt-key add -</p>
-</div>
-<div class="paragraph">
-<p>apt update</p>
-</div>
-<div class="paragraph">
-<p>apt install grafana</p>
-</div>
-</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-04-09 23:08:26 +0200
+Last updated 2020-04-14 00:40:50 +0200
 </div>
 </div>
 <style>
