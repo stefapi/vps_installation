@@ -215,7 +215,8 @@ avez mis en place un compte sudo:
    -  Mettez ici <sudo\_username> par votre nom de login et
       <example.com> par votre nom de domaine. Au début votre nom de
       domaine acheté n’est pas encore configuré. Il faut donc utiliser
-      le nom de machine de votre VPS (pour ovh: VPSxxxxxx.ovh.net).
+      le nom de machine ( par exemple pour un VPS ovh:
+      VPSxxxxxx.ovh.net) ou votre adresse IP.
 
    ou utilisez putty si vous êtes sous Windows.
 

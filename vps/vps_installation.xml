@@ -197,7 +197,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO1-1"/></programlisting>
 <calloutlist>
 <callout arearefs="CO1-1">
-<para>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine de votre VPS (pour ovh: VPSxxxxxx.ovh.net).</para>
+<para>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS ovh: VPSxxxxxx.ovh.net) ou votre adresse IP.</para>
 </callout>
 </calloutlist>
 <simpara>ou utilisez putty si vous êtes sous Windows.</simpara>

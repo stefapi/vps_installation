@@ -156,3 +156,62 @@ Il y a la possibilité chez OVH d’utiliser un DNS secondaire. Je ne l’ai
 pas mis en oeuvre.
 
 Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.
+
+Installation du linux sur votre raspberry.
+==========================================
+
+C’est la première étape.
+
+Il vous faudra un lecteur de flash microSD - USB que vous brancherez sur
+votre PC.
+
+Il existe maintenant un outil nommé `Rasberry PI
+Imager <https://downloads.raspberrypi.org/imager/imager_amd64.deb>`__
+pour la plateforme qui vous convient. C’est le moyen de plus simple de
+flasher votre raspberry.
+
+Se loguer root sur le serveur
+=============================
+
+A de nombreux endroit dans la documentation, il est demandé de se loguer
+root sur le serveur. Pour se loguer root, et dans l’hypothèse que vous
+avez mis en place un compte sudo:
+
+1. De votre machine locale, loguez vous avec votre compte
+   ``<sudo_username>``. Tapez :
+
+   .. code:: bash
+
+       ssh <sudo_username>@<example.com> 
+
+   -  Mettez ici <sudo\_username> par votre nom de login et
+      <example.com> par votre nom de domaine. Au début votre nom de
+      domaine acheté n’est pas encore configuré. Il faut donc utiliser
+      le nom de machine ( par exemple pour un VPS OVH:
+      VPSxxxxxx.ovh.net) ou votre adresse IP.
+
+   ou utilisez putty si vous êtes sous Windows.
+
+2. Tapez votre mot de passe s’il est demandé. Si vous avez installé une
+   clé de connexion ce ne devrait pas être le cas.
+
+3. Loguez-vous ``root``. Tapez :
+
+   .. code:: bash
+
+       sudo bash
+
+   Un mot de passe vous est demandé. Tapez le mot de passe demandé.
+
+4. Dans le cas contraire (pas de sudo créé et connexion en root directe
+   sur le serveur):
+
+   a. Se loguer root sur le serveur distant. Tapez:
+
+      .. code:: bash
+
+          ssh root@<example.com> 
+
+      -  remplacer ici <example.com> par votre nom de domaine.
+
+      Tapez ensuite votre mot de passe root

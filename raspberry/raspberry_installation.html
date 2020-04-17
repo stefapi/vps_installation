@@ -452,6 +452,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#_avant_propos">1. Avant propos</a></li>
 <li><a href="#_choix_du_registrar">2. Choix du registrar</a></li>
+<li><a href="#_installation_du_linux_sur_votre_raspberry">3. Installation du linux sur votre raspberry.</a></li>
+<li><a href="#root_login">4. Se loguer root sur le serveur</a></li>
 </ul>
 </div>
 </div>
@@ -637,12 +639,169 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_installation_du_linux_sur_votre_raspberry">3. Installation du linux sur votre raspberry.</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>C&#8217;est la première étape.</p>
+</div>
+<div class="paragraph">
+<p>Il vous faudra un lecteur de flash microSD - USB que vous brancherez sur votre PC.</p>
+</div>
+<div class="paragraph">
+<p>Il existe maintenant un outil nommé <a href="https://downloads.raspberrypi.org/imager/imager_amd64.deb">Rasberry PI Imager</a> pour la plateforme qui vous convient. C&#8217;est le moyen de plus simple de flasher votre raspberry.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="root_login">4. Se loguer root sur le serveur</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A de nombreux endroit dans la documentation, il est demandé de se loguer root sur le serveur.
+Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte sudo:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>De votre machine locale, loguez vous avec votre compte <code>&lt;sudo_username&gt;</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh &lt;sudo_username&gt;@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net) ou votre adresse IP.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>ou utilisez putty si vous êtes sous Windows.</p>
+</div>
+</li>
+<li>
+<p>Tapez votre mot de passe s&#8217;il est demandé. Si vous avez installé une clé de connexion ce ne devrait pas être le cas.</p>
+</li>
+<li>
+<p>Loguez-vous <code>root</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo bash</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Un mot de passe vous est demandé. Tapez le mot de passe demandé.</p>
+</div>
+</li>
+<li>
+<p>Dans le cas contraire (pas de sudo créé et connexion en root directe sur le serveur):</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Se loguer root sur le serveur distant. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh root@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer ici &lt;example.com&gt; par votre nom de domaine.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Tapez ensuite votre mot de passe root</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-04-17 21:07:12 +0200
+Last updated 2020-04-17 22:44:55 +0200
 </div>
 </div>
+<style>
+pre.pygments .hll { background-color: #ffffcc }
+pre.pygments  { background: #ffffff; }
+pre.pygments .tok-c { color: #888888 } /* Comment */
+pre.pygments .tok-err { color: #FF0000; background-color: #FFAAAA } /* Error */
+pre.pygments .tok-k { color: #008800; font-weight: bold } /* Keyword */
+pre.pygments .tok-o { color: #333333 } /* Operator */
+pre.pygments .tok-ch { color: #888888 } /* Comment.Hashbang */
+pre.pygments .tok-cm { color: #888888 } /* Comment.Multiline */
+pre.pygments .tok-cp { color: #557799 } /* Comment.Preproc */
+pre.pygments .tok-cpf { color: #888888 } /* Comment.PreprocFile */
+pre.pygments .tok-c1 { color: #888888 } /* Comment.Single */
+pre.pygments .tok-cs { color: #cc0000; font-weight: bold } /* Comment.Special */
+pre.pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+pre.pygments .tok-ge { font-style: italic } /* Generic.Emph */
+pre.pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+pre.pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+pre.pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+pre.pygments .tok-go { color: #888888 } /* Generic.Output */
+pre.pygments .tok-gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+pre.pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+pre.pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+pre.pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+pre.pygments .tok-kc { color: #008800; font-weight: bold } /* Keyword.Constant */
+pre.pygments .tok-kd { color: #008800; font-weight: bold } /* Keyword.Declaration */
+pre.pygments .tok-kn { color: #008800; font-weight: bold } /* Keyword.Namespace */
+pre.pygments .tok-kp { color: #003388; font-weight: bold } /* Keyword.Pseudo */
+pre.pygments .tok-kr { color: #008800; font-weight: bold } /* Keyword.Reserved */
+pre.pygments .tok-kt { color: #333399; font-weight: bold } /* Keyword.Type */
+pre.pygments .tok-m { color: #6600EE; font-weight: bold } /* Literal.Number */
+pre.pygments .tok-s { background-color: #fff0f0 } /* Literal.String */
+pre.pygments .tok-na { color: #0000CC } /* Name.Attribute */
+pre.pygments .tok-nb { color: #007020 } /* Name.Builtin */
+pre.pygments .tok-nc { color: #BB0066; font-weight: bold } /* Name.Class */
+pre.pygments .tok-no { color: #003366; font-weight: bold } /* Name.Constant */
+pre.pygments .tok-nd { color: #555555; font-weight: bold } /* Name.Decorator */
+pre.pygments .tok-ni { color: #880000; font-weight: bold } /* Name.Entity */
+pre.pygments .tok-ne { color: #FF0000; font-weight: bold } /* Name.Exception */
+pre.pygments .tok-nf { color: #0066BB; font-weight: bold } /* Name.Function */
+pre.pygments .tok-nl { color: #997700; font-weight: bold } /* Name.Label */
+pre.pygments .tok-nn { color: #0e84b5; font-weight: bold } /* Name.Namespace */
+pre.pygments .tok-nt { color: #007700 } /* Name.Tag */
+pre.pygments .tok-nv { color: #996633 } /* Name.Variable */
+pre.pygments .tok-ow { color: #000000; font-weight: bold } /* Operator.Word */
+pre.pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+pre.pygments .tok-mb { color: #6600EE; font-weight: bold } /* Literal.Number.Bin */
+pre.pygments .tok-mf { color: #6600EE; font-weight: bold } /* Literal.Number.Float */
+pre.pygments .tok-mh { color: #005588; font-weight: bold } /* Literal.Number.Hex */
+pre.pygments .tok-mi { color: #0000DD; font-weight: bold } /* Literal.Number.Integer */
+pre.pygments .tok-mo { color: #4400EE; font-weight: bold } /* Literal.Number.Oct */
+pre.pygments .tok-sa { background-color: #fff0f0 } /* Literal.String.Affix */
+pre.pygments .tok-sb { background-color: #fff0f0 } /* Literal.String.Backtick */
+pre.pygments .tok-sc { color: #0044DD } /* Literal.String.Char */
+pre.pygments .tok-dl { background-color: #fff0f0 } /* Literal.String.Delimiter */
+pre.pygments .tok-sd { color: #DD4422 } /* Literal.String.Doc */
+pre.pygments .tok-s2 { background-color: #fff0f0 } /* Literal.String.Double */
+pre.pygments .tok-se { color: #666666; font-weight: bold; background-color: #fff0f0 } /* Literal.String.Escape */
+pre.pygments .tok-sh { background-color: #fff0f0 } /* Literal.String.Heredoc */
+pre.pygments .tok-si { background-color: #eeeeee } /* Literal.String.Interpol */
+pre.pygments .tok-sx { color: #DD2200; background-color: #fff0f0 } /* Literal.String.Other */
+pre.pygments .tok-sr { color: #000000; background-color: #fff0ff } /* Literal.String.Regex */
+pre.pygments .tok-s1 { background-color: #fff0f0 } /* Literal.String.Single */
+pre.pygments .tok-ss { color: #AA6600 } /* Literal.String.Symbol */
+pre.pygments .tok-bp { color: #007020 } /* Name.Builtin.Pseudo */
+pre.pygments .tok-fm { color: #0066BB; font-weight: bold } /* Name.Function.Magic */
+pre.pygments .tok-vc { color: #336699 } /* Name.Variable.Class */
+pre.pygments .tok-vg { color: #dd7700; font-weight: bold } /* Name.Variable.Global */
+pre.pygments .tok-vi { color: #3333BB } /* Name.Variable.Instance */
+pre.pygments .tok-vm { color: #996633 } /* Name.Variable.Magic */
+pre.pygments .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Integer.Long */
+</style>
 </body>
 </html>

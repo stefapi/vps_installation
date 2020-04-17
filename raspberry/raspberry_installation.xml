@@ -154,4 +154,50 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 <simpara>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Je ne l&#8217;ai pas mis en oeuvre.</simpara>
 <simpara>Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.</simpara>
 </section>
+<section xml:id="_installation_du_linux_sur_votre_raspberry">
+<title>Installation du linux sur votre raspberry.</title>
+<simpara>C&#8217;est la première étape.</simpara>
+<simpara>Il vous faudra un lecteur de flash microSD - USB que vous brancherez sur votre PC.</simpara>
+<simpara>Il existe maintenant un outil nommé <link xl:href="https://downloads.raspberrypi.org/imager/imager_amd64.deb">Rasberry PI Imager</link> pour la plateforme qui vous convient. C&#8217;est le moyen de plus simple de flasher votre raspberry.</simpara>
+</section>
+<section xml:id="root_login">
+<title>Se loguer root sur le serveur</title>
+<simpara>A de nombreux endroit dans la documentation, il est demandé de se loguer root sur le serveur.
+Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte sudo:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>De votre machine locale, loguez vous avec votre compte <literal>&lt;sudo_username&gt;</literal>. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO1-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO1-1">
+<para>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net) ou votre adresse IP.</para>
+</callout>
+</calloutlist>
+<simpara>ou utilisez putty si vous êtes sous Windows.</simpara>
+</listitem>
+<listitem>
+<simpara>Tapez votre mot de passe s&#8217;il est demandé. Si vous avez installé une clé de connexion ce ne devrait pas être le cas.</simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous <literal>root</literal>. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo bash</programlisting>
+<simpara>Un mot de passe vous est demandé. Tapez le mot de passe demandé.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans le cas contraire (pas de sudo créé et connexion en root directe sur le serveur):</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Se loguer root sur le serveur distant. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO2-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO2-1">
+<para>remplacer ici &lt;example.com&gt; par votre nom de domaine.</para>
+</callout>
+</calloutlist>
+<simpara>Tapez ensuite votre mot de passe root</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
 </article>
