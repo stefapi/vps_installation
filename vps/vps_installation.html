@@ -603,6 +603,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_annexe">21. Annexe</a>
 <ul class="sectlevel2">
 <li><a href="#_installation_de_hestia">21.1. Installation de Hestia</a></li>
+<li><a href="#_backup">21.2. backup</a></li>
 </ul>
 </li>
 </ul>
@@ -2179,6 +2180,15 @@ systemctl disable spamassassin</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>a2enconf httpoxy
+systemctl restart apache2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Désactiver la documentation apache en tapant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2disconf apache2-doc
 systemctl restart apache2</code></pre>
 </div>
 </div>
@@ -8741,13 +8751,22 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 </ol>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_backup">21.2. backup</h3>
+<div class="paragraph">
+<p>pour installer borg backup en mode rescue afin d&#8217;avoir la dernière version.
+apt install python3-pip libssl-dev cython3 gcc g++ libpython-dev libacl1-dev
+pip3 install borgbackup
+pip3 install rdiff-backup</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-04-14 00:40:50 +0200
+Last updated 2020-04-16 22:24:10 +0200
 </div>
 </div>
 <style>

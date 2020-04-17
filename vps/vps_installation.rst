@@ -1158,6 +1158,13 @@ Configuration d’Apache
        a2enconf httpoxy
        systemctl restart apache2
 
+4. Désactiver la documentation apache en tapant:
+
+   .. code:: bash
+
+       a2disconf apache2-doc
+       systemctl restart apache2
+
 Installation et Configuration de Mailman
 ----------------------------------------
 
@@ -5850,3 +5857,11 @@ Pour installer:
 
 3. Hestia est installé. Il est important de bien noter le mot de passe
    du compte admin de Hestia ainsi que le numéro de port du site web
+
+backup
+------
+
+pour installer borg backup en mode rescue afin d’avoir la dernière
+version. apt install python3-pip libssl-dev cython3 gcc g++
+libpython-dev libacl1-dev pip3 install borgbackup pip3 install
+rdiff-backup
