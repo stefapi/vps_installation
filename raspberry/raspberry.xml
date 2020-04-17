@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>Installation d&#8217;un serveur Linux sur un Raspberry</title>
+<date>2020-03-27</date>
+<author>
+<personname>
+<firstname>Stéphane</firstname>
+<surname>Apiou</surname>
+</personname>
+<email>stephane@apiou.org</email>
+</author>
+<authorinitials>SA</authorinitials>
+<revhistory>
+<revision>
+<revnumber>1.0</revnumber>
+<date>2020-03-27</date>
+<authorinitials>SA</authorinitials>
+</revision>
+</revhistory>
+</info>
+<section xml:id="_avant_propos">
+<title>Avant propos</title>
+<simpara>Ce document est disponible sur le site <link xl:href="https://raspberry-box-installation.readthedocs.io">ReadTheDocs</link>
+et sur <link xl:href="https://github.com/apiou/vps_installation">Github</link>.</simpara>
+<simpara>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer une homebox (site auto hébergé) avec un raspberry PI
+Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
+Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation est facilement transposable pour des versions différentes de Debian.</simpara>
+<simpara>Dans ce document, je montre la configuration de nombreux types de sites web et services dans un domaine en utilisant ISPConfig.</simpara>
+<simpara>Sont installés:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>un panel <link xl:href="https://www.ispconfig.org/">ISPConfig</link></simpara>
+</listitem>
+<listitem>
+<simpara>un configurateur <link xl:href="http://www.webmin.com/">Webmin</link></simpara>
+</listitem>
+<listitem>
+<simpara>un serveur apache avec sa configuration let&#8217;s encrypt et les plugins PHP, python et ruby</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur de mail avec antispam, sécurisation d&#8217;envoi des mails et autoconfiguration pour Outlook, Thunderbird, Android.</simpara>
+</listitem>
+<listitem>
+<simpara>un webmail <link xl:href="https://roundcube.net">roundcube</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur de mailing list <link xl:href="https://www.list.org">mailman</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur ftp et sftp sécurisé.</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur de base de données et son interface web d&#8217;administration <link xl:href="https://www.phpmyadmin.net/">phpmyadmin</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>des outils de sécurisation, de mise à jour automatique et d&#8217;audit du serveur</simpara>
+</listitem>
+<listitem>
+<simpara>un outil de Monitoring <link xl:href="http://munin-monitoring.org/">Munin</link></simpara>
+</listitem>
+<listitem>
+<simpara>un outil de Monitoring <link xl:href="http://mmonit.com/monit/">Monit</link></simpara>
+</listitem>
+<listitem>
+<simpara>un sous domaine pointant sur un site auto-hébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <link xl:href="https://yunohost.org">Yunohost</link>),</simpara>
+</listitem>
+<listitem>
+<simpara>un site CMS sous <link xl:href="https://www.joomla.fr/">Joomla</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un site CMS sous <link xl:href="https://www.concrete5.org/">Concrete5</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un site WIKI sous <link xl:href="https://www.mediawiki.org">Mediawiki</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un site <link xl:href="https://wordpress.com">Wordpress</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un site <link xl:href="https://microweber.com">Microweber</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un site Photo sous <link xl:href="https://piwigo.org/">Piwigo</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un site Collaboratif sous <link xl:href="https://nextcloud.com">Nextcloud</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un site <link xl:href="https://gitea.io">Gitea</link> et son repository GIT,</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur et un site  de partage de fichiers <link xl:href="https://www.seafile.com">Seafile</link>,</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur <link xl:href="https://grafana.com/">Grafana</link>, <link xl:href="https://prometheus.io/">Prometheus</link>, <link xl:href="https://github.com/grafana/loki">Loki</link>, Promtail pour gérer les statistiques et les logs du serveur,</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur de sauvegardes <link xl:href="https://www.borgbackup.org/">Borg</link></simpara>
+</listitem>
+<listitem>
+<simpara>un serveur de VPN <link xl:href="https://pritunl.com/">Pritunl</link>,</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</simpara>
+<simpara>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal, que vous savez vous servir de <literal>ssh</literal> pour Linux ou de <literal>putty</literal> pour Windows, que vous avez des notions élémentaires de Shell Unix et que vous savez vous servir de l&#8217;éditeur <literal>vi</literal>. Si <literal>vi</literal> est trop compliqué pour vous, je vous suggère d&#8217;utiliser l&#8217;éditeur de commande <literal>nano</literal> à la place et de remplacer <literal>vi</literal> par <literal>nano</literal> dans toutes les lignes de commande.</simpara>
+<simpara>Dans le document, on peut trouver des textes entourés de &lt;texte&gt;. Cela signifie que vous devez mettre ici votre propre texte selon vos préférences.</simpara>
+<simpara>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'. Ce dernier exemple a un taux de complexité est bien meilleur que les mots de passe classiques. Il est aussi plus facile à retenir que 'Az3~1ym_a&amp;'.</simpara>
+<simpara>Le coût pour mettre en oeuvre ce type de serveur est relativement faible:
+* Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y avoir des promos)
+* Comptez 26€ pour acheter une carte Raspberry PI 3 A+ (1Go de Ram) et 61€ pour un PI 4 avec 4Go de Ram. A cela il faut ajouter un boitier, une alim et une flash de 64 ou 128 Go. Vous en aurez donc pour 110€ si vous achetez tout le kit.</simpara>
+<simpara>Par rapport à une solution VPS directement dans le cloud, ce budget correspond à 8 mois d&#8217;abonnement.</simpara>
+</section>
+<section xml:id="_choix_du_registrar">
+<title>Choix du registrar</title>
+<simpara>Pour rappel,un registrar est une société auprès de laquelle vous pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez fournir pour votre enregistrement un ensemble de données personnelles qui permettront de vous identifier en tant que propriétaire de ce nom de domaine.</simpara>
+<simpara>Pour ma part j&#8217;ai choisi Gandi car il ne sont pas très cher et leur interface d&#8217;administration est simple d&#8217;usage. Vous pouvez très bien prendre aussi vos DNS chez OVH.</simpara>
+<simpara>Une fois votre domaine enregistré et votre compte créé vous pouvez vous loguer sur la <link xl:href="https://admin.gandi.net/dashboard">plateforme de gestion de Gandi</link>.</simpara>
+<simpara>Allez dans Nom de domaine et sélectionnez le nom de domaine que vous voulez administrer.
+La vue générale vous montre les services actifs. Il faut une fois la configuration des DNS effectuée être dans le mode suivant:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Serveurs de noms: Externes</simpara>
+</listitem>
+<listitem>
+<simpara>Emails: Inactif</simpara>
+</listitem>
+<listitem>
+<simpara>DNSSEC: Actif (cela sera activé dans une seconde étape de ce guide)</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Vous ne devez avoir aucune boite mail active sur ce domaine. A regardez dans le menu "Boites &amp; redirections Mails".
+Vous devez reconfigurer les 'Enregistrements DNS' en mode externes.
+Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms externe. Mettre 3 DNS:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>le nom de votre machine OVH: VPSxxxxxx.ovh.net</simpara>
+</listitem>
+<listitem>
+<simpara>et deux DNS de votre domaine: ns1.&lt;example.com&gt; et ns2.&lt;example.com&gt;</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Pour que tout cela fonctionne bien, ajoutez des Glue records:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>un pour ns1.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur OVH</simpara>
+</listitem>
+<listitem>
+<simpara>un pour ns2.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur OVH</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Je ne l&#8217;ai pas mis en oeuvre.</simpara>
+<simpara>Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.</simpara>
+</section>
+</article>
