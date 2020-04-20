@@ -232,7 +232,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <section xml:id="_mettre_léditeur_de_votre_choix">
 <title>Mettre l&#8217;éditeur de votre choix</title>
 <simpara>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient.</simpara>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal></link> et tapez:</simpara>
+<simpara><link linkend="root_login">Loguez vous comme root </link> et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">update-alternatives  --config editor</programlisting>
 <simpara>Pour les débutants, il est conseillé d&#8217;utiliser nano</simpara>
 </section>

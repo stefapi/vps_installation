@@ -253,7 +253,7 @@ Mettre l’éditeur de votre choix
 En fonction de vos préférences en terme d’éditeur, choisissez celui qui
 vous convient.
 
-`Loguez vous comme ``root`` <#root_login>`__ et tapez:
+`Loguez vous comme root <#root_login>`__ et tapez:
 
 .. code:: bash
 
