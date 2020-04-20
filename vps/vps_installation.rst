@@ -59,7 +59,7 @@ Sont installés:
 
 -  un site `Wordpress <https://wordpress.com>`__,
 
--  un site `Microweber <https://wordpress.com>`__,
+-  un site `Microweber <https://microweber.org/>`__,
 
 -  un site Photo sous `Piwigo <https://piwigo.org/>`__,
 
@@ -215,7 +215,7 @@ avez mis en place un compte sudo:
    -  Mettez ici <sudo\_username> par votre nom de login et
       <example.com> par votre nom de domaine. Au début votre nom de
       domaine acheté n’est pas encore configuré. Il faut donc utiliser
-      le nom de machine ( par exemple pour un VPS ovh:
+      le nom de machine ( par exemple pour un VPS OVH:
       VPSxxxxxx.ovh.net) ou votre adresse IP.
 
    ou utilisez putty si vous êtes sous Windows.
@@ -244,8 +244,8 @@ avez mis en place un compte sudo:
 
       Tapez ensuite votre mot de passe root
 
-Installation basique
-====================
+Configuration basique
+=====================
 
 Mettre l’éditeur de votre choix
 -------------------------------
@@ -472,12 +472,28 @@ autres paquets seront supprimés.
 5. Acceptez la liste des modifications proposées à la fin. Les paquets
    superflus seront supprimés
 
+Ci dessous une petite liste de paquets à conserver sur une installation
+basique:
+
++--------------------+--------------------+--------------------+--------------------+
+| aptitude           | cloud-init         | cloud-utils        | curl               |
++--------------------+--------------------+--------------------+--------------------+
+| debfoster          | etckeeper          | euca2ools          | gdbm-l10n          |
++--------------------+--------------------+--------------------+--------------------+
+| grub-pc            | ifenslave          | kbd                | linux-image-cloud- |
+|                    |                    |                    | amd64              |
++--------------------+--------------------+--------------------+--------------------+
+| locales-all        | most               | ntp                | openssh-server     |
++--------------------+--------------------+--------------------+--------------------+
+| screen             | unscd              | whiptail           |                    |
++--------------------+--------------------+--------------------+--------------------+
+
 Création d’un fichier keeper dans /etc
 --------------------------------------
 
 Vous pourriez être intéressé après l’installation de ``debfoster`` et de
 ``etckeeper`` de construire automatiquement un fichier qui contient la
-liste des paquets qui permettent de réinstaller le systeme:
+liste des paquets qui permettent de réinstaller le système:
 
 1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
@@ -604,13 +620,20 @@ correctement configuré.
 
           vi /etc/hosts
 
-      Changez la ou les lignes, sauvegardez et rebootez. Tapez :
+   b. Changez la ou les lignes, sauvegardez.
+
+          **Note**
+
+          Le FQDN (nom de machine avant le nom de domaine) doit être
+          déclaré avant le hostname simple dans le fichier ``hosts``.
+
+   c. Rebootez. Tapez :
 
       .. code:: bash
 
           reboot
 
-   b. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+   d. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 4. Vérifiez que tout est correctement configuré.
 
@@ -885,7 +908,7 @@ super-compte.
 
       .. code:: ini
 
-          %sudonp ALL=(ALL:ALL) NOPASSWD: ALL`
+          %sudonp ALL=(ALL:ALL) NOPASSWD: ALL
 
       L’utilisateur nom\_d\_utilisateur pourra se logger root sans mot
       de passe au travers de la commande ``sudo bash``
@@ -908,11 +931,21 @@ Ajouter un fichier de swap
 --------------------------
 
 Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de
-1 Go:
+1 Go. Si vous avez beaucoup d’outils et de serveurs à installer il peut
+être nécessaire d’avoir 4 Go de RAM au total.
+
+Tapez :
 
 1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
-2. Tapez:
+2. Tout d’abord, si l’outil ``dphys-swapfile`` est installé et configuré
+   sur la machine, commencez par désactiver le swap. Tapez:
+
+   .. code:: bash
+
+       dphys-swapfile uninstall
+
+3. Tapez:
 
    .. code:: bash
 
@@ -922,25 +955,44 @@ Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de
        mkswap /swapfile
        swapon /swapfile
 
-3. Enfin ajoutez une entrée dans le fichier fstab. Tapez :
+4. Enfin ajoutez une entrée dans le fichier fstab. Tapez :
 
    .. code:: bash
 
        vi /etc/fstab
 
-4. Ajoutez la ligne:
+5. Ajoutez la ligne:
 
    ::
 
        /swapfile swap swap defaults 0 0
 
+6. Enfin vous pouvez être tenté de limiter le swap (surtout utile sur
+   les systèmes avec peu de RAM et du SSD. Tapez:
+
+   .. code:: bash
+
+       vi /etc/systctl.conf
+
+7. Ajoutez ou modifiez la ligne:
+
+   ::
+
+       vm.swappiness = 5
+
+8. Le paramètre sera actif au prochain reboot
+
 Installation initiale des outils
 ================================
 
 La procédure d’installation ci-dessous configure ISPconfig avec les
-fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Amavisd,
-SPamAssassin, ClamAV, Apache, PHP, Let’s Encrypt, Mailman, PureFTPd,
-Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.
+fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Apache,
+PHP, Let’s Encrypt, PureFTPd, Bind, Webalizer, AWStats, fail2Ban, UFW
+Firewall, PHPMyadmin, RoundCube.
+
+Pour les systèmes ayant 2 Go de RAM ou plus, il est fortement conseillé
+d’installer les outils ci après : Amavisd, SPamAssassin, ClamAV,
+Mailman.
 
 1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
@@ -959,7 +1011,13 @@ Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.
 
       .. code:: bash
 
-          apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd amavisd-new spamassassin clamav clamav-daemon unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron
+          apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron
+
+   b. Pour les systèmes avec plus de mémoire tapez :
+
+      .. code:: bash
+
+          apt install amavisd-new spamassassin clamav clamav-daemon
 
 4. Aux questions posées répondez:
 
@@ -999,6 +1057,14 @@ Configuration de Postfix
    .. code:: bash
 
        systemctl restart postfix
+
+4. Si vous avez installé ``SpamAssassin``, désactiver ``SpamAssassin``
+   puisque ``amavisd`` utilise celui ci en sous jacent. Tapez :
+
+   .. code:: bash
+
+       systemctl stop spamassassin
+       systemctl disable spamassassin
 
 Configuration de MariaDB
 ------------------------
@@ -1117,13 +1183,12 @@ Configuration de MariaDB
 11. La sortie doit être du type:
     ``tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld``
 
-12. Désactiver SpamAssassin puisque amavisd utilise celui ci en sous
-    jacent. Tapez :
+12. Pour les serveur avec peu de ressources quelques éléments de tuning.
+    Editez le fichier 50-server.cnf:
 
     .. code:: bash
 
-        systemctl stop spamassassin
-        systemctl disable spamassassin
+        vi /etc/mysql/mariadb.conf.d/50-server.cnf
 
 Configuration d’Apache
 ----------------------
@@ -1376,8 +1441,50 @@ Installation et configuration de PureFTPd
 
           systemctl restart pure-ftpd-mysql
 
+   e. En Option: Activer les quotas si votre kernel le permet.
+
+      -  Installez les paquets de gestion des quotas. Tapez:
+
+         .. code:: bash
+
+             apt install quota quotatool
+
+      -  Editez ``fstab``. Tapez:
+
+         .. code:: bash
+
+             vi /etc/fstab
+
+      -  Inserez le texte ci dessous pour chaque directive de montage
+
+         ::
+
+             UUID=45576b38-39e8-4994-b8c1-ea4870e2e614 / ext4 errors=remount-ro,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 0 1
+
+      -  Pour le Raspberry, éditez le fichier rc.local pour créer
+         /dev/root à chaque reboot:
+
+         .. code:: bash
+
+             ln -s /dev/mmblk0p7 /dev/root
+             vi /etc/rc.local
+
+      -  Ajoutez avant ``exit 0``:
+
+         ::
+
+             ln -s /dev/mmcblk0p7 /dev/root
+
+      -  Pour activer les quotas, tapez:
+
+         .. code:: bash
+
+             mount -o remount /
+             quotacheck -avugm
+             quotaon -avug
+
 Installation et configuration de phpmyadmin
--------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Installez phpmyadmin. Exécutez:
 
@@ -1559,7 +1666,7 @@ Installation et configuration de phpmyadmin
          dé-commenter les lignes.
 
 Installation et configuration de Roundcube
-------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Tapez:
 
@@ -1606,7 +1713,7 @@ Installation et configuration de Roundcube
        systemctl reload apache2
 
 Installation de Let’s Encrypt
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Installez Let’s Encrypt. Tapez:
 
@@ -1618,7 +1725,7 @@ Installez Let’s Encrypt. Tapez:
     ./certbot-auto --install-only
 
 Installation d’un scanner de vulnérabilités
--------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. installer Git. Tapez :
 
@@ -1645,7 +1752,7 @@ Installation d’un scanner de vulnérabilités
    vulnérabilités et des améliorations de sécurité à appliquer.
 
 Installation d’un Panel
-=======================
+-----------------------
 
 Il existe plusieurs type de panel de contrôle pour les VPS. La plupart
 sont payant.
@@ -1681,7 +1788,7 @@ Pour rappel, HestiaCP (tout comme VestaCP) sont incompatibles
 d’ISPConfig et de Webmin. Ils doivent être utilisés seuls
 
 Installation et configuration de ISPConfig
-------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ISPConfig est un système de configuration de sites web totalement
 compatible avec Webmin.
@@ -1831,7 +1938,7 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
        de ce site de votre navigateur.
 
 Installation de Webmin
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Webmin est un outil généraliste de configuration de votre serveur. Son
 usage peut être assez complexe mais il permet une configuration plus
@@ -1945,7 +2052,7 @@ précise des fonctionnalités.
    c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
 
 Configuration d’un domaine
-==========================
+--------------------------
 
 Cette configuration est réalisée avec le Panel ISPConfig installé dans
 le chapitre précédent. L’étape "login initial" n’est à appliquer qu’une
@@ -1954,7 +2061,7 @@ loguer à ISPconfig en utilisant ce domaine à l’adresse:
 https://example.com:8080/ .
 
 Login initial
--------------
+~~~~~~~~~~~~~
 
     **Note**
 
@@ -2102,7 +2209,7 @@ de l’installation d’ISPConfig
                   libellés dans la suite de la documentation en anglais.
 
 Création de la zone DNS d’un domaine
-------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Allez dans ``DNS``
 
@@ -2156,7 +2263,7 @@ Ils doivent afficher une page web basique (Apache2, ou de parking).Si ce
 n’est pas le cas revérifier la configuration du DNS dans ISPConfig.
 
 Activation de DNSSEC
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 Vous pouvez maintenant activer DNSSEC afin d’augmenter la sécurité de
 résolution de nom de domaine:
@@ -2257,7 +2364,7 @@ erreur.
     fonctionnel.
 
 Exemple de configuration de domaine
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Une fois la configuration terminé, les différents enregistrements du
 domaines ressemblent à l’exemple ci-dessous. Il peut y avoir des
@@ -2290,7 +2397,7 @@ Let’s encrypt.
     example.com.         3600 TXT            "v=spf1 mx a ~all"
 
 Création d’un site web
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Dans la suite le site web sera nommé "example.com".
 
@@ -2364,7 +2471,7 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
    ``Grade A``.
 
 Création d’un Site Vhost
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Dans la suite le sous-domaine sera nommé "mail.example.com".
 
@@ -2435,7 +2542,7 @@ racine auparavant.
    ``Grade A``.
 
 Associer des certificats reconnu à vos outils
----------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Comme vous avec créé votre premier domaine avec SSL et let’s encrypt
 dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux
@@ -2548,10 +2655,10 @@ services de base:
       -  Remplacer example.com par votre nom de domaine.
 
 Surveillance du serveur avec Munin et Monit
-===========================================
+-------------------------------------------
 
 Note préliminaire
------------------
+~~~~~~~~~~~~~~~~~
 
 Installez tout d’abord les paquets insdispensables pour faire
 fonctionner Munin avec Apache puis activez le module fcgid:
@@ -2562,7 +2669,7 @@ fonctionner Munin avec Apache puis activez le module fcgid:
     a2enmod fcgid
 
 Installation et configuration de Munin
---------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suivez les étapes ci-après:
 
@@ -2730,7 +2837,7 @@ Suivez les étapes ci-après:
     http://example.com/munin/.
 
 Activez les plugins de Munin
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Dans Debian 10, tous les plugins complémentaires sont déjà activés.Vous
 pouvez être tenté de vérifier:
@@ -2765,7 +2872,7 @@ pouvez être tenté de vérifier:
        service munin-node restart
 
 Installer et configurer Monit
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pour installer et configurer Monit, vous devez appliquer la procédure
 suivante:
@@ -2931,10 +3038,10 @@ suivante:
     Monit affiche alors les informations de monitoring du serveur.
 
 Configuration de la messagerie
-==============================
+------------------------------
 
 Installation de rspamd à la place d' Amavis-new
------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``rspamd`` est réputé de meilleure qualité que ``Amavis`` dans la chasse
 aux spams. Vous pouvez décider de l’installer à la place d’Amavis. Cette
@@ -3260,7 +3367,7 @@ Suivez la procédure suivante:
         systemctl disable amavisd-new
 
 Création du serveur de messagerie
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pour créer un serveur de messagerie:
 
@@ -3293,7 +3400,7 @@ Pour créer un serveur de messagerie:
     sortants).
 
 Finaliser la sécurisation de votre serveur de mail
---------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Afin de mieux sécuriser votre serveur de mail, appliquez les opérations
 suivantes:
@@ -3329,7 +3436,7 @@ suivantes:
       être configuré pour pointer vers mail.example.com .
 
 Création de l’autoconfig pour Thunderbird et Android
-----------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 La procédure est utilisé par Thunderbird et Android pour configurer
 automatiquement les paramètres de la messagerie.
@@ -3447,7 +3554,7 @@ Appliquez la procédure suivante:
       ``/var/www/autoconfig.example.com``
 
 Création d’autodiscover pour Outlook
-------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Outlook utilise un autre mécanisme pour se configurer automatiquement.
 Il est basé sur l’utilisation du nom de sous-domaine ``autodiscover``.
@@ -3584,7 +3691,7 @@ Appliquez la procédure suivante:
    e. Le résultat doit être: ``Test de connectivité réussi``
 
 Création d’une boite mail
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pour créer une boite de messagerie:
 
@@ -3633,7 +3740,7 @@ Pour créer une boite de messagerie:
     ``recipient_delimiter``.
 
 Configuration de votre client de messagerie.
---------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Saisir l’adresse mail et votre mot de passe doit suffire pour configurer
 automatiquement votre client de messagerie.
@@ -3668,7 +3775,7 @@ informations à saisir:
 +--------------------------------------+--------------------------------------+
 
 Mise en oeuvre du site web de webmail
--------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 On suppose que vous avez install roundcube lors de la procédure
 d’installation initiale et que vous avez déjà créé le host
@@ -3715,7 +3822,7 @@ Il vous reste à appliquer la procédure suivante:
    https://mail.example.com
 
 Transfert de vos boites mails IMAP
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Si vous faites une migration d’un ancien serveur vers un nouveau serveur
 vous souhaiterez probablement migrer aussi vos boites mail.
@@ -3767,7 +3874,7 @@ Elle peut facilement être scriptée:
        rm secretdst
 
 Installation de Joomla ou de Concrete5
-======================================
+--------------------------------------
 
 Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour
 et inclut une foule de plugins Concrete5 est un autre CMS assez connu
@@ -3779,7 +3886,7 @@ l’identique pour concrete5 en remplacant les textes joomla par
 concrete5.
 
 Création du site web de Joomla
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -3809,7 +3916,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
    e. Laisser le reste par défaut.
 
 Création de l’application Joomla
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes dans ISPConfig:
 
@@ -3849,7 +3956,7 @@ Appliquez les opérations suivantes dans ISPConfig:
     dernière version de Joomla.
 
 Installation de Mediawiki
-=========================
+-------------------------
 
 Mediawiki est le portail wiki mondialement connu et utilisé notamment
 pour le site wikipedia.
@@ -3857,7 +3964,7 @@ pour le site wikipedia.
 L’installation s’effectue à 100% avec ISPConfig.
 
 Création du site web de Mediawiki
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -3887,7 +3994,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
    e. Laisser le reste par défaut.
 
 Création de l’application Mediawiki
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes dans ISPConfig:
 
@@ -3927,7 +4034,7 @@ Appliquez les opérations suivantes dans ISPConfig:
     dernière version de Mediawiki.
 
 Installation de Wordpress
-=========================
+-------------------------
 
 Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à
 jour.
@@ -3935,7 +4042,7 @@ jour.
 L’installation s’effectue à 100% avec ISPConfig.
 
 Création du site web de Wordpress
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -3965,7 +4072,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
    e. Laisser le reste par défaut.
 
 Création de l’application Wordpress
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes dans ISPConfig:
 
@@ -4005,7 +4112,7 @@ Appliquez les opérations suivantes dans ISPConfig:
     dernière version de Wordpress.
 
 Micro Weber
-===========
+-----------
 
 Microweber est un système de gestion de contenu et un constructeur de
 sites web Open Source. Il est basé sur le langage de programmation PHP
@@ -4016,7 +4123,7 @@ d’édition en direct qui permet aux utilisateurs de visualiser leurs
 modifications telles qu’elles apparaîtraient.
 
 Création du site web de Microweber
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -4050,7 +4157,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 3. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 Création des bases de données
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes dans ISPConfig :
 
@@ -4092,7 +4199,7 @@ Appliquez les opérations suivantes dans ISPConfig :
    e. Cliquez sur ``save``
 
 Installation de Microweber
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suivez la procédure suivante:
 
@@ -4139,7 +4246,7 @@ Suivez la procédure suivante:
    et commencer à utiliser l’outil
 
 Piwigo
-======
+------
 
 Piwigo est une application web pour gérer votre collection de photos, et
 autres médias. Doté de puissantes fonctionnalités, il gère des galeries
@@ -4149,7 +4256,7 @@ données MySQL.
 Piwigo était auparavant connu sous le nom PhpWebGallery.
 
 Création du site web de Piwigo
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -4183,7 +4290,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 3. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 Création des bases de données
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes dans ISPConfig :
 
@@ -4225,7 +4332,7 @@ Appliquez les opérations suivantes dans ISPConfig :
    e. Cliquez sur ``save``
 
 Installation de Piwigo
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Suivez la procédure suivante:
 
@@ -4273,7 +4380,7 @@ Suivez la procédure suivante:
    commencer à utiliser l’outil
 
 Installation de Nextcloud
-=========================
+-------------------------
 
 NextCloud est un serveur d’hébergement et de partage de fichiers gratuit
 et open source, fork du projet ownCloud. Il est très similaire aux
@@ -4291,7 +4398,7 @@ des systèmes d’exploitation, y compris Windows, macOS, FreeBSD, et
 Linux.
 
 Installation initiale
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 NextCloud est écrit en PHP et utilise une base de données MariaDB pour
 stocker ses données.
@@ -4328,7 +4435,7 @@ Pour installer, Suivez la procédure suivante:
        systemctl restart apache2
 
 Création du site web de Nextcloud
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -4362,7 +4469,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 3. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
 Création des bases de données
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes dans ISPConfig :
 
@@ -4404,7 +4511,7 @@ Appliquez les opérations suivantes dans ISPConfig :
    e. Cliquez sur ``save``
 
 Installation de Nextcloud
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suivez la procédure suivante:
 
@@ -4449,14 +4556,14 @@ Suivez la procédure suivante:
    et commencer à utliser l’outil
 
 Installation et configuration de Gitea
-======================================
+--------------------------------------
 
 Gitea est un système simple d’hébergement de code basé sur Git. C’est un
 fork de Gogs. Il montre des fonctionnalités similaires à gitlab ou
 github tout en gardant un code plus simple.
 
 Création du site web de Gitea
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -4531,7 +4638,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
        chmod 770 /etc/gitea
 
 Création des bases de données
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes dans ISPConfig :
 
@@ -4573,7 +4680,7 @@ Appliquez les opérations suivantes dans ISPConfig :
    e. Cliquez sur ``save``
 
 Téléchargez et installez Gitea
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes:
 
@@ -4697,7 +4804,7 @@ Appliquez les opérations suivantes:
         systemctl restart gitea.service
 
 Activer une connexion SSH dédiée
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 En option, vous pouvez avoir envie de dédier une connexion SSH pour
 Gitea:
@@ -4740,7 +4847,7 @@ Gitea:
 6. Enjoy !
 
 Installation de Seafile
-=======================
+-----------------------
 
 Seafile est un système de partage de fichier simple et efficace écrit en
 Python. Il existe des clients de connexion pour Windows, Linux, Android,
@@ -4749,7 +4856,7 @@ IOS.
 Cette installation est optionnelle.
 
 Création du site web de Seafile
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez la procédure suivante:
 
@@ -4815,7 +4922,7 @@ Appliquez la procédure suivante:
           ProxyPassReverse / http://localhost:8090/
 
 Création de bases de données
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Loguez vous sur ISPConfig
 
@@ -4860,7 +4967,7 @@ Création de bases de données
       bases
 
 Téléchargez et installez Seafile
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez la procédure suivante:
 
@@ -4906,7 +5013,7 @@ Appliquez la procédure suivante:
    de ce qui a été configuré
 
 Lancement initial
------------------
+~~~~~~~~~~~~~~~~~
 
 Nous allons effectuer un premier lancement du serveur Seafile:
 
@@ -4992,7 +5099,7 @@ Nous allons effectuer un premier lancement du serveur Seafile:
 12. La page de login de Seafile doit s’afficher
 
 Lancement automatique de Seafile
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Afin de s’assurer que Seafile tourne en permanence, on doit créer un
 script de lancement automatique de Seafile:
@@ -5085,12 +5192,12 @@ script de lancement automatique de Seafile:
 6. Enjoy !
 
 Installation d’un serveur de VPN Pritunl
-========================================
+----------------------------------------
 
 Pritunl est un serveur VPN basé sur OpenVPN.
 
 Création du site web de Pritunl
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez la procédure suivante:
 
@@ -5142,7 +5249,7 @@ Appliquez la procédure suivante:
           ProxyPreserveHost On
 
 Installation de Pritunl
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Veuillez suivre la procédure suivante:
 
@@ -5185,7 +5292,7 @@ Veuillez suivre la procédure suivante:
        systemctl enable mongod pritunl
 
 Configuration de Pritunl
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Votre service Pritunl est actif. Vous devez maintenant le configurer
 pour qu’il fonctionne:
@@ -5310,7 +5417,7 @@ pour qu’il fonctionne:
 18. Votre serveur de VPN est opérationnel.
 
 Se connecter au serveur de VPN
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Comme Pritunl est compatible OpenVPN n’importe quel logiciel compatible
 OpenVPN peut être utilisé. Pritunl founit un
@@ -5325,7 +5432,7 @@ Vous pourrez vous connecter en cliquant sur le bouton ``Connect`` du
 compte utilisateur.
 
 Réparer une base Pritunl
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Si jamais votre base est corrompue, vous pourrez la réparer en tapant:
 
@@ -5336,7 +5443,7 @@ Si jamais votre base est corrompue, vous pourrez la réparer en tapant:
     systemctl start pritunl
 
 Mot de passe perdu
-------------------
+~~~~~~~~~~~~~~~~~~
 
 Vous pouvez re-générer un mot de passe en tapant:
 
@@ -5345,7 +5452,7 @@ Vous pouvez re-générer un mot de passe en tapant:
     pritunl reset-password
 
 Installation de Grafana
-=======================
+-----------------------
 
 Grafana est un logiciel de visualisation et d’analyse à code source
 ouvert. Il vous permet d’interroger, de visualiser, d’alerter et
@@ -5360,7 +5467,7 @@ Cette installation est optionnelle puisque Munin est déjà installé sur
 votre système.
 
 Création du site web de Grafana
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez la procédure suivante:
 
@@ -5407,7 +5514,7 @@ Appliquez la procédure suivante:
           ProxyPassReverse / http://localhost:3000/
 
 Installation de Grafana
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 1.  `Loguez vous comme ``root`` sur le serveur <#root_login>`__
 
@@ -5543,7 +5650,7 @@ Installation de Grafana
         service prometheus-process-exporter restart
 
 Installation et configuration de Loki
--------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pour installer Loki, appliquez la procédure suivante:
 
@@ -5691,7 +5798,7 @@ Pour installer Loki, appliquez la procédure suivante:
         sudo service loki status
 
 Installation et configuration de Promtail
------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Installez maintenant Promtail:
 
@@ -5813,10 +5920,10 @@ Installez maintenant Promtail:
         {job="varlogs"}
 
 Annexe
-======
+------
 
 Installation de Hestia
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Hestia est basé sur VestaCP. C’est une alternative opensource et plus
 moderne de cet outiL. La documentation est proposée ici:
@@ -5860,7 +5967,7 @@ Pour installer:
    du compte admin de Hestia ainsi que le numéro de port du site web
 
 backup
-------
+~~~~~~
 
 pour installer borg backup en mode rescue afin d’avoir la dernière
 version. apt install python3-pip libssl-dev cython3 gcc g++

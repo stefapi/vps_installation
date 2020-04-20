@@ -454,7 +454,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_choix_du_vps">2. Choix du VPS</a></li>
 <li><a href="#_choix_du_registrar">3. Choix du registrar</a></li>
 <li><a href="#root_login">4. Se loguer root sur le serveur</a></li>
-<li><a href="#_installation_basique">5. Installation basique</a>
+<li><a href="#_configuration_basique">5. Configuration basique</a>
 <ul class="sectlevel2">
 <li><a href="#_mettre_léditeur_de_votre_choix">5.1. Mettre l&#8217;éditeur de votre choix</a></li>
 <li><a href="#_installation_dun_repository_pour_etc">5.2. Installation d&#8217;un repository pour <code>/etc</code></a></li>
@@ -481,129 +481,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_configuration_d_awstats">6.5. Configuration d' Awstats</a></li>
 <li><a href="#_configuration_de_fail2ban">6.6. Configuration de Fail2ban</a></li>
 <li><a href="#_installation_et_configuration_de_pureftpd">6.7. Installation et configuration de PureFTPd</a></li>
-<li><a href="#_installation_et_configuration_de_phpmyadmin">6.8. Installation et configuration de phpmyadmin</a></li>
-<li><a href="#_installation_et_configuration_de_roundcube">6.9. Installation et configuration de Roundcube</a></li>
-<li><a href="#_installation_de_lets_encrypt">6.10. Installation de Let&#8217;s Encrypt</a></li>
-<li><a href="#_installation_dun_scanner_de_vulnérabilités">6.11. Installation d&#8217;un scanner de vulnérabilités</a></li>
-</ul>
-</li>
-<li><a href="#_installation_dun_panel">7. Installation d&#8217;un Panel</a>
-<ul class="sectlevel2">
-<li><a href="#_installation_et_configuration_de_ispconfig">7.1. Installation et configuration de ISPConfig</a></li>
-<li><a href="#_installation_de_webmin">7.2. Installation de Webmin</a></li>
-</ul>
-</li>
-<li><a href="#domain-config">8. Configuration d&#8217;un domaine</a>
-<ul class="sectlevel2">
-<li><a href="#_login_initial">8.1. Login initial</a></li>
-<li><a href="#_création_de_la_zone_dns_dun_domaine">8.2. Création de la zone DNS d&#8217;un domaine</a></li>
-<li><a href="#_activation_de_dnssec">8.3. Activation de DNSSEC</a></li>
-<li><a href="#_exemple_de_configuration_de_domaine">8.4. Exemple de configuration de domaine</a></li>
-<li><a href="#domain-site">8.5. Création d’un site web</a></li>
-<li><a href="#subdomain-site">8.6. Création d’un Site Vhost</a></li>
-<li><a href="#_associer_des_certificats_reconnu_à_vos_outils">8.7. Associer des certificats reconnu à vos outils</a></li>
-</ul>
-</li>
-<li><a href="#_surveillance_du_serveur_avec_munin_et_monit">9. Surveillance du serveur avec Munin et Monit</a>
-<ul class="sectlevel2">
-<li><a href="#_note_préliminaire">9.1. Note préliminaire</a></li>
-<li><a href="#_installation_et_configuration_de_munin">9.2. Installation et configuration de Munin</a></li>
-<li><a href="#_activez_les_plugins_de_munin">9.3. Activez les plugins de Munin</a></li>
-<li><a href="#_installer_et_configurer_monit">9.4. Installer et configurer Monit</a></li>
-</ul>
-</li>
-<li><a href="#_configuration_de_la_messagerie">10. Configuration de la messagerie</a>
-<ul class="sectlevel2">
-<li><a href="#_installation_de_rspamd_à_la_place_d_amavis_new">10.1. Installation de rspamd à la place d' Amavis-new</a></li>
-<li><a href="#_création_du_serveur_de_messagerie">10.2. Création du serveur de messagerie</a></li>
-<li><a href="#_finaliser_la_sécurisation_de_votre_serveur_de_mail">10.3. Finaliser la sécurisation de votre serveur de mail</a></li>
-<li><a href="#_création_de_lautoconfig_pour_thunderbird_et_android">10.4. Création de l’autoconfig pour Thunderbird et Android</a></li>
-<li><a href="#_création_dautodiscover_pour_outlook">10.5. Création d’autodiscover pour Outlook</a></li>
-<li><a href="#_création_dune_boite_mail">10.6. Création d’une boite mail</a></li>
-<li><a href="#_configuration_de_votre_client_de_messagerie">10.7. Configuration de votre client de messagerie.</a></li>
-<li><a href="#_mise_en_oeuvre_du_site_web_de_webmail">10.8. Mise en oeuvre du site web de webmail</a></li>
-<li><a href="#_transfert_de_vos_boites_mails_imap">10.9. Transfert de vos boites mails IMAP</a></li>
-</ul>
-</li>
-<li><a href="#_installation_de_joomla_ou_de_concrete5">11. Installation de Joomla ou de Concrete5</a>
-<ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_joomla">11.1. Création du site web de Joomla</a></li>
-<li><a href="#_création_de_lapplication_joomla">11.2. Création de l&#8217;application Joomla</a></li>
-</ul>
-</li>
-<li><a href="#_installation_de_mediawiki">12. Installation de Mediawiki</a>
-<ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_mediawiki">12.1. Création du site web de Mediawiki</a></li>
-<li><a href="#_création_de_lapplication_mediawiki">12.2. Création de l&#8217;application Mediawiki</a></li>
-</ul>
-</li>
-<li><a href="#_installation_de_wordpress">13. Installation de Wordpress</a>
-<ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_wordpress">13.1. Création du site web de Wordpress</a></li>
-<li><a href="#_création_de_lapplication_wordpress">13.2. Création de l&#8217;application Wordpress</a></li>
-</ul>
-</li>
-<li><a href="#_micro_weber">14. Micro Weber</a>
-<ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_microweber">14.1. Création du site web de Microweber</a></li>
-<li><a href="#_création_des_bases_de_données">14.2. Création des bases de données</a></li>
-<li><a href="#_installation_de_microweber">14.3. Installation de Microweber</a></li>
-</ul>
-</li>
-<li><a href="#_piwigo">15. Piwigo</a>
-<ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_piwigo">15.1. Création du site web de Piwigo</a></li>
-<li><a href="#_création_des_bases_de_données_2">15.2. Création des bases de données</a></li>
-<li><a href="#_installation_de_piwigo">15.3. Installation de Piwigo</a></li>
-</ul>
-</li>
-<li><a href="#_installation_de_nextcloud">16. Installation de Nextcloud</a>
-<ul class="sectlevel2">
-<li><a href="#_installation_initiale">16.1. Installation initiale</a></li>
-<li><a href="#_création_du_site_web_de_nextcloud">16.2. Création du site web de Nextcloud</a></li>
-<li><a href="#_création_des_bases_de_données_3">16.3. Création des bases de données</a></li>
-<li><a href="#_installation_de_nextcloud_2">16.4. Installation de Nextcloud</a></li>
-</ul>
-</li>
-<li><a href="#_installation_et_configuration_de_gitea">17. Installation et configuration de Gitea</a>
-<ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_gitea">17.1. Création du site web de Gitea</a></li>
-<li><a href="#_création_des_bases_de_données_4">17.2. Création des bases de données</a></li>
-<li><a href="#_téléchargez_et_installez_gitea">17.3. Téléchargez et installez Gitea</a></li>
-<li><a href="#_activer_une_connexion_ssh_dédiée">17.4. Activer une connexion SSH dédiée</a></li>
-</ul>
-</li>
-<li><a href="#_installation_de_seafile">18. Installation de Seafile</a>
-<ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_seafile">18.1. Création du site web de Seafile</a></li>
-<li><a href="#_création_de_bases_de_données">18.2. Création de bases de données</a></li>
-<li><a href="#_téléchargez_et_installez_seafile">18.3. Téléchargez et installez Seafile</a></li>
-<li><a href="#_lancement_initial">18.4. Lancement initial</a></li>
-<li><a href="#_lancement_automatique_de_seafile">18.5. Lancement automatique de Seafile</a></li>
-</ul>
-</li>
-<li><a href="#_installation_dun_serveur_de_vpn_pritunl">19. Installation d&#8217;un serveur de VPN Pritunl</a>
-<ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_pritunl">19.1. Création du site web de Pritunl</a></li>
-<li><a href="#_installation_de_pritunl">19.2. Installation de Pritunl</a></li>
-<li><a href="#_configuration_de_pritunl">19.3. Configuration de Pritunl</a></li>
-<li><a href="#_se_connecter_au_serveur_de_vpn">19.4. Se connecter au serveur de VPN</a></li>
-<li><a href="#_réparer_une_base_pritunl">19.5. Réparer une base Pritunl</a></li>
-<li><a href="#_mot_de_passe_perdu">19.6. Mot de passe perdu</a></li>
-</ul>
-</li>
-<li><a href="#_installation_de_grafana">20. Installation de Grafana</a>
-<ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_grafana">20.1. Création du site web de Grafana</a></li>
-<li><a href="#_installation_de_grafana_2">20.2. Installation de Grafana</a></li>
-<li><a href="#_installation_et_configuration_de_loki">20.3. Installation et configuration de Loki</a></li>
-<li><a href="#_installation_et_configuration_de_promtail">20.4. Installation et configuration de Promtail</a></li>
-</ul>
-</li>
-<li><a href="#_annexe">21. Annexe</a>
-<ul class="sectlevel2">
-<li><a href="#_installation_de_hestia">21.1. Installation de Hestia</a></li>
-<li><a href="#_backup">21.2. backup</a></li>
+<li><a href="#_installation_dun_panel">6.8. Installation d&#8217;un Panel</a></li>
+<li><a href="#domain-config">6.9. Configuration d&#8217;un domaine</a></li>
+<li><a href="#_surveillance_du_serveur_avec_munin_et_monit">6.10. Surveillance du serveur avec Munin et Monit</a></li>
+<li><a href="#_configuration_de_la_messagerie">6.11. Configuration de la messagerie</a></li>
+<li><a href="#_installation_de_joomla_ou_de_concrete5">6.12. Installation de Joomla ou de Concrete5</a></li>
+<li><a href="#_installation_de_mediawiki">6.13. Installation de Mediawiki</a></li>
+<li><a href="#_installation_de_wordpress">6.14. Installation de Wordpress</a></li>
+<li><a href="#_micro_weber">6.15. Micro Weber</a></li>
+<li><a href="#_piwigo">6.16. Piwigo</a></li>
+<li><a href="#_installation_de_nextcloud">6.17. Installation de Nextcloud</a></li>
+<li><a href="#_installation_et_configuration_de_gitea">6.18. Installation et configuration de Gitea</a></li>
+<li><a href="#_installation_de_seafile">6.19. Installation de Seafile</a></li>
+<li><a href="#_installation_dun_serveur_de_vpn_pritunl">6.20. Installation d&#8217;un serveur de VPN Pritunl</a></li>
+<li><a href="#_installation_de_grafana">6.21. Installation de Grafana</a></li>
+<li><a href="#_annexe">6.22. Annexe</a></li>
 </ul>
 </li>
 </ul>
@@ -680,7 +572,7 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <p>un site <a href="https://wordpress.com">Wordpress</a>,</p>
 </li>
 <li>
-<p>un site <a href="https://wordpress.com">Microweber</a>,</p>
+<p>un site <a href="https://microweber.org/">Microweber</a>,</p>
 </li>
 <li>
 <p>un site Photo sous <a href="https://piwigo.org/">Piwigo</a>,</p>
@@ -856,7 +748,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS ovh: VPSxxxxxx.ovh.net) ou votre adresse IP.</td>
+<td>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net) ou votre adresse IP.</td>
 </tr>
 </table>
 </div>
@@ -909,7 +801,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_basique">5. Installation basique</h2>
+<h2 id="_configuration_basique">5. Configuration basique</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_mettre_léditeur_de_votre_choix">5.1. Mettre l&#8217;éditeur de votre choix</h3>
@@ -1204,11 +1096,54 @@ Tous les autres paquets seront supprimés.</p>
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>Ci dessous une petite liste de paquets à conserver sur une installation basique:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">aptitude</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cloud-init</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cloud-utils</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">curl</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debfoster</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">etckeeper</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">euca2ools</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gdbm-l10n</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">grub-pc</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ifenslave</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">kbd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">linux-image-cloud-amd64</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locales-all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">most</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ntp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">openssh-server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">screen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unscd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">whiptail</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_création_dun_fichier_keeper_dans_etc">5.6. Création d&#8217;un fichier keeper dans /etc</h3>
 <div class="paragraph">
-<p>Vous pourriez être intéressé après l&#8217;installation de <code>debfoster</code> et de <code>etckeeper</code> de construire automatiquement un fichier qui contient la liste des paquets qui permettent de réinstaller le systeme:</p>
+<p>Vous pourriez être intéressé après l&#8217;installation de <code>debfoster</code> et de <code>etckeeper</code> de construire automatiquement un fichier qui contient la liste des paquets qui permettent de réinstaller le système:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1373,9 +1308,24 @@ L&#8217;installation automatique de paquets peut conduire dans certains cas trè
 <pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/hosts</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Changez la ou les lignes, sauvegardez et rebootez. Tapez :</p>
+</li>
+<li>
+<p>Changez la ou les lignes, sauvegardez.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Le FQDN (nom de machine avant le nom de domaine) doit être déclaré avant le hostname simple dans le fichier <code>hosts</code>.
+</td>
+</tr>
+</table>
 </div>
+</li>
+<li>
+<p>Rebootez. Tapez :</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>reboot</code></pre>
@@ -1786,7 +1736,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 <p>Ajouter dans le fichier la ligne suivante:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">%sudonp ALL</span><span class="tok-o">=</span><span class="tok-s">(ALL:ALL) NOPASSWD: ALL`</span></code></pre>
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">%sudonp ALL</span><span class="tok-o">=</span><span class="tok-s">(ALL:ALL) NOPASSWD: ALL</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1823,12 +1773,24 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 <div class="sect2">
 <h3 id="_ajouter_un_fichier_de_swap">5.14. Ajouter un fichier de swap</h3>
 <div class="paragraph">
-<p>Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de 1 Go:</p>
+<p>Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de 1 Go.
+Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être nécessaire d&#8217;avoir 4 Go de RAM au total.</p>
+</div>
+<div class="paragraph">
+<p>Tapez :</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Tout d&#8217;abord, si l&#8217;outil <code>dphys-swapfile</code> est installé et configuré sur la machine, commencez par désactiver le swap. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>dphys-swapfile uninstall</code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Tapez:</p>
@@ -1858,6 +1820,25 @@ swapon /swapfile</code></pre>
 </div>
 </div>
 </li>
+<li>
+<p>Enfin vous pouvez être tenté de limiter le swap (surtout utile sur les systèmes avec peu de RAM et du SSD. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systctl.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez ou modifiez la ligne:</p>
+<div class="listingblock">
+<div class="content">
+<pre>vm.swappiness = 5</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Le paramètre sera actif au prochain reboot</p>
+</li>
 </ol>
 </div>
 </div>
@@ -1867,7 +1848,10 @@ swapon /swapfile</code></pre>
 <h2 id="_installation_initiale_des_outils">6. Installation initiale des outils</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>La procédure d&#8217;installation ci-dessous configure ISPconfig avec les fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Amavisd, SPamAssassin, ClamAV, Apache, PHP, Let&#8217;s Encrypt, Mailman, PureFTPd, Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.</p>
+<p>La procédure d&#8217;installation ci-dessous configure ISPconfig avec les fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Apache, PHP, Let&#8217;s Encrypt, PureFTPd, Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.</p>
+</div>
+<div class="paragraph">
+<p>Pour les systèmes ayant 2 Go de RAM ou plus, il est fortement conseillé d&#8217;installer les outils ci après :  Amavisd, SPamAssassin, ClamAV, Mailman.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1893,7 +1877,15 @@ swapon /swapfile</code></pre>
 <p>Tapez :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd amavisd-new spamassassin clamav clamav-daemon unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour les systèmes avec plus de mémoire tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install amavisd-new spamassassin clamav clamav-daemon</code></pre>
 </div>
 </div>
 </li>
@@ -1950,6 +1942,15 @@ smtps inet n - - - - smtpd
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart postfix</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Si vous avez installé <code>SpamAssassin</code>, désactiver <code>SpamAssassin</code> puisque <code>amavisd</code> utilise celui ci en sous jacent. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop spamassassin
+systemctl disable spamassassin</code></pre>
 </div>
 </div>
 </li>
@@ -2127,11 +2128,10 @@ systemctl restart mariadb</code></pre>
 <p>La sortie doit être du type: <code>tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld</code></p>
 </li>
 <li>
-<p>Désactiver SpamAssassin puisque amavisd utilise celui ci en sous jacent. Tapez :</p>
+<p>Pour les serveur avec peu de ressources quelques éléments de tuning. Editez le fichier 50-server.cnf:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop spamassassin
-systemctl disable spamassassin</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/mysql/mariadb.conf.d/50-server.cnf</code></pre>
 </div>
 </div>
 </li>
@@ -2483,14 +2483,71 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
 </div>
 </div>
 </li>
+<li>
+<p>En Option: Activer les quotas si votre kernel le permet.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Installez les paquets de gestion des quotas. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install quota quotatool</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez <code>fstab</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/fstab</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Inserez le texte ci dessous pour chaque directive de montage</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>UUID=45576b38-39e8-4994-b8c1-ea4870e2e614 / ext4 errors=remount-ro,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 0 1</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour le Raspberry, éditez le fichier rc.local pour créer /dev/root à chaque reboot:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ln -s /dev/mmblk0p7 /dev/root
+vi /etc/rc.local</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez avant <code>exit 0</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>ln -s /dev/mmcblk0p7 /dev/root</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour activer les quotas, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mount -o remount /
+quotacheck -avugm
+quotaon -avug</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
 </ol>
 </div>
 </li>
 </ol>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_installation_et_configuration_de_phpmyadmin">6.8. Installation et configuration de phpmyadmin</h3>
+<div class="sect3">
+<h4 id="_installation_et_configuration_de_phpmyadmin">6.7.1. Installation et configuration de phpmyadmin</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2732,8 +2789,8 @@ systemctl restart apache2</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_et_configuration_de_roundcube">6.9. Installation et configuration de Roundcube</h3>
+<div class="sect3">
+<h4 id="_installation_et_configuration_de_roundcube">6.7.2. Installation et configuration de Roundcube</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2802,8 +2859,8 @@ systemctl restart apache2</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_de_lets_encrypt">6.10. Installation de Let&#8217;s Encrypt</h3>
+<div class="sect3">
+<h4 id="_installation_de_lets_encrypt">6.7.3. Installation de Let&#8217;s Encrypt</h4>
 <div class="paragraph">
 <p>Installez Let&#8217;s Encrypt. Tapez:</p>
 </div>
@@ -2816,8 +2873,8 @@ chmod a+x certbot-auto
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_dun_scanner_de_vulnérabilités">6.11. Installation d&#8217;un scanner de vulnérabilités</h3>
+<div class="sect3">
+<h4 id="_installation_dun_scanner_de_vulnérabilités">6.7.4. Installation d&#8217;un scanner de vulnérabilités</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2859,10 +2916,8 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_installation_dun_panel">7. Installation d&#8217;un Panel</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_dun_panel">6.8. Installation d&#8217;un Panel</h3>
 <div class="paragraph">
 <p>Il existe plusieurs type de panel de contrôle pour les VPS. La plupart sont payant.</p>
 </div>
@@ -2901,8 +2956,8 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 <div class="paragraph">
 <p>Pour rappel, HestiaCP (tout comme VestaCP) sont incompatibles d&#8217;ISPConfig et de Webmin. Ils doivent être utilisés seuls</p>
 </div>
-<div class="sect2">
-<h3 id="_installation_et_configuration_de_ispconfig">7.1. Installation et configuration de ISPConfig</h3>
+<div class="sect3">
+<h4 id="_installation_et_configuration_de_ispconfig">6.8.1. Installation et configuration de ISPConfig</h4>
 <div class="paragraph">
 <p>ISPConfig est un système de configuration de sites web totalement compatible avec Webmin.</p>
 </div>
@@ -3109,8 +3164,8 @@ Si le message "Possible attack detected. This action has been logged.". Cela sig
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_de_webmin">7.2. Installation de Webmin</h3>
+<div class="sect3">
+<h4 id="_installation_de_webmin">6.8.2. Installation de Webmin</h4>
 <div class="paragraph">
 <p>Webmin est un outil généraliste de configuration de votre serveur. Son usage peut être assez complexe mais il permet une configuration plus précise des fonctionnalités.</p>
 </div>
@@ -3268,16 +3323,14 @@ Si le message "Possible attack detected. This action has been logged.". Cela sig
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="domain-config">8. Configuration d&#8217;un domaine</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="domain-config">6.9. Configuration d&#8217;un domaine</h3>
 <div class="paragraph">
 <p>Cette configuration est réalisée avec le Panel ISPConfig installé dans le chapitre précédent.
 L&#8217;étape "login initial" n&#8217;est à appliquer qu&#8217;une seule fois. Une fois votre premier domaine configuré, vous pourrez vous loguer à ISPconfig en utilisant ce domaine à l&#8217;adresse: <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a> .</p>
 </div>
-<div class="sect2">
-<h3 id="_login_initial">8.1. Login initial</h3>
+<div class="sect3">
+<h4 id="_login_initial">6.9.1. Login initial</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -3500,8 +3553,8 @@ Vous trouverez donc tous les libellés dans la suite de la documentation en angl
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_de_la_zone_dns_dun_domaine">8.2. Création de la zone DNS d&#8217;un domaine</h3>
+<div class="sect3">
+<h4 id="_création_de_la_zone_dns_dun_domaine">6.9.2. Création de la zone DNS d&#8217;un domaine</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3574,8 +3627,8 @@ Une manière de corriger ce problème est de définir un DNS secondaire chez OVH
 <p>Ils doivent afficher une page web basique (Apache2, ou de parking).Si ce n&#8217;est pas le cas revérifier la configuration du DNS dans ISPConfig.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_activation_de_dnssec">8.3. Activation de DNSSEC</h3>
+<div class="sect3">
+<h4 id="_activation_de_dnssec">6.9.3. Activation de DNSSEC</h4>
 <div class="paragraph">
 <p>Vous pouvez maintenant activer DNSSEC afin d&#8217;augmenter la sécurité de résolution de nom de domaine:</p>
 </div>
@@ -3708,8 +3761,8 @@ Cela signifie que vous avez saisi une ou deux entrées DS dans vos enregistremen
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_exemple_de_configuration_de_domaine">8.4. Exemple de configuration de domaine</h3>
+<div class="sect3">
+<h4 id="_exemple_de_configuration_de_domaine">6.9.4. Exemple de configuration de domaine</h4>
 <div class="paragraph">
 <p>Une fois la configuration terminé, les différents enregistrements du domaines ressemblent à l&#8217;exemple ci-dessous.
 Il peut y avoir des enregistrements supplémentaires pour les configurations SPF, DKIM et Let&#8217;s encrypt.</p>
@@ -3741,8 +3794,8 @@ example.com.         3600 TXT            "v=spf1 mx a ~all"</pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="domain-site">8.5. Création d’un site web</h3>
+<div class="sect3">
+<h4 id="domain-site">6.9.5. Création d’un site web</h4>
 <div class="paragraph">
 <p>Dans la suite le site web sera nommé "example.com".</p>
 </div>
@@ -3855,8 +3908,8 @@ example.com.         3600 TXT            "v=spf1 mx a ~all"</pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="subdomain-site">8.6. Création d’un Site Vhost</h3>
+<div class="sect3">
+<h4 id="subdomain-site">6.9.6. Création d’un Site Vhost</h4>
 <div class="paragraph">
 <p>Dans la suite le sous-domaine sera nommé "mail.example.com".</p>
 </div>
@@ -3960,8 +4013,8 @@ Vous ne pouvez définir un sous-domaine que si vous avez défini le site web rac
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_associer_des_certificats_reconnu_à_vos_outils">8.7. Associer des certificats reconnu à vos outils</h3>
+<div class="sect3">
+<h4 id="_associer_des_certificats_reconnu_à_vos_outils">6.9.7. Associer des certificats reconnu à vos outils</h4>
 <div class="paragraph">
 <p>Comme vous avec créé votre premier domaine avec SSL et let&#8217;s encrypt dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux services de base:</p>
 </div>
@@ -4132,12 +4185,10 @@ incrontab -e.</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_surveillance_du_serveur_avec_munin_et_monit">9. Surveillance du serveur avec Munin et Monit</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_note_préliminaire">9.1. Note préliminaire</h3>
+<h3 id="_surveillance_du_serveur_avec_munin_et_monit">6.10. Surveillance du serveur avec Munin et Monit</h3>
+<div class="sect3">
+<h4 id="_note_préliminaire">6.10.1. Note préliminaire</h4>
 <div class="paragraph">
 <p>Installez tout d&#8217;abord les paquets insdispensables pour faire fonctionner Munin avec Apache puis activez le module fcgid:</p>
 </div>
@@ -4148,8 +4199,8 @@ a2enmod fcgid</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_et_configuration_de_munin">9.2. Installation et configuration de Munin</h3>
+<div class="sect3">
+<h4 id="_installation_et_configuration_de_munin">6.10.2. Installation et configuration de Munin</h4>
 <div class="paragraph">
 <p>Suivez les étapes ci-après:</p>
 </div>
@@ -4341,8 +4392,8 @@ includedir /etc/munin/munin-conf.d
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_activez_les_plugins_de_munin">9.3. Activez les plugins de Munin</h3>
+<div class="sect3">
+<h4 id="_activez_les_plugins_de_munin">6.10.3. Activez les plugins de Munin</h4>
 <div class="paragraph">
 <p>Dans Debian 10, tous les plugins complémentaires sont déjà activés.Vous pouvez être tenté de vérifier:</p>
 </div>
@@ -4382,8 +4433,8 @@ rm /usr/share/munin/plugins/mysql_</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installer_et_configurer_monit">9.4. Installer et configurer Monit</h3>
+<div class="sect3">
+<h4 id="_installer_et_configurer_monit">6.10.4. Installer et configurer Monit</h4>
 <div class="paragraph">
 <p>Pour installer et configurer Monit, vous devez appliquer la procédure suivante:</p>
 </div>
@@ -4569,12 +4620,10 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_configuration_de_la_messagerie">10. Configuration de la messagerie</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_de_rspamd_à_la_place_d_amavis_new">10.1. Installation de rspamd à la place d' Amavis-new</h3>
+<h3 id="_configuration_de_la_messagerie">6.11. Configuration de la messagerie</h3>
+<div class="sect3">
+<h4 id="_installation_de_rspamd_à_la_place_d_amavis_new">6.11.1. Installation de rspamd à la place d' Amavis-new</h4>
 <div class="paragraph">
 <p><code>rspamd</code> est réputé de meilleure qualité que <code>Amavis</code> dans la chasse aux spams. Vous pouvez décider de l&#8217;installer à la place d&#8217;Amavis. Cette installation reste optionnelle.</p>
 </div>
@@ -4978,8 +5027,8 @@ systemctl disable amavisd-new</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_du_serveur_de_messagerie">10.2. Création du serveur de messagerie</h3>
+<div class="sect3">
+<h4 id="_création_du_serveur_de_messagerie">6.11.2. Création du serveur de messagerie</h4>
 <div class="paragraph">
 <p>Pour créer un serveur de messagerie:</p>
 </div>
@@ -5021,8 +5070,8 @@ systemctl disable amavisd-new</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_finaliser_la_sécurisation_de_votre_serveur_de_mail">10.3. Finaliser la sécurisation de votre serveur de mail</h3>
+<div class="sect3">
+<h4 id="_finaliser_la_sécurisation_de_votre_serveur_de_mail">6.11.3. Finaliser la sécurisation de votre serveur de mail</h4>
 <div class="paragraph">
 <p>Afin de mieux sécuriser votre serveur de mail, appliquez les opérations suivantes:</p>
 </div>
@@ -5079,8 +5128,8 @@ systemctl disable amavisd-new</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_de_lautoconfig_pour_thunderbird_et_android">10.4. Création de l’autoconfig pour Thunderbird et Android</h3>
+<div class="sect3">
+<h4 id="_création_de_lautoconfig_pour_thunderbird_et_android">6.11.4. Création de l’autoconfig pour Thunderbird et Android</h4>
 <div class="paragraph">
 <p>La procédure est utilisé par Thunderbird et Android pour configurer automatiquement les paramètres de la messagerie.</p>
 </div>
@@ -5245,8 +5294,8 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.x
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_dautodiscover_pour_outlook">10.5. Création d’autodiscover pour Outlook</h3>
+<div class="sect3">
+<h4 id="_création_dautodiscover_pour_outlook">6.11.5. Création d’autodiscover pour Outlook</h4>
 <div class="paragraph">
 <p>Outlook utilise un autre mécanisme pour se configurer automatiquement. Il est basé sur l&#8217;utilisation du nom de sous-domaine <code>autodiscover</code>.</p>
 </div>
@@ -5441,8 +5490,8 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_dune_boite_mail">10.6. Création d’une boite mail</h3>
+<div class="sect3">
+<h4 id="_création_dune_boite_mail">6.11.6. Création d’une boite mail</h4>
 <div class="paragraph">
 <p>Pour créer une boite de messagerie:</p>
 </div>
@@ -5522,8 +5571,8 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_configuration_de_votre_client_de_messagerie">10.7. Configuration de votre client de messagerie.</h3>
+<div class="sect3">
+<h4 id="_configuration_de_votre_client_de_messagerie">6.11.7. Configuration de votre client de messagerie.</h4>
 <div class="paragraph">
 <p>Saisir l&#8217;adresse mail et votre mot de passe doit suffire pour configurer automatiquement votre client de messagerie.</p>
 </div>
@@ -5589,8 +5638,8 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="_mise_en_oeuvre_du_site_web_de_webmail">10.8. Mise en oeuvre du site web de webmail</h3>
+<div class="sect3">
+<h4 id="_mise_en_oeuvre_du_site_web_de_webmail">6.11.8. Mise en oeuvre du site web de webmail</h4>
 <div class="paragraph">
 <p>On suppose que vous avez install roundcube lors de la procédure d&#8217;installation initiale et que vous avez déjà créé le host mail.example.com.</p>
 </div>
@@ -5652,8 +5701,8 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_transfert_de_vos_boites_mails_imap">10.9. Transfert de vos boites mails IMAP</h3>
+<div class="sect3">
+<h4 id="_transfert_de_vos_boites_mails_imap">6.11.9. Transfert de vos boites mails IMAP</h4>
 <div class="paragraph">
 <p>Si vous faites une migration d&#8217;un ancien serveur vers un nouveau serveur vous souhaiterez probablement migrer aussi vos boites mail.</p>
 </div>
@@ -5723,10 +5772,8 @@ rm secretdst</pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_installation_de_joomla_ou_de_concrete5">11. Installation de Joomla ou de Concrete5</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_de_joomla_ou_de_concrete5">6.12. Installation de Joomla ou de Concrete5</h3>
 <div class="paragraph">
 <p>Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour et inclut une foule de plugins
 Concrete5 est un autre CMS assez connu  avec un design plus moderne.</p>
@@ -5735,8 +5782,8 @@ Concrete5 est un autre CMS assez connu  avec un design plus moderne.</p>
 <p>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.
 Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;appliquer à l&#8217;identique pour concrete5 en remplacant les textes joomla par concrete5.</p>
 </div>
-<div class="sect2">
-<h3 id="_création_du_site_web_de_joomla">11.1. Création du site web de Joomla</h3>
+<div class="sect3">
+<h4 id="_création_du_site_web_de_joomla">6.12.1. Création du site web de Joomla</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -5790,8 +5837,8 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_de_lapplication_joomla">11.2. Création de l&#8217;application Joomla</h3>
+<div class="sect3">
+<h4 id="_création_de_lapplication_joomla">6.12.2. Création de l&#8217;application Joomla</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig:</p>
 </div>
@@ -5853,18 +5900,16 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_installation_de_mediawiki">12. Installation de Mediawiki</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_de_mediawiki">6.13. Installation de Mediawiki</h3>
 <div class="paragraph">
 <p>Mediawiki est le portail wiki mondialement connu et utilisé notamment pour le site wikipedia.</p>
 </div>
 <div class="paragraph">
 <p>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</p>
 </div>
-<div class="sect2">
-<h3 id="_création_du_site_web_de_mediawiki">12.1. Création du site web de Mediawiki</h3>
+<div class="sect3">
+<h4 id="_création_du_site_web_de_mediawiki">6.13.1. Création du site web de Mediawiki</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -5918,8 +5963,8 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_de_lapplication_mediawiki">12.2. Création de l&#8217;application Mediawiki</h3>
+<div class="sect3">
+<h4 id="_création_de_lapplication_mediawiki">6.13.2. Création de l&#8217;application Mediawiki</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig:</p>
 </div>
@@ -5981,18 +6026,16 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_installation_de_wordpress">13. Installation de Wordpress</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_de_wordpress">6.14. Installation de Wordpress</h3>
 <div class="paragraph">
 <p>Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à jour.</p>
 </div>
 <div class="paragraph">
 <p>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</p>
 </div>
-<div class="sect2">
-<h3 id="_création_du_site_web_de_wordpress">13.1. Création du site web de Wordpress</h3>
+<div class="sect3">
+<h4 id="_création_du_site_web_de_wordpress">6.14.1. Création du site web de Wordpress</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -6046,8 +6089,8 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_de_lapplication_wordpress">13.2. Création de l&#8217;application Wordpress</h3>
+<div class="sect3">
+<h4 id="_création_de_lapplication_wordpress">6.14.2. Création de l&#8217;application Wordpress</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig:</p>
 </div>
@@ -6109,15 +6152,13 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_micro_weber">14. Micro Weber</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_micro_weber">6.15. Micro Weber</h3>
 <div class="paragraph">
 <p>Microweber est un système de gestion de contenu et un constructeur de sites web Open Source. Il est basé sur le langage de programmation PHP et le framework web Laravel 5, utilisant le glisser-déposer et permettant aux utilisateurs de créer rapidement du contenu, tout en programmant et en gérant plusieurs affichages. Il dispose d&#8217;une fonction d&#8217;édition en direct qui permet aux utilisateurs de visualiser leurs modifications telles qu&#8217;elles apparaîtraient.</p>
 </div>
-<div class="sect2">
-<h3 id="_création_du_site_web_de_microweber">14.1. Création du site web de Microweber</h3>
+<div class="sect3">
+<h4 id="_création_du_site_web_de_microweber">6.15.1. Création du site web de Microweber</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -6177,8 +6218,8 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_des_bases_de_données">14.2. Création des bases de données</h3>
+<div class="sect3">
+<h4 id="_création_des_bases_de_données">6.15.2. Création des bases de données</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -6248,8 +6289,8 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_de_microweber">14.3. Installation de Microweber</h3>
+<div class="sect3">
+<h4 id="_installation_de_microweber">6.15.3. Installation de Microweber</h4>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -6320,18 +6361,16 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_piwigo">15. Piwigo</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_piwigo">6.16. Piwigo</h3>
 <div class="paragraph">
 <p>Piwigo est une application web pour gérer votre collection de photos, et autres médias. Doté de puissantes fonctionnalités, il gère des galeries partout dans le monde. Elle est écrite en PHP et nécessite une base de données MySQL.</p>
 </div>
 <div class="paragraph">
 <p>Piwigo était auparavant connu sous le nom PhpWebGallery.</p>
 </div>
-<div class="sect2">
-<h3 id="_création_du_site_web_de_piwigo">15.1. Création du site web de Piwigo</h3>
+<div class="sect3">
+<h4 id="_création_du_site_web_de_piwigo">6.16.1. Création du site web de Piwigo</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -6391,8 +6430,8 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_des_bases_de_données_2">15.2. Création des bases de données</h3>
+<div class="sect3">
+<h4 id="_création_des_bases_de_données_2">6.16.2. Création des bases de données</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -6462,8 +6501,8 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_de_piwigo">15.3. Installation de Piwigo</h3>
+<div class="sect3">
+<h4 id="_installation_de_piwigo">6.16.3. Installation de Piwigo</h4>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -6535,10 +6574,8 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_installation_de_nextcloud">16. Installation de Nextcloud</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_de_nextcloud">6.17. Installation de Nextcloud</h3>
 <div class="paragraph">
 <p>NextCloud est un serveur d&#8217;hébergement et de partage de fichiers gratuit et open source, fork du projet ownCloud.
 Il est très similaire aux autres systèmes de partage de fichiers des services comme Google Drive, Dropbox et iCloud ou Seafile.
@@ -6548,8 +6585,8 @@ NextCloud s&#8217;intègre avec le courrier, calendrier, contacts et autres fonc
 Vous pouvez installer le client NextCloud sur un  ou plusieurs PC pour synchroniser les fichiers avec votre serveur Nextcloud.
 Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation, y compris Windows, macOS, FreeBSD, et Linux.</p>
 </div>
-<div class="sect2">
-<h3 id="_installation_initiale">16.1. Installation initiale</h3>
+<div class="sect3">
+<h4 id="_installation_initiale">6.17.1. Installation initiale</h4>
 <div class="paragraph">
 <p>NextCloud est écrit en PHP et utilise une base de données MariaDB pour stocker ses données.</p>
 </div>
@@ -6601,8 +6638,8 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_du_site_web_de_nextcloud">16.2. Création du site web de Nextcloud</h3>
+<div class="sect3">
+<h4 id="_création_du_site_web_de_nextcloud">6.17.2. Création du site web de Nextcloud</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -6662,8 +6699,8 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_des_bases_de_données_3">16.3. Création des bases de données</h3>
+<div class="sect3">
+<h4 id="_création_des_bases_de_données_3">6.17.3. Création des bases de données</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -6733,8 +6770,8 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_de_nextcloud_2">16.4. Installation de Nextcloud</h3>
+<div class="sect3">
+<h4 id="_installation_de_nextcloud_2">6.17.4. Installation de Nextcloud</h4>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -6803,16 +6840,14 @@ wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_installation_et_configuration_de_gitea">17. Installation et configuration de Gitea</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_gitea">6.18. Installation et configuration de Gitea</h3>
 <div class="paragraph">
 <p>Gitea est un système simple d&#8217;hébergement de code basé sur Git. C&#8217;est un fork de Gogs.
 Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un code plus simple.</p>
 </div>
-<div class="sect2">
-<h3 id="_création_du_site_web_de_gitea">17.1. Création du site web de Gitea</h3>
+<div class="sect3">
+<h4 id="_création_du_site_web_de_gitea">6.18.1. Création du site web de Gitea</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -6928,8 +6963,8 @@ chmod <span class="tok-m">770</span> /etc/gitea</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_des_bases_de_données_4">17.2. Création des bases de données</h3>
+<div class="sect3">
+<h4 id="_création_des_bases_de_données_4">6.18.2. Création des bases de données</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -6999,8 +7034,8 @@ chmod <span class="tok-m">770</span> /etc/gitea</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_téléchargez_et_installez_gitea">17.3. Téléchargez et installez Gitea</h3>
+<div class="sect3">
+<h4 id="_téléchargez_et_installez_gitea">6.18.3. Téléchargez et installez Gitea</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes:</p>
 </div>
@@ -7157,8 +7192,8 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_activer_une_connexion_ssh_dédiée">17.4. Activer une connexion SSH dédiée</h3>
+<div class="sect3">
+<h4 id="_activer_une_connexion_ssh_dédiée">6.18.4. Activer une connexion SSH dédiée</h4>
 <div class="paragraph">
 <p>En option, vous pouvez avoir envie de dédier une connexion SSH pour Gitea:</p>
 </div>
@@ -7226,18 +7261,16 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_installation_de_seafile">18. Installation de Seafile</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_de_seafile">6.19. Installation de Seafile</h3>
 <div class="paragraph">
 <p>Seafile est un système de partage de fichier simple et efficace écrit en Python. Il existe des clients de connexion pour Windows, Linux, Android, IOS.</p>
 </div>
 <div class="paragraph">
 <p>Cette installation est optionnelle.</p>
 </div>
-<div class="sect2">
-<h3 id="_création_du_site_web_de_seafile">18.1. Création du site web de Seafile</h3>
+<div class="sect3">
+<h4 id="_création_du_site_web_de_seafile">6.19.1. Création du site web de Seafile</h4>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -7330,8 +7363,8 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_création_de_bases_de_données">18.2. Création de bases de données</h3>
+<div class="sect3">
+<h4 id="_création_de_bases_de_données">6.19.2. Création de bases de données</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -7408,8 +7441,8 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_téléchargez_et_installez_seafile">18.3. Téléchargez et installez Seafile</h3>
+<div class="sect3">
+<h4 id="_téléchargez_et_installez_seafile">6.19.3. Téléchargez et installez Seafile</h4>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -7467,8 +7500,8 @@ chown -R web1:client0 seafile <i class="conum" data-value="1"></i><b>(1)</b></co
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_lancement_initial">18.4. Lancement initial</h3>
+<div class="sect3">
+<h4 id="_lancement_initial">6.19.4. Lancement initial</h4>
 <div class="paragraph">
 <p>Nous allons effectuer un premier lancement du serveur Seafile:</p>
 </div>
@@ -7585,8 +7618,8 @@ sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" 
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_lancement_automatique_de_seafile">18.5. Lancement automatique de Seafile</h3>
+<div class="sect3">
+<h4 id="_lancement_automatique_de_seafile">6.19.5. Lancement automatique de Seafile</h4>
 <div class="paragraph">
 <p>Afin de s&#8217;assurer que Seafile tourne en permanence, on doit créer un script de lancement automatique de Seafile:</p>
 </div>
@@ -7724,15 +7757,13 @@ stop<span class="tok-o">)</span>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_installation_dun_serveur_de_vpn_pritunl">19. Installation d&#8217;un serveur de VPN Pritunl</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_dun_serveur_de_vpn_pritunl">6.20. Installation d&#8217;un serveur de VPN Pritunl</h3>
 <div class="paragraph">
 <p>Pritunl est un serveur VPN basé sur OpenVPN.</p>
 </div>
-<div class="sect2">
-<h3 id="_création_du_site_web_de_pritunl">19.1. Création du site web de Pritunl</h3>
+<div class="sect3">
+<h4 id="_création_du_site_web_de_pritunl">6.20.1. Création du site web de Pritunl</h4>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -7811,8 +7842,8 @@ stop<span class="tok-o">)</span>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_de_pritunl">19.2. Installation de Pritunl</h3>
+<div class="sect3">
+<h4 id="_installation_de_pritunl">6.20.2. Installation de Pritunl</h4>
 <div class="paragraph">
 <p>Veuillez suivre la procédure suivante:</p>
 </div>
@@ -7874,8 +7905,8 @@ systemctl <span class="tok-nb">enable</span> mongod pritunl</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_configuration_de_pritunl">19.3. Configuration de Pritunl</h3>
+<div class="sect3">
+<h4 id="_configuration_de_pritunl">6.20.3. Configuration de Pritunl</h4>
 <div class="paragraph">
 <p>Votre service Pritunl est actif. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</p>
 </div>
@@ -8058,8 +8089,8 @@ systemctl start pritunl</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_se_connecter_au_serveur_de_vpn">19.4. Se connecter au serveur de VPN</h3>
+<div class="sect3">
+<h4 id="_se_connecter_au_serveur_de_vpn">6.20.4. Se connecter au serveur de VPN</h4>
 <div class="paragraph">
 <p>Comme Pritunl est compatible OpenVPN n&#8217;importe quel logiciel compatible OpenVPN peut être utilisé.
 Pritunl founit un <a href="https://client.pritunl.com/">client</a> compatible pour Linux, macOS, and Windows.</p>
@@ -8070,8 +8101,8 @@ Ce fichier est à importer dans le logiciel client de Pritunl.
 Une fois fait, une compte apparaît dans le logiciel client. Vous pourrez vous connecter en cliquant sur le bouton <code>Connect</code> du compte utilisateur.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_réparer_une_base_pritunl">19.5. Réparer une base Pritunl</h3>
+<div class="sect3">
+<h4 id="_réparer_une_base_pritunl">6.20.5. Réparer une base Pritunl</h4>
 <div class="paragraph">
 <p>Si jamais votre base est corrompue, vous pourrez la réparer en tapant:</p>
 </div>
@@ -8083,8 +8114,8 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_mot_de_passe_perdu">19.6. Mot de passe perdu</h3>
+<div class="sect3">
+<h4 id="_mot_de_passe_perdu">6.20.6. Mot de passe perdu</h4>
 <div class="paragraph">
 <p>Vous pouvez re-générer un mot de passe en tapant:</p>
 </div>
@@ -8095,10 +8126,8 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_installation_de_grafana">20. Installation de Grafana</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_de_grafana">6.21. Installation de Grafana</h3>
 <div class="paragraph">
 <p>Grafana est un logiciel de visualisation et d&#8217;analyse à code source ouvert. Il vous permet d&#8217;interroger, de visualiser, d&#8217;alerter et d&#8217;explorer vos mesures, quel que soit l&#8217;endroit où elles sont stockées. En clair, il vous fournit des outils pour transformer vos données de base de données de séries chronologiques (TSDB) en de magnifiques graphiques et visualisations.
 Grafana s&#8217;appuie sur Prometheus afin d&#8217;obtenir des métriques.
@@ -8107,8 +8136,8 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 <div class="paragraph">
 <p>Cette installation est optionnelle puisque Munin est déjà installé sur votre système.</p>
 </div>
-<div class="sect2">
-<h3 id="_création_du_site_web_de_grafana">20.1. Création du site web de Grafana</h3>
+<div class="sect3">
+<h4 id="_création_du_site_web_de_grafana">6.21.1. Création du site web de Grafana</h4>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -8182,8 +8211,8 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_de_grafana_2">20.2. Installation de Grafana</h3>
+<div class="sect3">
+<h4 id="_installation_de_grafana_2">6.21.2. Installation de Grafana</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -8349,8 +8378,8 @@ apt install grafana prometheus prometheus-mysqld-exporter prometheus-apache-expo
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_et_configuration_de_loki">20.3. Installation et configuration de Loki</h3>
+<div class="sect3">
+<h4 id="_installation_et_configuration_de_loki">6.21.3. Installation et configuration de Loki</h4>
 <div class="paragraph">
 <p>Pour installer Loki, appliquez la procédure suivante:</p>
 </div>
@@ -8533,8 +8562,8 @@ sudo service loki status</code></pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_installation_et_configuration_de_promtail">20.4. Installation et configuration de Promtail</h3>
+<div class="sect3">
+<h4 id="_installation_et_configuration_de_promtail">6.21.4. Installation et configuration de Promtail</h4>
 <div class="paragraph">
 <p>Installez maintenant Promtail:</p>
 </div>
@@ -8692,12 +8721,10 @@ sudo service promtail status</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_annexe">21. Annexe</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_de_hestia">21.1. Installation de Hestia</h3>
+<h3 id="_annexe">6.22. Annexe</h3>
+<div class="sect3">
+<h4 id="_installation_de_hestia">6.22.1. Installation de Hestia</h4>
 <div class="paragraph">
 <p>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
 La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="bare">https://docs.hestiacp.com/</a></p>
@@ -8751,8 +8778,8 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_backup">21.2. backup</h3>
+<div class="sect3">
+<h4 id="_backup">6.22.2. backup</h4>
 <div class="paragraph">
 <p>pour installer borg backup en mode rescue afin d&#8217;avoir la dernière version.
 apt install python3-pip libssl-dev cython3 gcc g++ libpython-dev libacl1-dev
@@ -8763,10 +8790,11 @@ pip3 install rdiff-backup</p>
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-04-17 22:36:02 +0200
+Last updated 2020-04-19 22:01:10 +0200
 </div>
 </div>
 <style>

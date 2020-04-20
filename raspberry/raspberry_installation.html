@@ -454,6 +454,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_choix_du_registrar">2. Choix du registrar</a></li>
 <li><a href="#_installation_du_linux_sur_votre_raspberry">3. Installation du linux sur votre raspberry.</a></li>
 <li><a href="#root_login">4. Se loguer root sur le serveur</a></li>
+<li><a href="#_configuration_basique">5. Configuration basique</a>
+<ul class="sectlevel2">
+<li><a href="#_mettre_léditeur_de_votre_choix">5.1. Mettre l&#8217;éditeur de votre choix</a></li>
+<li><a href="#_installation_dun_repository_pour_etc">5.2. Installation d&#8217;un repository pour <code>/etc</code></a></li>
+<li><a href="#_mise_à_jour_des_sources_de_paquets_debian">5.3. Mise à jour des sources de paquets Debian</a></li>
+<li><a href="#_installation_des_paquets_de_base">5.4. Installation des paquets de base</a></li>
+<li><a href="#_installer_loutil_debfoster">5.5. Installer l&#8217;outil Debfoster</a></li>
+<li><a href="#_création_dun_fichier_keeper_dans_etc">5.6. Création d&#8217;un fichier keeper dans /etc</a></li>
+<li><a href="#_installation_des_mises_à_jours_automatiques">5.7. Installation des mises à jours automatiques</a></li>
+<li><a href="#_vérification_du_nom_de_serveur">5.8. Vérification du nom de serveur</a></li>
+<li><a href="#_interdire_le_login_direct_en_root">5.9. Interdire le login direct en root</a></li>
+<li><a href="#_création_dune_clé_de_connexion_ssh_locale">5.10. Création d&#8217;une clé de connexion ssh locale</a></li>
+<li><a href="#_sudo_sans_mot_de_passe">5.11. Sudo sans mot de passe</a></li>
+<li><a href="#_installer_loutil_dselect">5.12. Installer l&#8217;outil dselect</a></li>
+<li><a href="#_ajouter_un_fichier_de_swap">5.13. Ajouter un fichier de swap</a></li>
+</ul>
+</li>
+<li><a href="#_installation_initiale_des_outils">6. Installation initiale des outils</a>
+<ul class="sectlevel2">
+<li><a href="#_configuration_de_postfix">6.1. Configuration de Postfix</a></li>
+<li><a href="#_configuration_de_mariadb">6.2. Configuration de MariaDB</a></li>
+<li><a href="#_configuration_dapache">6.3. Configuration d&#8217;Apache</a></li>
+<li><a href="#_installation_et_configuration_de_mailman">6.4. Installation et Configuration de Mailman</a></li>
+<li><a href="#_configuration_d_awstats">6.5. Configuration d' Awstats</a></li>
+<li><a href="#_configuration_de_fail2ban">6.6. Configuration de Fail2ban</a></li>
+<li><a href="#_installation_et_configuration_de_pureftpd">6.7. Installation et configuration de PureFTPd</a></li>
+<li><a href="#_annexe">6.8. Annexe</a></li>
+<li><a href="#_configuration_dun_écran_3_5inch_rpi_lcd_a">6.9. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -527,7 +557,7 @@ Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation es
 <p>un site <a href="https://wordpress.com">Wordpress</a>,</p>
 </li>
 <li>
-<p>un site <a href="https://microweber.com">Microweber</a>,</p>
+<p>un site <a href="https://microweber.org/">Microweber</a>,</p>
 </li>
 <li>
 <p>un site Photo sous <a href="https://piwigo.org/">Piwigo</a>,</p>
@@ -565,12 +595,20 @@ Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation es
 <p>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'. Ce dernier exemple a un taux de complexité est bien meilleur que les mots de passe classiques. Il est aussi plus facile à retenir que 'Az3~1ym_a&amp;'.</p>
 </div>
 <div class="paragraph">
-<p>Le coût pour mettre en oeuvre ce type de serveur est relativement faible:
-* Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y avoir des promos)
-* Comptez 26€ pour acheter une carte Raspberry PI 3 A+ (1Go de Ram) et 61€ pour un PI 4 avec 4Go de Ram. A cela il faut ajouter un boitier, une alim et une flash de 64 ou 128 Go. Vous en aurez donc pour 110€ si vous achetez tout le kit.</p>
+<p>Le coût pour mettre en oeuvre ce type de serveur est relativement faible:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y avoir des promos)</p>
+</li>
+<li>
+<p>Comptez 26€ pour acheter une carte Raspberry PI 3 A+ (1Go de Ram) et 61€ pour un PI 4 avec 4Go de Ram. A cela il faut ajouter un boitier, une alim et une flash de 64 ou 128 Go (prenez les cartes SD les plus rapide possible en écriture). Vous en aurez donc pour 110€ si vous achetez tout le kit.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Par rapport à une solution VPS directement dans le cloud, ce budget correspond à 8 mois d&#8217;abonnement.</p>
+<p>Par rapport à une solution VPS directement dans le cloud, ce budget correspond à 7 mois d&#8217;abonnement.</p>
 </div>
 </div>
 </div>
@@ -649,7 +687,130 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 <p>Il vous faudra un lecteur de flash microSD - USB que vous brancherez sur votre PC.</p>
 </div>
 <div class="paragraph">
-<p>Il existe maintenant un outil nommé <a href="https://downloads.raspberrypi.org/imager/imager_amd64.deb">Rasberry PI Imager</a> pour la plateforme qui vous convient. C&#8217;est le moyen de plus simple de flasher votre raspberry.</p>
+<p>Il existe maintenant un outil nommé <a href="https://www.raspberrypi.org/downloads/">Rasberry PI Imager</a> pour la plateforme qui vous convient. C&#8217;est le moyen de plus simple de flasher votre raspberry.</p>
+</div>
+<div class="paragraph">
+<p>Pour Windows, très simple, il suffit de lancer le programme téléchargé.
+Pour Linux, appliquer la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code></a></p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp
+wget https://downloads.raspberrypi.org/imager/imager_amd64.deb
+dpkg -i imager_amd64.deb</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lancez le programme.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Suivez la procédure ci dessous commune à toutes les plateformes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sélectionnez <code>Choose OS</code> et dans la liste choisissez <code>Raspbian</code></p>
+</li>
+<li>
+<p>Sélectionnez <code>CHoose SD CARD</code> et sélectionnez votre lecteur de carte SD</p>
+</li>
+<li>
+<p>Cliquez sur <code>Write</code></p>
+</li>
+<li>
+<p>Attendez la fin du chargement et de l&#8217;écriture sur la flash.</p>
+</li>
+<li>
+<p>Enlevez la carte SD de votre lecteur et insèrez la dans votre raspberry PI.</p>
+</li>
+<li>
+<p>Brancher un clavier, une souris et un écran (ou utilisez un écran 3,5" configuré selon la procédure en annexe).</p>
+</li>
+<li>
+<p>Branchez votre Rasberry sur votre réseau ethernet filaire (vous pouvez aussi utiliser le wifi)</p>
+</li>
+<li>
+<p>Démarrez votre raspberry.</p>
+</li>
+<li>
+<p>Après l&#8217;écran de démarrage arc en ciel, vous devez assez rapidement arriver sur le bureau</p>
+</li>
+<li>
+<p>Un programme doit se lancer automatiquement.</p>
+</li>
+<li>
+<p>Sélectionnez le clavier et la langue en français</p>
+</li>
+<li>
+<p>Tapez votre nouveau mot de passe root</p>
+</li>
+<li>
+<p>Choisissez un full screen sans bords</p>
+</li>
+<li>
+<p>Choississez votre connexion wifi et entrez le mot de passe</p>
+</li>
+<li>
+<p>Bien noter votre adresse IP elle vous sera utile ensuite</p>
+</li>
+<li>
+<p>Les mises à jours de paquets debian ainsi que l&#8217;installation des traductions en français vont s&#8217;installer.</p>
+</li>
+<li>
+<p>Une fois les installations terminées, le raspberry va rebooter.</p>
+</li>
+<li>
+<p>Une fois rebooté, sélectionnez dans le menu <code>Préférences</code>&#8594;`Configuration du Raspberry PI`</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Dans l&#8217;onglet <code>Display</code> Cliquez sur <code>Set Resolution</code> et choisissez <code>31: 1920x1080</code></p>
+</li>
+<li>
+<p>Dans l&#8217;onglet <code>Interfaces</code> activez <code>SSH</code> et <code>VNC</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Valider</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur l&#8217;icone <code>VNC</code> dans la barre en haut à Droite</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Dans la fenêtre cliquez sur le menu burger en haut à Droite.</p>
+</li>
+<li>
+<p>Choisissez <code>Options</code> puis l&#8217;onglet <code>Sécurité</code></p>
+</li>
+<li>
+<p>Dans le champ Authentification choisissez l&#8217;option <code>mot de passe VNC</code></p>
+</li>
+<li>
+<p>Tapez votre mot de passe dans les deux champs et cliquez <code>Valider</code> puis <code>OK</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Vous pouvez maintenant rebooter votre raspberry sans écran et sans clavier pour continuer la configuration.</p>
+</li>
+<li>
+<p>Vous avez deux options: connexion en mode SSH ou au travers d&#8217;une connection VNC</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -725,11 +886,2314 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_configuration_basique">5. Configuration basique</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_mettre_léditeur_de_votre_choix">5.1. Mettre l&#8217;éditeur de votre choix</h3>
+<div class="paragraph">
+<p>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient.</p>
+</div>
+<div class="paragraph">
+<p><a href="#root_login">Loguez vous comme <code>root</code></a> et tapez:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>update-alternatives  --config editor</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pour les débutants, il est conseillé d&#8217;utiliser nano</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_dun_repository_pour_etc">5.2. Installation d&#8217;un repository pour <code>/etc</code></h3>
+<div class="paragraph">
+<p>Si vous souhaitez gérer en gestion de configuration le contenu de votre répertoire <code>/etc</code>, installez <code>etckeeper</code>.</p>
+</div>
+<div class="paragraph">
+<p>Cette installation est optionnelle.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt update
+apt install etckeeper</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Vous pouvez créer un repository privé dans le cloud pour stocker votre configuration de serveur (autre serveur privé de confiance ou repository privé  <code>Gitlab</code> ou <code>Github</code>).</p>
+</li>
+<li>
+<p>Ajoutez ce repository distant. Pour <code>Gitlab</code> et <code>Github</code>, une fois le repository créé, demandez l&#8217;affichage de la commande git pour une communication en ssh. Tapez ensuite sur votre serveur :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc
+git remote add origin git@github.com:username/etc_keeper.git <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer l&#8217;url par celle qui correspond au chemin de votre repository</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>modifier le fichier de configuration de <code>etckeeper</code>. tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/etckeeper/etckeeper.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Recherchez la ligne contenant <code>PUSH_REMOTE</code> et ajoutez y tous les repositories distant sur lesquels vous souhaitez pousser les modifications. Pour notre configuration, mettez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">PUSH_REMOTE</span><span class="tok-o">=</span><span class="tok-s2">&quot;origin&quot;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour éviter demandes de mot de passe de la part de <code>github</code> ou <code>gitlab</code>, il est nécessaire de déclarer une clé publique sur leur site. Créez une clé sur votre serveur pour l&#8217;utilisateur root:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Créer un répertoire <code>/root/.ssh</code> s&#8217;il n&#8217;existe pas. tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /root
+mkdir -p .ssh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Allez dans le répertoire. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /root/.ssh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Générez vous clés. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh-keygen -t rsa</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Un ensemble de questions apparaît. Si un texte vous explique que le fichier existe déjà, arrêtez la procédure. Cela signifie que vous avez déjà créé une clé et que vous risquez de perdre la connexion à d&#8217;autres serveurs si vous en générez une nouvelle. Sinon, appuyez sur Entrée à chaque fois pour accepter les valeurs par défaut.</p>
+</li>
+<li>
+<p>Allez sur <code>gitlab</code> ou <code>github</code> dans la rubriques "settings" et le menu "SSH keys". Ajoutez la clé que vous aurez affiché avec la commande suivante:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cat /root/.ssh/id_rsa.pub</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Effectuez un premier push. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc
+git push -u origin master</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>aucun mot de passe ne doit vous être demandé. Si ce n&#8217;est pas le cas, re-vérifier les étapes précédentes.</p>
+</li>
+<li>
+<p>Lancer <code>etckeeper</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>etckeeper commit</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tout le contenu de <code>/etc</code> est poussé sur le repository. Saisissez un commentaire.</p>
+</li>
+<li>
+<p>C&#8217;est fait !</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mise_à_jour_des_sources_de_paquets_debian">5.3. Mise à jour des sources de paquets Debian</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Modifier la liste standard de paquets</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Éditer le fichier <code>/etc/apt/sources.list</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apt/sources.list</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Dé-commenter les lignes débutant par <code>deb</code> et contenant le terme <code>backports</code>. Par exemple pour <code>#deb <a href="http://deb.debian.org/debian" class="bare">http://deb.debian.org/debian</a> buster-backports main contrib non-free</code> enlever le # en début de ligne</p>
+</li>
+<li>
+<p>Ajouter sur toutes les lignes les paquets <code>contrib</code> et <code>non-free</code> . en ajoutant ces textes après chaque mot <code>main</code> du fichier <code>source.list</code></p>
+</li>
+<li>
+<p>Le fichier doit ressembler à ceci:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">deb http://raspbian.raspberrypi.org/raspbian/ buster main contrib non-free rpi</span>
+<span class="tok-c1"># Uncomment line below then &#39;apt-get update&#39; to enable &#39;apt-get source&#39;</span>
+<span class="tok-c1">#deb-src http://raspbian.raspberrypi.org/raspbian/ buster main contrib non-free rpi</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Effectuer une mise à niveau du système</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Mettez à jour la liste des paquets. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt update</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installez les nouveautés. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt dist-upgrade</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Effectuez du ménage. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt autoremove</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_des_paquets_de_base">5.4. Installation des paquets de base</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends man</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installer_loutil_debfoster">5.5. Installer l&#8217;outil Debfoster</h3>
+<div class="paragraph">
+<p>L&#8217;outil <code>debfoster</code> permet de ne conserver que les paquets essentiels.</p>
+</div>
+<div class="paragraph">
+<p>Cette installation est optionnelle.</p>
+</div>
+<div class="paragraph">
+<p>Il maintient un fichier <code>keepers</code> présent dans <code>/var/lib/debfoster</code></p>
+</div>
+<div class="paragraph">
+<p>En répondant aux questions de conservations de paquets, <code>debfoster</code> maintient la liste des paquets uniques nécessaires au système.
+Tous les autres paquets seront supprimés.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Ajouter le paquet <code>debfoster</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install debfoster</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lancez <code>debfoster</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>debfoster</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Répondez au questions pour chaque paquet</p>
+</li>
+<li>
+<p>Acceptez la liste des modifications proposées à la fin. Les paquets superflus seront supprimés</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Ci dessous une petite liste de paquets à conserver sur une installation basique:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alacarte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">apparmor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">apt-listchanges</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">arandr</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">avahi-daemon</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">binutils-arm-linux-gnueabihf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">blueman</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bluetooth</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cifs-utils</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">console-setup</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debconf-utils</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debfoster</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debian-reference-en</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dphys-swapfile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">etckeeper</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ethtool</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fake-hwclock</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fbset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ffmpeg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">firmware-atheros</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">firmware-brcm80211</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">firmware-libertas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">firmware-misc-nonfree</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">firmware-realtek</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gldriver-test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hardlink</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">htop</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hunspell-en-gb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hunspell-fr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hyphen-en-gb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hyphen-fr</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keyutils</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locales</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lxde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mythes-fr</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ncdu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">omxplayer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pi-package</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">piclone</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">piwiz</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pkg-config</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">python-pip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">qpdfview</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">raspberrypi-net-mods</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">raspberrypi-ui-mods</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">raspi-copies-and-fills</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">read-edid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">realvnc-vnc-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">realvnc-vnc-viewer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rng-tools</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rp-prefapps</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rpi-update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rsync</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ssh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ssh-import-id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">strace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sudo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tree</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ttf-bitstream-vera</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">usb-modeswitch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">usbutils</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v4l-utils</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vl805fw</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wamerican</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wfrench</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wireless-tools</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wpasupplicant</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xcompmgr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xfonts-100dpi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xinit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xml-core</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xserver-xorg-video-fbdev</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">zip</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_création_dun_fichier_keeper_dans_etc">5.6. Création d&#8217;un fichier keeper dans /etc</h3>
+<div class="paragraph">
+<p>Vous pourriez être intéressé après l&#8217;installation de <code>debfoster</code> et de <code>etckeeper</code> de construire automatiquement un fichier qui contient la liste des paquets qui permettent de réinstaller le système:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/etckeeper/pre-commit.d/35debfoster</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Saisissez dans le fichier:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/sh</span>
+<span class="tok-nb">set</span> -e
+
+<span class="tok-c1"># Make sure sort always sorts in same order.</span>
+<span class="tok-nv">LANG</span><span class="tok-o">=</span>C
+<span class="tok-nb">export</span> LANG
+
+shellquote<span class="tok-o">()</span> <span class="tok-o">{</span>
+        <span class="tok-c1"># Single quotes text, escaping existing single quotes.</span>
+        sed -e <span class="tok-s2">&quot;s/&#39;/&#39;\&quot;&#39;\&quot;&#39;/g&quot;</span> -e <span class="tok-s2">&quot;s/^/&#39;/&quot;</span> -e <span class="tok-s2">&quot;s/</span>$<span class="tok-s2">/&#39;/&quot;</span>
+<span class="tok-o">}</span>
+
+
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$VCS</span><span class="tok-s2">&quot;</span> <span class="tok-o">=</span> git <span class="tok-o">]</span> <span class="tok-o">||</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$VCS</span><span class="tok-s2">&quot;</span> <span class="tok-o">=</span> hg <span class="tok-o">]</span> <span class="tok-o">||</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$VCS</span><span class="tok-s2">&quot;</span> <span class="tok-o">=</span> bzr <span class="tok-o">]</span> <span class="tok-o">||</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$VCS</span><span class="tok-s2">&quot;</span> <span class="tok-o">=</span> darcs <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+        <span class="tok-c1"># Make sure the file is not readable by others, since it can leak</span>
+        <span class="tok-c1"># information about contents of non-readable directories in /etc.</span>
+        debfoster -q -k /etc/keepers
+        chmod <span class="tok-m">600</span> /etc/keepers
+        sed -i <span class="tok-s2">&quot;1i\\# debfoster file&quot;</span> /etc/keepers
+        sed -i <span class="tok-s2">&quot;1i\\# Generated by etckeeper.  Do not edit.&quot;</span>  /etc/keepers
+
+        <span class="tok-c1"># stage the file as part of the current commit</span>
+        <span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$VCS</span><span class="tok-s2">&quot;</span> <span class="tok-o">=</span> git <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+                <span class="tok-c1"># this will do nothing if the keepers file is unchanged.</span>
+                git add keepers
+        <span class="tok-k">fi</span>
+        <span class="tok-c1"># hg, bzr and darcs add not done, they will automatically</span>
+        <span class="tok-c1"># include the file in the current commit</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sauvez et tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">755</span> /etc/etckeeper/pre-commit.d/35debfoster</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Exécutez maintenant <code>etckeeper</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>etckeeper commit</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Le fichier keepers est créé et sauvegardé automatiquement.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_des_mises_à_jours_automatiques">5.7. Installation des mises à jours automatiques</h3>
+<div class="paragraph">
+<p>Si vous souhaitez installer automatiquement les paquets Debian de correction de bugs de sécurité, cette installation est pour vous.</p>
+</div>
+<div class="paragraph">
+<p>Cette installation est optionnelle.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+L&#8217;installation automatique de paquets peut conduire dans certains cas très rare à des dysfonctionnements du serveur. Il est important de regarder périodiquement les logs d&#8217;installation
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Tapez:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install unattended-upgrades</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vérification_du_nom_de_serveur">5.8. Vérification du nom de serveur</h3>
+<div class="paragraph">
+<p>Cette partie consiste à vérifier que le serveur a un hostname correctement configuré.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>vérifier que le hostname est bien celui attendu (c&#8217;est à dire configuré par votre hébergeur). Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cat /etc/hostname</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le nom du hostname (sans le domaine) doit s&#8217;afficher.</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Si ce n&#8217;est pas le cas, changer ce nom en éditant le fichier. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="shell"><span></span>vi /etc/hostname</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Changez la valeur, sauvegardez et rebootez. Tapez :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>reboot</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Vérifier le fichier <code>hosts</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cat /etc/hosts</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Si le fichier contient plusieurs lignes avec la même adresse de loopback en <code>127.x.y.z</code>, en gardez une seule et celle avec le hostname et le nom de domaine complet.</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>si ce n&#8217;est pas le cas, changer les lignes en éditant le fichier. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/hosts</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Changez la ou les lignes, sauvegardez.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Le FQDN (nom de machine avant le nom de domaine) doit être déclaré avant le hostname simple dans le fichier <code>hosts</code>.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Rebootez. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>reboot</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Vérifiez que tout est correctement configuré.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>hostname</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La sortie doit afficher le nom de host.</p>
+</div>
+</li>
+<li>
+<p>Tapez ensuite :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>hostname -f</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La sortie doit afficher le nom de host avec le nom de domaine.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_interdire_le_login_direct_en_root">5.9. Interdire le login direct en root</h3>
+<div class="paragraph">
+<p>Il est toujours vivement déconseillé d&#8217;autoriser la possibilité de se connecter directement en SSH en tant que root.
+De ce fait, notre première action sera de désactiver le login direct en root  et d&#8217;autoriser le sudo.
+Respectez bien les étapes de cette procédure:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Ajoutez un utilisateur standard qui sera nommé par la suite en tant que &lt;sudo_username&gt;</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>adduser &lt;sudo_username&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Répondez aux questions qui vont sont posées: habituellement le nom complet d&#8217;utilisateur et le mot de passe.</p>
+</li>
+<li>
+<p>Donner les attributs sudo à l&#8217;utilisateur <code>&lt;sudo_username&gt;</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>usermod -a -G sudo &lt;sudo_username&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Dans une autre fenêtre, se connecter sur le serveur avec votre nouveau compte <code>&lt;sudo_username&gt;</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh &lt;sudo_username&gt;@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>une fois logué, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo bash</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tapez le mot de passe de votre utilisateur. Vous devez avoir accès au compte root. Si ce n&#8217;est pas le cas, revérifiez la procédure et repassez toutes les étapes.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Tout pendant que ces premières étapes ne donnent pas satisfaction ne passez pas à la suite sous peine de perdre la possibilité d’accéder à votre serveur.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Il faut maintenant modifier la configuration de sshd.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Editez le fichier <code>/etc/ssh/sshd_config</code>, Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/ssh/sshd_config</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>il faut rechercher la ligne: <code>PermitRootLogin yes</code> et la remplacer par:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">PermitRootLogin no</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez le serveur ssh. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service sshd restart</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Faites maintenant l&#8217;essai de vous re-loguer avec le compte root.Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh root@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacer ici &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Ce ne devrait plus être possible: le serveur vous l&#8217;indique par un message <code>Permission denied, please try again.</code></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_dune_clé_de_connexion_ssh_locale">5.10. Création d&#8217;une clé de connexion ssh locale</h3>
+<div class="paragraph">
+<p>Pour créer une clé et la déployer:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Créez une clé sur votre machine locale (et pas sur le serveur distant!):</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Ouvrir un terminal</p>
+</li>
+<li>
+<p>Créer un répertoire <code>~/.ssh</code> s&#8217;il n&#8217;existe pas. tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p <span class="tok-nv">$HOME</span>/.ssh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Allez dans le répertoire. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> ~/.ssh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Générez vous clés. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh-keygen -t rsa</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Un ensemble de questions apparaît. Si un texte vous explique que le fichier existe déjà, arrêtez la procédure. Cela signifie que vous avez déjà créé une clé et que vous risquez de perdre la connexion à d&#8217;autres serveurs si vous en générez une nouvelle. Sinon, appuyez sur Entrée à chaque fois pour accepter les valeurs par défaut.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Sur votre PC local afficher la clé à l&#8217;écran. Elle sera copiée-collée par la suite:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cat /root/.ssh/id_rsa.pub</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Déployez votre clé:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Loguez vous sur votre serveur distant. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh &lt;sudo_username&gt;@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Entrez votre mot de passe</p>
+</div>
+</li>
+<li>
+<p>Créer un répertoire <code>~/.ssh</code> s&#8217;il n&#8217;existe pas. tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p <span class="tok-nv">$HOME</span>/.ssh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éditez le fichier <code>~/.ssh/authorized_keys</code> tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi ~/.ssh/authorized_keys</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et coller dans ce fichier le texte contenu dans le votre fichier local <code>~/.ssh/id_rsa.pub</code>. Remarque: il peut y avoir déjà des clés dans le fichier <code>authorized_keys</code>.</p>
+</div>
+</li>
+<li>
+<p>Sécurisez votre fichier de clés. Tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">600</span> ~/.ssh/authorized_keys</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sécurisez le répertoire SSH; Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">700</span> ~/.ssh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Déconnectez vous de votre session</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Vérifiez que tout fonctionne en vous connectant. Tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh &lt;sudo_username&gt;@&lt;example.com&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>La session doit s&#8217;ouvrir sans demander de mot de passe.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sudo_sans_mot_de_passe">5.11. Sudo sans mot de passe</h3>
+<div class="paragraph">
+<p>Avant tout, il faut bien se rendre compte que cela constitue potentiellement une faille de sécurité et qu&#8217;en conséquence, le compte possédant cette propriété devra être autant sécurisé qu&#8217;un compte root.
+L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en gardant la facilité de se loguer root sur le système au travers d&#8217;un super-compte.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Ajoutez un groupe sudonp et y affecter un utilisateur. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>addgroup --system sudonp</code></pre>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Ajouter l&#8217;utilisateur: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>usermod -a -G sudonp &lt;sudo_username&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éventuellement retirez l&#8217;utilisateur du groupe sudo s&#8217;il a été ajouté auparavant :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>gpasswd -d &lt;sudo_username&gt; sudo</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éditez le fichier sudoers. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/sudoers</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajouter dans le fichier la ligne suivante:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">%sudonp ALL</span><span class="tok-o">=</span><span class="tok-s">(ALL:ALL) NOPASSWD: ALL</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>L&#8217;utilisateur nom_d_utilisateur pourra se logger root sans mot de passe au travers de la commande <code>sudo bash</code></p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installer_loutil_dselect">5.12. Installer l&#8217;outil dselect</h3>
+<div class="paragraph">
+<p>L&#8217;outil <code>dselect</code> permet de choisir de façon interactive les paquets que l&#8217;on souhaite installer.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Ajouter le paquet <code>dselect</code>. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install dselect</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ajouter_un_fichier_de_swap">5.13. Ajouter un fichier de swap</h3>
+<div class="paragraph">
+<p>Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de 1 Go.
+Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être nécessaire d&#8217;avoir 4 Go de RAM au total.</p>
+</div>
+<div class="paragraph">
+<p>Tapez :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Tout d&#8217;abord, si l&#8217;outil <code>dphys-swapfile</code> est installé et configuré sur la machine, commencez par désactiver le swap. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>dphys-swapfile uninstall</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /
+fallocate -l 2G /swapfile
+chmod <span class="tok-m">600</span> /swapfile
+mkswap /swapfile
+swapon /swapfile</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enfin ajoutez une entrée dans le fichier fstab. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/fstab</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez la ligne:</p>
+<div class="listingblock">
+<div class="content">
+<pre>/swapfile swap swap defaults 0 0</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enfin vous pouvez être tenté de limiter le swap (surtout utile sur les systèmes avec peu de RAM et du SSD. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systctl.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez ou modifiez la ligne:</p>
+<div class="listingblock">
+<div class="content">
+<pre>vm.swappiness = 5</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Le paramètre sera actif au prochain reboot</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_initiale_des_outils">6. Installation initiale des outils</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La procédure d&#8217;installation ci-dessous configure ISPconfig avec les fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Apache, PHP, Let&#8217;s Encrypt, PureFTPd, Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.</p>
+</div>
+<div class="paragraph">
+<p>Pour les systèmes ayant 2 Go de RAM ou plus, il est fortement conseillé d&#8217;installer les outils ci après :  Amavisd, SPamAssassin, ClamAV, Mailman.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+</li>
+<li>
+<p>Changez le Shell par défaut. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>dpkg-reconfigure dash</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A la question <code>utilisez dash comme shell par défaut</code> répondez <code>non</code>. C&#8217;est bash qui doit être utilisé.</p>
+</div>
+</li>
+<li>
+<p>Installation de quelques paquets debian. ;-)</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour les systèmes avec plus de mémoire tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install amavisd-new spamassassin clamav clamav-daemon</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Aux questions posées répondez:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Type principal de configuration de mail</code>: &#8592; Sélectionnez <code>Site Internet</code></p>
+</li>
+<li>
+<p><code>Nom de courrier</code>: &#8592; Entrez votre nom de host. Par exemple: mail.example.com</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_configuration_de_postfix">6.1. Configuration de Postfix</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Editez le master.cf file de postfix. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/postfix/master.cf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez dans le fichier:</p>
+<div class="listingblock">
+<div class="content">
+<pre>submission inet n - - - - smtpd
+ -o syslog_name=postfix/submission
+ -o smtpd_tls_security_level=encrypt
+ -o smtpd_sasl_auth_enable=yes
+ -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+
+smtps inet n - - - - smtpd
+ -o syslog_name=postfix/smtps
+ -o smtpd_tls_wrappermode=yes
+ -o smtpd_sasl_auth_enable=yes
+ -o smtpd_client_restrictions=permit_sasl_authenticated,reject</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sauvegardez et relancez Postfix:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart postfix</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Si vous avez installé <code>SpamAssassin</code>, désactiver <code>SpamAssassin</code> puisque <code>amavisd</code> utilise celui ci en sous jacent. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop spamassassin
+systemctl disable spamassassin</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_de_mariadb">6.2. Configuration de MariaDB</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sécurisez votre installation MariaDB. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mysql_secure_installation</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Répondez au questions ainsi:</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Enter current password for root</code>: &#8592; Tapez Entrée</p>
+</li>
+<li>
+<p><code>Set root password? [Y/n]</code>: &#8592; Tapez <code>Y</code></p>
+</li>
+<li>
+<p><code>New password:</code>: &#8592; Tapez votre mot de passe root MariaDB</p>
+</li>
+<li>
+<p><code>Re-enter New password:</code>: &#8592; Tapez votre mot de passe root MariaDB</p>
+</li>
+<li>
+<p><code>Remove anonymous users? [Y/n]</code>: &#8592; Tapez <code>Y</code></p>
+</li>
+<li>
+<p><code>Disallow root login remotely? [Y/n]</code>: &#8592; Tapez <code>Y</code></p>
+</li>
+<li>
+<p><code>Remove test database and access to it? [Y/n]</code>: &#8592; Tapez <code>Y</code></p>
+</li>
+<li>
+<p><code>Reload privilege tables now? [Y/n]</code>: &#8592; Tapez <code>Y</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>MariaDB doit pouvoir être atteint par toutes les interfaces et pas seulement localhost.</p>
+</li>
+<li>
+<p>Éditez le fichier de configuration. :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/mysql/mariadb.conf.d/50-server.cnf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Commentez la ligne <code>bind-address</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1">#bind-address           = 127.0.0.1</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Modifiez la méthode d&#8217;accès à la base MariaDB pour utiliser la méthode de login native.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;update mysql.user set plugin = &#39;mysql_native_password&#39; where user=&#39;root&#39;;&quot;</span> <span class="tok-p">|</span> mysql -u root</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Editez le fichier debian.cnf. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/mysql/debian.cnf</code></pre>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aux deux endroits du fichier ou le mot clé <code>password</code> est présent, mettez le mot de passe root de votre base de données.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">password</span> <span class="tok-o">=</span> <span class="tok-s">votre_mot_de_passe</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Pour éviter l&#8217;erreur <code>Error in accept: Too many open files</code>, augmenter la limite du nombre de fichiers ouverts.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Editer le fichier: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/security/limits.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez à la fin du fichier les deux lignes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mysql soft nofile <span class="tok-m">65535</span>
+mysql hard nofile <span class="tok-m">65535</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créez ensuite un nouveau répertoire. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /etc/systemd/system/mysql.service.d/</code></pre>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Editer le fichier limits.conf. :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systemd/system/mysql.service.d/limits.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez dans le fichier les lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[Service]
+LimitNOFILE=infinity</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Redémarrez votre serveur MariaDB. Tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl daemon-reload
+systemctl restart mariadb</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>vérifiez maintenant que MariaDB est accessible sur toutes les interfaces réseau. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>netstat -tap <span class="tok-p">|</span> grep mysql</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>La sortie doit être du type: <code>tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld</code></p>
+</li>
+<li>
+<p>Pour les serveur avec peu de ressources quelques éléments de tuning. Editez le fichier 50-server.cnf:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/mysql/mariadb.conf.d/50-server.cnf</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_dapache">6.3. Configuration d&#8217;Apache</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Installez les modules Apache nécessaires. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2enmod suexec rewrite ssl proxy_http actions include dav_fs dav auth_digest cgi headers actions proxy_fcgi <span class="tok-nb">alias</span> speling</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour ne pas être confronté aux problèmes de sécurité  de type <a href="https://www.howtoforge.com/tutorial/httpoxy-protect-your-server/">HTTPOXY</a>, il est nécessaire de créer un petit module dans apache.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Éditez le fichier httpoxy.conf: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apache2/conf-available/httpoxy.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Collez les lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;IfModule</span> <span class="tok-s">mod_headers.c</span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">RequestHeader</span> unset Proxy early
+<span class="tok-nt">&lt;/IfModule&gt;</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Activez le module en tapant :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2enconf httpoxy
+systemctl restart apache2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Désactiver la documentation apache en tapant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2disconf apache2-doc
+systemctl restart apache2</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_mailman">6.4. Installation et Configuration de Mailman</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install mailman</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sélectionnez un langage:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Languages to support:</code> &#8592; Tapez <code>en (English)</code></p>
+</li>
+<li>
+<p><code>Missing site list :</code> &#8592; Tapez <code>Ok</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créez une mailing list. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>newlist mailman</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>ensuite éditez le fichier aliases: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/aliases</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et ajoutez les lignes affichées à l&#8217;écran:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>## mailman mailing list
+mailman:              "|/var/lib/mailman/mail/mailman post mailman"
+mailman-admin:        "|/var/lib/mailman/mail/mailman admin mailman"
+mailman-bounces:      "|/var/lib/mailman/mail/mailman bounces mailman"
+mailman-confirm:      "|/var/lib/mailman/mail/mailman confirm mailman"
+mailman-join:         "|/var/lib/mailman/mail/mailman join mailman"
+mailman-leave:        "|/var/lib/mailman/mail/mailman leave mailman"
+mailman-owner:        "|/var/lib/mailman/mail/mailman owner mailman"
+mailman-request:      "|/var/lib/mailman/mail/mailman request mailman"
+mailman-subscribe:    "|/var/lib/mailman/mail/mailman subscribe mailman"
+mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Exécutez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>newaliases</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et redémarrez postfix: :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart postfix</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez la page web de mailman dans apache: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ln -s /etc/mailman/apache.conf /etc/apache2/conf-enabled/mailman.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez apache :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart apache2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>puis redémarrez le demon mailman :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart mailman</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Le site web de mailman est accessible</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Vous pouvez accéder à la page admin Mailman à <a href="http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/" class="bare">http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/</a></p>
+</li>
+<li>
+<p>La page web utilisateur de la mailing list est accessible  ici <a href="http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/" class="bare">http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/</a>.</p>
+</li>
+<li>
+<p>Sous <a href="http://&lt;server1.example.com&gt;/pipermail/mailman" class="bare">http://&lt;server1.example.com&gt;/pipermail/mailman</a> vous avez accès aux archives.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_d_awstats">6.5. Configuration d' Awstats</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>configurer la tache cron d&#8217;awstats: Éditez le fichier :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/cron.d/awstats</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Et commentez toutes les lignes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#MAILTO=root
+#*/10 * * * * www-data [ -x /usr/share/awstats/tools/update.sh ] &amp;&amp; /usr/share/awstats/tools/update.sh
+# Generate static reports:
+#10 03 * * * www-data [ -x /usr/share/awstats/tools/buildstatic.sh ] &amp;&amp; /usr/share/awstats/tools/buildstatic.sh</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_de_fail2ban">6.6. Configuration de Fail2ban</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Editez le fichier jail.local :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/fail2ban/jail.local</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ajoutez les lignes suivantes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-k">[dovecot]</span>
+<span class="tok-na">enabled</span> <span class="tok-o">=</span> <span class="tok-s">true</span>
+<span class="tok-na">filter</span> <span class="tok-o">=</span> <span class="tok-s">dovecot</span>
+<span class="tok-na">logpath</span> <span class="tok-o">=</span> <span class="tok-s">/var/log/mail.log</span>
+<span class="tok-na">maxretry</span> <span class="tok-o">=</span> <span class="tok-s">5</span>
+
+<span class="tok-k">[postfix-sasl]</span>
+<span class="tok-na">enabled</span> <span class="tok-o">=</span> <span class="tok-s">true</span>
+<span class="tok-na">port</span> <span class="tok-o">=</span> <span class="tok-s">smtp</span>
+<span class="tok-na">filter</span> <span class="tok-o">=</span> <span class="tok-s">postfix[mode=auth]</span>
+<span class="tok-na">logpath</span> <span class="tok-o">=</span> <span class="tok-s">/var/log/mail.log</span>
+<span class="tok-na">maxretry</span> <span class="tok-o">=</span> <span class="tok-s">3</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez Fail2ban: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart fail2ban</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_pureftpd">6.7. Installation et configuration de PureFTPd</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install pure-ftpd-common pure-ftpd-mysql</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éditez le fichier de conf: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/default/pure-ftpd-common</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Changez les lignes ainsi:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">STANDALONE_OR_INETD</span><span class="tok-o">=</span><span class="tok-s">standalone</span>
+<span class="tok-na">VIRTUALCHROOT</span><span class="tok-o">=</span><span class="tok-s">true</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Autorisez les connexions TLS. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-m">1</span> &gt; /etc/pure-ftpd/conf/TLS</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez un certificat SSL.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /etc/ssl/private/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Puis créez le certificat auto signé. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>openssl req -x509 -nodes -days <span class="tok-m">7300</span> -newkey rsa:2048 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et répondez aux questions de la manière suivante:</p>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p><code>Country Name (2 letter code) [AU]:</code> &#8592; Entrez le code pays à 2 lettres</p>
+</li>
+<li>
+<p><code>State or Province Name (full name) [Some-State]:</code> &#8592; Entrer le nom d&#8217;état</p>
+</li>
+<li>
+<p><code>Locality Name (eg, city) []:</code> &#8592; Entrer votre ville</p>
+</li>
+<li>
+<p><code>Organization Name (eg, company) [Internet Widgits Pty Ltd]:</code> &#8592; Entrez votre entreprise ou tapez entrée</p>
+</li>
+<li>
+<p><code>Organizational Unit Name (eg, section) []:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</p>
+</li>
+<li>
+<p><code>Email Address []:</code> &#8592; Tapez entrée</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Puis tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">600</span> /etc/ssl/private/pure-ftpd.pem</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>et redémarrez pure-ftpd en tapant: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart pure-ftpd-mysql</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>En Option: Activer les quotas si votre kernel le permet.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Installez les paquets de gestion des quotas. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install quota quotatool</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez <code>fstab</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/fstab</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Inserez le texte ci dessous pour chaque directive de montage</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>UUID=45576b38-39e8-4994-b8c1-ea4870e2e614 / ext4 errors=remount-ro,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 0 1</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour le Raspberry, éditez le fichier rc.local pour créer /dev/root à chaque reboot:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ln -s /dev/mmblk0p7 /dev/root
+vi /etc/rc.local</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez avant <code>exit 0</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>ln -s /dev/mmcblk0p7 /dev/root</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour activer les quotas, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mount -o remount /
+quotacheck -avugm
+quotaon -avug</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_annexe">6.8. Annexe</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_configuration_dun_écran_3_5inch_rpi_lcd_a">6.9. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</h3>
+<div class="sect3">
+<h4 id="_pour_commencer">6.9.1. Pour commencer</h4>
+<div class="paragraph">
+<p>Le RPi LCD peut être piloté de deux manières :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>installer le pilote sur votre
+Raspbian OS.</p>
+</li>
+<li>
+<p>utiliser le fichier image prêt à l&#8217;emploi ou lle pilote LCD est préinstallé.</p>
+</li>
+<li>
+<p>Téléchargez la dernière image sur le site web de Raspberry Pi et écrivez-la sur la carte SD.</p>
+</li>
+<li>
+<p>Connectez l&#8217;écran LCD RPi à Raspberry Pi et connectez le Pi au réseau.</p>
+</li>
+<li>
+<p>Configurez votre Pi :</p>
+<div class="literalblock">
+<div class="content">
+<pre>sudo raspi-config</pre>
+</div>
+</div>
+</li>
+<li>
+<p>configurez ainsi :</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Sélectionnez "Expand Filesystem".</p>
+</li>
+<li>
+<p>Boot Option &#8594; Desktop Autologin (peut différer selon la révision Raspbian)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Ouvrez le terminal du Raspberry Pi (Vous devrez peut-être connecter un clavier et un écran LCD HDMI à Pi pour l&#8217;installation du pilote). Tapez:</p>
+<div class="literalblock">
+<div class="content">
+<pre>git clone https://github.com/waveshare/LCD-show.git
+cd LCD-show/</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Note: Une connexion réseau est nécessaire lors de l&#8217;installation du pilote sur votre Pi, sinon l&#8217;installation ne fonctionnera pas correctement.</strong></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>chmod +x LCD35-show
+./LCD35-show</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Après le redémarrage du système, le RPi LCD est prêt à l&#8217;emploi.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_basculer_entre_laffichage_lcd_et_hdmi">6.9.2. Basculer entre l&#8217;affichage LCD et HDMI</h4>
+<div class="paragraph">
+<p>Une fois que l&#8217;écran LCD est activé, les paramètres par défaut pour HDMI sont modifiés. Si vous souhaitez utiliser un autre moniteur HDMI, veuillez exécuter la commande suivante :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>cd LCD-show/
+./LCD-hdmi</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cela permet de basculer le mode sur l&#8217;affichage LCD :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>chmod +x LCD35-show
+./LCD35-show</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_paramètres_dorientation_de_lécran">6.9.3. Paramètres d&#8217;orientation de l&#8217;écran</h4>
+<div class="paragraph">
+<p>Une fois le pilote tactile installé, l&#8217;orientation de l&#8217;écran peut être définie par ces commandes :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Rotation de 0 degrés</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>cd LCD-show/
+./LCD35-show 0</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Rotation de 90 degrés</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>cd LCD-show/
+./LCD35-show 90</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Rotation de 180 degrés</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>cd LCD-show/
+./LCD35-show 180</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Rotation de 270 degrés</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>cd LCD-show/
+./LCD35-show 270</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_calibrage_de_lécran_tactile">6.9.4. Calibrage de l&#8217;écran tactile</h4>
+<div class="paragraph">
+<p>Cet écran LCD peut être calibré à l&#8217;aide d&#8217;un programme appelé <code>xinput_calibrator</code> . Il n&#8217;est pas préinstallé sur le système d&#8217;exploitation Raspbian original. Vous devez donc le télécharger et installer le programme manuellement.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo apt-get install -y xinput-calibrator</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Entrez les commandes suivantes pour le calibrage de l&#8217;écran tactile :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo DISPLAY=:0.0 xinput_calibrator</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ou Sélectionnez Menu &#8594; Preferences &#8594; Calibrate Touchscreen.</p>
+</div>
+<div class="paragraph">
+<p>Après l&#8217;exécution de ces commandes, l&#8217;écran LCD affiche une invite pour un calibrage en quatre points. Cliquez sur les points un par un pour terminer le calibrage tactile. Ensuite, les nouvelles données de calibrage seront affichées dans le terminal, comme indiqué ci-dessous. Veuillez obtenir ces données pour une utilisation ultérieure.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Doing dynamic recalibration:
+Setting new calibration data: 3919, 208, 236, 3913</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tapez la commande suivante pour éditer 99-calibration.conf:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo nano /etc/X11/xorg.conf.d/99-calibration.conf</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ensuite, les anciennes données d&#8217;étalonnage seront affichées dans le terminal :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Section "InputClass"
+Identifier  "calibration"
+MatchProduct    "ADS7846 Touchscreen"
+Option  "Calibration"   "160 3723 3896 181"
+Option  "SwapAxes"  "1"
+EndSection</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Modifiez les données d&#8217;étalonnage en fonction des nouvelles données d&#8217;étalonnage affichées plus haut :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Section "InputClass"
+Identifier  "calibration"
+MatchProduct    "ADS7846 Touchscreen"
+Option  "Calibration"   "3919 208 236 3913"
+Option  "SwapAxes"  "1"
+EndSection</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Appuyez sur les touches Ctrl+X, et sélectionnez l&#8217;option Y pour enregistrer la modification.</p>
+</div>
+<div class="paragraph">
+<p>La modification sera valide après le redémarrage du système. Entrez la commande suivante pour le redémarrage du système :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo reboot</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Notices: En cas de toucher imprécis, veuillez procéder à un nouvel étalonnage de l&#8217;écran et redémarrer le système.</strong></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_installer_un_clavier_virtuel">6.9.5. Installer un clavier virtuel</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Installer matchbox-keyboard</p>
+<div class="literalblock">
+<div class="content">
+<pre>sudo apt-get install update
+sudo apt-get install matchbox-keyboard
+sudo nano /usr/bin/toggle-matchbox-keyboard.sh</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Copiez les commandes ci-dessous dans toggle-matchbox-keyboard.sh et sauvegardez.</p>
+<div class="literalblock">
+<div class="content">
+<pre>#!/bin/bash
+#This script toggle the virtual keyboard
+PID=`pidof matchbox-keyboard`
+if [ ! -e $PID ]; then
+killall matchbox-keyboard
+else
+matchbox-keyboard -s 50 extended&amp;
+fi</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Exécutez les commandes:</p>
+<div class="literalblock">
+<div class="content">
+<pre>sudo chmod +x /usr/bin/toggle-matchbox-keyboard.sh
+sudo mkdir /usr/local/share/applications
+sudo nano /usr/local/share/applications/toggle-matchbox-keyboard.desktop</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Copiez les commandes ci-dessous dans toggle-matchbox-keyboard.desktop et sauvegardez.</p>
+<div class="literalblock">
+<div class="content">
+<pre>[Desktop Entry]
+Name=Toggle Matchbox Keyboard
+Comment=Toggle Matchbox Keyboard`
+Exec=toggle-matchbox-keyboard.sh
+Type=Application
+Icon=matchbox-keyboard.png
+Categories=Panel;Utility;MB
+X-MB-INPUT-MECHANSIM=True</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Exécutez les commandes ci dessous.</p>
+<div class="paragraph">
+<p><strong>NOTE: Notez que vous devez utiliser les droits d&#8217;utilisateur "Pi" au lieu de root pour exécuter cette commande</strong></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>nano ~/.config/lxpanel/LXDE-pi/panels/panel</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Trouvez la déclaration qui est similaire à celle ci-dessous : (Elle peut être différente dans une autre version)</p>
+<div class="literalblock">
+<div class="content">
+<pre>Plugin {
+  type = launchbar
+  Config {
+    Button {
+      id=lxde-screenlock.desktop
+    }
+    Button {
+      id=lxde-logout.desktop
+    }
+  }
+}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez ces déclarations pour ajouter une option de bouton :</p>
+<div class="literalblock">
+<div class="content">
+<pre>Button {
+  id=/usr/local/share/applications/toggle-matchbox-keyboard.desktop
+}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>redémarrez votre Raspberry Pi. Si le clavier virtuel est correctement installé, vous pouvez constater qu&#8217;il y a une icône de clavier sur la gauche de la barre</p>
+<div class="literalblock">
+<div class="content">
+<pre>sudo reboot</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ressources">6.9.6. Ressources</h4>
+<div class="sect4">
+<h5 id="_manuel_utilisateur">Manuel utilisateur</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.waveshare.com/w/upload/1/1e/RPi_LCD_User_Manual_EN.pdf">RPiLCD User Manual</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_images">Images</h5>
+<div class="paragraph">
+<p>Description : si vous avez eu du mal à installer le pilote, essayez l&#8217;image avec le pilote préinstallé.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://drive.google.com/open?id=1xsvANujoImwVQvdf0n7IiUjP8BuCe2GK">RPi-35inch-LCD-(A)-Raspbian-180326.7z</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_driver">Driver</h5>
+<div class="paragraph">
+<p>Le pilote peut être téléchargé sur github</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>git clone https://github.com/waveshare/LCD-show.git</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_fichiers_de_configuration_de_référence">Fichiers de configuration de référence</h5>
+<div class="paragraph">
+<p>/boot/cmdline.txt</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>dwc_otg.lpm_enable=0 console=tty1 console=ttyAMA0,115200 root=/dev/mmcblk0p7 rootfstype=ext4 elevator=deadline rootwait fbcon=map:10 fbcon=font:ProFont6x11 logo.nologo</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>/boot/config.txt</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre># For more options and information see
+# http://www.raspberrypi.org/documentation/configuration/config-txt.md
+# Some settings may impact device functionality. See link above for details
+
+# uncomment if you get no picture on HDMI for a default "safe" mode
+#hdmi_safe=1
+
+# uncomment this if your display has a black border of unused pixels visible
+# and your display can output without overscan
+#disable_overscan=1
+
+# uncomment the following to adjust overscan. Use positive numbers if console
+# goes off screen, and negative if there is too much border
+#overscan_left=16
+#overscan_right=16
+#overscan_top=16
+#overscan_bottom=16
+
+# uncomment to force a console size. By default it will be display's size minus
+# overscan.
+#framebuffer_width=1280
+#framebuffer_height=720
+
+# uncomment if hdmi display is not detected and composite is being output
+hdmi_force_hotplug=1
+
+# uncomment to force a specific HDMI mode (this will force VGA)
+#hdmi_group=1
+#hdmi_mode=1
+
+# uncomment to force a HDMI mode rather than DVI. This can make audio work in
+# DMT (computer monitor) modes
+#hdmi_drive=2
+
+# uncomment to increase signal to HDMI, if you have interference, blanking, or
+# no display
+#config_hdmi_boost=4
+
+# uncomment for composite PAL
+#sdtv_mode=2
+
+#uncomment to overclock the arm. 700 MHz is the default.
+#arm_freq=800
+
+# Uncomment some or all of these to enable the optional hardware interfaces
+dtparam=i2c_arm=on
+#dtparam=i2s=on
+dtparam=spi=on
+enable_uart=1
+# Uncomment this to enable the lirc-rpi module
+#dtoverlay=lirc-rpi
+
+# Additional overlays and parameters are documented /boot/overlays/README
+
+# Enable audio (loads snd_bcm2835)
+dtparam=audio=on
+dtoverlay=tft35a
+#dtoverlay=ads7846,cs=1,penirq=17,penirq_pull=2,speed=1000000,keep_vref_on=1,swapxy=1,pmax=255,xohms=60,xmin=200,xmax=3900,ymin=200,ymax=3900</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>/etc/inittab</p>
+</div>
+<div class="paragraph">
+<p>Ajouter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#Spawn a getty on Raspberry Pi serial line
+T0:23:respawn:/sbin/getty -L ttyAMA0 115200 vt100</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>/usr/share/X11/xorg.conf/99-fbturbo.conf</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Section "Device"
+        Identifier      "Allwinner A10/A13/A20 FBDEV"
+        Driver          "fbturbo"
+        Option          "fbdev" "/dev/fb1"
+
+        Option          "SwapbuffersWait" "true"
+EndSection</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>/usr/share/X11/xorg.conf.d/40-libinput.conf
+/usr/share/X11/xorg.conf.d/45-evdev.conf</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Section "InputClass"
+        Identifier "libinput pointer catchall"
+        MatchIsPointer "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+EndSection
+
+Section "InputClass"
+        Identifier "libinput keyboard catchall"
+        MatchIsKeyboard "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+EndSection
+
+Section "InputClass"
+        Identifier "libinput touchpad catchall"
+        MatchIsTouchpad "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+EndSection
+
+Section "InputClass"
+        Identifier "libinput touchscreen catchall"
+        MatchIsTouchscreen "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+EndSection
+
+Section "InputClass"
+        Identifier "libinput tablet catchall"
+        MatchIsTablet "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+EndSection</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>/etc/X11/xorg.conf.d/99-calibration.conf</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Section "InputClass"
+        Identifier      "calibration"
+        MatchProduct    "ADS7846 Touchscreen"
+        Option  "Calibration"   "3936 227 268 3880"
+        Option  "SwapAxes"      "1"
+EndSection</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-04-17 22:44:55 +0200
+Last updated 2020-04-19 22:01:08 +0200
 </div>
 </div>
 <style>
