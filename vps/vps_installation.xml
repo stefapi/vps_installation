@@ -148,7 +148,7 @@ Une fois l&#8217;installation effectuée, vous recevez un Email sur l&#8217;adre
 </section>
 <section xml:id="_choix_du_registrar">
 <title>Choix du registrar</title>
-<simpara>Pour rappel,un registrar est une société auprès de laquelle vous pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez fournir pour votre enregistrement un ensemble de données personnelles qui permettront de vous identifier en tant que propriétaire de ce nom de domaine.</simpara>
+<simpara>Pour rappel, un registrar est une société auprès de laquelle vous pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez fournir pour votre enregistrement un ensemble de données personnelles qui permettront de vous identifier en tant que propriétaire de ce nom de domaine.</simpara>
 <simpara>Pour ma part j&#8217;ai choisi Gandi car il ne sont pas très cher et leur interface d&#8217;administration est simple d&#8217;usage. Vous pouvez très bien prendre aussi vos DNS chez OVH.</simpara>
 <simpara>Une fois votre domaine enregistré et votre compte créé vous pouvez vous loguer sur la <link xl:href="https://admin.gandi.net/dashboard">plateforme de gestion de Gandi</link>.</simpara>
 <simpara>Allez dans Nom de domaine et sélectionnez le nom de domaine que vous voulez administrer.
@@ -185,6 +185,9 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 </listitem>
 </itemizedlist>
 <simpara>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Je ne l&#8217;ai pas mis en oeuvre.</simpara>
+<note>
+<simpara>Avoir un DNS sur au moins deux machines distinctes est la configuration recommandée.</simpara>
+</note>
 <simpara>Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.</simpara>
 </section>
 <section xml:id="root_login">
@@ -231,10 +234,10 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <title>Configuration basique</title>
 <section xml:id="_mettre_léditeur_de_votre_choix">
 <title>Mettre l&#8217;éditeur de votre choix</title>
-<simpara>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient.</simpara>
+<simpara>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient pour les outils utilisant un éditeur de façon automatique tels que <literal>crontab</literal>.</simpara>
+<simpara>Pour les débutants, il est conseillé d&#8217;utiliser nano.</simpara>
 <simpara><link linkend="root_login">Loguez vous comme root </link> et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">update-alternatives  --config editor</programlisting>
-<simpara>Pour les débutants, il est conseillé d&#8217;utiliser nano</simpara>
 </section>
 <section xml:id="_installation_dun_repository_pour_etc">
 <title>Installation d&#8217;un repository pour <literal>/etc</literal></title>
@@ -242,7 +245,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <simpara>Cette installation est optionnelle.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez :</simpara>
@@ -319,7 +322,7 @@ git push -u origin master</programlisting>
 <title>Mise à jour des sources de paquets Debian</title>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Modifier la liste standard de paquets</simpara>
@@ -377,7 +380,7 @@ deb-src http://deb.debian.org/debian buster-backports main contrib non-free</pro
 <title>Installation des paquets de base</title>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
@@ -394,7 +397,7 @@ deb-src http://deb.debian.org/debian buster-backports main contrib non-free</pro
 Tous les autres paquets seront supprimés.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Ajouter le paquet <literal>debfoster</literal>. Tapez :</simpara>
@@ -458,7 +461,7 @@ Tous les autres paquets seront supprimés.</simpara>
 <simpara>Vous pourriez être intéressé après l&#8217;installation de <literal>debfoster</literal> et de <literal>etckeeper</literal> de construire automatiquement un fichier qui contient la liste des paquets qui permettent de réinstaller le système:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
@@ -524,7 +527,7 @@ fi</programlisting>
 <simpara>Cette partie consiste à vérifier que le serveur a un hostname correctement configuré.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>vérifier que le hostname est bien celui attendu (c&#8217;est à dire configuré par votre hébergeur). Tapez :</simpara>
@@ -538,7 +541,7 @@ fi</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">reboot</programlisting>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 </orderedlist>
 </listitem>
@@ -562,7 +565,7 @@ fi</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">reboot</programlisting>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 </orderedlist>
 </listitem>
@@ -618,7 +621,7 @@ De ce fait, notre première action sera de désactiver le login direct en root  
 Respectez bien les étapes de cette procédure:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Ajoutez un utilisateur standard qui sera nommé par la suite en tant que &lt;sudo_username&gt;</simpara>
@@ -768,7 +771,7 @@ Respectez bien les étapes de cette procédure:</simpara>
 L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en gardant la facilité de se loguer root sur le système au travers d&#8217;un super-compte.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Ajoutez un groupe sudonp et y affecter un utilisateur. Tapez :</simpara>
@@ -800,7 +803,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 <simpara>L&#8217;outil <literal>dselect</literal> permet de choisir de façon interactive les paquets que l&#8217;on souhaite installer.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Ajouter le paquet <literal>dselect</literal>. Tapez :</simpara>
@@ -815,7 +818,7 @@ Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être n
 <simpara>Tapez :</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tout d&#8217;abord, si l&#8217;outil <literal>dphys-swapfile</literal> est installé et configuré sur la machine, commencez par désactiver le swap. Tapez:</simpara>
@@ -857,7 +860,7 @@ swapon /swapfile</programlisting>
 <simpara>Pour les systèmes ayant 2 Go de RAM ou plus, il est fortement conseillé d&#8217;installer les outils ci après :  Amavisd, SPamAssassin, ClamAV, Mailman.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Changez le Shell par défaut. Tapez :</simpara>
@@ -1657,7 +1660,7 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <simpara>Il est maintenant recommandé de désactiver les protocoles TLS 1.0 et TLS 1.1. Ce n&#8217;est pas la configuration par défaut d&#8217;ISPconfig</simpara>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link>.</simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link>.</simpara>
 </listitem>
 <listitem>
 <simpara>Copier le fichier <literal>vhost.conf.master</literal> dans la zone custom</simpara>
@@ -1692,7 +1695,7 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <simpara>Webmin est un outil généraliste de configuration de votre serveur. Son usage peut être assez complexe mais il permet une configuration plus précise des fonctionnalités.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Ajoutez le repository Webmin</simpara>
@@ -1771,7 +1774,7 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <simpara>Si vous n&#8217;arrivez pas à vous reconnecter c&#8217;est que l&#8217;adresse IP n&#8217;est pas la bonne. Le seul moyen de se reconnecter est de:</simpara>
 <orderedlist numeration="loweralpha">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne <literal>allow= &#8230;&#8203;</literal></simpara>
@@ -2337,7 +2340,7 @@ ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]</programl
 <simpara>Vous devez avoir créé au préalable un site pour les domaines example.com et mail.example.com</simpara>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Liez le certificat d&#8217;ISPconfig avec celui du domaine crée.</simpara>
@@ -2780,7 +2783,7 @@ echo "hello" &gt; /var/www/html/monit/token</programlisting>
 <simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Installez les paquets debian. tapez:</simpara>
@@ -3186,7 +3189,7 @@ CheckCaseOnly Off</programlisting>
 </orderedlist>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Dans le répertoire <literal>/var/www/autoconfig.example.com/autoconfig/</literal> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
@@ -3317,7 +3320,7 @@ RewriteRule ^/ - [QSA,L]</programlisting>
 </orderedlist>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Dans le répertoire <literal>/var/www/autoconfig.example.com/autoconfig/</literal>, créer un répertoire <literal>Autodiscover</literal>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
@@ -4002,7 +4005,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </orderedlist>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 </orderedlist>
 </section>
@@ -4176,7 +4179,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </orderedlist>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 </orderedlist>
 </section>
@@ -4385,7 +4388,7 @@ date.timezone = Asia/Kolkata</programlisting>
 </orderedlist>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 </orderedlist>
 </section>
@@ -4578,7 +4581,7 @@ ProxyPassReverse / http://localhost:3000/ <co xml:id="CO25-2"/></programlisting>
 </orderedlist>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Créez un utilisateur <literal>Gitea</literal>. Tapez:</simpara>
@@ -4773,7 +4776,7 @@ chmod 640 /etc/gitea/app.ini</programlisting>
 <simpara>Redémarrez <literal>gitea</literal>.</simpara>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
@@ -4786,7 +4789,7 @@ chmod 640 /etc/gitea/app.ini</programlisting>
 <simpara>En option, vous pouvez avoir envie de dédier une connexion SSH pour Gitea:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Éditez le fichier de configuration. Tapez:</simpara>
@@ -4984,7 +4987,7 @@ ProxyPassReverse / http://localhost:8090/</programlisting>
 <simpara>Appliquez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Installez quelques paquets Debian complémentaires. Tapez:</simpara>
@@ -5286,7 +5289,7 @@ ProxyPreserveHost On</programlisting>
 <simpara>Veuillez suivre la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Ajoutez des repositories Debian. Tapez:</simpara>
@@ -5559,7 +5562,7 @@ ProxyPassReverse / http://localhost:3000/</programlisting>
 <title>Installation de Grafana</title>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
@@ -5669,7 +5672,7 @@ service prometheus-process-exporter restart</programlisting>
 <simpara>Pour installer Loki, appliquez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Allez sur le site de <link xl:href="https://github.com/grafana/loki/releases">loki</link> et repérez la dernière version à charger.</simpara>
@@ -5817,7 +5820,7 @@ sudo service loki status</programlisting>
 <simpara>Installez maintenant Promtail:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
@@ -5942,7 +5945,7 @@ La documentation est proposée ici: <link xl:href="https://docs.hestiacp.com/">h
 <simpara>Pour installer:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Télécharger le package et lancez l’installeur</simpara>

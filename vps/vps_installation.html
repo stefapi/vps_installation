@@ -667,7 +667,7 @@ Une fois l&#8217;installation effectuée, vous recevez un Email sur l&#8217;adre
 <h2 id="_choix_du_registrar">3. Choix du registrar</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Pour rappel,un registrar est une société auprès de laquelle vous pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez fournir pour votre enregistrement un ensemble de données personnelles qui permettront de vous identifier en tant que propriétaire de ce nom de domaine.</p>
+<p>Pour rappel, un registrar est une société auprès de laquelle vous pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez fournir pour votre enregistrement un ensemble de données personnelles qui permettront de vous identifier en tant que propriétaire de ce nom de domaine.</p>
 </div>
 <div class="paragraph">
 <p>Pour ma part j&#8217;ai choisi Gandi car il ne sont pas très cher et leur interface d&#8217;administration est simple d&#8217;usage. Vous pouvez très bien prendre aussi vos DNS chez OVH.</p>
@@ -722,6 +722,18 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 </div>
 <div class="paragraph">
 <p>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Je ne l&#8217;ai pas mis en oeuvre.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Avoir un DNS sur au moins deux machines distinctes est la configuration recommandée.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.</p>
@@ -806,7 +818,10 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <div class="sect2">
 <h3 id="_mettre_léditeur_de_votre_choix">5.1. Mettre l&#8217;éditeur de votre choix</h3>
 <div class="paragraph">
-<p>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient.</p>
+<p>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient pour les outils utilisant un éditeur de façon automatique tels que <code>crontab</code>.</p>
+</div>
+<div class="paragraph">
+<p>Pour les débutants, il est conseillé d&#8217;utiliser nano.</p>
 </div>
 <div class="paragraph">
 <p><a href="#root_login">Loguez vous comme root </a> et tapez:</p>
@@ -815,9 +830,6 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>update-alternatives  --config editor</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Pour les débutants, il est conseillé d&#8217;utiliser nano</p>
 </div>
 </div>
 <div class="sect2">
@@ -831,7 +843,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tapez :</p>
@@ -955,7 +967,7 @@ git push -u origin master</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Modifier la liste standard de paquets</p>
@@ -1039,7 +1051,7 @@ git push -u origin master</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tapez:</p>
@@ -1070,7 +1082,7 @@ Tous les autres paquets seront supprimés.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Ajouter le paquet <code>debfoster</code>. Tapez :</p>
@@ -1148,7 +1160,7 @@ Tous les autres paquets seront supprimés.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tapez:</p>
@@ -1253,7 +1265,7 @@ L&#8217;installation automatique de paquets peut conduire dans certains cas trè
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>vérifier que le hostname est bien celui attendu (c&#8217;est à dire configuré par votre hébergeur). Tapez :</p>
@@ -1284,7 +1296,7 @@ L&#8217;installation automatique de paquets peut conduire dans certains cas trè
 </div>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 </ol>
 </div>
@@ -1333,7 +1345,7 @@ Le FQDN (nom de machine avant le nom de domaine) doit être déclaré avant le h
 </div>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 </ol>
 </div>
@@ -1426,7 +1438,7 @@ Respectez bien les étapes de cette procédure:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Ajoutez un utilisateur standard qui sera nommé par la suite en tant que &lt;sudo_username&gt;</p>
@@ -1697,7 +1709,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Ajoutez un groupe sudonp et y affecter un utilisateur. Tapez :</p>
@@ -1757,7 +1769,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Ajouter le paquet <code>dselect</code>. Tapez :</p>
@@ -1782,7 +1794,7 @@ Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être n
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tout d&#8217;abord, si l&#8217;outil <code>dphys-swapfile</code> est installé et configuré sur la machine, commencez par désactiver le swap. Tapez:</p>
@@ -1856,7 +1868,7 @@ swapon /swapfile</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Changez le Shell par défaut. Tapez :</p>
@@ -3102,7 +3114,7 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 <p>Il est maintenant recommandé de désactiver les protocoles TLS 1.0 et TLS 1.1. Ce n&#8217;est pas la configuration par défaut d&#8217;ISPconfig</p>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a>.</p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a>.</p>
 </li>
 <li>
 <p>Copier le fichier <code>vhost.conf.master</code> dans la zone custom</p>
@@ -3172,7 +3184,7 @@ Si le message "Possible attack detected. This action has been logged.". Cela sig
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Ajoutez le repository Webmin</p>
@@ -3284,7 +3296,7 @@ Si le message "Possible attack detected. This action has been logged.". Cela sig
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne <code>allow= &#8230;&#8203;</code></p>
@@ -4024,7 +4036,7 @@ Vous ne pouvez définir un sous-domaine que si vous avez défini le site web rac
 <p>Vous devez avoir créé au préalable un site pour les domaines example.com et mail.example.com</p>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Liez le certificat d&#8217;ISPconfig avec celui du domaine crée.</p>
@@ -4633,7 +4645,7 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Installez les paquets debian. tapez:</p>
@@ -5179,7 +5191,7 @@ systemctl disable amavisd-new</code></pre>
 </div>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Dans le répertoire <code>/var/www/autoconfig.example.com/autoconfig/</code> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
@@ -5354,7 +5366,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.x
 </div>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Dans le répertoire <code>/var/www/autoconfig.example.com/autoconfig/</code>, créer un répertoire <code>Autodiscover</code>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
@@ -6213,7 +6225,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 </ol>
 </div>
@@ -6425,7 +6437,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 </ol>
 </div>
@@ -6694,7 +6706,7 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </div>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 </ol>
 </div>
@@ -6930,7 +6942,7 @@ Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un
 </div>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Créez un utilisateur <code>Gitea</code>. Tapez:</p>
@@ -7179,7 +7191,7 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 <p>Redémarrez <code>gitea</code>.</p>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tapez:</p>
@@ -7200,7 +7212,7 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Éditez le fichier de configuration. Tapez:</p>
@@ -7449,7 +7461,7 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Installez quelques paquets Debian complémentaires. Tapez:</p>
@@ -7850,7 +7862,7 @@ stop<span class="tok-o">)</span>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Ajoutez des repositories Debian. Tapez:</p>
@@ -8216,7 +8228,7 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tapez:</p>
@@ -8386,7 +8398,7 @@ apt install grafana prometheus prometheus-mysqld-exporter prometheus-apache-expo
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Allez sur le site de <a href="https://github.com/grafana/loki/releases">loki</a> et repérez la dernière version à charger.</p>
@@ -8570,7 +8582,7 @@ sudo service loki status</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tapez:</p>
@@ -8741,7 +8753,7 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Télécharger le package et lancez l’installeur</p>
@@ -8794,7 +8806,7 @@ pip3 install rdiff-backup</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-04-19 22:01:10 +0200
+Last updated 2020-04-20 13:51:24 +0200
 </div>
 </div>
 <style>

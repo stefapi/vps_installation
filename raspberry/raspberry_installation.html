@@ -616,7 +616,7 @@ Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation es
 <h2 id="_choix_du_registrar">2. Choix du registrar</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Pour rappel,un registrar est une société auprès de laquelle vous pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez fournir pour votre enregistrement un ensemble de données personnelles qui permettront de vous identifier en tant que propriétaire de ce nom de domaine.</p>
+<p>Pour rappel, un registrar est une société auprès de laquelle vous pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez fournir pour votre enregistrement un ensemble de données personnelles qui permettront de vous identifier en tant que propriétaire de ce nom de domaine.</p>
 </div>
 <div class="paragraph">
 <p>Pour ma part j&#8217;ai choisi Gandi car il ne sont pas très cher et leur interface d&#8217;administration est simple d&#8217;usage. Vous pouvez très bien prendre aussi vos DNS chez OVH.</p>
@@ -672,6 +672,18 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 <div class="paragraph">
 <p>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Je ne l&#8217;ai pas mis en oeuvre.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Avoir un DNS sur au moins deux machines distinctes est la configuration recommandée.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.</p>
 </div>
@@ -696,7 +708,7 @@ Pour Linux, appliquer la procédure suivante:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code></a></p>
+<p><a href="#root_login">Loguez vous comme root</a></p>
 </li>
 <li>
 <p>Tapez:</p>
@@ -917,7 +929,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tapez :</p>
@@ -1041,7 +1053,7 @@ git push -u origin master</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Modifier la liste standard de paquets</p>
@@ -1113,7 +1125,7 @@ git push -u origin master</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tapez:</p>
@@ -1144,7 +1156,7 @@ Tous les autres paquets seront supprimés.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Ajouter le paquet <code>debfoster</code>. Tapez :</p>
@@ -1306,7 +1318,7 @@ Tous les autres paquets seront supprimés.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tapez:</p>
@@ -1411,7 +1423,7 @@ L&#8217;installation automatique de paquets peut conduire dans certains cas trè
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>vérifier que le hostname est bien celui attendu (c&#8217;est à dire configuré par votre hébergeur). Tapez :</p>
@@ -1442,7 +1454,7 @@ L&#8217;installation automatique de paquets peut conduire dans certains cas trè
 </div>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 </ol>
 </div>
@@ -1491,7 +1503,7 @@ Le FQDN (nom de machine avant le nom de domaine) doit être déclaré avant le h
 </div>
 </li>
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 </ol>
 </div>
@@ -1538,7 +1550,7 @@ Respectez bien les étapes de cette procédure:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Ajoutez un utilisateur standard qui sera nommé par la suite en tant que &lt;sudo_username&gt;</p>
@@ -1809,7 +1821,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Ajoutez un groupe sudonp et y affecter un utilisateur. Tapez :</p>
@@ -1869,7 +1881,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Ajouter le paquet <code>dselect</code>. Tapez :</p>
@@ -1894,7 +1906,7 @@ Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être n
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tout d&#8217;abord, si l&#8217;outil <code>dphys-swapfile</code> est installé et configuré sur la machine, commencez par désactiver le swap. Tapez:</p>
@@ -1968,7 +1980,7 @@ swapon /swapfile</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme <code>root</code> sur le serveur</a></p>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Changez le Shell par défaut. Tapez :</p>
@@ -3193,7 +3205,7 @@ EndSection</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-04-19 22:01:08 +0200
+Last updated 2020-04-20 13:48:57 +0200
 </div>
 </div>
 <style>

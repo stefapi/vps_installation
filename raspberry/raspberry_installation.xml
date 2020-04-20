@@ -121,7 +121,7 @@ Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation es
 </section>
 <section xml:id="_choix_du_registrar">
 <title>Choix du registrar</title>
-<simpara>Pour rappel,un registrar est une société auprès de laquelle vous pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez fournir pour votre enregistrement un ensemble de données personnelles qui permettront de vous identifier en tant que propriétaire de ce nom de domaine.</simpara>
+<simpara>Pour rappel, un registrar est une société auprès de laquelle vous pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez fournir pour votre enregistrement un ensemble de données personnelles qui permettront de vous identifier en tant que propriétaire de ce nom de domaine.</simpara>
 <simpara>Pour ma part j&#8217;ai choisi Gandi car il ne sont pas très cher et leur interface d&#8217;administration est simple d&#8217;usage. Vous pouvez très bien prendre aussi vos DNS chez OVH.</simpara>
 <simpara>Une fois votre domaine enregistré et votre compte créé vous pouvez vous loguer sur la <link xl:href="https://admin.gandi.net/dashboard">plateforme de gestion de Gandi</link>.</simpara>
 <simpara>Allez dans Nom de domaine et sélectionnez le nom de domaine que vous voulez administrer.
@@ -158,6 +158,9 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 </listitem>
 </itemizedlist>
 <simpara>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Je ne l&#8217;ai pas mis en oeuvre.</simpara>
+<note>
+<simpara>Avoir un DNS sur au moins deux machines distinctes est la configuration recommandée.</simpara>
+</note>
 <simpara>Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.</simpara>
 </section>
 <section xml:id="_installation_du_linux_sur_votre_raspberry">
@@ -169,7 +172,7 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 Pour Linux, appliquer la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal></link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
@@ -328,7 +331,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <simpara>Cette installation est optionnelle.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez :</simpara>
@@ -405,7 +408,7 @@ git push -u origin master</programlisting>
 <title>Mise à jour des sources de paquets Debian</title>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Modifier la liste standard de paquets</simpara>
@@ -451,7 +454,7 @@ git push -u origin master</programlisting>
 <title>Installation des paquets de base</title>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
@@ -468,7 +471,7 @@ git push -u origin master</programlisting>
 Tous les autres paquets seront supprimés.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Ajouter le paquet <literal>debfoster</literal>. Tapez :</simpara>
@@ -616,7 +619,7 @@ Tous les autres paquets seront supprimés.</simpara>
 <simpara>Vous pourriez être intéressé après l&#8217;installation de <literal>debfoster</literal> et de <literal>etckeeper</literal> de construire automatiquement un fichier qui contient la liste des paquets qui permettent de réinstaller le système:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
@@ -682,7 +685,7 @@ fi</programlisting>
 <simpara>Cette partie consiste à vérifier que le serveur a un hostname correctement configuré.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>vérifier que le hostname est bien celui attendu (c&#8217;est à dire configuré par votre hébergeur). Tapez :</simpara>
@@ -696,7 +699,7 @@ fi</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">reboot</programlisting>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 </orderedlist>
 </listitem>
@@ -720,7 +723,7 @@ fi</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">reboot</programlisting>
 </listitem>
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 </orderedlist>
 </listitem>
@@ -748,7 +751,7 @@ De ce fait, notre première action sera de désactiver le login direct en root  
 Respectez bien les étapes de cette procédure:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Ajoutez un utilisateur standard qui sera nommé par la suite en tant que &lt;sudo_username&gt;</simpara>
@@ -898,7 +901,7 @@ Respectez bien les étapes de cette procédure:</simpara>
 L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en gardant la facilité de se loguer root sur le système au travers d&#8217;un super-compte.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Ajoutez un groupe sudonp et y affecter un utilisateur. Tapez :</simpara>
@@ -930,7 +933,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 <simpara>L&#8217;outil <literal>dselect</literal> permet de choisir de façon interactive les paquets que l&#8217;on souhaite installer.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Ajouter le paquet <literal>dselect</literal>. Tapez :</simpara>
@@ -945,7 +948,7 @@ Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être n
 <simpara>Tapez :</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tout d&#8217;abord, si l&#8217;outil <literal>dphys-swapfile</literal> est installé et configuré sur la machine, commencez par désactiver le swap. Tapez:</simpara>
@@ -987,7 +990,7 @@ swapon /swapfile</programlisting>
 <simpara>Pour les systèmes ayant 2 Go de RAM ou plus, il est fortement conseillé d&#8217;installer les outils ci après :  Amavisd, SPamAssassin, ClamAV, Mailman.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme <literal>root</literal> sur le serveur</link></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Changez le Shell par défaut. Tapez :</simpara>

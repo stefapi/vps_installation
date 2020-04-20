@@ -153,10 +153,10 @@ administrer celui-ci. Vous y trouverez notamment:
 Choix du registrar
 ==================
 
-Pour rappel,un registrar est une société auprès de laquelle vous pourrez
-acheter un nom de domaine sur une durée déterminée. Vous devrez fournir
-pour votre enregistrement un ensemble de données personnelles qui
-permettront de vous identifier en tant que propriétaire de ce nom de
+Pour rappel, un registrar est une société auprès de laquelle vous
+pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez
+fournir pour votre enregistrement un ensemble de données personnelles
+qui permettront de vous identifier en tant que propriétaire de ce nom de
 domaine.
 
 Pour ma part j’ai choisi Gandi car il ne sont pas très cher et leur
@@ -195,6 +195,11 @@ Pour que tout cela fonctionne bien, ajoutez des Glue records:
 
 Il y a la possibilité chez OVH d’utiliser un DNS secondaire. Je ne l’ai
 pas mis en oeuvre.
+
+    **Note**
+
+    Avoir un DNS sur au moins deux machines distinctes est la
+    configuration recommandée.
 
 Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.
 
@@ -251,15 +256,16 @@ Mettre l’éditeur de votre choix
 -------------------------------
 
 En fonction de vos préférences en terme d’éditeur, choisissez celui qui
-vous convient.
+vous convient pour les outils utilisant un éditeur de façon automatique
+tels que ``crontab``.
+
+Pour les débutants, il est conseillé d’utiliser nano.
 
 `Loguez vous comme root <#root_login>`__ et tapez:
 
 .. code:: bash
 
     update-alternatives  --config editor
-
-Pour les débutants, il est conseillé d’utiliser nano
 
 Installation d’un repository pour ``/etc``
 ------------------------------------------
@@ -269,7 +275,7 @@ répertoire ``/etc``, installez ``etckeeper``.
 
 Cette installation est optionnelle.
 
-1.  `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
 2.  Tapez :
 
@@ -370,7 +376,7 @@ Cette installation est optionnelle.
 Mise à jour des sources de paquets Debian
 -----------------------------------------
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Modifier la liste standard de paquets
 
@@ -432,7 +438,7 @@ Mise à jour des sources de paquets Debian
 Installation des paquets de base
 --------------------------------
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Tapez:
 
@@ -453,7 +459,7 @@ En répondant aux questions de conservations de paquets, ``debfoster``
 maintient la liste des paquets uniques nécessaires au système. Tous les
 autres paquets seront supprimés.
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Ajouter le paquet ``debfoster``. Tapez :
 
@@ -495,7 +501,7 @@ Vous pourriez être intéressé après l’installation de ``debfoster`` et de
 ``etckeeper`` de construire automatiquement un fichier qui contient la
 liste des paquets qui permettent de réinstaller le système:
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Tapez:
 
@@ -577,7 +583,7 @@ Vérification du nom de serveur
 Cette partie consiste à vérifier que le serveur a un hostname
 correctement configuré.
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. vérifier que le hostname est bien celui attendu (c’est à dire
    configuré par votre hébergeur). Tapez :
@@ -601,7 +607,7 @@ correctement configuré.
 
           reboot
 
-   b. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+   b. `Loguez vous comme root sur le serveur <#root_login>`__
 
 3. Vérifier le fichier ``hosts``. Tapez :
 
@@ -633,7 +639,7 @@ correctement configuré.
 
           reboot
 
-   d. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+   d. `Loguez vous comme root sur le serveur <#root_login>`__
 
 4. Vérifiez que tout est correctement configuré.
 
@@ -691,7 +697,7 @@ connecter directement en SSH en tant que root. De ce fait, notre
 première action sera de désactiver le login direct en root et
 d’autoriser le sudo. Respectez bien les étapes de cette procédure:
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Ajoutez un utilisateur standard qui sera nommé par la suite en tant
    que <sudo\_username>
@@ -877,7 +883,7 @@ L’intérêt étant d’interdire le compte root en connexion ssh tout en
 gardant la facilité de se loguer root sur le système au travers d’un
 super-compte.
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Ajoutez un groupe sudonp et y affecter un utilisateur. Tapez :
 
@@ -919,7 +925,7 @@ Installer l’outil dselect
 L’outil ``dselect`` permet de choisir de façon interactive les paquets
 que l’on souhaite installer.
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Ajouter le paquet ``dselect``. Tapez :
 
@@ -936,7 +942,7 @@ Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de
 
 Tapez :
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Tout d’abord, si l’outil ``dphys-swapfile`` est installé et configuré
    sur la machine, commencez par désactiver le swap. Tapez:
@@ -994,7 +1000,7 @@ Pour les systèmes ayant 2 Go de RAM ou plus, il est fortement conseillé
 d’installer les outils ci après : Amavisd, SPamAssassin, ClamAV,
 Mailman.
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Changez le Shell par défaut. Tapez :
 
@@ -1898,7 +1904,7 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
    a. Il est maintenant recommandé de désactiver les protocoles TLS 1.0
       et TLS 1.1. Ce n’est pas la configuration par défaut d’ISPconfig
 
-   b. `Loguez vous comme ``root`` sur le serveur <#root_login>`__.
+   b. `Loguez vous comme root sur le serveur <#root_login>`__.
 
    c. Copier le fichier ``vhost.conf.master`` dans la zone custom
 
@@ -1944,7 +1950,7 @@ Webmin est un outil généraliste de configuration de votre serveur. Son
 usage peut être assez complexe mais il permet une configuration plus
 précise des fonctionnalités.
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Ajoutez le repository Webmin
 
@@ -2025,7 +2031,7 @@ précise des fonctionnalités.
 8. Si vous n’arrivez pas à vous reconnecter c’est que l’adresse IP n’est
    pas la bonne. Le seul moyen de se reconnecter est de:
 
-   a. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+   a. `Loguez vous comme root sur le serveur <#root_login>`__
 
    b. Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne
       ``allow= …​``
@@ -2551,7 +2557,7 @@ services de base:
 1. Vous devez avoir créé au préalable un site pour les domaines
    example.com et mail.example.com
 
-2. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+2. `Loguez vous comme root sur le serveur <#root_login>`__
 
 3. Liez le certificat d’ISPconfig avec celui du domaine crée.
 
@@ -3049,7 +3055,7 @@ installation reste optionnelle.
 
 Suivez la procédure suivante:
 
-1.  `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
 2.  Installez les paquets debian. tapez:
 
@@ -3469,7 +3475,7 @@ Appliquez la procédure suivante:
 
    h. Sauver.
 
-2. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+2. `Loguez vous comme root sur le serveur <#root_login>`__
 
 3. Dans le répertoire ``/var/www/autoconfig.example.com/autoconfig/``
    créer un répertoire mail. Lui donner les permissions 755 et affecter
@@ -3591,7 +3597,7 @@ Appliquez la procédure suivante:
 
    h. Sauver.
 
-2. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+2. `Loguez vous comme root sur le serveur <#root_login>`__
 
 3. Dans le répertoire ``/var/www/autoconfig.example.com/autoconfig/``,
    créer un répertoire ``Autodiscover``. Lui donner les permissions 755
@@ -4154,7 +4160,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    f. Cliquez sur ``Save``
 
-3. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+3. `Loguez vous comme root sur le serveur <#root_login>`__
 
 Création des bases de données
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4287,7 +4293,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    f. Cliquez sur ``Save``
 
-3. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+3. `Loguez vous comme root sur le serveur <#root_login>`__
 
 Création des bases de données
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4466,7 +4472,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    f. Cliquez sur ``Save``
 
-3. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+3. `Loguez vous comme root sur le serveur <#root_login>`__
 
 Création des bases de données
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4613,7 +4619,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    h. Cliquez sur ``Save``
 
-3. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+3. `Loguez vous comme root sur le serveur <#root_login>`__
 
 4. Créez un utilisateur ``Gitea``. Tapez:
 
@@ -4795,7 +4801,7 @@ Appliquez les opérations suivantes:
 
 9.  Redémarrez ``gitea``.
 
-10. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+10. `Loguez vous comme root sur le serveur <#root_login>`__
 
 11. Tapez:
 
@@ -4809,7 +4815,7 @@ Activer une connexion SSH dédiée
 En option, vous pouvez avoir envie de dédier une connexion SSH pour
 Gitea:
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Éditez le fichier de configuration. Tapez:
 
@@ -4971,7 +4977,7 @@ Téléchargez et installez Seafile
 
 Appliquez la procédure suivante:
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Installez quelques paquets Debian complémentaires. Tapez:
 
@@ -5253,7 +5259,7 @@ Installation de Pritunl
 
 Veuillez suivre la procédure suivante:
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Ajoutez des repositories Debian. Tapez:
 
@@ -5516,7 +5522,7 @@ Appliquez la procédure suivante:
 Installation de Grafana
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-1.  `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
 2.  Tapez:
 
@@ -5654,7 +5660,7 @@ Installation et configuration de Loki
 
 Pour installer Loki, appliquez la procédure suivante:
 
-1.  `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
 2.  Allez sur le site de
     `loki <https://github.com/grafana/loki/releases>`__ et repérez la
@@ -5802,7 +5808,7 @@ Installation et configuration de Promtail
 
 Installez maintenant Promtail:
 
-1.  `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
 2.  Tapez:
 
@@ -5939,7 +5945,7 @@ compatibilité que cela impose.
 
 Pour installer:
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Télécharger le package et lancez l’installeur
 

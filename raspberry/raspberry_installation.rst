@@ -117,10 +117,10 @@ correspond à 7 mois d’abonnement.
 Choix du registrar
 ==================
 
-Pour rappel,un registrar est une société auprès de laquelle vous pourrez
-acheter un nom de domaine sur une durée déterminée. Vous devrez fournir
-pour votre enregistrement un ensemble de données personnelles qui
-permettront de vous identifier en tant que propriétaire de ce nom de
+Pour rappel, un registrar est une société auprès de laquelle vous
+pourrez acheter un nom de domaine sur une durée déterminée. Vous devrez
+fournir pour votre enregistrement un ensemble de données personnelles
+qui permettront de vous identifier en tant que propriétaire de ce nom de
 domaine.
 
 Pour ma part j’ai choisi Gandi car il ne sont pas très cher et leur
@@ -160,6 +160,11 @@ Pour que tout cela fonctionne bien, ajoutez des Glue records:
 Il y a la possibilité chez OVH d’utiliser un DNS secondaire. Je ne l’ai
 pas mis en oeuvre.
 
+    **Note**
+
+    Avoir un DNS sur au moins deux machines distinctes est la
+    configuration recommandée.
+
 Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.
 
 Installation du linux sur votre raspberry.
@@ -178,7 +183,7 @@ raspberry.
 Pour Windows, très simple, il suffit de lancer le programme téléchargé.
 Pour Linux, appliquer la procédure suivante:
 
-1. `Loguez vous comme ``root`` <#root_login>`__
+1. `Loguez vous comme root <#root_login>`__
 
 2. Tapez:
 
@@ -331,7 +336,7 @@ répertoire ``/etc``, installez ``etckeeper``.
 
 Cette installation est optionnelle.
 
-1.  `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
 2.  Tapez :
 
@@ -432,7 +437,7 @@ Cette installation est optionnelle.
 Mise à jour des sources de paquets Debian
 -----------------------------------------
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Modifier la liste standard de paquets
 
@@ -482,7 +487,7 @@ Mise à jour des sources de paquets Debian
 Installation des paquets de base
 --------------------------------
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Tapez:
 
@@ -503,7 +508,7 @@ En répondant aux questions de conservations de paquets, ``debfoster``
 maintient la liste des paquets uniques nécessaires au système. Tous les
 autres paquets seront supprimés.
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Ajouter le paquet ``debfoster``. Tapez :
 
@@ -577,7 +582,7 @@ Vous pourriez être intéressé après l’installation de ``debfoster`` et de
 ``etckeeper`` de construire automatiquement un fichier qui contient la
 liste des paquets qui permettent de réinstaller le système:
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Tapez:
 
@@ -659,7 +664,7 @@ Vérification du nom de serveur
 Cette partie consiste à vérifier que le serveur a un hostname
 correctement configuré.
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. vérifier que le hostname est bien celui attendu (c’est à dire
    configuré par votre hébergeur). Tapez :
@@ -683,7 +688,7 @@ correctement configuré.
 
           reboot
 
-   b. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+   b. `Loguez vous comme root sur le serveur <#root_login>`__
 
 3. Vérifier le fichier ``hosts``. Tapez :
 
@@ -715,7 +720,7 @@ correctement configuré.
 
           reboot
 
-   d. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+   d. `Loguez vous comme root sur le serveur <#root_login>`__
 
 4. Vérifiez que tout est correctement configuré.
 
@@ -743,7 +748,7 @@ connecter directement en SSH en tant que root. De ce fait, notre
 première action sera de désactiver le login direct en root et
 d’autoriser le sudo. Respectez bien les étapes de cette procédure:
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Ajoutez un utilisateur standard qui sera nommé par la suite en tant
    que <sudo\_username>
@@ -929,7 +934,7 @@ L’intérêt étant d’interdire le compte root en connexion ssh tout en
 gardant la facilité de se loguer root sur le système au travers d’un
 super-compte.
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Ajoutez un groupe sudonp et y affecter un utilisateur. Tapez :
 
@@ -971,7 +976,7 @@ Installer l’outil dselect
 L’outil ``dselect`` permet de choisir de façon interactive les paquets
 que l’on souhaite installer.
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Ajouter le paquet ``dselect``. Tapez :
 
@@ -988,7 +993,7 @@ Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de
 
 Tapez :
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Tout d’abord, si l’outil ``dphys-swapfile`` est installé et configuré
    sur la machine, commencez par désactiver le swap. Tapez:
@@ -1046,7 +1051,7 @@ Pour les systèmes ayant 2 Go de RAM ou plus, il est fortement conseillé
 d’installer les outils ci après : Amavisd, SPamAssassin, ClamAV,
 Mailman.
 
-1. `Loguez vous comme ``root`` sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
 2. Changez le Shell par défaut. Tapez :
 
