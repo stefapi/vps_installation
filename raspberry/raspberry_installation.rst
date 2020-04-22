@@ -2,8 +2,8 @@ Avant propos
 ============
 
 Ce document est disponible sur le site
-`ReadTheDocs <https://raspberry-box-installation.readthedocs.io>`__ et
-sur `Github <https://github.com/apiou/vps_installation>`__.
+`ReadTheDocs <https://raspberry-installation.readthedocs.io>`__ et sur
+`Github <https://github.com/apiou/vps_installation>`__.
 
 Cette documentation décrit la méthode que j’ai utilisé pour installer
 une homebox (site auto hébergé) avec un raspberry PI Elle est le
@@ -197,47 +197,62 @@ Pour Linux, appliquer la procédure suivante:
 
 Suivez la procédure ci dessous commune à toutes les plateformes:
 
-1.  Sélectionnez ``Choose OS`` et dans la liste choisissez ``Raspbian``
+1. Sélectionnez ``Choose OS`` et dans la liste choisissez ``Raspbian``
 
-2.  Sélectionnez ``CHoose SD CARD`` et sélectionnez votre lecteur de
-    carte SD
+2. Sélectionnez ``CHoose SD CARD`` et sélectionnez votre lecteur de
+   carte SD
 
-3.  Cliquez sur ``Write``
+3. Cliquez sur ``Write``
 
-4.  Attendez la fin du chargement et de l’écriture sur la flash.
+4. Attendez la fin du chargement et de l’écriture sur la flash.
 
-5.  Enlevez la carte SD de votre lecteur et insèrez la dans votre
+5. Vous avez deux façons d’installer:
+
+   -  avec un écran et un clavier qui est la méthode la plus facile
+
+   -  en mode Headless qui est plus complexe mais ne nécessite pas
+      d’écran ni de clavier
+
+6. Vous devez choisir l’une des méthodes décrites dans les deux
+   chapitres suivants.
+
+Installation avec écran et clavier
+----------------------------------
+
+Pour ce type d’installation, il vous faut un clavier+souris et un écran.
+
+1.  Enlevez la carte SD de votre lecteur et insérez la dans votre
     raspberry PI.
 
-6.  Brancher un clavier, une souris et un écran (ou utilisez un écran
+2.  Brancher un clavier, une souris et un écran (ou utilisez un écran
     3,5" configuré selon la procédure en annexe).
 
-7.  Branchez votre Rasberry sur votre réseau ethernet filaire (vous
+3.  Branchez votre Raspberry sur votre réseau Ethernet filaire (vous
     pouvez aussi utiliser le wifi)
 
-8.  Démarrez votre raspberry.
+4.  Démarrez votre Raspberry.
 
-9.  Après l’écran de démarrage arc en ciel, vous devez assez rapidement
+5.  Après l’écran de démarrage arc en ciel, vous devez assez rapidement
     arriver sur le bureau
 
-10. Un programme doit se lancer automatiquement.
+6.  Un programme doit se lancer automatiquement.
 
-11. Sélectionnez le clavier et la langue en français
+7.  Sélectionnez le clavier et la langue en français
 
-12. Tapez votre nouveau mot de passe root
+8.  Tapez votre nouveau mot de passe pour le login ``pi``
 
-13. Choisissez un full screen sans bords
+9.  Choisissez un full screen sans bords
 
-14. Choississez votre connexion wifi et entrez le mot de passe
+10. Choisissez votre connexion wifi et entrez le mot de passe
 
-15. Bien noter votre adresse IP elle vous sera utile ensuite
+11. Bien noter votre adresse IP elle vous sera utile ensuite
 
-16. Les mises à jours de paquets debian ainsi que l’installation des
+12. Les mises à jours de paquets Debian ainsi que l’installation des
     traductions en français vont s’installer.
 
-17. Une fois les installations terminées, le raspberry va rebooter.
+13. Une fois les installations terminées, le Raspberry va rebooter.
 
-18. Une fois rebooté, sélectionnez dans le menu
+14. Une fois rebooté, sélectionnez dans le menu
     ``Préférences``\ →\`Configuration du Raspberry PI\`
 
     -  Dans l’onglet ``Display`` Cliquez sur ``Set Resolution`` et
@@ -247,7 +262,7 @@ Suivez la procédure ci dessous commune à toutes les plateformes:
 
     -  Cliquez sur ``Valider``
 
-19. Cliquez sur l’icone ``VNC`` dans la barre en haut à Droite
+15. Cliquez sur l’icône ``VNC`` dans la barre en haut à Droite
 
     -  Dans la fenêtre cliquez sur le menu burger en haut à Droite.
 
@@ -259,10 +274,225 @@ Suivez la procédure ci dessous commune à toutes les plateformes:
     -  Tapez votre mot de passe dans les deux champs et cliquez
        ``Valider`` puis ``OK``
 
-20. Vous pouvez maintenant rebooter votre raspberry sans écran et sans
+16. Vous pouvez maintenant rebooter votre Raspberry sans écran et sans
     clavier pour continuer la configuration.
 
-21. Vous avez deux options: connexion en mode SSH ou au travers d’une
+17. Vous avez deux options: connexion en mode SSH ou au travers d’une
+    connexion VNC
+
+Installation Headless
+---------------------
+
+Pour ce type d’installation, pas besoin d’écran et de clavier et de
+souris. Tout s’effectue à distance.
+
+Dans la suite, je suppose que vous possèdez un PC fonctionnant avec un
+Linux (la procédure peut être adaptée avec une machine windows en
+utilisant la ligne de commande et putty)
+
+1. Avant d’enlever votre flash SD du lecteur, appliquez la procédure ci
+   après:
+
+   -  Sur la flash, 2 partitions ont été crées. Montez la partition boot
+
+   -  sur cette partition, créez un fichier ``wpa_supplicant.conf`` et
+      éditez le avec un éditeur de text (Nano ou vi sous linux ou
+      Notepad sous windows).
+
+   -  Mettez y le texte suivant:
+
+      ::
+
+          ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+          update_config=1
+          country=US
+          network={
+              ssid="YOURSSID" 
+              psk="YOURPASSWORD" 
+              key_mgmt=WPA-PSK
+              scan_ssid=1
+          }
+
+      -  remplacez ``YOURSSID`` par le nom SSID de votre wifi local
+
+      -  remplacez ``YOURPASSWORD`` par le mot de passe de votre wifi
+         local
+
+   -  sauvez le fichier
+
+   -  Sur la même partition créez un fichier ``ssh`` (vide et sans
+      extension). Il servira à indiquer au raspberry d’activer ssh au
+      prochain boot
+
+   -  démontez la partition
+
+   -  au boot sur la carte SD, le fichier sera recopié dans votre
+      configuration et le réseau wifi sera ainsi accessible
+
+2. Enlevez la carte SD de votre lecteur et insérez la dans votre
+   Raspberry PI.
+
+3. Démarrez votre raspberry.
+
+4. Attendez environ 2 minutes le temps que le premier boot se termine.
+   Tout pendant la procédure de boot, la petite led d’accès disque doit
+   clignoter.
+
+5. Vous devez maintenant découvrir l’adresse IP de votre Raspberry, pour
+   cela tapez la commande suivante:
+
+   .. code:: bash
+
+       ping raspberrypi.local
+
+6. Si le Raspberry a démarré correctement, cette commande doit montrer
+   l’adresse IP du raspberry et une réponse correcte au ping
+
+::
+
+    PING raspberrypi.local (192.168.3.212) 56(84) bytes of data.
+    64 bytes from raspberrypi.local (192.168.0.212): icmp_seq=1 ttl=64 time=1.32 ms
+
+1.  Si vous n’obtenez aucun résultat essayer la commande ``nmap`` sur le
+    subnet de votre réseau local
+
+    -  On obtient l’adresse local du subnet en tapant:
+
+       .. code:: bash
+
+           hostname -I
+
+    -  l’adresse IP de votre PC est affichée comme premier mot. Par
+       exemple :\`192.168.3.10\`
+
+    -  le subnet se déduit de cette adresse en gardant les 3 premiers
+       nombres (cas général de la plupart des utilisateurs).
+
+    -  Tapez:
+
+       .. code:: bash
+
+           nmap -sn 192.168.3.0/24
+
+    -  la commande affiche alors les adresses IP et mac de toutes les
+       machines présentes sur le réseau.
+
+    -  le Raspberry se reconnait par son nom de machine qui contient le
+       terme ``raspberry`` ou par son adresse mac qui est reconnue du
+       type ``Raspberry Pi Foundation``
+
+2.  vous pouvez alors directement vous connecter. Tapez:
+
+    .. code:: bash
+
+        ssh pi@adresse_ip 
+
+    -  adresse\_ip est l’adresse IP du Raspberry pi découverte
+       précédemment ou raspberrypi.local
+
+3.  Se loguer avec le mot de passe ``raspberry``
+
+4.  Tapez :
+
+    .. code:: bash
+
+        sudo raspi-config
+
+5.  Choisissez ``1 Change User Password`` → tapez votre nouveau mot de
+    passe 2 fois
+
+6.  Sur l’étape suivante, il ne faut pas se louper ou vous serez obligé
+    d’éteindre votre raspberry, retirer la flash et la reprogrammer avec
+    le fichier ``wpa_supplicant.conf`` dans la partition ``boot``
+
+7.  Choisissez ``2 Network Options`` → ``N2 Wi-fi`` → Tapez votre nom de
+    SSID (attention aux majuscules) → Tapez votre mot de passe
+
+8.  Choisissez ``4 Localisation Options`` → ``I1 Change Locale`` →
+    Sélectionnez votre langue: ``fr_FR.UTF-8 UTF-8`` → puis la locale
+    par défaut ``fr_FR.UTF-8 UTF-8``
+
+9.  Choisissez ``4 Localisation Options`` → ``I2 Change Timezone`` →
+    Choisissez votre timezone (par exemple: ``Europe`` → ``Paris``)
+
+10. Choisissez ``4 Localisation Options`` →
+    ``I3 Change Keyboard Layout`` → Choisissez votre mapping clavier
+
+11. Choisissez ``4 Localisation Options`` → ``I4 Change Wi-fi Country``
+    → choisissez votre pays de norme wifi
+
+12. choisissez ``5 Interfacing Options`` → ``P2 SSH`` → choisissez
+    ``yes``
+
+13. choisissez ``5 Interfacing Options`` → ``P3 VNC`` → choisissez
+    ``yes``
+
+14. choisissez ``7 Advanced Options`` → ``A5 Resolution`` → choisissez
+    ``DMT Mode 82 1920x1080 60Hz 16:9``
+
+15. choisissez ``8 Update`` ; Une mise a jour du système va s’effectuer
+
+16. Tapez ensuite 2 fois sur la touche ``TAB`` pour sélectionner
+    ``Finish``. Tapez ``entrée``.
+
+17. Rebootez le système en tapant:
+
+    .. code:: bash
+
+        sudo reboot
+
+18. Vous allez perdre votre connexion avec le raspberry
+
+19. si vous arrivez à vous reloguer en tapant (attendre 30 secondes
+    après le reboot avant d’essayer):
+
+    .. code:: bash
+
+        ssh pi@adresse_ip 
+
+    -  adresse\_ip est l’adresse IP du Raspberry pi découverte
+       précédemment ou raspberrypi.local
+
+    C’est que vous avez terminé avec succès la configuration initiale.
+
+20. RealVNC dans sa configuration par défaut ne permet pas à un
+    utilisateur de se connecter simplement. Il faut donc ruser la
+    première fois.
+
+21. Dans un autre terminal sur votre poste local, tapez:
+
+    .. code:: bash
+
+        apt install realvnc-vnc-viewer
+        vncviewer adresse_ip:5900 
+
+    -  adresse\_ip est l’adresse IP du Raspberry pi découverte
+       précédemment ou raspberrypi.local
+
+22. Une demande de login et de mot de passe est affiché tapez ``pi``
+    dans le login et le mot de passe que vous avez choisi dans le champ
+    mot de passe. Cliquez sur ``OK``
+
+23. le bureau va s’afficher et un programme se lance automatiquement.
+    Arrêter ce programme puisque vous avez déjà fait la configuration
+    initiale.
+
+24. Cliquez sur l’icone ``VNC`` dans la barre en haut à Droite
+
+    -  Dans la fenêtre cliquez sur le menu burger en haut à Droite.
+
+    -  Choisissez ``Options`` puis l’onglet ``Sécurité``
+
+    -  Dans le champ Authentification choisissez l’option
+       ``mot de passe VNC``
+
+    -  Tapez votre mot de passe dans les deux champs et cliquez
+       ``Valider`` puis ``OK``
+
+25. Vous avez terminé l’installation initiale de Raspbian. Vous pouvez
+    maintenant rebooter votre raspberry pour continuer la configuration.
+
+26. Vous avez deux options: connexion en mode SSH ou au travers d’une
     connection VNC
 
 Se loguer root sur le serveur
@@ -318,15 +548,16 @@ Mettre l’éditeur de votre choix
 -------------------------------
 
 En fonction de vos préférences en terme d’éditeur, choisissez celui qui
-vous convient.
+vous convient pour les outils utilisant un éditeur de façon automatique
+tels que ``crontab``.
+
+Pour les débutants, il est conseillé d’utiliser nano.
 
 `Loguez vous comme root <#root_login>`__ et tapez:
 
 .. code:: bash
 
     update-alternatives  --config editor
-
-Pour les débutants, il est conseillé d’utiliser nano
 
 Installation d’un repository pour ``/etc``
 ------------------------------------------
@@ -1539,6 +1770,2483 @@ Installation et configuration de PureFTPd
              mount -o remount /
              quotacheck -avugm
              quotaon -avug
+
+Installation et configuration de phpmyadmin
+-------------------------------------------
+
+1. Installez phpmyadmin. Exécutez:
+
+   .. code:: bash
+
+       mkdir /usr/share/phpmyadmin
+       mkdir /etc/phpmyadmin
+       mkdir -p /var/lib/phpmyadmin/tmp
+       chown -R www-data:www-data /var/lib/phpmyadmin
+       touch /etc/phpmyadmin/htpasswd.setup
+       cd /tmp
+       wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
+       tar xfz phpMyAdmin-4.9.0.1-all-languages.tar.gz
+       mv phpMyAdmin-4.9.0.1-all-languages/* /usr/share/phpmyadmin/
+       rm phpMyAdmin-4.9.0.1-all-languages.tar.gz
+       rm -rf phpMyAdmin-4.9.0.1-all-languages
+       cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php
+
+2. Éditez le fichier :
+
+   .. code:: bash
+
+       vi /usr/share/phpmyadmin/config.inc.php
+
+   a. Modifier l’entrée ``blowfish_secret`` en ajoutant votre propre
+      chaîne de 32 caractères.
+
+   b. Éditez le fichier: :
+
+      .. code:: bash
+
+          vi /etc/apache2/conf-available/phpmyadmin.conf
+
+   c. Ajoutez les lignes suivantes:
+
+      .. code:: apache
+
+          # phpMyAdmin default Apache configuration
+
+          Alias /phpmyadmin /usr/share/phpmyadmin
+
+          <Directory /usr/share/phpmyadmin>
+           Options FollowSymLinks
+           DirectoryIndex index.php
+
+           <IfModule mod_php7.c>
+           AddType application/x-httpd-php .php
+
+           php_flag magic_quotes_gpc Off
+           php_flag track_vars On
+           php_flag register_globals Off
+           php_value include_path .
+           </IfModule>
+
+          </Directory>
+
+          # Authorize for setup
+          <Directory /usr/share/phpmyadmin/setup>
+           <IfModule mod_authn_file.c>
+           AuthType Basic
+           AuthName "phpMyAdmin Setup"
+           AuthUserFile /etc/phpmyadmin/htpasswd.setup
+           </IfModule>
+           Require valid-user
+          </Directory>
+
+          # Disallow web access to directories that don't need it
+          <Directory /usr/share/phpmyadmin/libraries>
+           Order Deny,Allow
+           Deny from All
+          </Directory>
+          <Directory /usr/share/phpmyadmin/setup/lib>
+           Order Deny,Allow
+           Deny from All
+          </Directory>
+
+3. Activez le module et redémarrez apache. Tapez :
+
+   .. code:: bash
+
+       a2enconf phpmyadmin
+       systemctl restart apache2
+
+4. Créer la base de donnée phpmyadmin.
+
+   a. Tapez :
+
+      .. code:: bash
+
+          mysql -u root -p
+
+      puis entrer le mot de passe root
+
+   b. Créez une base phpmyadmin. Tapez :
+
+      .. code:: sql
+
+          CREATE DATABASE phpmyadmin;
+
+   c. Créez un utilisateur phpmyadmin. Tapez :
+
+      .. code:: sql
+
+          CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; 
+
+      -  ``mypassword`` doit être remplacé par un mot de passe choisi.
+
+   d. Accordez des privilèges et sauvez:
+
+      .. code:: sql
+
+          GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; 
+
+      -  ``mypassword`` doit être remplacé par un mot de passe choisi.
+
+   e. Flusher les privilèges:
+
+      .. code:: sql
+
+          FLUSH PRIVILEGES;
+
+   f. et enfin
+
+      .. code:: sql
+
+          EXIT;
+
+5. Chargez les tables sql dans la base phpmyadmin:
+
+   .. code:: bash
+
+       mysql -u root -p phpmyadmin < /usr/share/phpmyadmin/sql/create_tables.sql
+
+6. Enfin ajoutez les mots de passe nécessaires dans le fichier de
+   config.
+
+   a. Tapez:
+
+      .. code:: bash
+
+          vi /usr/share/phpmyadmin/config.inc.php
+
+   b. Rechercher le texte contenant ``controlhost`` . Ci-dessous, un
+      exemple:
+
+      .. code:: php
+
+          /* User used to manipulate with storage */
+          $cfg['Servers'][$i]['controlhost'] = 'localhost';
+          $cfg['Servers'][$i]['controlport'] = '';
+          $cfg['Servers'][$i]['controluser'] = 'pma';
+          $cfg['Servers'][$i]['controlpass'] = 'mypassword'; 
+
+
+          /* Storage database and tables */
+          $cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
+          $cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
+          $cfg['Servers'][$i]['relation'] = 'pma__relation';
+          $cfg['Servers'][$i]['table_info'] = 'pma__table_info';
+          $cfg['Servers'][$i]['table_coords'] = 'pma__table_coords';
+          $cfg['Servers'][$i]['pdf_pages'] = 'pma__pdf_pages';
+          $cfg['Servers'][$i]['column_info'] = 'pma__column_info';
+          $cfg['Servers'][$i]['history'] = 'pma__history';
+          $cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
+          $cfg['Servers'][$i]['tracking'] = 'pma__tracking';
+          $cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
+          $cfg['Servers'][$i]['recent'] = 'pma__recent';
+          $cfg['Servers'][$i]['favorite'] = 'pma__favorite';
+          $cfg['Servers'][$i]['users'] = 'pma__users';
+          $cfg['Servers'][$i]['usergroups'] = 'pma__usergroups';
+          $cfg['Servers'][$i]['navigationhiding'] = 'pma__navigationhiding';
+          $cfg['Servers'][$i]['savedsearches'] = 'pma__savedsearches';
+          $cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
+          $cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
+          $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';
+
+      -  A tous les endroit ou vous voyez dans le texte ci dessus le mot
+         ``mypassword`` mettez celui choisi. N’oubliez pas de
+         dé-commenter les lignes.
+
+Installation et configuration de Roundcube
+------------------------------------------
+
+1. Tapez:
+
+   .. code:: bash
+
+       apt-get install roundcube roundcube-core roundcube-mysql roundcube-plugins
+
+2. Répondez aux question
+
+   -  ``Utiliser dbconfig_common`` ← Répondre ``Oui``
+
+   -  ``Mot de passe Mysql pour db Roundcube`` ← Tapez un mot de passe
+
+3. Éditez le fichier php de roundcube: :
+
+   .. code:: bash
+
+       vi /etc/roundcube/config.inc.php
+
+   et définissez les hosts par défaut comme localhost
+
+   .. code:: php
+
+       $config['default_host'] = 'localhost';
+       $config['smtp_server'] = 'localhost';
+
+4. Éditez la configuration apache pour roundcube: :
+
+   .. code:: bash
+
+       vi /etc/apache2/conf-enabled/roundcube.conf
+
+   et ajouter au début les lignes suivantes:
+
+   .. code:: apache
+
+       Alias /roundcube /var/lib/roundcube
+       Alias /webmail /var/lib/roundcube
+
+5. Redémarrez Apache:
+
+   .. code:: bash
+
+       systemctl reload apache2
+
+Installation de Let’s Encrypt
+-----------------------------
+
+Installez Let’s Encrypt. Tapez:
+
+.. code:: bash
+
+    cd /usr/local/bin
+    wget https://dl.eff.org/certbot-auto
+    chmod a+x certbot-auto
+    ./certbot-auto --install-only
+
+Une façon alternative de l’installer est:
+
+.. code:: bash
+
+    apt install python3-certbot-apache
+
+Installation d’un scanner de vulnérabilités
+-------------------------------------------
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. installer Git. Tapez :
+
+   .. code:: bash
+
+       apt install git
+
+3. installer Lynis
+
+   a. Tapez :
+
+      .. code:: bash
+
+          cd
+          git clone https://github.com/CISOfy/lynis
+
+   b. Executez :
+
+      .. code:: bash
+
+          cd lynis;./lynis audit system
+
+4. L’outil vous listera dans une forme très synthétique la liste des
+   vulnérabilités et des améliorations de sécurité à appliquer.
+
+Installation d’un Panel
+=======================
+
+Il existe plusieurs type de panel de contrôle pour les VPS. La plupart
+sont payant.
+
+Pour citer les plus connus:
+
+-  payant: cPanel (leader du type), Plesk
+
+-  gratuit: Yunohost ( un excellent système d’autohébergement packagé) ,
+   Ajenti, Froxlor, Centos web panel, Webmin et Usermin, ISPConfig,
+   HestiaCP, VestaCP ,
+
+Ci après nous allons en présenter 3 différents (ISPConfig, Webmin et
+HestiaCP). Ils sont incompatibles entre eux.
+
+On peut faire cohabiter ISPConfig et Webmin en prenant les précautions
+suivantes:
+
+-  ISPConfig est le maitre de la configuration: toute modification sur
+   les sites webs, mailboxes et DNS doit impérativement être effectuées
+   du coté d’ISPConfig
+
+-  Les modifications réalisées au niveau de webmin pour ces sites webs,
+   mailboxes et DNS seront au mieux écrasées par ISPConfig au pire elles
+   risquent de conduire à des incompatibilités qui engendreront des
+   dysfonctionnement d’ISPConfig (impossibilité de mettre à jour les
+   configurations)
+
+-  Le reste des modifications peuvent être configurées au niveau de
+   webmin sans trop de contraintes.
+
+Pour rappel, HestiaCP (tout comme VestaCP) sont incompatibles
+d’ISPConfig et de Webmin. Ils doivent être utilisés seuls
+
+Installation et configuration de ISPConfig
+------------------------------------------
+
+ISPConfig est un système de configuration de sites web totalement
+compatible avec Webmin.
+
+Pour installer ISPConfig, vous devez suivre la procédure ci-dessous.
+ISPConfig 3.1 a été utilisé dans ce tutoriel.
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Tapez:
+
+    .. code:: bash
+
+        cd /tmp
+
+3.  Cherchez la dernière version d’ISPConfig sur le site
+    `ISPConfig <https://www.ispconfig.org/ispconfig/download/>`__
+
+4.  Installez cette version en tapant: :
+
+    .. code:: bash
+
+        wget <la_version_a_telecharger>.tar.gz
+
+5.  Décompressez la version en tapant: :
+
+    .. code:: bash
+
+        tar xfz <la_version>.tar.gz
+
+6.  Enfin allez dans le répertoire d’installation: :
+
+    .. code:: bash
+
+        cd ispconfig3_install/install/
+
+7.  Lancez l’installation: :
+
+    .. code:: bash
+
+        php -q install.php
+
+    et répondez aux questions:
+
+    a. ``Select language (en,de) [en]:`` ← Tapez entrée
+
+    b. ``Installation mode (standard,expert) [standard]:`` ← Tapez
+       entrée
+
+    c. ``Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:``
+       ← Tapez entrée
+
+    d. ``MySQL server hostname [localhost]:`` ← Tapez entrée
+
+    e. ``MySQL server port [3306]:`` ← Tapez entrée
+
+    f. ``MySQL root username [root]:`` ← Tapez entrée
+
+    g. ``MySQL root password []:`` ← Enter your MySQL root password
+
+    h. ``MySQL database to create [dbispconfig]:`` ← Tapez entrée
+
+    i. ``MySQL charset [utf8]:`` ← Tapez entrée
+
+    j. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
+       lettres
+
+    k. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
+       nom d’état
+
+    l. ``Locality Name (eg, city) []:`` ← Entrer votre ville
+
+    m. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
+       Entrez votre entreprise ou tapez entrée
+
+    n. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
+
+    o. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le
+       nom d’hôte de votre serveur. Dans notre cas: server1.example.com
+
+    p. ``Email Address []:`` ← Tapez entrée
+
+    q. ``ISPConfig Port [8080]:`` ← Tapez entrée
+
+    r. ``Admin password [admin]:`` ← Tapez entrée
+
+    s. ``Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:``
+       ←- Tapez entrée
+
+    t. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
+       lettres
+
+    u. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
+       nom d’état
+
+    v. ``Locality Name (eg, city) []:`` ← Entrer votre ville
+
+    w. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
+       Entrez votre entreprise ou tapez entrée
+
+    x. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
+
+    y. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le
+       nom d’hôte de votre serveur. Dans notre cas: server1.example.com
+
+    z. ``Email Address []:`` ← Tapez entrée
+
+8.  Sécurisez Apache
+
+    a. Il est maintenant recommandé de désactiver les protocoles TLS 1.0
+       et TLS 1.1. Ce n’est pas la configuration par défaut d’ISPconfig
+
+    b. `Loguez vous comme root sur le serveur <#root_login>`__.
+
+    c. Copier le fichier ``vhost.conf.master`` dans la zone custom
+
+       .. code:: bash
+
+           cp /usr/local/ispconfig/server/conf/vhost.conf.master /usr/local/ispconfig/server/conf-custom/vhost.conf.master
+
+    d. Editer le fichier dans la zone custom. Tapez:
+
+       .. code:: bash
+
+           vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master
+
+    e. Remplacez la ligne ``SSLProtocol All`` par:
+
+       .. code:: ini
+
+           SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
+
+9.  L’installation est terminée. Vous accédez au serveur à l’adresse:
+    https://example.com:8080/ .
+
+        **Note**
+
+        Lors de votre première connexion, votre domaine n’est pas encore
+        configuré. Il faudra alors utiliser le nom DNS donné par votre
+        hébergeur. Pour OVH, elle s’écrit VPSxxxxxx.ovh.net
+
+10. Loguez vous comme admin et avec le mot de passe que vous avez
+    choisi. Vous pouvez décider de le changer au premier login
+
+        **Note**
+
+        Si le message "Possible attack detected. This action has been
+        logged.". Cela signifie que vous avez des cookies d’une
+        précédente installation qui sont configurés. Effacer les cookies
+        de ce site de votre navigateur.
+
+Installation de Webmin
+----------------------
+
+Webmin est un outil généraliste de configuration de votre serveur. Son
+usage peut être assez complexe mais il permet une configuration plus
+précise des fonctionnalités.
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Ajoutez le repository Webmin
+
+   a. allez dans le répertoire des repositories. Tapez :
+
+      .. code:: bash
+
+          cd /etc/apt/sources.list.d
+
+   b. Tapez: :
+
+      .. code:: bash
+
+          echo "deb http://download.webmin.com/download/repository sarge contrib" >> webmin.list
+
+   c. Ajoutez la clé. Tapez :
+
+      .. code:: bash
+
+          curl -fsSL http://www.webmin.com/jcameron-key.asc | sudo apt-key add -
+
+      Le message ``OK`` s’affiche
+
+3. Mise à jour. Tapez :
+
+   .. code:: bash
+
+       apt update
+
+4. Installation de Webmin. Tapez :
+
+   .. code:: bash
+
+       apt install webmin
+
+   ::
+
+       Débloquez le port 10000 dans votre firewall
+
+   a. Allez sur le site ispconfig https://example.com:8080/
+
+   b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+      ``Firewall``. Cliquez sur votre serveur.
+
+   c. dans la rubrique ``Open TCP ports:``, ajoutez le port 10000
+
+   d. Cliquez sur ``save``
+
+5. Connectez vous avec votre navigateur sur l’url
+   `https://<example.com>:10000 <https://<example.com>:10000>`__. Un
+   message indique un problème de sécurité. Cela vient du certificat
+   auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et
+   poursuivre'.
+
+6. Loguez-vous ``root``. Tapez le mot de passe de ``root``. Le dashboard
+   s’affiche.
+
+7. Restreignez l’adressage IP
+
+   a. Obtenez votre adresse IP en allant par exemples sur le site
+      https://www.showmyip.com/
+
+   b. Sur votre URL Webmin ou vous êtes logué, allez dans Webmin→Webmin
+      Configuration
+
+   c. Dans l’écran choisir l’icône ``Ip Access Control``.
+
+   d. Choisissez ``Only allow from listed addresses``
+
+   e. Puis dans le champ ``Allowed IP addresses`` tapez votre adresse IP
+      récupérée sur showmyip
+
+   f. Cliquez sur ``Save``
+
+   g. Vous devriez avoir une brève déconnexion le temps que le serveur
+      Webmin redémarre puis une reconnexion.
+
+8. Si vous n’arrivez pas à vous reconnecter c’est que l’adresse IP n’est
+   pas la bonne. Le seul moyen de se reconnecter est de:
+
+   a. `Loguez vous comme root sur le serveur <#root_login>`__
+
+   b. Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne
+      ``allow= …​``
+
+   c. Tapez :
+
+      .. code:: bash
+
+          service webmin restart
+
+   d. Connectez vous sur l’url de votre site Webmin. Tout doit
+      fonctionner
+
+9. Passez en Français. Pour les personnes non anglophone. Les
+   traductions française ont des problèmes d’encodage de caractère ce
+   n’est donc pas recommandé. La suite de mon tutoriel suppose que vous
+   êtes resté en anglais.
+
+   a. Sur votre url Webmin ou vous êtes logué, allez dans Webmin→Webmin
+      Configuration
+
+   b. Dans l’écran choisir l’icône ``Language and Locale``.
+
+   c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
+
+Configuration d’un domaine
+==========================
+
+Cette configuration est réalisée avec le Panel ISPConfig installé dans
+le chapitre précédent. L’étape "login initial" n’est à appliquer qu’une
+seule fois. Une fois votre premier domaine configuré, vous pourrez vous
+loguer à ISPconfig en utilisant ce domaine à l’adresse:
+https://example.com:8080/ .
+
+Login initial
+-------------
+
+    **Note**
+
+    Cette procédure n’est à appliquer que lorsqu’aucun domaine n’est
+    encore créé.
+
+Vous devrez tout d’abord vous loguer sur le serveur ISPConfig. Comme
+vous n’avez pas encore configuré de nom de de domaine, vous devrez vous
+loguer de prime abord sur le site http://vpsxxxxxx.ovh.net:8080/ pour un
+vps chez ovh par exemple ou sur http://raspberrypi.local:8080/ pour un
+Raspberry.
+
+Utiliser le login: Admin et le mot de passe que vous avez configuré lors
+de l’installation d’ISPConfig
+
+1. Aller dans la rubrique ``System``
+
+   a. Dans le menu ``Main config``
+
+      i.  Dans l’onglet ``Sites``, configurer:
+
+          A. ``Create subdomains as web site:`` ← Yes
+
+          B. ``Create aliasdomains as web site:`` ← Yes
+
+      ii. Dans l’onglet ``Mail`` :
+
+          A. ``Administrator’s e-mail :`` ← adresse mail de
+             l’administrateur. par exemple admin@example.com
+
+          B. ``Administrator’s name :`` ← nom de l’administrateur
+
+   b. Dans le menu ``Firewall``
+
+      i.  Cliquez sur ``Add Firewall Record``
+
+      ii. Acceptez les valeurs par défaut en cliquant sur ``Save``
+
+              **Note**
+
+              Il est possible de basculer le site ISPConfig entièrement
+              en Français. J’ai pour ma part gardé la version anglaise
+              du site. Vous trouverez donc tous les libellés dans la
+              suite de la documentation en anglais.
+
+2. Aller dans la rubrique ``DNS``
+
+   a. Dans le menu ``Template``
+
+      i.   Cliquez sur ``Add new record``
+
+      ii.  Remplissez les champs comme ci-après:
+
+           -  ``Name`` ← Tapez ``Template IPV4 autoNS``
+
+           -  ``Fields`` ← Cochez ``Domain``, ``IP Address``, ``Email``,
+              ``DKIM``, ``DNSSEC``
+
+           -  ``Template`` ← remplissez comme ci dessous:
+
+              .. code:: bash
+
+                  [ZONE]
+                  origin={DOMAIN}.
+                  ns=ns1.{DOMAIN}.
+                  mbox={EMAIL}.
+                  refresh=7200
+                  retry=540
+                  expire=604800
+                  minimum=3600
+                  ttl=3600
+
+                  [DNS_RECORDS]
+                  A|{DOMAIN}.|{IP}|0|3600
+                  A|www|{IP}|0|3600
+                  A|mail|{IP}|0|3600
+                  A|autoconfig|{IP}|0|3600
+                  A|autodiscover|{IP}|0|3600
+                  A|webmail|{IP}|0|3600
+                  A|ns1|{IP}|0|3600
+                  CNAME|ftp|{DOMAIN}|0|3600
+                  CNAME|smtp|{DOMAIN}|0|3600
+                  CNAME|pop3|{DOMAIN}|0|3600
+                  CNAME|imap|{DOMAIN}|0|3600
+                  SRV|_pop3._tcp|0 0 .|0|3600
+                  SRV|_imap._tcp|0 0 .|0|3600
+                  SRV|_pop3s._tcp|1 995 mail.{DOMAIN}|0|3600
+                  SRV|_imaps._tcp|1 993 mail.{DOMAIN}|0|3600
+                  SRV|_submission._tcp|1 465 mail.{DOMAIN}|0|3600
+                  SRV|_autodiscover._tcp|1 443 autodiscover.{DOMAIN}|0|3600
+                  NS|{DOMAIN}.|ns1.{DOMAIN}.|0|3600
+                  MX|{DOMAIN}.|mail.{DOMAIN}.|10|3600
+                  TXT|{DOMAIN}.|v=spf1 mx a ~all|0|3600
+
+      iii. Cliquez sur ``Save``
+
+      iv.  Cliquez sur ``Add new record``
+
+      v.   Remplissez les champs comme ci-après:
+
+           -  ``Name`` ← Tapez ``Template IPV6 autoNS``
+
+           -  ``Fields`` ← Cochez ``Domain``, ``IP Address``,
+              ``IPV6 Address``, ``Email``, ``DKIM``, ``DNSSEC``
+
+           -  ``Template`` ← remplissez comme ci dessous:
+
+              .. code:: bash
+
+                  [ZONE]
+                  origin={DOMAIN}.
+                  ns=ns1.{DOMAIN}.
+                  mbox={EMAIL}.
+                  refresh=7200
+                  retry=540
+                  expire=604800
+                  minimum=3600
+                  ttl=3600
+
+                  [DNS_RECORDS]
+                  A|{DOMAIN}.|{IP}|0|3600
+                  A|www|{IP}|0|3600
+                  A|mail|{IP}|0|3600
+                  A|autoconfig|{IP}|0|3600
+                  A|autodiscover|{IP}|0|3600
+                  A|webmail|{IP}|0|3600
+                  A|ns1|{IP}|0|3600
+                  AAAA|{DOMAIN}.|{IPV6}|0|3600
+                  AAAA|www|{IPV6}|0|3600
+                  AAAA|mail|{IPV6}|0|3600
+                  AAAA|autoconfig|{IPV6}|0|3600
+                  AAAA|autodiscover|{IPV6}|0|3600
+                  AAAA|webmail|{IPV6}|0|3600
+                  AAAA|ns1|{IPV6}|0|3600
+                  CNAME|ftp|{DOMAIN}|0|3600
+                  CNAME|smtp|{DOMAIN}|0|3600
+                  CNAME|pop3|{DOMAIN}|0|3600
+                  CNAME|imap|{DOMAIN}|0|3600
+                  SRV|_pop3._tcp|0 0 .|0|3600
+                  SRV|_imap._tcp|0 0 .|0|3600
+                  SRV|_pop3s._tcp|1 995 mail.{DOMAIN}|0|3600
+                  SRV|_imaps._tcp|1 993 mail.{DOMAIN}|0|3600
+                  SRV|_submission._tcp|1 465 mail.{DOMAIN}|0|3600
+                  SRV|_autodiscover._tcp|1 443 autodiscover.{DOMAIN}|0|3600
+                  NS|{DOMAIN}.|ns1.{DOMAIN}.|0|3600
+                  MX|{DOMAIN}.|mail.{DOMAIN}.|10|3600
+                  TXT|{DOMAIN}.|v=spf1 mx a ~all|0|3600
+
+Création de la zone DNS d’un domaine
+------------------------------------
+
+1. Allez dans ``DNS``
+
+   a. Cliquez sur ``Add dns-zone``
+
+   b. Cliquez sur ``Dns zone wizard``
+
+   c. Choisir le template ``IPV4 autoNS`` ou\`IPV6 autoNS\` selon que
+      vous soyez IPV4 ou IPV4+V6
+
+   d. Remplissez les champs:
+
+      -  ``Domain :`` ← tapez le nom de votre domaine ``example.com``
+
+      -  ``IP Address:`` ← prendre l’adresse IPV4 du serveur
+         sélectionnée
+
+      -  ``IPV6 Address:`` ← prendre l’adresse IPV6 du serveur
+         sélectionnée
+
+      -  ``Email:`` ← votre Email valide exemple admin@example.com
+
+      -  ``DKIM:`` ← Yes
+
+             **Note**
+
+             Si votre serveur est chez vous, il est probablement
+             installé derrière un routeur ADSL configuré au préalable
+             avec une DMZ qui pointe sur ce serveur. Dans ce cas, vous
+             ne devrez pas indiquer l’adresse IP locale de votre serveur
+             mais l’adresse IP de votre routeur ADSL telle qu’elle est
+             vue sur internet. On suppose aussi que cette adresse IP est
+             statique et non pas allouée dynamiquement par l’opérateur.
+
+   e. Cliquez sur ``Create DNS-record``
+
+Attendez quelques minutes le temps que les enregistrements DNS se
+propagent et faites une essai de votre nom de domaine sur le site
+`ZoneMaster <https://zonemaster.fr/domain_check>`__.
+
+Dans le champ Nom de domaine saisissez votre nom de domaine et tapez sur
+check. Tout doit est OK sauf pour les serveurs de noms ns1 et ns2. Si ce
+n’est pas le cas, votre nom de domaine doit être mal configuré chez
+votre registrar. Il vous faut vérifier la configuration initiale.
+
+    **Note**
+
+    Zonemaster a bien repéré que l’on a essayé de mettre des noms de
+    host différents pour les serveurs de DNS. Ils ont cependant tous la
+    même adresse IP. Cela apparait comme une erreur suite au test. De la
+    même manière, il indique dans la rubrique connectivité qu’il n’y a
+    pas de redondance de serveur DNS. Une manière de corriger ce
+    problème est de définir un DNS secondaire chez OVH en utilisant le
+    service qu’ils mettent à disposition.
+
+Vous pouvez maintenant essayer les différents Hostname munis de leur nom
+de domaine dans votre navigateur. Par exemple:
+http://webmail.example.com
+
+Ils doivent afficher une page web basique (Apache2, ou de parking).Si ce
+n’est pas le cas revérifier la configuration du DNS dans ISPConfig.
+
+Activation de DNSSEC
+--------------------
+
+Vous pouvez maintenant activer DNSSEC afin d’augmenter la sécurité de
+résolution de nom de domaine:
+
+1. Allez dans la rubrique ``DNS``
+
+   a. puis dans le menu ``Zones``
+
+   b. choisissez la zone correspondant à votre domaine
+
+   c. dans l’onglet ``DNS Zone`` allez tout en bas et activer la coche
+      ``Sign Zone (DNSSEC)``
+
+   d. cliquez sur ``Save``
+
+   e. Une fois fait, retourner dans le même onglet. La boite \`DNSSEC
+      DS-Data for registry: \`contient les informations que vous devez
+      coller dans le site web de votre registrar pour sécuriser votre
+      zone.
+
+   f. Gardez cette fenêtre ouverte dans votre navigateur et ouvrez un
+      autre onglet sur le site de votre registrar.
+
+Si vous êtes chez `Gandi <https://admin.gandi.net/>`__, il vous faut:
+
+1. Sélectionner le menu ``nom de domaine``
+
+2. Choisir votre nom de domaine "example.com"
+
+3. Allez dans l’onglet DNSSEC. Il doit permettre d’ajouter des clés
+   puisque vous fonctionner avec des DNS externes.
+
+4. Effacez éventuellement toutes les clés si vous n’êtes pas sur de
+   celles-ci.
+
+5. puis cliquez sur ``Ajouter une clé externe``
+
+   a. Sélectionnez d’abord le flag ``257 (KSK)``. puis l’algorithme
+      ``7 (RSASHA1-NSEC3-SHA1)``
+
+   b. Collez ensuite la clé de votre site ISPConfig. Elle doit
+      ressembler à cela:
+
+      ::
+
+          example.com. IN DNSKEY 257 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn
+
+   c. Cliquez sur ``Ajouter``
+
+   d. Entrez la deuxième clé. Cliquez sur ``Ajouter une clé externe``
+
+   e. Sélectionnez d’abord le flag ``256 (ZSK)``. puis l’algorithme
+      ``7 (RSASHA1-NSEC3-SHA1)``
+
+   f. Collez ensuite la clé de votre site ISPConfig. Elle doit
+      ressembler à cela:
+
+      ::
+
+          example.com. IN DNSKEY 256 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn
+
+   g. Cliquez sur ``Ajouter``
+
+   h. Les deux clés doivent maintenant apparaître dans l’onglet
+      ``DNSSEC``
+
+   i. Vous devez attendre quelques minutes (une heure dans certains cas)
+      pour que les clés se propagent. Pendant ce temps vous pouvez avoir
+      quelques problèmes d’accès à vos sites webs
+
+   j. Allez sur le site `DNSSEC
+      Analyzer <https://dnssec-debugger.verisignlabs.com/>`__.
+
+   k. Entrez votre nom de domaine "example.com" et tapez sur "entrée".
+
+Le site doit afficher pour les différentes zones le statut des
+certificats. Tout doit être au vert. Si ce n’est pas le cas, réessayer
+dans une heure. S’il y a encore des problèmes vérifiez votre
+configuration dans ISPConfig, chez votre registrar (rubrique DNSSEC) ou
+regardez les logs d’ISPConfig sur votre serveur pour y débusquer une
+erreur.
+
+    **Tip**
+
+    Une erreur classique est de croiser les certificats avec leurs
+    types. Vérifiez bien que vous avez mis les bons certificats avec les
+    bons types.
+
+    **Warning**
+
+    Une fois que vous activez DNSSEC, vous pourriez faire face au
+    problème suivant: les nouveaux enregistrements que vous renseignez
+    ne sont pas actifs. Une analyse des logs montre que la commande
+    ``dnssec-signzone`` retourne l’erreur
+    ``fatal: 'example.com': found DS RRset without NS RRset``. Cela
+    signifie que vous avez saisi une ou deux entrées DS dans vos
+    enregistrements. Il faut les supprimer pour que tout redevienne
+    fonctionnel.
+
+Exemple de configuration de domaine
+-----------------------------------
+
+Une fois la configuration terminé, les différents enregistrements du
+domaines ressemblent à l’exemple ci-dessous. Il peut y avoir des
+enregistrements supplémentaires pour les configurations SPF, DKIM et
+Let’s encrypt.
+
+::
+
+    example.com.         3600 A              1.2.3.4
+    www                  3600 A              1.2.3.4
+    mail                 3600 A              1.2.3.4
+    ns1                  3600 A              1.2.3.4
+    ns2                  3600 A              1.2.3.4
+    webmail              3600 A              1.2.3.4
+    autoconfig           3600 A              1.2.3.4
+    autodiscover         3600 A              1.2.3.4
+    ftp                  3600 CNAME          example.com.
+    smtp                 3600 CNAME          mail.example.com.
+    pop3                 3600 CNAME          mail.example.com.
+    imap                 3600 CNAME          mail.example.com.
+    example.com.         3600 NS             ns1.example.com.
+    example.com.         3600 NS             ns2.example.com.
+    example.com.         3600 MX    10       mail.example.com.
+    _pop3s._tcp          3600 SRV   10 1 995 mail.example.com.
+    _imaps._tcp          3600 SRV   0  1 993 mail.example.com.
+    _submission._tcp     3600 SRV   0  1 465 mail.example.com.
+    _imap._tcp           3600 SRV   0  0 0   .
+    _pop3._tcp           3600 SRV   0  0 0   .
+    _autodiscover._tcp   3600 SRV   0 0 443  autoconfig.example.com.
+    example.com.         3600 TXT            "v=spf1 mx a ~all"
+
+Création d’un sous domaine
+--------------------------
+
+Supposons que vous êtes en train de créer un sous domain nommé
+sub.example.com . Dans ce sous domaines vous allez créer un ensemble de
+site web par exemple mail.sub.example.com ou blog.sub.example.com.
+
+Un cas assez classique est que ce sous domaine est délégué à une machine
+tierce.
+
+Par exemple: example.com est installé sur un VPS quelque part sur
+internet et sub.example.com est hébergé chez vous sur votre Raspberry.
+
+On suppose que votre domain a été configuré en suivant la procédure du
+chapitre précédent.
+
+Rien de bien sorcier pour votre sous domaine: Vous devez le créer sur
+votre Raspberry selon la même procédure mais avec le nom du sous domaine
+(sub.example.com donc).
+
+Vous aurez des actions complémentaires à effectuer sur votre domaine:
+
+1. Allez dans ``DNS`` de votre serveur de domaine principal
+
+2. Sélectionner le menu ``Zones`` puis le domaine example.com
+
+3. Choisissez l’onglet ``Records`` et créez:
+
+   -  un enregistrement de type ``NS`` avec une ``Zone`` ←
+      ``sub.example.com.`` et un ``nameserver Hostname`` ←
+      ``ns1.sub.example.com.``
+
+   -  un enregistrement de type ``NS`` avec une ``Zone`` ←
+      ``sub.example.com.`` et un ``nameserver Hostname`` ←
+      ``ns2.sub.example.com.``
+
+   -  un enregistrement de type ``NS`` avec une ``Zone`` ←
+      ``sub.example.com.`` et un ``nameserver Hostname`` ←
+      ``ns3.example.com.`` .
+
+      Ce dernier type d’enregistrement se nomme un Glue record pour
+      faire le lien vers le serveur secondaire.
+
+   -  un enregistrement de type ``A`` avec un ``Hostname`` ← ns3 et une
+      ``IP-address`` ← Adresse IP de votre routeur ADSL ou est connecté
+      le Raspberry.
+
+      Ce dernier enregistrement en complétant le Glue record fait le
+      lien avec l’adresse IP de sub.example.com
+
+4. Si vous avez activé DNSSEC sur votre serveur DNS de sub.example.com
+   vous devrez récupérer les entrées DS du champ
+   ``DNSSEC DS-Data for registry`` de votre domaine sub.example.com et
+   créer dans votre domaine example.com les deux entrées suivantes:
+
+   -  un enregistrement de type ``DS`` avec une ``Zone`` ←
+      ``sub.example.com`` et un champ ``data`` contenant
+      ``xxxxx 7 1 <votre_digest_recupérée>``
+
+   -  un enregistrement de type ``DS`` avec une ``Zone`` ←
+      ``sub.example.com`` et un champ ``data`` contenant
+      ``xxxxx 7 2 <votre_digest_recupérée>``
+
+Création d’un site web
+----------------------
+
+Dans la suite le site web sera nommé "example.com".
+
+Vous devez avoir avant tout défini le "record" DNS associé au site.
+
+1. Aller dans "Sites"
+
+   a. Aller dans le menu "Website" pour définir un site web
+
+      i.   Cliquez sur "Add new website"
+
+      ii.  Saisissez les informations:
+
+           -  ``Domain:`` ← mettre ``example.com``
+
+           -  ``Auto-subdomain:`` ← sélectionner ``wwww`` ou ``*`` si
+              l’on veut un certificat let’s encrypt wildcard
+
+           -  ``SSL:`` ← yes
+
+           -  ``Let’s Encrypt:`` ← yes
+
+           -  ``Php:`` ← Sélectionez ``php-fpm``
+
+           -  Sélectionnez éventuellement aussi les coches ``Perl``,
+              ``Python``, ``Ruby`` en fonction des technologies
+              déployées sur votre site. Cela est indiqué dans la
+              procédure d’installation du site.
+
+      iii. Dans l’onglet ``redirect`` du même écran
+
+           -  ``SEO Redirect:`` ← Sélectionner
+              ``domain.tld ⇒www.domain.tld``
+
+           -  ``Rewrite http to https:`` ← yes
+
+      iv.  Dans l’onglet ``Statistics`` du même écran
+
+           -  ``Set Webstatistics password:`` ← saisissez un mot de
+              passe
+
+           -  ``Repeat Password:`` ← ressaisissez le mot de passe
+
+      v.   Dans l’onglet ``Backup`` du même écran
+
+           -  ``Backup interval:`` ← saisir ``weekly``
+
+           -  ``Number of backup copies:`` ← saisir ``1``
+
+      vi.  Dans l’onglet ``Options``, il peut être utile pour certains
+           types de site qui sont des redirections d’autres sites de
+           saisir dans la zone ``Apache Directives:``
+
+           .. code:: apache
+
+               ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+               ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+               RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+               # redirect from server
+               #
+
+               SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+               ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
+               ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
+
+2. Vous pouvez maintenant tester la qualité de la connexion de votre
+   site en allant sur: `SSL Server
+   Test <https://www.ssllabs.com/ssltest>`__. Saisissez votre nom de
+   domaine et cliquez sur ``Submit``. Votre site doit au moins être de
+   ``Grade A``.
+
+Création d’un Site Vhost
+------------------------
+
+Dans la suite le sous-domaine sera nommé "mail.example.com".
+
+Vous devez avoir avant tout défini le "record" DNS associé au site. Vous
+ne pouvez définir un sous-domaine que si vous avez défini le site web
+racine auparavant.
+
+1. Aller dans "Sites"
+
+   a. Aller dans le menu "Subdomain(vhost)" pour définir un sous-domaine
+
+      i.   Cliquez sur "Add Subdomain" pour un nouveau sous domaine
+
+      ii.  Saisissez les informations:
+
+           -  ``Hostname:`` ← saisir ``mail``
+
+           -  ``Domain:`` ← mettre ``example.com``
+
+           -  ``web folder:`` ← saisir ``mail``
+
+           -  ``Auto-subdomain:`` ← sélectionner ``wwww`` ou ``*`` si
+              l’on veut un certificat let’s encrypt wildcard
+
+           -  ``SSL:`` ← yes
+
+           -  ``Let’s Encrypt:`` ← yes
+
+           -  ``Php:`` ← Sélectionez ``php-fpm``
+
+           -  Sélectionnez éventuellement aussi les coches ``Perl``,
+              ``Python``, ``Ruby`` en fonction des technologies
+              déployées sur votre site. Cela est indiqué dans la
+              procédure d’installation du site.
+
+      iii. Dans l’onglet ``redirect`` du même écran
+
+           -  ``Rewrite http to https:`` ← yes
+
+      iv.  Dans l’onglet ``Statistics`` du même écran
+
+           -  ``Set Webstatistics password:`` ← saisissez un mot de
+              passe
+
+           -  ``Repeat Password:`` ← ressaisissez le mot de passe
+
+      v.   Dans l’onglet ``Options``, il peut être utile pour certains
+           types de site qui sont des redirections d’autres sites de
+           saisir dans la zone ``Apache Directives:``
+
+           .. code:: apache
+
+               ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+               ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+               RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+               # redirect from server
+               #
+
+               SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+               ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
+               ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
+
+2. Vous pouvez maintenant tester la qualité de la connexion de votre
+   site en allant sur: `SSL Server
+   Test <https://www.ssllabs.com/ssltest>`__. Saisissez votre nom de
+   domaine et cliquez sur ``Submit``. Votre site doit au moins être de
+   ``Grade A``.
+
+Associer des certificats reconnu à vos outils
+=============================================
+
+Cette action est à effectuer une fois que vous avez créé votre domaine
+principal et que vous avez généré vos premiers certificats let’s encrypt
+dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux
+services de base:
+
+1. Vous devez avoir créé au préalable un site pour les domaines
+   example.com et mail.example.com
+
+2. `Loguez vous comme root sur le serveur <#root_login>`__
+
+3. Liez le certificat d’ISPconfig avec celui du domaine crée.
+
+   -  Tapez :
+
+      .. code:: bash
+
+          cd /usr/local/ispconfig/interface/ssl/
+          mv ispserver.crt ispserver.crt-$(date +"%y%m%d%H%M%S").bak
+          mv ispserver.key ispserver.key-$(date +"%y%m%d%H%M%S").bak
+          ln -s /etc/letsencrypt/live/example.com/fullchain.pem ispserver.crt 
+          ln -s /etc/letsencrypt/live/example.com/privkey.pem ispserver.key 
+          cat ispserver.{key,crt} > ispserver.pem
+          chmod 600 ispserver.pem
+          systemctl restart apache2
+
+      -  remplacer <example.com> par votre nom de domaine
+
+4. Liez le certificat Postfix et Dovecot avec celui de let’s encrypt
+
+   -  Tapez :
+
+      .. code:: bash
+
+          cd /etc/postfix/
+          mv smtpd.cert smtpd.cert-$(date +"%y%m%d%H%M%S").bak
+          mv smtpd.key smtpd.key-$(date +"%y%m%d%H%M%S").bak
+          ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert 
+          ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key 
+          service postfix restart
+          service dovecot restart
+
+      -  remplacer <example.com> par votre nom de domaine
+
+5. Liez le certificat pour Pureftd
+
+   -  Tapez :
+
+      .. code:: bash
+
+          cd /etc/ssl/private/
+          mv pure-ftpd.pem pure-ftpd.pem-$(date +"%y%m%d%H%M%S").bak
+          ln -s /usr/local/ispconfig/interface/ssl/ispserver.pem pure-ftpd.pem
+          chmod 600 pure-ftpd.pem
+          service pure-ftpd-mysql restart
+
+6. Création d’un script de renouvellement automatique du fichier pem
+
+   a. Installez incron. Tapez :
+
+      .. code:: bash
+
+          apt install -y incron
+
+   b. Créez le fichier d’exécution périodique. Tapez :
+
+      .. code:: bash
+
+          vi /etc/init.d/le_ispc_pem.sh
+
+      et coller dans le fichier le code suivant:
+
+      .. code:: bash
+
+          #!/bin/sh
+          ### BEGIN INIT INFO
+          # Provides: LE ISPSERVER.PEM AUTO UPDATER
+          # Required-Start: $local_fs $network
+          # Required-Stop: $local_fs
+          # Default-Start: 2 3 4 5
+          # Default-Stop: 0 1 6
+          # Short-Description: LE ISPSERVER.PEM AUTO UPDATER
+          # Description: Update ispserver.pem automatically after ISPC LE SSL certs are renewed.
+          ### END INIT INFO
+          cd /usr/local/ispconfig/interface/ssl/
+          mv ispserver.pem ispserver.pem-$(date +"%y%m%d%H%M%S").bak
+          cat ispserver.{key,crt} > ispserver.pem
+          chmod 600 ispserver.pem
+          chmod 600 /etc/ssl/private/pure-ftpd.pem
+          service pure-ftpd-mysql restart
+          service monit restart
+          service postfix restart
+          service dovecot restart
+          service apache2 restart
+          exit 1
+
+   c. Sauvez et quittez. Tapez ensuite:
+
+      .. code:: bash
+
+          chmod +x /etc/init.d/le_ispc_pem.sh
+          echo "root" >> /etc/incron.allow
+          incrontab -e.
+
+      et ajoutez les lignes ci dessous dans le fichier:
+
+      .. code:: bash
+
+          /etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh 
+
+      -  Remplacer example.com par votre nom de domaine.
+
+Surveillance du serveur avec Munin et Monit
+===========================================
+
+Note préliminaire
+-----------------
+
+Installez tout d’abord les paquets indispensables pour faire fonctionner
+Munin avec Apache puis activez le module fcgid:
+
+.. code:: bash
+
+    apt-get install apache2 libcgi-fast-perl libapache2-mod-fcgid
+    a2enmod fcgid
+
+Installation et configuration de Munin
+--------------------------------------
+
+Suivez les étapes ci-après:
+
+1.  Installer le paquet Munin:
+
+    .. code:: bash
+
+        apt-get install munin munin-node munin-plugins-extra logtail libcache-cache-perl
+
+2.  Votre configuration de Munin va utiliser une base de données
+    MariaDB. Vous devez activer quelques plugins. Tapez:
+
+    .. code:: bash
+
+        cd /etc/munin/plugins
+        ln -s /usr/share/munin/plugins/mysql_ mysql_
+        ln -s /usr/share/munin/plugins/mysql_bytes mysql_bytes
+        ln -s /usr/share/munin/plugins/mysql_innodb mysql_innodb
+        ln -s /usr/share/munin/plugins/mysql_isam_space_ mysql_isam_space_
+        ln -s /usr/share/munin/plugins/mysql_queries mysql_queries
+        ln -s /usr/share/munin/plugins/mysql_slowqueries mysql_slowqueries
+        ln -s /usr/share/munin/plugins/mysql_threads mysql_threads
+
+3.  Créez la base de données MariaDB de Munin. Tapez:
+
+    .. code:: bash
+
+        mysql -p
+
+4.  Tapez le mot de passe mysql de root , puis dans mysql tapez:
+
+    .. code:: mysql
+
+        CREATE SCHEMA munin_innodb;
+        USE munin_innodb
+        CREATE TABLE something (anything int) ENGINE=InnoDB;
+        GRANT SELECT ON munin_innodb.* TO 'munin'@'localhost' IDENTIFIED BY 'munin';
+        FLUSH PRIVILEGES;
+        EXIT;
+
+5.  Editez ensuite le fichier de configuration de Munin. Tapez:
+
+    .. code:: bash
+
+        vi /etc/munin/munin.conf
+
+6.  Décommentez les lignes débutant par: ``bdir``, ``htmldir``,
+    ``logdir``, ``rundir``, and ``tmpldir``. Les valeurs par défaut sont
+    correctes.
+
+7.  Munin utilisera l’adresse ``munin.example.com``. Toujours dans le
+    fichier de configuration de munin, remplacer la directive
+    ``[localhost.localdomain]`` par ``[munin.example.com]``.
+
+8.  Un fois les commentaires enlevés et la ligne modifiée, le fichier de
+    configuration doit ressembler à celui-ci:
+
+    ::
+
+        # Example configuration file for Munin, generated by 'make build'
+        # The next three variables specifies where the location of the RRD
+        # databases, the HTML output, logs and the lock/pid files. They all
+        # must be writable by the user running munin-cron. They are all
+        # defaulted to the values you see here.
+        #
+        dbdir /var/lib/munin
+        htmldir /var/cache/munin/www
+        logdir /var/log/munin
+        rundir /var/run/munin
+        # Where to look for the HTML templates
+        #
+        tmpldir /etc/munin/templates
+        # Where to look for the static www files
+        #
+        #staticdir /etc/munin/static
+        # temporary cgi files are here. note that it has to be writable by
+        # the cgi user (usually nobody or httpd).
+        #
+        # cgitmpdir /var/lib/munin/cgi-tmp
+
+        # (Exactly one) directory to include all files from.
+        includedir /etc/munin/munin-conf.d
+        [...]
+        # a simple host tree
+        [server1.example.com]
+         address 127.0.0.1
+         use_node_name yes
+        [...]
+
+9.  Activez Munin dans Apache. Tapez:
+
+    .. code:: bash
+
+        a2enconf munin
+
+10. Editez le fichier munin.conf d’Apache:
+
+    .. code:: bash
+
+        vi /etc/apache2/conf-enabled/munin.conf
+
+11. Nous allons maintenant activer le module Munin dans Apache et
+    définir une authentification basique.
+
+12. Modifiez le fichier pour qu’il ressemble à celui ci-dessous:
+
+    .. code:: apache
+
+        ScriptAlias /munin-cgi/munin-cgi-graph /usr/lib/munin/cgi/munin-cgi-graph
+        Alias /munin/static/ /var/cache/munin/www/static/
+
+        <Directory /var/cache/munin/www>
+            Options FollowSymLinks SymLinksIfOwnerMatch
+            AuthUserFile /etc/munin/munin-htpasswd
+            AuthName "Munin"
+            AuthType Basic
+            Require valid-user
+
+        </Directory>
+
+        <Directory /usr/lib/munin/cgi>
+            AuthUserFile /etc/munin/munin-htpasswd
+            AuthName "Munin"
+            AuthType Basic
+            Require valid-user
+            Options FollowSymLinks SymLinksIfOwnerMatch
+            <IfModule mod_fcgid.c>
+                SetHandler fcgid-script
+            </IfModule>
+            <IfModule !mod_fcgid.c>
+                SetHandler cgi-script
+            </IfModule>
+        </Directory>
+
+        # ***** SETTINGS FOR CGI/CRON STRATEGIES *****
+
+        # pick _one_ of the following lines depending on your "html_strategy"
+        # html_strategy: cron (default)
+        Alias /munin /var/cache/munin/www
+        # html_strategy: cgi (requires the apache module "cgid" or "fcgid")
+        #ScriptAlias /munin /usr/lib/munin/cgi/munin-cgi-html
+
+13. Créez ensuite le fichier de mot de passe de munin:
+
+    .. code:: bash
+
+        htpasswd -c /etc/munin/munin-htpasswd admin
+
+14. Tapez votre mot de passe
+
+15. Redémarrez apache. Tapez:
+
+    .. code:: bash
+
+        service apache2 restart
+
+16. Redémarrez Munin. Tapez:
+
+    .. code:: bash
+
+        service munin-node restart
+
+17. Attendez quelques minutes afin que Munin produise ses premiers
+    fichiers de sortie. et allez ensuite sur l’URL:
+    http://example.com/munin/.
+
+Activez les plugins de Munin
+----------------------------
+
+Dans Debian 10, tous les plugins complémentaires sont déjà activés.Vous
+pouvez être tenté de vérifier:
+
+1. Pour vérifier que la configuration est correcte. Tapez:
+
+   .. code:: bash
+
+       munin-node-configure --suggest
+
+2. Une liste de plugins doit s’afficher à l’écran. La colonne ``used``
+   indique que le plugins est activé. La colonne ``Suggestions`` indique
+   que le serveur fait fonctionner un service qui peut être monitoré par
+   ce module. Il faut créer un lien symbolique du module de
+   ``/usr/share/munin/plugins`` dans ``/etc/munin/plugins`` pour
+   l’activer.
+
+3. Par exemple pour activer les modules apache\_\*:
+
+   .. code:: bash
+
+       cd /etc/munin/plugins
+       ln -s /usr/share/munin/plugins/apache_accesses
+       ln -s /usr/share/munin/plugins/apache_processes
+       ln -s /usr/share/munin/plugins/apache_volume
+       rm /usr/share/munin/plugins/mysql_
+
+4. Redémarrez ensuite le service Munin. Tapez:
+
+   .. code:: bash
+
+       service munin-node restart
+
+Installer et configurer Monit
+-----------------------------
+
+Pour installer et configurer Monit, vous devez appliquer la procédure
+suivante:
+
+1.  Tapez:
+
+    .. code:: bash
+
+        apt install monit
+
+2.  Maintenant nous devons éditer le fichier ``monitrc`` qui définira
+    les services que l’on souhaite monitorer. Il existe de nombreux
+    exemples sur le web et vous pourrez trouver de nombreuses
+    configuration sur http://mmonit.com/monit/documentation/.
+
+3.  Editez le fichier monitrc. Tapez:
+
+    .. code:: bash
+
+        cp /etc/monit/monitrc /etc/monit/monitrc_orig
+        vi /etc/monit/monitrc
+
+4.  Le fichier contient déjà de nombreux exemples. Nous configurer une
+    surveillance de sshd, apache, mysql, proftpd, postfix, memcached,
+    named, ntpd, mailman, amavisd, dovecot. Monit sera activé sur le
+    port 2812 et nous allons donner à l’utilisateur admin un mot de
+    passe. Le certificat HTTPS sera celui généré avec let’s encrypt pour
+    le site ISPConfig. Collez le contenu ci dessous dans le fichier
+    monitrc:
+
+    ::
+
+        set daemon 60
+        set logfile syslog facility log_daemon
+        set mailserver localhost
+        set mail-format { from: monit@fpvview.site }
+        set alert stef@fpvview.site
+        set httpd port 2812 and
+         SSL ENABLE
+         PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
+         allow admin:"my_password" 
+
+        check process sshd with pidfile /var/run/sshd.pid
+         start program "/usr/sbin/service ssh start"
+         stop program "/usr/sbin/service ssh stop"
+         if failed port 22 protocol ssh then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process apache with pidfile /var/run/apache2/apache2.pid
+         group www
+         start program = "/usr/sbin/service apache2 start"
+         stop program = "/usr/sbin/service apache2 stop"
+         if failed host localhost port 80 protocol http
+         and request "/monit/token" then restart
+         if cpu is greater than 60% for 2 cycles then alert
+         if cpu > 80% for 5 cycles then restart
+         if totalmem > 500 MB for 5 cycles then restart
+         if children > 250 then restart
+         if loadavg(5min) greater than 10 for 8 cycles then stop
+         if 3 restarts within 5 cycles then timeout
+
+        # ---------------------------------------------------------------------------------------------
+        # NOTE: Replace example.pid with the pid name of your server, the name depends on the hostname
+        # ---------------------------------------------------------------------------------------------
+        check process mysql with pidfile /var/run/mysqld/mysqld.pid
+         group database
+         start program = "/usr/sbin/service mysql start"
+         stop program = "/usr/sbin/service mysql stop"
+         if failed host 127.0.0.1 port 3306 then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process pureftpd with pidfile /var/run/pure-ftpd/pure-ftpd.pid
+         start program = "/usr/sbin/service pure-ftpd-mysql start"
+         stop program = "/usr/sbin/service pure-ftpd-mysql stop"
+         if failed port 21 protocol ftp then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process postfix with pidfile /var/spool/postfix/pid/master.pid
+         group mail
+         start program = "/usr/sbin/service postfix start"
+         stop program = "/usr/sbin/service postfix stop"
+         if failed port 25 protocol smtp then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process memcached with pidfile /var/run/memcached/memcached.pid
+         start program = "/usr/sbin/service memcached start"
+         stop program = "/usr/sbin/service memcached stop"
+         if failed host 127.0.0.1 port 11211 then restart
+
+        check process named with pidfile /var/run/named/named.pid
+         start program = "/usr/sbin/service bind9 start"
+         stop program = "/usr/sbin/service bind9 stop"
+         if failed host 127.0.0.1 port 53 type tcp protocol dns then restart
+         if failed host 127.0.0.1 port 53 type udp protocol dns then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process ntpd with pidfile /var/run/ntpd.pid
+         start program = "/usr/sbin/service ntp start"
+         stop program = "/usr/sbin/service ntp stop"
+         if failed host 127.0.0.1 port 123 type udp then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process mailman with pidfile /var/run/mailman/mailman.pid
+         group mail
+         start program = "/usr/sbin/service mailman start"
+         stop program = "/usr/sbin/service mailman stop"
+
+        check process amavisd with pidfile /var/run/amavis/amavisd.pid
+         group mail
+         start program = "/usr/sbin/service amavis start"
+         stop program = "/usr/sbin/service amavis stop"
+         if failed port 10024 protocol smtp then restart
+         if 5 restarts within 5 cycles then timeout
+
+        check process dovecot with pidfile /var/run/dovecot/master.pid
+         group mail
+         start program = "/usr/sbin/service dovecot start"
+         stop program = "/usr/sbin/service dovecot stop"
+         if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
+         if 5 restarts within 5 cycles then timeout
+
+    -  remplacez my\_password par votre mot de passe
+
+5.  La configuration est assez claire à lire. pour obtenir des
+    précisions, référez vous à la documentation de monit
+    http://mmonit.com/monit/documentation/monit.html.
+
+6.  Dans la configuration pour apache, la configuration indique que
+    monit doit allez chercher sur le port 80 un fichier dans
+    ``/monit/token``. Nous devons donc créer ce fichier. Tapez:
+
+    .. code:: bash
+
+        mkdir /var/www/html/monit
+        echo "hello" > /var/www/html/monit/token
+
+7.  Tapez :
+
+    .. code:: bash
+
+        service monit restart
+
+8.  Pour monitorer le statut des process en ligne de commande, tapez:
+
+    .. code:: bash
+
+        monit status
+
+9.  Débloquez le port 2812 dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 2812
+
+    d. Cliquez sur ``save``
+
+10. Maintenant naviguez sur le site https://example.com:2812/
+
+11. Rentrez le login ``admin`` et votre mot de passe ``my_password``.
+    Monit affiche alors les informations de monitoring du serveur.
+
+Configuration de la messagerie
+==============================
+
+Installation de rspamd à la place d' Amavis-new
+-----------------------------------------------
+
+``rspamd`` est réputé de meilleure qualité que ``Amavis`` dans la chasse
+aux spams. Vous pouvez décider de l’installer à la place d’Amavis. Cette
+installation reste optionnelle.
+
+Suivez la procédure suivante:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Installez les paquets debian. tapez:
+
+    .. code:: bash
+
+        apt-get install rspamd redis-server
+
+3.  Activez l’apprentissage automatique
+
+    .. code:: bash
+
+        echo "autolearn = true;" > /etc/rspamd/local.d/classifier-bayes.conf
+        echo 'backend = "redis";' >> /etc/rspamd/local.d/classifier-bayes.conf
+        echo "new_schema = true;" >> /etc/rspamd/local.d/classifier-bayes.conf
+        echo "expire = 8640000;" >> /etc/rspamd/local.d/classifier-bayes.conf
+
+4.  Activez Redis dans la configuration de Rspamd. Tapez:
+
+    .. code:: bash
+
+        echo 'servers = "127.0.0.1";' > /etc/rspamd/local.d/redis.conf
+
+5.  Fixer des métriques assez élevées pour analyser les spams
+
+    .. code:: bash
+
+        echo "actions {" > /etc/rspamd/local.d/metrics.conf
+        echo 'add_header = 5;' >> /etc/rspamd/local.d/metrics.conf
+        echo "greylist = 25;" >> /etc/rspamd/local.d/metrics.conf
+        echo "reject = 50;" >> /etc/rspamd/local.d/metrics.conf
+        echo "}" >> /etc/rspamd/local.d/metrics.conf
+
+6.  Augmentez la taille de l’historique de Rspamd, activez la
+    compression.
+
+    .. code:: bash
+
+        echo "nrows = 2500;" > /etc/rspamd/local.d/history_redis.conf
+        echo "compress = true;" >> /etc/rspamd/local.d/history_redis.conf
+        echo "subject_privacy = false;" >> /etc/rspamd/local.d/history_redis.conf
+
+7.  Activez la mise à jour automatique de rspamd
+
+    .. code:: bash
+
+        echo 'enabled = true;' > /etc/rspamd/local.d/redis.conf
+
+8.  Enrichissez les headers des mails spams. Tapez:
+
+    .. code:: bash
+
+        vi /etc/rspamd/local.d/milter_headers.conf
+
+9.  inserez le texte suivant:
+
+    ::
+
+        # local.d/milter_headers.conf:
+
+        # Options
+
+        # Add "extended Rspamd headers" (default false) (enables x-spamd-result, x-rspamd-server & x-rspamd-queue-id routines)
+        extended_spam_headers = true;
+
+        # List of headers to be enabled for authenticated users (default empty)
+        # authenticated_headers = ["authentication-results"];
+
+        # List of headers to be enabled for local IPs (default empty)
+        local_headers = ["x-spamd-bar"];
+
+        # Set false to always add headers for local IPs (default true)
+        # skip_local = true;
+
+        # Set false to always add headers for authenticated users (default true)
+        # skip_authenticated = true;
+
+        # Routines to use- this is the only required setting (may be omitted if using extended_spam_headers)
+        use = ["x-spamd-bar", "x-spam-level", "authentication-results"];
+
+        # this is where we may configure our selected routines
+        routines {
+          # settings for x-spamd-bar routine
+          x-spamd-bar {
+            # effectively disables negative spambar
+            negative = "";
+          }
+          # other routines...
+        }
+        custom {
+          # user-defined routines: more on these later
+        }
+
+10. Créez un mot de passe. Tapez:
+
+    .. code:: bash
+
+        rspamadm pw
+
+11. Entrez votre mot de passe. Une hashphrase est générée.
+
+12. Copiez la.
+
+13. Remplacez celle déjà présente dans
+    ``/etc/rspamd/local.d/worker-controller.inc``
+
+    .. code:: bash
+
+        vi /etc/rspamd/local.d/worker-controller.inc
+
+14. Remplacez le texte entre guillemets sur la ligne
+    ``password = "$2$g95yw…​…​dq3c5byy";`` par le texte copié.
+
+15. Sauvez
+
+16. Redémarrez Rspamd
+
+    .. code:: bash
+
+        systemctl restart rspamd
+
+17. Loguez vous dans ISPConfig
+
+18. Activer Rspamd dans ISPConfig
+
+    a. Allez dans la rubrique ``system`` → menu ``Server Config`` →
+       Sélectionnez votre serveur → Onglet ``Mail``
+
+    b. Dans le champ ``Content Filter``, sélectionnez ``Rspamd``
+
+    c. Dans le champ ``Rspamd Password``, tapez votre mot de passe
+
+    d. Cliquez sur ``Save``
+
+    e. Revenez dans la rubrique ``system`` → menu ``Server Config`` →
+       Sélectionnez votre serveur → Onglet ``Mail``
+
+    f. Vous pouvez voir le mot de passe de connexion au serveur web
+       Rspamd.
+
+19. Rendre le site rspamd accessible dans un host
+
+20. Activez le module proxy dans apache
+
+    .. code:: bash
+
+        a2enmod proxy
+        systemctl restart apache2
+
+21. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+    Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+    a. Cliquez sur ``A`` et saisissez:
+
+       -  ``Hostname:`` ← Tapez ``rspamd``
+
+       -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+          de votre serveur
+
+    b. Cliquez sur ``Save``
+
+22. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+    configurateur de ``sites``.
+
+    a. Lui donner le nom ``rspamd``.
+
+    b. Le faire pointer vers le web folder ``rspamd``.
+
+    c. Activer let’s encrypt ssl
+
+    d. Activer ``Fast CGI`` pour PHP
+
+    e. Laisser le reste par défaut.
+
+    f. Dans l’onglet Options:
+
+    g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+       .. code:: apache
+
+           ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+           ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+           RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+           # rspamd httpserver
+           #
+
+           SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+           ProxyPass / http://localhost:11334/
+           ProxyPassReverse / http://localhost:11334/
+
+23. en pointant sur le site rspampd.example.com, et en utilisant le mot
+    de passe saisi plus haut vous pouvez accèder aux fonctions de
+    l’outil.
+
+24. Activer l’apprentissage par déplacement
+
+    a. Couplé avec Dovecot, Rspamd nous propose de pouvoir apprendre
+       également en fonction des actions des utilisateurs. Si un mail
+       est déplacé vers le répertoire Junk, il sera appris comme tel et
+       au contraire, s’il est sorti du répertoire Junk vers autre chose
+       que la corbeille, il sera appris comme Ham.
+
+    b. Editez le fichier Dovecot.conf (remarques ISPConfig n’utilise pas
+       aujourd’hui le contenu du répertoire conf.d). Tapez:
+
+       .. code:: bash
+
+           vi /etc/dovecot/dovecot.conf
+
+    c. Insérez dans le groupe plugin et le protocol imap déjà existants
+       dans le fichier :
+
+       ::
+
+           plugin {
+             sieve_plugins = sieve_imapsieve sieve_extprograms
+
+             imapsieve_mailbox1_name = Junk
+             imapsieve_mailbox1_causes = COPY
+             imapsieve_mailbox1_before = file:/etc/dovecot/sieve/report-spam.sieve
+
+             imapsieve_mailbox2_name = *
+             imapsieve_mailbox2_from = Junk
+             imapsieve_mailbox2_causes = COPY
+             imapsieve_mailbox2_before = file:/etc/dovecot/sieve/report-ham.sieve
+
+             sieve_pipe_bin_dir = /etc/dovecot/sieve
+
+             sieve_global_extensions = +vnd.dovecot.pipe
+           }
+
+           protocol imap {
+             mail_plugins = quota imap_quota imap_sieve
+           }
+
+    d. Redémarrez dovecot. Tapez:
+
+       .. code:: bash
+
+           service dovecot restart
+
+    e. Créez un répertoire sieve et éditez report-ham.sieve. Tapez:
+
+       .. code:: bash
+
+           mkdir -p /etc/dovecot/sieve/
+           vi /etc/dovecot/sieve/report-ham.sieve
+
+    f. Insérez le texte suivant:
+
+       ::
+
+           require ["vnd.dovecot.pipe", "copy", "imapsieve", "environment", "variables"];
+
+           if environment :matches "imap.mailbox" "*" {
+           set "mailbox" "${1}";
+           }
+
+           if string "${mailbox}" "Trash" {
+           stop;
+           }
+
+           if environment :matches "imap.email" "*" {
+           set "email" "${1}";
+           }
+
+           pipe :copy "train-ham.sh" [ "${email}" ];
+
+    g. Editez report-spam.sieve. Tapez:
+
+       .. code:: bash
+
+           vi /etc/dovecot/sieve/report-spam.sieve
+
+    h. Insérez le texte suivant:
+
+       ::
+
+           require ["vnd.dovecot.pipe", "copy", "imapsieve", "environment", "variables"];
+
+           if environment :matches "imap.email" "*" {
+           set "email" "${1}";
+           }
+
+           pipe :copy "train-spam.sh" [ "${email}" ];
+
+    i. Créez les scripts et rétablissez les droits et permissions.
+       Compilez les règles. Tapez:
+
+       .. code:: bash
+
+           echo "exec /usr/bin/rspamc learn_ham" > /etc/dovecot/sieve/train-ham.sh
+           echo "exec /usr/bin/rspamc learn_spam" > /etc/dovecot/sieve/train-spam.sh
+           sievec /etc/dovecot/sieve/report-ham.sieve
+           sievec /etc/dovecot/sieve/report-spam.sieve
+           chmod +x /etc/dovecot/sieve/train-*
+           chown -R vmail:vmail /etc/dovecot/sieve
+
+    j. Redémarrez dovecot. Tapez:
+
+       .. code:: bash
+
+           service dovecot restart
+
+    k. Lorsque vous déplacer un mail du répertoire Inbox vers le
+       répertoire Junk ou vice-versa, les fichiers ``/var/log/mail.log``
+       et ``/var/log/rspamd/rspamd.log`` doivent montrer les actions de
+       recalcul des spams.
+
+25. Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:
+
+    .. code:: bash
+
+        systemctl stop amavisd-new
+        systemctl disable amavisd-new
+
+Création du serveur de messagerie
+---------------------------------
+
+Pour créer un serveur de messagerie:
+
+1.  Assurez vous d’avoir créé le domaine DNS. Si ce n’est pas le cas
+    déroulez tout d’abord la procédure de `création de
+    domaines <#domain-config>`__
+
+2.  Aller dans la rubrique ``Email``. Sélectionnez ensuite le menu
+    ``Domain``
+
+3.  Cliquez sur ``Add new Domain``
+
+4.  Saisissez le nom de domaine.
+
+5.  Cliquez sur ``DomainKeys Indentified Mail (DKIM)``
+
+6.  Cliquez sur ``enable DKIM``
+
+7.  Cliquez sur ``Generate DKIM Private-key``
+
+8.  Une fois cela fait, retourner dans la gestion des ``Records`` de
+    domaine et activer le type DMARC
+
+9.  Garder le paramétrage par défaut et sauvegardez.
+
+10. Faites de même pour les enregistrements SPF mais sélectionnez le
+    mécanisme softfail.
+
+11. Votre serveur est créé et protégé Contre les spams (entrants et
+    sortants).
+
+Finaliser la sécurisation de votre serveur de mail
+--------------------------------------------------
+
+Afin de mieux sécuriser votre serveur de mail, appliquez les opérations
+suivantes:
+
+1. editez le fichier main.cf
+
+   .. code:: bash
+
+       vi /etc/postfix/main.cf
+
+2. Rechercher ``myhostname`` et replacer le texte par:
+
+   .. code:: ini
+
+       myhostname = mail.example.com 
+
+   -  Remplacer example.com par votre nom de domaine.
+
+3. Redémarrez Postfix. Tapez:
+
+   .. code:: bash
+
+       service postfix restart
+
+4. Vous pouvez le tester en allant sur le site
+   `MxToolbox <https://mxtoolbox.com/diagnostic.aspx>`__.
+
+   -  Entrez le nom de host de votre serveur de mail: mail.example.com .
+
+   -  cliquez sur ``test Email Server``
+
+   -  Tout doit être correct sauf éventuellement le reverse DNS qui doit
+      être configuré pour pointer vers mail.example.com .
+
+Création de l’autoconfig pour Thunderbird et Android
+----------------------------------------------------
+
+La procédure est utilisé par Thunderbird et Android pour configurer
+automatiquement les paramètres de la messagerie.
+
+Appliquez la procédure suivante:
+
+1. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``autoconfig``.
+
+   b. Le faire pointer vers le web folder ``autoconfig``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``php-FPM``
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          AddType application/x-httpd-php .php .php3 .php4 .php5 .xml
+
+          CheckSpelling On
+          CheckCaseOnly Off
+
+   h. Sauver.
+
+2. `Loguez vous comme root sur le serveur <#root_login>`__
+
+3. Dans le répertoire ``/var/www/autoconfig.example.com/autoconfig/``
+   créer un répertoire mail. Lui donner les permissions 755 et affecter
+   les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:
+
+   .. code:: bash
+
+       mkdir -p /var/www/autoconfig.example.com/autoconfig/mail
+       chmod 755 /var/www/autoconfig.example.com/autoconfig/mail
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail 
+
+   -  remplacer web1:client0 par les permissions du répertoire
+      ``/var/www/autoconfig.example.com``
+
+      a. A l’intérieur de ce répertoire, Editez un fichier
+         ``config-v1.1.xml``. Tapez:
+
+         .. code:: bash
+
+             vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml
+
+4. Y coller:
+
+   .. code:: xml
+
+       <?php
+       header('Content-Type: application/xml');
+       ?>
+       <?xml version="1.0" encoding="UTF-8"?>
+
+       <clientConfig version="1.1">
+        <emailProvider id="example.com"> 
+          <domain>example.com</domain>
+          <displayName>Example Mail</displayName> 
+          <displayShortName>Example</displayShortName> 
+          <incomingServer type="imap">
+            <hostname>mail.example.com</hostname> 
+            <port>993</port>
+            <socketType>SSL</socketType>
+            <authentication>password-cleartext</authentication>
+            <username>%EMAILADDRESS%</username>
+          </incomingServer>
+          <incomingServer type="pop3">
+            <hostname>mail.example.com</hostname> 
+            <port>995</port>
+            <socketType>SSL</socketType>
+            <authentication>password-cleartext</authentication>
+            <username>%EMAILADDRESS%</username>
+          </incomingServer>
+          <outgoingServer type="smtp">
+            <hostname>mail.example.com</hostname> 
+            <port>465</port>
+            <socketType>SSL</socketType>
+            <authentication>password-cleartext</authentication>
+            <username>%EMAILADDRESS%</username>
+          </outgoingServer>
+          <outgoingServer type="smtp">
+            <hostname>mail.example.com</hostname> 
+            <port>587</port>
+            <socketType>STARTTLS</socketType>
+            <authentication>password-cleartext</authentication>
+            <username>%EMAILADDRESS%</username>
+          </outgoingServer>
+        </emailProvider>
+       </clientConfig>
+
+   -  mettre à la place de example.com votre nom de domaine
+
+   -  mettre ici votre libellé long pour votre nom de messagerie
+
+   -  mettre ici un libellé court pour votre nom de messagerie
+
+5. Donner la permission en lecture seule et affecter les groupes
+   d’appartenance. Tapez:
+
+   .. code:: bash
+
+       chmod 644 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml 
+
+   -  remplacer web1:client0 par les permissions du répertoire
+      ``/var/www/autoconfig.example.com``
+
+Création d’autodiscover pour Outlook
+------------------------------------
+
+Outlook utilise un autre mécanisme pour se configurer automatiquement.
+Il est basé sur l’utilisation du nom de sous-domaine ``autodiscover``.
+
+Appliquez la procédure suivante:
+
+1. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``autodiscover``.
+
+   b. Le faire pointer vers le web folder ``autodiscover``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``php-FPM``
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          CheckSpelling On
+          CheckCaseOnly On
+          RewriteEngine On
+          ProxyPass "/" http://autoconfig.example.com/ 
+          ProxyPassReverse "/" http://autoconfig.example.com/ 
+          RewriteRule ^/ - [QSA,L]
+
+      -  remplacer example.com par votre nom de domaine
+
+   h. Sauver.
+
+2. `Loguez vous comme root sur le serveur <#root_login>`__
+
+3. Dans le répertoire ``/var/www/autoconfig.example.com/autoconfig/``,
+   créer un répertoire ``Autodiscover``. Lui donner les permissions 755
+   et affecter les mêmes possesseurs que pour autres fichiers du
+   répertoire. Tapez:
+
+   .. code:: bash
+
+       mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/
+       chmod 755 /var/www/autoconfig.example.com/autoconfig/Autodiscover/
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ 
+
+   -  remplacer web1:client0 par les permissions du répertoire
+      ``/var/www/autoconfig.example.com``
+
+      a. A l’intérieur de ce répertoire, Editez un fichier
+         ``Autodiscover.xml``. Tapez:
+
+         .. code:: bash
+
+             vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml
+
+4. Y coller:
+
+   .. code:: xml
+
+       <?php
+        $raw = file_get_contents('php://input');
+        $matches = array();
+        preg_match('/<EMailAddress>(.*)<\/EMailAddress>/', $raw, $matches);
+        header('Content-Type: application/xml');
+       ?>
+        <Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006">
+          <Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a">
+            <User>
+              <DisplayName>Example Mail</DisplayName> 
+            </User>
+            <Account>
+              <AccountType>email</AccountType>
+              <Action>settings</Action>
+              <Protocol>
+                <Type>IMAP</Type>
+                <Server>mail.example.com</Server> 
+                <Port>993</Port>
+                <DomainRequired>off</DomainRequired>
+                <SPA>off</SPA>
+                <SSL>on</SSL>
+                <AuthRequired>on</AuthRequired>
+                <LoginName><?php echo $matches[1]; ?></LoginName>
+              </Protocol>
+              <Protocol>
+                <Type>SMTP</Type>
+                <Server>mail.example.com</Server> 
+                <Port>465</Port>
+                <DomainRequired>off</DomainRequired>
+                <SPA>off</SPA>
+                <SSL>on</SSL>
+                <AuthRequired>on</AuthRequired>
+                <LoginName><?php echo $matches[1]; ?></LoginName>
+              </Protocol>
+            </Account>
+          </Response>
+        </Autodiscover>
+
+   -  mettre à la place de example.com votre nom de domaine
+
+   -  mettre ici votre libellé long pour votre nom de messagerie
+
+5. Changez les permissions comme pour le répertoire
+
+   .. code:: bash
+
+       chmod 644 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml 
+
+   -  remplacer web1:client0 par les permissions du répertoire
+      ``/var/www/autoconfig.example.com``
+
+6. Pointer votre navigateur sur le site
+   https://autodiscover.example.com/Autodiscover/Autodiscover.xml.
+
+7. Le contenu du fichier xml doit s’afficher
+
+8. Vous pouvez faire aussi un test sur le `Testeur de connectivité
+   Microsoft <https://testconnectivity.microsoft.com>`__.
+
+   a. choisissez: ``Découverte automatique Outlook``
+
+   b. cliquez sur ``suivant``
+
+   c. Entrez votre adresse de courrier: ``user@example.com``, un domain:
+      ``example\user``, un mot de passe tiré au hazard, Cochez les deux
+      cases en dessous.
+
+   d. Cliquez sur ``effectuer un test``
+
+   e. Le résultat doit être: ``Test de connectivité réussi``
+
+Création d’une boite mail
+-------------------------
+
+Pour créer une boite de messagerie:
+
+1. Aller dans la rubrique ``Email``. Sélectionnez ensuite le menu
+   ``Email Mailbox``
+
+2. Cliquez sur ``Add new Mailbox``
+
+3. Remplissez les champs suivants:
+
+   a. ``Name:`` ← mettez votre prénom et votre nom
+
+   b. ```Email:`` ← mail\_name @ example.com
+
+   c. ``Password:`` ← saisissez un mot de passe ou générez en un
+
+   d. ``Repeat Password`` ← saisissez une deuxième fois votre mot de
+      passe
+
+   e. ``Quota (0 for unlimited):`` ← mettez éventuellement un quota ou
+      laissez 0 pour illimité.
+
+   f. ``Spamfilter:`` ← Sélectionnez ``Normal``
+
+4. Dans l’onglet Backup:
+
+   a. ``Backup interval:`` Sélectionnez ``Daily``
+
+   b. ``Number of backup copies:`` Sélectionnez 1
+
+5. Cliquez sur ``Save``
+
+    **Note**
+
+    Notez que si vous créez une adresse mail nommée
+    mail_name@example.com, vous pouvez utilisez toutes les variantes
+    (nommées tag) derrière le caractère "+". Ainsi
+    mail_name+nospam@example.com sera bien redirigé vers votre boite et
+    l’extension +nospam vous permettre de trier automatiquement les
+    mails que vous ne voulez pas recevoir.
+
+    **Note**
+
+    Il est possible de changer ce caractère spécial en le modifiant dans
+    le fichier ``/etc/postfix/main.cf`` sur la ligne commençant par
+    ``recipient_delimiter``.
+
+Configuration de votre client de messagerie.
+--------------------------------------------
+
+Saisir l’adresse mail et votre mot de passe doit suffire pour configurer
+automatiquement votre client de messagerie.
+
+Si vous avez besoin de configurer votre client manuellement, voici les
+informations à saisir:
+
++--------------------------------------+--------------------------------------+
+| Paramètre                            | Valeur                               |
++======================================+======================================+
+| Type de serveur                      | IMAP                                 |
++--------------------------------------+--------------------------------------+
+| Nom de serveur IMAP                  | mail.example.com                     |
++--------------------------------------+--------------------------------------+
+| Nom d’utilisateur IMAP               | user@example.com                     |
++--------------------------------------+--------------------------------------+
+| Port IMAP                            | 993                                  |
++--------------------------------------+--------------------------------------+
+| Sécurité IMAP                        | SSL/TLS                              |
++--------------------------------------+--------------------------------------+
+| Authentification IMAP                | Normal Password                      |
++--------------------------------------+--------------------------------------+
+| Nom de serveur SMTP                  | mail.example.com                     |
++--------------------------------------+--------------------------------------+
+| Nom d’utilisateur SMTP               | user@example.com                     |
++--------------------------------------+--------------------------------------+
+| Port SMTP                            | 465                                  |
++--------------------------------------+--------------------------------------+
+| Sécurité SMTP                        | SSL/TLS                              |
++--------------------------------------+--------------------------------------+
+| Authentification SMTP                | Normal Password                      |
++--------------------------------------+--------------------------------------+
+
+Mise en oeuvre du site web de webmail
+-------------------------------------
+
+On suppose que vous avez install roundcube lors de la procédure
+d’installation initiale et que vous avez déjà créé le host
+mail.example.com.
+
+Il vous reste à appliquer la procédure suivante:
+
+1. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``mail``.
+
+   b. Le faire pointer vers le web folder ``mail``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          # roundcube httpserver
+
+          SSLProxyEngine On
+          SSLProxyCheckPeerCN Off
+          SSLProxyCheckPeerName Off
+          SSLProxyVerify none
+
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass / https://localhost:8080/webmail/
+          ProxyPassReverse / https://localhost:8080/webmail/
+          ProxyPreserveHost On
+
+2. C’est fait, vous pouvez accéder à Roundcube directement sur
+   https://mail.example.com
+
+Transfert de vos boites mails IMAP
+----------------------------------
+
+Si vous faites une migration d’un ancien serveur vers un nouveau serveur
+vous souhaiterez probablement migrer aussi vos boites mail.
+
+La procédure ci dessous est à appliquer pour chaque compte mail IMAP.
+Elle peut facilement être scriptée:
+
+1. Téléchargez imapsync du repository. Tapez:
+
+   ::
+
+       wget https://raw.githubusercontent.com/imapsync/imapsync/master/imapsync
+       chmod 755 imapsync
+
+2. Installez les packages perls éventuellement manquants:
+
+   ::
+
+       apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl
+
+3. Créez deux fichiers temporaires qui contiennent les mots de passe du
+   1er et 2eme serveur. Tapez:
+
+   ::
+
+       echo "passwdsrc" > secretsrc 
+       echo "passwddst" > secretdst 
+       chmod 600 secretsrc
+       chmod 600 secretdst
+
+   -  passwdsrc est à remplacer par le mot de passe du compte sur le
+      serveur source
+
+   -  passwddst est à remplacer par le mot de passe du compte sur le
+      serveur destination
+
+4. Nous pouvons maintenant lancer la commande. Tapez:
+
+   ::
+
+       ./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst
+
+5. Un fois la synchronisation effectuée, vous pouvez supprimer le
+   fichier des mots de passe. tapez:
+
+   ::
+
+       rm secretsrc
+       rm secretdst
 
 Annexe
 ------

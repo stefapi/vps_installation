@@ -1490,7 +1490,7 @@ Installation et configuration de PureFTPd
              quotaon -avug
 
 Installation et configuration de phpmyadmin
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------
 
 1. Installez phpmyadmin. Exécutez:
 
@@ -1672,7 +1672,7 @@ Installation et configuration de phpmyadmin
          dé-commenter les lignes.
 
 Installation et configuration de Roundcube
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 1. Tapez:
 
@@ -1719,7 +1719,7 @@ Installation et configuration de Roundcube
        systemctl reload apache2
 
 Installation de Let’s Encrypt
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Installez Let’s Encrypt. Tapez:
 
@@ -1730,16 +1730,24 @@ Installez Let’s Encrypt. Tapez:
     chmod a+x certbot-auto
     ./certbot-auto --install-only
 
-Installation d’un scanner de vulnérabilités
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Une façon alternative de l’installer est:
 
-1. installer Git. Tapez :
+.. code:: bash
+
+    apt install python3-certbot-apache
+
+Installation d’un scanner de vulnérabilités
+-------------------------------------------
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. installer Git. Tapez :
 
    .. code:: bash
 
        apt install git
 
-2. installer Lynis
+3. installer Lynis
 
    a. Tapez :
 
@@ -1754,11 +1762,11 @@ Installation d’un scanner de vulnérabilités
 
           cd lynis;./lynis audit system
 
-3. L’outil vous listera dans une forme très synthétique la liste des
+4. L’outil vous listera dans une forme très synthétique la liste des
    vulnérabilités et des améliorations de sécurité à appliquer.
 
 Installation d’un Panel
------------------------
+=======================
 
 Il existe plusieurs type de panel de contrôle pour les VPS. La plupart
 sont payant.
@@ -1794,7 +1802,7 @@ Pour rappel, HestiaCP (tout comme VestaCP) sont incompatibles
 d’ISPConfig et de Webmin. Ils doivent être utilisés seuls
 
 Installation et configuration de ISPConfig
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 ISPConfig est un système de configuration de sites web totalement
 compatible avec Webmin.
@@ -1802,149 +1810,152 @@ compatible avec Webmin.
 Pour installer ISPConfig, vous devez suivre la procédure ci-dessous.
 ISPConfig 3.1 a été utilisé dans ce tutoriel.
 
-1. Tapez:
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-   .. code:: bash
+2.  Tapez:
 
-       cd /tmp
+    .. code:: bash
 
-2. Cherchez la dernière version d’ISPConfig sur le site
-   `ISPConfig <https://www.ispconfig.org/ispconfig/download/>`__
+        cd /tmp
 
-3. Installez cette version en tapant: :
+3.  Cherchez la dernière version d’ISPConfig sur le site
+    `ISPConfig <https://www.ispconfig.org/ispconfig/download/>`__
 
-   .. code:: bash
+4.  Installez cette version en tapant: :
 
-       wget <la_version_a_telecharger>.tar.gz
+    .. code:: bash
 
-4. Décompressez la version en tapant: :
+        wget <la_version_a_telecharger>.tar.gz
 
-   .. code:: bash
+5.  Décompressez la version en tapant: :
 
-       tar xfz <la_version>.tar.gz
+    .. code:: bash
 
-5. Enfin allez dans le répertoire d’installation: :
+        tar xfz <la_version>.tar.gz
 
-   .. code:: bash
+6.  Enfin allez dans le répertoire d’installation: :
 
-       cd ispconfig3_install/install/
+    .. code:: bash
 
-6. Lancez l’installation: :
+        cd ispconfig3_install/install/
 
-   .. code:: bash
+7.  Lancez l’installation: :
 
-       php -q install.php
+    .. code:: bash
 
-   et répondez aux questions:
+        php -q install.php
 
-   a. ``Select language (en,de) [en]:`` ← Tapez entrée
+    et répondez aux questions:
 
-   b. ``Installation mode (standard,expert) [standard]:`` ← Tapez entrée
+    a. ``Select language (en,de) [en]:`` ← Tapez entrée
 
-   c. ``Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:``
-      ← Tapez entrée
+    b. ``Installation mode (standard,expert) [standard]:`` ← Tapez
+       entrée
 
-   d. ``MySQL server hostname [localhost]:`` ← Tapez entrée
+    c. ``Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:``
+       ← Tapez entrée
 
-   e. ``MySQL server port [3306]:`` ← Tapez entrée
+    d. ``MySQL server hostname [localhost]:`` ← Tapez entrée
 
-   f. ``MySQL root username [root]:`` ← Tapez entrée
+    e. ``MySQL server port [3306]:`` ← Tapez entrée
 
-   g. ``MySQL root password []:`` ← Enter your MySQL root password
+    f. ``MySQL root username [root]:`` ← Tapez entrée
 
-   h. ``MySQL database to create [dbispconfig]:`` ← Tapez entrée
+    g. ``MySQL root password []:`` ← Enter your MySQL root password
 
-   i. ``MySQL charset [utf8]:`` ← Tapez entrée
+    h. ``MySQL database to create [dbispconfig]:`` ← Tapez entrée
 
-   j. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
-      lettres
+    i. ``MySQL charset [utf8]:`` ← Tapez entrée
 
-   k. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
-      nom d’état
+    j. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
+       lettres
 
-   l. ``Locality Name (eg, city) []:`` ← Entrer votre ville
+    k. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
+       nom d’état
 
-   m. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
-      Entrez votre entreprise ou tapez entrée
+    l. ``Locality Name (eg, city) []:`` ← Entrer votre ville
 
-   n. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
+    m. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
+       Entrez votre entreprise ou tapez entrée
 
-   o. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le nom
-      d’hôte de votre serveur. Dans notre cas: server1.example.com
+    n. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
 
-   p. ``Email Address []:`` ← Tapez entrée
+    o. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le
+       nom d’hôte de votre serveur. Dans notre cas: server1.example.com
 
-   q. ``ISPConfig Port [8080]:`` ← Tapez entrée
+    p. ``Email Address []:`` ← Tapez entrée
 
-   r. ``Admin password [admin]:`` ← Tapez entrée
+    q. ``ISPConfig Port [8080]:`` ← Tapez entrée
 
-   s. ``Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:``
-      ←- Tapez entrée
+    r. ``Admin password [admin]:`` ← Tapez entrée
 
-   t. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
-      lettres
+    s. ``Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:``
+       ←- Tapez entrée
 
-   u. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
-      nom d’état
+    t. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
+       lettres
 
-   v. ``Locality Name (eg, city) []:`` ← Entrer votre ville
+    u. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
+       nom d’état
 
-   w. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
-      Entrez votre entreprise ou tapez entrée
+    v. ``Locality Name (eg, city) []:`` ← Entrer votre ville
 
-   x. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
+    w. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
+       Entrez votre entreprise ou tapez entrée
 
-   y. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le nom
-      d’hôte de votre serveur. Dans notre cas: server1.example.com
+    x. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
 
-   z. ``Email Address []:`` ← Tapez entrée
+    y. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le
+       nom d’hôte de votre serveur. Dans notre cas: server1.example.com
 
-7. Sécurisez Apache
+    z. ``Email Address []:`` ← Tapez entrée
 
-   a. Il est maintenant recommandé de désactiver les protocoles TLS 1.0
-      et TLS 1.1. Ce n’est pas la configuration par défaut d’ISPconfig
+8.  Sécurisez Apache
 
-   b. `Loguez vous comme root sur le serveur <#root_login>`__.
+    a. Il est maintenant recommandé de désactiver les protocoles TLS 1.0
+       et TLS 1.1. Ce n’est pas la configuration par défaut d’ISPconfig
 
-   c. Copier le fichier ``vhost.conf.master`` dans la zone custom
+    b. `Loguez vous comme root sur le serveur <#root_login>`__.
 
-      .. code:: bash
+    c. Copier le fichier ``vhost.conf.master`` dans la zone custom
 
-          cp /usr/local/ispconfig/server/conf/vhost.conf.master /usr/local/ispconfig/server/conf-custom/vhost.conf.master
+       .. code:: bash
 
-   d. Editer le fichier dans la zone custom. Tapez:
+           cp /usr/local/ispconfig/server/conf/vhost.conf.master /usr/local/ispconfig/server/conf-custom/vhost.conf.master
 
-      .. code:: bash
+    d. Editer le fichier dans la zone custom. Tapez:
 
-          vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master
+       .. code:: bash
 
-   e. Remplacez la ligne ``SSLProtocol All`` par:
+           vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master
 
-      .. code:: ini
+    e. Remplacez la ligne ``SSLProtocol All`` par:
 
-          SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
+       .. code:: ini
 
-8. L’installation est terminée. Vous accédez au serveur à l’adresse:
-   https://example.com:8080/ .
+           SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
 
-       **Note**
+9.  L’installation est terminée. Vous accédez au serveur à l’adresse:
+    https://example.com:8080/ .
 
-       Lors de votre première connexion, votre domaine n’est pas encore
-       configuré. Il faudra alors utiliser le nom DNS donné par votre
-       hébergeur. Pour OVH, elle s’écrit VPSxxxxxx.ovh.net
+        **Note**
 
-9. Loguez vous comme admin et avec le mot de passe que vous avez choisi.
-   Vous pouvez décider de le changer au premier login
+        Lors de votre première connexion, votre domaine n’est pas encore
+        configuré. Il faudra alors utiliser le nom DNS donné par votre
+        hébergeur. Pour OVH, elle s’écrit VPSxxxxxx.ovh.net
 
-       **Note**
+10. Loguez vous comme admin et avec le mot de passe que vous avez
+    choisi. Vous pouvez décider de le changer au premier login
 
-       Si le message "Possible attack detected. This action has been
-       logged.". Cela signifie que vous avez des cookies d’une
-       précédente installation qui sont configurés. Effacer les cookies
-       de ce site de votre navigateur.
+        **Note**
+
+        Si le message "Possible attack detected. This action has been
+        logged.". Cela signifie que vous avez des cookies d’une
+        précédente installation qui sont configurés. Effacer les cookies
+        de ce site de votre navigateur.
 
 Installation de Webmin
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 Webmin est un outil généraliste de configuration de votre serveur. Son
 usage peut être assez complexe mais il permet une configuration plus
@@ -2058,7 +2069,7 @@ précise des fonctionnalités.
    c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
 
 Configuration d’un domaine
---------------------------
+==========================
 
 Cette configuration est réalisée avec le Panel ISPConfig installé dans
 le chapitre précédent. L’étape "login initial" n’est à appliquer qu’une
@@ -2067,7 +2078,7 @@ loguer à ISPconfig en utilisant ce domaine à l’adresse:
 https://example.com:8080/ .
 
 Login initial
-~~~~~~~~~~~~~
+-------------
 
     **Note**
 
@@ -2076,7 +2087,9 @@ Login initial
 
 Vous devrez tout d’abord vous loguer sur le serveur ISPConfig. Comme
 vous n’avez pas encore configuré de nom de de domaine, vous devrez vous
-loguer de prime abord sur le site http://vpsxxxxxx.ovh.net:8080/ .
+loguer de prime abord sur le site http://vpsxxxxxx.ovh.net:8080/ pour un
+vps chez ovh par exemple ou sur http://raspberrypi.local:8080/ pour un
+Raspberry.
 
 Utiliser le login: Admin et le mot de passe que vous avez configuré lors
 de l’installation d’ISPConfig
@@ -2103,6 +2116,13 @@ de l’installation d’ISPConfig
       i.  Cliquez sur ``Add Firewall Record``
 
       ii. Acceptez les valeurs par défaut en cliquant sur ``Save``
+
+              **Note**
+
+              Il est possible de basculer le site ISPConfig entièrement
+              en Français. J’ai pour ma part gardé la version anglaise
+              du site. Vous trouverez donc tous les libellés dans la
+              suite de la documentation en anglais.
 
 2. Aller dans la rubrique ``DNS``
 
@@ -2207,15 +2227,8 @@ de l’installation d’ISPConfig
                   MX|{DOMAIN}.|mail.{DOMAIN}.|10|3600
                   TXT|{DOMAIN}.|v=spf1 mx a ~all|0|3600
 
-                  **Note**
-
-                  Il est possible de basculer le site ISPConfig
-                  entièrement en Français. J’ai pour ma part gardé la
-                  version anglaise du site. Vous trouverez donc tous les
-                  libellés dans la suite de la documentation en anglais.
-
 Création de la zone DNS d’un domaine
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 1. Allez dans ``DNS``
 
@@ -2239,6 +2252,16 @@ Création de la zone DNS d’un domaine
       -  ``Email:`` ← votre Email valide exemple admin@example.com
 
       -  ``DKIM:`` ← Yes
+
+             **Note**
+
+             Si votre serveur est chez vous, il est probablement
+             installé derrière un routeur ADSL configuré au préalable
+             avec une DMZ qui pointe sur ce serveur. Dans ce cas, vous
+             ne devrez pas indiquer l’adresse IP locale de votre serveur
+             mais l’adresse IP de votre routeur ADSL telle qu’elle est
+             vue sur internet. On suppose aussi que cette adresse IP est
+             statique et non pas allouée dynamiquement par l’opérateur.
 
    e. Cliquez sur ``Create DNS-record``
 
@@ -2269,7 +2292,7 @@ Ils doivent afficher une page web basique (Apache2, ou de parking).Si ce
 n’est pas le cas revérifier la configuration du DNS dans ISPConfig.
 
 Activation de DNSSEC
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Vous pouvez maintenant activer DNSSEC afin d’augmenter la sécurité de
 résolution de nom de domaine:
@@ -2370,7 +2393,7 @@ erreur.
     fonctionnel.
 
 Exemple de configuration de domaine
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 Une fois la configuration terminé, les différents enregistrements du
 domaines ressemblent à l’exemple ci-dessous. Il peut y avoir des
@@ -2402,8 +2425,71 @@ Let’s encrypt.
     _autodiscover._tcp   3600 SRV   0 0 443  autoconfig.example.com.
     example.com.         3600 TXT            "v=spf1 mx a ~all"
 
+Création d’un sous domaine
+--------------------------
+
+Supposons que vous êtes en train de créer un sous domain nommé
+sub.example.com . Dans ce sous domaines vous allez créer un ensemble de
+site web par exemple mail.sub.example.com ou blog.sub.example.com.
+
+Un cas assez classique est que ce sous domaine est délégué à une machine
+tierce.
+
+Par exemple: example.com est installé sur un VPS quelque part sur
+internet et sub.example.com est hébergé chez vous sur votre Raspberry.
+
+On suppose que votre domain a été configuré en suivant la procédure du
+chapitre précédent.
+
+Rien de bien sorcier pour votre sous domaine: Vous devez le créer sur
+votre Raspberry selon la même procédure mais avec le nom du sous domaine
+(sub.example.com donc).
+
+Vous aurez des actions complémentaires à effectuer sur votre domaine:
+
+1. Allez dans ``DNS`` de votre serveur de domaine principal
+
+2. Sélectionner le menu ``Zones`` puis le domaine example.com
+
+3. Choisissez l’onglet ``Records`` et créez:
+
+   -  un enregistrement de type ``NS`` avec une ``Zone`` ←
+      ``sub.example.com.`` et un ``nameserver Hostname`` ←
+      ``ns1.sub.example.com.``
+
+   -  un enregistrement de type ``NS`` avec une ``Zone`` ←
+      ``sub.example.com.`` et un ``nameserver Hostname`` ←
+      ``ns2.sub.example.com.``
+
+   -  un enregistrement de type ``NS`` avec une ``Zone`` ←
+      ``sub.example.com.`` et un ``nameserver Hostname`` ←
+      ``ns3.example.com.`` .
+
+      Ce dernier type d’enregistrement se nomme un Glue record pour
+      faire le lien vers le serveur secondaire.
+
+   -  un enregistrement de type ``A`` avec un ``Hostname`` ← ns3 et une
+      ``IP-address`` ← Adresse IP de votre routeur ADSL ou est connecté
+      le Raspberry.
+
+      Ce dernier enregistrement en complétant le Glue record fait le
+      lien avec l’adresse IP de sub.example.com
+
+4. Si vous avez activé DNSSEC sur votre serveur DNS de sub.example.com
+   vous devrez récupérer les entrées DS du champ
+   ``DNSSEC DS-Data for registry`` de votre domaine sub.example.com et
+   créer dans votre domaine example.com les deux entrées suivantes:
+
+   -  un enregistrement de type ``DS`` avec une ``Zone`` ←
+      ``sub.example.com`` et un champ ``data`` contenant
+      ``xxxxx 7 1 <votre_digest_recupérée>``
+
+   -  un enregistrement de type ``DS`` avec une ``Zone`` ←
+      ``sub.example.com`` et un champ ``data`` contenant
+      ``xxxxx 7 2 <votre_digest_recupérée>``
+
 Création d’un site web
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 Dans la suite le site web sera nommé "example.com".
 
@@ -2477,7 +2563,7 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
    ``Grade A``.
 
 Création d’un Site Vhost
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 Dans la suite le sous-domaine sera nommé "mail.example.com".
 
@@ -2548,9 +2634,10 @@ racine auparavant.
    ``Grade A``.
 
 Associer des certificats reconnu à vos outils
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=============================================
 
-Comme vous avec créé votre premier domaine avec SSL et let’s encrypt
+Cette action est à effectuer une fois que vous avez créé votre domaine
+principal et que vous avez généré vos premiers certificats let’s encrypt
 dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux
 services de base:
 
@@ -2661,13 +2748,13 @@ services de base:
       -  Remplacer example.com par votre nom de domaine.
 
 Surveillance du serveur avec Munin et Monit
--------------------------------------------
+===========================================
 
 Note préliminaire
-~~~~~~~~~~~~~~~~~
+-----------------
 
-Installez tout d’abord les paquets insdispensables pour faire
-fonctionner Munin avec Apache puis activez le module fcgid:
+Installez tout d’abord les paquets indispensables pour faire fonctionner
+Munin avec Apache puis activez le module fcgid:
 
 .. code:: bash
 
@@ -2675,7 +2762,7 @@ fonctionner Munin avec Apache puis activez le module fcgid:
     a2enmod fcgid
 
 Installation et configuration de Munin
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 Suivez les étapes ci-après:
 
@@ -2843,7 +2930,7 @@ Suivez les étapes ci-après:
     http://example.com/munin/.
 
 Activez les plugins de Munin
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 Dans Debian 10, tous les plugins complémentaires sont déjà activés.Vous
 pouvez être tenté de vérifier:
@@ -2878,7 +2965,7 @@ pouvez être tenté de vérifier:
        service munin-node restart
 
 Installer et configurer Monit
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Pour installer et configurer Monit, vous devez appliquer la procédure
 suivante:
@@ -2950,7 +3037,7 @@ suivante:
          if failed host 127.0.0.1 port 3306 then restart
          if 5 restarts within 5 cycles then timeout
 
-        check process proftpd with pidfile /var/run/pure-ftpd/pure-ftpd.pid
+        check process pureftpd with pidfile /var/run/pure-ftpd/pure-ftpd.pid
          start program = "/usr/sbin/service pure-ftpd-mysql start"
          stop program = "/usr/sbin/service pure-ftpd-mysql stop"
          if failed port 21 protocol ftp then restart
@@ -3044,10 +3131,10 @@ suivante:
     Monit affiche alors les informations de monitoring du serveur.
 
 Configuration de la messagerie
-------------------------------
+==============================
 
 Installation de rspamd à la place d' Amavis-new
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------------
 
 ``rspamd`` est réputé de meilleure qualité que ``Amavis`` dans la chasse
 aux spams. Vous pouvez décider de l’installer à la place d’Amavis. Cette
@@ -3373,7 +3460,7 @@ Suivez la procédure suivante:
         systemctl disable amavisd-new
 
 Création du serveur de messagerie
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 Pour créer un serveur de messagerie:
 
@@ -3406,7 +3493,7 @@ Pour créer un serveur de messagerie:
     sortants).
 
 Finaliser la sécurisation de votre serveur de mail
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------------
 
 Afin de mieux sécuriser votre serveur de mail, appliquez les opérations
 suivantes:
@@ -3442,7 +3529,7 @@ suivantes:
       être configuré pour pointer vers mail.example.com .
 
 Création de l’autoconfig pour Thunderbird et Android
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------------
 
 La procédure est utilisé par Thunderbird et Android pour configurer
 automatiquement les paramètres de la messagerie.
@@ -3560,7 +3647,7 @@ Appliquez la procédure suivante:
       ``/var/www/autoconfig.example.com``
 
 Création d’autodiscover pour Outlook
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 Outlook utilise un autre mécanisme pour se configurer automatiquement.
 Il est basé sur l’utilisation du nom de sous-domaine ``autodiscover``.
@@ -3697,7 +3784,7 @@ Appliquez la procédure suivante:
    e. Le résultat doit être: ``Test de connectivité réussi``
 
 Création d’une boite mail
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 Pour créer une boite de messagerie:
 
@@ -3746,7 +3833,7 @@ Pour créer une boite de messagerie:
     ``recipient_delimiter``.
 
 Configuration de votre client de messagerie.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
 
 Saisir l’adresse mail et votre mot de passe doit suffire pour configurer
 automatiquement votre client de messagerie.
@@ -3781,7 +3868,7 @@ informations à saisir:
 +--------------------------------------+--------------------------------------+
 
 Mise en oeuvre du site web de webmail
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 On suppose que vous avez install roundcube lors de la procédure
 d’installation initiale et que vous avez déjà créé le host
@@ -3828,7 +3915,7 @@ Il vous reste à appliquer la procédure suivante:
    https://mail.example.com
 
 Transfert de vos boites mails IMAP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 Si vous faites une migration d’un ancien serveur vers un nouveau serveur
 vous souhaiterez probablement migrer aussi vos boites mail.

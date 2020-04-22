@@ -444,15 +444,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Stéphane Apiou</span><br>
 <span id="email" class="email"><a href="mailto:stephane@apiou.org">stephane@apiou.org</a></span><br>
-<span id="revnumber">version 1.0,</span>
-<span id="revdate">2020-03-27</span>
+<span id="revnumber">version 0.9,</span>
+<span id="revdate">2020-04-20</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_avant_propos">1. Avant propos</a></li>
 <li><a href="#_choix_du_registrar">2. Choix du registrar</a></li>
-<li><a href="#_installation_du_linux_sur_votre_raspberry">3. Installation du linux sur votre raspberry.</a></li>
+<li><a href="#_installation_du_linux_sur_votre_raspberry">3. Installation du linux sur votre raspberry.</a>
+<ul class="sectlevel2">
+<li><a href="#_installation_avec_écran_et_clavier">3.1. Installation avec écran et clavier</a></li>
+<li><a href="#_installation_headless">3.2. Installation Headless</a></li>
+</ul>
+</li>
 <li><a href="#root_login">4. Se loguer root sur le serveur</a></li>
 <li><a href="#_configuration_basique">5. Configuration basique</a>
 <ul class="sectlevel2">
@@ -480,8 +485,51 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_configuration_d_awstats">6.5. Configuration d' Awstats</a></li>
 <li><a href="#_configuration_de_fail2ban">6.6. Configuration de Fail2ban</a></li>
 <li><a href="#_installation_et_configuration_de_pureftpd">6.7. Installation et configuration de PureFTPd</a></li>
-<li><a href="#_annexe">6.8. Annexe</a></li>
-<li><a href="#_configuration_dun_écran_3_5inch_rpi_lcd_a">6.9. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</a></li>
+<li><a href="#_installation_et_configuration_de_phpmyadmin">6.8. Installation et configuration de phpmyadmin</a></li>
+<li><a href="#_installation_et_configuration_de_roundcube">6.9. Installation et configuration de Roundcube</a></li>
+<li><a href="#_installation_de_lets_encrypt">6.10. Installation de Let&#8217;s Encrypt</a></li>
+<li><a href="#_installation_dun_scanner_de_vulnérabilités">6.11. Installation d&#8217;un scanner de vulnérabilités</a></li>
+</ul>
+</li>
+<li><a href="#_installation_dun_panel">7. Installation d&#8217;un Panel</a>
+<ul class="sectlevel2">
+<li><a href="#_installation_et_configuration_de_ispconfig">7.1. Installation et configuration de ISPConfig</a></li>
+<li><a href="#_installation_de_webmin">7.2. Installation de Webmin</a></li>
+</ul>
+</li>
+<li><a href="#domain-config">8. Configuration d&#8217;un domaine</a>
+<ul class="sectlevel2">
+<li><a href="#_login_initial">8.1. Login initial</a></li>
+<li><a href="#_création_de_la_zone_dns_dun_domaine">8.2. Création de la zone DNS d&#8217;un domaine</a></li>
+<li><a href="#_activation_de_dnssec">8.3. Activation de DNSSEC</a></li>
+<li><a href="#_exemple_de_configuration_de_domaine">8.4. Exemple de configuration de domaine</a></li>
+<li><a href="#_création_dun_sous_domaine">8.5. Création d&#8217;un sous domaine</a></li>
+<li><a href="#domain-site">8.6. Création d’un site web</a></li>
+<li><a href="#subdomain-site">8.7. Création d’un Site Vhost</a></li>
+</ul>
+</li>
+<li><a href="#_associer_des_certificats_reconnu_à_vos_outils">9. Associer des certificats reconnu à vos outils</a></li>
+<li><a href="#_surveillance_du_serveur_avec_munin_et_monit">10. Surveillance du serveur avec Munin et Monit</a>
+<ul class="sectlevel2">
+<li><a href="#_note_préliminaire">10.1. Note préliminaire</a></li>
+<li><a href="#_installation_et_configuration_de_munin">10.2. Installation et configuration de Munin</a></li>
+<li><a href="#_activez_les_plugins_de_munin">10.3. Activez les plugins de Munin</a></li>
+<li><a href="#_installer_et_configurer_monit">10.4. Installer et configurer Monit</a></li>
+</ul>
+</li>
+<li><a href="#_configuration_de_la_messagerie">11. Configuration de la messagerie</a>
+<ul class="sectlevel2">
+<li><a href="#_installation_de_rspamd_à_la_place_d_amavis_new">11.1. Installation de rspamd à la place d' Amavis-new</a></li>
+<li><a href="#_création_du_serveur_de_messagerie">11.2. Création du serveur de messagerie</a></li>
+<li><a href="#_finaliser_la_sécurisation_de_votre_serveur_de_mail">11.3. Finaliser la sécurisation de votre serveur de mail</a></li>
+<li><a href="#_création_de_lautoconfig_pour_thunderbird_et_android">11.4. Création de l’autoconfig pour Thunderbird et Android</a></li>
+<li><a href="#_création_dautodiscover_pour_outlook">11.5. Création d’autodiscover pour Outlook</a></li>
+<li><a href="#_création_dune_boite_mail">11.6. Création d’une boite mail</a></li>
+<li><a href="#_configuration_de_votre_client_de_messagerie">11.7. Configuration de votre client de messagerie.</a></li>
+<li><a href="#_mise_en_oeuvre_du_site_web_de_webmail">11.8. Mise en oeuvre du site web de webmail</a></li>
+<li><a href="#_transfert_de_vos_boites_mails_imap">11.9. Transfert de vos boites mails IMAP</a></li>
+<li><a href="#_annexe">11.10. Annexe</a></li>
+<li><a href="#_configuration_dun_écran_3_5inch_rpi_lcd_a">11.11. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</a></li>
 </ul>
 </li>
 </ul>
@@ -492,7 +540,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_avant_propos">1. Avant propos</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ce document est disponible sur le site <a href="https://raspberry-box-installation.readthedocs.io">ReadTheDocs</a>
+<p>Ce document est disponible sur le site <a href="https://raspberry-installation.readthedocs.io">ReadTheDocs</a>
 et sur <a href="https://github.com/apiou/vps_installation">Github</a>.</p>
 </div>
 <div class="paragraph">
@@ -743,16 +791,41 @@ dpkg -i imager_amd64.deb</code></pre>
 <p>Attendez la fin du chargement et de l&#8217;écriture sur la flash.</p>
 </li>
 <li>
-<p>Enlevez la carte SD de votre lecteur et insèrez la dans votre raspberry PI.</p>
+<p>Vous avez deux façons d&#8217;installer:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>avec un écran et un clavier qui est la méthode la plus facile</p>
+</li>
+<li>
+<p>en mode Headless qui est plus complexe mais ne nécessite pas d&#8217;écran ni de clavier</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Vous devez choisir l&#8217;une des méthodes décrites dans les deux chapitres suivants.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_installation_avec_écran_et_clavier">3.1. Installation avec écran et clavier</h3>
+<div class="paragraph">
+<p>Pour ce type d&#8217;installation, il vous faut un clavier+souris et un écran.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Enlevez la carte SD de votre lecteur et insérez la dans votre raspberry PI.</p>
 </li>
 <li>
 <p>Brancher un clavier, une souris et un écran (ou utilisez un écran 3,5" configuré selon la procédure en annexe).</p>
 </li>
 <li>
-<p>Branchez votre Rasberry sur votre réseau ethernet filaire (vous pouvez aussi utiliser le wifi)</p>
+<p>Branchez votre Raspberry sur votre réseau Ethernet filaire (vous pouvez aussi utiliser le wifi)</p>
 </li>
 <li>
-<p>Démarrez votre raspberry.</p>
+<p>Démarrez votre Raspberry.</p>
 </li>
 <li>
 <p>Après l&#8217;écran de démarrage arc en ciel, vous devez assez rapidement arriver sur le bureau</p>
@@ -764,22 +837,22 @@ dpkg -i imager_amd64.deb</code></pre>
 <p>Sélectionnez le clavier et la langue en français</p>
 </li>
 <li>
-<p>Tapez votre nouveau mot de passe root</p>
+<p>Tapez votre nouveau mot de passe pour le login <code>pi</code></p>
 </li>
 <li>
 <p>Choisissez un full screen sans bords</p>
 </li>
 <li>
-<p>Choississez votre connexion wifi et entrez le mot de passe</p>
+<p>Choisissez votre connexion wifi et entrez le mot de passe</p>
 </li>
 <li>
 <p>Bien noter votre adresse IP elle vous sera utile ensuite</p>
 </li>
 <li>
-<p>Les mises à jours de paquets debian ainsi que l&#8217;installation des traductions en français vont s&#8217;installer.</p>
+<p>Les mises à jours de paquets Debian ainsi que l&#8217;installation des traductions en français vont s&#8217;installer.</p>
 </li>
 <li>
-<p>Une fois les installations terminées, le raspberry va rebooter.</p>
+<p>Une fois les installations terminées, le Raspberry va rebooter.</p>
 </li>
 <li>
 <p>Une fois rebooté, sélectionnez dans le menu <code>Préférences</code>&#8594;`Configuration du Raspberry PI`</p>
@@ -796,6 +869,281 @@ dpkg -i imager_amd64.deb</code></pre>
 </li>
 </ul>
 </div>
+</li>
+<li>
+<p>Cliquez sur l’icône <code>VNC</code> dans la barre en haut à Droite</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Dans la fenêtre cliquez sur le menu burger en haut à Droite.</p>
+</li>
+<li>
+<p>Choisissez <code>Options</code> puis l&#8217;onglet <code>Sécurité</code></p>
+</li>
+<li>
+<p>Dans le champ Authentification choisissez l&#8217;option <code>mot de passe VNC</code></p>
+</li>
+<li>
+<p>Tapez votre mot de passe dans les deux champs et cliquez <code>Valider</code> puis <code>OK</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Vous pouvez maintenant rebooter votre Raspberry sans écran et sans clavier pour continuer la configuration.</p>
+</li>
+<li>
+<p>Vous avez deux options: connexion en mode SSH ou au travers d&#8217;une connexion VNC</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_headless">3.2. Installation Headless</h3>
+<div class="paragraph">
+<p>Pour ce type d&#8217;installation, pas besoin d&#8217;écran et de clavier et de souris. Tout s&#8217;effectue à distance.</p>
+</div>
+<div class="paragraph">
+<p>Dans la suite, je suppose que vous possèdez un PC fonctionnant avec un Linux (la procédure peut être adaptée avec une machine windows en utilisant la ligne de commande et putty)</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Avant d&#8217;enlever votre flash SD du lecteur, appliquez la procédure ci après:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Sur la flash, 2 partitions ont été crées. Montez la partition boot</p>
+</li>
+<li>
+<p>sur cette partition, créez un fichier <code>wpa_supplicant.conf</code> et éditez le avec un éditeur de text (Nano ou vi sous linux ou Notepad sous windows).</p>
+</li>
+<li>
+<p>Mettez y le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=US
+network={
+    ssid=&quot;YOURSSID&quot; <i class="conum" data-value="1"></i><b>(1)</b>
+    psk=&quot;YOURPASSWORD&quot; <i class="conum" data-value="2"></i><b>(2)</b>
+    key_mgmt=WPA-PSK
+    scan_ssid=1
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacez <code>YOURSSID</code> par le nom SSID de votre wifi local</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>remplacez <code>YOURPASSWORD</code> par le mot de passe de votre wifi local</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>sauvez le fichier</p>
+</li>
+<li>
+<p>Sur la même partition créez un fichier <code>ssh</code> (vide et sans extension). Il servira à indiquer au raspberry d&#8217;activer ssh au prochain boot</p>
+</li>
+<li>
+<p>démontez la partition</p>
+</li>
+<li>
+<p>au boot sur la carte SD, le fichier sera recopié dans votre configuration et le réseau wifi sera ainsi accessible</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enlevez la carte SD de votre lecteur et insérez la dans votre Raspberry PI.</p>
+</li>
+<li>
+<p>Démarrez votre raspberry.</p>
+</li>
+<li>
+<p>Attendez environ 2 minutes le temps que le premier boot se termine. Tout pendant la procédure de boot, la petite led d&#8217;accès disque doit clignoter.</p>
+</li>
+<li>
+<p>Vous devez maintenant découvrir l&#8217;adresse IP de votre Raspberry, pour cela tapez la commande suivante:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ping raspberrypi.local</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Si le Raspberry a démarré correctement, cette commande doit montrer l&#8217;adresse IP du raspberry et une réponse correcte au ping</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>PING raspberrypi.local (192.168.3.212) 56(84) bytes of data.
+64 bytes from raspberrypi.local (192.168.0.212): icmp_seq=1 ttl=64 time=1.32 ms</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Si vous n&#8217;obtenez aucun résultat essayer la commande <code>nmap</code> sur le subnet de votre réseau local</p>
+<div class="ulist">
+<ul>
+<li>
+<p>On obtient l&#8217;adresse local du subnet en tapant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>hostname -I</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>l&#8217;adresse IP de votre PC est affichée comme premier mot. Par exemple :`192.168.3.10`</p>
+</li>
+<li>
+<p>le subnet se déduit de cette adresse en gardant les 3 premiers nombres (cas général de la plupart des utilisateurs).</p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>nmap -sn <span class="tok-m">192</span>.168.3.0/24</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>la commande affiche alors les adresses IP et mac de toutes les machines présentes sur le réseau.</p>
+</li>
+<li>
+<p>le Raspberry se reconnait par son nom de machine qui contient le terme <code>raspberry</code> ou par son adresse mac qui est reconnue du type <code>Raspberry Pi Foundation</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>vous pouvez alors directement vous connecter. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh pi@adresse_ip <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Se loguer avec le mot de passe <code>raspberry</code></p>
+</li>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo raspi-config</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Choisissez <code>1 Change User Password</code> &#8594; tapez votre nouveau mot de passe 2 fois</p>
+</li>
+<li>
+<p>Sur l&#8217;étape suivante, il ne faut pas se louper ou vous serez obligé d&#8217;éteindre votre raspberry, retirer la flash et la reprogrammer avec le fichier <code>wpa_supplicant.conf</code> dans la partition <code>boot</code></p>
+</li>
+<li>
+<p>Choisissez <code>2 Network Options</code> &#8594; <code>N2 Wi-fi</code> &#8594; Tapez votre nom de SSID (attention aux majuscules) &#8594; Tapez votre mot de passe</p>
+</li>
+<li>
+<p>Choisissez <code>4 Localisation Options</code> &#8594; <code>I1 Change Locale</code> &#8594; Sélectionnez votre langue: <code>fr_FR.UTF-8 UTF-8</code> &#8594; puis la locale par défaut <code>fr_FR.UTF-8 UTF-8</code></p>
+</li>
+<li>
+<p>Choisissez <code>4 Localisation Options</code> &#8594; <code>I2 Change Timezone</code> &#8594; Choisissez votre timezone (par exemple: <code>Europe</code> &#8594; <code>Paris</code>)</p>
+</li>
+<li>
+<p>Choisissez <code>4 Localisation Options</code> &#8594; <code>I3 Change Keyboard Layout</code> &#8594; Choisissez votre mapping clavier</p>
+</li>
+<li>
+<p>Choisissez <code>4 Localisation Options</code> &#8594; <code>I4 Change Wi-fi Country</code> &#8594; choisissez votre pays de norme wifi</p>
+</li>
+<li>
+<p>choisissez <code>5 Interfacing Options</code> &#8594; <code>P2 SSH</code> &#8594; choisissez <code>yes</code></p>
+</li>
+<li>
+<p>choisissez <code>5 Interfacing Options</code> &#8594; <code>P3 VNC</code> &#8594; choisissez <code>yes</code></p>
+</li>
+<li>
+<p>choisissez <code>7 Advanced Options</code> &#8594; <code>A5 Resolution</code> &#8594; choisissez <code>DMT Mode 82 1920x1080 60Hz 16:9</code></p>
+</li>
+<li>
+<p>choisissez <code>8 Update</code> ; Une mise a jour du système va s&#8217;effectuer</p>
+</li>
+<li>
+<p>Tapez ensuite 2 fois sur la touche <code>TAB</code> pour sélectionner <code>Finish</code>. Tapez <code>entrée</code>.</p>
+</li>
+<li>
+<p>Rebootez le système en tapant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo reboot</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Vous allez perdre votre connexion avec le raspberry</p>
+</li>
+<li>
+<p>si vous arrivez à vous reloguer en tapant (attendre 30 secondes après le reboot avant d&#8217;essayer):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh pi@adresse_ip <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>C&#8217;est que vous avez terminé avec succès la configuration initiale.</p>
+</div>
+</li>
+<li>
+<p>RealVNC dans sa configuration par défaut ne permet pas à un utilisateur de se connecter simplement. Il faut donc ruser la première fois.</p>
+</li>
+<li>
+<p>Dans un autre terminal sur votre poste local, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install realvnc-vnc-viewer
+vncviewer adresse_ip:5900 <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Une demande de login et de mot de passe est affiché tapez <code>pi</code> dans le login et le mot de passe que vous avez choisi dans le champ mot de passe. Cliquez sur <code>OK</code></p>
+</li>
+<li>
+<p>le bureau va s&#8217;afficher et un programme se lance automatiquement. Arrêter ce programme puisque vous avez déjà fait la configuration initiale.</p>
 </li>
 <li>
 <p>Cliquez sur l&#8217;icone <code>VNC</code> dans la barre en haut à Droite</p>
@@ -817,12 +1165,13 @@ dpkg -i imager_amd64.deb</code></pre>
 </div>
 </li>
 <li>
-<p>Vous pouvez maintenant rebooter votre raspberry sans écran et sans clavier pour continuer la configuration.</p>
+<p>Vous avez terminé l&#8217;installation initiale de Raspbian. Vous pouvez maintenant rebooter votre raspberry pour continuer la configuration.</p>
 </li>
 <li>
 <p>Vous avez deux options: connexion en mode SSH ou au travers d&#8217;une connection VNC</p>
 </li>
 </ol>
+</div>
 </div>
 </div>
 </div>
@@ -904,7 +1253,10 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <div class="sect2">
 <h3 id="_mettre_léditeur_de_votre_choix">5.1. Mettre l&#8217;éditeur de votre choix</h3>
 <div class="paragraph">
-<p>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient.</p>
+<p>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient pour les outils utilisant un éditeur de façon automatique tels que <code>crontab</code>.</p>
+</div>
+<div class="paragraph">
+<p>Pour les débutants, il est conseillé d&#8217;utiliser nano.</p>
 </div>
 <div class="paragraph">
 <p><a href="#root_login">Loguez vous comme root </a> et tapez:</p>
@@ -913,9 +1265,6 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>update-alternatives  --config editor</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Pour les débutants, il est conseillé d&#8217;utiliser nano</p>
 </div>
 </div>
 <div class="sect2">
@@ -2672,13 +3021,3344 @@ quotaon -avug</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_annexe">6.8. Annexe</h3>
+<h3 id="_installation_et_configuration_de_phpmyadmin">6.8. Installation et configuration de phpmyadmin</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Installez phpmyadmin. Exécutez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir /usr/share/phpmyadmin
+mkdir /etc/phpmyadmin
+mkdir -p /var/lib/phpmyadmin/tmp
+chown -R www-data:www-data /var/lib/phpmyadmin
+touch /etc/phpmyadmin/htpasswd.setup
+<span class="tok-nb">cd</span> /tmp
+wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
+tar xfz phpMyAdmin-4.9.0.1-all-languages.tar.gz
+mv phpMyAdmin-4.9.0.1-all-languages/* /usr/share/phpmyadmin/
+rm phpMyAdmin-4.9.0.1-all-languages.tar.gz
+rm -rf phpMyAdmin-4.9.0.1-all-languages
+cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éditez le fichier :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /usr/share/phpmyadmin/config.inc.php</code></pre>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Modifier l’entrée <code>blowfish_secret</code> en ajoutant votre propre chaîne de 32 caractères.</p>
+</li>
+<li>
+<p>Éditez le fichier: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apache2/conf-available/phpmyadmin.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez les lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-c"># phpMyAdmin default Apache configuration</span>
+
+<span class="tok-nb">Alias</span> <span class="tok-sx">/phpmyadmin</span> <span class="tok-sx">/usr/share/phpmyadmin</span>
+
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/usr/share/phpmyadmin</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nb">Options</span> FollowSymLinks
+ <span class="tok-nb">DirectoryIndex</span> index.php
+
+ <span class="tok-nt">&lt;IfModule</span> <span class="tok-s">mod_php7.c</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nb">AddType</span> application/x-httpd-php .php
+
+ <span class="tok-nb">php_flag</span> magic_quotes_gpc <span class="tok-k">Off</span>
+ <span class="tok-nb">php_flag</span> track_vars <span class="tok-k">On</span>
+ <span class="tok-nb">php_flag</span> register_globals <span class="tok-k">Off</span>
+ <span class="tok-nb">php_value</span> include_path .
+ <span class="tok-nt">&lt;/IfModule&gt;</span>
+
+<span class="tok-nt">&lt;/Directory&gt;</span>
+
+<span class="tok-c"># Authorize for setup</span>
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/usr/share/phpmyadmin/setup</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nt">&lt;IfModule</span> <span class="tok-s">mod_authn_file.c</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nb">AuthType</span> Basic
+ <span class="tok-nb">AuthName</span> <span class="tok-s2">&quot;phpMyAdmin Setup&quot;</span>
+ <span class="tok-nb">AuthUserFile</span> <span class="tok-sx">/etc/phpmyadmin/htpasswd.setup</span>
+ <span class="tok-nt">&lt;/IfModule&gt;</span>
+ <span class="tok-nb">Require</span> valid-user
+<span class="tok-nt">&lt;/Directory&gt;</span>
+
+<span class="tok-c"># Disallow web access to directories that don&#39;t need it</span>
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/usr/share/phpmyadmin/libraries</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nb">Order</span> Deny,Allow
+ <span class="tok-nb">Deny</span> from <span class="tok-k">All</span>
+<span class="tok-nt">&lt;/Directory&gt;</span>
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/usr/share/phpmyadmin/setup/lib</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nb">Order</span> Deny,Allow
+ <span class="tok-nb">Deny</span> from <span class="tok-k">All</span>
+<span class="tok-nt">&lt;/Directory&gt;</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Activez le module et redémarrez apache. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2enconf phpmyadmin
+systemctl restart apache2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créer la base de donnée phpmyadmin.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mysql -u root -p</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>puis entrer le mot de passe root</p>
+</div>
+</li>
+<li>
+<p>Créez une base phpmyadmin. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-k">CREATE</span> <span class="tok-k">DATABASE</span> <span class="tok-n">phpmyadmin</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez un utilisateur phpmyadmin. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-k">CREATE</span> <span class="tok-k">USER</span> <span class="tok-s1">&#39;pma&#39;</span><span class="tok-o">@</span><span class="tok-s1">&#39;localhost&#39;</span> <span class="tok-n">IDENTIFIED</span> <span class="tok-k">BY</span> <span class="tok-s1">&#39;mypassword&#39;</span><span class="tok-p">;</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>mypassword</code> doit être remplacé par un mot de passe choisi.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Accordez des privilèges et sauvez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-k">GRANT</span> <span class="tok-k">ALL</span> <span class="tok-k">PRIVILEGES</span> <span class="tok-k">ON</span> <span class="tok-n">phpmyadmin</span><span class="tok-p">.</span><span class="tok-o">*</span> <span class="tok-k">TO</span> <span class="tok-s1">&#39;pma&#39;</span><span class="tok-o">@</span><span class="tok-s1">&#39;localhost&#39;</span> <span class="tok-n">IDENTIFIED</span> <span class="tok-k">BY</span> <span class="tok-s1">&#39;mypassword&#39;</span> <span class="tok-k">WITH</span> <span class="tok-k">GRANT</span> <span class="tok-k">OPTION</span><span class="tok-p">;</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>mypassword</code> doit être remplacé par un mot de passe choisi.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Flusher les privilèges:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-n">FLUSH</span> <span class="tok-k">PRIVILEGES</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>et enfin</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-n">EXIT</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Chargez les tables sql dans la base phpmyadmin:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mysql -u root -p phpmyadmin &lt; /usr/share/phpmyadmin/sql/create_tables.sql</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enfin ajoutez les mots de passe nécessaires dans le fichier de config.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /usr/share/phpmyadmin/config.inc.php</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Rechercher le texte contenant <code>controlhost</code> .  Ci-dessous, un exemple:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="php"><span></span><span class="tok-cm">/* User used to manipulate with storage */</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;controlhost&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;localhost&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;controlport&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;controluser&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;controlpass&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;mypassword&#39;</span><span class="tok-p">;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+
+<span class="tok-cm">/* Storage database and tables */</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;pmadb&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;phpmyadmin&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;bookmarktable&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__bookmark&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;relation&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__relation&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;table_info&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__table_info&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;table_coords&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__table_coords&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;pdf_pages&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__pdf_pages&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;column_info&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__column_info&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;history&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__history&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;table_uiprefs&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__table_uiprefs&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;tracking&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__tracking&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;userconfig&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__userconfig&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;recent&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__recent&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;favorite&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__favorite&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;users&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__users&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;usergroups&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__usergroups&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;navigationhiding&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__navigationhiding&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;savedsearches&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__savedsearches&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;central_columns&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__central_columns&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;designer_settings&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__designer_settings&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;export_templates&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__export_templates&#39;</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A tous les endroit ou vous voyez dans le texte ci dessus le mot <code>mypassword</code> mettez celui choisi. N&#8217;oubliez pas de dé-commenter les lignes.</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_roundcube">6.9. Installation et configuration de Roundcube</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install roundcube roundcube-core roundcube-mysql roundcube-plugins</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Répondez aux question</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Utiliser dbconfig_common</code> &#8592; Répondre <code>Oui</code></p>
+</li>
+<li>
+<p><code>Mot de passe Mysql pour db Roundcube</code> &#8592; Tapez un mot de passe</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Éditez le fichier php de roundcube: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/roundcube/config.inc.php</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et définissez les hosts par défaut comme localhost</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="php"><span></span><span class="tok-nv">$config</span><span class="tok-p">[</span><span class="tok-s1">&#39;default_host&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;localhost&#39;</span><span class="tok-p">;</span>
+<span class="tok-nv">$config</span><span class="tok-p">[</span><span class="tok-s1">&#39;smtp_server&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;localhost&#39;</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Éditez la configuration apache pour roundcube: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apache2/conf-enabled/roundcube.conf</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et ajouter au début les lignes suivantes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">Alias</span> <span class="tok-sx">/roundcube</span> <span class="tok-sx">/var/lib/roundcube</span>
+<span class="tok-nb">Alias</span> <span class="tok-sx">/webmail</span> <span class="tok-sx">/var/lib/roundcube</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez Apache:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl reload apache2</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_lets_encrypt">6.10. Installation de Let&#8217;s Encrypt</h3>
+<div class="paragraph">
+<p>Installez Let&#8217;s Encrypt. Tapez:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/bin
+wget https://dl.eff.org/certbot-auto
+chmod a+x certbot-auto
+./certbot-auto --install-only</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Une façon alternative de l&#8217;installer est:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install python3-certbot-apache</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_dun_scanner_de_vulnérabilités">6.11. Installation d&#8217;un scanner de vulnérabilités</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>installer Git. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install git</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>installer Lynis</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span>
+git clone https://github.com/CISOfy/lynis</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Executez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> lynis<span class="tok-p">;</span>./lynis audit system</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>L&#8217;outil vous listera dans une forme très synthétique la liste des vulnérabilités et des améliorations de sécurité à appliquer.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_dun_panel">7. Installation d&#8217;un Panel</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Il existe plusieurs type de panel de contrôle pour les VPS. La plupart sont payant.</p>
+</div>
+<div class="paragraph">
+<p>Pour citer les plus connus:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>payant: cPanel (leader du type), Plesk</p>
+</li>
+<li>
+<p>gratuit: Yunohost ( un excellent système d&#8217;autohébergement packagé) , Ajenti, Froxlor, Centos web panel, Webmin et Usermin, ISPConfig, HestiaCP, VestaCP ,</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Ci après nous allons en présenter 3 différents (ISPConfig, Webmin et HestiaCP). Ils sont incompatibles entre eux.</p>
+</div>
+<div class="paragraph">
+<p>On peut faire cohabiter ISPConfig et Webmin en prenant les précautions suivantes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ISPConfig est le maitre de la configuration: toute modification sur les sites webs, mailboxes et DNS doit impérativement être effectuées du coté d&#8217;ISPConfig</p>
+</li>
+<li>
+<p>Les modifications réalisées au niveau de webmin pour ces sites webs, mailboxes et DNS seront au mieux écrasées par ISPConfig au pire elles risquent de conduire à des incompatibilités qui engendreront des dysfonctionnement d&#8217;ISPConfig (impossibilité de mettre à jour les configurations)</p>
+</li>
+<li>
+<p>Le reste des modifications peuvent être configurées au niveau de webmin sans trop de contraintes.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Pour rappel, HestiaCP (tout comme VestaCP) sont incompatibles d&#8217;ISPConfig et de Webmin. Ils doivent être utilisés seuls</p>
+</div>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_ispconfig">7.1. Installation et configuration de ISPConfig</h3>
+<div class="paragraph">
+<p>ISPConfig est un système de configuration de sites web totalement compatible avec Webmin.</p>
+</div>
+<div class="paragraph">
+<p>Pour installer ISPConfig, vous devez suivre la procédure ci-dessous. ISPConfig 3.1 a été utilisé dans ce tutoriel.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Cherchez la dernière version d&#8217;ISPConfig sur le site <a href="https://www.ispconfig.org/ispconfig/download/">ISPConfig</a></p>
+</li>
+<li>
+<p>Installez cette version en tapant: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>wget &lt;la_version_a_telecharger&gt;.tar.gz</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Décompressez la version en tapant: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>tar xfz &lt;la_version&gt;.tar.gz</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enfin allez dans le répertoire d&#8217;installation: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> ispconfig3_install/install/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lancez l&#8217;installation: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>php -q install.php</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et répondez aux questions:</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Select language (en,de) [en]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Installation mode (standard,expert) [standard]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL server hostname [localhost]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL server port [3306]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL root username [root]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL root password []:</code> &#8592; Enter your MySQL root password</p>
+</li>
+<li>
+<p><code>MySQL database to create [dbispconfig]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>MySQL charset [utf8]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Country Name (2 letter code) [AU]:</code> &#8592; Entrez le code pays à 2 lettres</p>
+</li>
+<li>
+<p><code>State or Province Name (full name) [Some-State]:</code> &#8592; Entrer le nom d&#8217;état</p>
+</li>
+<li>
+<p><code>Locality Name (eg, city) []:</code> &#8592; Entrer votre ville</p>
+</li>
+<li>
+<p><code>Organization Name (eg, company) [Internet Widgits Pty Ltd]:</code> &#8592; Entrez votre entreprise ou tapez entrée</p>
+</li>
+<li>
+<p><code>Organizational Unit Name (eg, section) []:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</p>
+</li>
+<li>
+<p><code>Email Address []:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>ISPConfig Port [8080]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Admin password [admin]:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:</code> &#8592;- Tapez entrée</p>
+</li>
+<li>
+<p><code>Country Name (2 letter code) [AU]:</code> &#8592; Entrez le code pays à 2 lettres</p>
+</li>
+<li>
+<p><code>State or Province Name (full name) [Some-State]:</code> &#8592; Entrer le nom d&#8217;état</p>
+</li>
+<li>
+<p><code>Locality Name (eg, city) []:</code> &#8592; Entrer votre ville</p>
+</li>
+<li>
+<p><code>Organization Name (eg, company) [Internet Widgits Pty Ltd]:</code> &#8592; Entrez votre entreprise ou tapez entrée</p>
+</li>
+<li>
+<p><code>Organizational Unit Name (eg, section) []:</code> &#8592; Tapez entrée</p>
+</li>
+<li>
+<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</p>
+</li>
+<li>
+<p><code>Email Address []:</code> &#8592; Tapez entrée</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Sécurisez Apache</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Il est maintenant recommandé de désactiver les protocoles TLS 1.0 et TLS 1.1. Ce n&#8217;est pas la configuration par défaut d&#8217;ISPconfig</p>
+</li>
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a>.</p>
+</li>
+<li>
+<p>Copier le fichier <code>vhost.conf.master</code> dans la zone custom</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cp /usr/local/ispconfig/server/conf/vhost.conf.master /usr/local/ispconfig/server/conf-custom/vhost.conf.master</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editer le fichier dans la zone custom. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Remplacez la ligne <code>SSLProtocol All</code> par:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>L&#8217;installation est terminée. Vous accédez au serveur à l&#8217;adresse: <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a> .</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur. Pour OVH, elle s&#8217;écrit VPSxxxxxx.ovh.net
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Loguez vous comme admin et avec le mot de passe que vous avez choisi. Vous pouvez décider de le changer au premier login</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Si le message "Possible attack detected. This action has been logged.". Cela signifie que vous avez des cookies d&#8217;une précédente installation qui sont configurés. Effacer les cookies de ce site de votre navigateur.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_webmin">7.2. Installation de Webmin</h3>
+<div class="paragraph">
+<p>Webmin est un outil généraliste de configuration de votre serveur. Son usage peut être assez complexe mais il permet une configuration plus précise des fonctionnalités.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Ajoutez le repository Webmin</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>allez dans le répertoire des repositories. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/apt/sources.list.d</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez: :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;deb http://download.webmin.com/download/repository sarge contrib&quot;</span> &gt;&gt; webmin.list</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez la clé. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>curl -fsSL http://www.webmin.com/jcameron-key.asc <span class="tok-p">|</span> sudo apt-key add -</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le message <code>OK</code> s&#8217;affiche</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Mise à jour. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt update</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installation de Webmin. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install webmin</code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Débloquez le port 10000 dans votre firewall</pre>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+</li>
+<li>
+<p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
+</li>
+<li>
+<p>dans la rubrique <code>Open TCP ports:</code>, ajoutez le port 10000</p>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Connectez vous avec votre navigateur sur l&#8217;url <a href="https://&lt;example.com&gt;:10000" class="bare">https://&lt;example.com&gt;:10000</a>. Un message indique un problème de sécurité. Cela vient du certificat auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et poursuivre'.</p>
+</li>
+<li>
+<p>Loguez-vous <code>root</code>. Tapez le mot de passe de <code>root</code>. Le dashboard s&#8217;affiche.</p>
+</li>
+<li>
+<p>Restreignez l&#8217;adressage IP</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Obtenez votre adresse IP en allant par exemples sur le site <a href="https://www.showmyip.com/" class="bare">https://www.showmyip.com/</a></p>
+</li>
+<li>
+<p>Sur votre URL Webmin ou vous êtes logué, allez dans Webmin&#8594;Webmin Configuration</p>
+</li>
+<li>
+<p>Dans l&#8217;écran choisir l’icône <code>Ip Access Control</code>.</p>
+</li>
+<li>
+<p>Choisissez <code>Only allow from listed addresses</code></p>
+</li>
+<li>
+<p>Puis dans le champ <code>Allowed IP addresses</code> tapez votre adresse IP récupérée sur showmyip</p>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+<li>
+<p>Vous devriez avoir une brève déconnexion le temps que le serveur Webmin redémarre puis une reconnexion.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Si vous n&#8217;arrivez pas à vous reconnecter c&#8217;est que l&#8217;adresse IP n&#8217;est pas la bonne. Le seul moyen de se reconnecter est de:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne <code>allow= &#8230;&#8203;</code></p>
+</li>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service webmin restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Connectez vous sur l&#8217;url de votre site Webmin. Tout doit fonctionner</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Passez en Français. Pour les personnes non anglophone. Les traductions française ont des problèmes d&#8217;encodage de caractère ce n&#8217;est donc pas recommandé. La suite de mon tutoriel suppose que vous êtes resté en anglais.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Sur votre url Webmin ou vous êtes logué, allez dans Webmin&#8594;Webmin Configuration</p>
+</li>
+<li>
+<p>Dans l&#8217;écran choisir l’icône <code>Language and Locale</code>.</p>
+</li>
+<li>
+<p>Choisir <code>Display Language</code> à <code>French (FR.UTF-8)</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="domain-config">8. Configuration d&#8217;un domaine</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cette configuration est réalisée avec le Panel ISPConfig installé dans le chapitre précédent.
+L&#8217;étape "login initial" n&#8217;est à appliquer qu&#8217;une seule fois. Une fois votre premier domaine configuré, vous pourrez vous loguer à ISPconfig en utilisant ce domaine à l&#8217;adresse: <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a> .</p>
+</div>
+<div class="sect2">
+<h3 id="_login_initial">8.1. Login initial</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Cette procédure n&#8217;est à appliquer que lorsqu&#8217;aucun domaine n&#8217;est encore créé.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Vous devrez tout d&#8217;abord vous loguer sur le serveur ISPConfig.
+Comme vous n&#8217;avez pas encore configuré de nom de de domaine, vous devrez vous loguer de prime abord sur le site <a href="http://vpsxxxxxx.ovh.net:8080/" class="bare">http://vpsxxxxxx.ovh.net:8080/</a> pour un vps chez ovh par exemple ou sur <a href="http://raspberrypi.local:8080/" class="bare">http://raspberrypi.local:8080/</a> pour un Raspberry.</p>
+</div>
+<div class="paragraph">
+<p>Utiliser le login: Admin et le mot de passe que vous avez configuré lors de l&#8217;installation d&#8217;ISPConfig</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Aller dans la rubrique <code>System</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Dans le menu <code>Main config</code></p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Dans l’onglet <code>Sites</code>, configurer:</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p><code>Create subdomains as web site:</code> &#8592; Yes</p>
+</li>
+<li>
+<p><code>Create aliasdomains as web site:</code> &#8592; Yes</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Dans l&#8217;onglet <code>Mail</code> :</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p><code>Administrator&#8217;s e-mail :</code> &#8592; adresse mail de l’administrateur. par exemple <a href="mailto:admin@example.com">admin@example.com</a></p>
+</li>
+<li>
+<p><code>Administrator&#8217;s name :</code> &#8592; nom de l’administrateur</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Dans le menu <code>Firewall</code></p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur <code>Add Firewall Record</code></p>
+</li>
+<li>
+<p>Acceptez les valeurs par défaut en cliquant sur <code>Save</code></p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Il est possible de basculer le site ISPConfig entièrement en Français. J&#8217;ai pour ma part gardé la version anglaise du site.
+Vous trouverez donc tous les libellés dans la suite de la documentation en anglais.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Aller dans la rubrique <code>DNS</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Dans le menu <code>Template</code></p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur <code>Add new record</code></p>
+</li>
+<li>
+<p>Remplissez les champs comme ci-après:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Name</code> &#8592; Tapez <code>Template IPV4 autoNS</code></p>
+</li>
+<li>
+<p><code>Fields</code> &#8592; Cochez <code>Domain</code>, <code>IP Address</code>, <code>Email</code>, <code>DKIM</code>, <code>DNSSEC</code></p>
+</li>
+<li>
+<p><code>Template</code> &#8592; remplissez comme ci dessous:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-o">[</span>ZONE<span class="tok-o">]</span>
+<span class="tok-nv">origin</span><span class="tok-o">={</span>DOMAIN<span class="tok-o">}</span>.
+<span class="tok-nv">ns</span><span class="tok-o">=</span>ns1.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.
+<span class="tok-nv">mbox</span><span class="tok-o">={</span>EMAIL<span class="tok-o">}</span>.
+<span class="tok-nv">refresh</span><span class="tok-o">=</span><span class="tok-m">7200</span>
+<span class="tok-nv">retry</span><span class="tok-o">=</span><span class="tok-m">540</span>
+<span class="tok-nv">expire</span><span class="tok-o">=</span><span class="tok-m">604800</span>
+<span class="tok-nv">minimum</span><span class="tok-o">=</span><span class="tok-m">3600</span>
+<span class="tok-nv">ttl</span><span class="tok-o">=</span><span class="tok-m">3600</span>
+
+<span class="tok-o">[</span>DNS_RECORDS<span class="tok-o">]</span>
+A<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>www<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>mail<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>autoconfig<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>autodiscover<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>webmail<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>ns1<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+CNAME<span class="tok-p">|</span>ftp<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+CNAME<span class="tok-p">|</span>smtp<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+CNAME<span class="tok-p">|</span>pop3<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+CNAME<span class="tok-p">|</span>imap<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_pop3._tcp<span class="tok-p">|</span><span class="tok-m">0</span> <span class="tok-m">0</span> .<span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_imap._tcp<span class="tok-p">|</span><span class="tok-m">0</span> <span class="tok-m">0</span> .<span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_pop3s._tcp<span class="tok-p">|</span><span class="tok-m">1</span> <span class="tok-m">995</span> mail.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_imaps._tcp<span class="tok-p">|</span><span class="tok-m">1</span> <span class="tok-m">993</span> mail.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_submission._tcp<span class="tok-p">|</span><span class="tok-m">1</span> <span class="tok-m">465</span> mail.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_autodiscover._tcp<span class="tok-p">|</span><span class="tok-m">1</span> <span class="tok-m">443</span> autodiscover.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+NS<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span>ns1.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+MX<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span>mail.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span><span class="tok-m">10</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+TXT<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span><span class="tok-nv">v</span><span class="tok-o">=</span>spf1 mx a ~all<span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span></code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Add new record</code></p>
+</li>
+<li>
+<p>Remplissez les champs comme ci-après:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Name</code> &#8592; Tapez <code>Template IPV6 autoNS</code></p>
+</li>
+<li>
+<p><code>Fields</code> &#8592; Cochez <code>Domain</code>, <code>IP Address</code>, <code>IPV6 Address</code>, <code>Email</code>, <code>DKIM</code>, <code>DNSSEC</code></p>
+</li>
+<li>
+<p><code>Template</code> &#8592; remplissez comme ci dessous:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-o">[</span>ZONE<span class="tok-o">]</span>
+<span class="tok-nv">origin</span><span class="tok-o">={</span>DOMAIN<span class="tok-o">}</span>.
+<span class="tok-nv">ns</span><span class="tok-o">=</span>ns1.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.
+<span class="tok-nv">mbox</span><span class="tok-o">={</span>EMAIL<span class="tok-o">}</span>.
+<span class="tok-nv">refresh</span><span class="tok-o">=</span><span class="tok-m">7200</span>
+<span class="tok-nv">retry</span><span class="tok-o">=</span><span class="tok-m">540</span>
+<span class="tok-nv">expire</span><span class="tok-o">=</span><span class="tok-m">604800</span>
+<span class="tok-nv">minimum</span><span class="tok-o">=</span><span class="tok-m">3600</span>
+<span class="tok-nv">ttl</span><span class="tok-o">=</span><span class="tok-m">3600</span>
+
+<span class="tok-o">[</span>DNS_RECORDS<span class="tok-o">]</span>
+A<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>www<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>mail<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>autoconfig<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>autodiscover<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>webmail<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+A<span class="tok-p">|</span>ns1<span class="tok-p">|</span><span class="tok-o">{</span>IP<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+AAAA<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span><span class="tok-o">{</span>IPV6<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+AAAA<span class="tok-p">|</span>www<span class="tok-p">|</span><span class="tok-o">{</span>IPV6<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+AAAA<span class="tok-p">|</span>mail<span class="tok-p">|</span><span class="tok-o">{</span>IPV6<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+AAAA<span class="tok-p">|</span>autoconfig<span class="tok-p">|</span><span class="tok-o">{</span>IPV6<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+AAAA<span class="tok-p">|</span>autodiscover<span class="tok-p">|</span><span class="tok-o">{</span>IPV6<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+AAAA<span class="tok-p">|</span>webmail<span class="tok-p">|</span><span class="tok-o">{</span>IPV6<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+AAAA<span class="tok-p">|</span>ns1<span class="tok-p">|</span><span class="tok-o">{</span>IPV6<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+CNAME<span class="tok-p">|</span>ftp<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+CNAME<span class="tok-p">|</span>smtp<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+CNAME<span class="tok-p">|</span>pop3<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+CNAME<span class="tok-p">|</span>imap<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_pop3._tcp<span class="tok-p">|</span><span class="tok-m">0</span> <span class="tok-m">0</span> .<span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_imap._tcp<span class="tok-p">|</span><span class="tok-m">0</span> <span class="tok-m">0</span> .<span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_pop3s._tcp<span class="tok-p">|</span><span class="tok-m">1</span> <span class="tok-m">995</span> mail.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_imaps._tcp<span class="tok-p">|</span><span class="tok-m">1</span> <span class="tok-m">993</span> mail.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_submission._tcp<span class="tok-p">|</span><span class="tok-m">1</span> <span class="tok-m">465</span> mail.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+SRV<span class="tok-p">|</span>_autodiscover._tcp<span class="tok-p">|</span><span class="tok-m">1</span> <span class="tok-m">443</span> autodiscover.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span><span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+NS<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span>ns1.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+MX<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span>mail.<span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span><span class="tok-m">10</span><span class="tok-p">|</span><span class="tok-m">3600</span>
+TXT<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="tok-o">}</span>.<span class="tok-p">|</span><span class="tok-nv">v</span><span class="tok-o">=</span>spf1 mx a ~all<span class="tok-p">|</span><span class="tok-m">0</span><span class="tok-p">|</span><span class="tok-m">3600</span></code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_de_la_zone_dns_dun_domaine">8.2. Création de la zone DNS d&#8217;un domaine</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans <code>DNS</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>Add dns-zone</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Dns zone wizard</code></p>
+</li>
+<li>
+<p>Choisir le template <code>IPV4 autoNS</code> ou`IPV6 autoNS` selon que vous soyez IPV4 ou IPV4+V6</p>
+</li>
+<li>
+<p>Remplissez les champs:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Domain :</code> &#8592; tapez le nom de votre domaine <code>example.com</code></p>
+</li>
+<li>
+<p><code>IP Address:</code> &#8592; prendre l’adresse IPV4 du serveur sélectionnée</p>
+</li>
+<li>
+<p><code>IPV6 Address:</code> &#8592; prendre l’adresse IPV6 du serveur sélectionnée</p>
+</li>
+<li>
+<p><code>Email:</code> &#8592; votre Email valide exemple <a href="mailto:admin@example.com">admin@example.com</a></p>
+</li>
+<li>
+<p><code>DKIM:</code> &#8592; Yes</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Si votre serveur est chez vous, il est probablement installé derrière un routeur ADSL configuré au préalable avec une DMZ qui pointe sur ce serveur. Dans ce cas, vous ne devrez pas indiquer l&#8217;adresse IP locale de votre serveur mais l&#8217;adresse IP de votre routeur ADSL telle qu&#8217;elle est vue sur internet. On suppose aussi que cette adresse IP est statique et non pas allouée dynamiquement par l&#8217;opérateur.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Create DNS-record</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Attendez quelques minutes le temps que les enregistrements DNS se propagent et faites une essai de votre nom de domaine sur le site <a href="https://zonemaster.fr/domain_check">ZoneMaster</a>.</p>
+</div>
+<div class="paragraph">
+<p>Dans le champ Nom de domaine saisissez votre nom de domaine et tapez sur check. Tout doit est OK sauf pour les serveurs de noms ns1 et ns2. Si ce n&#8217;est pas le cas, votre nom de domaine doit être mal configuré chez votre registrar. Il vous faut vérifier la configuration initiale.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Zonemaster a bien repéré que l&#8217;on a essayé de mettre des noms de host différents pour les serveurs de DNS. Ils ont cependant tous la même adresse IP. Cela apparait comme une erreur suite au test.
+De la même manière, il indique dans la rubrique connectivité qu&#8217;il n&#8217;y a pas de redondance de serveur DNS.
+Une manière de corriger ce problème est de définir un DNS secondaire chez OVH en utilisant le service qu&#8217;ils mettent à disposition.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Vous pouvez maintenant essayer les différents Hostname munis de leur nom de domaine dans votre navigateur. Par exemple: <a href="http://webmail.example.com" class="bare">http://webmail.example.com</a></p>
+</div>
+<div class="paragraph">
+<p>Ils doivent afficher une page web basique (Apache2, ou de parking).Si ce n&#8217;est pas le cas revérifier la configuration du DNS dans ISPConfig.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_activation_de_dnssec">8.3. Activation de DNSSEC</h3>
+<div class="paragraph">
+<p>Vous pouvez maintenant activer DNSSEC afin d&#8217;augmenter la sécurité de résolution de nom de domaine:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans la rubrique <code>DNS</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>puis dans le menu <code>Zones</code></p>
+</li>
+<li>
+<p>choisissez la zone correspondant à votre domaine</p>
+</li>
+<li>
+<p>dans l&#8217;onglet <code>DNS Zone</code> allez tout en bas et activer la coche <code>Sign Zone (DNSSEC)</code></p>
+</li>
+<li>
+<p>cliquez sur <code>Save</code></p>
+</li>
+<li>
+<p>Une fois fait, retourner dans le même onglet. La boite `DNSSEC DS-Data for registry: `contient les informations que vous devez coller dans le site web de votre registrar pour sécuriser votre zone.</p>
+</li>
+<li>
+<p>Gardez cette fenêtre ouverte dans votre navigateur et ouvrez un autre onglet sur le site de votre registrar.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Si vous êtes chez <a href="https://admin.gandi.net/">Gandi</a>, il vous faut:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sélectionner le menu <code>nom de domaine</code></p>
+</li>
+<li>
+<p>Choisir votre nom de domaine "example.com"</p>
+</li>
+<li>
+<p>Allez dans l&#8217;onglet DNSSEC. Il doit permettre d&#8217;ajouter des clés puisque vous fonctionner avec des DNS externes.</p>
+</li>
+<li>
+<p>Effacez éventuellement toutes les clés si vous n&#8217;êtes pas sur de celles-ci.</p>
+</li>
+<li>
+<p>puis cliquez sur <code>Ajouter une clé externe</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Sélectionnez d&#8217;abord le flag <code>257 (KSK)</code>. puis l&#8217;algorithme <code>7 (RSASHA1-NSEC3-SHA1)</code></p>
+</li>
+<li>
+<p>Collez ensuite la clé de votre site ISPConfig. Elle doit ressembler à cela:</p>
+<div class="listingblock">
+<div class="content">
+<pre>example.com. IN DNSKEY 257 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Ajouter</code></p>
+</li>
+<li>
+<p>Entrez la deuxième clé. Cliquez sur <code>Ajouter une clé externe</code></p>
+</li>
+<li>
+<p>Sélectionnez d&#8217;abord le flag <code>256 (ZSK)</code>. puis l&#8217;algorithme <code>7 (RSASHA1-NSEC3-SHA1)</code></p>
+</li>
+<li>
+<p>Collez ensuite la clé de votre site ISPConfig. Elle doit ressembler à cela:</p>
+<div class="listingblock">
+<div class="content">
+<pre>example.com. IN DNSKEY 256 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Ajouter</code></p>
+</li>
+<li>
+<p>Les deux clés doivent maintenant apparaître dans l&#8217;onglet <code>DNSSEC</code></p>
+</li>
+<li>
+<p>Vous devez attendre quelques minutes (une heure dans certains cas) pour que les clés se propagent. Pendant ce temps vous pouvez avoir quelques problèmes d&#8217;accès à vos sites webs</p>
+</li>
+<li>
+<p>Allez sur le site <a href="https://dnssec-debugger.verisignlabs.com/">DNSSEC Analyzer</a>.</p>
+</li>
+<li>
+<p>Entrez votre nom de domaine "example.com" et tapez sur "entrée".</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Le site doit afficher pour les différentes zones le statut des certificats. Tout doit être au vert.
+Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore des problèmes vérifiez votre configuration dans ISPConfig, chez votre registrar (rubrique DNSSEC) ou regardez les logs d&#8217;ISPConfig sur votre serveur pour y débusquer une erreur.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Une erreur classique est de croiser les certificats avec leurs types. Vérifiez bien que vous avez mis les bons certificats avec les bons types.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Une fois que vous activez DNSSEC, vous pourriez faire face au problème suivant: les nouveaux enregistrements que vous renseignez ne sont pas actifs.
+Une analyse des logs montre que la commande <code>dnssec-signzone</code> retourne l&#8217;erreur <code>fatal: 'example.com': found DS RRset without NS RRset</code>.
+Cela signifie que vous avez saisi une ou deux entrées DS dans vos enregistrements. Il faut les supprimer pour que tout redevienne fonctionnel.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exemple_de_configuration_de_domaine">8.4. Exemple de configuration de domaine</h3>
+<div class="paragraph">
+<p>Une fois la configuration terminé, les différents enregistrements du domaines ressemblent à l&#8217;exemple ci-dessous.
+Il peut y avoir des enregistrements supplémentaires pour les configurations SPF, DKIM et Let&#8217;s encrypt.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>example.com.         3600 A              1.2.3.4
+www                  3600 A              1.2.3.4
+mail                 3600 A              1.2.3.4
+ns1                  3600 A              1.2.3.4
+ns2                  3600 A              1.2.3.4
+webmail              3600 A              1.2.3.4
+autoconfig           3600 A              1.2.3.4
+autodiscover         3600 A              1.2.3.4
+ftp                  3600 CNAME          example.com.
+smtp                 3600 CNAME          mail.example.com.
+pop3                 3600 CNAME          mail.example.com.
+imap                 3600 CNAME          mail.example.com.
+example.com.         3600 NS             ns1.example.com.
+example.com.         3600 NS             ns2.example.com.
+example.com.         3600 MX    10       mail.example.com.
+_pop3s._tcp          3600 SRV   10 1 995 mail.example.com.
+_imaps._tcp          3600 SRV   0  1 993 mail.example.com.
+_submission._tcp     3600 SRV   0  1 465 mail.example.com.
+_imap._tcp           3600 SRV   0  0 0   .
+_pop3._tcp           3600 SRV   0  0 0   .
+_autodiscover._tcp   3600 SRV   0 0 443  autoconfig.example.com.
+example.com.         3600 TXT            "v=spf1 mx a ~all"</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_dun_sous_domaine">8.5. Création d&#8217;un sous domaine</h3>
+<div class="paragraph">
+<p>Supposons que vous êtes en train de créer un sous domain nommé sub.example.com .
+Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail.sub.example.com ou blog.sub.example.com.</p>
+</div>
+<div class="paragraph">
+<p>Un cas assez classique est que ce sous domaine est délégué à une machine tierce.</p>
+</div>
+<div class="paragraph">
+<p>Par exemple: example.com est installé sur un VPS quelque part sur internet et sub.example.com est hébergé chez vous sur votre Raspberry.</p>
+</div>
+<div class="paragraph">
+<p>On suppose que votre domain a été configuré en suivant la procédure du chapitre précédent.</p>
+</div>
+<div class="paragraph">
+<p>Rien de bien sorcier pour votre sous domaine: Vous devez le créer sur votre Raspberry selon la même procédure mais avec le nom du sous domaine (sub.example.com donc).</p>
+</div>
+<div class="paragraph">
+<p>Vous aurez des actions complémentaires à effectuer sur votre domaine:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans <code>DNS</code> de votre serveur de domaine principal</p>
+</li>
+<li>
+<p>Sélectionner le menu <code>Zones</code> puis le domaine example.com</p>
+</li>
+<li>
+<p>Choisissez l&#8217;onglet <code>Records</code> et créez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>un enregistrement de type <code>NS</code> avec une <code>Zone</code> &#8592; <code>sub.example.com.</code> et un <code>nameserver Hostname</code> &#8592; <code>ns1.sub.example.com.</code></p>
+</li>
+<li>
+<p>un enregistrement de type <code>NS</code> avec une <code>Zone</code> &#8592; <code>sub.example.com.</code> et un <code>nameserver Hostname</code> &#8592; <code>ns2.sub.example.com.</code></p>
+</li>
+<li>
+<p>un enregistrement de type <code>NS</code> avec une <code>Zone</code> &#8592; <code>sub.example.com.</code> et un <code>nameserver Hostname</code> &#8592; <code>ns3.example.com.</code> .</p>
+<div class="paragraph">
+<p>Ce dernier type d&#8217;enregistrement se nomme un Glue record pour faire le lien vers le serveur secondaire.</p>
+</div>
+</li>
+<li>
+<p>un enregistrement de type <code>A</code> avec un <code>Hostname</code> &#8592; ns3 et une <code>IP-address</code> &#8592; Adresse IP de votre routeur ADSL ou est connecté le Raspberry.</p>
+<div class="paragraph">
+<p>Ce dernier enregistrement en complétant le Glue record fait le lien avec l&#8217;adresse IP de sub.example.com</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Si vous avez activé DNSSEC sur votre serveur DNS de sub.example.com vous devrez récupérer les entrées DS du champ <code>DNSSEC DS-Data for registry</code> de votre domaine sub.example.com et créer dans votre domaine example.com les deux entrées suivantes:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>un enregistrement de type <code>DS</code> avec une <code>Zone</code> &#8592; <code>sub.example.com</code> et un champ <code>data</code> contenant <code>xxxxx 7 1 &lt;votre_digest_recupérée&gt;</code></p>
+</li>
+<li>
+<p>un enregistrement de type <code>DS</code> avec une <code>Zone</code> &#8592; <code>sub.example.com</code> et un champ <code>data</code> contenant <code>xxxxx 7 2 &lt;votre_digest_recupérée&gt;</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="domain-site">8.6. Création d’un site web</h3>
+<div class="paragraph">
+<p>Dans la suite le site web sera nommé "example.com".</p>
+</div>
+<div class="paragraph">
+<p>Vous devez avoir avant tout défini le "record" DNS associé au site.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Aller dans "Sites"</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aller dans le menu "Website" pour définir un site web</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur "Add new website"</p>
+</li>
+<li>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Domain:</code> &#8592; mettre <code>example.com</code></p>
+</li>
+<li>
+<p><code>Auto-subdomain:</code> &#8592; sélectionner <code>wwww</code> ou <code>*</code> si l’on veut un certificat let’s encrypt wildcard</p>
+</li>
+<li>
+<p><code>SSL:</code> &#8592; yes</p>
+</li>
+<li>
+<p><code>Let’s Encrypt:</code> &#8592; yes</p>
+</li>
+<li>
+<p><code>Php:</code> &#8592; Sélectionez <code>php-fpm</code></p>
+</li>
+<li>
+<p>Sélectionnez éventuellement aussi les coches <code>Perl</code>, <code>Python</code>, <code>Ruby</code> en fonction des technologies déployées sur votre site. Cela est indiqué dans la procédure d&#8217;installation du site.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l’onglet <code>redirect</code> du même écran</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SEO Redirect:</code> &#8592; Sélectionner <code>domain.tld &#8658;www.domain.tld</code></p>
+</li>
+<li>
+<p><code>Rewrite http to https:</code> &#8592; yes</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l’onglet <code>Statistics</code> du même écran</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Set Webstatistics password:</code> &#8592; saisissez un mot de passe</p>
+</li>
+<li>
+<p><code>Repeat Password:</code> &#8592; ressaisissez le mot de passe</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l’onglet <code>Backup</code> du même écran</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Backup interval:</code> &#8592; saisir <code>weekly</code></p>
+</li>
+<li>
+<p><code>Number of backup copies:</code> &#8592; saisir <code>1</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l&#8217;onglet <code>Options</code>, il peut être utile pour certains types de site qui sont des redirections d&#8217;autres sites de saisir dans la zone <code>Apache Directives:</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+
+<span class="tok-c"># redirect from server</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> / http://localhost[:port_number_if_any]/[path_if_any]
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Vous pouvez maintenant tester la qualité de la  connexion de votre site en allant sur: <a href="https://www.ssllabs.com/ssltest">SSL Server Test</a>. Saisissez votre nom de domaine et cliquez sur <code>Submit</code>. Votre site doit au moins être de <code>Grade A</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="subdomain-site">8.7. Création d’un Site Vhost</h3>
+<div class="paragraph">
+<p>Dans la suite le sous-domaine sera nommé "mail.example.com".</p>
+</div>
+<div class="paragraph">
+<p>Vous devez avoir avant tout défini le "record" DNS associé au site.
+Vous ne pouvez définir un sous-domaine que si vous avez défini le site web racine auparavant.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Aller dans "Sites"</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aller dans le menu "Subdomain(vhost)" pour définir un sous-domaine</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur "Add Subdomain" pour un nouveau sous domaine</p>
+</li>
+<li>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592;  saisir <code>mail</code></p>
+</li>
+<li>
+<p><code>Domain:</code> &#8592; mettre <code>example.com</code></p>
+</li>
+<li>
+<p><code>web folder:</code> &#8592; saisir <code>mail</code></p>
+</li>
+<li>
+<p><code>Auto-subdomain:</code> &#8592; sélectionner <code>wwww</code> ou <code>*</code> si l’on veut un certificat let’s encrypt wildcard</p>
+</li>
+<li>
+<p><code>SSL:</code> &#8592; yes</p>
+</li>
+<li>
+<p><code>Let’s Encrypt:</code> &#8592; yes</p>
+</li>
+<li>
+<p><code>Php:</code> &#8592; Sélectionez <code>php-fpm</code></p>
+</li>
+<li>
+<p>Sélectionnez éventuellement aussi les coches <code>Perl</code>, <code>Python</code>, <code>Ruby</code> en fonction des technologies déployées sur votre site. Cela est indiqué dans la procédure d&#8217;installation du site.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l’onglet <code>redirect</code> du même écran</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Rewrite http to https:</code> &#8592; yes</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l’onglet <code>Statistics</code> du même écran</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Set Webstatistics password:</code> &#8592; saisissez un mot de passe</p>
+</li>
+<li>
+<p><code>Repeat Password:</code> &#8592; ressaisissez le mot de passe</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l&#8217;onglet <code>Options</code>, il peut être utile pour certains types de site qui sont des redirections d&#8217;autres sites de saisir dans la zone <code>Apache Directives:</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+
+<span class="tok-c"># redirect from server</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> / http://localhost[:port_number_if_any]/[path_if_any]
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Vous pouvez maintenant tester la qualité de la  connexion de votre site en allant sur: <a href="https://www.ssllabs.com/ssltest">SSL Server Test</a>. Saisissez votre nom de domaine et cliquez sur <code>Submit</code>. Votre site doit au moins être de <code>Grade A</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_associer_des_certificats_reconnu_à_vos_outils">9. Associer des certificats reconnu à vos outils</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cette action est à effectuer une fois que vous avez créé votre domaine principal et que vous avez généré vos premiers certificats let&#8217;s encrypt dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux services de base:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Vous devez avoir créé au préalable un site pour les domaines example.com et mail.example.com</p>
+</li>
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Liez le certificat d&#8217;ISPconfig avec celui du domaine crée.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/ispconfig/interface/ssl/
+mv ispserver.crt ispserver.crt-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+mv ispserver.key ispserver.key-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+ln -s /etc/letsencrypt/live/example.com/fullchain.pem ispserver.crt <i class="conum" data-value="1"></i><b>(1)</b>
+ln -s /etc/letsencrypt/live/example.com/privkey.pem ispserver.key <i class="conum" data-value="1"></i><b>(1)</b>
+cat ispserver.<span class="tok-o">{</span>key,crt<span class="tok-o">}</span> &gt; ispserver.pem
+chmod <span class="tok-m">600</span> ispserver.pem
+systemctl restart apache2</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Liez le certificat Postfix et Dovecot avec celui de let&#8217;s encrypt</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/postfix/
+mv smtpd.cert smtpd.cert-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+mv smtpd.key smtpd.key-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert <i class="conum" data-value="1"></i><b>(1)</b>
+ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key <i class="conum" data-value="1"></i><b>(1)</b>
+service postfix restart
+service dovecot restart</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer &lt;example.com&gt; par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Liez le certificat pour Pureftd</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/ssl/private/
+mv pure-ftpd.pem pure-ftpd.pem-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+ln -s /usr/local/ispconfig/interface/ssl/ispserver.pem pure-ftpd.pem
+chmod <span class="tok-m">600</span> pure-ftpd.pem
+service pure-ftpd-mysql restart</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Création d&#8217;un script de renouvellement automatique du fichier pem</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Installez incron. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install -y incron</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez le fichier d&#8217;exécution périodique. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/init.d/le_ispc_pem.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et coller dans le fichier le code suivant:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/sh</span>
+<span class="tok-c1">### BEGIN INIT INFO</span>
+<span class="tok-c1"># Provides: LE ISPSERVER.PEM AUTO UPDATER</span>
+<span class="tok-c1"># Required-Start: $local_fs $network</span>
+<span class="tok-c1"># Required-Stop: $local_fs</span>
+<span class="tok-c1"># Default-Start: 2 3 4 5</span>
+<span class="tok-c1"># Default-Stop: 0 1 6</span>
+<span class="tok-c1"># Short-Description: LE ISPSERVER.PEM AUTO UPDATER</span>
+<span class="tok-c1"># Description: Update ispserver.pem automatically after ISPC LE SSL certs are renewed.</span>
+<span class="tok-c1">### END INIT INFO</span>
+<span class="tok-nb">cd</span> /usr/local/ispconfig/interface/ssl/
+mv ispserver.pem ispserver.pem-<span class="tok-k">$(</span>date +<span class="tok-s2">&quot;%y%m%d%H%M%S&quot;</span><span class="tok-k">)</span>.bak
+cat ispserver.<span class="tok-o">{</span>key,crt<span class="tok-o">}</span> &gt; ispserver.pem
+chmod <span class="tok-m">600</span> ispserver.pem
+chmod <span class="tok-m">600</span> /etc/ssl/private/pure-ftpd.pem
+service pure-ftpd-mysql restart
+service monit restart
+service postfix restart
+service dovecot restart
+service apache2 restart
+<span class="tok-nb">exit</span> <span class="tok-m">1</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sauvez et quittez. Tapez ensuite:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod +x /etc/init.d/le_ispc_pem.sh
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;root&quot;</span> &gt;&gt; /etc/incron.allow
+incrontab -e.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>et ajoutez les lignes ci dessous dans le fichier:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>/etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacer example.com par votre nom de domaine.</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_surveillance_du_serveur_avec_munin_et_monit">10. Surveillance du serveur avec Munin et Monit</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_note_préliminaire">10.1. Note préliminaire</h3>
+<div class="paragraph">
+<p>Installez tout d&#8217;abord les paquets indispensables pour faire fonctionner Munin avec Apache puis activez le module fcgid:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install apache2 libcgi-fast-perl libapache2-mod-fcgid
+a2enmod fcgid</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_et_configuration_de_munin">10.2. Installation et configuration de Munin</h3>
+<div class="paragraph">
+<p>Suivez les étapes ci-après:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Installer le paquet Munin:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install munin munin-node munin-plugins-extra logtail libcache-cache-perl</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Votre configuration de Munin va utiliser une base de données MariaDB. Vous devez activer quelques plugins. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/munin/plugins
+ln -s /usr/share/munin/plugins/mysql_ mysql_
+ln -s /usr/share/munin/plugins/mysql_bytes mysql_bytes
+ln -s /usr/share/munin/plugins/mysql_innodb mysql_innodb
+ln -s /usr/share/munin/plugins/mysql_isam_space_ mysql_isam_space_
+ln -s /usr/share/munin/plugins/mysql_queries mysql_queries
+ln -s /usr/share/munin/plugins/mysql_slowqueries mysql_slowqueries
+ln -s /usr/share/munin/plugins/mysql_threads mysql_threads</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez la base de données MariaDB de Munin. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mysql -p</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez le mot de passe mysql de root , puis dans mysql tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="mysql"><span></span><span class="tok-k">CREATE</span> <span class="tok-k">SCHEMA</span> <span class="tok-n">munin_innodb</span><span class="tok-p">;</span>
+<span class="tok-k">USE</span> <span class="tok-n">munin_innodb</span>
+<span class="tok-k">CREATE</span> <span class="tok-k">TABLE</span> <span class="tok-nf">something</span> <span class="tok-p">(</span><span class="tok-n">anything</span> <span class="tok-kt">int</span><span class="tok-p">)</span> <span class="tok-kp">ENGINE</span><span class="tok-o">=</span><span class="tok-n">InnoDB</span><span class="tok-p">;</span>
+<span class="tok-k">GRANT</span> <span class="tok-k">SELECT</span> <span class="tok-k">ON</span> <span class="tok-n">munin_innodb</span><span class="tok-p">.</span><span class="tok-o">*</span> <span class="tok-k">TO</span> <span class="tok-s1">&#39;munin&#39;</span><span class="tok-o">@</span><span class="tok-s1">&#39;localhost&#39;</span> <span class="tok-n">IDENTIFIED</span> <span class="tok-k">BY</span> <span class="tok-s1">&#39;munin&#39;</span><span class="tok-p">;</span>
+<span class="tok-k">FLUSH</span> <span class="tok-n">PRIVILEGES</span><span class="tok-p">;</span>
+<span class="tok-k">EXIT</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez ensuite le fichier de configuration de Munin. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/munin/munin.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Décommentez les lignes débutant par: <code>bdir</code>, <code>htmldir</code>, <code>logdir</code>, <code>rundir</code>, and <code>tmpldir</code>. Les valeurs par défaut sont correctes.</p>
+</li>
+<li>
+<p>Munin utilisera l&#8217;adresse <code>munin.example.com</code>. Toujours dans le fichier de configuration de munin, remplacer la directive <code>[localhost.localdomain]</code> par <code>[munin.example.com]</code>.</p>
+</li>
+<li>
+<p>Un fois les commentaires enlevés et la ligne modifiée, le fichier de configuration doit ressembler à celui-ci:</p>
+<div class="listingblock">
+<div class="content">
+<pre># Example configuration file for Munin, generated by 'make build'
+# The next three variables specifies where the location of the RRD
+# databases, the HTML output, logs and the lock/pid files. They all
+# must be writable by the user running munin-cron. They are all
+# defaulted to the values you see here.
+#
+dbdir /var/lib/munin
+htmldir /var/cache/munin/www
+logdir /var/log/munin
+rundir /var/run/munin
+# Where to look for the HTML templates
+#
+tmpldir /etc/munin/templates
+# Where to look for the static www files
+#
+#staticdir /etc/munin/static
+# temporary cgi files are here. note that it has to be writable by
+# the cgi user (usually nobody or httpd).
+#
+# cgitmpdir /var/lib/munin/cgi-tmp
+
+# (Exactly one) directory to include all files from.
+includedir /etc/munin/munin-conf.d
+[...]
+# a simple host tree
+[server1.example.com]
+ address 127.0.0.1
+ use_node_name yes
+[...]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez Munin dans Apache. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2enconf munin</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez le fichier munin.conf d&#8217;Apache:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apache2/conf-enabled/munin.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Nous allons maintenant activer le module Munin dans Apache et définir une authentification basique.</p>
+</li>
+<li>
+<p>Modifiez le fichier pour qu&#8217;il ressemble à celui ci-dessous:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ScriptAlias</span> <span class="tok-sx">/munin-cgi/munin-cgi-graph</span> <span class="tok-sx">/usr/lib/munin/cgi/munin-cgi-graph</span>
+<span class="tok-nb">Alias</span> <span class="tok-sx">/munin/static/</span> <span class="tok-sx">/var/cache/munin/www/static/</span>
+
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/var/cache/munin/www</span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">Options</span> FollowSymLinks SymLinksIfOwnerMatch
+    <span class="tok-nb">AuthUserFile</span> <span class="tok-sx">/etc/munin/munin-htpasswd</span>
+    <span class="tok-nb">AuthName</span> <span class="tok-s2">&quot;Munin&quot;</span>
+    <span class="tok-nb">AuthType</span> Basic
+    <span class="tok-nb">Require</span> valid-user
+
+<span class="tok-nt">&lt;/Directory&gt;</span>
+
+<span class="tok-nt">&lt;Directory</span> <span class="tok-s">/usr/lib/munin/cgi</span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthUserFile</span> <span class="tok-sx">/etc/munin/munin-htpasswd</span>
+    <span class="tok-nb">AuthName</span> <span class="tok-s2">&quot;Munin&quot;</span>
+    <span class="tok-nb">AuthType</span> Basic
+    <span class="tok-nb">Require</span> valid-user
+    <span class="tok-nb">Options</span> FollowSymLinks SymLinksIfOwnerMatch
+    <span class="tok-nt">&lt;IfModule</span> <span class="tok-s">mod_fcgid.c</span><span class="tok-nt">&gt;</span>
+        <span class="tok-nb">SetHandler</span> fcgid-script
+    <span class="tok-nt">&lt;/IfModule&gt;</span>
+    <span class="tok-nt">&lt;IfModule</span> <span class="tok-s">!mod_fcgid.c</span><span class="tok-nt">&gt;</span>
+        <span class="tok-nb">SetHandler</span> cgi-script
+    <span class="tok-nt">&lt;/IfModule&gt;</span>
+<span class="tok-nt">&lt;/Directory&gt;</span>
+
+<span class="tok-c"># ***** SETTINGS FOR CGI/CRON STRATEGIES *****</span>
+
+<span class="tok-c"># pick _one_ of the following lines depending on your &quot;html_strategy&quot;</span>
+<span class="tok-c"># html_strategy: cron (default)</span>
+<span class="tok-nb">Alias</span> <span class="tok-sx">/munin</span> <span class="tok-sx">/var/cache/munin/www</span>
+<span class="tok-c"># html_strategy: cgi (requires the apache module &quot;cgid&quot; or &quot;fcgid&quot;)</span>
+<span class="tok-c">#ScriptAlias /munin /usr/lib/munin/cgi/munin-cgi-html</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez ensuite le fichier de mot de passe de munin:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>htpasswd -c /etc/munin/munin-htpasswd admin</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez votre mot de passe</p>
+</li>
+<li>
+<p>Redémarrez apache. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service apache2 restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez Munin. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service munin-node restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Attendez quelques minutes afin que Munin produise ses premiers fichiers de sortie. et allez ensuite sur l&#8217;URL: <a href="http://example.com/munin/" class="bare">http://example.com/munin/</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_activez_les_plugins_de_munin">10.3. Activez les plugins de Munin</h3>
+<div class="paragraph">
+<p>Dans Debian 10, tous les plugins complémentaires sont déjà activés.Vous pouvez être tenté de vérifier:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pour vérifier que la configuration est correcte. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>munin-node-configure --suggest</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Une liste de plugins doit s&#8217;afficher à l&#8217;écran. La colonne <code>used</code> indique que le plugins est activé. La colonne <code>Suggestions</code> indique que le serveur fait fonctionner un service qui peut être monitoré par ce module. Il faut créer un lien symbolique du module de <code>/usr/share/munin/plugins</code> dans <code>/etc/munin/plugins</code> pour l&#8217;activer.</p>
+</li>
+<li>
+<p>Par exemple pour activer les modules apache_*:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /etc/munin/plugins
+ln -s /usr/share/munin/plugins/apache_accesses
+ln -s /usr/share/munin/plugins/apache_processes
+ln -s /usr/share/munin/plugins/apache_volume
+rm /usr/share/munin/plugins/mysql_</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez ensuite le service Munin. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service munin-node restart</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installer_et_configurer_monit">10.4. Installer et configurer Monit</h3>
+<div class="paragraph">
+<p>Pour installer et configurer Monit, vous devez appliquer la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install monit</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Maintenant nous devons éditer le fichier <code>monitrc</code> qui définira les services que l&#8217;on souhaite monitorer. Il existe de nombreux exemples sur le web et vous pourrez trouver de nombreuses configuration sur <a href="http://mmonit.com/monit/documentation/" class="bare">http://mmonit.com/monit/documentation/</a>.</p>
+</li>
+<li>
+<p>Editez le fichier monitrc. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cp /etc/monit/monitrc /etc/monit/monitrc_orig
+vi /etc/monit/monitrc</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Le fichier contient déjà de nombreux exemples. Nous configurer une surveillance de sshd, apache, mysql, proftpd, postfix, memcached, named, ntpd, mailman, amavisd, dovecot. Monit  sera activé sur le port 2812 et nous allons donner à l&#8217;utilisateur  admin un mot de passe. Le certificat HTTPS sera celui généré avec let&#8217;s encrypt pour le site ISPConfig. Collez le contenu ci dessous dans le fichier monitrc:</p>
+<div class="listingblock">
+<div class="content">
+<pre>set daemon 60
+set logfile syslog facility log_daemon
+set mailserver localhost
+set mail-format { from: monit@fpvview.site }
+set alert stef@fpvview.site
+set httpd port 2812 and
+ SSL ENABLE
+ PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
+ allow admin:"my_password" <i class="conum" data-value="1"></i><b>(1)</b>
+
+check process sshd with pidfile /var/run/sshd.pid
+ start program "/usr/sbin/service ssh start"
+ stop program "/usr/sbin/service ssh stop"
+ if failed port 22 protocol ssh then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process apache with pidfile /var/run/apache2/apache2.pid
+ group www
+ start program = "/usr/sbin/service apache2 start"
+ stop program = "/usr/sbin/service apache2 stop"
+ if failed host localhost port 80 protocol http
+ and request "/monit/token" then restart
+ if cpu is greater than 60% for 2 cycles then alert
+ if cpu &gt; 80% for 5 cycles then restart
+ if totalmem &gt; 500 MB for 5 cycles then restart
+ if children &gt; 250 then restart
+ if loadavg(5min) greater than 10 for 8 cycles then stop
+ if 3 restarts within 5 cycles then timeout
+
+# ---------------------------------------------------------------------------------------------
+# NOTE: Replace example.pid with the pid name of your server, the name depends on the hostname
+# ---------------------------------------------------------------------------------------------
+check process mysql with pidfile /var/run/mysqld/mysqld.pid
+ group database
+ start program = "/usr/sbin/service mysql start"
+ stop program = "/usr/sbin/service mysql stop"
+ if failed host 127.0.0.1 port 3306 then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process pureftpd with pidfile /var/run/pure-ftpd/pure-ftpd.pid
+ start program = "/usr/sbin/service pure-ftpd-mysql start"
+ stop program = "/usr/sbin/service pure-ftpd-mysql stop"
+ if failed port 21 protocol ftp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process postfix with pidfile /var/spool/postfix/pid/master.pid
+ group mail
+ start program = "/usr/sbin/service postfix start"
+ stop program = "/usr/sbin/service postfix stop"
+ if failed port 25 protocol smtp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process memcached with pidfile /var/run/memcached/memcached.pid
+ start program = "/usr/sbin/service memcached start"
+ stop program = "/usr/sbin/service memcached stop"
+ if failed host 127.0.0.1 port 11211 then restart
+
+check process named with pidfile /var/run/named/named.pid
+ start program = "/usr/sbin/service bind9 start"
+ stop program = "/usr/sbin/service bind9 stop"
+ if failed host 127.0.0.1 port 53 type tcp protocol dns then restart
+ if failed host 127.0.0.1 port 53 type udp protocol dns then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process ntpd with pidfile /var/run/ntpd.pid
+ start program = "/usr/sbin/service ntp start"
+ stop program = "/usr/sbin/service ntp stop"
+ if failed host 127.0.0.1 port 123 type udp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process mailman with pidfile /var/run/mailman/mailman.pid
+ group mail
+ start program = "/usr/sbin/service mailman start"
+ stop program = "/usr/sbin/service mailman stop"
+
+check process amavisd with pidfile /var/run/amavis/amavisd.pid
+ group mail
+ start program = "/usr/sbin/service amavis start"
+ stop program = "/usr/sbin/service amavis stop"
+ if failed port 10024 protocol smtp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process dovecot with pidfile /var/run/dovecot/master.pid
+ group mail
+ start program = "/usr/sbin/service dovecot start"
+ stop program = "/usr/sbin/service dovecot stop"
+ if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
+ if 5 restarts within 5 cycles then timeout</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacez my_password par votre mot de passe</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>La configuration est assez claire à lire. pour obtenir des précisions, référez vous à la documentation de monit <a href="http://mmonit.com/monit/documentation/monit.html" class="bare">http://mmonit.com/monit/documentation/monit.html</a>.</p>
+</li>
+<li>
+<p>Dans la configuration pour apache, la configuration indique que monit doit allez chercher sur le port 80 un fichier dans <code>/monit/token</code>. Nous devons donc créer ce fichier. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir /var/www/html/monit
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;hello&quot;</span> &gt; /var/www/html/monit/token</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service monit restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour monitorer le statut des process en ligne de commande, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>monit status</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Débloquez le port 2812 dans votre firewall</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+</li>
+<li>
+<p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
+</li>
+<li>
+<p>dans la rubrique <code>Open TCP ports:</code>, ajoutez le port 2812</p>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Maintenant naviguez sur le site <a href="https://example.com:2812/" class="bare">https://example.com:2812/</a></p>
+</li>
+<li>
+<p>Rentrez le login <code>admin</code> et votre mot de passe <code>my_password</code>. Monit affiche alors les informations de monitoring du serveur.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration_de_la_messagerie">11. Configuration de la messagerie</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation_de_rspamd_à_la_place_d_amavis_new">11.1. Installation de rspamd à la place d' Amavis-new</h3>
+<div class="paragraph">
+<p><code>rspamd</code> est réputé de meilleure qualité que <code>Amavis</code> dans la chasse aux spams. Vous pouvez décider de l&#8217;installer à la place d&#8217;Amavis. Cette installation reste optionnelle.</p>
+</div>
+<div class="paragraph">
+<p>Suivez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Installez les paquets debian. tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install rspamd redis-server</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez l&#8217;apprentissage automatique</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;autolearn = true;&quot;</span> &gt; /etc/rspamd/local.d/classifier-bayes.conf
+<span class="tok-nb">echo</span> <span class="tok-s1">&#39;backend = &quot;redis&quot;;&#39;</span> &gt;&gt; /etc/rspamd/local.d/classifier-bayes.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;new_schema = true;&quot;</span> &gt;&gt; /etc/rspamd/local.d/classifier-bayes.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;expire = 8640000;&quot;</span> &gt;&gt; /etc/rspamd/local.d/classifier-bayes.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez Redis dans la configuration de Rspamd. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;servers = &quot;127.0.0.1&quot;;&#39;</span> &gt; /etc/rspamd/local.d/redis.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Fixer des métriques assez élevées pour analyser les spams</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;actions {&quot;</span> &gt; /etc/rspamd/local.d/metrics.conf
+<span class="tok-nb">echo</span> <span class="tok-s1">&#39;add_header = 5;&#39;</span> &gt;&gt; /etc/rspamd/local.d/metrics.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;greylist = 25;&quot;</span> &gt;&gt; /etc/rspamd/local.d/metrics.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;reject = 50;&quot;</span> &gt;&gt; /etc/rspamd/local.d/metrics.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;}&quot;</span> &gt;&gt; /etc/rspamd/local.d/metrics.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Augmentez la taille de l&#8217;historique de Rspamd, activez la compression.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;nrows = 2500;&quot;</span> &gt; /etc/rspamd/local.d/history_redis.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;compress = true;&quot;</span> &gt;&gt; /etc/rspamd/local.d/history_redis.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;subject_privacy = false;&quot;</span> &gt;&gt; /etc/rspamd/local.d/history_redis.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez la mise à jour automatique de rspamd</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;enabled = true;&#39;</span> &gt; /etc/rspamd/local.d/redis.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enrichissez les headers des mails spams. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/rspamd/local.d/milter_headers.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>inserez le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span># local.d/milter_headers.conf:
+
+# Options
+
+# Add &quot;extended Rspamd headers&quot; (default false) (enables x-spamd-result, x-rspamd-server &amp; x-rspamd-queue-id routines)
+extended_spam_headers = true;
+
+# List of headers to be enabled for authenticated users (default empty)
+# authenticated_headers = [&quot;authentication-results&quot;];
+
+# List of headers to be enabled for local IPs (default empty)
+local_headers = [&quot;x-spamd-bar&quot;];
+
+# Set false to always add headers for local IPs (default true)
+# skip_local = true;
+
+# Set false to always add headers for authenticated users (default true)
+# skip_authenticated = true;
+
+# Routines to use- this is the only required setting (may be omitted if using extended_spam_headers)
+use = [&quot;x-spamd-bar&quot;, &quot;x-spam-level&quot;, &quot;authentication-results&quot;];
+
+# this is where we may configure our selected routines
+routines {
+  # settings for x-spamd-bar routine
+  x-spamd-bar {
+    # effectively disables negative spambar
+    negative = &quot;&quot;;
+  }
+  # other routines...
+}
+custom {
+  # user-defined routines: more on these later
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez un mot de passe. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>rspamadm pw</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Entrez votre mot de passe. Une hashphrase est générée.</p>
+</li>
+<li>
+<p>Copiez la.</p>
+</li>
+<li>
+<p>Remplacez celle déjà présente dans <code>/etc/rspamd/local.d/worker-controller.inc</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/rspamd/local.d/worker-controller.inc</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Remplacez le texte entre guillemets sur la ligne <code>password = "$2$g95yw&#8230;&#8203;&#8230;&#8203;dq3c5byy";</code> par le texte copié.</p>
+</li>
+<li>
+<p>Sauvez</p>
+</li>
+<li>
+<p>Redémarrez Rspamd</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart rspamd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Loguez vous dans ISPConfig</p>
+</li>
+<li>
+<p>Activer Rspamd dans ISPConfig</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
+</li>
+<li>
+<p>Dans le champ <code>Content Filter</code>, sélectionnez <code>Rspamd</code></p>
+</li>
+<li>
+<p>Dans le champ <code>Rspamd Password</code>, tapez votre mot de passe</p>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+<li>
+<p>Revenez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
+</li>
+<li>
+<p>Vous pouvez voir le mot de passe de connexion au serveur web Rspamd.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Rendre le site rspamd accessible dans un host</p>
+</li>
+<li>
+<p>Activez le module proxy dans apache</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>a2enmod proxy
+systemctl restart apache2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Allez dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>rspamd</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de <code>sites</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>rspamd</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>rspamd</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>Fast CGI</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+
+<span class="tok-c"># rspamd httpserver</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> / http://localhost:11334/
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost:11334/</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>en pointant sur le site rspampd.example.com, et en utilisant le mot de passe saisi plus haut vous pouvez accèder aux fonctions de l&#8217;outil.</p>
+</li>
+<li>
+<p>Activer l&#8217;apprentissage par déplacement</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Couplé avec Dovecot, Rspamd nous propose de pouvoir apprendre également en fonction des actions des utilisateurs. Si un mail est déplacé vers le répertoire Junk, il sera appris comme tel et au contraire, s’il est sorti du répertoire Junk vers autre chose que la corbeille, il sera appris comme Ham.</p>
+</li>
+<li>
+<p>Editez le fichier Dovecot.conf (remarques ISPConfig n&#8217;utilise pas aujourd&#8217;hui le contenu du répertoire conf.d). Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/dovecot/dovecot.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Insérez dans le groupe plugin et le protocol imap déjà existants dans le fichier :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>plugin {
+  sieve_plugins = sieve_imapsieve sieve_extprograms
+
+  imapsieve_mailbox1_name = Junk
+  imapsieve_mailbox1_causes = COPY
+  imapsieve_mailbox1_before = file:/etc/dovecot/sieve/report-spam.sieve
+
+  imapsieve_mailbox2_name = *
+  imapsieve_mailbox2_from = Junk
+  imapsieve_mailbox2_causes = COPY
+  imapsieve_mailbox2_before = file:/etc/dovecot/sieve/report-ham.sieve
+
+  sieve_pipe_bin_dir = /etc/dovecot/sieve
+
+  sieve_global_extensions = +vnd.dovecot.pipe
+}
+
+protocol imap {
+  mail_plugins = quota imap_quota imap_sieve
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez dovecot. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service dovecot restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez un répertoire sieve et éditez report-ham.sieve. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /etc/dovecot/sieve/
+vi /etc/dovecot/sieve/report-ham.sieve</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Insérez le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>require [&quot;vnd.dovecot.pipe&quot;, &quot;copy&quot;, &quot;imapsieve&quot;, &quot;environment&quot;, &quot;variables&quot;];
+
+if environment :matches &quot;imap.mailbox&quot; &quot;*&quot; {
+set &quot;mailbox&quot; &quot;${1}&quot;;
+}
+
+if string &quot;${mailbox}&quot; &quot;Trash&quot; {
+stop;
+}
+
+if environment :matches &quot;imap.email&quot; &quot;*&quot; {
+set &quot;email&quot; &quot;${1}&quot;;
+}
+
+pipe :copy &quot;train-ham.sh&quot; [ &quot;${email}&quot; ];</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez report-spam.sieve. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/dovecot/sieve/report-spam.sieve</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Insérez le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>require [&quot;vnd.dovecot.pipe&quot;, &quot;copy&quot;, &quot;imapsieve&quot;, &quot;environment&quot;, &quot;variables&quot;];
+
+if environment :matches &quot;imap.email&quot; &quot;*&quot; {
+set &quot;email&quot; &quot;${1}&quot;;
+}
+
+pipe :copy &quot;train-spam.sh&quot; [ &quot;${email}&quot; ];</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez les scripts et rétablissez les droits et permissions. Compilez les règles. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;exec /usr/bin/rspamc learn_ham&quot;</span> &gt; /etc/dovecot/sieve/train-ham.sh
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;exec /usr/bin/rspamc learn_spam&quot;</span> &gt; /etc/dovecot/sieve/train-spam.sh
+sievec /etc/dovecot/sieve/report-ham.sieve
+sievec /etc/dovecot/sieve/report-spam.sieve
+chmod +x /etc/dovecot/sieve/train-*
+chown -R vmail:vmail /etc/dovecot/sieve</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez dovecot. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service dovecot restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lorsque vous déplacer un mail du répertoire Inbox vers le répertoire Junk ou vice-versa, les fichiers <code>/var/log/mail.log</code> et <code>/var/log/rspamd/rspamd.log</code> doivent montrer les actions de recalcul des spams.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop amavisd-new
+systemctl disable amavisd-new</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_du_serveur_de_messagerie">11.2. Création du serveur de messagerie</h3>
+<div class="paragraph">
+<p>Pour créer un serveur de messagerie:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Assurez vous d&#8217;avoir créé le domaine DNS. Si ce n&#8217;est pas le cas déroulez tout d&#8217;abord la procédure de <a href="#domain-config">création de domaines</a></p>
+</li>
+<li>
+<p>Aller dans la rubrique <code>Email</code>. Sélectionnez ensuite le menu <code>Domain</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Add new Domain</code></p>
+</li>
+<li>
+<p>Saisissez le nom de domaine.</p>
+</li>
+<li>
+<p>Cliquez sur <code>DomainKeys Indentified Mail (DKIM)</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>enable DKIM</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Generate DKIM Private-key</code></p>
+</li>
+<li>
+<p>Une fois cela fait, retourner dans la gestion des <code>Records</code> de domaine et activer le type DMARC</p>
+</li>
+<li>
+<p>Garder le paramétrage par défaut et sauvegardez.</p>
+</li>
+<li>
+<p>Faites de même pour les enregistrements SPF mais sélectionnez le mécanisme softfail.</p>
+</li>
+<li>
+<p>Votre serveur est créé et protégé Contre les spams (entrants et sortants).</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_finaliser_la_sécurisation_de_votre_serveur_de_mail">11.3. Finaliser la sécurisation de votre serveur de mail</h3>
+<div class="paragraph">
+<p>Afin de mieux sécuriser votre serveur de mail, appliquez les opérations suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>editez le fichier main.cf</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/postfix/main.cf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Rechercher <code>myhostname</code> et replacer le texte par:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">myhostname</span> <span class="tok-o">=</span> <span class="tok-s">mail.example.com </span><i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacer example.com par votre nom de domaine.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Redémarrez Postfix. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service postfix restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Vous pouvez le tester en allant sur le site <a href="https://mxtoolbox.com/diagnostic.aspx">MxToolbox</a>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Entrez le nom de host de votre serveur de mail: mail.example.com .</p>
+</li>
+<li>
+<p>cliquez sur <code>test Email Server</code></p>
+</li>
+<li>
+<p>Tout doit être correct sauf éventuellement le reverse DNS qui doit être configuré pour pointer vers mail.example.com .</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_de_lautoconfig_pour_thunderbird_et_android">11.4. Création de l’autoconfig pour Thunderbird et Android</h3>
+<div class="paragraph">
+<p>La procédure est utilisé par Thunderbird et Android pour configurer automatiquement les paramètres de la messagerie.</p>
+</div>
+<div class="paragraph">
+<p>Appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>autoconfig</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>autoconfig</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>php-FPM</code></p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span>
+<span class="tok-nb">AddType</span> application/x-httpd-php .php .php3 .php4 .php5 .xml
+
+<span class="tok-nb">CheckSpelling</span> <span class="tok-k">On</span>
+<span class="tok-nb">CheckCaseOnly</span> <span class="tok-k">Off</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Sauver.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Dans le répertoire <code>/var/www/autoconfig.example.com/autoconfig/</code> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/www/autoconfig.example.com/autoconfig/mail
+chmod <span class="tok-m">755</span> /var/www/autoconfig.example.com/autoconfig/mail
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>A l’intérieur de ce répertoire, Editez un fichier <code>config-v1.1.xml</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div></td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Y coller:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="xml"><span></span><span class="tok-cp">&lt;?php</span>
+<span class="tok-cp">header(&#39;Content-Type: application/xml&#39;);</span>
+<span class="tok-cp">?&gt;</span>
+<span class="tok-cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+
+<span class="tok-nt">&lt;clientConfig</span> <span class="tok-na">version=</span><span class="tok-s">&quot;1.1&quot;</span><span class="tok-nt">&gt;</span>
+ <span class="tok-nt">&lt;emailProvider</span> <span class="tok-na">id=</span><span class="tok-s">&quot;example.com&quot;</span><span class="tok-nt">&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+   <span class="tok-nt">&lt;domain&gt;</span>example.com<span class="tok-nt">&lt;/domain&gt;</span>
+   <span class="tok-nt">&lt;displayName&gt;</span>Example Mail<span class="tok-nt">&lt;/displayName&gt;</span> <i class="conum" data-value="2"></i><b>(2)</b>
+   <span class="tok-nt">&lt;displayShortName&gt;</span>Example<span class="tok-nt">&lt;/displayShortName&gt;</span> <i class="conum" data-value="3"></i><b>(3)</b>
+   <span class="tok-nt">&lt;incomingServer</span> <span class="tok-na">type=</span><span class="tok-s">&quot;imap&quot;</span><span class="tok-nt">&gt;</span>
+     <span class="tok-nt">&lt;hostname&gt;</span>mail.example.com<span class="tok-nt">&lt;/hostname&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+     <span class="tok-nt">&lt;port&gt;</span>993<span class="tok-nt">&lt;/port&gt;</span>
+     <span class="tok-nt">&lt;socketType&gt;</span>SSL<span class="tok-nt">&lt;/socketType&gt;</span>
+     <span class="tok-nt">&lt;authentication&gt;</span>password-cleartext<span class="tok-nt">&lt;/authentication&gt;</span>
+     <span class="tok-nt">&lt;username&gt;</span>%EMAILADDRESS%<span class="tok-nt">&lt;/username&gt;</span>
+   <span class="tok-nt">&lt;/incomingServer&gt;</span>
+   <span class="tok-nt">&lt;incomingServer</span> <span class="tok-na">type=</span><span class="tok-s">&quot;pop3&quot;</span><span class="tok-nt">&gt;</span>
+     <span class="tok-nt">&lt;hostname&gt;</span>mail.example.com<span class="tok-nt">&lt;/hostname&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+     <span class="tok-nt">&lt;port&gt;</span>995<span class="tok-nt">&lt;/port&gt;</span>
+     <span class="tok-nt">&lt;socketType&gt;</span>SSL<span class="tok-nt">&lt;/socketType&gt;</span>
+     <span class="tok-nt">&lt;authentication&gt;</span>password-cleartext<span class="tok-nt">&lt;/authentication&gt;</span>
+     <span class="tok-nt">&lt;username&gt;</span>%EMAILADDRESS%<span class="tok-nt">&lt;/username&gt;</span>
+   <span class="tok-nt">&lt;/incomingServer&gt;</span>
+   <span class="tok-nt">&lt;outgoingServer</span> <span class="tok-na">type=</span><span class="tok-s">&quot;smtp&quot;</span><span class="tok-nt">&gt;</span>
+     <span class="tok-nt">&lt;hostname&gt;</span>mail.example.com<span class="tok-nt">&lt;/hostname&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+     <span class="tok-nt">&lt;port&gt;</span>465<span class="tok-nt">&lt;/port&gt;</span>
+     <span class="tok-nt">&lt;socketType&gt;</span>SSL<span class="tok-nt">&lt;/socketType&gt;</span>
+     <span class="tok-nt">&lt;authentication&gt;</span>password-cleartext<span class="tok-nt">&lt;/authentication&gt;</span>
+     <span class="tok-nt">&lt;username&gt;</span>%EMAILADDRESS%<span class="tok-nt">&lt;/username&gt;</span>
+   <span class="tok-nt">&lt;/outgoingServer&gt;</span>
+   <span class="tok-nt">&lt;outgoingServer</span> <span class="tok-na">type=</span><span class="tok-s">&quot;smtp&quot;</span><span class="tok-nt">&gt;</span>
+     <span class="tok-nt">&lt;hostname&gt;</span>mail.example.com<span class="tok-nt">&lt;/hostname&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+     <span class="tok-nt">&lt;port&gt;</span>587<span class="tok-nt">&lt;/port&gt;</span>
+     <span class="tok-nt">&lt;socketType&gt;</span>STARTTLS<span class="tok-nt">&lt;/socketType&gt;</span>
+     <span class="tok-nt">&lt;authentication&gt;</span>password-cleartext<span class="tok-nt">&lt;/authentication&gt;</span>
+     <span class="tok-nt">&lt;username&gt;</span>%EMAILADDRESS%<span class="tok-nt">&lt;/username&gt;</span>
+   <span class="tok-nt">&lt;/outgoingServer&gt;</span>
+ <span class="tok-nt">&lt;/emailProvider&gt;</span>
+<span class="tok-nt">&lt;/clientConfig&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de example.com votre nom de domaine</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>mettre ici votre libellé long pour votre nom de messagerie</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>mettre ici un libellé court pour votre nom de messagerie</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Donner la permission en lecture seule et affecter les groupes d&#8217;appartenance. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">644</span> /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code></td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_dautodiscover_pour_outlook">11.5. Création d’autodiscover pour Outlook</h3>
+<div class="paragraph">
+<p>Outlook utilise un autre mécanisme pour se configurer automatiquement. Il est basé sur l&#8217;utilisation du nom de sous-domaine <code>autodiscover</code>.</p>
+</div>
+<div class="paragraph">
+<p>Appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>autodiscover</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>autodiscover</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>php-FPM</code></p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">CheckSpelling</span> <span class="tok-k">On</span>
+<span class="tok-nb">CheckCaseOnly</span> <span class="tok-k">On</span>
+<span class="tok-nb">RewriteEngine</span> <span class="tok-k">On</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/&quot;</span> http://autoconfig.example.com/ <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/&quot;</span> http://autoconfig.example.com/ <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nb">RewriteRule</span> ^/ - [QSA,L]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer example.com par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Sauver.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Dans le répertoire <code>/var/www/autoconfig.example.com/autoconfig/</code>, créer un répertoire <code>Autodiscover</code>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/
+chmod <span class="tok-m">755</span> /var/www/autoconfig.example.com/autoconfig/Autodiscover/
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>A l’intérieur de ce répertoire, Editez un fichier <code>Autodiscover.xml</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div></td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Y coller:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="xml"><span></span><span class="tok-cp">&lt;?php</span>
+<span class="tok-cp"> $raw = file_get_contents(&#39;php://input&#39;);</span>
+<span class="tok-cp"> $matches = array();</span>
+<span class="tok-cp"> preg_match(&#39;/&lt;EMailAddress&gt;(.*)&lt;\/EMailAddress&gt;/&#39;, $raw, $matches);</span>
+<span class="tok-cp"> header(&#39;Content-Type: application/xml&#39;);</span>
+<span class="tok-cp">?&gt;</span>
+ <span class="tok-nt">&lt;Autodiscover</span> <span class="tok-na">xmlns=</span><span class="tok-s">&quot;http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006&quot;</span><span class="tok-nt">&gt;</span>
+   <span class="tok-nt">&lt;Response</span> <span class="tok-na">xmlns=</span><span class="tok-s">&quot;http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a&quot;</span><span class="tok-nt">&gt;</span>
+     <span class="tok-nt">&lt;User&gt;</span>
+       <span class="tok-nt">&lt;DisplayName&gt;</span>Example Mail<span class="tok-nt">&lt;/DisplayName&gt;</span> <i class="conum" data-value="2"></i><b>(2)</b>
+     <span class="tok-nt">&lt;/User&gt;</span>
+     <span class="tok-nt">&lt;Account&gt;</span>
+       <span class="tok-nt">&lt;AccountType&gt;</span>email<span class="tok-nt">&lt;/AccountType&gt;</span>
+       <span class="tok-nt">&lt;Action&gt;</span>settings<span class="tok-nt">&lt;/Action&gt;</span>
+       <span class="tok-nt">&lt;Protocol&gt;</span>
+         <span class="tok-nt">&lt;Type&gt;</span>IMAP<span class="tok-nt">&lt;/Type&gt;</span>
+         <span class="tok-nt">&lt;Server&gt;</span>mail.example.com<span class="tok-nt">&lt;/Server&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+         <span class="tok-nt">&lt;Port&gt;</span>993<span class="tok-nt">&lt;/Port&gt;</span>
+         <span class="tok-nt">&lt;DomainRequired&gt;</span>off<span class="tok-nt">&lt;/DomainRequired&gt;</span>
+         <span class="tok-nt">&lt;SPA&gt;</span>off<span class="tok-nt">&lt;/SPA&gt;</span>
+         <span class="tok-nt">&lt;SSL&gt;</span>on<span class="tok-nt">&lt;/SSL&gt;</span>
+         <span class="tok-nt">&lt;AuthRequired&gt;</span>on<span class="tok-nt">&lt;/AuthRequired&gt;</span>
+         <span class="tok-nt">&lt;LoginName&gt;</span><span class="tok-cp">&lt;?php echo $matches[1]; ?&gt;</span><span class="tok-nt">&lt;/LoginName&gt;</span>
+       <span class="tok-nt">&lt;/Protocol&gt;</span>
+       <span class="tok-nt">&lt;Protocol&gt;</span>
+         <span class="tok-nt">&lt;Type&gt;</span>SMTP<span class="tok-nt">&lt;/Type&gt;</span>
+         <span class="tok-nt">&lt;Server&gt;</span>mail.example.com<span class="tok-nt">&lt;/Server&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+         <span class="tok-nt">&lt;Port&gt;</span>465<span class="tok-nt">&lt;/Port&gt;</span>
+         <span class="tok-nt">&lt;DomainRequired&gt;</span>off<span class="tok-nt">&lt;/DomainRequired&gt;</span>
+         <span class="tok-nt">&lt;SPA&gt;</span>off<span class="tok-nt">&lt;/SPA&gt;</span>
+         <span class="tok-nt">&lt;SSL&gt;</span>on<span class="tok-nt">&lt;/SSL&gt;</span>
+         <span class="tok-nt">&lt;AuthRequired&gt;</span>on<span class="tok-nt">&lt;/AuthRequired&gt;</span>
+         <span class="tok-nt">&lt;LoginName&gt;</span><span class="tok-cp">&lt;?php echo $matches[1]; ?&gt;</span><span class="tok-nt">&lt;/LoginName&gt;</span>
+       <span class="tok-nt">&lt;/Protocol&gt;</span>
+     <span class="tok-nt">&lt;/Account&gt;</span>
+   <span class="tok-nt">&lt;/Response&gt;</span>
+ <span class="tok-nt">&lt;/Autodiscover&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de example.com votre nom de domaine</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>mettre ici votre libellé long pour votre nom de messagerie</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Changez les permissions comme pour le répertoire</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">644</span> /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code></td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Pointer votre navigateur sur le site <a href="https://autodiscover.example.com/Autodiscover/Autodiscover.xml" class="bare">https://autodiscover.example.com/Autodiscover/Autodiscover.xml</a>.</p>
+</li>
+<li>
+<p>Le contenu du fichier xml doit s&#8217;afficher</p>
+</li>
+<li>
+<p>Vous pouvez faire aussi un test sur le <a href="https://testconnectivity.microsoft.com">Testeur de connectivité Microsoft</a>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>choisissez: <code>Découverte automatique Outlook</code></p>
+</li>
+<li>
+<p>cliquez sur <code>suivant</code></p>
+</li>
+<li>
+<p>Entrez votre adresse de courrier: <code>user@example.com</code>, un domain: <code>example\user</code>, un mot de passe tiré au hazard, Cochez les deux cases en dessous.</p>
+</li>
+<li>
+<p>Cliquez sur <code>effectuer un test</code></p>
+</li>
+<li>
+<p>Le résultat doit être: <code>Test de connectivité réussi</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_dune_boite_mail">11.6. Création d’une boite mail</h3>
+<div class="paragraph">
+<p>Pour créer une boite de messagerie:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Aller dans la rubrique <code>Email</code>. Sélectionnez ensuite le menu <code>Email Mailbox</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Add new Mailbox</code></p>
+</li>
+<li>
+<p>Remplissez les champs suivants:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Name:</code> &#8592; mettez votre prénom et votre nom</p>
+</li>
+<li>
+<p><code>`Email:</code> &#8592; mail_name @ example.com</p>
+</li>
+<li>
+<p><code>Password:</code> &#8592; saisissez un mot de passe ou générez en un</p>
+</li>
+<li>
+<p><code>Repeat Password</code> &#8592; saisissez une deuxième fois votre mot de passe</p>
+</li>
+<li>
+<p><code>Quota (0 for unlimited):</code> &#8592; mettez éventuellement un quota ou laissez 0 pour illimité.</p>
+</li>
+<li>
+<p><code>Spamfilter:</code> &#8592; Sélectionnez <code>Normal</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Dans l’onglet Backup:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Backup interval:</code> Sélectionnez <code>Daily</code></p>
+</li>
+<li>
+<p><code>Number of backup copies:</code> Sélectionnez 1</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Notez que si vous créez une adresse mail nommée <a href="mailto:mail_name@example.com">mail_name@example.com</a>, vous pouvez utilisez toutes les variantes (nommées tag) derrière le caractère "+". Ainsi <a href="mailto:mail_name+nospam@example.com">mail_name+nospam@example.com</a> sera bien redirigé vers votre boite et l&#8217;extension +nospam vous permettre de trier automatiquement les mails que vous ne voulez pas recevoir.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Il est possible de changer ce caractère spécial en le modifiant dans le fichier <code>/etc/postfix/main.cf</code> sur la ligne commençant par <code>recipient_delimiter</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_de_votre_client_de_messagerie">11.7. Configuration de votre client de messagerie.</h3>
+<div class="paragraph">
+<p>Saisir l&#8217;adresse mail et votre mot de passe doit suffire pour configurer automatiquement votre client de messagerie.</p>
+</div>
+<div class="paragraph">
+<p>Si vous avez besoin de configurer votre client manuellement, voici les informations à saisir:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Paramètre</th>
+<th class="tableblock halign-left valign-top">Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type de serveur</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IMAP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nom de serveur IMAP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mail.example.com</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nom d&#8217;utilisateur IMAP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:user@example.com">user@example.com</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Port IMAP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">993</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sécurité IMAP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SSL/TLS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentification IMAP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Normal Password</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nom de serveur SMTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mail.example.com</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nom d&#8217;utilisateur SMTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:user@example.com">user@example.com</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Port SMTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">465</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sécurité SMTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SSL/TLS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentification SMTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Normal Password</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_mise_en_oeuvre_du_site_web_de_webmail">11.8. Mise en oeuvre du site web de webmail</h3>
+<div class="paragraph">
+<p>On suppose que vous avez install roundcube lors de la procédure d&#8217;installation initiale et que vous avez déjà créé le host mail.example.com.</p>
+</div>
+<div class="paragraph">
+<p>Il vous reste à appliquer la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>mail</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>mail</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>Fast CGI</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+
+<span class="tok-c"># roundcube httpserver</span>
+
+<span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span>
+<span class="tok-nb">SSLProxyCheckPeerCN</span> <span class="tok-k">Off</span>
+<span class="tok-nb">SSLProxyCheckPeerName</span> <span class="tok-k">Off</span>
+<span class="tok-nb">SSLProxyVerify</span> <span class="tok-k">none</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> / https://localhost:8080/webmail/
+<span class="tok-nb">ProxyPassReverse</span> / https://localhost:8080/webmail/
+<span class="tok-nb">ProxyPreserveHost</span> <span class="tok-k">On</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>C&#8217;est fait, vous pouvez accéder à Roundcube directement sur <a href="https://mail.example.com" class="bare">https://mail.example.com</a></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_transfert_de_vos_boites_mails_imap">11.9. Transfert de vos boites mails IMAP</h3>
+<div class="paragraph">
+<p>Si vous faites une migration d&#8217;un ancien serveur vers un nouveau serveur vous souhaiterez probablement migrer aussi vos boites mail.</p>
+</div>
+<div class="paragraph">
+<p>La procédure ci dessous est à appliquer pour chaque compte mail IMAP. Elle peut facilement être scriptée:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Téléchargez imapsync du repository. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre>wget https://raw.githubusercontent.com/imapsync/imapsync/master/imapsync
+chmod 755 imapsync</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installez les packages perls éventuellement manquants:</p>
+<div class="listingblock">
+<div class="content">
+<pre>apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez deux fichiers temporaires qui contiennent les mots de passe du 1er et  2eme serveur. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre>echo "passwdsrc" &gt; secretsrc <i class="conum" data-value="1"></i><b>(1)</b>
+echo "passwddst" &gt; secretdst <i class="conum" data-value="2"></i><b>(2)</b>
+chmod 600 secretsrc
+chmod 600 secretdst</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>passwdsrc est à remplacer par le mot de passe du compte sur le serveur source</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>passwddst est à remplacer par le mot de passe du compte sur le serveur destination</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Nous pouvons maintenant lancer la commande. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre>./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Un fois la synchronisation effectuée, vous pouvez supprimer le fichier des mots de passe. tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre>rm secretsrc
+rm secretdst</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_annexe">11.10. Annexe</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_configuration_dun_écran_3_5inch_rpi_lcd_a">6.9. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</h3>
+<h3 id="_configuration_dun_écran_3_5inch_rpi_lcd_a">11.11. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</h3>
 <div class="sect3">
-<h4 id="_pour_commencer">6.9.1. Pour commencer</h4>
+<h4 id="_pour_commencer">11.11.1. Pour commencer</h4>
 <div class="paragraph">
 <p>Le RPi LCD peut être piloté de deux manières :</p>
 </div>
@@ -2743,7 +6423,7 @@ cd LCD-show/</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_basculer_entre_laffichage_lcd_et_hdmi">6.9.2. Basculer entre l&#8217;affichage LCD et HDMI</h4>
+<h4 id="_basculer_entre_laffichage_lcd_et_hdmi">11.11.2. Basculer entre l&#8217;affichage LCD et HDMI</h4>
 <div class="paragraph">
 <p>Une fois que l&#8217;écran LCD est activé, les paramètres par défaut pour HDMI sont modifiés. Si vous souhaitez utiliser un autre moniteur HDMI, veuillez exécuter la commande suivante :</p>
 </div>
@@ -2764,7 +6444,7 @@ cd LCD-show/</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_paramètres_dorientation_de_lécran">6.9.3. Paramètres d&#8217;orientation de l&#8217;écran</h4>
+<h4 id="_paramètres_dorientation_de_lécran">11.11.3. Paramètres d&#8217;orientation de l&#8217;écran</h4>
 <div class="paragraph">
 <p>Une fois le pilote tactile installé, l&#8217;orientation de l&#8217;écran peut être définie par ces commandes :</p>
 </div>
@@ -2822,7 +6502,7 @@ cd LCD-show/</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_calibrage_de_lécran_tactile">6.9.4. Calibrage de l&#8217;écran tactile</h4>
+<h4 id="_calibrage_de_lécran_tactile">11.11.4. Calibrage de l&#8217;écran tactile</h4>
 <div class="paragraph">
 <p>Cet écran LCD peut être calibré à l&#8217;aide d&#8217;un programme appelé <code>xinput_calibrator</code> . Il n&#8217;est pas préinstallé sur le système d&#8217;exploitation Raspbian original. Vous devez donc le télécharger et installer le programme manuellement.</p>
 </div>
@@ -2901,7 +6581,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_installer_un_clavier_virtuel">6.9.5. Installer un clavier virtuel</h4>
+<h4 id="_installer_un_clavier_virtuel">11.11.5. Installer un clavier virtuel</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3005,7 +6685,7 @@ X-MB-INPUT-MECHANSIM=True</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ressources">6.9.6. Ressources</h4>
+<h4 id="_ressources">11.11.6. Ressources</h4>
 <div class="sect4">
 <h5 id="_manuel_utilisateur">Manuel utilisateur</h5>
 <div class="ulist">
@@ -3204,8 +6884,8 @@ EndSection</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0<br>
-Last updated 2020-04-20 13:48:57 +0200
+Version 0.9<br>
+Last updated 2020-04-23 00:26:37 +0200
 </div>
 </div>
 <style>

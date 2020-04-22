@@ -4,7 +4,7 @@
 <article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Installation d&#8217;un serveur Linux sur un Raspberry</title>
-<date>2020-03-27</date>
+<date>2020-04-20</date>
 <author>
 <personname>
 <firstname>Stéphane</firstname>
@@ -15,15 +15,15 @@
 <authorinitials>SA</authorinitials>
 <revhistory>
 <revision>
-<revnumber>1.0</revnumber>
-<date>2020-03-27</date>
+<revnumber>0.9</revnumber>
+<date>2020-04-20</date>
 <authorinitials>SA</authorinitials>
 </revision>
 </revhistory>
 </info>
 <section xml:id="_avant_propos">
 <title>Avant propos</title>
-<simpara>Ce document est disponible sur le site <link xl:href="https://raspberry-box-installation.readthedocs.io">ReadTheDocs</link>
+<simpara>Ce document est disponible sur le site <link xl:href="https://raspberry-installation.readthedocs.io">ReadTheDocs</link>
 et sur <link xl:href="https://github.com/apiou/vps_installation">Github</link>.</simpara>
 <simpara>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer une homebox (site auto hébergé) avec un raspberry PI
 Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
@@ -199,16 +199,35 @@ dpkg -i imager_amd64.deb</programlisting>
 <simpara>Attendez la fin du chargement et de l&#8217;écriture sur la flash.</simpara>
 </listitem>
 <listitem>
-<simpara>Enlevez la carte SD de votre lecteur et insèrez la dans votre raspberry PI.</simpara>
+<simpara>Vous avez deux façons d&#8217;installer:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>avec un écran et un clavier qui est la méthode la plus facile</simpara>
+</listitem>
+<listitem>
+<simpara>en mode Headless qui est plus complexe mais ne nécessite pas d&#8217;écran ni de clavier</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Vous devez choisir l&#8217;une des méthodes décrites dans les deux chapitres suivants.</simpara>
+</listitem>
+</orderedlist>
+<section xml:id="_installation_avec_écran_et_clavier">
+<title>Installation avec écran et clavier</title>
+<simpara>Pour ce type d&#8217;installation, il vous faut un clavier+souris et un écran.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Enlevez la carte SD de votre lecteur et insérez la dans votre raspberry PI.</simpara>
 </listitem>
 <listitem>
 <simpara>Brancher un clavier, une souris et un écran (ou utilisez un écran 3,5" configuré selon la procédure en annexe).</simpara>
 </listitem>
 <listitem>
-<simpara>Branchez votre Rasberry sur votre réseau ethernet filaire (vous pouvez aussi utiliser le wifi)</simpara>
+<simpara>Branchez votre Raspberry sur votre réseau Ethernet filaire (vous pouvez aussi utiliser le wifi)</simpara>
 </listitem>
 <listitem>
-<simpara>Démarrez votre raspberry.</simpara>
+<simpara>Démarrez votre Raspberry.</simpara>
 </listitem>
 <listitem>
 <simpara>Après l&#8217;écran de démarrage arc en ciel, vous devez assez rapidement arriver sur le bureau</simpara>
@@ -220,22 +239,22 @@ dpkg -i imager_amd64.deb</programlisting>
 <simpara>Sélectionnez le clavier et la langue en français</simpara>
 </listitem>
 <listitem>
-<simpara>Tapez votre nouveau mot de passe root</simpara>
+<simpara>Tapez votre nouveau mot de passe pour le login <literal>pi</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Choisissez un full screen sans bords</simpara>
 </listitem>
 <listitem>
-<simpara>Choississez votre connexion wifi et entrez le mot de passe</simpara>
+<simpara>Choisissez votre connexion wifi et entrez le mot de passe</simpara>
 </listitem>
 <listitem>
 <simpara>Bien noter votre adresse IP elle vous sera utile ensuite</simpara>
 </listitem>
 <listitem>
-<simpara>Les mises à jours de paquets debian ainsi que l&#8217;installation des traductions en français vont s&#8217;installer.</simpara>
+<simpara>Les mises à jours de paquets Debian ainsi que l&#8217;installation des traductions en français vont s&#8217;installer.</simpara>
 </listitem>
 <listitem>
-<simpara>Une fois les installations terminées, le raspberry va rebooter.</simpara>
+<simpara>Une fois les installations terminées, le Raspberry va rebooter.</simpara>
 </listitem>
 <listitem>
 <simpara>Une fois rebooté, sélectionnez dans le menu <literal>Préférences</literal>&#8594;`Configuration du Raspberry PI`</simpara>
@@ -250,6 +269,212 @@ dpkg -i imager_amd64.deb</programlisting>
 <simpara>Cliquez sur <literal>Valider</literal></simpara>
 </listitem>
 </itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur l’icône <literal>VNC</literal> dans la barre en haut à Droite</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Dans la fenêtre cliquez sur le menu burger en haut à Droite.</simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez <literal>Options</literal> puis l&#8217;onglet <literal>Sécurité</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Dans le champ Authentification choisissez l&#8217;option <literal>mot de passe VNC</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez votre mot de passe dans les deux champs et cliquez <literal>Valider</literal> puis <literal>OK</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Vous pouvez maintenant rebooter votre Raspberry sans écran et sans clavier pour continuer la configuration.</simpara>
+</listitem>
+<listitem>
+<simpara>Vous avez deux options: connexion en mode SSH ou au travers d&#8217;une connexion VNC</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_headless">
+<title>Installation Headless</title>
+<simpara>Pour ce type d&#8217;installation, pas besoin d&#8217;écran et de clavier et de souris. Tout s&#8217;effectue à distance.</simpara>
+<simpara>Dans la suite, je suppose que vous possèdez un PC fonctionnant avec un Linux (la procédure peut être adaptée avec une machine windows en utilisant la ligne de commande et putty)</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Avant d&#8217;enlever votre flash SD du lecteur, appliquez la procédure ci après:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Sur la flash, 2 partitions ont été crées. Montez la partition boot</simpara>
+</listitem>
+<listitem>
+<simpara>sur cette partition, créez un fichier <literal>wpa_supplicant.conf</literal> et éditez le avec un éditeur de text (Nano ou vi sous linux ou Notepad sous windows).</simpara>
+</listitem>
+<listitem>
+<simpara>Mettez y le texte suivant:</simpara>
+<screen linenumbering="unnumbered">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=US
+network={
+    ssid="YOURSSID" <co xml:id="CO1-1"/>
+    psk="YOURPASSWORD" <co xml:id="CO1-2"/>
+    key_mgmt=WPA-PSK
+    scan_ssid=1
+}</screen>
+<calloutlist>
+<callout arearefs="CO1-1">
+<para>remplacez <literal>YOURSSID</literal> par le nom SSID de votre wifi local</para>
+</callout>
+<callout arearefs="CO1-2">
+<para>remplacez <literal>YOURPASSWORD</literal> par le mot de passe de votre wifi local</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>sauvez le fichier</simpara>
+</listitem>
+<listitem>
+<simpara>Sur la même partition créez un fichier <literal>ssh</literal> (vide et sans extension). Il servira à indiquer au raspberry d&#8217;activer ssh au prochain boot</simpara>
+</listitem>
+<listitem>
+<simpara>démontez la partition</simpara>
+</listitem>
+<listitem>
+<simpara>au boot sur la carte SD, le fichier sera recopié dans votre configuration et le réseau wifi sera ainsi accessible</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Enlevez la carte SD de votre lecteur et insérez la dans votre Raspberry PI.</simpara>
+</listitem>
+<listitem>
+<simpara>Démarrez votre raspberry.</simpara>
+</listitem>
+<listitem>
+<simpara>Attendez environ 2 minutes le temps que le premier boot se termine. Tout pendant la procédure de boot, la petite led d&#8217;accès disque doit clignoter.</simpara>
+</listitem>
+<listitem>
+<simpara>Vous devez maintenant découvrir l&#8217;adresse IP de votre Raspberry, pour cela tapez la commande suivante:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ping raspberrypi.local</programlisting>
+</listitem>
+<listitem>
+<simpara>Si le Raspberry a démarré correctement, cette commande doit montrer l&#8217;adresse IP du raspberry et une réponse correcte au ping</simpara>
+</listitem>
+</orderedlist>
+<screen>PING raspberrypi.local (192.168.3.212) 56(84) bytes of data.
+64 bytes from raspberrypi.local (192.168.0.212): icmp_seq=1 ttl=64 time=1.32 ms</screen>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Si vous n&#8217;obtenez aucun résultat essayer la commande <literal>nmap</literal> sur le subnet de votre réseau local</simpara>
+<itemizedlist>
+<listitem>
+<simpara>On obtient l&#8217;adresse local du subnet en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">hostname -I</programlisting>
+</listitem>
+<listitem>
+<simpara>l&#8217;adresse IP de votre PC est affichée comme premier mot. Par exemple :`192.168.3.10`</simpara>
+</listitem>
+<listitem>
+<simpara>le subnet se déduit de cette adresse en gardant les 3 premiers nombres (cas général de la plupart des utilisateurs).</simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">nmap -sn 192.168.3.0/24</programlisting>
+</listitem>
+<listitem>
+<simpara>la commande affiche alors les adresses IP et mac de toutes les machines présentes sur le réseau.</simpara>
+</listitem>
+<listitem>
+<simpara>le Raspberry se reconnait par son nom de machine qui contient le terme <literal>raspberry</literal> ou par son adresse mac qui est reconnue du type <literal>Raspberry Pi Foundation</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>vous pouvez alors directement vous connecter. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh pi@adresse_ip <co xml:id="CO2-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO2-1">
+<para>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Se loguer avec le mot de passe <literal>raspberry</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo raspi-config</programlisting>
+</listitem>
+<listitem>
+<simpara>Choisissez <literal>1 Change User Password</literal> &#8594; tapez votre nouveau mot de passe 2 fois</simpara>
+</listitem>
+<listitem>
+<simpara>Sur l&#8217;étape suivante, il ne faut pas se louper ou vous serez obligé d&#8217;éteindre votre raspberry, retirer la flash et la reprogrammer avec le fichier <literal>wpa_supplicant.conf</literal> dans la partition <literal>boot</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez <literal>2 Network Options</literal> &#8594; <literal>N2 Wi-fi</literal> &#8594; Tapez votre nom de SSID (attention aux majuscules) &#8594; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez <literal>4 Localisation Options</literal> &#8594; <literal>I1 Change Locale</literal> &#8594; Sélectionnez votre langue: <literal>fr_FR.UTF-8 UTF-8</literal> &#8594; puis la locale par défaut <literal>fr_FR.UTF-8 UTF-8</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez <literal>4 Localisation Options</literal> &#8594; <literal>I2 Change Timezone</literal> &#8594; Choisissez votre timezone (par exemple: <literal>Europe</literal> &#8594; <literal>Paris</literal>)</simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez <literal>4 Localisation Options</literal> &#8594; <literal>I3 Change Keyboard Layout</literal> &#8594; Choisissez votre mapping clavier</simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez <literal>4 Localisation Options</literal> &#8594; <literal>I4 Change Wi-fi Country</literal> &#8594; choisissez votre pays de norme wifi</simpara>
+</listitem>
+<listitem>
+<simpara>choisissez <literal>5 Interfacing Options</literal> &#8594; <literal>P2 SSH</literal> &#8594; choisissez <literal>yes</literal></simpara>
+</listitem>
+<listitem>
+<simpara>choisissez <literal>5 Interfacing Options</literal> &#8594; <literal>P3 VNC</literal> &#8594; choisissez <literal>yes</literal></simpara>
+</listitem>
+<listitem>
+<simpara>choisissez <literal>7 Advanced Options</literal> &#8594; <literal>A5 Resolution</literal> &#8594; choisissez <literal>DMT Mode 82 1920x1080 60Hz 16:9</literal></simpara>
+</listitem>
+<listitem>
+<simpara>choisissez <literal>8 Update</literal> ; Une mise a jour du système va s&#8217;effectuer</simpara>
+</listitem>
+<listitem>
+<simpara>Tapez ensuite 2 fois sur la touche <literal>TAB</literal> pour sélectionner <literal>Finish</literal>. Tapez <literal>entrée</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Rebootez le système en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo reboot</programlisting>
+</listitem>
+<listitem>
+<simpara>Vous allez perdre votre connexion avec le raspberry</simpara>
+</listitem>
+<listitem>
+<simpara>si vous arrivez à vous reloguer en tapant (attendre 30 secondes après le reboot avant d&#8217;essayer):</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh pi@adresse_ip <co xml:id="CO3-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO3-1">
+<para>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local</para>
+</callout>
+</calloutlist>
+<simpara>C&#8217;est que vous avez terminé avec succès la configuration initiale.</simpara>
+</listitem>
+<listitem>
+<simpara>RealVNC dans sa configuration par défaut ne permet pas à un utilisateur de se connecter simplement. Il faut donc ruser la première fois.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans un autre terminal sur votre poste local, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install realvnc-vnc-viewer
+vncviewer adresse_ip:5900 <co xml:id="CO4-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO4-1">
+<para>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Une demande de login et de mot de passe est affiché tapez <literal>pi</literal> dans le login et le mot de passe que vous avez choisi dans le champ mot de passe. Cliquez sur <literal>OK</literal></simpara>
+</listitem>
+<listitem>
+<simpara>le bureau va s&#8217;afficher et un programme se lance automatiquement. Arrêter ce programme puisque vous avez déjà fait la configuration initiale.</simpara>
 </listitem>
 <listitem>
 <simpara>Cliquez sur l&#8217;icone <literal>VNC</literal> dans la barre en haut à Droite</simpara>
@@ -269,12 +494,13 @@ dpkg -i imager_amd64.deb</programlisting>
 </itemizedlist>
 </listitem>
 <listitem>
-<simpara>Vous pouvez maintenant rebooter votre raspberry sans écran et sans clavier pour continuer la configuration.</simpara>
+<simpara>Vous avez terminé l&#8217;installation initiale de Raspbian. Vous pouvez maintenant rebooter votre raspberry pour continuer la configuration.</simpara>
 </listitem>
 <listitem>
 <simpara>Vous avez deux options: connexion en mode SSH ou au travers d&#8217;une connection VNC</simpara>
 </listitem>
 </orderedlist>
+</section>
 </section>
 <section xml:id="root_login">
 <title>Se loguer root sur le serveur</title>
@@ -283,9 +509,9 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>De votre machine locale, loguez vous avec votre compte <literal>&lt;sudo_username&gt;</literal>. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO1-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO5-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO1-1">
+<callout arearefs="CO5-1">
 <para>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net) ou votre adresse IP.</para>
 </callout>
 </calloutlist>
@@ -304,9 +530,9 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Se loguer root sur le serveur distant. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO2-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO6-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO2-1">
+<callout arearefs="CO6-1">
 <para>remplacer ici &lt;example.com&gt; par votre nom de domaine.</para>
 </callout>
 </calloutlist>
@@ -320,10 +546,10 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <title>Configuration basique</title>
 <section xml:id="_mettre_léditeur_de_votre_choix">
 <title>Mettre l&#8217;éditeur de votre choix</title>
-<simpara>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient.</simpara>
+<simpara>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient pour les outils utilisant un éditeur de façon automatique tels que <literal>crontab</literal>.</simpara>
+<simpara>Pour les débutants, il est conseillé d&#8217;utiliser nano.</simpara>
 <simpara><link linkend="root_login">Loguez vous comme root </link> et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">update-alternatives  --config editor</programlisting>
-<simpara>Pour les débutants, il est conseillé d&#8217;utiliser nano</simpara>
 </section>
 <section xml:id="_installation_dun_repository_pour_etc">
 <title>Installation d&#8217;un repository pour <literal>/etc</literal></title>
@@ -344,9 +570,9 @@ apt install etckeeper</programlisting>
 <listitem>
 <simpara>Ajoutez ce repository distant. Pour <literal>Gitlab</literal> et <literal>Github</literal>, une fois le repository créé, demandez l&#8217;affichage de la commande git pour une communication en ssh. Tapez ensuite sur votre serveur :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /etc
-git remote add origin git@github.com:username/etc_keeper.git <co xml:id="CO3-1"/></programlisting>
+git remote add origin git@github.com:username/etc_keeper.git <co xml:id="CO7-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO3-1">
+<callout arearefs="CO7-1">
 <para>remplacer l&#8217;url par celle qui correspond au chemin de votre repository</para>
 </callout>
 </calloutlist>
@@ -769,9 +995,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Dans une autre fenêtre, se connecter sur le serveur avec votre nouveau compte <literal>&lt;sudo_username&gt;</literal>:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO4-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO8-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO4-1">
+<callout arearefs="CO8-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -805,9 +1031,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Faites maintenant l&#8217;essai de vous re-loguer avec le compte root.Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO5-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO9-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO5-1">
+<callout arearefs="CO9-1">
 <para>Remplacer ici &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -853,9 +1079,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Loguez vous sur votre serveur distant. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO6-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO10-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO6-1">
+<callout arearefs="CO10-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -885,9 +1111,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Vérifiez que tout fonctionne en vous connectant. Tapez: :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO7-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO11-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO7-1">
+<callout arearefs="CO11-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -1405,6 +1631,2422 @@ quotaon -avug</programlisting>
 </itemizedlist>
 </listitem>
 </orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_et_configuration_de_phpmyadmin">
+<title>Installation et configuration de phpmyadmin</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Installez phpmyadmin. Exécutez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir /usr/share/phpmyadmin
+mkdir /etc/phpmyadmin
+mkdir -p /var/lib/phpmyadmin/tmp
+chown -R www-data:www-data /var/lib/phpmyadmin
+touch /etc/phpmyadmin/htpasswd.setup
+cd /tmp
+wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
+tar xfz phpMyAdmin-4.9.0.1-all-languages.tar.gz
+mv phpMyAdmin-4.9.0.1-all-languages/* /usr/share/phpmyadmin/
+rm phpMyAdmin-4.9.0.1-all-languages.tar.gz
+rm -rf phpMyAdmin-4.9.0.1-all-languages
+cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php</programlisting>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/share/phpmyadmin/config.inc.php</programlisting>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Modifier l’entrée <literal>blowfish_secret</literal> en ajoutant votre propre chaîne de 32 caractères.</simpara>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/apache2/conf-available/phpmyadmin.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez les lignes suivantes:</simpara>
+<programlisting language="apache" linenumbering="unnumbered"># phpMyAdmin default Apache configuration
+
+Alias /phpmyadmin /usr/share/phpmyadmin
+
+&lt;Directory /usr/share/phpmyadmin&gt;
+ Options FollowSymLinks
+ DirectoryIndex index.php
+
+ &lt;IfModule mod_php7.c&gt;
+ AddType application/x-httpd-php .php
+
+ php_flag magic_quotes_gpc Off
+ php_flag track_vars On
+ php_flag register_globals Off
+ php_value include_path .
+ &lt;/IfModule&gt;
+
+&lt;/Directory&gt;
+
+# Authorize for setup
+&lt;Directory /usr/share/phpmyadmin/setup&gt;
+ &lt;IfModule mod_authn_file.c&gt;
+ AuthType Basic
+ AuthName "phpMyAdmin Setup"
+ AuthUserFile /etc/phpmyadmin/htpasswd.setup
+ &lt;/IfModule&gt;
+ Require valid-user
+&lt;/Directory&gt;
+
+# Disallow web access to directories that don't need it
+&lt;Directory /usr/share/phpmyadmin/libraries&gt;
+ Order Deny,Allow
+ Deny from All
+&lt;/Directory&gt;
+&lt;Directory /usr/share/phpmyadmin/setup/lib&gt;
+ Order Deny,Allow
+ Deny from All
+&lt;/Directory&gt;</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Activez le module et redémarrez apache. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">a2enconf phpmyadmin
+systemctl restart apache2</programlisting>
+</listitem>
+<listitem>
+<simpara>Créer la base de donnée phpmyadmin.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mysql -u root -p</programlisting>
+<simpara>puis entrer le mot de passe root</simpara>
+</listitem>
+<listitem>
+<simpara>Créez une base phpmyadmin. Tapez :</simpara>
+<programlisting language="sql" linenumbering="unnumbered">CREATE DATABASE phpmyadmin;</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez un utilisateur phpmyadmin. Tapez :</simpara>
+<programlisting language="sql" linenumbering="unnumbered">CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; <co xml:id="CO12-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO12-1">
+<para><literal>mypassword</literal> doit être remplacé par un mot de passe choisi.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Accordez des privilèges et sauvez:</simpara>
+<programlisting language="sql" linenumbering="unnumbered">GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; <co xml:id="CO13-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO13-1">
+<para><literal>mypassword</literal> doit être remplacé par un mot de passe choisi.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Flusher les privilèges:</simpara>
+<programlisting language="sql" linenumbering="unnumbered">FLUSH PRIVILEGES;</programlisting>
+</listitem>
+<listitem>
+<simpara>et enfin</simpara>
+<programlisting language="sql" linenumbering="unnumbered">EXIT;</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Chargez les tables sql dans la base phpmyadmin:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mysql -u root -p phpmyadmin &lt; /usr/share/phpmyadmin/sql/create_tables.sql</programlisting>
+</listitem>
+<listitem>
+<simpara>Enfin ajoutez les mots de passe nécessaires dans le fichier de config.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/share/phpmyadmin/config.inc.php</programlisting>
+</listitem>
+<listitem>
+<simpara>Rechercher le texte contenant <literal>controlhost</literal> .  Ci-dessous, un exemple:</simpara>
+<programlisting language="php" linenumbering="unnumbered">/* User used to manipulate with storage */
+$cfg['Servers'][$i]['controlhost'] = 'localhost';
+$cfg['Servers'][$i]['controlport'] = '';
+$cfg['Servers'][$i]['controluser'] = 'pma';
+$cfg['Servers'][$i]['controlpass'] = 'mypassword'; <co xml:id="CO14-1"/>
+
+
+/* Storage database and tables */
+$cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
+$cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
+$cfg['Servers'][$i]['relation'] = 'pma__relation';
+$cfg['Servers'][$i]['table_info'] = 'pma__table_info';
+$cfg['Servers'][$i]['table_coords'] = 'pma__table_coords';
+$cfg['Servers'][$i]['pdf_pages'] = 'pma__pdf_pages';
+$cfg['Servers'][$i]['column_info'] = 'pma__column_info';
+$cfg['Servers'][$i]['history'] = 'pma__history';
+$cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
+$cfg['Servers'][$i]['tracking'] = 'pma__tracking';
+$cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
+$cfg['Servers'][$i]['recent'] = 'pma__recent';
+$cfg['Servers'][$i]['favorite'] = 'pma__favorite';
+$cfg['Servers'][$i]['users'] = 'pma__users';
+$cfg['Servers'][$i]['usergroups'] = 'pma__usergroups';
+$cfg['Servers'][$i]['navigationhiding'] = 'pma__navigationhiding';
+$cfg['Servers'][$i]['savedsearches'] = 'pma__savedsearches';
+$cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
+$cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
+$cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';</programlisting>
+<calloutlist>
+<callout arearefs="CO14-1">
+<para>A tous les endroit ou vous voyez dans le texte ci dessus le mot <literal>mypassword</literal> mettez celui choisi. N&#8217;oubliez pas de dé-commenter les lignes.</para>
+</callout>
+</calloutlist>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_et_configuration_de_roundcube">
+<title>Installation et configuration de Roundcube</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install roundcube roundcube-core roundcube-mysql roundcube-plugins</programlisting>
+</listitem>
+<listitem>
+<simpara>Répondez aux question</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Utiliser dbconfig_common</literal> &#8592; Répondre <literal>Oui</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Mot de passe Mysql pour db Roundcube</literal> &#8592; Tapez un mot de passe</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier php de roundcube: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/roundcube/config.inc.php</programlisting>
+<simpara>et définissez les hosts par défaut comme localhost</simpara>
+<programlisting language="php" linenumbering="unnumbered">$config['default_host'] = 'localhost';
+$config['smtp_server'] = 'localhost';</programlisting>
+</listitem>
+<listitem>
+<simpara>Éditez la configuration apache pour roundcube: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/apache2/conf-enabled/roundcube.conf</programlisting>
+<simpara>et ajouter au début les lignes suivantes:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">Alias /roundcube /var/lib/roundcube
+Alias /webmail /var/lib/roundcube</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez Apache:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl reload apache2</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_lets_encrypt">
+<title>Installation de Let&#8217;s Encrypt</title>
+<simpara>Installez Let&#8217;s Encrypt. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/bin
+wget https://dl.eff.org/certbot-auto
+chmod a+x certbot-auto
+./certbot-auto --install-only</programlisting>
+<simpara>Une façon alternative de l&#8217;installer est:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install python3-certbot-apache</programlisting>
+</section>
+<section xml:id="_installation_dun_scanner_de_vulnérabilités">
+<title>Installation d&#8217;un scanner de vulnérabilités</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>installer Git. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install git</programlisting>
+</listitem>
+<listitem>
+<simpara>installer Lynis</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd
+git clone https://github.com/CISOfy/lynis</programlisting>
+</listitem>
+<listitem>
+<simpara>Executez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd lynis;./lynis audit system</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>L&#8217;outil vous listera dans une forme très synthétique la liste des vulnérabilités et des améliorations de sécurité à appliquer.</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_dun_panel">
+<title>Installation d&#8217;un Panel</title>
+<simpara>Il existe plusieurs type de panel de contrôle pour les VPS. La plupart sont payant.</simpara>
+<simpara>Pour citer les plus connus:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>payant: cPanel (leader du type), Plesk</simpara>
+</listitem>
+<listitem>
+<simpara>gratuit: Yunohost ( un excellent système d&#8217;autohébergement packagé) , Ajenti, Froxlor, Centos web panel, Webmin et Usermin, ISPConfig, HestiaCP, VestaCP ,</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Ci après nous allons en présenter 3 différents (ISPConfig, Webmin et HestiaCP). Ils sont incompatibles entre eux.</simpara>
+<simpara>On peut faire cohabiter ISPConfig et Webmin en prenant les précautions suivantes:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>ISPConfig est le maitre de la configuration: toute modification sur les sites webs, mailboxes et DNS doit impérativement être effectuées du coté d&#8217;ISPConfig</simpara>
+</listitem>
+<listitem>
+<simpara>Les modifications réalisées au niveau de webmin pour ces sites webs, mailboxes et DNS seront au mieux écrasées par ISPConfig au pire elles risquent de conduire à des incompatibilités qui engendreront des dysfonctionnement d&#8217;ISPConfig (impossibilité de mettre à jour les configurations)</simpara>
+</listitem>
+<listitem>
+<simpara>Le reste des modifications peuvent être configurées au niveau de webmin sans trop de contraintes.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Pour rappel, HestiaCP (tout comme VestaCP) sont incompatibles d&#8217;ISPConfig et de Webmin. Ils doivent être utilisés seuls</simpara>
+<section xml:id="_installation_et_configuration_de_ispconfig">
+<title>Installation et configuration de ISPConfig</title>
+<simpara>ISPConfig est un système de configuration de sites web totalement compatible avec Webmin.</simpara>
+<simpara>Pour installer ISPConfig, vous devez suivre la procédure ci-dessous. ISPConfig 3.1 a été utilisé dans ce tutoriel.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /tmp</programlisting>
+</listitem>
+<listitem>
+<simpara>Cherchez la dernière version d&#8217;ISPConfig sur le site <link xl:href="https://www.ispconfig.org/ispconfig/download/">ISPConfig</link></simpara>
+</listitem>
+<listitem>
+<simpara>Installez cette version en tapant: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">wget &lt;la_version_a_telecharger&gt;.tar.gz</programlisting>
+</listitem>
+<listitem>
+<simpara>Décompressez la version en tapant: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">tar xfz &lt;la_version&gt;.tar.gz</programlisting>
+</listitem>
+<listitem>
+<simpara>Enfin allez dans le répertoire d&#8217;installation: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd ispconfig3_install/install/</programlisting>
+</listitem>
+<listitem>
+<simpara>Lancez l&#8217;installation: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">php -q install.php</programlisting>
+<simpara>et répondez aux questions:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara><literal>Select language (en,de) [en]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Installation mode (standard,expert) [standard]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL server hostname [localhost]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL server port [3306]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL root username [root]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL root password []:</literal> &#8592; Enter your MySQL root password</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL database to create [dbispconfig]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>MySQL charset [utf8]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Country Name (2 letter code) [AU]:</literal> &#8592; Entrez le code pays à 2 lettres</simpara>
+</listitem>
+<listitem>
+<simpara><literal>State or Province Name (full name) [Some-State]:</literal> &#8592; Entrer le nom d&#8217;état</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Locality Name (eg, city) []:</literal> &#8592; Entrer votre ville</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Organization Name (eg, company) [Internet Widgits Pty Ltd]:</literal> &#8592; Entrez votre entreprise ou tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Organizational Unit Name (eg, section) []:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Common Name (e.g. server FQDN or YOUR name) []:</literal> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Email Address []:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>ISPConfig Port [8080]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Admin password [admin]:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:</literal> &#8592;- Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Country Name (2 letter code) [AU]:</literal> &#8592; Entrez le code pays à 2 lettres</simpara>
+</listitem>
+<listitem>
+<simpara><literal>State or Province Name (full name) [Some-State]:</literal> &#8592; Entrer le nom d&#8217;état</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Locality Name (eg, city) []:</literal> &#8592; Entrer votre ville</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Organization Name (eg, company) [Internet Widgits Pty Ltd]:</literal> &#8592; Entrez votre entreprise ou tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Organizational Unit Name (eg, section) []:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Common Name (e.g. server FQDN or YOUR name) []:</literal> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Email Address []:</literal> &#8592; Tapez entrée</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Sécurisez Apache</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Il est maintenant recommandé de désactiver les protocoles TLS 1.0 et TLS 1.1. Ce n&#8217;est pas la configuration par défaut d&#8217;ISPconfig</simpara>
+</listitem>
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Copier le fichier <literal>vhost.conf.master</literal> dans la zone custom</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cp /usr/local/ispconfig/server/conf/vhost.conf.master /usr/local/ispconfig/server/conf-custom/vhost.conf.master</programlisting>
+</listitem>
+<listitem>
+<simpara>Editer le fichier dans la zone custom. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master</programlisting>
+</listitem>
+<listitem>
+<simpara>Remplacez la ligne <literal>SSLProtocol All</literal> par:</simpara>
+<programlisting language="ini" linenumbering="unnumbered">SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>L&#8217;installation est terminée. Vous accédez au serveur à l&#8217;adresse: <link xl:href="https://example.com:8080/">https://example.com:8080/</link> .</simpara>
+<note>
+<simpara>Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur. Pour OVH, elle s&#8217;écrit VPSxxxxxx.ovh.net</simpara>
+</note>
+</listitem>
+<listitem>
+<simpara>Loguez vous comme admin et avec le mot de passe que vous avez choisi. Vous pouvez décider de le changer au premier login</simpara>
+<note>
+<simpara>Si le message "Possible attack detected. This action has been logged.". Cela signifie que vous avez des cookies d&#8217;une précédente installation qui sont configurés. Effacer les cookies de ce site de votre navigateur.</simpara>
+</note>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_webmin">
+<title>Installation de Webmin</title>
+<simpara>Webmin est un outil généraliste de configuration de votre serveur. Son usage peut être assez complexe mais il permet une configuration plus précise des fonctionnalités.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Ajoutez le repository Webmin</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>allez dans le répertoire des repositories. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /etc/apt/sources.list.d</programlisting>
+</listitem>
+<listitem>
+<simpara>Tapez: :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo "deb http://download.webmin.com/download/repository sarge contrib" &gt;&gt; webmin.list</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez la clé. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">curl -fsSL http://www.webmin.com/jcameron-key.asc | sudo apt-key add -</programlisting>
+<simpara>Le message <literal>OK</literal> s&#8217;affiche</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Mise à jour. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt update</programlisting>
+</listitem>
+<listitem>
+<simpara>Installation de Webmin. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install webmin</programlisting>
+<literallayout class="monospaced">Débloquez le port 10000 dans votre firewall</literallayout>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, ajoutez le port 10000</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Connectez vous avec votre navigateur sur l&#8217;url <link xl:href="https://&lt;example.com&gt;:10000">https://&lt;example.com&gt;:10000</link>. Un message indique un problème de sécurité. Cela vient du certificat auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et poursuivre'.</simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous <literal>root</literal>. Tapez le mot de passe de <literal>root</literal>. Le dashboard s&#8217;affiche.</simpara>
+</listitem>
+<listitem>
+<simpara>Restreignez l&#8217;adressage IP</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Obtenez votre adresse IP en allant par exemples sur le site <link xl:href="https://www.showmyip.com/">https://www.showmyip.com/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Sur votre URL Webmin ou vous êtes logué, allez dans Webmin&#8594;Webmin Configuration</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;écran choisir l’icône <literal>Ip Access Control</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez <literal>Only allow from listed addresses</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Puis dans le champ <literal>Allowed IP addresses</literal> tapez votre adresse IP récupérée sur showmyip</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Vous devriez avoir une brève déconnexion le temps que le serveur Webmin redémarre puis une reconnexion.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Si vous n&#8217;arrivez pas à vous reconnecter c&#8217;est que l&#8217;adresse IP n&#8217;est pas la bonne. Le seul moyen de se reconnecter est de:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne <literal>allow= &#8230;&#8203;</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service webmin restart</programlisting>
+</listitem>
+<listitem>
+<simpara>Connectez vous sur l&#8217;url de votre site Webmin. Tout doit fonctionner</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Passez en Français. Pour les personnes non anglophone. Les traductions française ont des problèmes d&#8217;encodage de caractère ce n&#8217;est donc pas recommandé. La suite de mon tutoriel suppose que vous êtes resté en anglais.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Sur votre url Webmin ou vous êtes logué, allez dans Webmin&#8594;Webmin Configuration</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;écran choisir l’icône <literal>Language and Locale</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Choisir <literal>Display Language</literal> à <literal>French (FR.UTF-8)</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="domain-config">
+<title>Configuration d&#8217;un domaine</title>
+<simpara>Cette configuration est réalisée avec le Panel ISPConfig installé dans le chapitre précédent.
+L&#8217;étape "login initial" n&#8217;est à appliquer qu&#8217;une seule fois. Une fois votre premier domaine configuré, vous pourrez vous loguer à ISPconfig en utilisant ce domaine à l&#8217;adresse: <link xl:href="https://example.com:8080/">https://example.com:8080/</link> .</simpara>
+<section xml:id="_login_initial">
+<title>Login initial</title>
+<note>
+<simpara>Cette procédure n&#8217;est à appliquer que lorsqu&#8217;aucun domaine n&#8217;est encore créé.</simpara>
+</note>
+<simpara>Vous devrez tout d&#8217;abord vous loguer sur le serveur ISPConfig.
+Comme vous n&#8217;avez pas encore configuré de nom de de domaine, vous devrez vous loguer de prime abord sur le site <link xl:href="http://vpsxxxxxx.ovh.net:8080/">http://vpsxxxxxx.ovh.net:8080/</link> pour un vps chez ovh par exemple ou sur <link xl:href="http://raspberrypi.local:8080/">http://raspberrypi.local:8080/</link> pour un Raspberry.</simpara>
+<simpara>Utiliser le login: Admin et le mot de passe que vous avez configuré lors de l&#8217;installation d&#8217;ISPConfig</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Aller dans la rubrique <literal>System</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Dans le menu <literal>Main config</literal></simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Dans l’onglet <literal>Sites</literal>, configurer:</simpara>
+<orderedlist numeration="upperalpha">
+<listitem>
+<simpara><literal>Create subdomains as web site:</literal> &#8592; Yes</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Create aliasdomains as web site:</literal> &#8592; Yes</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;onglet <literal>Mail</literal> :</simpara>
+<orderedlist numeration="upperalpha">
+<listitem>
+<simpara><literal>Administrator&#8217;s e-mail :</literal> &#8592; adresse mail de l’administrateur. par exemple <link xl:href="mailto:admin@example.com">admin@example.com</link></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Administrator&#8217;s name :</literal> &#8592; nom de l’administrateur</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Dans le menu <literal>Firewall</literal></simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add Firewall Record</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Acceptez les valeurs par défaut en cliquant sur <literal>Save</literal></simpara>
+<note>
+<simpara>Il est possible de basculer le site ISPConfig entièrement en Français. J&#8217;ai pour ma part gardé la version anglaise du site.
+Vous trouverez donc tous les libellés dans la suite de la documentation en anglais.</simpara>
+</note>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Aller dans la rubrique <literal>DNS</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Dans le menu <literal>Template</literal></simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add new record</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez les champs comme ci-après:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Name</literal> &#8592; Tapez <literal>Template IPV4 autoNS</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Fields</literal> &#8592; Cochez <literal>Domain</literal>, <literal>IP Address</literal>, <literal>Email</literal>, <literal>DKIM</literal>, <literal>DNSSEC</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Template</literal> &#8592; remplissez comme ci dessous:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">[ZONE]
+origin={DOMAIN}.
+ns=ns1.{DOMAIN}.
+mbox={EMAIL}.
+refresh=7200
+retry=540
+expire=604800
+minimum=3600
+ttl=3600
+
+[DNS_RECORDS]
+A|{DOMAIN}.|{IP}|0|3600
+A|www|{IP}|0|3600
+A|mail|{IP}|0|3600
+A|autoconfig|{IP}|0|3600
+A|autodiscover|{IP}|0|3600
+A|webmail|{IP}|0|3600
+A|ns1|{IP}|0|3600
+CNAME|ftp|{DOMAIN}|0|3600
+CNAME|smtp|{DOMAIN}|0|3600
+CNAME|pop3|{DOMAIN}|0|3600
+CNAME|imap|{DOMAIN}|0|3600
+SRV|_pop3._tcp|0 0 .|0|3600
+SRV|_imap._tcp|0 0 .|0|3600
+SRV|_pop3s._tcp|1 995 mail.{DOMAIN}|0|3600
+SRV|_imaps._tcp|1 993 mail.{DOMAIN}|0|3600
+SRV|_submission._tcp|1 465 mail.{DOMAIN}|0|3600
+SRV|_autodiscover._tcp|1 443 autodiscover.{DOMAIN}|0|3600
+NS|{DOMAIN}.|ns1.{DOMAIN}.|0|3600
+MX|{DOMAIN}.|mail.{DOMAIN}.|10|3600
+TXT|{DOMAIN}.|v=spf1 mx a ~all|0|3600</programlisting>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add new record</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez les champs comme ci-après:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Name</literal> &#8592; Tapez <literal>Template IPV6 autoNS</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Fields</literal> &#8592; Cochez <literal>Domain</literal>, <literal>IP Address</literal>, <literal>IPV6 Address</literal>, <literal>Email</literal>, <literal>DKIM</literal>, <literal>DNSSEC</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Template</literal> &#8592; remplissez comme ci dessous:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">[ZONE]
+origin={DOMAIN}.
+ns=ns1.{DOMAIN}.
+mbox={EMAIL}.
+refresh=7200
+retry=540
+expire=604800
+minimum=3600
+ttl=3600
+
+[DNS_RECORDS]
+A|{DOMAIN}.|{IP}|0|3600
+A|www|{IP}|0|3600
+A|mail|{IP}|0|3600
+A|autoconfig|{IP}|0|3600
+A|autodiscover|{IP}|0|3600
+A|webmail|{IP}|0|3600
+A|ns1|{IP}|0|3600
+AAAA|{DOMAIN}.|{IPV6}|0|3600
+AAAA|www|{IPV6}|0|3600
+AAAA|mail|{IPV6}|0|3600
+AAAA|autoconfig|{IPV6}|0|3600
+AAAA|autodiscover|{IPV6}|0|3600
+AAAA|webmail|{IPV6}|0|3600
+AAAA|ns1|{IPV6}|0|3600
+CNAME|ftp|{DOMAIN}|0|3600
+CNAME|smtp|{DOMAIN}|0|3600
+CNAME|pop3|{DOMAIN}|0|3600
+CNAME|imap|{DOMAIN}|0|3600
+SRV|_pop3._tcp|0 0 .|0|3600
+SRV|_imap._tcp|0 0 .|0|3600
+SRV|_pop3s._tcp|1 995 mail.{DOMAIN}|0|3600
+SRV|_imaps._tcp|1 993 mail.{DOMAIN}|0|3600
+SRV|_submission._tcp|1 465 mail.{DOMAIN}|0|3600
+SRV|_autodiscover._tcp|1 443 autodiscover.{DOMAIN}|0|3600
+NS|{DOMAIN}.|ns1.{DOMAIN}.|0|3600
+MX|{DOMAIN}.|mail.{DOMAIN}.|10|3600
+TXT|{DOMAIN}.|v=spf1 mx a ~all|0|3600</programlisting>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_de_la_zone_dns_dun_domaine">
+<title>Création de la zone DNS d&#8217;un domaine</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans <literal>DNS</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>Add dns-zone</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Dns zone wizard</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Choisir le template <literal>IPV4 autoNS</literal> ou`IPV6 autoNS` selon que vous soyez IPV4 ou IPV4+V6</simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Domain :</literal> &#8592; tapez le nom de votre domaine <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP Address:</literal> &#8592; prendre l’adresse IPV4 du serveur sélectionnée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>IPV6 Address:</literal> &#8592; prendre l’adresse IPV6 du serveur sélectionnée</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Email:</literal> &#8592; votre Email valide exemple <link xl:href="mailto:admin@example.com">admin@example.com</link></simpara>
+</listitem>
+<listitem>
+<simpara><literal>DKIM:</literal> &#8592; Yes</simpara>
+<note>
+<simpara>Si votre serveur est chez vous, il est probablement installé derrière un routeur ADSL configuré au préalable avec une DMZ qui pointe sur ce serveur. Dans ce cas, vous ne devrez pas indiquer l&#8217;adresse IP locale de votre serveur mais l&#8217;adresse IP de votre routeur ADSL telle qu&#8217;elle est vue sur internet. On suppose aussi que cette adresse IP est statique et non pas allouée dynamiquement par l&#8217;opérateur.</simpara>
+</note>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Create DNS-record</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+<simpara>Attendez quelques minutes le temps que les enregistrements DNS se propagent et faites une essai de votre nom de domaine sur le site <link xl:href="https://zonemaster.fr/domain_check">ZoneMaster</link>.</simpara>
+<simpara>Dans le champ Nom de domaine saisissez votre nom de domaine et tapez sur check. Tout doit est OK sauf pour les serveurs de noms ns1 et ns2. Si ce n&#8217;est pas le cas, votre nom de domaine doit être mal configuré chez votre registrar. Il vous faut vérifier la configuration initiale.</simpara>
+<note>
+<simpara>Zonemaster a bien repéré que l&#8217;on a essayé de mettre des noms de host différents pour les serveurs de DNS. Ils ont cependant tous la même adresse IP. Cela apparait comme une erreur suite au test.
+De la même manière, il indique dans la rubrique connectivité qu&#8217;il n&#8217;y a pas de redondance de serveur DNS.
+Une manière de corriger ce problème est de définir un DNS secondaire chez OVH en utilisant le service qu&#8217;ils mettent à disposition.</simpara>
+</note>
+<simpara>Vous pouvez maintenant essayer les différents Hostname munis de leur nom de domaine dans votre navigateur. Par exemple: <link xl:href="http://webmail.example.com">http://webmail.example.com</link></simpara>
+<simpara>Ils doivent afficher une page web basique (Apache2, ou de parking).Si ce n&#8217;est pas le cas revérifier la configuration du DNS dans ISPConfig.</simpara>
+</section>
+<section xml:id="_activation_de_dnssec">
+<title>Activation de DNSSEC</title>
+<simpara>Vous pouvez maintenant activer DNSSEC afin d&#8217;augmenter la sécurité de résolution de nom de domaine:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>puis dans le menu <literal>Zones</literal></simpara>
+</listitem>
+<listitem>
+<simpara>choisissez la zone correspondant à votre domaine</simpara>
+</listitem>
+<listitem>
+<simpara>dans l&#8217;onglet <literal>DNS Zone</literal> allez tout en bas et activer la coche <literal>Sign Zone (DNSSEC)</literal></simpara>
+</listitem>
+<listitem>
+<simpara>cliquez sur <literal>Save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Une fois fait, retourner dans le même onglet. La boite `DNSSEC DS-Data for registry: `contient les informations que vous devez coller dans le site web de votre registrar pour sécuriser votre zone.</simpara>
+</listitem>
+<listitem>
+<simpara>Gardez cette fenêtre ouverte dans votre navigateur et ouvrez un autre onglet sur le site de votre registrar.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+<simpara>Si vous êtes chez <link xl:href="https://admin.gandi.net/">Gandi</link>, il vous faut:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Sélectionner le menu <literal>nom de domaine</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Choisir votre nom de domaine "example.com"</simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans l&#8217;onglet DNSSEC. Il doit permettre d&#8217;ajouter des clés puisque vous fonctionner avec des DNS externes.</simpara>
+</listitem>
+<listitem>
+<simpara>Effacez éventuellement toutes les clés si vous n&#8217;êtes pas sur de celles-ci.</simpara>
+</listitem>
+<listitem>
+<simpara>puis cliquez sur <literal>Ajouter une clé externe</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Sélectionnez d&#8217;abord le flag <literal>257 (KSK)</literal>. puis l&#8217;algorithme <literal>7 (RSASHA1-NSEC3-SHA1)</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Collez ensuite la clé de votre site ISPConfig. Elle doit ressembler à cela:</simpara>
+<screen>example.com. IN DNSKEY 257 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn</screen>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Ajouter</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Entrez la deuxième clé. Cliquez sur <literal>Ajouter une clé externe</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionnez d&#8217;abord le flag <literal>256 (ZSK)</literal>. puis l&#8217;algorithme <literal>7 (RSASHA1-NSEC3-SHA1)</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Collez ensuite la clé de votre site ISPConfig. Elle doit ressembler à cela:</simpara>
+<screen>example.com. IN DNSKEY 256 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn</screen>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Ajouter</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Les deux clés doivent maintenant apparaître dans l&#8217;onglet <literal>DNSSEC</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Vous devez attendre quelques minutes (une heure dans certains cas) pour que les clés se propagent. Pendant ce temps vous pouvez avoir quelques problèmes d&#8217;accès à vos sites webs</simpara>
+</listitem>
+<listitem>
+<simpara>Allez sur le site <link xl:href="https://dnssec-debugger.verisignlabs.com/">DNSSEC Analyzer</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Entrez votre nom de domaine "example.com" et tapez sur "entrée".</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+<simpara>Le site doit afficher pour les différentes zones le statut des certificats. Tout doit être au vert.
+Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore des problèmes vérifiez votre configuration dans ISPConfig, chez votre registrar (rubrique DNSSEC) ou regardez les logs d&#8217;ISPConfig sur votre serveur pour y débusquer une erreur.</simpara>
+<tip>
+<simpara>Une erreur classique est de croiser les certificats avec leurs types. Vérifiez bien que vous avez mis les bons certificats avec les bons types.</simpara>
+</tip>
+<warning>
+<simpara>Une fois que vous activez DNSSEC, vous pourriez faire face au problème suivant: les nouveaux enregistrements que vous renseignez ne sont pas actifs.
+Une analyse des logs montre que la commande <literal>dnssec-signzone</literal> retourne l&#8217;erreur <literal>fatal: 'example.com': found DS RRset without NS RRset</literal>.
+Cela signifie que vous avez saisi une ou deux entrées DS dans vos enregistrements. Il faut les supprimer pour que tout redevienne fonctionnel.</simpara>
+</warning>
+</section>
+<section xml:id="_exemple_de_configuration_de_domaine">
+<title>Exemple de configuration de domaine</title>
+<simpara>Une fois la configuration terminé, les différents enregistrements du domaines ressemblent à l&#8217;exemple ci-dessous.
+Il peut y avoir des enregistrements supplémentaires pour les configurations SPF, DKIM et Let&#8217;s encrypt.</simpara>
+<screen>example.com.         3600 A              1.2.3.4
+www                  3600 A              1.2.3.4
+mail                 3600 A              1.2.3.4
+ns1                  3600 A              1.2.3.4
+ns2                  3600 A              1.2.3.4
+webmail              3600 A              1.2.3.4
+autoconfig           3600 A              1.2.3.4
+autodiscover         3600 A              1.2.3.4
+ftp                  3600 CNAME          example.com.
+smtp                 3600 CNAME          mail.example.com.
+pop3                 3600 CNAME          mail.example.com.
+imap                 3600 CNAME          mail.example.com.
+example.com.         3600 NS             ns1.example.com.
+example.com.         3600 NS             ns2.example.com.
+example.com.         3600 MX    10       mail.example.com.
+_pop3s._tcp          3600 SRV   10 1 995 mail.example.com.
+_imaps._tcp          3600 SRV   0  1 993 mail.example.com.
+_submission._tcp     3600 SRV   0  1 465 mail.example.com.
+_imap._tcp           3600 SRV   0  0 0   .
+_pop3._tcp           3600 SRV   0  0 0   .
+_autodiscover._tcp   3600 SRV   0 0 443  autoconfig.example.com.
+example.com.         3600 TXT            "v=spf1 mx a ~all"</screen>
+</section>
+<section xml:id="_création_dun_sous_domaine">
+<title>Création d&#8217;un sous domaine</title>
+<simpara>Supposons que vous êtes en train de créer un sous domain nommé sub.example.com .
+Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail.sub.example.com ou blog.sub.example.com.</simpara>
+<simpara>Un cas assez classique est que ce sous domaine est délégué à une machine tierce.</simpara>
+<simpara>Par exemple: example.com est installé sur un VPS quelque part sur internet et sub.example.com est hébergé chez vous sur votre Raspberry.</simpara>
+<simpara>On suppose que votre domain a été configuré en suivant la procédure du chapitre précédent.</simpara>
+<simpara>Rien de bien sorcier pour votre sous domaine: Vous devez le créer sur votre Raspberry selon la même procédure mais avec le nom du sous domaine (sub.example.com donc).</simpara>
+<simpara>Vous aurez des actions complémentaires à effectuer sur votre domaine:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans <literal>DNS</literal> de votre serveur de domaine principal</simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionner le menu <literal>Zones</literal> puis le domaine example.com</simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez l&#8217;onglet <literal>Records</literal> et créez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>un enregistrement de type <literal>NS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com.</literal> et un <literal>nameserver Hostname</literal> &#8592; <literal>ns1.sub.example.com.</literal></simpara>
+</listitem>
+<listitem>
+<simpara>un enregistrement de type <literal>NS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com.</literal> et un <literal>nameserver Hostname</literal> &#8592; <literal>ns2.sub.example.com.</literal></simpara>
+</listitem>
+<listitem>
+<simpara>un enregistrement de type <literal>NS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com.</literal> et un <literal>nameserver Hostname</literal> &#8592; <literal>ns3.example.com.</literal> .</simpara>
+<simpara>Ce dernier type d&#8217;enregistrement se nomme un Glue record pour faire le lien vers le serveur secondaire.</simpara>
+</listitem>
+<listitem>
+<simpara>un enregistrement de type <literal>A</literal> avec un <literal>Hostname</literal> &#8592; ns3 et une <literal>IP-address</literal> &#8592; Adresse IP de votre routeur ADSL ou est connecté le Raspberry.</simpara>
+<simpara>Ce dernier enregistrement en complétant le Glue record fait le lien avec l&#8217;adresse IP de sub.example.com</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Si vous avez activé DNSSEC sur votre serveur DNS de sub.example.com vous devrez récupérer les entrées DS du champ <literal>DNSSEC DS-Data for registry</literal> de votre domaine sub.example.com et créer dans votre domaine example.com les deux entrées suivantes:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>un enregistrement de type <literal>DS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com</literal> et un champ <literal>data</literal> contenant <literal>xxxxx 7 1 &lt;votre_digest_recupérée&gt;</literal></simpara>
+</listitem>
+<listitem>
+<simpara>un enregistrement de type <literal>DS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com</literal> et un champ <literal>data</literal> contenant <literal>xxxxx 7 2 &lt;votre_digest_recupérée&gt;</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="domain-site">
+<title>Création d’un site web</title>
+<simpara>Dans la suite le site web sera nommé "example.com".</simpara>
+<simpara>Vous devez avoir avant tout défini le "record" DNS associé au site.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Aller dans "Sites"</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Aller dans le menu "Website" pour définir un site web</simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur "Add new website"</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Domain:</literal> &#8592; mettre <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Auto-subdomain:</literal> &#8592; sélectionner <literal>wwww</literal> ou <literal>*</literal> si l’on veut un certificat let’s encrypt wildcard</simpara>
+</listitem>
+<listitem>
+<simpara><literal>SSL:</literal> &#8592; yes</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Let’s Encrypt:</literal> &#8592; yes</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Php:</literal> &#8592; Sélectionez <literal>php-fpm</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionnez éventuellement aussi les coches <literal>Perl</literal>, <literal>Python</literal>, <literal>Ruby</literal> en fonction des technologies déployées sur votre site. Cela est indiqué dans la procédure d&#8217;installation du site.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet <literal>redirect</literal> du même écran</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>SEO Redirect:</literal> &#8592; Sélectionner <literal>domain.tld &#8658;www.domain.tld</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Rewrite http to https:</literal> &#8592; yes</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet <literal>Statistics</literal> du même écran</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Set Webstatistics password:</literal> &#8592; saisissez un mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password:</literal> &#8592; ressaisissez le mot de passe</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet <literal>Backup</literal> du même écran</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Backup interval:</literal> &#8592; saisir <literal>weekly</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Number of backup copies:</literal> &#8592; saisir <literal>1</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;onglet <literal>Options</literal>, il peut être utile pour certains types de site qui sont des redirections d&#8217;autres sites de saisir dans la zone <literal>Apache Directives:</literal></simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# redirect from server
+#
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
+ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Vous pouvez maintenant tester la qualité de la  connexion de votre site en allant sur: <link xl:href="https://www.ssllabs.com/ssltest">SSL Server Test</link>. Saisissez votre nom de domaine et cliquez sur <literal>Submit</literal>. Votre site doit au moins être de <literal>Grade A</literal>.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="subdomain-site">
+<title>Création d’un Site Vhost</title>
+<simpara>Dans la suite le sous-domaine sera nommé "mail.example.com".</simpara>
+<simpara>Vous devez avoir avant tout défini le "record" DNS associé au site.
+Vous ne pouvez définir un sous-domaine que si vous avez défini le site web racine auparavant.</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Aller dans "Sites"</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Aller dans le menu "Subdomain(vhost)" pour définir un sous-domaine</simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur "Add Subdomain" pour un nouveau sous domaine</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592;  saisir <literal>mail</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Domain:</literal> &#8592; mettre <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>web folder:</literal> &#8592; saisir <literal>mail</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Auto-subdomain:</literal> &#8592; sélectionner <literal>wwww</literal> ou <literal>*</literal> si l’on veut un certificat let’s encrypt wildcard</simpara>
+</listitem>
+<listitem>
+<simpara><literal>SSL:</literal> &#8592; yes</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Let’s Encrypt:</literal> &#8592; yes</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Php:</literal> &#8592; Sélectionez <literal>php-fpm</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionnez éventuellement aussi les coches <literal>Perl</literal>, <literal>Python</literal>, <literal>Ruby</literal> en fonction des technologies déployées sur votre site. Cela est indiqué dans la procédure d&#8217;installation du site.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet <literal>redirect</literal> du même écran</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Rewrite http to https:</literal> &#8592; yes</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet <literal>Statistics</literal> du même écran</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Set Webstatistics password:</literal> &#8592; saisissez un mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password:</literal> &#8592; ressaisissez le mot de passe</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;onglet <literal>Options</literal>, il peut être utile pour certains types de site qui sont des redirections d&#8217;autres sites de saisir dans la zone <literal>Apache Directives:</literal></simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# redirect from server
+#
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
+ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Vous pouvez maintenant tester la qualité de la  connexion de votre site en allant sur: <link xl:href="https://www.ssllabs.com/ssltest">SSL Server Test</link>. Saisissez votre nom de domaine et cliquez sur <literal>Submit</literal>. Votre site doit au moins être de <literal>Grade A</literal>.</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_associer_des_certificats_reconnu_à_vos_outils">
+<title>Associer des certificats reconnu à vos outils</title>
+<simpara>Cette action est à effectuer une fois que vous avez créé votre domaine principal et que vous avez généré vos premiers certificats let&#8217;s encrypt dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux services de base:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Vous devez avoir créé au préalable un site pour les domaines example.com et mail.example.com</simpara>
+</listitem>
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Liez le certificat d&#8217;ISPconfig avec celui du domaine crée.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/ispconfig/interface/ssl/
+mv ispserver.crt ispserver.crt-$(date +"%y%m%d%H%M%S").bak
+mv ispserver.key ispserver.key-$(date +"%y%m%d%H%M%S").bak
+ln -s /etc/letsencrypt/live/example.com/fullchain.pem ispserver.crt <co xml:id="CO15-1"/>
+ln -s /etc/letsencrypt/live/example.com/privkey.pem ispserver.key <co xml:id="CO15-2"/>
+cat ispserver.{key,crt} &gt; ispserver.pem
+chmod 600 ispserver.pem
+systemctl restart apache2</programlisting>
+<calloutlist>
+<callout arearefs="CO15-1 CO15-2">
+<para>remplacer &lt;example.com&gt; par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Liez le certificat Postfix et Dovecot avec celui de let&#8217;s encrypt</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /etc/postfix/
+mv smtpd.cert smtpd.cert-$(date +"%y%m%d%H%M%S").bak
+mv smtpd.key smtpd.key-$(date +"%y%m%d%H%M%S").bak
+ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert <co xml:id="CO16-1"/>
+ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key <co xml:id="CO16-2"/>
+service postfix restart
+service dovecot restart</programlisting>
+<calloutlist>
+<callout arearefs="CO16-1 CO16-2">
+<para>remplacer &lt;example.com&gt; par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Liez le certificat pour Pureftd</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /etc/ssl/private/
+mv pure-ftpd.pem pure-ftpd.pem-$(date +"%y%m%d%H%M%S").bak
+ln -s /usr/local/ispconfig/interface/ssl/ispserver.pem pure-ftpd.pem
+chmod 600 pure-ftpd.pem
+service pure-ftpd-mysql restart</programlisting>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Création d&#8217;un script de renouvellement automatique du fichier pem</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Installez incron. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install -y incron</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez le fichier d&#8217;exécution périodique. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/init.d/le_ispc_pem.sh</programlisting>
+<simpara>et coller dans le fichier le code suivant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
+### BEGIN INIT INFO
+# Provides: LE ISPSERVER.PEM AUTO UPDATER
+# Required-Start: $local_fs $network
+# Required-Stop: $local_fs
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: LE ISPSERVER.PEM AUTO UPDATER
+# Description: Update ispserver.pem automatically after ISPC LE SSL certs are renewed.
+### END INIT INFO
+cd /usr/local/ispconfig/interface/ssl/
+mv ispserver.pem ispserver.pem-$(date +"%y%m%d%H%M%S").bak
+cat ispserver.{key,crt} &gt; ispserver.pem
+chmod 600 ispserver.pem
+chmod 600 /etc/ssl/private/pure-ftpd.pem
+service pure-ftpd-mysql restart
+service monit restart
+service postfix restart
+service dovecot restart
+service apache2 restart
+exit 1</programlisting>
+</listitem>
+<listitem>
+<simpara>Sauvez et quittez. Tapez ensuite:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod +x /etc/init.d/le_ispc_pem.sh
+echo "root" &gt;&gt; /etc/incron.allow
+incrontab -e.</programlisting>
+<simpara>et ajoutez les lignes ci dessous dans le fichier:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">/etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <co xml:id="CO17-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO17-1">
+<para>Remplacer example.com par votre nom de domaine.</para>
+</callout>
+</calloutlist>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_surveillance_du_serveur_avec_munin_et_monit">
+<title>Surveillance du serveur avec Munin et Monit</title>
+<section xml:id="_note_préliminaire">
+<title>Note préliminaire</title>
+<simpara>Installez tout d&#8217;abord les paquets indispensables pour faire fonctionner Munin avec Apache puis activez le module fcgid:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install apache2 libcgi-fast-perl libapache2-mod-fcgid
+a2enmod fcgid</programlisting>
+</section>
+<section xml:id="_installation_et_configuration_de_munin">
+<title>Installation et configuration de Munin</title>
+<simpara>Suivez les étapes ci-après:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Installer le paquet Munin:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install munin munin-node munin-plugins-extra logtail libcache-cache-perl</programlisting>
+</listitem>
+<listitem>
+<simpara>Votre configuration de Munin va utiliser une base de données MariaDB. Vous devez activer quelques plugins. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /etc/munin/plugins
+ln -s /usr/share/munin/plugins/mysql_ mysql_
+ln -s /usr/share/munin/plugins/mysql_bytes mysql_bytes
+ln -s /usr/share/munin/plugins/mysql_innodb mysql_innodb
+ln -s /usr/share/munin/plugins/mysql_isam_space_ mysql_isam_space_
+ln -s /usr/share/munin/plugins/mysql_queries mysql_queries
+ln -s /usr/share/munin/plugins/mysql_slowqueries mysql_slowqueries
+ln -s /usr/share/munin/plugins/mysql_threads mysql_threads</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez la base de données MariaDB de Munin. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mysql -p</programlisting>
+</listitem>
+<listitem>
+<simpara>Tapez le mot de passe mysql de root , puis dans mysql tapez:</simpara>
+<programlisting language="mysql" linenumbering="unnumbered">CREATE SCHEMA munin_innodb;
+USE munin_innodb
+CREATE TABLE something (anything int) ENGINE=InnoDB;
+GRANT SELECT ON munin_innodb.* TO 'munin'@'localhost' IDENTIFIED BY 'munin';
+FLUSH PRIVILEGES;
+EXIT;</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez ensuite le fichier de configuration de Munin. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/munin/munin.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Décommentez les lignes débutant par: <literal>bdir</literal>, <literal>htmldir</literal>, <literal>logdir</literal>, <literal>rundir</literal>, and <literal>tmpldir</literal>. Les valeurs par défaut sont correctes.</simpara>
+</listitem>
+<listitem>
+<simpara>Munin utilisera l&#8217;adresse <literal>munin.example.com</literal>. Toujours dans le fichier de configuration de munin, remplacer la directive <literal>[localhost.localdomain]</literal> par <literal>[munin.example.com]</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Un fois les commentaires enlevés et la ligne modifiée, le fichier de configuration doit ressembler à celui-ci:</simpara>
+<screen># Example configuration file for Munin, generated by 'make build'
+# The next three variables specifies where the location of the RRD
+# databases, the HTML output, logs and the lock/pid files. They all
+# must be writable by the user running munin-cron. They are all
+# defaulted to the values you see here.
+#
+dbdir /var/lib/munin
+htmldir /var/cache/munin/www
+logdir /var/log/munin
+rundir /var/run/munin
+# Where to look for the HTML templates
+#
+tmpldir /etc/munin/templates
+# Where to look for the static www files
+#
+#staticdir /etc/munin/static
+# temporary cgi files are here. note that it has to be writable by
+# the cgi user (usually nobody or httpd).
+#
+# cgitmpdir /var/lib/munin/cgi-tmp
+
+# (Exactly one) directory to include all files from.
+includedir /etc/munin/munin-conf.d
+[...]
+# a simple host tree
+[server1.example.com]
+ address 127.0.0.1
+ use_node_name yes
+[...]</screen>
+</listitem>
+<listitem>
+<simpara>Activez Munin dans Apache. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">a2enconf munin</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez le fichier munin.conf d&#8217;Apache:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/apache2/conf-enabled/munin.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Nous allons maintenant activer le module Munin dans Apache et définir une authentification basique.</simpara>
+</listitem>
+<listitem>
+<simpara>Modifiez le fichier pour qu&#8217;il ressemble à celui ci-dessous:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">ScriptAlias /munin-cgi/munin-cgi-graph /usr/lib/munin/cgi/munin-cgi-graph
+Alias /munin/static/ /var/cache/munin/www/static/
+
+&lt;Directory /var/cache/munin/www&gt;
+    Options FollowSymLinks SymLinksIfOwnerMatch
+    AuthUserFile /etc/munin/munin-htpasswd
+    AuthName "Munin"
+    AuthType Basic
+    Require valid-user
+
+&lt;/Directory&gt;
+
+&lt;Directory /usr/lib/munin/cgi&gt;
+    AuthUserFile /etc/munin/munin-htpasswd
+    AuthName "Munin"
+    AuthType Basic
+    Require valid-user
+    Options FollowSymLinks SymLinksIfOwnerMatch
+    &lt;IfModule mod_fcgid.c&gt;
+        SetHandler fcgid-script
+    &lt;/IfModule&gt;
+    &lt;IfModule !mod_fcgid.c&gt;
+        SetHandler cgi-script
+    &lt;/IfModule&gt;
+&lt;/Directory&gt;
+
+# ***** SETTINGS FOR CGI/CRON STRATEGIES *****
+
+# pick _one_ of the following lines depending on your "html_strategy"
+# html_strategy: cron (default)
+Alias /munin /var/cache/munin/www
+# html_strategy: cgi (requires the apache module "cgid" or "fcgid")
+#ScriptAlias /munin /usr/lib/munin/cgi/munin-cgi-html</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez ensuite le fichier de mot de passe de munin:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">htpasswd -c /etc/munin/munin-htpasswd admin</programlisting>
+</listitem>
+<listitem>
+<simpara>Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara>Redémarrez apache. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service apache2 restart</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez Munin. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service munin-node restart</programlisting>
+</listitem>
+<listitem>
+<simpara>Attendez quelques minutes afin que Munin produise ses premiers fichiers de sortie. et allez ensuite sur l&#8217;URL: <link xl:href="http://example.com/munin/">http://example.com/munin/</link>.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_activez_les_plugins_de_munin">
+<title>Activez les plugins de Munin</title>
+<simpara>Dans Debian 10, tous les plugins complémentaires sont déjà activés.Vous pouvez être tenté de vérifier:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Pour vérifier que la configuration est correcte. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">munin-node-configure --suggest</programlisting>
+</listitem>
+<listitem>
+<simpara>Une liste de plugins doit s&#8217;afficher à l&#8217;écran. La colonne <literal>used</literal> indique que le plugins est activé. La colonne <literal>Suggestions</literal> indique que le serveur fait fonctionner un service qui peut être monitoré par ce module. Il faut créer un lien symbolique du module de <literal>/usr/share/munin/plugins</literal> dans <literal>/etc/munin/plugins</literal> pour l&#8217;activer.</simpara>
+</listitem>
+<listitem>
+<simpara>Par exemple pour activer les modules apache_*:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /etc/munin/plugins
+ln -s /usr/share/munin/plugins/apache_accesses
+ln -s /usr/share/munin/plugins/apache_processes
+ln -s /usr/share/munin/plugins/apache_volume
+rm /usr/share/munin/plugins/mysql_</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez ensuite le service Munin. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service munin-node restart</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installer_et_configurer_monit">
+<title>Installer et configurer Monit</title>
+<simpara>Pour installer et configurer Monit, vous devez appliquer la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install monit</programlisting>
+</listitem>
+<listitem>
+<simpara>Maintenant nous devons éditer le fichier <literal>monitrc</literal> qui définira les services que l&#8217;on souhaite monitorer. Il existe de nombreux exemples sur le web et vous pourrez trouver de nombreuses configuration sur <link xl:href="http://mmonit.com/monit/documentation/">http://mmonit.com/monit/documentation/</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Editez le fichier monitrc. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cp /etc/monit/monitrc /etc/monit/monitrc_orig
+vi /etc/monit/monitrc</programlisting>
+</listitem>
+<listitem>
+<simpara>Le fichier contient déjà de nombreux exemples. Nous configurer une surveillance de sshd, apache, mysql, proftpd, postfix, memcached, named, ntpd, mailman, amavisd, dovecot. Monit  sera activé sur le port 2812 et nous allons donner à l&#8217;utilisateur  admin un mot de passe. Le certificat HTTPS sera celui généré avec let&#8217;s encrypt pour le site ISPConfig. Collez le contenu ci dessous dans le fichier monitrc:</simpara>
+<screen>set daemon 60
+set logfile syslog facility log_daemon
+set mailserver localhost
+set mail-format { from: monit@fpvview.site }
+set alert stef@fpvview.site
+set httpd port 2812 and
+ SSL ENABLE
+ PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
+ allow admin:"my_password" <co xml:id="CO18-1"/>
+
+check process sshd with pidfile /var/run/sshd.pid
+ start program "/usr/sbin/service ssh start"
+ stop program "/usr/sbin/service ssh stop"
+ if failed port 22 protocol ssh then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process apache with pidfile /var/run/apache2/apache2.pid
+ group www
+ start program = "/usr/sbin/service apache2 start"
+ stop program = "/usr/sbin/service apache2 stop"
+ if failed host localhost port 80 protocol http
+ and request "/monit/token" then restart
+ if cpu is greater than 60% for 2 cycles then alert
+ if cpu &gt; 80% for 5 cycles then restart
+ if totalmem &gt; 500 MB for 5 cycles then restart
+ if children &gt; 250 then restart
+ if loadavg(5min) greater than 10 for 8 cycles then stop
+ if 3 restarts within 5 cycles then timeout
+
+# ---------------------------------------------------------------------------------------------
+# NOTE: Replace example.pid with the pid name of your server, the name depends on the hostname
+# ---------------------------------------------------------------------------------------------
+check process mysql with pidfile /var/run/mysqld/mysqld.pid
+ group database
+ start program = "/usr/sbin/service mysql start"
+ stop program = "/usr/sbin/service mysql stop"
+ if failed host 127.0.0.1 port 3306 then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process pureftpd with pidfile /var/run/pure-ftpd/pure-ftpd.pid
+ start program = "/usr/sbin/service pure-ftpd-mysql start"
+ stop program = "/usr/sbin/service pure-ftpd-mysql stop"
+ if failed port 21 protocol ftp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process postfix with pidfile /var/spool/postfix/pid/master.pid
+ group mail
+ start program = "/usr/sbin/service postfix start"
+ stop program = "/usr/sbin/service postfix stop"
+ if failed port 25 protocol smtp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process memcached with pidfile /var/run/memcached/memcached.pid
+ start program = "/usr/sbin/service memcached start"
+ stop program = "/usr/sbin/service memcached stop"
+ if failed host 127.0.0.1 port 11211 then restart
+
+check process named with pidfile /var/run/named/named.pid
+ start program = "/usr/sbin/service bind9 start"
+ stop program = "/usr/sbin/service bind9 stop"
+ if failed host 127.0.0.1 port 53 type tcp protocol dns then restart
+ if failed host 127.0.0.1 port 53 type udp protocol dns then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process ntpd with pidfile /var/run/ntpd.pid
+ start program = "/usr/sbin/service ntp start"
+ stop program = "/usr/sbin/service ntp stop"
+ if failed host 127.0.0.1 port 123 type udp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process mailman with pidfile /var/run/mailman/mailman.pid
+ group mail
+ start program = "/usr/sbin/service mailman start"
+ stop program = "/usr/sbin/service mailman stop"
+
+check process amavisd with pidfile /var/run/amavis/amavisd.pid
+ group mail
+ start program = "/usr/sbin/service amavis start"
+ stop program = "/usr/sbin/service amavis stop"
+ if failed port 10024 protocol smtp then restart
+ if 5 restarts within 5 cycles then timeout
+
+check process dovecot with pidfile /var/run/dovecot/master.pid
+ group mail
+ start program = "/usr/sbin/service dovecot start"
+ stop program = "/usr/sbin/service dovecot stop"
+ if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
+ if 5 restarts within 5 cycles then timeout</screen>
+<calloutlist>
+<callout arearefs="CO18-1">
+<para>remplacez my_password par votre mot de passe</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>La configuration est assez claire à lire. pour obtenir des précisions, référez vous à la documentation de monit <link xl:href="http://mmonit.com/monit/documentation/monit.html">http://mmonit.com/monit/documentation/monit.html</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la configuration pour apache, la configuration indique que monit doit allez chercher sur le port 80 un fichier dans <literal>/monit/token</literal>. Nous devons donc créer ce fichier. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir /var/www/html/monit
+echo "hello" &gt; /var/www/html/monit/token</programlisting>
+</listitem>
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service monit restart</programlisting>
+</listitem>
+<listitem>
+<simpara>Pour monitorer le statut des process en ligne de commande, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">monit status</programlisting>
+</listitem>
+<listitem>
+<simpara>Débloquez le port 2812 dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, ajoutez le port 2812</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Maintenant naviguez sur le site <link xl:href="https://example.com:2812/">https://example.com:2812/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Rentrez le login <literal>admin</literal> et votre mot de passe <literal>my_password</literal>. Monit affiche alors les informations de monitoring du serveur.</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_configuration_de_la_messagerie">
+<title>Configuration de la messagerie</title>
+<section xml:id="_installation_de_rspamd_à_la_place_d_amavis_new">
+<title>Installation de rspamd à la place d' Amavis-new</title>
+<simpara><literal>rspamd</literal> est réputé de meilleure qualité que <literal>Amavis</literal> dans la chasse aux spams. Vous pouvez décider de l&#8217;installer à la place d&#8217;Amavis. Cette installation reste optionnelle.</simpara>
+<simpara>Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Installez les paquets debian. tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install rspamd redis-server</programlisting>
+</listitem>
+<listitem>
+<simpara>Activez l&#8217;apprentissage automatique</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo "autolearn = true;" &gt; /etc/rspamd/local.d/classifier-bayes.conf
+echo 'backend = "redis";' &gt;&gt; /etc/rspamd/local.d/classifier-bayes.conf
+echo "new_schema = true;" &gt;&gt; /etc/rspamd/local.d/classifier-bayes.conf
+echo "expire = 8640000;" &gt;&gt; /etc/rspamd/local.d/classifier-bayes.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Activez Redis dans la configuration de Rspamd. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo 'servers = "127.0.0.1";' &gt; /etc/rspamd/local.d/redis.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Fixer des métriques assez élevées pour analyser les spams</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo "actions {" &gt; /etc/rspamd/local.d/metrics.conf
+echo 'add_header = 5;' &gt;&gt; /etc/rspamd/local.d/metrics.conf
+echo "greylist = 25;" &gt;&gt; /etc/rspamd/local.d/metrics.conf
+echo "reject = 50;" &gt;&gt; /etc/rspamd/local.d/metrics.conf
+echo "}" &gt;&gt; /etc/rspamd/local.d/metrics.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Augmentez la taille de l&#8217;historique de Rspamd, activez la compression.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo "nrows = 2500;" &gt; /etc/rspamd/local.d/history_redis.conf
+echo "compress = true;" &gt;&gt; /etc/rspamd/local.d/history_redis.conf
+echo "subject_privacy = false;" &gt;&gt; /etc/rspamd/local.d/history_redis.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Activez la mise à jour automatique de rspamd</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo 'enabled = true;' &gt; /etc/rspamd/local.d/redis.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Enrichissez les headers des mails spams. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/rspamd/local.d/milter_headers.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>inserez le texte suivant:</simpara>
+<screen linenumbering="unnumbered"># local.d/milter_headers.conf:
+
+# Options
+
+# Add "extended Rspamd headers" (default false) (enables x-spamd-result, x-rspamd-server &amp; x-rspamd-queue-id routines)
+extended_spam_headers = true;
+
+# List of headers to be enabled for authenticated users (default empty)
+# authenticated_headers = ["authentication-results"];
+
+# List of headers to be enabled for local IPs (default empty)
+local_headers = ["x-spamd-bar"];
+
+# Set false to always add headers for local IPs (default true)
+# skip_local = true;
+
+# Set false to always add headers for authenticated users (default true)
+# skip_authenticated = true;
+
+# Routines to use- this is the only required setting (may be omitted if using extended_spam_headers)
+use = ["x-spamd-bar", "x-spam-level", "authentication-results"];
+
+# this is where we may configure our selected routines
+routines {
+  # settings for x-spamd-bar routine
+  x-spamd-bar {
+    # effectively disables negative spambar
+    negative = "";
+  }
+  # other routines...
+}
+custom {
+  # user-defined routines: more on these later
+}</screen>
+</listitem>
+<listitem>
+<simpara>Créez un mot de passe. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">rspamadm pw</programlisting>
+</listitem>
+<listitem>
+<simpara>Entrez votre mot de passe. Une hashphrase est générée.</simpara>
+</listitem>
+<listitem>
+<simpara>Copiez la.</simpara>
+</listitem>
+<listitem>
+<simpara>Remplacez celle déjà présente dans <literal>/etc/rspamd/local.d/worker-controller.inc</literal></simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/rspamd/local.d/worker-controller.inc</programlisting>
+</listitem>
+<listitem>
+<simpara>Remplacez le texte entre guillemets sur la ligne <literal>password = "$2$g95yw&#8230;&#8203;&#8230;&#8203;dq3c5byy";</literal> par le texte copié.</simpara>
+</listitem>
+<listitem>
+<simpara>Sauvez</simpara>
+</listitem>
+<listitem>
+<simpara>Redémarrez Rspamd</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart rspamd</programlisting>
+</listitem>
+<listitem>
+<simpara>Loguez vous dans ISPConfig</simpara>
+</listitem>
+<listitem>
+<simpara>Activer Rspamd dans ISPConfig</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez dans la rubrique <literal>system</literal> &#8594; menu <literal>Server Config</literal> &#8594; Sélectionnez votre serveur &#8594; Onglet <literal>Mail</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Dans le champ <literal>Content Filter</literal>, sélectionnez <literal>Rspamd</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Dans le champ <literal>Rspamd Password</literal>, tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Revenez dans la rubrique <literal>system</literal> &#8594; menu <literal>Server Config</literal> &#8594; Sélectionnez votre serveur &#8594; Onglet <literal>Mail</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Vous pouvez voir le mot de passe de connexion au serveur web Rspamd.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Rendre le site rspamd accessible dans un host</simpara>
+</listitem>
+<listitem>
+<simpara>Activez le module proxy dans apache</simpara>
+<programlisting language="bash" linenumbering="unnumbered">a2enmod proxy
+systemctl restart apache2</programlisting>
+</listitem>
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>rspamd</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de <literal>sites</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>rspamd</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>rspamd</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# rspamd httpserver
+#
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / http://localhost:11334/
+ProxyPassReverse / http://localhost:11334/</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>en pointant sur le site rspampd.example.com, et en utilisant le mot de passe saisi plus haut vous pouvez accèder aux fonctions de l&#8217;outil.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer l&#8217;apprentissage par déplacement</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Couplé avec Dovecot, Rspamd nous propose de pouvoir apprendre également en fonction des actions des utilisateurs. Si un mail est déplacé vers le répertoire Junk, il sera appris comme tel et au contraire, s’il est sorti du répertoire Junk vers autre chose que la corbeille, il sera appris comme Ham.</simpara>
+</listitem>
+<listitem>
+<simpara>Editez le fichier Dovecot.conf (remarques ISPConfig n&#8217;utilise pas aujourd&#8217;hui le contenu du répertoire conf.d). Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/dovecot/dovecot.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Insérez dans le groupe plugin et le protocol imap déjà existants dans le fichier :</simpara>
+<screen linenumbering="unnumbered">plugin {
+  sieve_plugins = sieve_imapsieve sieve_extprograms
+
+  imapsieve_mailbox1_name = Junk
+  imapsieve_mailbox1_causes = COPY
+  imapsieve_mailbox1_before = file:/etc/dovecot/sieve/report-spam.sieve
+
+  imapsieve_mailbox2_name = *
+  imapsieve_mailbox2_from = Junk
+  imapsieve_mailbox2_causes = COPY
+  imapsieve_mailbox2_before = file:/etc/dovecot/sieve/report-ham.sieve
+
+  sieve_pipe_bin_dir = /etc/dovecot/sieve
+
+  sieve_global_extensions = +vnd.dovecot.pipe
+}
+
+protocol imap {
+  mail_plugins = quota imap_quota imap_sieve
+}</screen>
+</listitem>
+<listitem>
+<simpara>Redémarrez dovecot. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service dovecot restart</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez un répertoire sieve et éditez report-ham.sieve. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /etc/dovecot/sieve/
+vi /etc/dovecot/sieve/report-ham.sieve</programlisting>
+</listitem>
+<listitem>
+<simpara>Insérez le texte suivant:</simpara>
+<screen linenumbering="unnumbered">require ["vnd.dovecot.pipe", "copy", "imapsieve", "environment", "variables"];
+
+if environment :matches "imap.mailbox" "*" {
+set "mailbox" "${1}";
+}
+
+if string "${mailbox}" "Trash" {
+stop;
+}
+
+if environment :matches "imap.email" "*" {
+set "email" "${1}";
+}
+
+pipe :copy "train-ham.sh" [ "${email}" ];</screen>
+</listitem>
+<listitem>
+<simpara>Editez report-spam.sieve. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/dovecot/sieve/report-spam.sieve</programlisting>
+</listitem>
+<listitem>
+<simpara>Insérez le texte suivant:</simpara>
+<screen linenumbering="unnumbered">require ["vnd.dovecot.pipe", "copy", "imapsieve", "environment", "variables"];
+
+if environment :matches "imap.email" "*" {
+set "email" "${1}";
+}
+
+pipe :copy "train-spam.sh" [ "${email}" ];</screen>
+</listitem>
+<listitem>
+<simpara>Créez les scripts et rétablissez les droits et permissions. Compilez les règles. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo "exec /usr/bin/rspamc learn_ham" &gt; /etc/dovecot/sieve/train-ham.sh
+echo "exec /usr/bin/rspamc learn_spam" &gt; /etc/dovecot/sieve/train-spam.sh
+sievec /etc/dovecot/sieve/report-ham.sieve
+sievec /etc/dovecot/sieve/report-spam.sieve
+chmod +x /etc/dovecot/sieve/train-*
+chown -R vmail:vmail /etc/dovecot/sieve</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez dovecot. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service dovecot restart</programlisting>
+</listitem>
+<listitem>
+<simpara>Lorsque vous déplacer un mail du répertoire Inbox vers le répertoire Junk ou vice-versa, les fichiers <literal>/var/log/mail.log</literal> et <literal>/var/log/rspamd/rspamd.log</literal> doivent montrer les actions de recalcul des spams.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop amavisd-new
+systemctl disable amavisd-new</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_du_serveur_de_messagerie">
+<title>Création du serveur de messagerie</title>
+<simpara>Pour créer un serveur de messagerie:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Assurez vous d&#8217;avoir créé le domaine DNS. Si ce n&#8217;est pas le cas déroulez tout d&#8217;abord la procédure de <link linkend="domain-config">création de domaines</link></simpara>
+</listitem>
+<listitem>
+<simpara>Aller dans la rubrique <literal>Email</literal>. Sélectionnez ensuite le menu <literal>Domain</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add new Domain</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez le nom de domaine.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>DomainKeys Indentified Mail (DKIM)</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>enable DKIM</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Generate DKIM Private-key</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Une fois cela fait, retourner dans la gestion des <literal>Records</literal> de domaine et activer le type DMARC</simpara>
+</listitem>
+<listitem>
+<simpara>Garder le paramétrage par défaut et sauvegardez.</simpara>
+</listitem>
+<listitem>
+<simpara>Faites de même pour les enregistrements SPF mais sélectionnez le mécanisme softfail.</simpara>
+</listitem>
+<listitem>
+<simpara>Votre serveur est créé et protégé Contre les spams (entrants et sortants).</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_finaliser_la_sécurisation_de_votre_serveur_de_mail">
+<title>Finaliser la sécurisation de votre serveur de mail</title>
+<simpara>Afin de mieux sécuriser votre serveur de mail, appliquez les opérations suivantes:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>editez le fichier main.cf</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/postfix/main.cf</programlisting>
+</listitem>
+<listitem>
+<simpara>Rechercher <literal>myhostname</literal> et replacer le texte par:</simpara>
+<programlisting language="ini" linenumbering="unnumbered">myhostname = mail.example.com <co xml:id="CO19-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO19-1">
+<para>Remplacer example.com par votre nom de domaine.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Redémarrez Postfix. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service postfix restart</programlisting>
+</listitem>
+<listitem>
+<simpara>Vous pouvez le tester en allant sur le site <link xl:href="https://mxtoolbox.com/diagnostic.aspx">MxToolbox</link>.</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Entrez le nom de host de votre serveur de mail: mail.example.com .</simpara>
+</listitem>
+<listitem>
+<simpara>cliquez sur <literal>test Email Server</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Tout doit être correct sauf éventuellement le reverse DNS qui doit être configuré pour pointer vers mail.example.com .</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_de_lautoconfig_pour_thunderbird_et_android">
+<title>Création de l’autoconfig pour Thunderbird et Android</title>
+<simpara>La procédure est utilisé par Thunderbird et Android pour configurer automatiquement les paramètres de la messagerie.</simpara>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>autoconfig</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>autoconfig</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>php-FPM</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">AddType application/x-httpd-php .php .php3 .php4 .php5 .xml
+
+CheckSpelling On
+CheckCaseOnly Off</programlisting>
+</listitem>
+<listitem>
+<simpara>Sauver.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Dans le répertoire <literal>/var/www/autoconfig.example.com/autoconfig/</literal> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/www/autoconfig.example.com/autoconfig/mail
+chmod 755 /var/www/autoconfig.example.com/autoconfig/mail
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail <co xml:id="CO20-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO20-1">
+<para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>A l’intérieur de ce répertoire, Editez un fichier <literal>config-v1.1.xml</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml</programlisting>
+</listitem>
+</orderedlist>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Y coller:</simpara>
+<programlisting language="xml" linenumbering="unnumbered">&lt;?php
+header('Content-Type: application/xml');
+?&gt;
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;clientConfig version="1.1"&gt;
+ &lt;emailProvider id="example.com"&gt; <co xml:id="CO21-1"/>
+   &lt;domain&gt;example.com&lt;/domain&gt;
+   &lt;displayName&gt;Example Mail&lt;/displayName&gt; <co xml:id="CO21-2"/>
+   &lt;displayShortName&gt;Example&lt;/displayShortName&gt; <co xml:id="CO21-3"/>
+   &lt;incomingServer type="imap"&gt;
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO21-4"/>
+     &lt;port&gt;993&lt;/port&gt;
+     &lt;socketType&gt;SSL&lt;/socketType&gt;
+     &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
+     &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
+   &lt;/incomingServer&gt;
+   &lt;incomingServer type="pop3"&gt;
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO21-5"/>
+     &lt;port&gt;995&lt;/port&gt;
+     &lt;socketType&gt;SSL&lt;/socketType&gt;
+     &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
+     &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
+   &lt;/incomingServer&gt;
+   &lt;outgoingServer type="smtp"&gt;
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO21-6"/>
+     &lt;port&gt;465&lt;/port&gt;
+     &lt;socketType&gt;SSL&lt;/socketType&gt;
+     &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
+     &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
+   &lt;/outgoingServer&gt;
+   &lt;outgoingServer type="smtp"&gt;
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO21-7"/>
+     &lt;port&gt;587&lt;/port&gt;
+     &lt;socketType&gt;STARTTLS&lt;/socketType&gt;
+     &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
+     &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
+   &lt;/outgoingServer&gt;
+ &lt;/emailProvider&gt;
+&lt;/clientConfig&gt;</programlisting>
+<calloutlist>
+<callout arearefs="CO21-1 CO21-4 CO21-5 CO21-6 CO21-7">
+<para>mettre à la place de example.com votre nom de domaine</para>
+</callout>
+<callout arearefs="CO21-2">
+<para>mettre ici votre libellé long pour votre nom de messagerie</para>
+</callout>
+<callout arearefs="CO21-3">
+<para>mettre ici un libellé court pour votre nom de messagerie</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Donner la permission en lecture seule et affecter les groupes d&#8217;appartenance. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 644 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <co xml:id="CO22-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO22-1">
+<para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
+</callout>
+</calloutlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_dautodiscover_pour_outlook">
+<title>Création d’autodiscover pour Outlook</title>
+<simpara>Outlook utilise un autre mécanisme pour se configurer automatiquement. Il est basé sur l&#8217;utilisation du nom de sous-domaine <literal>autodiscover</literal>.</simpara>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>autodiscover</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>autodiscover</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>php-FPM</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">CheckSpelling On
+CheckCaseOnly On
+RewriteEngine On
+ProxyPass "/" http://autoconfig.example.com/ <co xml:id="CO23-1"/>
+ProxyPassReverse "/" http://autoconfig.example.com/ <co xml:id="CO23-2"/>
+RewriteRule ^/ - [QSA,L]</programlisting>
+<calloutlist>
+<callout arearefs="CO23-1 CO23-2">
+<para>remplacer example.com par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Sauver.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Dans le répertoire <literal>/var/www/autoconfig.example.com/autoconfig/</literal>, créer un répertoire <literal>Autodiscover</literal>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/
+chmod 755 /var/www/autoconfig.example.com/autoconfig/Autodiscover/
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co xml:id="CO24-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO24-1">
+<para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>A l’intérieur de ce répertoire, Editez un fichier <literal>Autodiscover.xml</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml</programlisting>
+</listitem>
+</orderedlist>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Y coller:</simpara>
+<programlisting language="xml" linenumbering="unnumbered">&lt;?php
+ $raw = file_get_contents('php://input');
+ $matches = array();
+ preg_match('/&lt;EMailAddress&gt;(.*)&lt;\/EMailAddress&gt;/', $raw, $matches);
+ header('Content-Type: application/xml');
+?&gt;
+ &lt;Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006"&gt;
+   &lt;Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a"&gt;
+     &lt;User&gt;
+       &lt;DisplayName&gt;Example Mail&lt;/DisplayName&gt; <co xml:id="CO25-1"/>
+     &lt;/User&gt;
+     &lt;Account&gt;
+       &lt;AccountType&gt;email&lt;/AccountType&gt;
+       &lt;Action&gt;settings&lt;/Action&gt;
+       &lt;Protocol&gt;
+         &lt;Type&gt;IMAP&lt;/Type&gt;
+         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO25-2"/>
+         &lt;Port&gt;993&lt;/Port&gt;
+         &lt;DomainRequired&gt;off&lt;/DomainRequired&gt;
+         &lt;SPA&gt;off&lt;/SPA&gt;
+         &lt;SSL&gt;on&lt;/SSL&gt;
+         &lt;AuthRequired&gt;on&lt;/AuthRequired&gt;
+         &lt;LoginName&gt;&lt;?php echo $matches[1]; ?&gt;&lt;/LoginName&gt;
+       &lt;/Protocol&gt;
+       &lt;Protocol&gt;
+         &lt;Type&gt;SMTP&lt;/Type&gt;
+         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO25-3"/>
+         &lt;Port&gt;465&lt;/Port&gt;
+         &lt;DomainRequired&gt;off&lt;/DomainRequired&gt;
+         &lt;SPA&gt;off&lt;/SPA&gt;
+         &lt;SSL&gt;on&lt;/SSL&gt;
+         &lt;AuthRequired&gt;on&lt;/AuthRequired&gt;
+         &lt;LoginName&gt;&lt;?php echo $matches[1]; ?&gt;&lt;/LoginName&gt;
+       &lt;/Protocol&gt;
+     &lt;/Account&gt;
+   &lt;/Response&gt;
+ &lt;/Autodiscover&gt;</programlisting>
+<calloutlist>
+<callout arearefs="CO25-2 CO25-3">
+<para>mettre à la place de example.com votre nom de domaine</para>
+</callout>
+<callout arearefs="CO25-1">
+<para>mettre ici votre libellé long pour votre nom de messagerie</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Changez les permissions comme pour le répertoire</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 644 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <co xml:id="CO26-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO26-1">
+<para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Pointer votre navigateur sur le site <link xl:href="https://autodiscover.example.com/Autodiscover/Autodiscover.xml">https://autodiscover.example.com/Autodiscover/Autodiscover.xml</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le contenu du fichier xml doit s&#8217;afficher</simpara>
+</listitem>
+<listitem>
+<simpara>Vous pouvez faire aussi un test sur le <link xl:href="https://testconnectivity.microsoft.com">Testeur de connectivité Microsoft</link>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>choisissez: <literal>Découverte automatique Outlook</literal></simpara>
+</listitem>
+<listitem>
+<simpara>cliquez sur <literal>suivant</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Entrez votre adresse de courrier: <literal>user@example.com</literal>, un domain: <literal>example\user</literal>, un mot de passe tiré au hazard, Cochez les deux cases en dessous.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>effectuer un test</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Le résultat doit être: <literal>Test de connectivité réussi</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_dune_boite_mail">
+<title>Création d’une boite mail</title>
+<simpara>Pour créer une boite de messagerie:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Aller dans la rubrique <literal>Email</literal>. Sélectionnez ensuite le menu <literal>Email Mailbox</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add new Mailbox</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez les champs suivants:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara><literal>Name:</literal> &#8592; mettez votre prénom et votre nom</simpara>
+</listitem>
+<listitem>
+<simpara><literal>`Email:</literal> &#8592; mail_name @ example.com</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password:</literal> &#8592; saisissez un mot de passe ou générez en un</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password</literal> &#8592; saisissez une deuxième fois votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Quota (0 for unlimited):</literal> &#8592; mettez éventuellement un quota ou laissez 0 pour illimité.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Spamfilter:</literal> &#8592; Sélectionnez <literal>Normal</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Backup:</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara><literal>Backup interval:</literal> Sélectionnez <literal>Daily</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Number of backup copies:</literal> Sélectionnez 1</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+<note>
+<simpara>Notez que si vous créez une adresse mail nommée <link xl:href="mailto:mail_name@example.com">mail_name@example.com</link>, vous pouvez utilisez toutes les variantes (nommées tag) derrière le caractère "+". Ainsi <link xl:href="mailto:mail_name+nospam@example.com">mail_name+nospam@example.com</link> sera bien redirigé vers votre boite et l&#8217;extension +nospam vous permettre de trier automatiquement les mails que vous ne voulez pas recevoir.</simpara>
+</note>
+<note>
+<simpara>Il est possible de changer ce caractère spécial en le modifiant dans le fichier <literal>/etc/postfix/main.cf</literal> sur la ligne commençant par <literal>recipient_delimiter</literal>.</simpara>
+</note>
+</section>
+<section xml:id="_configuration_de_votre_client_de_messagerie">
+<title>Configuration de votre client de messagerie.</title>
+<simpara>Saisir l&#8217;adresse mail et votre mot de passe doit suffire pour configurer automatiquement votre client de messagerie.</simpara>
+<simpara>Si vous avez besoin de configurer votre client manuellement, voici les informations à saisir:</simpara>
+<informaltable frame="all" rowsep="1" colsep="1">
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="50*"/>
+<colspec colname="col_2" colwidth="50*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Paramètre</entry>
+<entry align="left" valign="top">Valeur</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top"><simpara>Type de serveur</simpara></entry>
+<entry align="left" valign="top"><simpara>IMAP</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Nom de serveur IMAP</simpara></entry>
+<entry align="left" valign="top"><simpara>mail.example.com</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Nom d&#8217;utilisateur IMAP</simpara></entry>
+<entry align="left" valign="top"><simpara><link xl:href="mailto:user@example.com">user@example.com</link></simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Port IMAP</simpara></entry>
+<entry align="left" valign="top"><simpara>993</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Sécurité IMAP</simpara></entry>
+<entry align="left" valign="top"><simpara>SSL/TLS</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Authentification IMAP</simpara></entry>
+<entry align="left" valign="top"><simpara>Normal Password</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Nom de serveur SMTP</simpara></entry>
+<entry align="left" valign="top"><simpara>mail.example.com</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Nom d&#8217;utilisateur SMTP</simpara></entry>
+<entry align="left" valign="top"><simpara><link xl:href="mailto:user@example.com">user@example.com</link></simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Port SMTP</simpara></entry>
+<entry align="left" valign="top"><simpara>465</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Sécurité SMTP</simpara></entry>
+<entry align="left" valign="top"><simpara>SSL/TLS</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Authentification SMTP</simpara></entry>
+<entry align="left" valign="top"><simpara>Normal Password</simpara></entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+</section>
+<section xml:id="_mise_en_oeuvre_du_site_web_de_webmail">
+<title>Mise en oeuvre du site web de webmail</title>
+<simpara>On suppose que vous avez install roundcube lors de la procédure d&#8217;installation initiale et que vous avez déjà créé le host mail.example.com.</simpara>
+<simpara>Il vous reste à appliquer la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>mail</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>mail</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# roundcube httpserver
+
+SSLProxyEngine On
+SSLProxyCheckPeerCN Off
+SSLProxyCheckPeerName Off
+SSLProxyVerify none
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / https://localhost:8080/webmail/
+ProxyPassReverse / https://localhost:8080/webmail/
+ProxyPreserveHost On</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>C&#8217;est fait, vous pouvez accéder à Roundcube directement sur <link xl:href="https://mail.example.com">https://mail.example.com</link></simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_transfert_de_vos_boites_mails_imap">
+<title>Transfert de vos boites mails IMAP</title>
+<simpara>Si vous faites une migration d&#8217;un ancien serveur vers un nouveau serveur vous souhaiterez probablement migrer aussi vos boites mail.</simpara>
+<simpara>La procédure ci dessous est à appliquer pour chaque compte mail IMAP. Elle peut facilement être scriptée:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Téléchargez imapsync du repository. Tapez:</simpara>
+<screen>wget https://raw.githubusercontent.com/imapsync/imapsync/master/imapsync
+chmod 755 imapsync</screen>
+</listitem>
+<listitem>
+<simpara>Installez les packages perls éventuellement manquants:</simpara>
+<screen>apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl</screen>
+</listitem>
+<listitem>
+<simpara>Créez deux fichiers temporaires qui contiennent les mots de passe du 1er et  2eme serveur. Tapez:</simpara>
+<screen>echo "passwdsrc" &gt; secretsrc <co xml:id="CO27-1"/>
+echo "passwddst" &gt; secretdst <co xml:id="CO27-2"/>
+chmod 600 secretsrc
+chmod 600 secretdst</screen>
+<calloutlist>
+<callout arearefs="CO27-1">
+<para>passwdsrc est à remplacer par le mot de passe du compte sur le serveur source</para>
+</callout>
+<callout arearefs="CO27-2">
+<para>passwddst est à remplacer par le mot de passe du compte sur le serveur destination</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Nous pouvons maintenant lancer la commande. Tapez:</simpara>
+<screen>./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst</screen>
+</listitem>
+<listitem>
+<simpara>Un fois la synchronisation effectuée, vous pouvez supprimer le fichier des mots de passe. tapez:</simpara>
+<screen>rm secretsrc
+rm secretdst</screen>
 </listitem>
 </orderedlist>
 </section>

@@ -1277,6 +1277,7 @@ quotaon -avug</programlisting>
 </orderedlist>
 </listitem>
 </orderedlist>
+</section>
 <section xml:id="_installation_et_configuration_de_phpmyadmin">
 <title>Installation et configuration de phpmyadmin</title>
 <orderedlist numeration="arabic">
@@ -1490,10 +1491,15 @@ Alias /webmail /var/lib/roundcube</programlisting>
 wget https://dl.eff.org/certbot-auto
 chmod a+x certbot-auto
 ./certbot-auto --install-only</programlisting>
+<simpara>Une façon alternative de l&#8217;installer est:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install python3-certbot-apache</programlisting>
 </section>
 <section xml:id="_installation_dun_scanner_de_vulnérabilités">
 <title>Installation d&#8217;un scanner de vulnérabilités</title>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>installer Git. Tapez :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">apt install git</programlisting>
@@ -1549,6 +1555,9 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <simpara>ISPConfig est un système de configuration de sites web totalement compatible avec Webmin.</simpara>
 <simpara>Pour installer ISPConfig, vous devez suivre la procédure ci-dessous. ISPConfig 3.1 a été utilisé dans ce tutoriel.</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp</programlisting>
@@ -1815,7 +1824,7 @@ L&#8217;étape "login initial" n&#8217;est à appliquer qu&#8217;une seule fois.
 <simpara>Cette procédure n&#8217;est à appliquer que lorsqu&#8217;aucun domaine n&#8217;est encore créé.</simpara>
 </note>
 <simpara>Vous devrez tout d&#8217;abord vous loguer sur le serveur ISPConfig.
-Comme vous n&#8217;avez pas encore configuré de nom de de domaine, vous devrez vous loguer de prime abord sur le site <link xl:href="http://vpsxxxxxx.ovh.net:8080/">http://vpsxxxxxx.ovh.net:8080/</link> .</simpara>
+Comme vous n&#8217;avez pas encore configuré de nom de de domaine, vous devrez vous loguer de prime abord sur le site <link xl:href="http://vpsxxxxxx.ovh.net:8080/">http://vpsxxxxxx.ovh.net:8080/</link> pour un vps chez ovh par exemple ou sur <link xl:href="http://raspberrypi.local:8080/">http://raspberrypi.local:8080/</link> pour un Raspberry.</simpara>
 <simpara>Utiliser le login: Admin et le mot de passe que vous avez configuré lors de l&#8217;installation d&#8217;ISPConfig</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -1856,6 +1865,10 @@ Comme vous n&#8217;avez pas encore configuré de nom de de domaine, vous devrez 
 </listitem>
 <listitem>
 <simpara>Acceptez les valeurs par défaut en cliquant sur <literal>Save</literal></simpara>
+<note>
+<simpara>Il est possible de basculer le site ISPConfig entièrement en Français. J&#8217;ai pour ma part gardé la version anglaise du site.
+Vous trouverez donc tous les libellés dans la suite de la documentation en anglais.</simpara>
+</note>
 </listitem>
 </orderedlist>
 </listitem>
@@ -1970,10 +1983,6 @@ SRV|_autodiscover._tcp|1 443 autodiscover.{DOMAIN}|0|3600
 NS|{DOMAIN}.|ns1.{DOMAIN}.|0|3600
 MX|{DOMAIN}.|mail.{DOMAIN}.|10|3600
 TXT|{DOMAIN}.|v=spf1 mx a ~all|0|3600</programlisting>
-<note>
-<simpara>Il est possible de basculer le site ISPConfig entièrement en Français. J&#8217;ai pour ma part gardé la version anglaise du site.
-Vous trouverez donc tous les libellés dans la suite de la documentation en anglais.</simpara>
-</note>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -2015,6 +2024,9 @@ Vous trouverez donc tous les libellés dans la suite de la documentation en angl
 </listitem>
 <listitem>
 <simpara><literal>DKIM:</literal> &#8592; Yes</simpara>
+<note>
+<simpara>Si votre serveur est chez vous, il est probablement installé derrière un routeur ADSL configuré au préalable avec une DMZ qui pointe sur ce serveur. Dans ce cas, vous ne devrez pas indiquer l&#8217;adresse IP locale de votre serveur mais l&#8217;adresse IP de votre routeur ADSL telle qu&#8217;elle est vue sur internet. On suppose aussi que cette adresse IP est statique et non pas allouée dynamiquement par l&#8217;opérateur.</simpara>
+</note>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -2154,6 +2166,54 @@ _imap._tcp           3600 SRV   0  0 0   .
 _pop3._tcp           3600 SRV   0  0 0   .
 _autodiscover._tcp   3600 SRV   0 0 443  autoconfig.example.com.
 example.com.         3600 TXT            "v=spf1 mx a ~all"</screen>
+</section>
+<section xml:id="_création_dun_sous_domaine">
+<title>Création d&#8217;un sous domaine</title>
+<simpara>Supposons que vous êtes en train de créer un sous domain nommé sub.example.com .
+Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail.sub.example.com ou blog.sub.example.com.</simpara>
+<simpara>Un cas assez classique est que ce sous domaine est délégué à une machine tierce.</simpara>
+<simpara>Par exemple: example.com est installé sur un VPS quelque part sur internet et sub.example.com est hébergé chez vous sur votre Raspberry.</simpara>
+<simpara>On suppose que votre domain a été configuré en suivant la procédure du chapitre précédent.</simpara>
+<simpara>Rien de bien sorcier pour votre sous domaine: Vous devez le créer sur votre Raspberry selon la même procédure mais avec le nom du sous domaine (sub.example.com donc).</simpara>
+<simpara>Vous aurez des actions complémentaires à effectuer sur votre domaine:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans <literal>DNS</literal> de votre serveur de domaine principal</simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionner le menu <literal>Zones</literal> puis le domaine example.com</simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez l&#8217;onglet <literal>Records</literal> et créez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>un enregistrement de type <literal>NS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com.</literal> et un <literal>nameserver Hostname</literal> &#8592; <literal>ns1.sub.example.com.</literal></simpara>
+</listitem>
+<listitem>
+<simpara>un enregistrement de type <literal>NS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com.</literal> et un <literal>nameserver Hostname</literal> &#8592; <literal>ns2.sub.example.com.</literal></simpara>
+</listitem>
+<listitem>
+<simpara>un enregistrement de type <literal>NS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com.</literal> et un <literal>nameserver Hostname</literal> &#8592; <literal>ns3.example.com.</literal> .</simpara>
+<simpara>Ce dernier type d&#8217;enregistrement se nomme un Glue record pour faire le lien vers le serveur secondaire.</simpara>
+</listitem>
+<listitem>
+<simpara>un enregistrement de type <literal>A</literal> avec un <literal>Hostname</literal> &#8592; ns3 et une <literal>IP-address</literal> &#8592; Adresse IP de votre routeur ADSL ou est connecté le Raspberry.</simpara>
+<simpara>Ce dernier enregistrement en complétant le Glue record fait le lien avec l&#8217;adresse IP de sub.example.com</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Si vous avez activé DNSSEC sur votre serveur DNS de sub.example.com vous devrez récupérer les entrées DS du champ <literal>DNSSEC DS-Data for registry</literal> de votre domaine sub.example.com et créer dans votre domaine example.com les deux entrées suivantes:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>un enregistrement de type <literal>DS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com</literal> et un champ <literal>data</literal> contenant <literal>xxxxx 7 1 &lt;votre_digest_recupérée&gt;</literal></simpara>
+</listitem>
+<listitem>
+<simpara>un enregistrement de type <literal>DS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com</literal> et un champ <literal>data</literal> contenant <literal>xxxxx 7 2 &lt;votre_digest_recupérée&gt;</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
 </section>
 <section xml:id="domain-site">
 <title>Création d’un site web</title>
@@ -2332,9 +2392,10 @@ ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]</programl
 </listitem>
 </orderedlist>
 </section>
+</section>
 <section xml:id="_associer_des_certificats_reconnu_à_vos_outils">
 <title>Associer des certificats reconnu à vos outils</title>
-<simpara>Comme vous avec créé votre premier domaine avec SSL et let&#8217;s encrypt dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux services de base:</simpara>
+<simpara>Cette action est à effectuer une fois que vous avez créé votre domaine principal et que vous avez généré vos premiers certificats let&#8217;s encrypt dans ISPConfig, vous pouvez maintenant, affecter ce certificat aux services de base:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Vous devez avoir créé au préalable un site pour les domaines example.com et mail.example.com</simpara>
@@ -2446,12 +2507,11 @@ incrontab -e.</programlisting>
 </listitem>
 </orderedlist>
 </section>
-</section>
 <section xml:id="_surveillance_du_serveur_avec_munin_et_monit">
 <title>Surveillance du serveur avec Munin et Monit</title>
 <section xml:id="_note_préliminaire">
 <title>Note préliminaire</title>
-<simpara>Installez tout d&#8217;abord les paquets insdispensables pour faire fonctionner Munin avec Apache puis activez le module fcgid:</simpara>
+<simpara>Installez tout d&#8217;abord les paquets indispensables pour faire fonctionner Munin avec Apache puis activez le module fcgid:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">apt-get install apache2 libcgi-fast-perl libapache2-mod-fcgid
 a2enmod fcgid</programlisting>
 </section>
@@ -2678,7 +2738,7 @@ check process mysql with pidfile /var/run/mysqld/mysqld.pid
  if failed host 127.0.0.1 port 3306 then restart
  if 5 restarts within 5 cycles then timeout
 
-check process proftpd with pidfile /var/run/pure-ftpd/pure-ftpd.pid
+check process pureftpd with pidfile /var/run/pure-ftpd/pure-ftpd.pid
  start program = "/usr/sbin/service pure-ftpd-mysql start"
  stop program = "/usr/sbin/service pure-ftpd-mysql stop"
  if failed port 21 protocol ftp then restart
@@ -3633,7 +3693,6 @@ chmod 600 secretdst</screen>
 rm secretdst</screen>
 </listitem>
 </orderedlist>
-</section>
 </section>
 <section xml:id="_installation_de_joomla_ou_de_concrete5">
 <title>Installation de Joomla ou de Concrete5</title>
