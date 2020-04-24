@@ -3966,8 +3966,60 @@ Elle peut facilement être scriptée:
        rm secretsrc
        rm secretdst
 
+Transfert de vos boites mails IMAP
+----------------------------------
+
+Si vous faites une migration d’un ancien serveur vers un nouveau serveur
+vous souhaiterez probablement migrer aussi vos boites mail.
+
+La procédure ci dessous est à appliquer pour chaque compte mail IMAP.
+Elle peut facilement être scriptée:
+
+1. Téléchargez imapsync du repository. Tapez:
+
+   ::
+
+       wget https://raw.githubusercontent.com/imapsync/imapsync/master/imapsync
+       chmod 755 imapsync
+
+2. Installez les packages perls éventuellement manquants:
+
+   ::
+
+       apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl
+
+3. Créez deux fichiers temporaires qui contiennent les mots de passe du
+   1er et 2eme serveur. Tapez:
+
+   ::
+
+       echo "passwdsrc" > secretsrc 
+       echo "passwddst" > secretdst 
+       chmod 600 secretsrc
+       chmod 600 secretdst
+
+   -  passwdsrc est à remplacer par le mot de passe du compte sur le
+      serveur source
+
+   -  passwddst est à remplacer par le mot de passe du compte sur le
+      serveur destination
+
+4. Nous pouvons maintenant lancer la commande. Tapez:
+
+   ::
+
+       ./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst
+
+5. Un fois la synchronisation effectuée, vous pouvez supprimer le
+   fichier des mots de passe. tapez:
+
+   ::
+
+       rm secretsrc
+       rm secretdst
+
 Installation de Joomla ou de Concrete5
---------------------------------------
+======================================
 
 Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour
 et inclut une foule de plugins Concrete5 est un autre CMS assez connu
@@ -3979,7 +4031,7 @@ l’identique pour concrete5 en remplacant les textes joomla par
 concrete5.
 
 Création du site web de Joomla
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -4009,7 +4061,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
    e. Laisser le reste par défaut.
 
 Création de l’application Joomla
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 Appliquez les opérations suivantes dans ISPConfig:
 
@@ -4049,7 +4101,7 @@ Appliquez les opérations suivantes dans ISPConfig:
     dernière version de Joomla.
 
 Installation de Mediawiki
--------------------------
+=========================
 
 Mediawiki est le portail wiki mondialement connu et utilisé notamment
 pour le site wikipedia.
@@ -4057,7 +4109,7 @@ pour le site wikipedia.
 L’installation s’effectue à 100% avec ISPConfig.
 
 Création du site web de Mediawiki
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -4087,7 +4139,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
    e. Laisser le reste par défaut.
 
 Création de l’application Mediawiki
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 Appliquez les opérations suivantes dans ISPConfig:
 
@@ -4127,7 +4179,7 @@ Appliquez les opérations suivantes dans ISPConfig:
     dernière version de Mediawiki.
 
 Installation de Wordpress
--------------------------
+=========================
 
 Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à
 jour.
@@ -4135,7 +4187,7 @@ jour.
 L’installation s’effectue à 100% avec ISPConfig.
 
 Création du site web de Wordpress
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -4165,7 +4217,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
    e. Laisser le reste par défaut.
 
 Création de l’application Wordpress
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 Appliquez les opérations suivantes dans ISPConfig:
 
@@ -4205,7 +4257,7 @@ Appliquez les opérations suivantes dans ISPConfig:
     dernière version de Wordpress.
 
 Micro Weber
------------
+===========
 
 Microweber est un système de gestion de contenu et un constructeur de
 sites web Open Source. Il est basé sur le langage de programmation PHP
@@ -4216,7 +4268,7 @@ d’édition en direct qui permet aux utilisateurs de visualiser leurs
 modifications telles qu’elles apparaîtraient.
 
 Création du site web de Microweber
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -4250,7 +4302,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 3. `Loguez vous comme root sur le serveur <#root_login>`__
 
 Création des bases de données
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Appliquez les opérations suivantes dans ISPConfig :
 
@@ -4292,7 +4344,7 @@ Appliquez les opérations suivantes dans ISPConfig :
    e. Cliquez sur ``save``
 
 Installation de Microweber
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 Suivez la procédure suivante:
 
@@ -4339,7 +4391,7 @@ Suivez la procédure suivante:
    et commencer à utiliser l’outil
 
 Piwigo
-------
+======
 
 Piwigo est une application web pour gérer votre collection de photos, et
 autres médias. Doté de puissantes fonctionnalités, il gère des galeries
@@ -4349,7 +4401,7 @@ données MySQL.
 Piwigo était auparavant connu sous le nom PhpWebGallery.
 
 Création du site web de Piwigo
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -4383,7 +4435,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 3. `Loguez vous comme root sur le serveur <#root_login>`__
 
 Création des bases de données
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Appliquez les opérations suivantes dans ISPConfig :
 
@@ -4425,7 +4477,7 @@ Appliquez les opérations suivantes dans ISPConfig :
    e. Cliquez sur ``save``
 
 Installation de Piwigo
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 Suivez la procédure suivante:
 
@@ -4473,7 +4525,7 @@ Suivez la procédure suivante:
    commencer à utiliser l’outil
 
 Installation de Nextcloud
--------------------------
+=========================
 
 NextCloud est un serveur d’hébergement et de partage de fichiers gratuit
 et open source, fork du projet ownCloud. Il est très similaire aux
@@ -4491,7 +4543,7 @@ des systèmes d’exploitation, y compris Windows, macOS, FreeBSD, et
 Linux.
 
 Installation initiale
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 NextCloud est écrit en PHP et utilise une base de données MariaDB pour
 stocker ses données.
@@ -4528,7 +4580,7 @@ Pour installer, Suivez la procédure suivante:
        systemctl restart apache2
 
 Création du site web de Nextcloud
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -4562,7 +4614,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 3. `Loguez vous comme root sur le serveur <#root_login>`__
 
 Création des bases de données
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Appliquez les opérations suivantes dans ISPConfig :
 
@@ -4604,7 +4656,7 @@ Appliquez les opérations suivantes dans ISPConfig :
    e. Cliquez sur ``save``
 
 Installation de Nextcloud
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 Suivez la procédure suivante:
 
@@ -4649,14 +4701,14 @@ Suivez la procédure suivante:
    et commencer à utliser l’outil
 
 Installation et configuration de Gitea
---------------------------------------
+======================================
 
 Gitea est un système simple d’hébergement de code basé sur Git. C’est un
 fork de Gogs. Il montre des fonctionnalités similaires à gitlab ou
 github tout en gardant un code plus simple.
 
 Création du site web de Gitea
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Appliquez les opérations suivantes Dans ISPConfig:
 
@@ -4731,7 +4783,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
        chmod 770 /etc/gitea
 
 Création des bases de données
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Appliquez les opérations suivantes dans ISPConfig :
 
@@ -4773,7 +4825,7 @@ Appliquez les opérations suivantes dans ISPConfig :
    e. Cliquez sur ``save``
 
 Téléchargez et installez Gitea
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 Appliquez les opérations suivantes:
 
@@ -4897,7 +4949,7 @@ Appliquez les opérations suivantes:
         systemctl restart gitea.service
 
 Activer une connexion SSH dédiée
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 En option, vous pouvez avoir envie de dédier une connexion SSH pour
 Gitea:
@@ -4940,7 +4992,7 @@ Gitea:
 6. Enjoy !
 
 Installation de Seafile
------------------------
+=======================
 
 Seafile est un système de partage de fichier simple et efficace écrit en
 Python. Il existe des clients de connexion pour Windows, Linux, Android,
@@ -4949,7 +5001,7 @@ IOS.
 Cette installation est optionnelle.
 
 Création du site web de Seafile
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 Appliquez la procédure suivante:
 
@@ -5015,7 +5067,7 @@ Appliquez la procédure suivante:
           ProxyPassReverse / http://localhost:8090/
 
 Création de bases de données
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 1. Loguez vous sur ISPConfig
 
@@ -5060,7 +5112,7 @@ Création de bases de données
       bases
 
 Téléchargez et installez Seafile
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 Appliquez la procédure suivante:
 
@@ -5106,7 +5158,7 @@ Appliquez la procédure suivante:
    de ce qui a été configuré
 
 Lancement initial
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Nous allons effectuer un premier lancement du serveur Seafile:
 
@@ -5192,7 +5244,7 @@ Nous allons effectuer un premier lancement du serveur Seafile:
 12. La page de login de Seafile doit s’afficher
 
 Lancement automatique de Seafile
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 Afin de s’assurer que Seafile tourne en permanence, on doit créer un
 script de lancement automatique de Seafile:
@@ -5285,12 +5337,12 @@ script de lancement automatique de Seafile:
 6. Enjoy !
 
 Installation d’un serveur de VPN Pritunl
-----------------------------------------
+========================================
 
 Pritunl est un serveur VPN basé sur OpenVPN.
 
 Création du site web de Pritunl
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 Appliquez la procédure suivante:
 
@@ -5342,7 +5394,7 @@ Appliquez la procédure suivante:
           ProxyPreserveHost On
 
 Installation de Pritunl
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 Veuillez suivre la procédure suivante:
 
@@ -5385,7 +5437,7 @@ Veuillez suivre la procédure suivante:
        systemctl enable mongod pritunl
 
 Configuration de Pritunl
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 Votre service Pritunl est actif. Vous devez maintenant le configurer
 pour qu’il fonctionne:
@@ -5510,7 +5562,7 @@ pour qu’il fonctionne:
 18. Votre serveur de VPN est opérationnel.
 
 Se connecter au serveur de VPN
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 Comme Pritunl est compatible OpenVPN n’importe quel logiciel compatible
 OpenVPN peut être utilisé. Pritunl founit un
@@ -5525,7 +5577,7 @@ Vous pourrez vous connecter en cliquant sur le bouton ``Connect`` du
 compte utilisateur.
 
 Réparer une base Pritunl
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 Si jamais votre base est corrompue, vous pourrez la réparer en tapant:
 
@@ -5536,7 +5588,7 @@ Si jamais votre base est corrompue, vous pourrez la réparer en tapant:
     systemctl start pritunl
 
 Mot de passe perdu
-~~~~~~~~~~~~~~~~~~
+------------------
 
 Vous pouvez re-générer un mot de passe en tapant:
 
@@ -5545,7 +5597,7 @@ Vous pouvez re-générer un mot de passe en tapant:
     pritunl reset-password
 
 Installation de Grafana
------------------------
+=======================
 
 Grafana est un logiciel de visualisation et d’analyse à code source
 ouvert. Il vous permet d’interroger, de visualiser, d’alerter et
@@ -5560,7 +5612,7 @@ Cette installation est optionnelle puisque Munin est déjà installé sur
 votre système.
 
 Création du site web de Grafana
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 Appliquez la procédure suivante:
 
@@ -5607,7 +5659,7 @@ Appliquez la procédure suivante:
           ProxyPassReverse / http://localhost:3000/
 
 Installation de Grafana
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
@@ -5743,7 +5795,7 @@ Installation de Grafana
         service prometheus-process-exporter restart
 
 Installation et configuration de Loki
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 Pour installer Loki, appliquez la procédure suivante:
 
@@ -5891,7 +5943,7 @@ Pour installer Loki, appliquez la procédure suivante:
         sudo service loki status
 
 Installation et configuration de Promtail
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 Installez maintenant Promtail:
 
@@ -6013,10 +6065,10 @@ Installez maintenant Promtail:
         {job="varlogs"}
 
 Annexe
-------
+======
 
 Installation de Hestia
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 Hestia est basé sur VestaCP. C’est une alternative opensource et plus
 moderne de cet outiL. La documentation est proposée ici:
@@ -6060,7 +6112,7 @@ Pour installer:
    du compte admin de Hestia ainsi que le numéro de port du site web
 
 backup
-~~~~~~
+------
 
 pour installer borg backup en mode rescue afin d’avoir la dernière
 version. apt install python3-pip libssl-dev cython3 gcc g++

@@ -4248,8 +4248,2098 @@ Elle peut facilement être scriptée:
        rm secretsrc
        rm secretdst
 
+Installation de Joomla ou de Concrete5
+======================================
+
+Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour
+et inclut une foule de plugins Concrete5 est un autre CMS assez connu
+avec un design plus moderne.
+
+L’installation s’effectue à 100% avec ISPConfig. Dans la procédure ci
+dessous qui est taillée pour Joomla, vous pouvez l’appliquer à
+l’identique pour concrete5 en remplacant les textes joomla par
+concrete5.
+
+Création du site web de Joomla
+------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``joomla``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``joomla``.
+
+   b. Le faire pointer vers le web folder ``joomla``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``PHP-FPM`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+Création de l’application Joomla
+--------------------------------
+
+Appliquez les opérations suivantes dans ISPConfig:
+
+1.  Allez dans la rubrique ``Sites``, le menu ``Update Packagelist``.
+
+2.  Cliquez sur ``Update Packagelist``
+
+3.  Allez dans la rubrique ``Sites``, le menu ``Available packages``.
+
+4.  Faites une recherche par ``Name``. Tapez ``joomla``
+
+5.  Cliquez sur le package ``joomla``
+
+6.  Cliquez sur ``Install this package``
+
+7.  Remplissez tous les champs:
+
+    -  ``Install location:`` ← choisissez votre domain (``example.com``)
+       et laissez vide le chemin.
+
+    -  ``New database password`` ← gardez ce qui est remplit
+
+    -  ``Administrator’s login`` ← gardez ce qui est remplit: ``admin``
+
+    -  ``Password`` et ``Repeat Password`` ← Tapez votre mot de passe
+
+    -  ``Default site language:`` ← choisissez ``French``
+
+    -  ``I accept the license`` ← cochez la case
+
+8.  Cliquez sur ``Install``
+
+9.  Pointez votre navigateur sur https://example.com/ et loguez vous
+    ``admin`` avec votre mot de passe saisi, c’est fait !
+
+10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
+    dernière version de Joomla.
+
+Installation de Mediawiki
+=========================
+
+Mediawiki est le portail wiki mondialement connu et utilisé notamment
+pour le site wikipedia.
+
+L’installation s’effectue à 100% avec ISPConfig.
+
+Création du site web de Mediawiki
+---------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``mediawiki``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``mediawiki``.
+
+   b. Le faire pointer vers le web folder ``mediawiki``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``PHP-FPM`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+Création de l’application Mediawiki
+-----------------------------------
+
+Appliquez les opérations suivantes dans ISPConfig:
+
+1.  Allez dans la rubrique ``Sites``, le menu ``Update Packagelist``.
+
+2.  Cliquez sur ``Update Packagelist``
+
+3.  Allez dans la rubrique ``Sites``, le menu ``Available packages``.
+
+4.  Faites une recherche par ``Name``. Tapez ``mediawiki``
+
+5.  Cliquez sur le package ``mediawiki``
+
+6.  Cliquez sur ``Install this package``
+
+7.  Remplissez tous les champs:
+
+    -  ``Install location:`` ← choisissez votre domain (``example.com``)
+       et laissez vide le chemin.
+
+    -  ``New database password`` ← gardez ce qui est remplit
+
+    -  ``Administrator’s login`` ← gardez ce qui est remplit: ``admin``
+
+    -  ``Password`` et ``Repeat Password`` ← Tapez votre mot de passe
+
+    -  ``Default site language:`` ← choisissez ``French``
+
+    -  ``I accept the license`` ← cochez la case
+
+8.  Cliquez sur ``Install``
+
+9.  Pointez votre navigateur sur https://example.com/ et loguez vous
+    ``admin`` avec votre mot de passe saisi, c’est fait !
+
+10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
+    dernière version de Mediawiki.
+
+Installation de Wordpress
+=========================
+
+Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à
+jour.
+
+L’installation s’effectue à 100% avec ISPConfig.
+
+Création du site web de Wordpress
+---------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``wordpress``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``wordpress``.
+
+   b. Le faire pointer vers le web folder ``wordpress``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``PHP-FPM`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+Création de l’application Wordpress
+-----------------------------------
+
+Appliquez les opérations suivantes dans ISPConfig:
+
+1.  Allez dans la rubrique ``Sites``, le menu ``Update Packagelist``.
+
+2.  Cliquez sur ``Update Packagelist``
+
+3.  Allez dans la rubrique ``Sites``, le menu ``Available packages``.
+
+4.  Faites une recherche par ``Name``. Tapez ``wordpress``
+
+5.  Cliquez sur le package ``wordpress``
+
+6.  Cliquez sur ``Install this package``
+
+7.  Remplissez tous les champs:
+
+    -  ``Install location:`` ← choisissez votre domain (``example.com``)
+       et laissez vide le chemin.
+
+    -  ``New database password`` ← gardez ce qui est remplit
+
+    -  ``Administrator’s login`` ← gardez ce qui est remplit: ``admin``
+
+    -  ``Password`` et ``Repeat Password`` ← Tapez votre mot de passe
+
+    -  ``Default site language:`` ← choisissez ``French``
+
+    -  ``I accept the license`` ← cochez la case
+
+8.  Cliquez sur ``Install``
+
+9.  Pointez votre navigateur sur https://example.com/ et loguez vous
+    ``admin`` avec votre mot de passe saisi, c’est fait !
+
+10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
+    dernière version de Wordpress.
+
+Micro Weber
+===========
+
+Microweber est un système de gestion de contenu et un constructeur de
+sites web Open Source. Il est basé sur le langage de programmation PHP
+et le framework web Laravel 5, utilisant le glisser-déposer et
+permettant aux utilisateurs de créer rapidement du contenu, tout en
+programmant et en gérant plusieurs affichages. Il dispose d’une fonction
+d’édition en direct qui permet aux utilisateurs de visualiser leurs
+modifications telles qu’elles apparaîtraient.
+
+Création du site web de Microweber
+----------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``microweber``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``microweber``.
+
+   b. Le faire pointer vers le web folder ``microweber``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``PHP-FPM`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Cliquez sur ``Save``
+
+3. `Loguez vous comme root sur le serveur <#root_login>`__
+
+Création des bases de données
+-----------------------------
+
+Appliquez les opérations suivantes dans ISPConfig :
+
+1. Créez une base de données mysql. Aller dans le menu ``Database`` pour
+   définir un utilisateur MariaDB
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``microweber`` par exemple
+
+          -  ``Database password:`` ← saisir un mot de passe ou en
+             générer un en cliquant sur le bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Cliquez sur ``save``
+
+   c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+      données
+
+   d. Saisissez les informations:
+
+      -  ``Site:`` ← sélectionner le site ``example.com``
+
+      -  ``Database name:`` ← Saisissez le nom de la base de données
+         ``microweber``
+
+      -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+         ``cxmicroweber``. x: est le numéro de client.
+
+   e. Cliquez sur ``save``
+
+Installation de Microweber
+--------------------------
+
+Suivez la procédure suivante:
+
+1. Tapez la commande suivante:
+
+::
+
+    https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinstall.php
+
+1. Un fois téléchargé, faites pointer votre navigateur vers
+   http://microweber.example.com/netinstall.php
+
+2. Indique ``.`` comme répertoire d’installation et cliquez sur
+   ``Télécharger et décompresser Piwigo``
+
+3. Une fois le téléchargement terminé cliquez sur
+   ``Installer Microweber``. Rechargez la page si besoin.
+
+4. Répondez aux questions suivantes:
+
+   -  ``Hote`` ← Laissez ``localhost``
+
+   -  ``Utilisateur`` ← entrez ``cxmicroweber``. x est le numero de
+      client; habituellement c’est 0
+
+   -  ``Mot de passe`` ← Tapez votre mot de passe
+
+   -  ``Nom de la Base de données`` ← entrez ``cxmicroweber``. x est le
+      numero de client; habituellement c’est 0
+
+   -  ``Préfix des noms de tables`` ← Laissez le champ vide
+
+   -  ``Nom d’Utilisateur`` ← tapez ``admin``
+
+   -  ``Mot de passe`` ← Tapez votre mot de passe
+
+   -  ``Mot de passe [confirmer]`` ← Tapez votre mot de passe
+
+   -  ``Adresse e-mail`` ← Tapez votre adresse mail d’administrateur
+
+5. Tapez ``Démarrer l’installation``
+
+6. Vous êtes redirigé sur le site Microweber ou vous pourrez vous loguer
+   et commencer à utiliser l’outil
+
+Piwigo
+======
+
+Piwigo est une application web pour gérer votre collection de photos, et
+autres médias. Doté de puissantes fonctionnalités, il gère des galeries
+partout dans le monde. Elle est écrite en PHP et nécessite une base de
+données MySQL.
+
+Piwigo était auparavant connu sous le nom PhpWebGallery.
+
+Création du site web de Piwigo
+------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``piwigo``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``piwigo``.
+
+   b. Le faire pointer vers le web folder ``piwigo``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``PHP-FPM`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Cliquez sur ``Save``
+
+3. `Loguez vous comme root sur le serveur <#root_login>`__
+
+Création des bases de données
+-----------------------------
+
+Appliquez les opérations suivantes dans ISPConfig :
+
+1. Créez une base de données mysql. Aller dans le menu ``Database`` pour
+   définir un utilisateur MariaDB
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``piwigo`` par exemple
+
+          -  ``Database password:`` ← saisir un mot de passe ou en
+             générer un en cliquant sur le bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Cliquez sur ``save``
+
+   c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+      données
+
+   d. Saisissez les informations:
+
+      -  ``Site:`` ← sélectionner le site ``example.com``
+
+      -  ``Database name:`` ← Saisissez le nom de la base de données
+         ``piwigo``
+
+      -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+         ``cxpiwigo``. x: est le numéro de client.
+
+   e. Cliquez sur ``save``
+
+Installation de Piwigo
+----------------------
+
+Suivez la procédure suivante:
+
+1. Tapez la commande suivante:
+
+::
+
+    cd /var/www/piwigo.example.com/piwigo
+    wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinstall.php
+
+1. Un fois téléchargé, faites pointer votre navigateur vers
+   http://piwigo.example.com/piwigo-netinstall.php
+
+2. Indique ``.`` comme répertoire d’installation et cliquez sur
+   ``Téléharger et décompresser Piwigo``
+
+3. Une fois le téléchargement terminé cliquez sur ``Installer Piwigo``.
+   Rechargez la page si besoin.
+
+4. Répondez aux questions suivantes:
+
+   -  ``Hote`` ← Laissez ``localhost``
+
+   -  ``Utilisateur`` ← entrez ``cxpiwigo``. x est le numero de client;
+      habituellement c’est 0
+
+   -  ``Mot de passe`` ← Tapez votre mot de passe
+
+   -  ``Nom de la Base de données`` ← entrez ``cxpiwigo``. x est le
+      numero de client; habituellement c’est 0
+
+   -  ``Préfix des noms de tables`` ← Laissez le champ vide
+
+   -  ``Nom d’Utilisateur`` ← tapez ``admin``
+
+   -  ``Mot de passe`` ← Tapez votre mot de passe
+
+   -  ``Mot de passe [confirmer]`` ← Tapez votre mot de passe
+
+   -  ``Adresse e-mail`` ← Tapez votre adresse mail d’administrateur
+
+5. Tapez ``Démarrer l’installation``
+
+6. Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer et
+   commencer à utiliser l’outil
+
+Installation de Nextcloud
+=========================
+
+NextCloud est un serveur d’hébergement et de partage de fichiers gratuit
+et open source, fork du projet ownCloud. Il est très similaire aux
+autres systèmes de partage de fichiers des services comme Google Drive,
+Dropbox et iCloud ou Seafile. NextCloud vous permet de stocker des
+fichiers, des documents, des photos, des films et des vidéos à partir de
+la centrale l’emplacement. Avec NextCloud, vous pouvez partager des
+fichiers, des contacts et tout autre les médias avec vos amis et vos
+clients. NextCloud s’intègre avec le courrier, calendrier, contacts et
+autres fonctionnalités qui aideront vos équipes à obtenir leur travail
+est plus rapide et plus facile. Vous pouvez installer le client
+NextCloud sur un ou plusieurs PC pour synchroniser les fichiers avec
+votre serveur Nextcloud. Des clients sont disponibles pour la plupart
+des systèmes d’exploitation, y compris Windows, macOS, FreeBSD, et
+Linux.
+
+Installation initiale
+---------------------
+
+NextCloud est écrit en PHP et utilise une base de données MariaDB pour
+stocker ses données.
+
+Pour installer, Suivez la procédure suivante:
+
+1. Installez quelques paquets de base. Tapez:
+
+   .. code:: bash
+
+       apt-get install  php-cgi php-curl
+
+2. Une fois installé, éditez le fichier php.ini pour changer quelques
+   limitations. Tapez:
+
+::
+
+    vi /etc/php/7.3/apache2/php.ini
+
+1. Cherchez les champs ci dessous et changez les valeurs comme suit:
+
+   .. code:: ini
+
+       memory_limit = 512M
+       upload_max_filesize = 500M
+       post_max_size = 500M
+       max_execution_time = 300
+       date.timezone = Asia/Kolkata
+
+2. Sauvez et redémarrez apache. Tapez:
+
+   .. code:: command
+
+       systemctl restart apache2
+
+Création du site web de Nextcloud
+---------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``nextcloud``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``nextcloud``.
+
+   b. Le faire pointer vers le web folder ``nextcloud``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``PHP-FPM`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Cliquez sur ``Save``
+
+3. `Loguez vous comme root sur le serveur <#root_login>`__
+
+Création des bases de données
+-----------------------------
+
+Appliquez les opérations suivantes dans ISPConfig :
+
+1. Créez une base de données mysql. Aller dans le menu ``Database`` pour
+   définir un utilisateur MariaDB
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``nextcloud`` par exemple
+
+          -  ``Database password:`` ← saisir un mot de passe ou en
+             générer un en cliquant sur le bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Cliquez sur ``save``
+
+   c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+      données
+
+   d. Saisissez les informations:
+
+      -  ``Site:`` ← sélectionner le site ``example.com``
+
+      -  ``Database name:`` ← Saisissez le nom de la base de données
+         ``nextcloud``
+
+      -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+         ``cxnextcloud``. x: est le numéro de client.
+
+   e. Cliquez sur ``save``
+
+Installation de Nextcloud
+-------------------------
+
+Suivez la procédure suivante:
+
+1. Tapez la commande suivante:
+
+::
+
+    cd /var/www/nextcloud.example.com/nextcloud
+    wget https://download.nextcloud.com/server/installer/setup-nextcloud.php
+
+1. Un fois téléchargé, faites pointer votre navigateur vers
+   http://nextcloud.example.com/setup-nextcloud.php
+
+2. Indique ``.`` comme répertoire d’installation et cliquez sur ``Next``
+
+3. Une fois le téléchargement terminé cliquez sur ``Next``. Rechargez la
+   page si besoin.
+
+4. Répondez aux questions suivantes:
+
+   -  ``Login Admin`` ← tapez ``admin``
+
+   -  ``Password Admin`` ← Tapez votre mot de passe
+
+   -  ouvrez ``Stockage et base de données``
+
+   -  ``Configurer la base de données`` ← cliquez sur ``MariaDB``
+
+   -  ``Utilisateur de la Base de données`` ← entrez ``cxnextcloud``. x
+      est le numero de client; habituellement c’est 0
+
+   -  ``Password de la Base de données`` ← Tapez votre mot de passe
+
+   -  ``Nom de la Base de données`` ← entrez ``cxnextcloud``. x est le
+      numero de client; habituellement c’est 0
+
+   -  ``nom du serveur`` ← Laissez ``Localhost``
+
+5. Tapez ``Next``
+
+6. Vous êtes redirigé sur le site nextcloud ou vous pourrez vous loguer
+   et commencer à utliser l’outil
+
+Installation et configuration de Gitea
+======================================
+
+Gitea est un système simple d’hébergement de code basé sur Git. C’est un
+fork de Gogs. Il montre des fonctionnalités similaires à gitlab ou
+github tout en gardant un code plus simple.
+
+Création du site web de Gitea
+-----------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``gitea``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``gitea``.
+
+   b. Le faire pointer vers le web folder ``gitea``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          # gitea httpserver
+          #
+
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass / http://localhost:3000/ 
+          ProxyPassReverse / http://localhost:3000/ 
+
+      -  mettez le nom de votre domaine à la place de example.com
+
+   h. Cliquez sur ``Save``
+
+3. `Loguez vous comme root sur le serveur <#root_login>`__
+
+4. Créez un utilisateur ``Gitea``. Tapez:
+
+   .. code:: bash
+
+       adduser --system --disabled-password --group --shell /bin/bash --home /home/gitea gitea
+
+5. Créez la structure de répertoire de ``Gitea``. Tapez:
+
+   .. code:: bash
+
+       mkdir -p /var/lib/gitea/{data,log} /etc/gitea /run/gitea
+
+6. Donnez les bonnes permissions aux répertoires. Tapez:
+
+   .. code:: bash
+
+       chown -R gitea:gitea /var/lib/gitea
+       chown -R gitea:gitea /run/gitea
+       chown -R root:gitea /etc/gitea
+       chmod -R 750 /var/lib/gitea
+       chmod 770 /etc/gitea
+
+Création des bases de données
+-----------------------------
+
+Appliquez les opérations suivantes dans ISPConfig :
+
+1. Créez une base de données mysql. Aller dans le menu ``Database`` pour
+   définir un utilisateur MariaDB
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``gitea`` par exemple
+
+          -  ``Database password:`` ← saisir un mot de passe ou en
+             générer un en cliquant sur le bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Cliquez sur ``save``
+
+   c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+      données
+
+   d. Saisissez les informations:
+
+      -  ``Site:`` ← sélectionner le site ``example.com``
+
+      -  ``Database name:`` ← Saisissez le nom de la base de données
+         ``gitea``
+
+      -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+         ``cxgitea``. x: est le numéro de client.
+
+   e. Cliquez sur ``save``
+
+Téléchargez et installez Gitea
+------------------------------
+
+Appliquez les opérations suivantes:
+
+1.  Téléchargez gitea du `site de
+    chargement <https://dl.gitea.io/gitea/>`__. Tapez pour un système 64
+    bits:
+
+    .. code:: bash
+
+        wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
+        chmod 755 /usr/local/bin/gitea
+
+2.  Créez maintenant une entrée pour le launcher systemd. Tapez:
+
+    .. code:: bash
+
+        vi /etc/systemd/system/gitea.service
+
+3.  y Coller le texte suivant:
+
+    .. code:: ini
+
+        [Unit]
+        Description=Gitea (Git with a cup of tea)
+        After=syslog.target
+        After=network.target
+        Requires=mysqld.service
+        [Service]
+        Type=simple
+        User=gitea
+        Group=gitea
+        WorkingDirectory=/var/lib/gitea/
+        RuntimeDirectory=gitea
+        ExecStart=/usr/local/bin/gitea web -c /etc/gitea/app.ini
+        Restart=always
+        Environment=USER=gitea HOME=/home/gitea GITEA_WORK_DIR=/var/lib/gitea
+        [Install]
+        WantedBy=multi-user.target
+
+4.  Recharge la base de systemd. Tapez:
+
+    .. code:: bash
+
+        systemctl daemon-reload
+
+5.  Activez et démarrez ``Gitea``. Tapez:
+
+    .. code:: bash
+
+        systemctl enable gitea.service
+        systemctl start gitea.service
+
+6.  Ouvrez votre navigateur sur l’url: https://gitea.example.com/install
+    et remplissez les paramètres comme ci-après :
+
+    -  ``Type de base de données:`` ← Sélectionnez ``MySQL``
+
+    -  ``Nom d’utilisateur:`` ← Tapez ``c0gitea``
+
+    -  ``Mot de passe:`` ← Tapez le mot de passe saisi lors de la
+       création de la base
+
+    -  ``Nom de base de données:`` ← Tapez ``c0gitea``
+
+    -  ``Titre du site:`` ← mettez une titre de votre choix
+
+    -  ``Emplacement racine des dépôts:`` ← saisissez
+       ``/home/gitea/gitea-repositories``
+
+    -  ``Répertoire racine Git LFS:`` ← Tapez
+       ``/var/lib/gitea/data/lfs``
+
+    -  ``Exécuter avec le compte d’un autre utilisateur :`` ← Tapez
+       ``gitea``
+
+    -  ``Domaine du serveur SSH:`` ← Tapez votre domaine. exemple :
+       ``gitea.example.com``
+
+    -  ``Port du serveur SSH:`` ← Tapez 22
+
+    -  ``Port d’écoute HTTP de Gitea:`` ← Tapez 3000
+
+    -  ``URL de base de Gitea:`` ← Tapez l’URL de votre domaine.
+       Exemple: ``https://gitea.example.com``
+
+    -  ``Chemin des fichiers log:`` ← Tapez ``/var/lib/gitea/log``
+
+    -  ``Hôte SMTP:`` ← Tapez ``localhost``
+
+    -  ``Envoyer les e-mails en tant que:`` ← Tapez
+       ``gitea@gitea.example.com``
+
+    -  ``Exiger la confirmation de l’e-mail lors de l’inscription:`` ←
+       cochez la case
+
+    -  ``Activez les notifications par e-mail:`` ← cochez la case
+
+    -  ``Désactiver le formulaire d’inscription:`` ← cochez la case
+
+    -  ``Masquer les adresses e-mail par défaut:`` ← cochez la case
+
+7.  Laissez le reste et cliquez sur ``Install Gitea``.
+
+8.  Restreignez les permissions sur le fichier de configuration de
+    gitea. Tapez:
+
+    .. code:: bash
+
+        chmod 750 /etc/gitea
+        chown root:gitea /etc/gitea/app.ini
+        chmod 640 /etc/gitea/app.ini
+
+9.  Redémarrez ``gitea``.
+
+10. `Loguez vous comme root sur le serveur <#root_login>`__
+
+11. Tapez:
+
+    .. code:: bash
+
+        systemctl restart gitea.service
+
+Activer une connexion SSH dédiée
+--------------------------------
+
+En option, vous pouvez avoir envie de dédier une connexion SSH pour
+Gitea:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Éditez le fichier de configuration. Tapez:
+
+   .. code:: bash
+
+       vi /etc/gitea/app.ini
+
+3. Trouvez les lignes suivantes et les remplacer dans le fichier.
+   Chercher et remplacez:
+
+   .. code:: bash
+
+       START_SSH_SERVER = true
+       SSH_PORT = 2222 
+
+   -  mettez ici le numéro de port que vous souhaitez
+
+4. Débloquez le port 2222 dans votre firewall
+
+   a. Allez sur le site ispconfig https://example.com:8080/
+
+   b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+      ``Firewall``. Cliquez sur votre serveur.
+
+   c. dans la rubrique ``Open TCP ports:``, ajoutez le port 222
+
+   d. Cliquez sur ``save``
+
+5. Redémarrez ``gitea``. Tapez:
+
+   .. code:: bash
+
+       systemctl restart gitea.service
+
+6. Enjoy !
+
+Installation de Seafile
+=======================
+
+Seafile est un système de partage de fichier simple et efficace écrit en
+Python. Il existe des clients de connexion pour Windows, Linux, Android,
+IOS.
+
+Cette installation est optionnelle.
+
+Création du site web de Seafile
+-------------------------------
+
+Appliquez la procédure suivante:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``seafile``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``seafile``.
+
+   b. Le faire pointer vers le web folder ``seafile``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          Alias /media {DOCROOT}/private/seafile/seafile-server-latest/seahub/media
+          RewriteEngine On
+
+          <Location /media>
+          Require all granted
+          </Location>
+
+          Alias /.well-known {DOCROOT}/private/seafile/.well-known
+          RewriteEngine On
+
+          <Location /.well-known>
+          Require all granted
+          </Location>
+
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          # seafile httpserver
+          #
+          ProxyPass /seafhttp http://localhost:8092
+          ProxyPassReverse /seafhttp http://localhost:8092
+          RewriteRule ^/seafhttp - [QSA,L]
+          #
+          # seahub
+          #
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass / http://localhost:8090/
+          ProxyPassReverse / http://localhost:8090/
+
+Création de bases de données
+----------------------------
+
+1. Loguez vous sur ISPConfig
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``seafile`` par exemple
+
+          -  ``Database password:`` ← saisir un mot de passe ou en
+             générer un en cliquant sur le bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Aller dans le menu ``Database`` pour définir les bases de données
+
+   c. Appliquer l’opération ci après 3 fois d’affilée pour créer les
+      trois bases suivantes: ``ccnetdb``, ``seafiledb``, ``seahubdb``
+
+      i.   Cliquez sur ``Add new Database`` pour créer une nouvelle base
+           de données
+
+      ii.  Saisissez les informations:
+
+           -  ``Site:`` ← sélectionner le site ``example.com``
+
+           -  ``Database name:`` ← Saisissez le nom de la base de
+              données
+
+           -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+              ``cxseafile``. x: est le numéro de client.
+
+      iii. Cliquez sur ``save``
+
+   d. Les trois bases de données doivent apparaître dans la liste des
+      bases
+
+Téléchargez et installez Seafile
+--------------------------------
+
+Appliquez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Installez quelques paquets Debian complémentaires. Tapez:
+
+   .. code:: bash
+
+       apt-get install python2.7 python-setuptools python-simplejson python-pil python-mysqldb python-flup
+
+3. Je préfère faire tourner mes serveurs dans le répertoire privé plutôt
+   que dans le répertoire web pour des questions de sécurité. Tapez:
+
+   .. code:: bash
+
+       cd /var/www/seafile.example.com/private
+       mkdir seafile
+       cd seafile
+       wget https://download.seadrive.org/seafile-server_7.0.5_x86-64.tar.gz
+       tar zxvf seafile-server_7.0.5_x86-64.tar.gz
+       mkdir installed
+       mv seafile-server_* installed
+       cd seafile-server-*
+       ./setup-seafile-mysql.sh
+       cd ../..
+       chown -R web1:client0 seafile 
+
+   -  choisissez le user et le groupe de votre site web. Ces
+      informations sont consultables dans ISPConfig en consultant les
+      informations du Web Domain→onglet ``Options``\ →champs Linux User
+      et Linux Group.
+
+4. A ce moment, vous devez répondre à un certain nombre de questions.
+
+5. Choisissez le mode de configuration 2) pour indiquer vous même les
+   informations sur les bases de données créées.
+
+6. Vous devrez ensuite donner le nom d’utilisateur pour la base de
+   données, le mot de passe ainsi que le nom des 3 bases de données.
+
+7. Si tout est saisi correctement le programme doit donner une synthèse
+   de ce qui a été configuré
+
+Lancement initial
+-----------------
+
+Nous allons effectuer un premier lancement du serveur Seafile:
+
+1.  allez dans le répertoire contenant les configurations et éditez
+    ``gunicorn.conf``. Tapez:
+
+    .. code:: bash
+
+        cd /var/www/seafile.example.com/private/seafile/conf
+        vi gunicorn.conf
+
+2.  Repèrez le texte ``bind=`` et mettez un numéro de port 8090 à la
+    place de 8000. Comme ceci:
+
+    .. code:: bash
+
+        bind = "127.0.0.1:8090"
+
+3.  Editez le fichier ``seafile.conf``. Tapez:
+
+    .. code:: bash
+
+        vi seafile.conf
+
+4.  mettez un port 8092 au lieu du port 8080 saisi pour l’entrée
+    ``fileserver``. Le fichier doit contenir ceci:
+
+    .. code:: ini
+
+        [fileserver]
+        port = 8092
+
+5.  Editez le fichier ``ccnet.conf``. Tapez:
+
+    .. code:: bash
+
+        vi ccnet.conf
+
+6.  modifier l’entrée SERVICE\_URL. Le fichier doit contenir ceci:
+
+    .. code:: bash
+
+        SERVICE_URL = https://seafile.example.com
+
+7.  Editez le fichier ``seahub_settings.py``. Tapez:
+
+    .. code:: bash
+
+        vi seahub_settings.py
+
+8.  modifier l’entrée FILE\_SERVER\_ROOT. Le fichier doit contenir ceci:
+
+    .. code:: python
+
+        FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp'
+
+9.  Démarrez Seafile. Tapez:
+
+    .. code:: bash
+
+        sudo -u web1 ./seafile.sh start 
+        sudo -u web1 ./seahub.sh start 8090 
+
+    -  remplacer le nom de user web1 par celui correspondant à celui du
+       site web installé (indiqué dans le champ ``Options``\ →\`linux
+       user\` du web domain). (Si vous n’avez qu’un site, web1 est le
+       bon).
+
+10. Débloquez le port 8090 et 8092 dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 8090 et
+       8092
+
+    d. Cliquez sur ``save``
+
+11. Faites pointer votre navigateur sur https://seafile.example.com
+
+12. La page de login de Seafile doit s’afficher
+
+Lancement automatique de Seafile
+--------------------------------
+
+Afin de s’assurer que Seafile tourne en permanence, on doit créer un
+script de lancement automatique de Seafile:
+
+1. Créer un script de lancement automatique. Tapez:
+
+   .. code:: bash
+
+       cd /var/www/seafile.example.com/private/seafile
+       touch startseafile.sh
+       chmod +x startseafile.sh
+       vi startseafile.sh
+
+2. Coller le texte suivant de le fichier ouvert:
+
+   .. code:: bash
+
+       #!/bin/bash
+
+       # Change the value of "seafile_dir" to your path of seafile installation
+       seafile_dir=/var/www/seafile.example.com/private/seafile 
+       script_path=${seafile_dir}/seafile-server-latest
+       seafile_init_log=${seafile_dir}/logs/seafile.init.log
+       seahub_init_log=${seafile_dir}/logs/seahub.init.log
+
+       case "$1" in
+       start)
+       ${script_path}/seafile.sh start >> ${seafile_init_log}
+       ${script_path}/seahub.sh start 8090 >> ${seahub_init_log}
+       ;;
+       restart)
+       ${script_path}/seafile.sh restart >> ${seafile_init_log}
+       ${script_path}/seahub.sh restart 8090 >> ${seahub_init_log}
+       ;;
+       stop)
+       ${script_path}/seahub.sh stop >> ${seahub_init_log}
+       ${script_path}/seafile.sh stop >> ${seafile_init_log}
+       ;;
+       *)
+       echo "Usage: /etc/init.d/seafile {start|stop|restart}"
+       exit 1
+       ;;
+       esac
+
+   -  remplacer example.com par votre nom de domaine
+
+3. Créer un job cron dans ISPConfig pour démarrer Seafile au démarrage
+
+   a. Allez dans la rubrique ``Sites`` puis dans le menu ``Cron Jobs``.
+      Cliquez sur ``Add cron Job``. Saisisssez les champs:
+
+      -  ``Parent Website:`` ← mettre ``example.com``
+
+      -  ``Minutes:`` ← mettre \*
+
+      -  ``Hours:`` ← mettre \*
+
+      -  ``Days of month:`` ← mettre \*
+
+      -  ``Months:`` ← mettre ``@reboot``
+
+      -  ``Days of week:`` ← mettre \*
+
+      -  ``Command to run:`` ← mettre
+         ``/var/www/seafile.example.com/private/seafile/startseafile.sh start``
+
+4. Créer un second job cron dans ISPConfig pour redémarrer Seafile tous
+   les jours
+
+   a. Allez dans la rubrique ``Sites`` puis dans le menu ``Cron Jobs``.
+      Cliquez sur ``Add cron Job``. Saisissez les champs:
+
+      -  ``Parent Website:`` ← mettre ``example.com``
+
+      -  ``Minutes:`` ← mettre 45
+
+      -  ``Hours:`` ← mettre 20
+
+      -  ``Days of month:`` ← mettre \*
+
+      -  ``Months:`` ← mettre \*
+
+      -  ``Days of week:`` ← mettre \*
+
+      -  ``Command to run:`` ← mettre
+         ``/var/www/seafile.example.com/private/seafile/startseafile.sh restart``
+
+5. Arretez le serveur précédemment lancé en tant que root. Tapez:
+
+6. Enjoy !
+
+Installation d’un serveur de VPN Pritunl
+========================================
+
+Pritunl est un serveur VPN basé sur OpenVPN.
+
+Création du site web de Pritunl
+-------------------------------
+
+Appliquez la procédure suivante:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``pritunl``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``pritunl``.
+
+   b. Le faire pointer vers le web folder ``pritunl``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          # Pritunl httpserver
+          #
+            SSLProxyEngine On
+            SSLProxyCheckPeerCN Off
+            SSLProxyCheckPeerName Off
+            SSLProxyVerify none
+
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass / https://localhost:8070/
+          ProxyPassReverse / https://localhost:8070/
+          ProxyPreserveHost On
+
+Installation de Pritunl
+-----------------------
+
+Veuillez suivre la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Ajoutez des repositories Debian. Tapez:
+
+   .. code:: bash
+
+       tee /etc/apt/sources.list.d/mongodb-org.list << EOF
+       deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main
+       EOF
+       tee /etc/apt/sources.list.d/pritunl.list << EOF
+       deb http://repo.pritunl.com/stable/apt buster main
+       EOF
+       apt-get install dirmngr
+       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
+       apt-get update
+       apt-get --assume-yes install pritunl mongodb-org
+
+3. Pritunl utilise en standard le port 80 et 443. Ces deux ports sont
+   utilisés dans notre configuration par le serveur apache
+
+4. On commence par arrêter apache. Tapez:
+
+       **Warning**
+
+       Plus aucun site web ne sera servit. Danger donc.
+
+   .. code:: bash
+
+       systemctl stop apache2
+
+5. Démarrez Mongodb ainsi que Pritunl. Tapez:
+
+   .. code:: bash
+
+       systemctl start mongod pritunl
+       systemctl enable mongod pritunl
+
+Configuration de Pritunl
+------------------------
+
+Votre service Pritunl est actif. Vous devez maintenant le configurer
+pour qu’il fonctionne:
+
+1.  pointez votre navigateur sur le site web de Pritunl:
+    https://example.com
+
+2.  Accepter le certificat non sécurisé. La page de setup de Pritunl
+    s’affiche.
+
+3.  Obtenez la clé d’activation. Tapez:
+
+    .. code:: bash
+
+        pritunl setup-key
+
+4.  copier la clé dans la page web. Cliquez sur ``Save``
+
+5.  La page web s’affiche en erreur. Pas d’inquiétude à avoir.
+
+6.  Arrêtez le serveur Pritunl. Tapez:
+
+    .. code:: bash
+
+        systemctl stop pritunl
+
+7.  Configurez le serveur pour qu’il n’utilise plus le port 80 et le
+    port 443
+
+    .. code:: bash
+
+        pritunl set app.server_port 8070
+        pritunl set app.redirect_server false
+
+8.  Redémarrez apache et pritunl
+
+    .. code:: bash
+
+        systemctl start apache2
+        systemctl start pritunl
+
+9.  Pointez maintenant votre navigateur sur le site
+    https://pritunl.example.com . La page de login de pritunl doit
+    s’afficher. Si ce n’est pas le cas, revérifier votre configuration
+    de site web dans ISPConfig et que le port 8070 est bien activé.
+
+10. Sur le serveur, tapez:
+
+    .. code:: bash
+
+        pritunl default-password
+
+11. Entrez dans la page web la valeur de ``username`` et de ``password``
+    affichés dans le terminal.
+
+12. Une boite de dialogue ``initial setup`` s’affiche. Ne changez rien
+    mais tapez votre mot de passe.
+
+13. Vous êtes maintenant connecté sur le site web.
+
+14. Cliquez sur l’onglet ``Users``
+
+    a. Cliquez sur ``Add Organization``
+
+    b. Entrez votre nom d’organisation. Par exemple ``Personnel``
+
+    c. Cliquez sur ``Add``
+
+    d. Cliquez sur ``Add User``
+
+    e. Remplissez les champs:
+
+       -  \`Name: \` ← Tapez votre nom de login (pas de caractère
+          accentué pas d’espace)
+
+       -  \`Select an organization: \` ← sélectionnez votre organisation
+
+       -  \`Email: \` ← Tapez votre adresse Email
+
+       -  ``Pin:`` ← entrez votre code Pin (que des nombres; au moins 6
+          chiffres)
+
+    f. Cliquez sur ``Add``
+
+15. Allez sur l’onglet ``Servers``
+
+    a. Cliquez sur ``Add Server``
+
+    b. Remplissez les champs:
+
+       -  ``Name:`` ← donnez un nom à votre serveur (pas de caractère
+          accentué pas d’espace)
+
+       -  laissez le reste tel quel mais notez bien le numéro de port
+          UDP indiqué
+
+    c. Cliquez sur ``Add``
+
+    d. Cliquez sur ``Attach Organization``
+
+    e. Sélectionnez le ``server`` et l' ``organization``.
+
+    f. Cliquez sur ``Attach``
+
+16. Débloquez le port VPN dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open UDP ports:``, ajoutez le port UDP du VPN
+       que vous avez noté.
+
+    d. Cliquez sur ``save``
+
+17. Retourner dans l’interface de Pritunl. retournez sur l’onglet
+    ``Servers``
+
+    a. Cliquez sur ``Start server``
+
+18. Votre serveur de VPN est opérationnel.
+
+Se connecter au serveur de VPN
+------------------------------
+
+Comme Pritunl est compatible OpenVPN n’importe quel logiciel compatible
+OpenVPN peut être utilisé. Pritunl founit un
+`client <https://client.pritunl.com/>`__ compatible pour Linux, macOS,
+and Windows.
+
+Pour se connecter à l’aide du client, vous devez charger un fichier de
+configuration qui est téléchargeable dans l’onglet utilisateur du
+serveur web. Ce fichier est à importer dans le logiciel client de
+Pritunl. Une fois fait, une compte apparaît dans le logiciel client.
+Vous pourrez vous connecter en cliquant sur le bouton ``Connect`` du
+compte utilisateur.
+
+Réparer une base Pritunl
+------------------------
+
+Si jamais votre base est corrompue, vous pourrez la réparer en tapant:
+
+.. code:: bash
+
+    systemctl stop pritunl
+    pritunl repair-database
+    systemctl start pritunl
+
+Mot de passe perdu
+------------------
+
+Vous pouvez re-générer un mot de passe en tapant:
+
+.. code:: bash
+
+    pritunl reset-password
+
+Installation de Grafana
+=======================
+
+Grafana est un logiciel de visualisation et d’analyse à code source
+ouvert. Il vous permet d’interroger, de visualiser, d’alerter et
+d’explorer vos mesures, quel que soit l’endroit où elles sont stockées.
+En clair, il vous fournit des outils pour transformer vos données de
+base de données de séries chronologiques (TSDB) en de magnifiques
+graphiques et visualisations. Grafana s’appuie sur Prometheus afin
+d’obtenir des métriques. Loki est aussi installé pour réaliser une
+analyse précise des fichiers de logs.
+
+Cette installation est optionnelle puisque Munin est déjà installé sur
+votre système.
+
+Création du site web de Grafana
+-------------------------------
+
+Appliquez la procédure suivante:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``grafana``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``grafana``.
+
+   b. Le faire pointer vers le web folder ``grafana``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          # grafana httpserver
+          #
+
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass / http://localhost:3000/
+          ProxyPassReverse / http://localhost:3000/
+
+Installation de Grafana
+-----------------------
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Tapez:
+
+    .. code:: bash
+
+        echo "deb https://packages.grafana.com/oss/deb stable main" >>/etc/apt/sources.list.d/grafana.list
+        wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+
+3.  Installez les paquets. Tapez:
+
+    .. code:: bash
+
+        apt update
+        apt install grafana prometheus prometheus-mysqld-exporter prometheus-apache-exporter prometheus-bind-exporter prometheus-process-exporter
+
+4.  Editez la configuration de Prometheus. Tapez:
+
+    .. code:: bash
+
+        vi /etc/prometheus/prometheus.yml
+
+5.  Ajoutez les lignes suivantes:
+
+    .. code:: yaml
+
+          - job_name: 'prometheus'
+
+            # Override the global default and scrape targets from this job every 5 seconds.
+            scrape_interval: 5s
+            scrape_timeout: 5s
+
+            # metrics_path defaults to '/metrics'
+            # scheme defaults to 'http'.
+
+            static_configs:
+              - targets: ['localhost:9090']
+
+          - job_name: node
+            # If prometheus-node-exporter is installed, grab stats about the local
+            # machine by default.
+            static_configs:
+              - targets: ['localhost:9100']
+
+          - job_name: dns-master
+            static_configs:
+              - targets: ['localhost:9119']
+                labels:
+                  alias: dns-master
+
+          - job_name: apache
+            static_configs:
+              - targets: ['localhost:9117']
+
+          - job_name: process
+            static_configs:
+              - targets: ['localhost:9256']
+
+          - job_name: mysql
+            static_configs:
+              - targets: ['localhost:9104']
+
+6.  Editez la configuration de ``prometheus-process-exporter``. Tapez:
+
+    .. code:: bash
+
+        vi etc/default/prometheus-process-exporter
+
+7.  Ajoutez les lignes suivantes:
+
+    ::
+
+        ARGS="-procnames postgres,dovecot,apache2,sshd,php-fpm7.3,rspamd,named,mysqld"
+
+8.  Editez la configuration de ``prometheus-mysqld-exporter``. Tapez:
+
+    .. code:: bash
+
+        vi etc/default/prometheus-mysqld-exporter
+
+9.  Ajoutez les lignes suivantes:
+
+    ::
+
+        ARGS='--config.my-cnf /etc/mysql/debian.cnf --collect.info_schema.tables.databases="*" --collect.auto_increment.columns --collect.perf_schema.file_instances.filter=".*" --collect.info_schema.tablestats'
+
+10. Ajuster les permissions du fichier de conf de mysql pour donner
+    l’accès à prometheus. Tapez:
+
+    .. code:: bash
+
+        chmod 644 /etc/mysql/debian.cnf
+
+11. Ajustez la configuration de bind pour servir des statistiques.
+    Tapez:
+
+    .. code:: bash
+
+        vi /etc/bind/named.conf
+
+12. Ajouter dans le fichier:
+
+    ::
+
+        statistics-channels {
+          inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+        };
+
+13. Activez dans mysql quelques statistiques. Tapez:
+
+    .. code:: bash
+
+        mysql -p
+
+14. tapez votre mot de passe root pour mysql. puis taper:
+
+    .. code:: mysql
+
+        INSTALL PLUGIN QUERY_RESPONSE_TIME_AUDIT SONAME 'query_response_time.so';
+        INSTALL PLUGIN QUERY_RESPONSE_TIME SONAME 'query_response_time.so';
+        INSTALL PLUGIN QUERY_RESPONSE_TIME_READ SONAME 'query_response_time.so';
+        INSTALL PLUGIN QUERY_RESPONSE_TIME_WRITE SONAME 'query_response_time.so';
+        SET GLOBAL query_response_time_stats=ON;
+        SET GLOBAL userstat=ON;
+
+15. Redémarrez les services. Taper:
+
+    .. code:: mysql
+
+        service prometheus restart
+        service prometheus-mysqld-exporter restart
+        service prometheus-process-exporter restart
+
+Installation et configuration de Loki
+-------------------------------------
+
+Pour installer Loki, appliquez la procédure suivante:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Allez sur le site de
+    `loki <https://github.com/grafana/loki/releases>`__ et repérez la
+    dernière version à charger.
+
+3.  Tapez:
+
+    .. code:: bash
+
+        cd /usr/local/bin
+        curl -fSL -o loki.gz https://github.com/grafana/loki/releases/download/v1.4.1/loki-linux-amd64.zip
+        gunzip loki.gz
+        chmod a+x loki
+
+4.  Créez le fichier de configuration de loki
+
+    .. code:: bash
+
+        vi /etc/config-loki.yml
+
+5.  Ajoutez le texte ci dessous dans le fichier
+
+    ::
+
+        auth_enabled: false
+
+        server:
+          http_listen_port: 3100
+          log_level: "warn"
+
+        ingester:
+          lifecycler:
+            address: 127.0.0.1
+            ring:
+              kvstore:
+                store: inmemory
+              replication_factor: 1
+            final_sleep: 0s
+          chunk_idle_period: 5m
+          chunk_retain_period: 30s
+
+        schema_config:
+          configs:
+          - from: 2010-01-01
+            store: boltdb
+            object_store: filesystem
+            schema: v9
+            index:
+              prefix: index_
+              period: 168h
+
+        storage_config:
+          boltdb:
+            directory: /tmp/loki/index
+
+          filesystem:
+            directory: /tmp/loki/chunks
+
+        limits_config:
+          enforce_metric_name: false
+          reject_old_samples: true
+          reject_old_samples_max_age: 168h
+
+        chunk_store_config:
+          max_look_back_period: 0
+
+        table_manager:
+          chunk_tables_provisioning:
+            inactive_read_throughput: 0
+            inactive_write_throughput: 0
+            provisioned_read_throughput: 0
+            provisioned_write_throughput: 0
+          index_tables_provisioning:
+            inactive_read_throughput: 0
+            inactive_write_throughput: 0
+            provisioned_read_throughput: 0
+            provisioned_write_throughput: 0
+          retention_deletes_enabled: false
+          retention_period: 0
+
+6.  Débloquez le port 3100 dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 3100
+
+    d. Cliquez sur ``save``
+
+7.  Testez maintenant la configuration de Loki. Tapez:
+
+    .. code:: bash
+
+        loki -config.file /etc/config-loki.yml
+
+8.  Ouvrez un navigateur et visitez: http://example.com:3100/metrics
+
+9.  Maintenant arrêtez Loki en tapant **CTRL-C**.
+
+10. Bloquez par sécurité le port 3100 dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open TCP ports:``, Supprimer le port 3100
+
+    d. Cliquez sur ``save``
+
+11. Configurez un service Loki afin de le faire tourner en arrière plan.
+    Tapez:
+
+    .. code:: bash
+
+        vi /etc/systemd/system/loki.service
+
+12. Ajoutez le texte ci dessous et sauvez:
+
+    ::
+
+        [Unit]
+        Description=Loki service
+        After=network.target
+
+        [Service]
+        Type=simple
+        ExecStart=/usr/local/bin/loki -config.file /etc/config-loki.yml
+
+        [Install]
+        WantedBy=multi-user.target
+
+13. Maintenant lancez le service et vérifiez que tout est fonctionnel.
+    Tapez: Now start and check the service is running.
+
+    .. code:: bash
+
+        sudo service loki start
+        sudo service loki status
+
+Installation et configuration de Promtail
+-----------------------------------------
+
+Installez maintenant Promtail:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Tapez:
+
+    .. code:: bash
+
+        cd /usr/local/bin
+        curl -fSL -o promtail.gz https://github.com/grafana/loki/releases/download/v1.4.1/promtail-linux-amd64.zip
+        gunzip promtail.gz
+        chmod a+x promtail
+
+3.  Créez la configuration de Promtail. Tapez:
+
+    .. code:: bash
+
+        mkdir -p /var/log/journal
+        vi /etc/config-promtail.yml
+
+4.  Et ajoutez le texte suivant puis sauvez:
+
+    ::
+
+        server:
+          http_listen_port: 9080
+          grpc_listen_port: 0
+
+        positions:
+          filename: /tmp/positions.yaml
+
+        clients:
+          - url: http://127.0.0.1:3100/api/prom/push
+
+        scrape_configs:
+        - job_name: system
+          static_configs:
+          - targets:
+              - localhost
+            labels:
+              job: varlogs
+              __path__: /var/log/{*.log,*/*.log}
+
+5.  Débloquez le port 9080 dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 9080
+
+    d. Cliquez sur ``save``
+
+6.  testez que Promtail fonctionne. Tapez:
+
+    .. code:: bash
+
+        promtail -config.file /etc/config-promtail.yml
+
+7.  Ouvrez un navigateur et visitez: http://example.com:9080
+
+8.  Maintenant arrêtez Promtail en tapant **CTRL-C**.
+
+9.  Bloquez par sécurité le port 9080 dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open TCP ports:``, Supprimer le port 9080
+
+    d. Cliquez sur ``save``
+
+10. Configurez un service Promtail afin de le faire tourner en arrière
+    plan. Tapez:
+
+    .. code:: bash
+
+        vi /etc/systemd/system/promtail.service
+
+11. Ajoutez le texte ci dessous et sauvez:
+
+    ::
+
+        [Unit]
+        Description=Promtail service
+        After=network.target
+
+        [Service]
+        Type=simple
+        ExecStart=/usr/local/bin/promtail -config.file /etc/config-promtail.yml
+
+        [Install]
+        WantedBy=multi-user.target
+
+12. Maintenant lancez le service et vérifiez que tout est fonctionnel.
+    Tapez:
+
+    .. code:: bash
+
+        sudo service promtail start
+        sudo service promtail status
+
+13. Allez sur votre site grafana http://grafana.example.com et ajoutez
+    une source de données de type loki
+
+14. Mettez l’URL suivante: http://127.0.0.1:3100 . Laissez tout le reste
+    tel quel.
+
+15. vous pouvez maintenant explorer vos logs en utilisant le menu
+    explore sur la gauche. Dans la zone texte "Log Labels" essayez ces
+    examples un à un:
+
+    ::
+
+        {job="varlogs"}
+
 Annexe
-------
+======
+
+Installation de Hestia
+----------------------
+
+Hestia est basé sur VestaCP. C’est une alternative opensource et plus
+moderne de cet outiL. La documentation est proposée ici:
+https://docs.hestiacp.com/
+
+Attention Hestia n’est pas compatible de Webmin dans le sens que webmin
+est incapable de lire et d’interpréter les fichiers créés par Hestia.
+
+De même, Hestia est principalement compatible de PHP. Si vous utilisez
+des système web basés sur des applicatifs écrits en Python ou en Ruby,
+la configuration sera à faire à la main avec tous les problèmes de
+compatibilité que cela impose.
+
+Pour installer:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Télécharger le package et lancez l’installeur
+
+   a. Tapez :
+
+      .. code:: bash
+
+          wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install.sh
+
+   b. Lancez l’installeur. Tapez :
+
+      .. code:: bash
+
+          bash hst-install.sh -g yes -o yes
+
+   c. Si le système n’est pas compatible, HestiaCP vous le dira. Sinon,
+      il vous informe de la configuration qui sera installée. Tapez
+      ``Y`` pour continuer.
+
+   d. Entrez votre adresse mail standard et indépendante du futur
+      serveur qui sera installé. ce peut être une adresse gmail.com par
+      exemple.
+
+3. Hestia est installé. Il est important de bien noter le mot de passe
+   du compte admin de Hestia ainsi que le numéro de port du site web
 
 Configuration d’un écran 3.5inch RPi LCD (A)
 --------------------------------------------

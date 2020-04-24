@@ -4050,9 +4050,2342 @@ rm secretdst</screen>
 </listitem>
 </orderedlist>
 </section>
+</section>
+<section xml:id="_installation_de_joomla_ou_de_concrete5">
+<title>Installation de Joomla ou de Concrete5</title>
+<simpara>Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour et inclut une foule de plugins
+Concrete5 est un autre CMS assez connu  avec un design plus moderne.</simpara>
+<simpara>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.
+Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;appliquer à l&#8217;identique pour concrete5 en remplacant les textes joomla par concrete5.</simpara>
+<section xml:id="_création_du_site_web_de_joomla">
+<title>Création du site web de Joomla</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>joomla</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>joomla</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>joomla</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_de_lapplication_joomla">
+<title>Création de l&#8217;application Joomla</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Update Packagelist</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Update Packagelist</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Available packages</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Faites une recherche par <literal>Name</literal>. Tapez <literal>joomla</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur le package <literal>joomla</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install this package</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez tous les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Install location:</literal> &#8592; choisissez votre domain (<literal>example.com</literal>) et laissez vide le chemin.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>New database password</literal> &#8592; gardez ce qui est remplit</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Administrator&#8217;s login</literal> &#8592; gardez ce qui est remplit: <literal>admin</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password</literal> et <literal>Repeat Password</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Default site language:</literal> &#8592; choisissez <literal>French</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>I accept the license</literal> &#8592; cochez la case</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Pointez votre navigateur sur <link xl:href="https://example.com/">https://example.com/</link> et loguez vous <literal>admin</literal> avec votre mot de passe saisi, c&#8217;est fait !</simpara>
+</listitem>
+<listitem>
+<simpara>N&#8217;oubliez pas d&#8217;administrer le site et de le mettre à jour avec la dernière version de Joomla.</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_de_mediawiki">
+<title>Installation de Mediawiki</title>
+<simpara>Mediawiki est le portail wiki mondialement connu et utilisé notamment pour le site wikipedia.</simpara>
+<simpara>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</simpara>
+<section xml:id="_création_du_site_web_de_mediawiki">
+<title>Création du site web de Mediawiki</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>mediawiki</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>mediawiki</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>mediawiki</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_de_lapplication_mediawiki">
+<title>Création de l&#8217;application Mediawiki</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Update Packagelist</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Update Packagelist</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Available packages</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Faites une recherche par <literal>Name</literal>. Tapez <literal>mediawiki</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur le package <literal>mediawiki</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install this package</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez tous les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Install location:</literal> &#8592; choisissez votre domain (<literal>example.com</literal>) et laissez vide le chemin.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>New database password</literal> &#8592; gardez ce qui est remplit</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Administrator&#8217;s login</literal> &#8592; gardez ce qui est remplit: <literal>admin</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password</literal> et <literal>Repeat Password</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Default site language:</literal> &#8592; choisissez <literal>French</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>I accept the license</literal> &#8592; cochez la case</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Pointez votre navigateur sur <link xl:href="https://example.com/">https://example.com/</link> et loguez vous <literal>admin</literal> avec votre mot de passe saisi, c&#8217;est fait !</simpara>
+</listitem>
+<listitem>
+<simpara>N&#8217;oubliez pas d&#8217;administrer le site et de le mettre à jour avec la dernière version de Mediawiki.</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_de_wordpress">
+<title>Installation de Wordpress</title>
+<simpara>Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à jour.</simpara>
+<simpara>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</simpara>
+<section xml:id="_création_du_site_web_de_wordpress">
+<title>Création du site web de Wordpress</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>wordpress</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>wordpress</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>wordpress</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_de_lapplication_wordpress">
+<title>Création de l&#8217;application Wordpress</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Update Packagelist</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Update Packagelist</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal>, le menu <literal>Available packages</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Faites une recherche par <literal>Name</literal>. Tapez <literal>wordpress</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur le package <literal>wordpress</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install this package</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez tous les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Install location:</literal> &#8592; choisissez votre domain (<literal>example.com</literal>) et laissez vide le chemin.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>New database password</literal> &#8592; gardez ce qui est remplit</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Administrator&#8217;s login</literal> &#8592; gardez ce qui est remplit: <literal>admin</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password</literal> et <literal>Repeat Password</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Default site language:</literal> &#8592; choisissez <literal>French</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>I accept the license</literal> &#8592; cochez la case</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Install</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Pointez votre navigateur sur <link xl:href="https://example.com/">https://example.com/</link> et loguez vous <literal>admin</literal> avec votre mot de passe saisi, c&#8217;est fait !</simpara>
+</listitem>
+<listitem>
+<simpara>N&#8217;oubliez pas d&#8217;administrer le site et de le mettre à jour avec la dernière version de Wordpress.</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_micro_weber">
+<title>Micro Weber</title>
+<simpara>Microweber est un système de gestion de contenu et un constructeur de sites web Open Source. Il est basé sur le langage de programmation PHP et le framework web Laravel 5, utilisant le glisser-déposer et permettant aux utilisateurs de créer rapidement du contenu, tout en programmant et en gérant plusieurs affichages. Il dispose d&#8217;une fonction d&#8217;édition en direct qui permet aux utilisateurs de visualiser leurs modifications telles qu&#8217;elles apparaîtraient.</simpara>
+<section xml:id="_création_du_site_web_de_microweber">
+<title>Création du site web de Microweber</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>microweber</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>microweber</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>microweber</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_des_bases_de_données">
+<title>Création des bases de données</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig :</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créez une base de données mysql. Aller dans le menu <literal>Database</literal> pour définir un utilisateur MariaDB</simpara>
+</listitem>
+<listitem>
+<simpara>Aller dans la rubrique <literal>Sites</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Aller dans le menu <literal>Database users</literal> pour définir un utilisateur MariaDB</simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add new User</literal> pour créer un nouvel utilisateur</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>microweber</literal> par exemple</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add new Database</literal> pour créer une nouvelle base de données</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Site:</literal> &#8592; sélectionner le site <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database name:</literal> &#8592; Saisissez le nom de la base de données <literal>microweber</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <literal>cxmicroweber</literal>. x: est le numéro de client.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_microweber">
+<title>Installation de Microweber</title>
+<simpara>Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez la commande suivante:</simpara>
+</listitem>
+</orderedlist>
+<screen>https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinstall.php</screen>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Un fois téléchargé, faites pointer votre navigateur vers <link xl:href="http://microweber.example.com/netinstall.php">http://microweber.example.com/netinstall.php</link></simpara>
+</listitem>
+<listitem>
+<simpara>Indique <literal>.</literal> comme répertoire d&#8217;installation et cliquez sur <literal>Télécharger et décompresser Piwigo</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Une fois le téléchargement terminé cliquez sur <literal>Installer Microweber</literal>. Rechargez la page si besoin.</simpara>
+</listitem>
+<listitem>
+<simpara>Répondez aux questions suivantes:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hote</literal> &#8592; Laissez <literal>localhost</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Utilisateur</literal> &#8592; entrez <literal>cxmicroweber</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Mot de passe</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Nom de la Base de données</literal> &#8592; entrez <literal>cxmicroweber</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Préfix des noms de tables</literal> &#8592; Laissez le champ vide</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Nom d&#8217;Utilisateur</literal> &#8592; tapez <literal>admin</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Mot de passe</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Mot de passe [confirmer]</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Adresse e-mail</literal> &#8592; Tapez votre adresse mail d&#8217;administrateur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Tapez <literal>Démarrer l&#8217;installation</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Vous êtes redirigé sur le site Microweber ou vous pourrez vous loguer et commencer à utiliser l&#8217;outil</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_piwigo">
+<title>Piwigo</title>
+<simpara>Piwigo est une application web pour gérer votre collection de photos, et autres médias. Doté de puissantes fonctionnalités, il gère des galeries partout dans le monde. Elle est écrite en PHP et nécessite une base de données MySQL.</simpara>
+<simpara>Piwigo était auparavant connu sous le nom PhpWebGallery.</simpara>
+<section xml:id="_création_du_site_web_de_piwigo">
+<title>Création du site web de Piwigo</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>piwigo</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>piwigo</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>piwigo</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_des_bases_de_données_2">
+<title>Création des bases de données</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig :</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créez une base de données mysql. Aller dans le menu <literal>Database</literal> pour définir un utilisateur MariaDB</simpara>
+</listitem>
+<listitem>
+<simpara>Aller dans la rubrique <literal>Sites</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Aller dans le menu <literal>Database users</literal> pour définir un utilisateur MariaDB</simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add new User</literal> pour créer un nouvel utilisateur</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>piwigo</literal> par exemple</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add new Database</literal> pour créer une nouvelle base de données</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Site:</literal> &#8592; sélectionner le site <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database name:</literal> &#8592; Saisissez le nom de la base de données <literal>piwigo</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <literal>cxpiwigo</literal>. x: est le numéro de client.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_piwigo">
+<title>Installation de Piwigo</title>
+<simpara>Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez la commande suivante:</simpara>
+</listitem>
+</orderedlist>
+<screen>cd /var/www/piwigo.example.com/piwigo
+wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinstall.php</screen>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Un fois téléchargé, faites pointer votre navigateur vers <link xl:href="http://piwigo.example.com/piwigo-netinstall.php">http://piwigo.example.com/piwigo-netinstall.php</link></simpara>
+</listitem>
+<listitem>
+<simpara>Indique <literal>.</literal> comme répertoire d&#8217;installation et cliquez sur <literal>Téléharger et décompresser Piwigo</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Une fois le téléchargement terminé cliquez sur <literal>Installer Piwigo</literal>. Rechargez la page si besoin.</simpara>
+</listitem>
+<listitem>
+<simpara>Répondez aux questions suivantes:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hote</literal> &#8592; Laissez <literal>localhost</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Utilisateur</literal> &#8592; entrez <literal>cxpiwigo</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Mot de passe</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Nom de la Base de données</literal> &#8592; entrez <literal>cxpiwigo</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Préfix des noms de tables</literal> &#8592; Laissez le champ vide</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Nom d&#8217;Utilisateur</literal> &#8592; tapez <literal>admin</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Mot de passe</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Mot de passe [confirmer]</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Adresse e-mail</literal> &#8592; Tapez votre adresse mail d&#8217;administrateur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Tapez <literal>Démarrer l&#8217;installation</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer et commencer à utiliser l&#8217;outil</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_de_nextcloud">
+<title>Installation de Nextcloud</title>
+<simpara>NextCloud est un serveur d&#8217;hébergement et de partage de fichiers gratuit et open source, fork du projet ownCloud.
+Il est très similaire aux autres systèmes de partage de fichiers des services comme Google Drive, Dropbox et iCloud ou Seafile.
+NextCloud vous permet de stocker des fichiers, des documents, des photos, des films et des vidéos à partir de la centrale l&#8217;emplacement.
+Avec NextCloud, vous pouvez partager des fichiers, des contacts et tout autre les médias avec vos amis et vos clients.
+NextCloud s&#8217;intègre avec le courrier, calendrier, contacts et autres fonctionnalités qui aideront vos équipes à obtenir leur travail est plus rapide et plus facile.
+Vous pouvez installer le client NextCloud sur un  ou plusieurs PC pour synchroniser les fichiers avec votre serveur Nextcloud.
+Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation, y compris Windows, macOS, FreeBSD, et Linux.</simpara>
+<section xml:id="_installation_initiale">
+<title>Installation initiale</title>
+<simpara>NextCloud est écrit en PHP et utilise une base de données MariaDB pour stocker ses données.</simpara>
+<simpara>Pour installer, Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Installez quelques paquets de base. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install  php-cgi php-curl</programlisting>
+</listitem>
+<listitem>
+<simpara>Une fois installé, éditez le fichier php.ini pour changer quelques limitations. Tapez:</simpara>
+</listitem>
+</orderedlist>
+<screen>vi /etc/php/7.3/apache2/php.ini</screen>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Cherchez les champs ci dessous et changez les valeurs comme suit:</simpara>
+<programlisting language="ini" linenumbering="unnumbered">memory_limit = 512M
+upload_max_filesize = 500M
+post_max_size = 500M
+max_execution_time = 300
+date.timezone = Asia/Kolkata</programlisting>
+</listitem>
+<listitem>
+<simpara>Sauvez et redémarrez apache. Tapez:</simpara>
+<programlisting language="command" linenumbering="unnumbered">systemctl restart apache2</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_du_site_web_de_nextcloud">
+<title>Création du site web de Nextcloud</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>nextcloud</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>nextcloud</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>nextcloud</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_des_bases_de_données_3">
+<title>Création des bases de données</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig :</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créez une base de données mysql. Aller dans le menu <literal>Database</literal> pour définir un utilisateur MariaDB</simpara>
+</listitem>
+<listitem>
+<simpara>Aller dans la rubrique <literal>Sites</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Aller dans le menu <literal>Database users</literal> pour définir un utilisateur MariaDB</simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add new User</literal> pour créer un nouvel utilisateur</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>nextcloud</literal> par exemple</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add new Database</literal> pour créer une nouvelle base de données</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Site:</literal> &#8592; sélectionner le site <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database name:</literal> &#8592; Saisissez le nom de la base de données <literal>nextcloud</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <literal>cxnextcloud</literal>. x: est le numéro de client.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_nextcloud_2">
+<title>Installation de Nextcloud</title>
+<simpara>Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez la commande suivante:</simpara>
+</listitem>
+</orderedlist>
+<screen>cd /var/www/nextcloud.example.com/nextcloud
+wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</screen>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Un fois téléchargé, faites pointer votre navigateur vers <link xl:href="http://nextcloud.example.com/setup-nextcloud.php">http://nextcloud.example.com/setup-nextcloud.php</link></simpara>
+</listitem>
+<listitem>
+<simpara>Indique <literal>.</literal> comme répertoire d&#8217;installation et cliquez sur <literal>Next</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Une fois le téléchargement terminé cliquez sur <literal>Next</literal>. Rechargez la page si besoin.</simpara>
+</listitem>
+<listitem>
+<simpara>Répondez aux questions suivantes:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Login Admin</literal> &#8592; tapez <literal>admin</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password Admin</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara>ouvrez <literal>Stockage et base de données</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Configurer la base de données</literal> &#8592; cliquez sur <literal>MariaDB</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Utilisateur de la Base de données</literal> &#8592; entrez <literal>cxnextcloud</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Password de la Base de données</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Nom de la Base de données</literal> &#8592; entrez <literal>cxnextcloud</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+</listitem>
+<listitem>
+<simpara><literal>nom du serveur</literal> &#8592; Laissez <literal>Localhost</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Tapez <literal>Next</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Vous êtes redirigé sur le site nextcloud ou vous pourrez vous loguer et commencer à utliser l&#8217;outil</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_et_configuration_de_gitea">
+<title>Installation et configuration de Gitea</title>
+<simpara>Gitea est un système simple d&#8217;hébergement de code basé sur Git. C&#8217;est un fork de Gogs.
+Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un code plus simple.</simpara>
+<section xml:id="_création_du_site_web_de_gitea">
+<title>Création du site web de Gitea</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>gitea</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>gitea</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>gitea</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# gitea httpserver
+#
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / http://localhost:3000/ <co xml:id="CO28-1"/>
+ProxyPassReverse / http://localhost:3000/ <co xml:id="CO28-2"/></programlisting>
+<calloutlist>
+<callout arearefs="CO28-1 CO28-2">
+<para>mettez le nom de votre domaine à la place de example.com</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Créez un utilisateur <literal>Gitea</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">adduser --system --disabled-password --group --shell /bin/bash --home /home/gitea gitea</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez la structure de répertoire de <literal>Gitea</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/lib/gitea/{data,log} /etc/gitea /run/gitea</programlisting>
+</listitem>
+<listitem>
+<simpara>Donnez les bonnes permissions aux répertoires. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chown -R gitea:gitea /var/lib/gitea
+chown -R gitea:gitea /run/gitea
+chown -R root:gitea /etc/gitea
+chmod -R 750 /var/lib/gitea
+chmod 770 /etc/gitea</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_des_bases_de_données_4">
+<title>Création des bases de données</title>
+<simpara>Appliquez les opérations suivantes dans ISPConfig :</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créez une base de données mysql. Aller dans le menu <literal>Database</literal> pour définir un utilisateur MariaDB</simpara>
+</listitem>
+<listitem>
+<simpara>Aller dans la rubrique <literal>Sites</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Aller dans le menu <literal>Database users</literal> pour définir un utilisateur MariaDB</simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add new User</literal> pour créer un nouvel utilisateur</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>gitea</literal> par exemple</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add new Database</literal> pour créer une nouvelle base de données</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Site:</literal> &#8592; sélectionner le site <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database name:</literal> &#8592; Saisissez le nom de la base de données <literal>gitea</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <literal>cxgitea</literal>. x: est le numéro de client.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_téléchargez_et_installez_gitea">
+<title>Téléchargez et installez Gitea</title>
+<simpara>Appliquez les opérations suivantes:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Téléchargez gitea du <link xl:href="https://dl.gitea.io/gitea/">site de chargement</link>. Tapez pour un système 64 bits:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
+chmod 755 /usr/local/bin/gitea</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez maintenant une entrée pour le launcher systemd. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/systemd/system/gitea.service</programlisting>
+</listitem>
+<listitem>
+<simpara>y Coller le texte suivant:</simpara>
+<programlisting language="ini" linenumbering="unnumbered">[Unit]
+Description=Gitea (Git with a cup of tea)
+After=syslog.target
+After=network.target
+Requires=mysqld.service
+[Service]
+Type=simple
+User=gitea
+Group=gitea
+WorkingDirectory=/var/lib/gitea/
+RuntimeDirectory=gitea
+ExecStart=/usr/local/bin/gitea web -c /etc/gitea/app.ini
+Restart=always
+Environment=USER=gitea HOME=/home/gitea GITEA_WORK_DIR=/var/lib/gitea
+[Install]
+WantedBy=multi-user.target</programlisting>
+</listitem>
+<listitem>
+<simpara>Recharge la base de systemd. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl daemon-reload</programlisting>
+</listitem>
+<listitem>
+<simpara>Activez et démarrez <literal>Gitea</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl enable gitea.service
+systemctl start gitea.service</programlisting>
+</listitem>
+<listitem>
+<simpara>Ouvrez votre navigateur sur l&#8217;url: <link xl:href="https://gitea.example.com/install">https://gitea.example.com/install</link> et remplissez les paramètres comme ci-après :</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Type de base de données:</literal> &#8592; Sélectionnez <literal>MySQL</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Nom d&#8217;utilisateur:</literal> &#8592; Tapez <literal>c0gitea</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Mot de passe:</literal> &#8592;  Tapez le mot de passe saisi lors de la création de la base</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Nom de base de données:</literal> &#8592; Tapez <literal>c0gitea</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Titre du site:</literal> &#8592; mettez une titre de votre choix</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Emplacement racine des dépôts:</literal> &#8592; saisissez <literal>/home/gitea/gitea-repositories</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Répertoire racine Git LFS:</literal> &#8592; Tapez <literal>/var/lib/gitea/data/lfs</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Exécuter avec le compte d&#8217;un autre utilisateur :</literal> &#8592; Tapez <literal>gitea</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Domaine du serveur SSH:</literal> &#8592; Tapez votre domaine. exemple : <literal>gitea.example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Port du serveur SSH:</literal> &#8592; Tapez 22</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Port d&#8217;écoute HTTP de Gitea:</literal> &#8592; Tapez 3000</simpara>
+</listitem>
+<listitem>
+<simpara><literal>URL de base de Gitea:</literal> &#8592; Tapez l&#8217;URL de votre domaine. Exemple: <literal><link xl:href="https://gitea.example.com">https://gitea.example.com</link></literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Chemin des fichiers log:</literal> &#8592; Tapez  <literal>/var/lib/gitea/log</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Hôte SMTP:</literal> &#8592; Tapez <literal>localhost</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Envoyer les e-mails en tant que:</literal> &#8592; Tapez <literal>gitea@gitea.example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Exiger la confirmation de l&#8217;e-mail lors de l&#8217;inscription:</literal> &#8592; cochez la case</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Activez les notifications par e-mail:</literal> &#8592; cochez la case</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Désactiver le formulaire d&#8217;inscription:</literal> &#8592; cochez la case</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Masquer les adresses e-mail par défaut:</literal> &#8592; cochez la case</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Laissez le reste et cliquez sur <literal>Install Gitea</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Restreignez les permissions sur le fichier de configuration de gitea. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 750 /etc/gitea
+chown root:gitea /etc/gitea/app.ini
+chmod 640 /etc/gitea/app.ini</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez <literal>gitea</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart gitea.service</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_activer_une_connexion_ssh_dédiée">
+<title>Activer une connexion SSH dédiée</title>
+<simpara>En option, vous pouvez avoir envie de dédier une connexion SSH pour Gitea:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Éditez le fichier de configuration. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/gitea/app.ini</programlisting>
+</listitem>
+<listitem>
+<simpara>Trouvez les lignes suivantes et les remplacer dans le fichier. Chercher et remplacez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">START_SSH_SERVER = true
+SSH_PORT = 2222 <co xml:id="CO29-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO29-1">
+<para>mettez ici le numéro de port que vous souhaitez</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Débloquez le port 2222 dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, ajoutez le port 222</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Redémarrez <literal>gitea</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart gitea.service</programlisting>
+</listitem>
+<listitem>
+<simpara>Enjoy !</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_de_seafile">
+<title>Installation de Seafile</title>
+<simpara>Seafile est un système de partage de fichier simple et efficace écrit en Python. Il existe des clients de connexion pour Windows, Linux, Android, IOS.</simpara>
+<simpara>Cette installation est optionnelle.</simpara>
+<section xml:id="_création_du_site_web_de_seafile">
+<title>Création du site web de Seafile</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>seafile</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>seafile</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>seafile</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">Alias /media {DOCROOT}/private/seafile/seafile-server-latest/seahub/media
+RewriteEngine On
+
+&lt;Location /media&gt;
+Require all granted
+&lt;/Location&gt;
+
+Alias /.well-known {DOCROOT}/private/seafile/.well-known
+RewriteEngine On
+
+&lt;Location /.well-known&gt;
+Require all granted
+&lt;/Location&gt;
+
+ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# seafile httpserver
+#
+ProxyPass /seafhttp http://localhost:8092
+ProxyPassReverse /seafhttp http://localhost:8092
+RewriteRule ^/seafhttp - [QSA,L]
+#
+# seahub
+#
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / http://localhost:8090/
+ProxyPassReverse / http://localhost:8090/</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_de_bases_de_données">
+<title>Création de bases de données</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Loguez vous sur ISPConfig</simpara>
+</listitem>
+<listitem>
+<simpara>Aller dans la rubrique <literal>Sites</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Aller dans le menu <literal>Database users</literal> pour définir un utilisateur MariaDB</simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add new User</literal> pour créer un nouvel utilisateur</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>seafile</literal> par exemple</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Aller dans le menu <literal>Database</literal> pour définir les bases de données</simpara>
+</listitem>
+<listitem>
+<simpara>Appliquer l&#8217;opération ci après 3 fois d&#8217;affilée pour créer les trois bases suivantes: <literal>ccnetdb</literal>, <literal>seafiledb</literal>, <literal>seahubdb</literal></simpara>
+<orderedlist numeration="lowerroman">
+<listitem>
+<simpara>Cliquez sur <literal>Add new Database</literal> pour créer une nouvelle base de données</simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez les informations:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Site:</literal> &#8592; sélectionner le site <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database name:</literal> &#8592; Saisissez le nom de la base de données</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database user:</literal> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <literal>cxseafile</literal>. x: est le numéro de client.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Les trois bases de données doivent apparaître dans la liste des bases</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_téléchargez_et_installez_seafile">
+<title>Téléchargez et installez Seafile</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Installez quelques paquets Debian complémentaires. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install python2.7 python-setuptools python-simplejson python-pil python-mysqldb python-flup</programlisting>
+</listitem>
+<listitem>
+<simpara>Je préfère faire tourner mes serveurs dans le répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private
+mkdir seafile
+cd seafile
+wget https://download.seadrive.org/seafile-server_7.0.5_x86-64.tar.gz
+tar zxvf seafile-server_7.0.5_x86-64.tar.gz
+mkdir installed
+mv seafile-server_* installed
+cd seafile-server-*
+./setup-seafile-mysql.sh
+cd ../..
+chown -R web1:client0 seafile <co xml:id="CO30-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO30-1">
+<para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>A ce moment, vous devez répondre à un certain nombre de questions.</simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez le mode de configuration 2) pour indiquer vous même les informations sur les bases de données créées.</simpara>
+</listitem>
+<listitem>
+<simpara>Vous devrez ensuite donner le nom d&#8217;utilisateur pour la base de données, le mot de passe ainsi que le nom des 3 bases de données.</simpara>
+</listitem>
+<listitem>
+<simpara>Si tout est saisi correctement le programme doit donner une synthèse de ce qui a été configuré</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_lancement_initial">
+<title>Lancement initial</title>
+<simpara>Nous allons effectuer un premier lancement du serveur Seafile:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>allez dans le répertoire contenant les configurations et éditez <literal>gunicorn.conf</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile/conf
+vi gunicorn.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Repèrez le texte <literal>bind=</literal> et mettez un numéro de port 8090 à la place de 8000. Comme ceci:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">bind = "127.0.0.1:8090"</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez le fichier <literal>seafile.conf</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi seafile.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>mettez un port 8092 au lieu du port 8080 saisi pour l&#8217;entrée <literal>fileserver</literal>. Le fichier doit contenir ceci:</simpara>
+<programlisting language="ini" linenumbering="unnumbered">[fileserver]
+port = 8092</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez le fichier <literal>ccnet.conf</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi ccnet.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>modifier l&#8217;entrée SERVICE_URL. Le fichier doit contenir ceci:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez le fichier <literal>seahub_settings.py</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi seahub_settings.py</programlisting>
+</listitem>
+<listitem>
+<simpara>modifier l&#8217;entrée FILE_SERVER_ROOT. Le fichier doit contenir ceci:</simpara>
+<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp'</programlisting>
+</listitem>
+<listitem>
+<simpara>Démarrez Seafile. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo -u web1 ./seafile.sh start <co xml:id="CO31-1"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO31-2"/></programlisting>
+<calloutlist>
+<callout arearefs="CO31-1 CO31-2">
+<para>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <literal>Options</literal>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Débloquez le port 8090 et 8092 dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, ajoutez le port 8090 et 8092</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Faites pointer votre navigateur sur <link xl:href="https://seafile.example.com">https://seafile.example.com</link></simpara>
+</listitem>
+<listitem>
+<simpara>La page de login de Seafile doit s&#8217;afficher</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_lancement_automatique_de_seafile">
+<title>Lancement automatique de Seafile</title>
+<simpara>Afin de s&#8217;assurer que Seafile tourne en permanence, on doit créer un script de lancement automatique de Seafile:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Créer un script de lancement automatique. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile
+touch startseafile.sh
+chmod +x startseafile.sh
+vi startseafile.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Coller le texte suivant de le fichier ouvert:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/bash
+
+# Change the value of "seafile_dir" to your path of seafile installation
+seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO32-1"/>
+script_path=${seafile_dir}/seafile-server-latest
+seafile_init_log=${seafile_dir}/logs/seafile.init.log
+seahub_init_log=${seafile_dir}/logs/seahub.init.log
+
+case "$1" in
+start)
+${script_path}/seafile.sh start &gt;&gt; ${seafile_init_log}
+${script_path}/seahub.sh start 8090 &gt;&gt; ${seahub_init_log}
+;;
+restart)
+${script_path}/seafile.sh restart &gt;&gt; ${seafile_init_log}
+${script_path}/seahub.sh restart 8090 &gt;&gt; ${seahub_init_log}
+;;
+stop)
+${script_path}/seahub.sh stop &gt;&gt; ${seahub_init_log}
+${script_path}/seafile.sh stop &gt;&gt; ${seafile_init_log}
+;;
+*)
+echo "Usage: /etc/init.d/seafile {start|stop|restart}"
+exit 1
+;;
+esac</programlisting>
+<calloutlist>
+<callout arearefs="CO32-1">
+<para>remplacer example.com par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Créer un job cron dans ISPConfig pour démarrer Seafile au démarrage</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal> puis dans le menu <literal>Cron Jobs</literal>. Cliquez sur <literal>Add cron Job</literal>. Saisisssez les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Parent Website:</literal> &#8592; mettre <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Minutes:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Hours:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Days of month:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Months:</literal> &#8592; mettre <literal>@reboot</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Days of week:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/www/seafile.example.com/private/seafile/startseafile.sh start</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un second job cron dans ISPConfig pour redémarrer Seafile tous les jours</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez dans la rubrique <literal>Sites</literal> puis dans le menu <literal>Cron Jobs</literal>. Cliquez sur <literal>Add cron Job</literal>. Saisissez les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Parent Website:</literal> &#8592; mettre <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Minutes:</literal> &#8592; mettre 45</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Hours:</literal> &#8592; mettre 20</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Days of month:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Months:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Days of week:</literal> &#8592; mettre *</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/www/seafile.example.com/private/seafile/startseafile.sh restart</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Arretez le serveur précédemment lancé en tant que root. Tapez:</simpara>
+</listitem>
+<listitem>
+<simpara>Enjoy !</simpara>
+</listitem>
+</orderedlist>
+</section>
+</section>
+<section xml:id="_installation_dun_serveur_de_vpn_pritunl">
+<title>Installation d&#8217;un serveur de VPN Pritunl</title>
+<simpara>Pritunl est un serveur VPN basé sur OpenVPN.</simpara>
+<section xml:id="_création_du_site_web_de_pritunl">
+<title>Création du site web de Pritunl</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>pritunl</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>pritunl</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>pritunl</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# Pritunl httpserver
+#
+  SSLProxyEngine On
+  SSLProxyCheckPeerCN Off
+  SSLProxyCheckPeerName Off
+  SSLProxyVerify none
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / https://localhost:8070/
+ProxyPassReverse / https://localhost:8070/
+ProxyPreserveHost On</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_pritunl">
+<title>Installation de Pritunl</title>
+<simpara>Veuillez suivre la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Ajoutez des repositories Debian. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">tee /etc/apt/sources.list.d/mongodb-org.list &lt;&lt; EOF
+deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main
+EOF
+tee /etc/apt/sources.list.d/pritunl.list &lt;&lt; EOF
+deb http://repo.pritunl.com/stable/apt buster main
+EOF
+apt-get install dirmngr
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
+apt-get update
+apt-get --assume-yes install pritunl mongodb-org</programlisting>
+</listitem>
+<listitem>
+<simpara>Pritunl utilise en standard le port 80 et 443. Ces deux ports sont utilisés dans notre configuration par le serveur apache</simpara>
+</listitem>
+<listitem>
+<simpara>On commence par arrêter apache. Tapez:</simpara>
+<warning>
+<simpara>Plus aucun site web ne sera servit. Danger donc.</simpara>
+</warning>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop apache2</programlisting>
+</listitem>
+<listitem>
+<simpara>Démarrez Mongodb ainsi que Pritunl. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl start mongod pritunl
+systemctl enable mongod pritunl</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_de_pritunl">
+<title>Configuration de Pritunl</title>
+<simpara>Votre service Pritunl est actif. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>pointez votre navigateur sur le site web de Pritunl: <link xl:href="https://example.com">https://example.com</link></simpara>
+</listitem>
+<listitem>
+<simpara>Accepter le certificat non sécurisé. La page de setup de Pritunl s&#8217;affiche.</simpara>
+</listitem>
+<listitem>
+<simpara>Obtenez la clé d&#8217;activation. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl setup-key</programlisting>
+</listitem>
+<listitem>
+<simpara>copier la clé dans la page web. Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>La page web s&#8217;affiche en erreur. Pas d&#8217;inquiétude à avoir.</simpara>
+</listitem>
+<listitem>
+<simpara>Arrêtez le serveur Pritunl. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop pritunl</programlisting>
+</listitem>
+<listitem>
+<simpara>Configurez le serveur pour qu&#8217;il n&#8217;utilise plus le port 80 et le port 443</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl set app.server_port 8070
+pritunl set app.redirect_server false</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez apache et pritunl</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl start apache2
+systemctl start pritunl</programlisting>
+</listitem>
+<listitem>
+<simpara>Pointez maintenant votre navigateur sur le site <link xl:href="https://pritunl.example.com">https://pritunl.example.com</link> . La page de login de pritunl doit s&#8217;afficher. Si ce n&#8217;est pas le cas, revérifier votre configuration de site web dans ISPConfig et que le port 8070 est bien activé.</simpara>
+</listitem>
+<listitem>
+<simpara>Sur le serveur, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl default-password</programlisting>
+</listitem>
+<listitem>
+<simpara>Entrez dans la page web la valeur de <literal>username</literal> et de <literal>password</literal> affichés dans le terminal.</simpara>
+</listitem>
+<listitem>
+<simpara>Une boite de dialogue <literal>initial setup</literal> s&#8217;affiche. Ne changez rien mais tapez votre mot de passe.</simpara>
+</listitem>
+<listitem>
+<simpara>Vous êtes maintenant connecté sur le site web.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur l&#8217;onglet <literal>Users</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>Add Organization</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Entrez votre nom d&#8217;organisation. Par exemple <literal>Personnel</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add User</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>`Name: ` &#8592; Tapez votre nom de login (pas de caractère accentué pas d&#8217;espace)</simpara>
+</listitem>
+<listitem>
+<simpara>`Select an organization: ` &#8592; sélectionnez votre organisation</simpara>
+</listitem>
+<listitem>
+<simpara>`Email: ` &#8592; Tapez votre adresse Email</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Pin:</literal> &#8592; entrez votre code Pin (que des nombres; au moins 6 chiffres)</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Allez sur l&#8217;onglet <literal>Servers</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>Add Server</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Name:</literal> &#8592; donnez un nom à votre serveur (pas de caractère accentué pas d&#8217;espace)</simpara>
+</listitem>
+<listitem>
+<simpara>laissez le reste tel quel mais notez bien le numéro de port UDP indiqué</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Attach Organization</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionnez le <literal>server</literal> et l' <literal>organization</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Attach</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Débloquez le port VPN dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open UDP ports:</literal>, ajoutez le port UDP du VPN que vous avez noté.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Retourner dans l&#8217;interface de Pritunl. retournez sur l&#8217;onglet <literal>Servers</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>Start server</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Votre serveur de VPN est opérationnel.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_se_connecter_au_serveur_de_vpn">
+<title>Se connecter au serveur de VPN</title>
+<simpara>Comme Pritunl est compatible OpenVPN n&#8217;importe quel logiciel compatible OpenVPN peut être utilisé.
+Pritunl founit un <link xl:href="https://client.pritunl.com/">client</link> compatible pour Linux, macOS, and Windows.</simpara>
+<simpara>Pour se connecter à l&#8217;aide du client, vous devez charger un fichier de configuration qui est téléchargeable dans l&#8217;onglet utilisateur du serveur web.
+Ce fichier est à importer dans le logiciel client de Pritunl.
+Une fois fait, une compte apparaît dans le logiciel client. Vous pourrez vous connecter en cliquant sur le bouton <literal>Connect</literal> du compte utilisateur.</simpara>
+</section>
+<section xml:id="_réparer_une_base_pritunl">
+<title>Réparer une base Pritunl</title>
+<simpara>Si jamais votre base est corrompue, vous pourrez la réparer en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop pritunl
+pritunl repair-database
+systemctl start pritunl</programlisting>
+</section>
+<section xml:id="_mot_de_passe_perdu">
+<title>Mot de passe perdu</title>
+<simpara>Vous pouvez re-générer un mot de passe en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl reset-password</programlisting>
+</section>
+</section>
+<section xml:id="_installation_de_grafana">
+<title>Installation de Grafana</title>
+<simpara>Grafana est un logiciel de visualisation et d&#8217;analyse à code source ouvert. Il vous permet d&#8217;interroger, de visualiser, d&#8217;alerter et d&#8217;explorer vos mesures, quel que soit l&#8217;endroit où elles sont stockées. En clair, il vous fournit des outils pour transformer vos données de base de données de séries chronologiques (TSDB) en de magnifiques graphiques et visualisations.
+Grafana s&#8217;appuie sur Prometheus afin d&#8217;obtenir des métriques.
+Loki est aussi installé pour réaliser une analyse précise des fichiers de logs.</simpara>
+<simpara>Cette installation est optionnelle puisque Munin est déjà installé sur votre système.</simpara>
+<section xml:id="_création_du_site_web_de_grafana">
+<title>Création du site web de Grafana</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>grafana</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>grafana</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>grafana</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# grafana httpserver
+#
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / http://localhost:3000/
+ProxyPassReverse / http://localhost:3000/</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_grafana_2">
+<title>Installation de Grafana</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo "deb https://packages.grafana.com/oss/deb stable main" &gt;&gt;/etc/apt/sources.list.d/grafana.list
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -</programlisting>
+</listitem>
+<listitem>
+<simpara>Installez les paquets. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt update
+apt install grafana prometheus prometheus-mysqld-exporter prometheus-apache-exporter prometheus-bind-exporter prometheus-process-exporter</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez la configuration de Prometheus. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/prometheus/prometheus.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez les lignes suivantes:</simpara>
+<programlisting language="yaml" linenumbering="unnumbered">  - job_name: 'prometheus'
+
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+    scrape_timeout: 5s
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: node
+    # If prometheus-node-exporter is installed, grab stats about the local
+    # machine by default.
+    static_configs:
+      - targets: ['localhost:9100']
+
+  - job_name: dns-master
+    static_configs:
+      - targets: ['localhost:9119']
+        labels:
+          alias: dns-master
+
+  - job_name: apache
+    static_configs:
+      - targets: ['localhost:9117']
+
+  - job_name: process
+    static_configs:
+      - targets: ['localhost:9256']
+
+  - job_name: mysql
+    static_configs:
+      - targets: ['localhost:9104']</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez la configuration de <literal>prometheus-process-exporter</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi etc/default/prometheus-process-exporter</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez les lignes suivantes:</simpara>
+<screen linenumbering="unnumbered">ARGS="-procnames postgres,dovecot,apache2,sshd,php-fpm7.3,rspamd,named,mysqld"</screen>
+</listitem>
+<listitem>
+<simpara>Editez la configuration de <literal>prometheus-mysqld-exporter</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi etc/default/prometheus-mysqld-exporter</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez les lignes suivantes:</simpara>
+<screen linenumbering="unnumbered">ARGS='--config.my-cnf /etc/mysql/debian.cnf --collect.info_schema.tables.databases="*" --collect.auto_increment.columns --collect.perf_schema.file_instances.filter=".*" --collect.info_schema.tablestats'</screen>
+</listitem>
+<listitem>
+<simpara>Ajuster les permissions du fichier de conf de mysql pour donner l&#8217;accès à prometheus. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 644 /etc/mysql/debian.cnf</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajustez la configuration de bind pour servir des statistiques. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/bind/named.conf</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajouter dans le fichier:</simpara>
+<screen linenumbering="unnumbered">statistics-channels {
+  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};</screen>
+</listitem>
+<listitem>
+<simpara>Activez dans mysql quelques statistiques. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mysql -p</programlisting>
+</listitem>
+<listitem>
+<simpara>tapez votre mot de passe root pour mysql. puis taper:</simpara>
+<programlisting language="mysql" linenumbering="unnumbered">INSTALL PLUGIN QUERY_RESPONSE_TIME_AUDIT SONAME 'query_response_time.so';
+INSTALL PLUGIN QUERY_RESPONSE_TIME SONAME 'query_response_time.so';
+INSTALL PLUGIN QUERY_RESPONSE_TIME_READ SONAME 'query_response_time.so';
+INSTALL PLUGIN QUERY_RESPONSE_TIME_WRITE SONAME 'query_response_time.so';
+SET GLOBAL query_response_time_stats=ON;
+SET GLOBAL userstat=ON;</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez les services. Taper:</simpara>
+<programlisting language="mysql" linenumbering="unnumbered">service prometheus restart
+service prometheus-mysqld-exporter restart
+service prometheus-process-exporter restart</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_et_configuration_de_loki">
+<title>Installation et configuration de Loki</title>
+<simpara>Pour installer Loki, appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Allez sur le site de <link xl:href="https://github.com/grafana/loki/releases">loki</link> et repérez la dernière version à charger.</simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/bin
+curl -fSL -o loki.gz https://github.com/grafana/loki/releases/download/v1.4.1/loki-linux-amd64.zip
+gunzip loki.gz
+chmod a+x loki</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez le fichier de configuration de loki</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/config-loki.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez le texte ci dessous dans le fichier</simpara>
+<screen>auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  log_level: "warn"
+
+ingester:
+  lifecycler:
+    address: 127.0.0.1
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+    final_sleep: 0s
+  chunk_idle_period: 5m
+  chunk_retain_period: 30s
+
+schema_config:
+  configs:
+  - from: 2010-01-01
+    store: boltdb
+    object_store: filesystem
+    schema: v9
+    index:
+      prefix: index_
+      period: 168h
+
+storage_config:
+  boltdb:
+    directory: /tmp/loki/index
+
+  filesystem:
+    directory: /tmp/loki/chunks
+
+limits_config:
+  enforce_metric_name: false
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
+
+chunk_store_config:
+  max_look_back_period: 0
+
+table_manager:
+  chunk_tables_provisioning:
+    inactive_read_throughput: 0
+    inactive_write_throughput: 0
+    provisioned_read_throughput: 0
+    provisioned_write_throughput: 0
+  index_tables_provisioning:
+    inactive_read_throughput: 0
+    inactive_write_throughput: 0
+    provisioned_read_throughput: 0
+    provisioned_write_throughput: 0
+  retention_deletes_enabled: false
+  retention_period: 0</screen>
+</listitem>
+<listitem>
+<simpara>Débloquez le port 3100 dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, ajoutez le port 3100</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Testez maintenant la configuration de Loki. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">loki -config.file /etc/config-loki.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Ouvrez un navigateur et visitez: <link xl:href="http://example.com:3100/metrics">http://example.com:3100/metrics</link></simpara>
+</listitem>
+<listitem>
+<simpara>Maintenant arrêtez Loki en tapant <emphasis role="strong">CTRL-C</emphasis>.</simpara>
+</listitem>
+<listitem>
+<simpara>Bloquez par sécurité le port 3100 dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, Supprimer le port 3100</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Configurez un service Loki afin de le faire tourner en arrière plan. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/systemd/system/loki.service</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez le texte ci dessous et sauvez:</simpara>
+<screen linenumbering="unnumbered">[Unit]
+Description=Loki service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/loki -config.file /etc/config-loki.yml
+
+[Install]
+WantedBy=multi-user.target</screen>
+</listitem>
+<listitem>
+<simpara>Maintenant lancez le service et vérifiez que tout est fonctionnel. Tapez:
+Now start and check the service is running.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo service loki start
+sudo service loki status</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_et_configuration_de_promtail">
+<title>Installation et configuration de Promtail</title>
+<simpara>Installez maintenant Promtail:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/bin
+curl -fSL -o promtail.gz https://github.com/grafana/loki/releases/download/v1.4.1/promtail-linux-amd64.zip
+gunzip promtail.gz
+chmod a+x promtail</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez la configuration de Promtail. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/log/journal
+vi /etc/config-promtail.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Et ajoutez le texte suivant puis sauvez:</simpara>
+<screen linenumbering="unnumbered">server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://127.0.0.1:3100/api/prom/push
+
+scrape_configs:
+- job_name: system
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: varlogs
+      __path__: /var/log/{*.log,*/*.log}</screen>
+</listitem>
+<listitem>
+<simpara>Débloquez le port 9080 dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, ajoutez le port 9080</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>testez que Promtail fonctionne. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">promtail -config.file /etc/config-promtail.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Ouvrez un navigateur et visitez: <link xl:href="http://example.com:9080">http://example.com:9080</link></simpara>
+</listitem>
+<listitem>
+<simpara>Maintenant arrêtez Promtail en tapant <emphasis role="strong">CTRL-C</emphasis>.</simpara>
+</listitem>
+<listitem>
+<simpara>Bloquez par sécurité le port 9080 dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open TCP ports:</literal>, Supprimer le port 9080</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Configurez un service Promtail afin de le faire tourner en arrière plan. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/systemd/system/promtail.service</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez le texte ci dessous et sauvez:</simpara>
+<screen linenumbering="unnumbered">[Unit]
+Description=Promtail service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/promtail -config.file /etc/config-promtail.yml
+
+[Install]
+WantedBy=multi-user.target</screen>
+</listitem>
+<listitem>
+<simpara>Maintenant lancez le service et vérifiez que tout est fonctionnel. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo service promtail start
+sudo service promtail status</programlisting>
+</listitem>
+<listitem>
+<simpara>Allez sur votre site grafana <link xl:href="http://grafana.example.com">http://grafana.example.com</link> et ajoutez une source de données de type loki</simpara>
+</listitem>
+<listitem>
+<simpara>Mettez l&#8217;URL suivante: <link xl:href="http://127.0.0.1:3100">http://127.0.0.1:3100</link> . Laissez tout le reste tel quel.</simpara>
+</listitem>
+<listitem>
+<simpara>vous pouvez maintenant explorer vos logs en utilisant le menu explore sur la gauche. Dans la zone texte "Log Labels" essayez ces examples un à un:</simpara>
+<screen linenumbering="unnumbered">{job="varlogs"}</screen>
+</listitem>
+</orderedlist>
+</section>
+</section>
 <section xml:id="_annexe">
 <title>Annexe</title>
-
+<section xml:id="_installation_de_hestia">
+<title>Installation de Hestia</title>
+<simpara>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
+La documentation est proposée ici: <link xl:href="https://docs.hestiacp.com/">https://docs.hestiacp.com/</link></simpara>
+<simpara>Attention Hestia n&#8217;est pas compatible de Webmin dans le sens que webmin est incapable de lire et d&#8217;interpréter les fichiers créés par Hestia.</simpara>
+<simpara>De même, Hestia est principalement compatible de PHP. Si vous utilisez des système web basés sur des applicatifs écrits en Python ou en Ruby, la configuration sera à faire à la main avec tous les problèmes de compatibilité que cela impose.</simpara>
+<simpara>Pour installer:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Télécharger le package et lancez l’installeur</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Lancez l&#8217;installeur. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">bash hst-install.sh -g yes -o yes</programlisting>
+</listitem>
+<listitem>
+<simpara>Si le système n&#8217;est pas compatible, HestiaCP vous le dira. Sinon,  il vous informe de la configuration qui sera installée. Tapez <literal>Y</literal> pour continuer.</simpara>
+</listitem>
+<listitem>
+<simpara>Entrez votre adresse mail standard et indépendante du futur serveur qui sera installé. ce peut être une adresse gmail.com par exemple.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Hestia est installé. Il est important de bien noter le mot de passe du compte admin de Hestia ainsi que le numéro de port du site web</simpara>
+</listitem>
+</orderedlist>
 </section>
 <section xml:id="_configuration_dun_écran_3_5inch_rpi_lcd_a">
 <title>Configuration d&#8217;un écran 3.5inch RPi LCD (A)</title>
