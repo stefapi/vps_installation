@@ -183,15 +183,19 @@ dans le menu "Boites & redirections Mails". Vous devez reconfigurer les
 'Enregistrements DNS' en mode externes. Dans le menu "serveurs de noms",
 vous devez configurer les serveurs de noms externe. Mettre 3 DNS:
 
--  le nom de votre machine OVH: VPSxxxxxx.ovh.net
-
--  et deux DNS de votre domaine: ns1.<example.com> et ns2.<example.com>
+-  le deux DNS de votre domaine: ns1.<example.com> et ns2.<example.com>
 
 Pour que tout cela fonctionne bien, ajoutez des Glue records:
 
--  un pour ns1.<example.com> lié à l’adresse <IP> du serveur OVH
+-  un pour ns1.<example.com> lié à l’adresse <IP> du serveur
 
--  un pour ns2.<example.com> lié à l’adresse <IP> du serveur OVH
+-  un pour ns2.<example.com> lié à l’adresse <IP> du serveur
+
+    **Note**
+
+    Cette configuration du lien chez votre registrar des deux DNS de
+    votre serveur n’est à faire qu’après avoir défini le premier domaine
+    de votre serveur
 
 Il y a la possibilité chez OVH d’utiliser un DNS secondaire. Je ne l’ai
 pas mis en oeuvre.

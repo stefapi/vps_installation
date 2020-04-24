@@ -169,21 +169,21 @@ Vous devez reconfigurer les 'Enregistrements DNS' en mode externes.
 Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms externe. Mettre 3 DNS:</simpara>
 <itemizedlist>
 <listitem>
-<simpara>le nom de votre machine OVH: VPSxxxxxx.ovh.net</simpara>
-</listitem>
-<listitem>
-<simpara>et deux DNS de votre domaine: ns1.&lt;example.com&gt; et ns2.&lt;example.com&gt;</simpara>
+<simpara>le deux DNS de votre domaine: ns1.&lt;example.com&gt; et ns2.&lt;example.com&gt;</simpara>
 </listitem>
 </itemizedlist>
 <simpara>Pour que tout cela fonctionne bien, ajoutez des Glue records:</simpara>
 <itemizedlist>
 <listitem>
-<simpara>un pour ns1.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur OVH</simpara>
+<simpara>un pour ns1.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur</simpara>
 </listitem>
 <listitem>
-<simpara>un pour ns2.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur OVH</simpara>
+<simpara>un pour ns2.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur</simpara>
 </listitem>
 </itemizedlist>
+<note>
+<simpara>Cette configuration du lien chez votre registrar des deux DNS de votre serveur n&#8217;est à faire qu&#8217;après avoir défini le premier domaine de votre serveur</simpara>
+</note>
 <simpara>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Je ne l&#8217;ai pas mis en oeuvre.</simpara>
 <note>
 <simpara>Avoir un DNS sur au moins deux machines distinctes est la configuration recommandée.</simpara>
