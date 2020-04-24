@@ -3966,58 +3966,6 @@ Elle peut facilement être scriptée:
        rm secretsrc
        rm secretdst
 
-Transfert de vos boites mails IMAP
-----------------------------------
-
-Si vous faites une migration d’un ancien serveur vers un nouveau serveur
-vous souhaiterez probablement migrer aussi vos boites mail.
-
-La procédure ci dessous est à appliquer pour chaque compte mail IMAP.
-Elle peut facilement être scriptée:
-
-1. Téléchargez imapsync du repository. Tapez:
-
-   ::
-
-       wget https://raw.githubusercontent.com/imapsync/imapsync/master/imapsync
-       chmod 755 imapsync
-
-2. Installez les packages perls éventuellement manquants:
-
-   ::
-
-       apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl
-
-3. Créez deux fichiers temporaires qui contiennent les mots de passe du
-   1er et 2eme serveur. Tapez:
-
-   ::
-
-       echo "passwdsrc" > secretsrc 
-       echo "passwddst" > secretdst 
-       chmod 600 secretsrc
-       chmod 600 secretdst
-
-   -  passwdsrc est à remplacer par le mot de passe du compte sur le
-      serveur source
-
-   -  passwddst est à remplacer par le mot de passe du compte sur le
-      serveur destination
-
-4. Nous pouvons maintenant lancer la commande. Tapez:
-
-   ::
-
-       ./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst
-
-5. Un fois la synchronisation effectuée, vous pouvez supprimer le
-   fichier des mots de passe. tapez:
-
-   ::
-
-       rm secretsrc
-       rm secretdst
-
 Installation de Joomla ou de Concrete5
 ======================================
 

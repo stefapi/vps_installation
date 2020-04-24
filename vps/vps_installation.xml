@@ -3694,46 +3694,6 @@ rm secretdst</screen>
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="_transfert_de_vos_boites_mails_imap_2">
-<title>Transfert de vos boites mails IMAP</title>
-<simpara>Si vous faites une migration d&#8217;un ancien serveur vers un nouveau serveur vous souhaiterez probablement migrer aussi vos boites mail.</simpara>
-<simpara>La procédure ci dessous est à appliquer pour chaque compte mail IMAP. Elle peut facilement être scriptée:</simpara>
-<orderedlist numeration="arabic">
-<listitem>
-<simpara>Téléchargez imapsync du repository. Tapez:</simpara>
-<screen>wget https://raw.githubusercontent.com/imapsync/imapsync/master/imapsync
-chmod 755 imapsync</screen>
-</listitem>
-<listitem>
-<simpara>Installez les packages perls éventuellement manquants:</simpara>
-<screen>apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl</screen>
-</listitem>
-<listitem>
-<simpara>Créez deux fichiers temporaires qui contiennent les mots de passe du 1er et  2eme serveur. Tapez:</simpara>
-<screen>echo "passwdsrc" &gt; secretsrc <co xml:id="CO25-1"/>
-echo "passwddst" &gt; secretdst <co xml:id="CO25-2"/>
-chmod 600 secretsrc
-chmod 600 secretdst</screen>
-<calloutlist>
-<callout arearefs="CO25-1">
-<para>passwdsrc est à remplacer par le mot de passe du compte sur le serveur source</para>
-</callout>
-<callout arearefs="CO25-2">
-<para>passwddst est à remplacer par le mot de passe du compte sur le serveur destination</para>
-</callout>
-</calloutlist>
-</listitem>
-<listitem>
-<simpara>Nous pouvons maintenant lancer la commande. Tapez:</simpara>
-<screen>./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst</screen>
-</listitem>
-<listitem>
-<simpara>Un fois la synchronisation effectuée, vous pouvez supprimer le fichier des mots de passe. tapez:</simpara>
-<screen>rm secretsrc
-rm secretdst</screen>
-</listitem>
-</orderedlist>
-</section>
 </section>
 <section xml:id="_installation_de_joomla_ou_de_concrete5">
 <title>Installation de Joomla ou de Concrete5</title>
@@ -4667,10 +4627,10 @@ RewriteRule ^/.well-known/acme-challenge - [QSA,L]
 #
 
 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-ProxyPass / http://localhost:3000/ <co xml:id="CO26-1"/>
-ProxyPassReverse / http://localhost:3000/ <co xml:id="CO26-2"/></programlisting>
+ProxyPass / http://localhost:3000/ <co xml:id="CO25-1"/>
+ProxyPassReverse / http://localhost:3000/ <co xml:id="CO25-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO26-1 CO26-2">
+<callout arearefs="CO25-1 CO25-2">
 <para>mettez le nom de votre domaine à la place de example.com</para>
 </callout>
 </calloutlist>
@@ -4898,9 +4858,9 @@ chmod 640 /etc/gitea/app.ini</programlisting>
 <listitem>
 <simpara>Trouvez les lignes suivantes et les remplacer dans le fichier. Chercher et remplacez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">START_SSH_SERVER = true
-SSH_PORT = 2222 <co xml:id="CO27-1"/></programlisting>
+SSH_PORT = 2222 <co xml:id="CO26-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO27-1">
+<callout arearefs="CO26-1">
 <para>mettez ici le numéro de port que vous souhaitez</para>
 </callout>
 </calloutlist>
@@ -5105,9 +5065,9 @@ mv seafile-server_* installed
 cd seafile-server-*
 ./setup-seafile-mysql.sh
 cd ../..
-chown -R web1:client0 seafile <co xml:id="CO28-1"/></programlisting>
+chown -R web1:client0 seafile <co xml:id="CO27-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO28-1">
+<callout arearefs="CO27-1">
 <para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
 </calloutlist>
@@ -5166,10 +5126,10 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>Démarrez Seafile. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">sudo -u web1 ./seafile.sh start <co xml:id="CO29-1"/>
-sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO29-2"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">sudo -u web1 ./seafile.sh start <co xml:id="CO28-1"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO28-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO29-1 CO29-2">
+<callout arearefs="CO28-1 CO28-2">
 <para>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <literal>Options</literal>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</para>
 </callout>
 </calloutlist>
@@ -5215,7 +5175,7 @@ vi startseafile.sh</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/bash
 
 # Change the value of "seafile_dir" to your path of seafile installation
-seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO30-1"/>
+seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO29-1"/>
 script_path=${seafile_dir}/seafile-server-latest
 seafile_init_log=${seafile_dir}/logs/seafile.init.log
 seahub_init_log=${seafile_dir}/logs/seahub.init.log
@@ -5239,7 +5199,7 @@ exit 1
 ;;
 esac</programlisting>
 <calloutlist>
-<callout arearefs="CO30-1">
+<callout arearefs="CO29-1">
 <para>remplacer example.com par votre nom de domaine</para>
 </callout>
 </calloutlist>

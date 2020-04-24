@@ -524,7 +524,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_configuration_de_votre_client_de_messagerie">11.7. Configuration de votre client de messagerie.</a></li>
 <li><a href="#_mise_en_oeuvre_du_site_web_de_webmail">11.8. Mise en oeuvre du site web de webmail</a></li>
 <li><a href="#_transfert_de_vos_boites_mails_imap">11.9. Transfert de vos boites mails IMAP</a></li>
-<li><a href="#_transfert_de_vos_boites_mails_imap_2">11.10. Transfert de vos boites mails IMAP</a></li>
 </ul>
 </li>
 <li><a href="#_installation_de_joomla_ou_de_concrete5">12. Installation de Joomla ou de Concrete5</a>
@@ -6000,76 +5999,6 @@ rm secretdst</pre>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_transfert_de_vos_boites_mails_imap_2">11.10. Transfert de vos boites mails IMAP</h3>
-<div class="paragraph">
-<p>Si vous faites une migration d&#8217;un ancien serveur vers un nouveau serveur vous souhaiterez probablement migrer aussi vos boites mail.</p>
-</div>
-<div class="paragraph">
-<p>La procédure ci dessous est à appliquer pour chaque compte mail IMAP. Elle peut facilement être scriptée:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Téléchargez imapsync du repository. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre>wget https://raw.githubusercontent.com/imapsync/imapsync/master/imapsync
-chmod 755 imapsync</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Installez les packages perls éventuellement manquants:</p>
-<div class="listingblock">
-<div class="content">
-<pre>apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Créez deux fichiers temporaires qui contiennent les mots de passe du 1er et  2eme serveur. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre>echo "passwdsrc" &gt; secretsrc <i class="conum" data-value="1"></i><b>(1)</b>
-echo "passwddst" &gt; secretdst <i class="conum" data-value="2"></i><b>(2)</b>
-chmod 600 secretsrc
-chmod 600 secretdst</pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>passwdsrc est à remplacer par le mot de passe du compte sur le serveur source</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>passwddst est à remplacer par le mot de passe du compte sur le serveur destination</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Nous pouvons maintenant lancer la commande. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre>./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Un fois la synchronisation effectuée, vous pouvez supprimer le fichier des mots de passe. tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre>rm secretsrc
-rm secretdst</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -9114,7 +9043,7 @@ pip3 install rdiff-backup</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-04-25 00:04:25 +0200
+Last updated 2020-04-25 00:11:26 +0200
 </div>
 </div>
 <style>
