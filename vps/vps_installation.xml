@@ -200,7 +200,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO1-1"/></programlisting>
 <calloutlist>
 <callout arearefs="CO1-1">
-<para>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net) ou votre adresse IP.</para>
+<para>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine ou son adresse IP. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net ou pour un raspberry: raspberrypi.local ) ou votre adresse IP.</para>
 </callout>
 </calloutlist>
 <simpara>ou utilisez putty si vous êtes sous Windows.</simpara>
@@ -813,8 +813,9 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 </section>
 <section xml:id="_ajouter_un_fichier_de_swap">
 <title>Ajouter un fichier de swap</title>
-<simpara>Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de 1 Go.
-Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être nécessaire d&#8217;avoir 4 Go de RAM au total.</simpara>
+<simpara>Pour un serveur VPS ou Raspberry Pi de 2 Go de RAM, la taille du fichier de swap sera de 2 Go.
+Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être nécessaire d&#8217;avoir 4 Go de RAM au total + 2 Go de swap.</simpara>
+<simpara>Enfin pour un Raspberry PI 3 avec 1 Go de Ram, il faut ajouter 1 Go de swap.</simpara>
 <simpara>Tapez :</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -825,7 +826,7 @@ Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être n
 <programlisting language="bash" linenumbering="unnumbered">dphys-swapfile uninstall</programlisting>
 </listitem>
 <listitem>
-<simpara>Tapez:</simpara>
+<simpara>Pour installer un swap de 2Go, tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /
 fallocate -l 2G /swapfile
 chmod 600 /swapfile

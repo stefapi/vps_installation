@@ -878,7 +878,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net) ou votre adresse IP.</td>
+<td>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine ou son adresse IP. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net ou pour un raspberry: raspberrypi.local ) ou votre adresse IP.</td>
 </tr>
 </table>
 </div>
@@ -1903,8 +1903,11 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 <div class="sect2">
 <h3 id="_ajouter_un_fichier_de_swap">5.14. Ajouter un fichier de swap</h3>
 <div class="paragraph">
-<p>Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de 1 Go.
-Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être nécessaire d&#8217;avoir 4 Go de RAM au total.</p>
+<p>Pour un serveur VPS ou Raspberry Pi de 2 Go de RAM, la taille du fichier de swap sera de 2 Go.
+Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être nécessaire d&#8217;avoir 4 Go de RAM au total + 2 Go de swap.</p>
+</div>
+<div class="paragraph">
+<p>Enfin pour un Raspberry PI 3 avec 1 Go de Ram, il faut ajouter 1 Go de swap.</p>
 </div>
 <div class="paragraph">
 <p>Tapez :</p>
@@ -1923,7 +1926,7 @@ Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être n
 </div>
 </li>
 <li>
-<p>Tapez:</p>
+<p>Pour installer un swap de 2Go, tapez:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /

@@ -222,10 +222,11 @@ avez mis en place un compte sudo:
        ssh <sudo_username>@<example.com> 
 
    -  Mettez ici <sudo\_username> par votre nom de login et
-      <example.com> par votre nom de domaine. Au début votre nom de
-      domaine acheté n’est pas encore configuré. Il faut donc utiliser
-      le nom de machine ( par exemple pour un VPS OVH:
-      VPSxxxxxx.ovh.net) ou votre adresse IP.
+      <example.com> par votre nom de domaine ou son adresse IP. Au début
+      votre nom de domaine acheté n’est pas encore configuré. Il faut
+      donc utiliser le nom de machine ( par exemple pour un VPS OVH:
+      VPSxxxxxx.ovh.net ou pour un raspberry: raspberrypi.local ) ou
+      votre adresse IP.
 
    ou utilisez putty si vous êtes sous Windows.
 
@@ -940,9 +941,13 @@ que l’on souhaite installer.
 Ajouter un fichier de swap
 --------------------------
 
-Pour un serveur VPS de 2 Go de RAM, la taille du fichier de swap sera de
-1 Go. Si vous avez beaucoup d’outils et de serveurs à installer il peut
-être nécessaire d’avoir 4 Go de RAM au total.
+Pour un serveur VPS ou Raspberry Pi de 2 Go de RAM, la taille du fichier
+de swap sera de 2 Go. Si vous avez beaucoup d’outils et de serveurs à
+installer il peut être nécessaire d’avoir 4 Go de RAM au total + 2 Go de
+swap.
+
+Enfin pour un Raspberry PI 3 avec 1 Go de Ram, il faut ajouter 1 Go de
+swap.
 
 Tapez :
 
@@ -955,7 +960,7 @@ Tapez :
 
        dphys-swapfile uninstall
 
-3. Tapez:
+3. Pour installer un swap de 2Go, tapez:
 
    .. code:: bash
 
