@@ -470,7 +470,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_création_dune_clé_de_connexion_ssh_locale">6.11. Création d&#8217;une clé de connexion ssh locale</a></li>
 <li><a href="#_sudo_sans_mot_de_passe">6.12. Sudo sans mot de passe</a></li>
 <li><a href="#_installer_loutil_dselect">6.13. Installer l&#8217;outil dselect</a></li>
-<li><a href="#_ajouter_un_fichier_de_swap">6.14. Ajouter un fichier de swap</a></li>
+<li><a href="#swap_create">6.14. Ajouter un fichier de swap</a></li>
 </ul>
 </li>
 <li><a href="#_installation_initiale_des_outils">7. Installation initiale des outils</a>
@@ -602,6 +602,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_vérifier_un_backup">22.6. Vérifier un backup</a></li>
 <li><a href="#_restaurer_un_backup">22.7. Restaurer un backup</a></li>
 <li><a href="#_supprimer_vos_vieux_backups">22.8. Supprimer vos vieux backups</a></li>
+<li><a href="#_automatisez_votre_sauvegarde">22.9. Automatisez votre sauvegarde</a></li>
+<li><a href="#_restauration_durgence">22.10. Restauration d&#8217;urgence.</a></li>
 </ul>
 </li>
 <li><a href="#_installation_dun_serveur_de_vpn_pritunl">23. Installation d&#8217;un serveur de VPN Pritunl</a>
@@ -2084,7 +2086,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ajouter_un_fichier_de_swap">6.14. Ajouter un fichier de swap</h3>
+<h3 id="swap_create">6.14. Ajouter un fichier de swap</h3>
 <div class="paragraph">
 <p>Pour un serveur VPS ou Raspberry Pi de 2 Go de RAM, la taille du fichier de swap sera de 2 Go.
 Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être nécessaire d&#8217;avoir 4 Go de RAM au total + 2 Go de swap.</p>
@@ -8951,6 +8953,18 @@ Nous nommerons le serveur qu&#8217;il faut sauvegarder: serveur sauvegardé et i
 </li>
 <li>
 <p><a href="#pass_gen">Générez un mot de passe long</a></p>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour récupérer vos backup après un crash du serveur. Sans celui-ci, impossible de récupérer votre installation !
+</td>
+</tr>
+</table>
+</div>
 </li>
 <li>
 <p>Créez un compte utilisateur. Tapez:</p>
@@ -9092,6 +9106,18 @@ chmod <span class="tok-m">700</span> borgbackup</code></pre>
 </li>
 <li>
 <p><a href="#pass_gen">Créez un mot de passe pour le dépot borg backup</a>.</p>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour récupérer vos backup après un crash du serveur. Sans celui-ci, impossible de récupérer votre installation !
+</td>
+</tr>
+</table>
+</div>
 </li>
 <li>
 <p>Puis tapez:</p>
@@ -9179,24 +9205,7 @@ chmod <span class="tok-m">700</span> borgbackup</code></pre>
 </div>
 </div>
 </li>
-<li>
-<p>vous pouvez ensuite planifier votre backup à 1h du matin. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>crontab -e</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Inserez ensuite le texte suivant:</p>
-</li>
 </ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre># Backup via Borg to backup server
-00 02 * * * /usr/local/bin/borgbackup.sh</pre>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -9278,7 +9287,7 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code><
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/sh</span>
 <span class="tok-nb">export</span> <span class="tok-nv">BORG_PASSPHRASE</span><span class="tok-o">=</span><span class="tok-s1">&#39;mot_passe&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
-borg check borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="tok-nv">$1</span></code></pre>
+borg check --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="tok-nv">$1</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -9422,6 +9431,14 @@ rmdir /mnt/borgbackup</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/sh</span>
+
+<span class="tok-c1"># Nettoyage des anciens backups</span>
+<span class="tok-c1"># On conserve</span>
+<span class="tok-c1"># - une archive par jour les 7 derniers jours,</span>
+<span class="tok-c1"># - une archive par semaine pour les 4 dernières semaines,</span>
+<span class="tok-c1"># - une archive par mois pour les 6 derniers mois.</span>
+
+
 <span class="tok-nb">export</span> <span class="tok-nv">BORG_PASSPHRASE</span><span class="tok-o">=</span><span class="tok-s1">&#39;mot_passe&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
 borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix <span class="tok-sb">`</span>hostname<span class="tok-sb">`</span>- --keep-daily<span class="tok-o">=</span><span class="tok-m">7</span> --keep-weekly<span class="tok-o">=</span><span class="tok-m">4</span> --keep-monthly<span class="tok-o">=</span><span class="tok-m">12</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
@@ -9457,11 +9474,172 @@ borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/bo
 </li>
 </ol>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_automatisez_votre_sauvegarde">22.9. Automatisez votre sauvegarde</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pour créer un script automatisé de backup. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/log/borg
+vi /usr/local/bin/borgcron.sh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Insérez dans le fichier le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/sh</span>
+<span class="tok-c1">#</span>
+<span class="tok-c1"># Script de sauvegarde.</span>
+<span class="tok-c1">#</span>
+
+<span class="tok-nb">set</span> -e
+
+<span class="tok-nv">LOG_PATH</span><span class="tok-o">=</span>/var/log/borg/cron.log
+
+/usr/local/bin/borgbackup.sh &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">LOG_PATH</span><span class="tok-si">}</span> <span class="tok-m">2</span>&gt;<span class="tok-p">&amp;</span><span class="tok-m">1</span>
+/usr/local/bin/borgprune.sh &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">LOG_PATH</span><span class="tok-si">}</span> <span class="tok-m">2</span>&gt;<span class="tok-p">&amp;</span><span class="tok-m">1</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>vous pouvez ensuite planifier votre backup à 1h du matin. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>crontab -e</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Inserez ensuite le texte suivant:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre># Backup via Borg to backup server
+00 01 * * * /usr/local/bin/borgcron.sh</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_restauration_durgence">22.10. Restauration d&#8217;urgence.</h3>
 <div class="paragraph">
-<p>pour installer borg backup en mode rescue afin d&#8217;avoir la dernière version.
-apt install python3-pip libssl-dev cython3 gcc g++ libpython-dev libacl1-dev
-pip3 install borgbackup
-pip3 install rdiff-backup</p>
+<p>En cas de crash du serveur, l’intérêt du backup offsite est de pouvoir remonter la dernière sauvegarde sans souci.
+Pour cela il faut avoir un moyen de booter le serveur dans un mode rescue (boot du VPS en mode rescue, utilisation d&#8217;un clé USB bootable, boot réseau ou autre moyen).</p>
+</div>
+<div class="paragraph">
+<p>On suppose dans ce qu&#8217;il suit que vous avez booté sur un linux de type debian ou ubuntu dont la version n&#8217;est pas la toute dernière et dans laquelle borg-backup n&#8217;est pas obligatoirement présent du moins dans un version suffisamment récente.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>loguez vous root sur votre serveur. A noter que, comme vous êtes en mode rescue, l&#8217;accès au mode est indiqué par votre hébergeur ou, si vous avez booté sur une clé USB en local, l&#8217;accès root s&#8217;effectue souvent avec une commande <code>sudo bash</code></p>
+</li>
+<li>
+<p>Montez votre partition racine. Sur un VPS, la partition est souvent déjà montée dans le répertoire /mnt. Sur un PC c&#8217;est souvent /dev/sda1. Sur un Raspberry Pi cette partition est /dev/mmcblk0p7. Tapez la commande:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /mnt/root
+mount /dev/mmcblk0p7 /mnt/root</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installez borgbackup. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install python3-pip libssl-dev cython3 gcc g++ libpython3-dev libacl1-dev python3-llfuse
+pip3 install borgbackup</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Si la compilation échoue, c&#8217;est qu&#8217;il manque des packages. lisez attentivement les logs et installez les packages manquant.</p>
+</li>
+<li>
+<p>Munissez vous du mot de passe &lt;mot_passe&gt; des archives borg et tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /mnt/borgbackup
+<span class="tok-nb">export</span> <span class="tok-nv">BORG_PASSPHRASE</span><span class="tok-o">=</span><span class="tok-s1">&#39;mot_passe&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+borg list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacez mot_passe par votre mot de passe de borg</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>tapez le mot de passe du compte borgbackup.</p>
+</li>
+<li>
+<p>la liste des sauvegardes est affichées à l&#8217;écran.</p>
+</li>
+<li>
+<p>Choisissez l&#8217;archive qui vous convient et tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /mnt/root
+borg extract --list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::&lt;votre_archive&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>tapez le mot de passe du compte borgbackup.</p>
+</li>
+<li>
+<p>la restauration s&#8217;effectue et peut prendre des heures ! soyez patient.</p>
+</li>
+<li>
+<p>il peut être nécessaire de réinstaller le bootloader (non utile sur VPS ou raspberry). Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /mnt/root
+chroot . bash
+mkdir -p dev proc run sys tmp
+mount -t devtmpfs dev /dev
+mount -t proc proc /proc
+grub_install /dev/sda <i class="conum" data-value="1"></i><b>(1)</b>
+umount /proc
+umount /dev
+sync
+<span class="tok-nb">exit</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>tapez ici le nom de device de votre disque de boot</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Créez votre fichier de swap en suivant <a href="#swap_create">la procédure</a>. Attention le fichier de swap doit être installé dans /mnt/root/swapfile</p>
+</li>
+<li>
+<p>vous pouvez maintenant rebooter votre machine en mode normal.</p>
+</li>
+<li>
+<p>une autre façon de remonter la sauvegarde est d&#8217;extraire un fichier tar.xz directement du serveur de stockage et de transférer cette archive sur la machine en mode rescue puis de décompresser. La commande de génération d&#8217;archive est:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>borg export-tar --list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::&lt;votre_archive&gt; restore.tar.xz</code></pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
