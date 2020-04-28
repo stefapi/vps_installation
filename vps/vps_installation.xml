@@ -108,7 +108,6 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <simpara>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</simpara>
 <simpara>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal, que vous savez vous servir de <literal>ssh</literal> pour Linux ou de <literal>putty</literal> pour Windows, que vous avez des notions élémentaires de Shell Unix et que vous savez vous servir de l&#8217;éditeur <literal>vi</literal>. Si <literal>vi</literal> est trop compliqué pour vous, je vous suggère d&#8217;utiliser l&#8217;éditeur de commande <literal>nano</literal> à la place et de remplacer <literal>vi</literal> par <literal>nano</literal> dans toutes les lignes de commande.</simpara>
 <simpara>Dans le document, on peut trouver des textes entourés de &lt;texte&gt;. Cela signifie que vous devez mettre ici votre propre texte selon vos préférences.</simpara>
-<simpara>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'. Ce dernier exemple a un taux de complexité est bien meilleur et les mots de passe classiques. Il est aussi plus facile à retenir que 'Az3~1ym_a&amp;'.</simpara>
 <simpara>Le coût pour mettre en oeuvre ce type de serveur est relativement faible:
 * Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y avoir des promos)
 * Compter 5€TTC/mois pour un VPS de base (2Go de Ram, un coeur, 20Go de SSD). Une machine plus sérieuse sera à 15€/mois (8Go de Ram, 2 coeurs, 80Go de SSD).</simpara>
@@ -120,7 +119,7 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 J&#8217;ai pour ma part choisi un serveur VPS SSD chez OVH avec 2Go de RAM. Au moment ou j&#8217;écris ce document il possède un seul coeur et 20 Go de disque.</simpara>
 <simpara>Choisissez d&#8217;installer une image Linux seule avec Debian 10.
 Une fois l&#8217;installation effectuée, vous recevez un Email sur l&#8217;adresse mail de votre compte OVH avec vos identifiants de login root. Ils serviront à vous connecter sur le serveur.</simpara>
-<simpara>En vous loguant sur la <link xl:href="https://www.ovh.com/manager/web">plateforme d&#8217;administration d&#8217;OVH</link>, vous accèderez aux informations de votre serveur dans le menu Server&#8594;VPS. A cet endroit votre VPS doit y être indiqué.</simpara>
+<simpara>En vous loguant sur la <link xl:href="https://www.ovh.com/manager/web">plateforme d&#8217;administration d&#8217;OVH</link>, vous accéderez aux informations de votre serveur dans le menu Server&#8594;VPS. A cet endroit votre VPS doit y être indiqué.</simpara>
 <simpara>En cliquant dessus un ensemble de menus doivent apparaitre pour administrer celui-ci. Vous y trouverez notamment:</simpara>
 <itemizedlist>
 <listitem>
@@ -169,7 +168,7 @@ Vous devez reconfigurer les 'Enregistrements DNS' en mode externes.
 Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms externe. Mettre 3 DNS:</simpara>
 <itemizedlist>
 <listitem>
-<simpara>le deux DNS de votre domaine: ns1.&lt;example.com&gt; et ns2.&lt;example.com&gt;</simpara>
+<simpara>les deux DNS de votre domaine: ns1.&lt;example.com&gt; et ns2.&lt;example.com&gt;</simpara>
 </listitem>
 </itemizedlist>
 <simpara>Pour que tout cela fonctionne bien, ajoutez des Glue records:</simpara>
@@ -230,6 +229,94 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 </listitem>
 </orderedlist>
 </section>
+<section xml:id="pass_gen">
+<title>Gestion des mots de passe</title>
+<simpara>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'. Ce dernier exemple a un taux de complexité bien meilleur qu&#8217;un mot de passe classique. Il est aussi plus facile à retenir que 'Az3~1ym_a&amp;'.</simpara>
+<simpara>Cependant, si vous êtes en manque d&#8217;inspiration et que vous souhaitez générer des mots de passe, voici quelques méthodes:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>En se basant sur la date. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">date +%s | sha256sum | base64 | head -c 32 ; echo <co xml:id="CO3-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO3-1">
+<para>remplacez 32 par la valeur qui vous convient pour générer un mot de passe d&#8217;une taille différente de 32 caractères</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>En se basant sur les nombres aléatoires système. Tapez l&#8217;une des deux lignes ci dessous :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">tr -cd '[:graph:]' &lt; /dev/urandom | head -c 32; echo <co xml:id="CO4-1"/>
+tr -cd A-Za-z0-9 &lt; /dev/urandom | head -c 32;echo <co xml:id="CO4-2"/></programlisting>
+<calloutlist>
+<callout arearefs="CO4-1 CO4-2">
+<para>remplacez 32 par la valeur qui vous convient pour générer un mot de passe d&#8217;une taille différente de 32 caractères</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>En utilisant Openssl. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">openssl rand -base64 32 | cut -c-32 <co xml:id="CO5-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO5-1">
+<para>remplacez 32 par la valeur qui vous convient pour générer un mot de passe d&#8217;une taille différente de 32 caractères</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>En utilisant gpg. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">gpg --gen-random --armor 1 32 | cut -c-32 <co xml:id="CO6-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO6-1">
+<para>remplacez 32 par la valeur qui vous convient pour générer un mot de passe d&#8217;une taille différente de 32 caractères</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>En utilisant pwgen pour générer des mots de passe qui suivent des règles de longueur et types de caractères.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Pour installer l&#8217;outil, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install pwgen</programlisting>
+</listitem>
+<listitem>
+<simpara>Ensuite tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pwgen -Bcny 32 -1 <co xml:id="CO7-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO7-1">
+<para>remplacez 32 par la valeur qui vous convient pour générer un mot de passe d&#8217;une taille différente de 32 caractères. La commande crée un mot de passe non ambigue avec au moins une majuscule , une valeur numérique, un symbole.</para>
+</callout>
+</calloutlist>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>En utilisant apg pour générer des mots de passe prononcables tel que: <literal>7quiGrikCod+ (SEVEN-qui-Grik-Cod-PLUS_SIGN)</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Pour installer l&#8217;outil, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install apg</programlisting>
+</listitem>
+<listitem>
+<simpara>Ensuite tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apg</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>En utilisant xkcdpass pour générer des passphrases comme: <literal>context smashup spiffy cuddly throttle landfall</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Pour installer l&#8217;outil, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install xkcdpass</programlisting>
+</listitem>
+<listitem>
+<simpara>Ensuite tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">xkcdpass</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
 <section xml:id="_configuration_basique">
 <title>Configuration basique</title>
 <section xml:id="_mettre_léditeur_de_votre_choix">
@@ -258,9 +345,9 @@ apt install etckeeper</programlisting>
 <listitem>
 <simpara>Ajoutez ce repository distant. Pour <literal>Gitlab</literal> et <literal>Github</literal>, une fois le repository créé, demandez l&#8217;affichage de la commande git pour une communication en ssh. Tapez ensuite sur votre serveur :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /etc
-git remote add origin git@github.com:username/etc_keeper.git <co xml:id="CO3-1"/></programlisting>
+git remote add origin git@github.com:username/etc_keeper.git <co xml:id="CO8-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO3-1">
+<callout arearefs="CO8-1">
 <para>remplacer l&#8217;url par celle qui correspond au chemin de votre repository</para>
 </callout>
 </calloutlist>
@@ -519,8 +606,16 @@ fi</programlisting>
 <warning>
 <simpara>L&#8217;installation automatique de paquets peut conduire dans certains cas très rare à des dysfonctionnements du serveur. Il est important de regarder périodiquement les logs d&#8217;installation</simpara>
 </warning>
+<simpara>Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
 <simpara>Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">apt install unattended-upgrades</programlisting>
+</listitem>
+</orderedlist>
 </section>
 <section xml:id="_vérification_du_nom_de_serveur">
 <title>Vérification du nom de serveur</title>
@@ -590,7 +685,11 @@ fi</programlisting>
 <title>Configurer une IPV6</title>
 <simpara>OVH propose des adresses IPV6. Ces adresses sont indiquées sur le panneau de synthèse du VPS (Dashboard).</simpara>
 <simpara>La résolution par DHCP ne semble pas fonctionner. Il faut donc configurer l&#8217;adresse à la main:</simpara>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /etc/network/interfaces</programlisting>
@@ -598,16 +697,16 @@ fi</programlisting>
 <listitem>
 <simpara>Ajoutez ces lignes à la fin:</simpara>
 <programlisting language="ini" linenumbering="unnumbered">iface eth0 inet6 static
-address &lt;IPV6_ADDRESS&gt; <co xml:id="CO4-1"/>
-post-up /sbin/ip -6 route add &lt;GW_ADDRESS&gt; dev eth0 <co xml:id="CO4-2"/>
-post-up /sbin/ip -6 route add default via &lt;GW_ADDRESS&gt; dev eth0 <co xml:id="CO4-3"/>
-pre-down /sbin/ip -6 route del default via &lt;GW_ADDRESS&gt; dev eth0 <co xml:id="CO4-4"/>
-pre-down /sbin/ip -6 route del &lt;GW_ADDRESS&gt; dev eth0 <co xml:id="CO4-5"/></programlisting>
+address &lt;IPV6_ADDRESS&gt; <co xml:id="CO9-1"/>
+post-up /sbin/ip -6 route add &lt;GW_ADDRESS&gt; dev eth0 <co xml:id="CO9-2"/>
+post-up /sbin/ip -6 route add default via &lt;GW_ADDRESS&gt; dev eth0 <co xml:id="CO9-3"/>
+pre-down /sbin/ip -6 route del default via &lt;GW_ADDRESS&gt; dev eth0 <co xml:id="CO9-4"/>
+pre-down /sbin/ip -6 route del &lt;GW_ADDRESS&gt; dev eth0 <co xml:id="CO9-5"/></programlisting>
 <calloutlist>
-<callout arearefs="CO4-1">
+<callout arearefs="CO9-1">
 <para>Mettre ici l&#8217;adresse IPV6 proposée par OVH</para>
 </callout>
-<callout arearefs="CO4-2 CO4-3 CO4-4 CO4-5">
+<callout arearefs="CO9-2 CO9-3 CO9-4 CO9-5">
 <para>Mettre ici l&#8217;adresse IPV6 du gateway proposé par OVH</para>
 </callout>
 </calloutlist>
@@ -639,9 +738,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Dans une autre fenêtre, se connecter sur le serveur avec votre nouveau compte <literal>&lt;sudo_username&gt;</literal>:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO5-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO10-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO5-1">
+<callout arearefs="CO10-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -675,9 +774,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Faites maintenant l&#8217;essai de vous re-loguer avec le compte root.Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO6-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO11-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO6-1">
+<callout arearefs="CO11-1">
 <para>Remplacer ici &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -699,7 +798,8 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Créer un répertoire <literal>~/.ssh</literal> s&#8217;il n&#8217;existe pas. tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">mkdir -p $HOME/.ssh</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p $HOME/.ssh
+chmod 700 ~/.ssh</programlisting>
 </listitem>
 <listitem>
 <simpara>Allez dans le répertoire. Tapez :</simpara>
@@ -723,9 +823,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Loguez vous sur votre serveur distant. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO7-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO12-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO7-1">
+<callout arearefs="CO12-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -755,9 +855,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Vérifiez que tout fonctionne en vous connectant. Tapez: :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO8-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO13-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO8-1">
+<callout arearefs="CO13-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -895,7 +995,11 @@ swapon /swapfile</programlisting>
 </orderedlist>
 <section xml:id="_configuration_de_postfix">
 <title>Configuration de Postfix</title>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Editez le master.cf file de postfix. Tapez :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /etc/postfix/master.cf</programlisting>
@@ -927,7 +1031,11 @@ systemctl disable spamassassin</programlisting>
 </section>
 <section xml:id="_configuration_de_mariadb">
 <title>Configuration de MariaDB</title>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Sécurisez votre installation MariaDB. Tapez :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mysql_secure_installation</programlisting>
@@ -1038,7 +1146,11 @@ systemctl restart mariadb</programlisting>
 </section>
 <section xml:id="_configuration_dapache">
 <title>Configuration d&#8217;Apache</title>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Installez les modules Apache nécessaires. Tapez :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">a2enmod suexec rewrite ssl proxy_http actions include dav_fs dav auth_digest cgi headers actions proxy_fcgi alias speling</programlisting>
@@ -1072,7 +1184,11 @@ systemctl restart apache2</programlisting>
 </section>
 <section xml:id="_installation_et_configuration_de_mailman">
 <title>Installation et Configuration de Mailman</title>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Tapez :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">apt-get install mailman</programlisting>
@@ -1142,7 +1258,11 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</scre
 </section>
 <section xml:id="_configuration_d_awstats">
 <title>Configuration d' Awstats</title>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>configurer la tache cron d&#8217;awstats: Éditez le fichier :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /etc/cron.d/awstats</programlisting>
@@ -1156,7 +1276,11 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</scre
 </section>
 <section xml:id="_configuration_de_fail2ban">
 <title>Configuration de Fail2ban</title>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Editez le fichier jail.local :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /etc/fail2ban/jail.local</programlisting>
@@ -1182,7 +1306,11 @@ maxretry = 3</programlisting>
 </section>
 <section xml:id="_installation_et_configuration_de_pureftpd">
 <title>Installation et configuration de PureFTPd</title>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Tapez: :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">apt-get install pure-ftpd-common pure-ftpd-mysql</programlisting>
@@ -1281,7 +1409,11 @@ quotaon -avug</programlisting>
 </section>
 <section xml:id="_installation_et_configuration_de_phpmyadmin">
 <title>Installation et configuration de phpmyadmin</title>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Installez phpmyadmin. Exécutez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir /usr/share/phpmyadmin
@@ -1298,11 +1430,18 @@ rm -rf phpMyAdmin-4.9.0.1-all-languages
 cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php</programlisting>
 </listitem>
 <listitem>
+<simpara>Créez votre chaîne aléatoire en base64. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">tr -dc A-Za-z0-9 &lt; /dev/urandom | head -c${1:-32};echo;</programlisting>
+</listitem>
+<listitem>
+<simpara>Copiez le texte généré</simpara>
+</listitem>
+<listitem>
 <simpara>Éditez le fichier :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /usr/share/phpmyadmin/config.inc.php</programlisting>
 <orderedlist numeration="loweralpha">
 <listitem>
-<simpara>Modifier l’entrée <literal>blowfish_secret</literal> en ajoutant votre propre chaîne de 32 caractères.</simpara>
+<simpara>Modifier l’entrée <literal>blowfish_secret</literal> en ajoutant votre propre chaîne de 32 caractères générée juste avant.</simpara>
 </listitem>
 <listitem>
 <simpara>Éditez le fichier: :</simpara>
@@ -1370,18 +1509,18 @@ systemctl restart apache2</programlisting>
 </listitem>
 <listitem>
 <simpara>Créez un utilisateur phpmyadmin. Tapez :</simpara>
-<programlisting language="sql" linenumbering="unnumbered">CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; <co xml:id="CO9-1"/></programlisting>
+<programlisting language="sql" linenumbering="unnumbered">CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; <co xml:id="CO14-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO9-1">
+<callout arearefs="CO14-1">
 <para><literal>mypassword</literal> doit être remplacé par un mot de passe choisi.</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Accordez des privilèges et sauvez:</simpara>
-<programlisting language="sql" linenumbering="unnumbered">GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; <co xml:id="CO10-1"/></programlisting>
+<programlisting language="sql" linenumbering="unnumbered">GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; <co xml:id="CO15-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO10-1">
+<callout arearefs="CO15-1">
 <para><literal>mypassword</literal> doit être remplacé par un mot de passe choisi.</para>
 </callout>
 </calloutlist>
@@ -1413,7 +1552,7 @@ systemctl restart apache2</programlisting>
 $cfg['Servers'][$i]['controlhost'] = 'localhost';
 $cfg['Servers'][$i]['controlport'] = '';
 $cfg['Servers'][$i]['controluser'] = 'pma';
-$cfg['Servers'][$i]['controlpass'] = 'mypassword'; <co xml:id="CO11-1"/>
+$cfg['Servers'][$i]['controlpass'] = 'mypassword'; <co xml:id="CO16-1"/>
 
 
 /* Storage database and tables */
@@ -1438,7 +1577,7 @@ $cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
 $cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
 $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';</programlisting>
 <calloutlist>
-<callout arearefs="CO11-1">
+<callout arearefs="CO16-1">
 <para>A tous les endroit ou vous voyez dans le texte ci dessus le mot <literal>mypassword</literal> mettez celui choisi. N&#8217;oubliez pas de dé-commenter les lignes.</para>
 </callout>
 </calloutlist>
@@ -1449,7 +1588,11 @@ $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';</programlisti
 </section>
 <section xml:id="_installation_et_configuration_de_roundcube">
 <title>Installation et configuration de Roundcube</title>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">apt-get install roundcube roundcube-core roundcube-mysql roundcube-plugins</programlisting>
@@ -1487,16 +1630,27 @@ Alias /webmail /var/lib/roundcube</programlisting>
 </section>
 <section xml:id="_installation_de_lets_encrypt">
 <title>Installation de Let&#8217;s Encrypt</title>
+<simpara>Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
 <simpara>Installez Let&#8217;s Encrypt. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /usr/local/bin
 wget https://dl.eff.org/certbot-auto
 chmod a+x certbot-auto
 ./certbot-auto --install-only</programlisting>
+</listitem>
+<listitem>
 <simpara>Une façon alternative de l&#8217;installer est:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">apt install python3-certbot-apache</programlisting>
+</listitem>
+</orderedlist>
 </section>
 <section xml:id="_installation_dun_scanner_de_vulnérabilités">
 <title>Installation d&#8217;un scanner de vulnérabilités</title>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
@@ -2199,6 +2353,10 @@ Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail
 </listitem>
 <listitem>
 <simpara>un enregistrement de type <literal>A</literal> avec un <literal>Hostname</literal> &#8592; ns3 et une <literal>IP-address</literal> &#8592; Adresse IP de votre routeur ADSL ou est connecté le Raspberry.</simpara>
+</listitem>
+<listitem>
+<simpara>Si vous ne la connaissez pas, tapez dans un terminal texte:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">wget -qO- http://ipecho.net/plain; echo</programlisting>
 <simpara>Ce dernier enregistrement en complétant le Glue record fait le lien avec l&#8217;adresse IP de sub.example.com</simpara>
 </listitem>
 </itemizedlist>
@@ -2214,7 +2372,15 @@ Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail
 </listitem>
 </itemizedlist>
 </listitem>
+<listitem>
+<simpara>Allez sur le site <link xl:href="https://dnssec-debugger.verisignlabs.com/">DNSSEC Analyzer</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Entrez votre nom de domaine "sub.example.com" et tapez sur "entrée".</simpara>
+</listitem>
 </orderedlist>
+<simpara>Le site doit afficher pour les différentes zones le statut des certificats. Tout doit être au vert.
+Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore des problèmes vérifiez votre configuration dans ISPConfig de votre domaine et de votre sous-domaine, chez votre registrar (rubrique DNSSEC) ou regardez les logs d&#8217;ISPConfig sur votre serveur pour y débusquer une erreur.</simpara>
 </section>
 <section xml:id="domain-site">
 <title>Création d’un site web</title>
@@ -2412,13 +2578,13 @@ ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]</programl
 <programlisting language="bash" linenumbering="unnumbered">cd /usr/local/ispconfig/interface/ssl/
 mv ispserver.crt ispserver.crt-$(date +"%y%m%d%H%M%S").bak
 mv ispserver.key ispserver.key-$(date +"%y%m%d%H%M%S").bak
-ln -s /etc/letsencrypt/live/example.com/fullchain.pem ispserver.crt <co xml:id="CO12-1"/>
-ln -s /etc/letsencrypt/live/example.com/privkey.pem ispserver.key <co xml:id="CO12-2"/>
+ln -s /etc/letsencrypt/live/example.com/fullchain.pem ispserver.crt <co xml:id="CO17-1"/>
+ln -s /etc/letsencrypt/live/example.com/privkey.pem ispserver.key <co xml:id="CO17-2"/>
 cat ispserver.{key,crt} &gt; ispserver.pem
 chmod 600 ispserver.pem
 systemctl restart apache2</programlisting>
 <calloutlist>
-<callout arearefs="CO12-1 CO12-2">
+<callout arearefs="CO17-1 CO17-2">
 <para>remplacer &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -2433,12 +2599,12 @@ systemctl restart apache2</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">cd /etc/postfix/
 mv smtpd.cert smtpd.cert-$(date +"%y%m%d%H%M%S").bak
 mv smtpd.key smtpd.key-$(date +"%y%m%d%H%M%S").bak
-ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert <co xml:id="CO13-1"/>
-ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key <co xml:id="CO13-2"/>
+ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert <co xml:id="CO18-1"/>
+ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key <co xml:id="CO18-2"/>
 service postfix restart
 service dovecot restart</programlisting>
 <calloutlist>
-<callout arearefs="CO13-1 CO13-2">
+<callout arearefs="CO18-1 CO18-2">
 <para>remplacer &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -2497,9 +2663,9 @@ exit 1</programlisting>
 echo "root" &gt;&gt; /etc/incron.allow
 incrontab -e.</programlisting>
 <simpara>et ajoutez les lignes ci dessous dans le fichier:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <co xml:id="CO14-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <co xml:id="CO19-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO14-1">
+<callout arearefs="CO19-1">
 <para>Remplacer example.com par votre nom de domaine.</para>
 </callout>
 </calloutlist>
@@ -2708,7 +2874,7 @@ set alert stef@fpvview.site
 set httpd port 2812 and
  SSL ENABLE
  PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
- allow admin:"my_password" <co xml:id="CO15-1"/>
+ allow admin:"my_password" <co xml:id="CO20-1"/>
 
 check process sshd with pidfile /var/run/sshd.pid
  start program "/usr/sbin/service ssh start"
@@ -2789,7 +2955,7 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
  if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
  if 5 restarts within 5 cycles then timeout</screen>
 <calloutlist>
-<callout arearefs="CO15-1">
+<callout arearefs="CO20-1">
 <para>remplacez my_password par votre mot de passe</para>
 </callout>
 </calloutlist>
@@ -3179,14 +3345,17 @@ systemctl disable amavisd-new</programlisting>
 <simpara>Afin de mieux sécuriser votre serveur de mail, appliquez les opérations suivantes:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
 <simpara>editez le fichier main.cf</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /etc/postfix/main.cf</programlisting>
 </listitem>
 <listitem>
 <simpara>Rechercher <literal>myhostname</literal> et replacer le texte par:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">myhostname = mail.example.com <co xml:id="CO16-1"/></programlisting>
+<programlisting language="ini" linenumbering="unnumbered">myhostname = mail.example.com <co xml:id="CO21-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO16-1">
+<callout arearefs="CO21-1">
 <para>Remplacer example.com par votre nom de domaine.</para>
 </callout>
 </calloutlist>
@@ -3256,9 +3425,9 @@ CheckCaseOnly Off</programlisting>
 <simpara>Dans le répertoire <literal>/var/www/autoconfig.example.com/autoconfig/</literal> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/www/autoconfig.example.com/autoconfig/mail
 chmod 755 /var/www/autoconfig.example.com/autoconfig/mail
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail <co xml:id="CO17-1"/></programlisting>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail <co xml:id="CO22-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO17-1">
+<callout arearefs="CO22-1">
 <para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
 <orderedlist numeration="loweralpha">
 <listitem>
@@ -3277,33 +3446,33 @@ header('Content-Type: application/xml');
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 &lt;clientConfig version="1.1"&gt;
- &lt;emailProvider id="example.com"&gt; <co xml:id="CO18-1"/>
+ &lt;emailProvider id="example.com"&gt; <co xml:id="CO23-1"/>
    &lt;domain&gt;example.com&lt;/domain&gt;
-   &lt;displayName&gt;Example Mail&lt;/displayName&gt; <co xml:id="CO18-2"/>
-   &lt;displayShortName&gt;Example&lt;/displayShortName&gt; <co xml:id="CO18-3"/>
+   &lt;displayName&gt;Example Mail&lt;/displayName&gt; <co xml:id="CO23-2"/>
+   &lt;displayShortName&gt;Example&lt;/displayShortName&gt; <co xml:id="CO23-3"/>
    &lt;incomingServer type="imap"&gt;
-     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO18-4"/>
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO23-4"/>
      &lt;port&gt;993&lt;/port&gt;
      &lt;socketType&gt;SSL&lt;/socketType&gt;
      &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
      &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
    &lt;/incomingServer&gt;
    &lt;incomingServer type="pop3"&gt;
-     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO18-5"/>
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO23-5"/>
      &lt;port&gt;995&lt;/port&gt;
      &lt;socketType&gt;SSL&lt;/socketType&gt;
      &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
      &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
    &lt;/incomingServer&gt;
    &lt;outgoingServer type="smtp"&gt;
-     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO18-6"/>
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO23-6"/>
      &lt;port&gt;465&lt;/port&gt;
      &lt;socketType&gt;SSL&lt;/socketType&gt;
      &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
      &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
    &lt;/outgoingServer&gt;
    &lt;outgoingServer type="smtp"&gt;
-     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO18-7"/>
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO23-7"/>
      &lt;port&gt;587&lt;/port&gt;
      &lt;socketType&gt;STARTTLS&lt;/socketType&gt;
      &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
@@ -3312,13 +3481,13 @@ header('Content-Type: application/xml');
  &lt;/emailProvider&gt;
 &lt;/clientConfig&gt;</programlisting>
 <calloutlist>
-<callout arearefs="CO18-1 CO18-4 CO18-5 CO18-6 CO18-7">
+<callout arearefs="CO23-1 CO23-4 CO23-5 CO23-6 CO23-7">
 <para>mettre à la place de example.com votre nom de domaine</para>
 </callout>
-<callout arearefs="CO18-2">
+<callout arearefs="CO23-2">
 <para>mettre ici votre libellé long pour votre nom de messagerie</para>
 </callout>
-<callout arearefs="CO18-3">
+<callout arearefs="CO23-3">
 <para>mettre ici un libellé court pour votre nom de messagerie</para>
 </callout>
 </calloutlist>
@@ -3326,9 +3495,9 @@ header('Content-Type: application/xml');
 <listitem>
 <simpara>Donner la permission en lecture seule et affecter les groupes d&#8217;appartenance. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">chmod 644 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <co xml:id="CO19-1"/></programlisting>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <co xml:id="CO24-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO19-1">
+<callout arearefs="CO24-1">
 <para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
 </callout>
 </calloutlist>
@@ -3366,11 +3535,11 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.x
 <programlisting language="apache" linenumbering="unnumbered">CheckSpelling On
 CheckCaseOnly On
 RewriteEngine On
-ProxyPass "/" http://autoconfig.example.com/ <co xml:id="CO20-1"/>
-ProxyPassReverse "/" http://autoconfig.example.com/ <co xml:id="CO20-2"/>
+ProxyPass "/" http://autoconfig.example.com/ <co xml:id="CO25-1"/>
+ProxyPassReverse "/" http://autoconfig.example.com/ <co xml:id="CO25-2"/>
 RewriteRule ^/ - [QSA,L]</programlisting>
 <calloutlist>
-<callout arearefs="CO20-1 CO20-2">
+<callout arearefs="CO25-1 CO25-2">
 <para>remplacer example.com par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -3387,9 +3556,9 @@ RewriteRule ^/ - [QSA,L]</programlisting>
 <simpara>Dans le répertoire <literal>/var/www/autoconfig.example.com/autoconfig/</literal>, créer un répertoire <literal>Autodiscover</literal>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/
 chmod 755 /var/www/autoconfig.example.com/autoconfig/Autodiscover/
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co xml:id="CO21-1"/></programlisting>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co xml:id="CO26-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO21-1">
+<callout arearefs="CO26-1">
 <para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
 <orderedlist numeration="loweralpha">
 <listitem>
@@ -3411,14 +3580,14 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co 
  &lt;Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006"&gt;
    &lt;Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a"&gt;
      &lt;User&gt;
-       &lt;DisplayName&gt;Example Mail&lt;/DisplayName&gt; <co xml:id="CO22-1"/>
+       &lt;DisplayName&gt;Example Mail&lt;/DisplayName&gt; <co xml:id="CO27-1"/>
      &lt;/User&gt;
      &lt;Account&gt;
        &lt;AccountType&gt;email&lt;/AccountType&gt;
        &lt;Action&gt;settings&lt;/Action&gt;
        &lt;Protocol&gt;
          &lt;Type&gt;IMAP&lt;/Type&gt;
-         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO22-2"/>
+         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO27-2"/>
          &lt;Port&gt;993&lt;/Port&gt;
          &lt;DomainRequired&gt;off&lt;/DomainRequired&gt;
          &lt;SPA&gt;off&lt;/SPA&gt;
@@ -3428,7 +3597,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co 
        &lt;/Protocol&gt;
        &lt;Protocol&gt;
          &lt;Type&gt;SMTP&lt;/Type&gt;
-         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO22-3"/>
+         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO27-3"/>
          &lt;Port&gt;465&lt;/Port&gt;
          &lt;DomainRequired&gt;off&lt;/DomainRequired&gt;
          &lt;SPA&gt;off&lt;/SPA&gt;
@@ -3440,10 +3609,10 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co 
    &lt;/Response&gt;
  &lt;/Autodiscover&gt;</programlisting>
 <calloutlist>
-<callout arearefs="CO22-2 CO22-3">
+<callout arearefs="CO27-2 CO27-3">
 <para>mettre à la place de example.com votre nom de domaine</para>
 </callout>
-<callout arearefs="CO22-1">
+<callout arearefs="CO27-1">
 <para>mettre ici votre libellé long pour votre nom de messagerie</para>
 </callout>
 </calloutlist>
@@ -3451,9 +3620,9 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co 
 <listitem>
 <simpara>Changez les permissions comme pour le répertoire</simpara>
 <programlisting language="bash" linenumbering="unnumbered">chmod 644 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <co xml:id="CO23-1"/></programlisting>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <co xml:id="CO28-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO23-1">
+<callout arearefs="CO28-1">
 <para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
 </callout>
 </calloutlist>
@@ -3658,8 +3827,12 @@ ProxyPreserveHost On</programlisting>
 <section xml:id="_transfert_de_vos_boites_mails_imap">
 <title>Transfert de vos boites mails IMAP</title>
 <simpara>Si vous faites une migration d&#8217;un ancien serveur vers un nouveau serveur vous souhaiterez probablement migrer aussi vos boites mail.</simpara>
-<simpara>La procédure ci dessous est à appliquer pour chaque compte mail IMAP. Elle peut facilement être scriptée:</simpara>
+<simpara>La procédure ci dessous est à appliquer pour chaque compte mail IMAP. Elle peut facilement être scriptée.</simpara>
+<simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Téléchargez imapsync du repository. Tapez:</simpara>
 <screen>wget https://raw.githubusercontent.com/imapsync/imapsync/master/imapsync
@@ -3671,15 +3844,15 @@ chmod 755 imapsync</screen>
 </listitem>
 <listitem>
 <simpara>Créez deux fichiers temporaires qui contiennent les mots de passe du 1er et  2eme serveur. Tapez:</simpara>
-<screen>echo "passwdsrc" &gt; secretsrc <co xml:id="CO24-1"/>
-echo "passwddst" &gt; secretdst <co xml:id="CO24-2"/>
+<screen>echo "passwdsrc" &gt; secretsrc <co xml:id="CO29-1"/>
+echo "passwddst" &gt; secretdst <co xml:id="CO29-2"/>
 chmod 600 secretsrc
 chmod 600 secretdst</screen>
 <calloutlist>
-<callout arearefs="CO24-1">
+<callout arearefs="CO29-1">
 <para>passwdsrc est à remplacer par le mot de passe du compte sur le serveur source</para>
 </callout>
-<callout arearefs="CO24-2">
+<callout arearefs="CO29-2">
 <para>passwddst est à remplacer par le mot de passe du compte sur le serveur destination</para>
 </callout>
 </calloutlist>
@@ -4134,11 +4307,13 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara>Tapez la commande suivante:</simpara>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
-</orderedlist>
-<screen>https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinstall.php</screen>
-<orderedlist numeration="arabic">
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="command" linenumbering="unnumbered">cd /var/www/microweber.example.com/microweber
+wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinstall.php</programlisting>
+</listitem>
 <listitem>
 <simpara>Un fois téléchargé, faites pointer votre navigateur vers <link xl:href="http://microweber.example.com/netinstall.php">http://microweber.example.com/netinstall.php</link></simpara>
 </listitem>
@@ -4308,6 +4483,9 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
 <simpara>Tapez la commande suivante:</simpara>
 </listitem>
 </orderedlist>
@@ -4379,6 +4557,9 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 <simpara>Pour installer, Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
 <simpara>Installez quelques paquets de base. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">apt-get install  php-cgi php-curl</programlisting>
 </listitem>
@@ -4448,9 +4629,6 @@ date.timezone = Asia/Kolkata</programlisting>
 </listitem>
 </orderedlist>
 </listitem>
-<listitem>
-<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
-</listitem>
 </orderedlist>
 </section>
 <section xml:id="_création_des_bases_de_données_3">
@@ -4516,6 +4694,9 @@ date.timezone = Asia/Kolkata</programlisting>
 <title>Installation de Nextcloud</title>
 <simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Tapez la commande suivante:</simpara>
 </listitem>
@@ -4628,10 +4809,10 @@ RewriteRule ^/.well-known/acme-challenge - [QSA,L]
 #
 
 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-ProxyPass / http://localhost:3000/ <co xml:id="CO25-1"/>
-ProxyPassReverse / http://localhost:3000/ <co xml:id="CO25-2"/></programlisting>
+ProxyPass / http://localhost:3000/ <co xml:id="CO30-1"/>
+ProxyPassReverse / http://localhost:3000/ <co xml:id="CO30-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO25-1 CO25-2">
+<callout arearefs="CO30-1 CO30-2">
 <para>mettez le nom de votre domaine à la place de example.com</para>
 </callout>
 </calloutlist>
@@ -4725,6 +4906,9 @@ chmod 770 /etc/gitea</programlisting>
 <title>Téléchargez et installez Gitea</title>
 <simpara>Appliquez les opérations suivantes:</simpara>
 <orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
 <listitem>
 <simpara>Téléchargez gitea du <link xl:href="https://dl.gitea.io/gitea/">site de chargement</link>. Tapez pour un système 64 bits:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
@@ -4859,9 +5043,9 @@ chmod 640 /etc/gitea/app.ini</programlisting>
 <listitem>
 <simpara>Trouvez les lignes suivantes et les remplacer dans le fichier. Chercher et remplacez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">START_SSH_SERVER = true
-SSH_PORT = 2222 <co xml:id="CO26-1"/></programlisting>
+SSH_PORT = 2222 <co xml:id="CO31-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO26-1">
+<callout arearefs="CO31-1">
 <para>mettez ici le numéro de port que vous souhaitez</para>
 </callout>
 </calloutlist>
@@ -5066,9 +5250,9 @@ mv seafile-server_* installed
 cd seafile-server-*
 ./setup-seafile-mysql.sh
 cd ../..
-chown -R web1:client0 seafile <co xml:id="CO27-1"/></programlisting>
+chown -R web1:client0 seafile <co xml:id="CO32-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO27-1">
+<callout arearefs="CO32-1">
 <para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
 </calloutlist>
@@ -5127,10 +5311,10 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>Démarrez Seafile. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">sudo -u web1 ./seafile.sh start <co xml:id="CO28-1"/>
-sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO28-2"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">sudo -u web1 ./seafile.sh start <co xml:id="CO33-1"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO33-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO28-1 CO28-2">
+<callout arearefs="CO33-1 CO33-2">
 <para>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <literal>Options</literal>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</para>
 </callout>
 </calloutlist>
@@ -5176,7 +5360,7 @@ vi startseafile.sh</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/bash
 
 # Change the value of "seafile_dir" to your path of seafile installation
-seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO29-1"/>
+seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO34-1"/>
 script_path=${seafile_dir}/seafile-server-latest
 seafile_init_log=${seafile_dir}/logs/seafile.init.log
 seahub_init_log=${seafile_dir}/logs/seahub.init.log
@@ -5200,7 +5384,7 @@ exit 1
 ;;
 esac</programlisting>
 <calloutlist>
-<callout arearefs="CO29-1">
+<callout arearefs="CO34-1">
 <para>remplacer example.com par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -5274,282 +5458,6 @@ esac</programlisting>
 <simpara>Enjoy !</simpara>
 </listitem>
 </orderedlist>
-</section>
-</section>
-<section xml:id="_installation_dun_serveur_de_vpn_pritunl">
-<title>Installation d&#8217;un serveur de VPN Pritunl</title>
-<simpara>Pritunl est un serveur VPN basé sur OpenVPN.</simpara>
-<section xml:id="_création_du_site_web_de_pritunl">
-<title>Création du site web de Pritunl</title>
-<simpara>Appliquez la procédure suivante:</simpara>
-<orderedlist numeration="arabic">
-<listitem>
-<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
-<itemizedlist>
-<listitem>
-<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>pritunl</literal></simpara>
-</listitem>
-<listitem>
-<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
-</listitem>
-</itemizedlist>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>Save</literal></simpara>
-</listitem>
-</orderedlist>
-</listitem>
-<listitem>
-<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Lui donner le nom <literal>pritunl</literal>.</simpara>
-</listitem>
-<listitem>
-<simpara>Le faire pointer vers le web folder <literal>pritunl</literal>.</simpara>
-</listitem>
-<listitem>
-<simpara>Activer let’s encrypt ssl</simpara>
-</listitem>
-<listitem>
-<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
-</listitem>
-<listitem>
-<simpara>Laisser le reste par défaut.</simpara>
-</listitem>
-<listitem>
-<simpara>Dans l’onglet Options:</simpara>
-</listitem>
-<listitem>
-<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
-<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-RewriteRule ^/.well-known/acme-challenge - [QSA,L]
-
-# Pritunl httpserver
-#
-  SSLProxyEngine On
-  SSLProxyCheckPeerCN Off
-  SSLProxyCheckPeerName Off
-  SSLProxyVerify none
-
-SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-ProxyPass / https://localhost:8070/
-ProxyPassReverse / https://localhost:8070/
-ProxyPreserveHost On</programlisting>
-</listitem>
-</orderedlist>
-</listitem>
-</orderedlist>
-</section>
-<section xml:id="_installation_de_pritunl">
-<title>Installation de Pritunl</title>
-<simpara>Veuillez suivre la procédure suivante:</simpara>
-<orderedlist numeration="arabic">
-<listitem>
-<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
-</listitem>
-<listitem>
-<simpara>Ajoutez des repositories Debian. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">tee /etc/apt/sources.list.d/mongodb-org.list &lt;&lt; EOF
-deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main
-EOF
-tee /etc/apt/sources.list.d/pritunl.list &lt;&lt; EOF
-deb http://repo.pritunl.com/stable/apt buster main
-EOF
-apt-get install dirmngr
-apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
-apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
-apt-get update
-apt-get --assume-yes install pritunl mongodb-org</programlisting>
-</listitem>
-<listitem>
-<simpara>Pritunl utilise en standard le port 80 et 443. Ces deux ports sont utilisés dans notre configuration par le serveur apache</simpara>
-</listitem>
-<listitem>
-<simpara>On commence par arrêter apache. Tapez:</simpara>
-<warning>
-<simpara>Plus aucun site web ne sera servit. Danger donc.</simpara>
-</warning>
-<programlisting language="bash" linenumbering="unnumbered">systemctl stop apache2</programlisting>
-</listitem>
-<listitem>
-<simpara>Démarrez Mongodb ainsi que Pritunl. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl start mongod pritunl
-systemctl enable mongod pritunl</programlisting>
-</listitem>
-</orderedlist>
-</section>
-<section xml:id="_configuration_de_pritunl">
-<title>Configuration de Pritunl</title>
-<simpara>Votre service Pritunl est actif. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</simpara>
-<orderedlist numeration="arabic">
-<listitem>
-<simpara>pointez votre navigateur sur le site web de Pritunl: <link xl:href="https://example.com">https://example.com</link></simpara>
-</listitem>
-<listitem>
-<simpara>Accepter le certificat non sécurisé. La page de setup de Pritunl s&#8217;affiche.</simpara>
-</listitem>
-<listitem>
-<simpara>Obtenez la clé d&#8217;activation. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">pritunl setup-key</programlisting>
-</listitem>
-<listitem>
-<simpara>copier la clé dans la page web. Cliquez sur <literal>Save</literal></simpara>
-</listitem>
-<listitem>
-<simpara>La page web s&#8217;affiche en erreur. Pas d&#8217;inquiétude à avoir.</simpara>
-</listitem>
-<listitem>
-<simpara>Arrêtez le serveur Pritunl. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl stop pritunl</programlisting>
-</listitem>
-<listitem>
-<simpara>Configurez le serveur pour qu&#8217;il n&#8217;utilise plus le port 80 et le port 443</simpara>
-<programlisting language="bash" linenumbering="unnumbered">pritunl set app.server_port 8070
-pritunl set app.redirect_server false</programlisting>
-</listitem>
-<listitem>
-<simpara>Redémarrez apache et pritunl</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl start apache2
-systemctl start pritunl</programlisting>
-</listitem>
-<listitem>
-<simpara>Pointez maintenant votre navigateur sur le site <link xl:href="https://pritunl.example.com">https://pritunl.example.com</link> . La page de login de pritunl doit s&#8217;afficher. Si ce n&#8217;est pas le cas, revérifier votre configuration de site web dans ISPConfig et que le port 8070 est bien activé.</simpara>
-</listitem>
-<listitem>
-<simpara>Sur le serveur, tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">pritunl default-password</programlisting>
-</listitem>
-<listitem>
-<simpara>Entrez dans la page web la valeur de <literal>username</literal> et de <literal>password</literal> affichés dans le terminal.</simpara>
-</listitem>
-<listitem>
-<simpara>Une boite de dialogue <literal>initial setup</literal> s&#8217;affiche. Ne changez rien mais tapez votre mot de passe.</simpara>
-</listitem>
-<listitem>
-<simpara>Vous êtes maintenant connecté sur le site web.</simpara>
-</listitem>
-<listitem>
-<simpara>Cliquez sur l&#8217;onglet <literal>Users</literal></simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Cliquez sur <literal>Add Organization</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Entrez votre nom d&#8217;organisation. Par exemple <literal>Personnel</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>Add</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>Add User</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Remplissez les champs:</simpara>
-<itemizedlist>
-<listitem>
-<simpara>`Name: ` &#8592; Tapez votre nom de login (pas de caractère accentué pas d&#8217;espace)</simpara>
-</listitem>
-<listitem>
-<simpara>`Select an organization: ` &#8592; sélectionnez votre organisation</simpara>
-</listitem>
-<listitem>
-<simpara>`Email: ` &#8592; Tapez votre adresse Email</simpara>
-</listitem>
-<listitem>
-<simpara><literal>Pin:</literal> &#8592; entrez votre code Pin (que des nombres; au moins 6 chiffres)</simpara>
-</listitem>
-</itemizedlist>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>Add</literal></simpara>
-</listitem>
-</orderedlist>
-</listitem>
-<listitem>
-<simpara>Allez sur l&#8217;onglet <literal>Servers</literal></simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Cliquez sur <literal>Add Server</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Remplissez les champs:</simpara>
-<itemizedlist>
-<listitem>
-<simpara><literal>Name:</literal> &#8592; donnez un nom à votre serveur (pas de caractère accentué pas d&#8217;espace)</simpara>
-</listitem>
-<listitem>
-<simpara>laissez le reste tel quel mais notez bien le numéro de port UDP indiqué</simpara>
-</listitem>
-</itemizedlist>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>Add</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>Attach Organization</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Sélectionnez le <literal>server</literal> et l' <literal>organization</literal>.</simpara>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>Attach</literal></simpara>
-</listitem>
-</orderedlist>
-</listitem>
-<listitem>
-<simpara>Débloquez le port VPN dans votre firewall</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
-</listitem>
-<listitem>
-<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
-</listitem>
-<listitem>
-<simpara>dans la rubrique <literal>Open UDP ports:</literal>, ajoutez le port UDP du VPN que vous avez noté.</simpara>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>save</literal></simpara>
-</listitem>
-</orderedlist>
-</listitem>
-<listitem>
-<simpara>Retourner dans l&#8217;interface de Pritunl. retournez sur l&#8217;onglet <literal>Servers</literal></simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Cliquez sur <literal>Start server</literal></simpara>
-</listitem>
-</orderedlist>
-</listitem>
-<listitem>
-<simpara>Votre serveur de VPN est opérationnel.</simpara>
-</listitem>
-</orderedlist>
-</section>
-<section xml:id="_se_connecter_au_serveur_de_vpn">
-<title>Se connecter au serveur de VPN</title>
-<simpara>Comme Pritunl est compatible OpenVPN n&#8217;importe quel logiciel compatible OpenVPN peut être utilisé.
-Pritunl founit un <link xl:href="https://client.pritunl.com/">client</link> compatible pour Linux, macOS, and Windows.</simpara>
-<simpara>Pour se connecter à l&#8217;aide du client, vous devez charger un fichier de configuration qui est téléchargeable dans l&#8217;onglet utilisateur du serveur web.
-Ce fichier est à importer dans le logiciel client de Pritunl.
-Une fois fait, une compte apparaît dans le logiciel client. Vous pourrez vous connecter en cliquant sur le bouton <literal>Connect</literal> du compte utilisateur.</simpara>
-</section>
-<section xml:id="_réparer_une_base_pritunl">
-<title>Réparer une base Pritunl</title>
-<simpara>Si jamais votre base est corrompue, vous pourrez la réparer en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl stop pritunl
-pritunl repair-database
-systemctl start pritunl</programlisting>
-</section>
-<section xml:id="_mot_de_passe_perdu">
-<title>Mot de passe perdu</title>
-<simpara>Vous pouvez re-générer un mot de passe en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">pritunl reset-password</programlisting>
 </section>
 </section>
 <section xml:id="_installation_de_grafana">
@@ -5995,6 +5903,612 @@ sudo service promtail status</programlisting>
 </orderedlist>
 </section>
 </section>
+<section xml:id="_borgbackup">
+<title>BorgBackup</title>
+<simpara>BorgBackup est un système de backup simple mais offrant des fonctionnalités avancées telles que le backup incrémental, la déduplication de données, la compression, l&#8217;authentification, l&#8217;encryption.</simpara>
+<simpara>Borg backup est un système de backup offsite. Cela signifie que vous devez avoir accès à un espace de stockage sur un autre site pour effectuer cette sauvegarde.</simpara>
+<simpara>Pour le moment, BorgBackup n&#8217;utilise pas de mécanisme de type RClone et il n&#8217;est donc pas encore possible de sauvegarder sur google drive ou autres espaces partagés.</simpara>
+<section xml:id="_introduction">
+<title>Introduction</title>
+<simpara>BorgBackup permet de stocker des backups sur un serveur distant.
+Nous nommerons le serveur sur lequel les sauvegardes seront stockées : serveur de stockage et identifié par &lt;storing_srv&gt;.
+Nous nommerons le serveur qu&#8217;il faut sauvegarder: serveur sauvegardé et identifié par &lt;example.com&gt;</simpara>
+</section>
+<section xml:id="_installation_du_serveur_de_stockage">
+<title>Installation du serveur de stockage</title>
+<simpara>Il est préférable pour des questions de sécurité de créer un compte utilisateur spécifique.</simpara>
+<simpara>Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur &lt;storing_srv&gt;. </link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install borgbackup</programlisting>
+</listitem>
+<listitem>
+<simpara><link linkend="pass_gen">Générez un mot de passe long</link></simpara>
+</listitem>
+<listitem>
+<simpara>Créez un compte utilisateur. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">adduser borgbackup</programlisting>
+</listitem>
+<listitem>
+<simpara>Copiez-collez le mot de passe généré lorsqu&#8217;il est demandé</simpara>
+</listitem>
+<listitem>
+<simpara>Créer un répertoire <literal>~/.ssh</literal> s&#8217;il n&#8217;existe pas. tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p $HOME/.ssh
+chmod 700 ~/.ssh</programlisting>
+</listitem>
+<listitem>
+<simpara>Allez dans le répertoire. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd ~/.ssh</programlisting>
+</listitem>
+<listitem>
+<simpara>Générez vous clés. Tapez :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh-keygen -t rsa</programlisting>
+</listitem>
+<listitem>
+<simpara>Un ensemble de questions apparaît. Si un texte vous explique que le fichier existe déjà, arrêtez la procédure. Cela signifie que vous avez déjà créé une clé et que vous risquez de perdre la connexion à d&#8217;autres serveurs si vous en générez une nouvelle. Sinon, appuyez sur Entrée à chaque fois pour accepter les valeurs par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Créez maintenant le répertoire pour recevoir les sauvegardes</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd
+mkdir borgbackup
+chmod 700 borgbackup</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_sur_le_serveur_sauvegardé">
+<title>Installation sur le serveur sauvegardé</title>
+<simpara>Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur &lt;example.com&gt;. </link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install borgbackup</programlisting>
+</listitem>
+<listitem>
+<simpara>Copiez la clé publique de root sur le &lt;storing_srv&gt;. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh-copy-id -i ~/.ssh/id_*.pub borgbackup@&lt;storing_srv&gt;</programlisting>
+</listitem>
+<listitem>
+<simpara>Coller le mot de passe généré plus haut lorsqu&#8217;il est demandé</simpara>
+</listitem>
+<listitem>
+<simpara>Affichez votre adresse IP. tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">wget -qO- http://ipecho.net/plain; echo</programlisting>
+</listitem>
+<listitem>
+<simpara>Faites un essai de connexion en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ssh borgbackup@&lt;storing_srv&gt;</programlisting>
+</listitem>
+<listitem>
+<simpara>Aucun mot de passe ne doit être demandée et vous devez être connecté en tant que borgbackup sur le &lt;storing_srv&gt;</simpara>
+</listitem>
+<listitem>
+<simpara>Si vous êtes très attaché à la sécurité, vous pouvez restreindre l&#8217;accès au seul serveur &lt;example.com&gt;. Tapez sur la ligne de commande du &lt;storing_srv&gt; :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi ~/.ssh/authorized_keys</programlisting>
+</listitem>
+<listitem>
+<simpara>Ajoutez en première ligne du fichier :</simpara>
+<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO35-1"/></screen>
+<calloutlist>
+<callout arearefs="CO35-1">
+<para>remplacez SERVERIPADDRESS par l&#8217;adresse IP affichée plus tôt.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Fusionnez cette ligne avec la suivante qui démarre par ssh en prenant bien garde de laissez un espace entre no-user-rc et ssh-rsa</simpara>
+</listitem>
+<listitem>
+<simpara>Déconnectez vous en tapant :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">exit</programlisting>
+</listitem>
+<listitem>
+<simpara>De retour sur le serveur &lt;example.com&gt;</simpara>
+</listitem>
+<listitem>
+<simpara><link linkend="pass_gen">Créez un mot de passe pour le dépot borg backup</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Puis tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO36-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO36-1">
+<para>mot_passe doit être remplacé par celui généré plus haut</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Initialisez le dépot borg. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">borg init -e repokey-blake2 borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
+</listitem>
+<listitem>
+<simpara>Tout est maintenant prêt pour faire un backup</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_effectuer_un_backup">
+<title>Effectuer un backup</title>
+<simpara>Nous allons créer tout d&#8217;abord un script de backup pour sauvegarder tout le serveur sauf les répertoires système:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur &lt;example.com&gt;. </link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/local/bin/borgbackup.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Insèrez dans le fichier le texte suivant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO37-1"/>
+cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO37-2"/></programlisting>
+<calloutlist>
+<callout arearefs="CO37-1">
+<para>mot_passe doit être remplacé par celui généré plus haut</para>
+</callout>
+<callout arearefs="CO37-2">
+<para>si votre machine est assez puissante, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>changez les permissions du script. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 700 /usr/local/bin/borgbackup.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>vous pouvez maintenant effectuer une première sauvegarde en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgbackup.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>vous pouvez ensuite planifier votre backup à 1h du matin. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">crontab -e</programlisting>
+</listitem>
+<listitem>
+<simpara>Inserez ensuite le texte suivant:</simpara>
+</listitem>
+</orderedlist>
+<screen># Backup via Borg to backup server
+00 02 * * * /usr/local/bin/borgbackup.sh</screen>
+</section>
+<section xml:id="_lister_les_backups">
+<title>Lister les backups</title>
+<simpara>Nous allons créer un script de listage :</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur &lt;example.com&gt;. </link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/local/bin/borglist.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Insèrez dans le fichier le texte suivant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO38-1"/>
+borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
+<calloutlist>
+<callout arearefs="CO38-1">
+<para>mot_passe doit être remplacé par celui généré plus haut.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>changez les permissions du script. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 700 /usr/local/bin/borglist.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>vous pouvez maintenant lister vos backup en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borglist.sh</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_vérifier_un_backup">
+<title>Vérifier un backup</title>
+<simpara>Nous allons créer un script de vérification :</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur &lt;example.com&gt;. </link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/local/bin/borgcheck.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Insèrez dans le fichier le texte suivant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO39-1"/>
+borg check borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
+<calloutlist>
+<callout arearefs="CO39-1">
+<para>mot_passe doit être remplacé par celui généré plus haut.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>changez les permissions du script. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 700 /usr/local/bin/borgcheck.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>vous pouvez maintenant vérifier un de vos backup en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO40-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO40-1">
+<para>le nom de sauvegarde est récupéré en utilisant la commande borglist.sh</para>
+</callout>
+</calloutlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_restaurer_un_backup">
+<title>Restaurer un backup</title>
+<simpara>Nous allons créer un script de montage sous forme de système de fichier :</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur &lt;example.com&gt;. </link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/local/bin/borgmount.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Insérez dans le fichier le texte suivant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
+mkdir -p /mnt/borgbackup
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO41-1"/>
+borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
+<calloutlist>
+<callout arearefs="CO41-1">
+<para>mot_passe doit être remplacé par celui généré plus haut.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>changez les permissions du script. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 700 /usr/local/bin/borgmount.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>vous pouvez maintenant monter vos backups et effectuer des opérations de fichiers. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgmount.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Pour créer un script pour démonter les backups. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/local/bin/borgumount.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Insérez dans le fichier le texte suivant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
+umount /mnt/borgbackup
+rmdir /mnt/borgbackup</programlisting>
+</listitem>
+<listitem>
+<simpara>vous pouvez maintenant demonter vos backups. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgumount.sh</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_supprimer_vos_vieux_backups">
+<title>Supprimer vos vieux backups</title>
+<simpara>Nous allons créer un script de ménage des backups :</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur &lt;example.com&gt;. </link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/local/bin/borgprune.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Insèrez dans le fichier le texte suivant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO42-1"/>
+borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO42-2"/></programlisting>
+<calloutlist>
+<callout arearefs="CO42-1">
+<para>mot_passe doit être remplacé par celui généré plus haut.</para>
+</callout>
+<callout arearefs="CO42-2">
+<para>Le nettoyage des sauvegardes va conserver 7 sauvegardes journalières, 4 à la semaine et 12 au mois</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>changez les permissions du script. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 700 /usr/local/bin/borgprune.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>vous pouvez maintenant effectuer du ménage:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgprune.sh</programlisting>
+</listitem>
+</orderedlist>
+<simpara>pour installer borg backup en mode rescue afin d&#8217;avoir la dernière version.
+apt install python3-pip libssl-dev cython3 gcc g++ libpython-dev libacl1-dev
+pip3 install borgbackup
+pip3 install rdiff-backup</simpara>
+</section>
+</section>
+<section xml:id="_installation_dun_serveur_de_vpn_pritunl">
+<title>Installation d&#8217;un serveur de VPN Pritunl</title>
+<simpara>Pritunl est un serveur VPN basé sur OpenVPN.</simpara>
+<section xml:id="_création_du_site_web_de_pritunl">
+<title>Création du site web de Pritunl</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>pritunl</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>pritunl</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>pritunl</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+# Pritunl httpserver
+#
+  SSLProxyEngine On
+  SSLProxyCheckPeerCN Off
+  SSLProxyCheckPeerName Off
+  SSLProxyVerify none
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / https://localhost:8070/
+ProxyPassReverse / https://localhost:8070/
+ProxyPreserveHost On</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_pritunl">
+<title>Installation de Pritunl</title>
+<simpara>Veuillez suivre la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Ajoutez des repositories Debian. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">tee /etc/apt/sources.list.d/mongodb-org.list &lt;&lt; EOF
+deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main
+EOF
+tee /etc/apt/sources.list.d/pritunl.list &lt;&lt; EOF
+deb http://repo.pritunl.com/stable/apt buster main
+EOF
+apt-get install dirmngr
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
+apt-get update
+apt-get --assume-yes install pritunl mongodb-org</programlisting>
+</listitem>
+<listitem>
+<simpara>Pritunl utilise en standard le port 80 et 443. Ces deux ports sont utilisés dans notre configuration par le serveur apache</simpara>
+</listitem>
+<listitem>
+<simpara>On commence par arrêter apache. Tapez:</simpara>
+<warning>
+<simpara>Plus aucun site web ne sera servit. Danger donc.</simpara>
+</warning>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop apache2</programlisting>
+</listitem>
+<listitem>
+<simpara>Démarrez Mongodb ainsi que Pritunl. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl start mongod pritunl
+systemctl enable mongod pritunl</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_de_pritunl">
+<title>Configuration de Pritunl</title>
+<simpara>Votre service Pritunl est actif. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>pointez votre navigateur sur le site web de Pritunl: <link xl:href="https://example.com">https://example.com</link></simpara>
+</listitem>
+<listitem>
+<simpara>Accepter le certificat non sécurisé. La page de setup de Pritunl s&#8217;affiche.</simpara>
+</listitem>
+<listitem>
+<simpara>Obtenez la clé d&#8217;activation. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl setup-key</programlisting>
+</listitem>
+<listitem>
+<simpara>copier la clé dans la page web. Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>La page web s&#8217;affiche en erreur. Pas d&#8217;inquiétude à avoir.</simpara>
+</listitem>
+<listitem>
+<simpara>Arrêtez le serveur Pritunl. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop pritunl</programlisting>
+</listitem>
+<listitem>
+<simpara>Configurez le serveur pour qu&#8217;il n&#8217;utilise plus le port 80 et le port 443</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl set app.server_port 8070
+pritunl set app.redirect_server false</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez apache et pritunl</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl start apache2
+systemctl start pritunl</programlisting>
+</listitem>
+<listitem>
+<simpara>Pointez maintenant votre navigateur sur le site <link xl:href="https://pritunl.example.com">https://pritunl.example.com</link> . La page de login de pritunl doit s&#8217;afficher. Si ce n&#8217;est pas le cas, revérifier votre configuration de site web dans ISPConfig et que le port 8070 est bien activé.</simpara>
+</listitem>
+<listitem>
+<simpara>Sur le serveur, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl default-password</programlisting>
+</listitem>
+<listitem>
+<simpara>Entrez dans la page web la valeur de <literal>username</literal> et de <literal>password</literal> affichés dans le terminal.</simpara>
+</listitem>
+<listitem>
+<simpara>Une boite de dialogue <literal>initial setup</literal> s&#8217;affiche. Ne changez rien mais tapez votre mot de passe.</simpara>
+</listitem>
+<listitem>
+<simpara>Vous êtes maintenant connecté sur le site web.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur l&#8217;onglet <literal>Users</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>Add Organization</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Entrez votre nom d&#8217;organisation. Par exemple <literal>Personnel</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add User</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>`Name: ` &#8592; Tapez votre nom de login (pas de caractère accentué pas d&#8217;espace)</simpara>
+</listitem>
+<listitem>
+<simpara>`Select an organization: ` &#8592; sélectionnez votre organisation</simpara>
+</listitem>
+<listitem>
+<simpara>`Email: ` &#8592; Tapez votre adresse Email</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Pin:</literal> &#8592; entrez votre code Pin (que des nombres; au moins 6 chiffres)</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Allez sur l&#8217;onglet <literal>Servers</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>Add Server</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Remplissez les champs:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Name:</literal> &#8592; donnez un nom à votre serveur (pas de caractère accentué pas d&#8217;espace)</simpara>
+</listitem>
+<listitem>
+<simpara>laissez le reste tel quel mais notez bien le numéro de port UDP indiqué</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Add</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Attach Organization</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionnez le <literal>server</literal> et l' <literal>organization</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Attach</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Débloquez le port VPN dans votre firewall</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+</listitem>
+<listitem>
+<simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
+</listitem>
+<listitem>
+<simpara>dans la rubrique <literal>Open UDP ports:</literal>, ajoutez le port UDP du VPN que vous avez noté.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Retourner dans l&#8217;interface de Pritunl. retournez sur l&#8217;onglet <literal>Servers</literal></simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>Start server</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Votre serveur de VPN est opérationnel.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_se_connecter_au_serveur_de_vpn">
+<title>Se connecter au serveur de VPN</title>
+<simpara>Comme Pritunl est compatible OpenVPN n&#8217;importe quel logiciel compatible OpenVPN peut être utilisé.
+Pritunl founit un <link xl:href="https://client.pritunl.com/">client</link> compatible pour Linux, macOS, and Windows.</simpara>
+<simpara>Pour se connecter à l&#8217;aide du client, vous devez charger un fichier de configuration qui est téléchargeable dans l&#8217;onglet utilisateur du serveur web.
+Ce fichier est à importer dans le logiciel client de Pritunl.
+Une fois fait, une compte apparaît dans le logiciel client. Vous pourrez vous connecter en cliquant sur le bouton <literal>Connect</literal> du compte utilisateur.</simpara>
+</section>
+<section xml:id="_réparer_une_base_pritunl">
+<title>Réparer une base Pritunl</title>
+<simpara>Si jamais votre base est corrompue, vous pourrez la réparer en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop pritunl
+pritunl repair-database
+systemctl start pritunl</programlisting>
+</section>
+<section xml:id="_mot_de_passe_perdu">
+<title>Mot de passe perdu</title>
+<simpara>Vous pouvez re-générer un mot de passe en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl reset-password</programlisting>
+</section>
+</section>
 <section xml:id="_annexe">
 <title>Annexe</title>
 <section xml:id="_installation_de_hestia">
@@ -6031,13 +6545,6 @@ La documentation est proposée ici: <link xl:href="https://docs.hestiacp.com/">h
 <simpara>Hestia est installé. Il est important de bien noter le mot de passe du compte admin de Hestia ainsi que le numéro de port du site web</simpara>
 </listitem>
 </orderedlist>
-</section>
-<section xml:id="_backup">
-<title>backup</title>
-<simpara>pour installer borg backup en mode rescue afin d&#8217;avoir la dernière version.
-apt install python3-pip libssl-dev cython3 gcc g++ libpython-dev libacl1-dev
-pip3 install borgbackup
-pip3 install rdiff-backup</simpara>
 </section>
 </section>
 </article>

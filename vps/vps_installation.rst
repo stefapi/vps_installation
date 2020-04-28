@@ -95,14 +95,6 @@ Dans le document, on peut trouver des textes entourés de <texte>. Cela
 signifie que vous devez mettre ici votre propre texte selon vos
 préférences.
 
-A propos des mots de passe: il est conseillé de saisir des mots de passe
-de 10 caractères contenant des majuscules/minuscules/nombres/caractères
-spéciaux. Une autre façon de faire est de saisir de longues phrases. Par
-exemple: 'J’aime manger de la mousse au chocolat parfumée à la menthe'.
-Ce dernier exemple a un taux de complexité est bien meilleur et les mots
-de passe classiques. Il est aussi plus facile à retenir que
-'Az3~1ym\_a&'.
-
 Le coût pour mettre en oeuvre ce type de serveur est relativement
 faible: \* Compter 15-18€TTC/an pour un nom de domaine classique (mais
 il peut y avoir des promos) \* Compter 5€TTC/mois pour un VPS de base
@@ -125,7 +117,7 @@ votre compte OVH avec vos identifiants de login root. Ils serviront à
 vous connecter sur le serveur.
 
 En vous loguant sur la `plateforme d’administration
-d’OVH <https://www.ovh.com/manager/web>`__, vous accèderez aux
+d’OVH <https://www.ovh.com/manager/web>`__, vous accéderez aux
 informations de votre serveur dans le menu Server→VPS. A cet endroit
 votre VPS doit y être indiqué.
 
@@ -183,7 +175,7 @@ dans le menu "Boites & redirections Mails". Vous devez reconfigurer les
 'Enregistrements DNS' en mode externes. Dans le menu "serveurs de noms",
 vous devez configurer les serveurs de noms externe. Mettre 3 DNS:
 
--  le deux DNS de votre domaine: ns1.<example.com> et ns2.<example.com>
+-  les deux DNS de votre domaine: ns1.<example.com> et ns2.<example.com>
 
 Pour que tout cela fonctionne bien, ajoutez des Glue records:
 
@@ -253,6 +245,107 @@ avez mis en place un compte sudo:
       -  remplacer ici <example.com> par votre nom de domaine.
 
       Tapez ensuite votre mot de passe root
+
+Gestion des mots de passe
+=========================
+
+A propos des mots de passe: il est conseillé de saisir des mots de passe
+de 10 caractères contenant des majuscules/minuscules/nombres/caractères
+spéciaux. Une autre façon de faire est de saisir de longues phrases. Par
+exemple: 'J’aime manger de la mousse au chocolat parfumée à la menthe'.
+Ce dernier exemple a un taux de complexité bien meilleur qu’un mot de
+passe classique. Il est aussi plus facile à retenir que 'Az3~1ym\_a&'.
+
+Cependant, si vous êtes en manque d’inspiration et que vous souhaitez
+générer des mots de passe, voici quelques méthodes:
+
+1. En se basant sur la date. Tapez:
+
+   .. code:: bash
+
+       date +%s | sha256sum | base64 | head -c 32 ; echo 
+
+   -  remplacez 32 par la valeur qui vous convient pour générer un mot
+      de passe d’une taille différente de 32 caractères
+
+2. En se basant sur les nombres aléatoires système. Tapez l’une des deux
+   lignes ci dessous :
+
+   .. code:: bash
+
+       tr -cd '[:graph:]' < /dev/urandom | head -c 32; echo 
+       tr -cd A-Za-z0-9 < /dev/urandom | head -c 32;echo 
+
+   -  remplacez 32 par la valeur qui vous convient pour générer un mot
+      de passe d’une taille différente de 32 caractères
+
+3. En utilisant Openssl. Tapez :
+
+   .. code:: bash
+
+       openssl rand -base64 32 | cut -c-32 
+
+   -  remplacez 32 par la valeur qui vous convient pour générer un mot
+      de passe d’une taille différente de 32 caractères
+
+4. En utilisant gpg. Tapez :
+
+   .. code:: bash
+
+       gpg --gen-random --armor 1 32 | cut -c-32 
+
+   -  remplacez 32 par la valeur qui vous convient pour générer un mot
+      de passe d’une taille différente de 32 caractères
+
+5. En utilisant pwgen pour générer des mots de passe qui suivent des
+   règles de longueur et types de caractères.
+
+   a. Pour installer l’outil, tapez:
+
+      .. code:: bash
+
+          apt install pwgen
+
+   b. Ensuite tapez :
+
+      .. code:: bash
+
+          pwgen -Bcny 32 -1 
+
+      -  remplacez 32 par la valeur qui vous convient pour générer un
+         mot de passe d’une taille différente de 32 caractères. La
+         commande crée un mot de passe non ambigue avec au moins une
+         majuscule , une valeur numérique, un symbole.
+
+6. En utilisant apg pour générer des mots de passe prononcables tel que:
+   ``7quiGrikCod+ (SEVEN-qui-Grik-Cod-PLUS_SIGN)``
+
+   a. Pour installer l’outil, tapez:
+
+      .. code:: bash
+
+          apt install apg
+
+   b. Ensuite tapez :
+
+      .. code:: bash
+
+          apg
+
+7. En utilisant xkcdpass pour générer des passphrases comme:
+   ``context smashup spiffy cuddly throttle landfall``
+
+   a. Pour installer l’outil, tapez:
+
+      .. code:: bash
+
+          apt install xkcdpass
+
+   b. Ensuite tapez :
+
+      .. code:: bash
+
+          xkcdpass
 
 Configuration basique
 =====================
@@ -576,11 +669,15 @@ Cette installation est optionnelle.
     cas très rare à des dysfonctionnements du serveur. Il est important
     de regarder périodiquement les logs d’installation
 
-Tapez:
+Suivez la procédure suivante:
 
-.. code:: bash
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-    apt install unattended-upgrades
+2. Tapez:
+
+   .. code:: bash
+
+       apt install unattended-upgrades
 
 Vérification du nom de serveur
 ------------------------------
@@ -673,13 +770,17 @@ panneau de synthèse du VPS (Dashboard).
 La résolution par DHCP ne semble pas fonctionner. Il faut donc
 configurer l’adresse à la main:
 
-1. Tapez:
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez:
 
    .. code:: bash
 
        vi /etc/network/interfaces
 
-2. Ajoutez ces lignes à la fin:
+3. Ajoutez ces lignes à la fin:
 
    .. code:: ini
 
@@ -797,6 +898,7 @@ Pour créer une clé et la déployer:
       .. code:: bash
 
           mkdir -p $HOME/.ssh
+          chmod 700 ~/.ssh
 
    c. Allez dans le répertoire. Tapez :
 
@@ -1045,13 +1147,17 @@ Mailman.
 Configuration de Postfix
 ------------------------
 
-1. Editez le master.cf file de postfix. Tapez :
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Editez le master.cf file de postfix. Tapez :
 
    .. code:: bash
 
        vi /etc/postfix/master.cf
 
-2. Ajoutez dans le fichier:
+3. Ajoutez dans le fichier:
 
    ::
 
@@ -1067,13 +1173,13 @@ Configuration de Postfix
         -o smtpd_sasl_auth_enable=yes
         -o smtpd_client_restrictions=permit_sasl_authenticated,reject
 
-3. Sauvegardez et relancez Postfix:
+4. Sauvegardez et relancez Postfix:
 
    .. code:: bash
 
        systemctl restart postfix
 
-4. Si vous avez installé ``SpamAssassin``, désactiver ``SpamAssassin``
+5. Si vous avez installé ``SpamAssassin``, désactiver ``SpamAssassin``
    puisque ``amavisd`` utilise celui ci en sous jacent. Tapez :
 
    .. code:: bash
@@ -1084,7 +1190,11 @@ Configuration de Postfix
 Configuration de MariaDB
 ------------------------
 
-1.  Sécurisez votre installation MariaDB. Tapez :
+Suivez la procédure suivante:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Sécurisez votre installation MariaDB. Tapez :
 
     .. code:: bash
 
@@ -1109,22 +1219,22 @@ Configuration de MariaDB
 
     h. ``Reload privilege tables now? [Y/n]``: ← Tapez ``Y``
 
-2.  MariaDB doit pouvoir être atteint par toutes les interfaces et pas
+3.  MariaDB doit pouvoir être atteint par toutes les interfaces et pas
     seulement localhost.
 
-3.  Éditez le fichier de configuration. :
+4.  Éditez le fichier de configuration. :
 
     .. code:: bash
 
         vi /etc/mysql/mariadb.conf.d/50-server.cnf
 
-4.  Commentez la ligne ``bind-address``:
+5.  Commentez la ligne ``bind-address``:
 
     .. code:: bash
 
         #bind-address           = 127.0.0.1
 
-5.  Modifiez la méthode d’accès à la base MariaDB pour utiliser la
+6.  Modifiez la méthode d’accès à la base MariaDB pour utiliser la
     méthode de login native.
 
     a. Tapez :
@@ -1133,7 +1243,7 @@ Configuration de MariaDB
 
            echo "update mysql.user set plugin = 'mysql_native_password' where user='root';" | mysql -u root
 
-6.  Editez le fichier debian.cnf. Tapez :
+7.  Editez le fichier debian.cnf. Tapez :
 
     .. code:: bash
 
@@ -1146,7 +1256,7 @@ Configuration de MariaDB
 
            password = votre_mot_de_passe
 
-7.  Pour éviter l’erreur ``Error in accept: Too many open files``,
+8.  Pour éviter l’erreur ``Error in accept: Too many open files``,
     augmenter la limite du nombre de fichiers ouverts.
 
     a. Editer le fichier: :
@@ -1162,7 +1272,7 @@ Configuration de MariaDB
            mysql soft nofile 65535
            mysql hard nofile 65535
 
-8.  Créez ensuite un nouveau répertoire. Tapez:
+9.  Créez ensuite un nouveau répertoire. Tapez:
 
     .. code:: bash
 
@@ -1181,24 +1291,24 @@ Configuration de MariaDB
            [Service]
            LimitNOFILE=infinity
 
-9.  Redémarrez votre serveur MariaDB. Tapez: :
+10. Redémarrez votre serveur MariaDB. Tapez: :
 
     .. code:: bash
 
         systemctl daemon-reload
         systemctl restart mariadb
 
-10. vérifiez maintenant que MariaDB est accessible sur toutes les
+11. vérifiez maintenant que MariaDB est accessible sur toutes les
     interfaces réseau. Tapez :
 
     .. code:: bash
 
         netstat -tap | grep mysql
 
-11. La sortie doit être du type:
+12. La sortie doit être du type:
     ``tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld``
 
-12. Pour les serveur avec peu de ressources quelques éléments de tuning.
+13. Pour les serveur avec peu de ressources quelques éléments de tuning.
     Editez le fichier 50-server.cnf:
 
     .. code:: bash
@@ -1208,13 +1318,17 @@ Configuration de MariaDB
 Configuration d’Apache
 ----------------------
 
-1. Installez les modules Apache nécessaires. Tapez :
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Installez les modules Apache nécessaires. Tapez :
 
    .. code:: bash
 
        a2enmod suexec rewrite ssl proxy_http actions include dav_fs dav auth_digest cgi headers actions proxy_fcgi alias speling
 
-2. Pour ne pas être confronté aux problèmes de sécurité de type
+3. Pour ne pas être confronté aux problèmes de sécurité de type
    `HTTPOXY <https://www.howtoforge.com/tutorial/httpoxy-protect-your-server/>`__,
    il est nécessaire de créer un petit module dans apache.
 
@@ -1232,14 +1346,14 @@ Configuration d’Apache
               RequestHeader unset Proxy early
           </IfModule>
 
-3. Activez le module en tapant :
+4. Activez le module en tapant :
 
    .. code:: bash
 
        a2enconf httpoxy
        systemctl restart apache2
 
-4. Désactiver la documentation apache en tapant:
+5. Désactiver la documentation apache en tapant:
 
    .. code:: bash
 
@@ -1249,25 +1363,29 @@ Configuration d’Apache
 Installation et Configuration de Mailman
 ----------------------------------------
 
-1. Tapez :
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez :
 
    .. code:: bash
 
        apt-get install mailman
 
-2. Sélectionnez un langage:
+3. Sélectionnez un langage:
 
    a. ``Languages to support:`` ← Tapez ``en (English)``
 
    b. ``Missing site list :`` ← Tapez ``Ok``
 
-3. Créez une mailing list. Tapez:
+4. Créez une mailing list. Tapez:
 
    .. code:: bash
 
        newlist mailman
 
-4. ensuite éditez le fichier aliases: :
+5. ensuite éditez le fichier aliases: :
 
    .. code:: bash
 
@@ -1289,7 +1407,7 @@ Installation et Configuration de Mailman
        mailman-subscribe:    "|/var/lib/mailman/mail/mailman subscribe mailman"
        mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"
 
-5. Exécutez :
+6. Exécutez :
 
    .. code:: bash
 
@@ -1301,13 +1419,13 @@ Installation et Configuration de Mailman
 
        systemctl restart postfix
 
-6. Activez la page web de mailman dans apache: :
+7. Activez la page web de mailman dans apache: :
 
    .. code:: bash
 
        ln -s /etc/mailman/apache.conf /etc/apache2/conf-enabled/mailman.conf
 
-7. Redémarrez apache :
+8. Redémarrez apache :
 
    .. code:: bash
 
@@ -1319,7 +1437,7 @@ Installation et Configuration de Mailman
 
        systemctl restart mailman
 
-8. Le site web de mailman est accessible
+9. Le site web de mailman est accessible
 
    a. Vous pouvez accéder à la page admin Mailman à
       `http://<server1.example.com>/cgi-bin/mailman/admin/ <http://<server1.example.com>/cgi-bin/mailman/admin/>`__
@@ -1334,7 +1452,11 @@ Installation et Configuration de Mailman
 Configuration d' Awstats
 ------------------------
 
-1. configurer la tache cron d’awstats: Éditez le fichier :
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. configurer la tache cron d’awstats: Éditez le fichier :
 
    .. code:: bash
 
@@ -1352,7 +1474,11 @@ Configuration d' Awstats
 Configuration de Fail2ban
 -------------------------
 
-1. Editez le fichier jail.local :
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Editez le fichier jail.local :
 
    .. code:: bash
 
@@ -1375,7 +1501,7 @@ Configuration de Fail2ban
        logpath = /var/log/mail.log
        maxretry = 3
 
-2. Redémarrez Fail2ban: :
+3. Redémarrez Fail2ban: :
 
    .. code:: bash
 
@@ -1384,32 +1510,36 @@ Configuration de Fail2ban
 Installation et configuration de PureFTPd
 -----------------------------------------
 
-1. Tapez: :
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez: :
 
    .. code:: bash
 
        apt-get install pure-ftpd-common pure-ftpd-mysql
 
-2. Éditez le fichier de conf: :
+3. Éditez le fichier de conf: :
 
    .. code:: bash
 
        vi /etc/default/pure-ftpd-common
 
-3. Changez les lignes ainsi:
+4. Changez les lignes ainsi:
 
    .. code:: ini
 
        STANDALONE_OR_INETD=standalone
        VIRTUALCHROOT=true
 
-4. Autorisez les connexions TLS. Tapez:
+5. Autorisez les connexions TLS. Tapez:
 
    .. code:: bash
 
        echo 1 > /etc/pure-ftpd/conf/TLS
 
-5. Créez un certificat SSL.
+6. Créez un certificat SSL.
 
    a. Tapez :
 
@@ -1501,7 +1631,11 @@ Installation et configuration de PureFTPd
 Installation et configuration de phpmyadmin
 -------------------------------------------
 
-1. Installez phpmyadmin. Exécutez:
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Installez phpmyadmin. Exécutez:
 
    .. code:: bash
 
@@ -1518,14 +1652,22 @@ Installation et configuration de phpmyadmin
        rm -rf phpMyAdmin-4.9.0.1-all-languages
        cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php
 
-2. Éditez le fichier :
+3. Créez votre chaîne aléatoire en base64. Tapez:
+
+   .. code:: bash
+
+       tr -dc A-Za-z0-9 < /dev/urandom | head -c${1:-32};echo;
+
+4. Copiez le texte généré
+
+5. Éditez le fichier :
 
    .. code:: bash
 
        vi /usr/share/phpmyadmin/config.inc.php
 
    a. Modifier l’entrée ``blowfish_secret`` en ajoutant votre propre
-      chaîne de 32 caractères.
+      chaîne de 32 caractères générée juste avant.
 
    b. Éditez le fichier: :
 
@@ -1576,14 +1718,14 @@ Installation et configuration de phpmyadmin
            Deny from All
           </Directory>
 
-3. Activez le module et redémarrez apache. Tapez :
+6. Activez le module et redémarrez apache. Tapez :
 
    .. code:: bash
 
        a2enconf phpmyadmin
        systemctl restart apache2
 
-4. Créer la base de donnée phpmyadmin.
+7. Créer la base de donnée phpmyadmin.
 
    a. Tapez :
 
@@ -1627,13 +1769,13 @@ Installation et configuration de phpmyadmin
 
           EXIT;
 
-5. Chargez les tables sql dans la base phpmyadmin:
+8. Chargez les tables sql dans la base phpmyadmin:
 
    .. code:: bash
 
        mysql -u root -p phpmyadmin < /usr/share/phpmyadmin/sql/create_tables.sql
 
-6. Enfin ajoutez les mots de passe nécessaires dans le fichier de
+9. Enfin ajoutez les mots de passe nécessaires dans le fichier de
    config.
 
    a. Tapez:
@@ -1683,19 +1825,23 @@ Installation et configuration de phpmyadmin
 Installation et configuration de Roundcube
 ------------------------------------------
 
-1. Tapez:
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez:
 
    .. code:: bash
 
        apt-get install roundcube roundcube-core roundcube-mysql roundcube-plugins
 
-2. Répondez aux question
+3. Répondez aux question
 
    -  ``Utiliser dbconfig_common`` ← Répondre ``Oui``
 
    -  ``Mot de passe Mysql pour db Roundcube`` ← Tapez un mot de passe
 
-3. Éditez le fichier php de roundcube: :
+4. Éditez le fichier php de roundcube: :
 
    .. code:: bash
 
@@ -1708,7 +1854,7 @@ Installation et configuration de Roundcube
        $config['default_host'] = 'localhost';
        $config['smtp_server'] = 'localhost';
 
-4. Éditez la configuration apache pour roundcube: :
+5. Éditez la configuration apache pour roundcube: :
 
    .. code:: bash
 
@@ -1721,7 +1867,7 @@ Installation et configuration de Roundcube
        Alias /roundcube /var/lib/roundcube
        Alias /webmail /var/lib/roundcube
 
-5. Redémarrez Apache:
+6. Redémarrez Apache:
 
    .. code:: bash
 
@@ -1730,23 +1876,29 @@ Installation et configuration de Roundcube
 Installation de Let’s Encrypt
 -----------------------------
 
-Installez Let’s Encrypt. Tapez:
+Suivez la procédure suivante:
 
-.. code:: bash
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-    cd /usr/local/bin
-    wget https://dl.eff.org/certbot-auto
-    chmod a+x certbot-auto
-    ./certbot-auto --install-only
+2. Installez Let’s Encrypt. Tapez:
 
-Une façon alternative de l’installer est:
+   .. code:: bash
 
-.. code:: bash
+       cd /usr/local/bin
+       wget https://dl.eff.org/certbot-auto
+       chmod a+x certbot-auto
+       ./certbot-auto --install-only
 
-    apt install python3-certbot-apache
+3. Une façon alternative de l’installer est:
+
+   .. code:: bash
+
+       apt install python3-certbot-apache
 
 Installation d’un scanner de vulnérabilités
 -------------------------------------------
+
+Suivez la procédure suivante:
 
 1. `Loguez vous comme root sur le serveur <#root_login>`__
 
@@ -2481,6 +2633,12 @@ Vous aurez des actions complémentaires à effectuer sur votre domaine:
       ``IP-address`` ← Adresse IP de votre routeur ADSL ou est connecté
       le Raspberry.
 
+   -  Si vous ne la connaissez pas, tapez dans un terminal texte:
+
+      .. code:: bash
+
+          wget -qO- http://ipecho.net/plain; echo
+
       Ce dernier enregistrement en complétant le Glue record fait le
       lien avec l’adresse IP de sub.example.com
 
@@ -2496,6 +2654,18 @@ Vous aurez des actions complémentaires à effectuer sur votre domaine:
    -  un enregistrement de type ``DS`` avec une ``Zone`` ←
       ``sub.example.com`` et un champ ``data`` contenant
       ``xxxxx 7 2 <votre_digest_recupérée>``
+
+5. Allez sur le site `DNSSEC
+   Analyzer <https://dnssec-debugger.verisignlabs.com/>`__.
+
+6. Entrez votre nom de domaine "sub.example.com" et tapez sur "entrée".
+
+Le site doit afficher pour les différentes zones le statut des
+certificats. Tout doit être au vert. Si ce n’est pas le cas, réessayer
+dans une heure. S’il y a encore des problèmes vérifiez votre
+configuration dans ISPConfig de votre domaine et de votre sous-domaine,
+chez votre registrar (rubrique DNSSEC) ou regardez les logs d’ISPConfig
+sur votre serveur pour y débusquer une erreur.
 
 Création d’un site web
 ----------------------
@@ -3507,13 +3677,15 @@ Finaliser la sécurisation de votre serveur de mail
 Afin de mieux sécuriser votre serveur de mail, appliquez les opérations
 suivantes:
 
-1. editez le fichier main.cf
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. editez le fichier main.cf
 
    .. code:: bash
 
        vi /etc/postfix/main.cf
 
-2. Rechercher ``myhostname`` et replacer le texte par:
+3. Rechercher ``myhostname`` et replacer le texte par:
 
    .. code:: ini
 
@@ -3521,13 +3693,13 @@ suivantes:
 
    -  Remplacer example.com par votre nom de domaine.
 
-3. Redémarrez Postfix. Tapez:
+4. Redémarrez Postfix. Tapez:
 
    .. code:: bash
 
        service postfix restart
 
-4. Vous pouvez le tester en allant sur le site
+5. Vous pouvez le tester en allant sur le site
    `MxToolbox <https://mxtoolbox.com/diagnostic.aspx>`__.
 
    -  Entrez le nom de host de votre serveur de mail: mail.example.com .
@@ -3930,22 +4102,26 @@ Si vous faites une migration d’un ancien serveur vers un nouveau serveur
 vous souhaiterez probablement migrer aussi vos boites mail.
 
 La procédure ci dessous est à appliquer pour chaque compte mail IMAP.
-Elle peut facilement être scriptée:
+Elle peut facilement être scriptée.
 
-1. Téléchargez imapsync du repository. Tapez:
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Téléchargez imapsync du repository. Tapez:
 
    ::
 
        wget https://raw.githubusercontent.com/imapsync/imapsync/master/imapsync
        chmod 755 imapsync
 
-2. Installez les packages perls éventuellement manquants:
+3. Installez les packages perls éventuellement manquants:
 
    ::
 
        apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl
 
-3. Créez deux fichiers temporaires qui contiennent les mots de passe du
+4. Créez deux fichiers temporaires qui contiennent les mots de passe du
    1er et 2eme serveur. Tapez:
 
    ::
@@ -3961,13 +4137,13 @@ Elle peut facilement être scriptée:
    -  passwddst est à remplacer par le mot de passe du compte sur le
       serveur destination
 
-4. Nous pouvons maintenant lancer la commande. Tapez:
+5. Nous pouvons maintenant lancer la commande. Tapez:
 
    ::
 
        ./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst
 
-5. Un fois la synchronisation effectuée, vous pouvez supprimer le
+6. Un fois la synchronisation effectuée, vous pouvez supprimer le
    fichier des mots de passe. tapez:
 
    ::
@@ -4305,22 +4481,25 @@ Installation de Microweber
 
 Suivez la procédure suivante:
 
-1. Tapez la commande suivante:
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-::
+2. Tapez:
 
-    https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinstall.php
+   .. code:: command
 
-1. Un fois téléchargé, faites pointer votre navigateur vers
+       cd /var/www/microweber.example.com/microweber
+       wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinstall.php
+
+3. Un fois téléchargé, faites pointer votre navigateur vers
    http://microweber.example.com/netinstall.php
 
-2. Indique ``.`` comme répertoire d’installation et cliquez sur
+4. Indique ``.`` comme répertoire d’installation et cliquez sur
    ``Télécharger et décompresser Piwigo``
 
-3. Une fois le téléchargement terminé cliquez sur
+5. Une fois le téléchargement terminé cliquez sur
    ``Installer Microweber``. Rechargez la page si besoin.
 
-4. Répondez aux questions suivantes:
+6. Répondez aux questions suivantes:
 
    -  ``Hote`` ← Laissez ``localhost``
 
@@ -4342,9 +4521,9 @@ Suivez la procédure suivante:
 
    -  ``Adresse e-mail`` ← Tapez votre adresse mail d’administrateur
 
-5. Tapez ``Démarrer l’installation``
+7. Tapez ``Démarrer l’installation``
 
-6. Vous êtes redirigé sur le site Microweber ou vous pourrez vous loguer
+8. Vous êtes redirigé sur le site Microweber ou vous pourrez vous loguer
    et commencer à utiliser l’outil
 
 Piwigo
@@ -4438,7 +4617,9 @@ Installation de Piwigo
 
 Suivez la procédure suivante:
 
-1. Tapez la commande suivante:
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez la commande suivante:
 
 ::
 
@@ -4507,13 +4688,15 @@ stocker ses données.
 
 Pour installer, Suivez la procédure suivante:
 
-1. Installez quelques paquets de base. Tapez:
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Installez quelques paquets de base. Tapez:
 
    .. code:: bash
 
        apt-get install  php-cgi php-curl
 
-2. Une fois installé, éditez le fichier php.ini pour changer quelques
+3. Une fois installé, éditez le fichier php.ini pour changer quelques
    limitations. Tapez:
 
 ::
@@ -4568,8 +4751,6 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    f. Cliquez sur ``Save``
 
-3. `Loguez vous comme root sur le serveur <#root_login>`__
-
 Création des bases de données
 -----------------------------
 
@@ -4617,7 +4798,9 @@ Installation de Nextcloud
 
 Suivez la procédure suivante:
 
-1. Tapez la commande suivante:
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez la commande suivante:
 
 ::
 
@@ -4786,7 +4969,9 @@ Téléchargez et installez Gitea
 
 Appliquez les opérations suivantes:
 
-1.  Téléchargez gitea du `site de
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Téléchargez gitea du `site de
     chargement <https://dl.gitea.io/gitea/>`__. Tapez pour un système 64
     bits:
 
@@ -4795,13 +4980,13 @@ Appliquez les opérations suivantes:
         wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
         chmod 755 /usr/local/bin/gitea
 
-2.  Créez maintenant une entrée pour le launcher systemd. Tapez:
+3.  Créez maintenant une entrée pour le launcher systemd. Tapez:
 
     .. code:: bash
 
         vi /etc/systemd/system/gitea.service
 
-3.  y Coller le texte suivant:
+4.  y Coller le texte suivant:
 
     .. code:: ini
 
@@ -4822,20 +5007,20 @@ Appliquez les opérations suivantes:
         [Install]
         WantedBy=multi-user.target
 
-4.  Recharge la base de systemd. Tapez:
+5.  Recharge la base de systemd. Tapez:
 
     .. code:: bash
 
         systemctl daemon-reload
 
-5.  Activez et démarrez ``Gitea``. Tapez:
+6.  Activez et démarrez ``Gitea``. Tapez:
 
     .. code:: bash
 
         systemctl enable gitea.service
         systemctl start gitea.service
 
-6.  Ouvrez votre navigateur sur l’url: https://gitea.example.com/install
+7.  Ouvrez votre navigateur sur l’url: https://gitea.example.com/install
     et remplissez les paramètres comme ci-après :
 
     -  ``Type de base de données:`` ← Sélectionnez ``MySQL``
@@ -4884,9 +5069,9 @@ Appliquez les opérations suivantes:
 
     -  ``Masquer les adresses e-mail par défaut:`` ← cochez la case
 
-7.  Laissez le reste et cliquez sur ``Install Gitea``.
+8.  Laissez le reste et cliquez sur ``Install Gitea``.
 
-8.  Restreignez les permissions sur le fichier de configuration de
+9.  Restreignez les permissions sur le fichier de configuration de
     gitea. Tapez:
 
     .. code:: bash
@@ -4895,11 +5080,11 @@ Appliquez les opérations suivantes:
         chown root:gitea /etc/gitea/app.ini
         chmod 640 /etc/gitea/app.ini
 
-9.  Redémarrez ``gitea``.
+10. Redémarrez ``gitea``.
 
-10. `Loguez vous comme root sur le serveur <#root_login>`__
+11. `Loguez vous comme root sur le serveur <#root_login>`__
 
-11. Tapez:
+12. Tapez:
 
     .. code:: bash
 
@@ -5292,266 +5477,6 @@ script de lancement automatique de Seafile:
 5. Arretez le serveur précédemment lancé en tant que root. Tapez:
 
 6. Enjoy !
-
-Installation d’un serveur de VPN Pritunl
-========================================
-
-Pritunl est un serveur VPN basé sur OpenVPN.
-
-Création du site web de Pritunl
--------------------------------
-
-Appliquez la procédure suivante:
-
-1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
-   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
-
-   a. Cliquez sur ``A`` et saisissez:
-
-      -  ``Hostname:`` ← Tapez ``pritunl``
-
-      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
-         de votre serveur
-
-   b. Cliquez sur ``Save``
-
-2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
-   configurateur de sites.
-
-   a. Lui donner le nom ``pritunl``.
-
-   b. Le faire pointer vers le web folder ``pritunl``.
-
-   c. Activer let’s encrypt ssl
-
-   d. Activer ``Fast CGI`` pour PHP
-
-   e. Laisser le reste par défaut.
-
-   f. Dans l’onglet Options:
-
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
-
-      .. code:: apache
-
-          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
-
-          # Pritunl httpserver
-          #
-            SSLProxyEngine On
-            SSLProxyCheckPeerCN Off
-            SSLProxyCheckPeerName Off
-            SSLProxyVerify none
-
-          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-          ProxyPass / https://localhost:8070/
-          ProxyPassReverse / https://localhost:8070/
-          ProxyPreserveHost On
-
-Installation de Pritunl
------------------------
-
-Veuillez suivre la procédure suivante:
-
-1. `Loguez vous comme root sur le serveur <#root_login>`__
-
-2. Ajoutez des repositories Debian. Tapez:
-
-   .. code:: bash
-
-       tee /etc/apt/sources.list.d/mongodb-org.list << EOF
-       deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main
-       EOF
-       tee /etc/apt/sources.list.d/pritunl.list << EOF
-       deb http://repo.pritunl.com/stable/apt buster main
-       EOF
-       apt-get install dirmngr
-       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
-       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
-       apt-get update
-       apt-get --assume-yes install pritunl mongodb-org
-
-3. Pritunl utilise en standard le port 80 et 443. Ces deux ports sont
-   utilisés dans notre configuration par le serveur apache
-
-4. On commence par arrêter apache. Tapez:
-
-       **Warning**
-
-       Plus aucun site web ne sera servit. Danger donc.
-
-   .. code:: bash
-
-       systemctl stop apache2
-
-5. Démarrez Mongodb ainsi que Pritunl. Tapez:
-
-   .. code:: bash
-
-       systemctl start mongod pritunl
-       systemctl enable mongod pritunl
-
-Configuration de Pritunl
-------------------------
-
-Votre service Pritunl est actif. Vous devez maintenant le configurer
-pour qu’il fonctionne:
-
-1.  pointez votre navigateur sur le site web de Pritunl:
-    https://example.com
-
-2.  Accepter le certificat non sécurisé. La page de setup de Pritunl
-    s’affiche.
-
-3.  Obtenez la clé d’activation. Tapez:
-
-    .. code:: bash
-
-        pritunl setup-key
-
-4.  copier la clé dans la page web. Cliquez sur ``Save``
-
-5.  La page web s’affiche en erreur. Pas d’inquiétude à avoir.
-
-6.  Arrêtez le serveur Pritunl. Tapez:
-
-    .. code:: bash
-
-        systemctl stop pritunl
-
-7.  Configurez le serveur pour qu’il n’utilise plus le port 80 et le
-    port 443
-
-    .. code:: bash
-
-        pritunl set app.server_port 8070
-        pritunl set app.redirect_server false
-
-8.  Redémarrez apache et pritunl
-
-    .. code:: bash
-
-        systemctl start apache2
-        systemctl start pritunl
-
-9.  Pointez maintenant votre navigateur sur le site
-    https://pritunl.example.com . La page de login de pritunl doit
-    s’afficher. Si ce n’est pas le cas, revérifier votre configuration
-    de site web dans ISPConfig et que le port 8070 est bien activé.
-
-10. Sur le serveur, tapez:
-
-    .. code:: bash
-
-        pritunl default-password
-
-11. Entrez dans la page web la valeur de ``username`` et de ``password``
-    affichés dans le terminal.
-
-12. Une boite de dialogue ``initial setup`` s’affiche. Ne changez rien
-    mais tapez votre mot de passe.
-
-13. Vous êtes maintenant connecté sur le site web.
-
-14. Cliquez sur l’onglet ``Users``
-
-    a. Cliquez sur ``Add Organization``
-
-    b. Entrez votre nom d’organisation. Par exemple ``Personnel``
-
-    c. Cliquez sur ``Add``
-
-    d. Cliquez sur ``Add User``
-
-    e. Remplissez les champs:
-
-       -  \`Name: \` ← Tapez votre nom de login (pas de caractère
-          accentué pas d’espace)
-
-       -  \`Select an organization: \` ← sélectionnez votre organisation
-
-       -  \`Email: \` ← Tapez votre adresse Email
-
-       -  ``Pin:`` ← entrez votre code Pin (que des nombres; au moins 6
-          chiffres)
-
-    f. Cliquez sur ``Add``
-
-15. Allez sur l’onglet ``Servers``
-
-    a. Cliquez sur ``Add Server``
-
-    b. Remplissez les champs:
-
-       -  ``Name:`` ← donnez un nom à votre serveur (pas de caractère
-          accentué pas d’espace)
-
-       -  laissez le reste tel quel mais notez bien le numéro de port
-          UDP indiqué
-
-    c. Cliquez sur ``Add``
-
-    d. Cliquez sur ``Attach Organization``
-
-    e. Sélectionnez le ``server`` et l' ``organization``.
-
-    f. Cliquez sur ``Attach``
-
-16. Débloquez le port VPN dans votre firewall
-
-    a. Allez sur le site ispconfig https://example.com:8080/
-
-    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-       ``Firewall``. Cliquez sur votre serveur.
-
-    c. dans la rubrique ``Open UDP ports:``, ajoutez le port UDP du VPN
-       que vous avez noté.
-
-    d. Cliquez sur ``save``
-
-17. Retourner dans l’interface de Pritunl. retournez sur l’onglet
-    ``Servers``
-
-    a. Cliquez sur ``Start server``
-
-18. Votre serveur de VPN est opérationnel.
-
-Se connecter au serveur de VPN
-------------------------------
-
-Comme Pritunl est compatible OpenVPN n’importe quel logiciel compatible
-OpenVPN peut être utilisé. Pritunl founit un
-`client <https://client.pritunl.com/>`__ compatible pour Linux, macOS,
-and Windows.
-
-Pour se connecter à l’aide du client, vous devez charger un fichier de
-configuration qui est téléchargeable dans l’onglet utilisateur du
-serveur web. Ce fichier est à importer dans le logiciel client de
-Pritunl. Une fois fait, une compte apparaît dans le logiciel client.
-Vous pourrez vous connecter en cliquant sur le bouton ``Connect`` du
-compte utilisateur.
-
-Réparer une base Pritunl
-------------------------
-
-Si jamais votre base est corrompue, vous pourrez la réparer en tapant:
-
-.. code:: bash
-
-    systemctl stop pritunl
-    pritunl repair-database
-    systemctl start pritunl
-
-Mot de passe perdu
-------------------
-
-Vous pouvez re-générer un mot de passe en tapant:
-
-.. code:: bash
-
-    pritunl reset-password
 
 Installation de Grafana
 =======================
@@ -6021,6 +5946,658 @@ Installez maintenant Promtail:
 
         {job="varlogs"}
 
+BorgBackup
+==========
+
+BorgBackup est un système de backup simple mais offrant des
+fonctionnalités avancées telles que le backup incrémental, la
+déduplication de données, la compression, l’authentification,
+l’encryption.
+
+Borg backup est un système de backup offsite. Cela signifie que vous
+devez avoir accès à un espace de stockage sur un autre site pour
+effectuer cette sauvegarde.
+
+Pour le moment, BorgBackup n’utilise pas de mécanisme de type RClone et
+il n’est donc pas encore possible de sauvegarder sur google drive ou
+autres espaces partagés.
+
+Introduction
+------------
+
+BorgBackup permet de stocker des backups sur un serveur distant. Nous
+nommerons le serveur sur lequel les sauvegardes seront stockées :
+serveur de stockage et identifié par <storing\_srv>. Nous nommerons le
+serveur qu’il faut sauvegarder: serveur sauvegardé et identifié par
+<example.com>
+
+Installation du serveur de stockage
+-----------------------------------
+
+Il est préférable pour des questions de sécurité de créer un compte
+utilisateur spécifique.
+
+Suivez la procédure suivante:
+
+1.  `Loguez vous comme root sur <storing\_srv>. <#root_login>`__
+
+2.  Tapez:
+
+    .. code:: bash
+
+        apt install borgbackup
+
+3.  `Générez un mot de passe long <#pass_gen>`__
+
+4.  Créez un compte utilisateur. Tapez:
+
+    .. code:: bash
+
+        adduser borgbackup
+
+5.  Copiez-collez le mot de passe généré lorsqu’il est demandé
+
+6.  Créer un répertoire ``~/.ssh`` s’il n’existe pas. tapez :
+
+    .. code:: bash
+
+        mkdir -p $HOME/.ssh
+        chmod 700 ~/.ssh
+
+7.  Allez dans le répertoire. Tapez :
+
+    .. code:: bash
+
+        cd ~/.ssh
+
+8.  Générez vous clés. Tapez :
+
+    .. code:: bash
+
+        ssh-keygen -t rsa
+
+9.  Un ensemble de questions apparaît. Si un texte vous explique que le
+    fichier existe déjà, arrêtez la procédure. Cela signifie que vous
+    avez déjà créé une clé et que vous risquez de perdre la connexion à
+    d’autres serveurs si vous en générez une nouvelle. Sinon, appuyez
+    sur Entrée à chaque fois pour accepter les valeurs par défaut.
+
+10. Créez maintenant le répertoire pour recevoir les sauvegardes
+
+    .. code:: bash
+
+        cd
+        mkdir borgbackup
+        chmod 700 borgbackup
+
+Installation sur le serveur sauvegardé
+--------------------------------------
+
+Suivez la procédure suivante:
+
+1.  `Loguez vous comme root sur <example.com>. <#root_login>`__
+
+2.  Tapez:
+
+    .. code:: bash
+
+        apt install borgbackup
+
+3.  Copiez la clé publique de root sur le <storing\_srv>. Tapez:
+
+    .. code:: bash
+
+        ssh-copy-id -i ~/.ssh/id_*.pub borgbackup@<storing_srv>
+
+4.  Coller le mot de passe généré plus haut lorsqu’il est demandé
+
+5.  Affichez votre adresse IP. tapez:
+
+    .. code:: bash
+
+        wget -qO- http://ipecho.net/plain; echo
+
+6.  Faites un essai de connexion en tapant:
+
+    .. code:: bash
+
+        ssh borgbackup@<storing_srv>
+
+7.  Aucun mot de passe ne doit être demandée et vous devez être connecté
+    en tant que borgbackup sur le <storing\_srv>
+
+8.  Si vous êtes très attaché à la sécurité, vous pouvez restreindre
+    l’accès au seul serveur <example.com>. Tapez sur la ligne de
+    commande du <storing\_srv> :
+
+    .. code:: bash
+
+        vi ~/.ssh/authorized_keys
+
+9.  Ajoutez en première ligne du fichier :
+
+    ::
+
+        from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc 
+
+    -  remplacez SERVERIPADDRESS par l’adresse IP affichée plus tôt.
+
+10. Fusionnez cette ligne avec la suivante qui démarre par ssh en
+    prenant bien garde de laissez un espace entre no-user-rc et ssh-rsa
+
+11. Déconnectez vous en tapant :
+
+    .. code:: bash
+
+        exit
+
+12. De retour sur le serveur <example.com>
+
+13. `Créez un mot de passe pour le dépot borg backup <#pass_gen>`__.
+
+14. Puis tapez:
+
+    .. code:: bash
+
+        export BORG_PASSPHRASE='mot_passe' 
+
+    -  mot\_passe doit être remplacé par celui généré plus haut
+
+15. Initialisez le dépot borg. Tapez:
+
+    .. code:: bash
+
+        borg init -e repokey-blake2 borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
+
+16. Tout est maintenant prêt pour faire un backup
+
+Effectuer un backup
+-------------------
+
+Nous allons créer tout d’abord un script de backup pour sauvegarder tout
+le serveur sauf les répertoires système:
+
+1. `Loguez vous comme root sur <example.com>. <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+       vi /usr/local/bin/borgbackup.sh
+
+3. Insèrez dans le fichier le texte suivant:
+
+   .. code:: bash
+
+       #!/bin/sh
+       export BORG_PASSPHRASE='mot_passe' 
+       cd / && borg create --stats --progress --compress zstd borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp && cd 
+
+   -  mot\_passe doit être remplacé par celui généré plus haut
+
+   -  si votre machine est assez puissante, vous pouvez remplacer
+      l’algorithme de compression zstd par un algorithme lz4 (rapide) ou
+      lzma (très lent mais performant en taille).
+
+4. changez les permissions du script. Tapez:
+
+   .. code:: bash
+
+       chmod 700 /usr/local/bin/borgbackup.sh
+
+5. vous pouvez maintenant effectuer une première sauvegarde en tapant:
+
+   .. code:: bash
+
+       /usr/local/bin/borgbackup.sh
+
+6. vous pouvez ensuite planifier votre backup à 1h du matin. Tapez:
+
+   .. code:: bash
+
+       crontab -e
+
+7. Inserez ensuite le texte suivant:
+
+::
+
+    # Backup via Borg to backup server
+    00 02 * * * /usr/local/bin/borgbackup.sh
+
+Lister les backups
+------------------
+
+Nous allons créer un script de listage :
+
+1. `Loguez vous comme root sur <example.com>. <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+       vi /usr/local/bin/borglist.sh
+
+3. Insèrez dans le fichier le texte suivant:
+
+   .. code:: bash
+
+       #!/bin/sh
+       export BORG_PASSPHRASE='mot_passe' 
+       borg list -v borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
+
+   -  mot\_passe doit être remplacé par celui généré plus haut.
+
+4. changez les permissions du script. Tapez:
+
+   .. code:: bash
+
+       chmod 700 /usr/local/bin/borglist.sh
+
+5. vous pouvez maintenant lister vos backup en tapant:
+
+   .. code:: bash
+
+       /usr/local/bin/borglist.sh
+
+Vérifier un backup
+------------------
+
+Nous allons créer un script de vérification :
+
+1. `Loguez vous comme root sur <example.com>. <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+       vi /usr/local/bin/borgcheck.sh
+
+3. Insèrez dans le fichier le texte suivant:
+
+   .. code:: bash
+
+       #!/bin/sh
+       export BORG_PASSPHRASE='mot_passe' 
+       borg check borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
+
+   -  mot\_passe doit être remplacé par celui généré plus haut.
+
+4. changez les permissions du script. Tapez:
+
+   .. code:: bash
+
+       chmod 700 /usr/local/bin/borgcheck.sh
+
+5. vous pouvez maintenant vérifier un de vos backup en tapant:
+
+   .. code:: bash
+
+       /usr/local/bin/borgcheck.sh <nom_de_sauvegarde> 
+
+   -  le nom de sauvegarde est récupéré en utilisant la commande
+      borglist.sh
+
+Restaurer un backup
+-------------------
+
+Nous allons créer un script de montage sous forme de système de fichier
+:
+
+1. `Loguez vous comme root sur <example.com>. <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+       vi /usr/local/bin/borgmount.sh
+
+3. Insérez dans le fichier le texte suivant:
+
+   .. code:: bash
+
+       #!/bin/sh
+       mkdir -p /mnt/borgbackup
+       export BORG_PASSPHRASE='mot_passe' 
+       borg mount borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ /mnt/borgbackup
+
+   -  mot\_passe doit être remplacé par celui généré plus haut.
+
+4. changez les permissions du script. Tapez:
+
+   .. code:: bash
+
+       chmod 700 /usr/local/bin/borgmount.sh
+
+5. vous pouvez maintenant monter vos backups et effectuer des opérations
+   de fichiers. Tapez:
+
+   .. code:: bash
+
+       /usr/local/bin/borgmount.sh
+
+6. Pour créer un script pour démonter les backups. Tapez:
+
+   .. code:: bash
+
+       vi /usr/local/bin/borgumount.sh
+
+7. Insérez dans le fichier le texte suivant:
+
+   .. code:: bash
+
+       #!/bin/sh
+       umount /mnt/borgbackup
+       rmdir /mnt/borgbackup
+
+8. vous pouvez maintenant demonter vos backups. Tapez:
+
+   .. code:: bash
+
+       /usr/local/bin/borgumount.sh
+
+Supprimer vos vieux backups
+---------------------------
+
+Nous allons créer un script de ménage des backups :
+
+1. `Loguez vous comme root sur <example.com>. <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+       vi /usr/local/bin/borgprune.sh
+
+3. Insèrez dans le fichier le texte suivant:
+
+   .. code:: bash
+
+       #!/bin/sh
+       export BORG_PASSPHRASE='mot_passe' 
+       borg prune --stats --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 
+
+   -  mot\_passe doit être remplacé par celui généré plus haut.
+
+   -  Le nettoyage des sauvegardes va conserver 7 sauvegardes
+      journalières, 4 à la semaine et 12 au mois
+
+4. changez les permissions du script. Tapez:
+
+   .. code:: bash
+
+       chmod 700 /usr/local/bin/borgprune.sh
+
+5. vous pouvez maintenant effectuer du ménage:
+
+   .. code:: bash
+
+       /usr/local/bin/borgprune.sh
+
+pour installer borg backup en mode rescue afin d’avoir la dernière
+version. apt install python3-pip libssl-dev cython3 gcc g++
+libpython-dev libacl1-dev pip3 install borgbackup pip3 install
+rdiff-backup
+
+Installation d’un serveur de VPN Pritunl
+========================================
+
+Pritunl est un serveur VPN basé sur OpenVPN.
+
+Création du site web de Pritunl
+-------------------------------
+
+Appliquez la procédure suivante:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``pritunl``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``pritunl``.
+
+   b. Le faire pointer vers le web folder ``pritunl``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          # Pritunl httpserver
+          #
+            SSLProxyEngine On
+            SSLProxyCheckPeerCN Off
+            SSLProxyCheckPeerName Off
+            SSLProxyVerify none
+
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass / https://localhost:8070/
+          ProxyPassReverse / https://localhost:8070/
+          ProxyPreserveHost On
+
+Installation de Pritunl
+-----------------------
+
+Veuillez suivre la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Ajoutez des repositories Debian. Tapez:
+
+   .. code:: bash
+
+       tee /etc/apt/sources.list.d/mongodb-org.list << EOF
+       deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main
+       EOF
+       tee /etc/apt/sources.list.d/pritunl.list << EOF
+       deb http://repo.pritunl.com/stable/apt buster main
+       EOF
+       apt-get install dirmngr
+       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
+       apt-get update
+       apt-get --assume-yes install pritunl mongodb-org
+
+3. Pritunl utilise en standard le port 80 et 443. Ces deux ports sont
+   utilisés dans notre configuration par le serveur apache
+
+4. On commence par arrêter apache. Tapez:
+
+       **Warning**
+
+       Plus aucun site web ne sera servit. Danger donc.
+
+   .. code:: bash
+
+       systemctl stop apache2
+
+5. Démarrez Mongodb ainsi que Pritunl. Tapez:
+
+   .. code:: bash
+
+       systemctl start mongod pritunl
+       systemctl enable mongod pritunl
+
+Configuration de Pritunl
+------------------------
+
+Votre service Pritunl est actif. Vous devez maintenant le configurer
+pour qu’il fonctionne:
+
+1.  pointez votre navigateur sur le site web de Pritunl:
+    https://example.com
+
+2.  Accepter le certificat non sécurisé. La page de setup de Pritunl
+    s’affiche.
+
+3.  Obtenez la clé d’activation. Tapez:
+
+    .. code:: bash
+
+        pritunl setup-key
+
+4.  copier la clé dans la page web. Cliquez sur ``Save``
+
+5.  La page web s’affiche en erreur. Pas d’inquiétude à avoir.
+
+6.  Arrêtez le serveur Pritunl. Tapez:
+
+    .. code:: bash
+
+        systemctl stop pritunl
+
+7.  Configurez le serveur pour qu’il n’utilise plus le port 80 et le
+    port 443
+
+    .. code:: bash
+
+        pritunl set app.server_port 8070
+        pritunl set app.redirect_server false
+
+8.  Redémarrez apache et pritunl
+
+    .. code:: bash
+
+        systemctl start apache2
+        systemctl start pritunl
+
+9.  Pointez maintenant votre navigateur sur le site
+    https://pritunl.example.com . La page de login de pritunl doit
+    s’afficher. Si ce n’est pas le cas, revérifier votre configuration
+    de site web dans ISPConfig et que le port 8070 est bien activé.
+
+10. Sur le serveur, tapez:
+
+    .. code:: bash
+
+        pritunl default-password
+
+11. Entrez dans la page web la valeur de ``username`` et de ``password``
+    affichés dans le terminal.
+
+12. Une boite de dialogue ``initial setup`` s’affiche. Ne changez rien
+    mais tapez votre mot de passe.
+
+13. Vous êtes maintenant connecté sur le site web.
+
+14. Cliquez sur l’onglet ``Users``
+
+    a. Cliquez sur ``Add Organization``
+
+    b. Entrez votre nom d’organisation. Par exemple ``Personnel``
+
+    c. Cliquez sur ``Add``
+
+    d. Cliquez sur ``Add User``
+
+    e. Remplissez les champs:
+
+       -  \`Name: \` ← Tapez votre nom de login (pas de caractère
+          accentué pas d’espace)
+
+       -  \`Select an organization: \` ← sélectionnez votre organisation
+
+       -  \`Email: \` ← Tapez votre adresse Email
+
+       -  ``Pin:`` ← entrez votre code Pin (que des nombres; au moins 6
+          chiffres)
+
+    f. Cliquez sur ``Add``
+
+15. Allez sur l’onglet ``Servers``
+
+    a. Cliquez sur ``Add Server``
+
+    b. Remplissez les champs:
+
+       -  ``Name:`` ← donnez un nom à votre serveur (pas de caractère
+          accentué pas d’espace)
+
+       -  laissez le reste tel quel mais notez bien le numéro de port
+          UDP indiqué
+
+    c. Cliquez sur ``Add``
+
+    d. Cliquez sur ``Attach Organization``
+
+    e. Sélectionnez le ``server`` et l' ``organization``.
+
+    f. Cliquez sur ``Attach``
+
+16. Débloquez le port VPN dans votre firewall
+
+    a. Allez sur le site ispconfig https://example.com:8080/
+
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
+
+    c. dans la rubrique ``Open UDP ports:``, ajoutez le port UDP du VPN
+       que vous avez noté.
+
+    d. Cliquez sur ``save``
+
+17. Retourner dans l’interface de Pritunl. retournez sur l’onglet
+    ``Servers``
+
+    a. Cliquez sur ``Start server``
+
+18. Votre serveur de VPN est opérationnel.
+
+Se connecter au serveur de VPN
+------------------------------
+
+Comme Pritunl est compatible OpenVPN n’importe quel logiciel compatible
+OpenVPN peut être utilisé. Pritunl founit un
+`client <https://client.pritunl.com/>`__ compatible pour Linux, macOS,
+and Windows.
+
+Pour se connecter à l’aide du client, vous devez charger un fichier de
+configuration qui est téléchargeable dans l’onglet utilisateur du
+serveur web. Ce fichier est à importer dans le logiciel client de
+Pritunl. Une fois fait, une compte apparaît dans le logiciel client.
+Vous pourrez vous connecter en cliquant sur le bouton ``Connect`` du
+compte utilisateur.
+
+Réparer une base Pritunl
+------------------------
+
+Si jamais votre base est corrompue, vous pourrez la réparer en tapant:
+
+.. code:: bash
+
+    systemctl stop pritunl
+    pritunl repair-database
+    systemctl start pritunl
+
+Mot de passe perdu
+------------------
+
+Vous pouvez re-générer un mot de passe en tapant:
+
+.. code:: bash
+
+    pritunl reset-password
+
 Annexe
 ======
 
@@ -6067,11 +6644,3 @@ Pour installer:
 
 3. Hestia est installé. Il est important de bien noter le mot de passe
    du compte admin de Hestia ainsi que le numéro de port du site web
-
-backup
-------
-
-pour installer borg backup en mode rescue afin d’avoir la dernière
-version. apt install python3-pip libssl-dev cython3 gcc g++
-libpython-dev libacl1-dev pip3 install borgbackup pip3 install
-rdiff-backup
