@@ -364,7 +364,7 @@ git remote add origin git@github.com:username/etc_keeper.git <co xml:id="CO8-1"/
 <programlisting language="bash" linenumbering="unnumbered">PUSH_REMOTE="origin"</programlisting>
 </listitem>
 <listitem>
-<simpara>Pour éviter demandes de mot de passe de la part de <literal>github</literal> ou <literal>gitlab</literal>, il est nécessaire de déclarer une clé publique sur leur site. Créez une clé sur votre serveur pour l&#8217;utilisateur root:</simpara>
+<simpara>Pour éviter des demandes de mot de passe de la part de <literal>github</literal> ou <literal>gitlab</literal>, il est nécessaire de déclarer une clé publique sur leur site. Créez une clé sur votre serveur pour l&#8217;utilisateur root:</simpara>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Créer un répertoire <literal>/root/.ssh</literal> s&#8217;il n&#8217;existe pas. tapez :</simpara>
@@ -1185,8 +1185,8 @@ systemctl restart apache2</programlisting>
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="_installation_et_configuration_de_mailman">
-<title>Installation et Configuration de Mailman</title>
+<section xml:id="_installation_du_gestionnaire_de_mailing_list_mailman">
+<title>Installation du gestionnaire de mailing list Mailman</title>
 <simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -1515,7 +1515,7 @@ systemctl restart apache2</programlisting>
 <programlisting language="sql" linenumbering="unnumbered">CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; <co xml:id="CO14-1"/></programlisting>
 <calloutlist>
 <callout arearefs="CO14-1">
-<para><literal>mypassword</literal> doit être remplacé par un mot de passe choisi.</para>
+<para><literal>mypassword</literal> doit être remplacé par <link linkend="pass_gen">un mot de passe choisi.</link></para>
 </callout>
 </calloutlist>
 </listitem>
@@ -1524,7 +1524,7 @@ systemctl restart apache2</programlisting>
 <programlisting language="sql" linenumbering="unnumbered">GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; <co xml:id="CO15-1"/></programlisting>
 <calloutlist>
 <callout arearefs="CO15-1">
-<para><literal>mypassword</literal> doit être remplacé par un mot de passe choisi.</para>
+<para><literal>mypassword</literal> doit être remplacé par le mot de passe choisi plus haut.</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -1589,8 +1589,8 @@ $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';</programlisti
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="_installation_et_configuration_de_roundcube">
-<title>Installation et configuration de Roundcube</title>
+<section xml:id="_installation_du_webmail_roundcube">
+<title>Installation du webmail Roundcube</title>
 <simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -1651,8 +1651,8 @@ chmod a+x certbot-auto
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="_installation_dun_scanner_de_vulnérabilités">
-<title>Installation d&#8217;un scanner de vulnérabilités</title>
+<section xml:id="_installation_dun_scanner_de_vulnérabilités_lynis">
+<title>Installation d&#8217;un scanner de vulnérabilités Lynis</title>
 <simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -1857,8 +1857,8 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="_installation_de_webmin">
-<title>Installation de Webmin</title>
+<section xml:id="_installation_du_système_dadministration_webmin">
+<title>Installation du système d&#8217;administration Webmin</title>
 <simpara>Webmin est un outil généraliste de configuration de votre serveur. Son usage peut être assez complexe mais il permet une configuration plus précise des fonctionnalités.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -2533,10 +2533,10 @@ Vous ne pouvez définir un sous-domaine que si vous avez défini le site web rac
 <simpara>Dans l’onglet <literal>Statistics</literal> du même écran</simpara>
 <itemizedlist>
 <listitem>
-<simpara><literal>Set Webstatistics password:</literal> &#8592; saisissez un mot de passe</simpara>
+<simpara><literal>Set Webstatistics password:</literal> &#8592; <link linkend="pass_gen">Saisissez un mot de passe généré</link></simpara>
 </listitem>
 <listitem>
-<simpara><literal>Repeat Password:</literal> &#8592; ressaisissez le mot de passe</simpara>
+<simpara><literal>Repeat Password:</literal> &#8592; Ressaisissez le mot de passe</simpara>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -2811,7 +2811,7 @@ Alias /munin /var/cache/munin/www
 <programlisting language="bash" linenumbering="unnumbered">htpasswd -c /etc/munin/munin-htpasswd admin</programlisting>
 </listitem>
 <listitem>
-<simpara>Tapez votre mot de passe</simpara>
+<simpara>Tapez <link linkend="pass_gen">votre mot de passe généré</link></simpara>
 </listitem>
 <listitem>
 <simpara>Redémarrez apache. Tapez:</simpara>
@@ -2959,12 +2959,16 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
  if 5 restarts within 5 cycles then timeout</screen>
 <calloutlist>
 <callout arearefs="CO20-1">
-<para>remplacez my_password par votre mot de passe</para>
+<para>remplacez my_password par <link linkend="pass_gen">votre mot de passe généré</link></para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>La configuration est assez claire à lire. pour obtenir des précisions, référez vous à la documentation de monit <link xl:href="http://mmonit.com/monit/documentation/monit.html">http://mmonit.com/monit/documentation/monit.html</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Redémarrez apache. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service apache2 restart</programlisting>
 </listitem>
 <listitem>
 <simpara>Dans la configuration pour apache, la configuration indique que monit doit allez chercher sur le port 80 un fichier dans <literal>/monit/token</literal>. Nous devons donc créer ce fichier. Tapez:</simpara>
@@ -3007,8 +3011,8 @@ echo "hello" &gt; /var/www/html/monit/token</programlisting>
 </section>
 <section xml:id="_configuration_de_la_messagerie">
 <title>Configuration de la messagerie</title>
-<section xml:id="_installation_de_rspamd_à_la_place_d_amavis_new">
-<title>Installation de rspamd à la place d' Amavis-new</title>
+<section xml:id="_installation_de_lantispam_rspamd_à_la_place_d_amavis_new">
+<title>Installation de l&#8217;antispam rspamd à la place d' Amavis-new</title>
 <simpara><literal>rspamd</literal> est réputé de meilleure qualité que <literal>Amavis</literal> dans la chasse aux spams. Vous pouvez décider de l&#8217;installer à la place d&#8217;Amavis. Cette installation reste optionnelle.</simpara>
 <simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
@@ -3094,7 +3098,7 @@ custom {
 <programlisting language="bash" linenumbering="unnumbered">rspamadm pw</programlisting>
 </listitem>
 <listitem>
-<simpara>Entrez votre mot de passe. Une hashphrase est générée.</simpara>
+<simpara>Entrez <link linkend="pass_gen">votre mot de passe généré</link>. Une hashphrase est générée.</simpara>
 </listitem>
 <listitem>
 <simpara>Copiez la.</simpara>
@@ -3678,7 +3682,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 <simpara><literal>`Email:</literal> &#8592; mail_name @ example.com</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Password:</literal> &#8592; saisissez un mot de passe ou générez en un</simpara>
+<simpara><literal>Password:</literal> &#8592; <link linkend="pass_gen">Saisissez un mot de passe généré</link> ou générez en un en cliquant sur le bouton</simpara>
 </listitem>
 <listitem>
 <simpara><literal>Repeat Password</literal> &#8592; saisissez une deuxième fois votre mot de passe</simpara>
@@ -3872,8 +3876,8 @@ rm secretdst</screen>
 </orderedlist>
 </section>
 </section>
-<section xml:id="_installation_de_joomla_ou_de_concrete5">
-<title>Installation de Joomla ou de Concrete5</title>
+<section xml:id="_installation_des_cms_joomla_et_concrete5">
+<title>Installation des CMS Joomla et Concrete5</title>
 <simpara>Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour et inclut une foule de plugins
 Concrete5 est un autre CMS assez connu  avec un design plus moderne.</simpara>
 <simpara>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.
@@ -3980,8 +3984,8 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </orderedlist>
 </section>
 </section>
-<section xml:id="_installation_de_mediawiki">
-<title>Installation de Mediawiki</title>
+<section xml:id="_installation_du_portail_wiki_mediawiki">
+<title>Installation du portail wiki Mediawiki</title>
 <simpara>Mediawiki est le portail wiki mondialement connu et utilisé notamment pour le site wikipedia.</simpara>
 <simpara>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</simpara>
 <section xml:id="_création_du_site_web_de_mediawiki">
@@ -4086,8 +4090,8 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </orderedlist>
 </section>
 </section>
-<section xml:id="_installation_de_wordpress">
-<title>Installation de Wordpress</title>
+<section xml:id="_installation_dun_gestionnaire_de_blog_wordpress">
+<title>Installation d&#8217;un gestionnaire de Blog Wordpress</title>
 <simpara>Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à jour.</simpara>
 <simpara>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</simpara>
 <section xml:id="_création_du_site_web_de_wordpress">
@@ -4170,7 +4174,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <simpara><literal>Administrator&#8217;s login</literal> &#8592; gardez ce qui est remplit: <literal>admin</literal></simpara>
 </listitem>
 <listitem>
-<simpara><literal>Password</literal> et <literal>Repeat Password</literal> &#8592; Tapez votre mot de passe</simpara>
+<simpara><literal>Password</literal> et <literal>Repeat Password</literal> &#8592; Tapez <link linkend="pass_gen">votre mot de passe généré</link></simpara>
 </listitem>
 <listitem>
 <simpara><literal>Default site language:</literal> &#8592; choisissez <literal>French</literal></simpara>
@@ -4192,8 +4196,8 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </orderedlist>
 </section>
 </section>
-<section xml:id="_micro_weber">
-<title>Micro Weber</title>
+<section xml:id="_installation_du_cms_micro_weber">
+<title>Installation du CMS Micro Weber</title>
 <simpara>Microweber est un système de gestion de contenu et un constructeur de sites web Open Source. Il est basé sur le langage de programmation PHP et le framework web Laravel 5, utilisant le glisser-déposer et permettant aux utilisateurs de créer rapidement du contenu, tout en programmant et en gérant plusieurs affichages. Il dispose d&#8217;une fonction d&#8217;édition en direct qui permet aux utilisateurs de visualiser leurs modifications telles qu&#8217;elles apparaîtraient.</simpara>
 <section xml:id="_création_du_site_web_de_microweber">
 <title>Création du site web de Microweber</title>
@@ -4269,7 +4273,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>microweber</literal> par exemple</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+<simpara><literal>Database password:</literal> &#8592; <link linkend="pass_gen">Saisissez un mot de passe généré</link> ou en générer un en cliquant sur le bouton</simpara>
 </listitem>
 <listitem>
 <simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
@@ -4333,13 +4337,13 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 <simpara><literal>Hote</literal> &#8592; Laissez <literal>localhost</literal></simpara>
 </listitem>
 <listitem>
-<simpara><literal>Utilisateur</literal> &#8592; entrez <literal>cxmicroweber</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+<simpara><literal>Utilisateur</literal> &#8592; entrez <literal>cxmicroweber</literal>. x est le numéro de client; habituellement c&#8217;est 0</simpara>
 </listitem>
 <listitem>
 <simpara><literal>Mot de passe</literal> &#8592; Tapez votre mot de passe</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Nom de la Base de données</literal> &#8592; entrez <literal>cxmicroweber</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+<simpara><literal>Nom de la Base de données</literal> &#8592; entrez <literal>cxmicroweber</literal>. x est le numéro de client; habituellement c&#8217;est 0</simpara>
 </listitem>
 <listitem>
 <simpara><literal>Préfix des noms de tables</literal> &#8592; Laissez le champ vide</simpara>
@@ -4367,8 +4371,8 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 </orderedlist>
 </section>
 </section>
-<section xml:id="_piwigo">
-<title>Piwigo</title>
+<section xml:id="_installation_du_gestionnaire_de_photos_piwigo">
+<title>Installation du gestionnaire de photos Piwigo</title>
 <simpara>Piwigo est une application web pour gérer votre collection de photos, et autres médias. Doté de puissantes fonctionnalités, il gère des galeries partout dans le monde. Elle est écrite en PHP et nécessite une base de données MySQL.</simpara>
 <simpara>Piwigo était auparavant connu sous le nom PhpWebGallery.</simpara>
 <section xml:id="_création_du_site_web_de_piwigo">
@@ -4445,7 +4449,7 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 <simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>piwigo</literal> par exemple</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+<simpara><literal>Database password:</literal> &#8592; saisir  <link linkend="pass_gen">un mot de passe généré</link> ou en générer un en cliquant sur le bouton</simpara>
 </listitem>
 <listitem>
 <simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
@@ -4526,10 +4530,10 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 <simpara><literal>Nom d&#8217;Utilisateur</literal> &#8592; tapez <literal>admin</literal></simpara>
 </listitem>
 <listitem>
-<simpara><literal>Mot de passe</literal> &#8592; Tapez votre mot de passe</simpara>
+<simpara><literal>Mot de passe</literal> &#8592; Tapez <link linkend="pass_gen">votre mot de passe généré</link></simpara>
 </listitem>
 <listitem>
-<simpara><literal>Mot de passe [confirmer]</literal> &#8592; Tapez votre mot de passe</simpara>
+<simpara><literal>Mot de passe [confirmer]</literal> &#8592; Retapez votre mot de passe</simpara>
 </listitem>
 <listitem>
 <simpara><literal>Adresse e-mail</literal> &#8592; Tapez votre adresse mail d&#8217;administrateur</simpara>
@@ -4545,8 +4549,8 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 </orderedlist>
 </section>
 </section>
-<section xml:id="_installation_de_nextcloud">
-<title>Installation de Nextcloud</title>
+<section xml:id="_installation_du_système_collaboratif_nextcloud">
+<title>Installation du système collaboratif Nextcloud</title>
 <simpara>NextCloud est un serveur d&#8217;hébergement et de partage de fichiers gratuit et open source, fork du projet ownCloud.
 Il est très similaire aux autres systèmes de partage de fichiers des services comme Google Drive, Dropbox et iCloud ou Seafile.
 NextCloud vous permet de stocker des fichiers, des documents, des photos, des films et des vidéos à partir de la centrale l&#8217;emplacement.
@@ -4657,7 +4661,7 @@ date.timezone = Asia/Kolkata</programlisting>
 <simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>nextcloud</literal> par exemple</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+<simpara><literal>Database password:</literal> &#8592; saisir <link linkend="pass_gen">un mot de passe généré</link> ou en générer un en cliquant sur le bouton</simpara>
 </listitem>
 <listitem>
 <simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
@@ -4693,7 +4697,7 @@ date.timezone = Asia/Kolkata</programlisting>
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="_installation_de_nextcloud_2">
+<section xml:id="_installation_de_nextcloud">
 <title>Installation de Nextcloud</title>
 <simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
@@ -4754,8 +4758,8 @@ wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</screen
 </orderedlist>
 </section>
 </section>
-<section xml:id="_installation_et_configuration_de_gitea">
-<title>Installation et configuration de Gitea</title>
+<section xml:id="_installation_du_gestionnaire_de_projet_gitea">
+<title>Installation du gestionnaire de projet Gitea</title>
 <simpara>Gitea est un système simple d&#8217;hébergement de code basé sur Git. C&#8217;est un fork de Gogs.
 Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un code plus simple.</simpara>
 <section xml:id="_création_du_site_web_de_gitea">
@@ -4864,7 +4868,7 @@ chmod 770 /etc/gitea</programlisting>
 <simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>gitea</literal> par exemple</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+<simpara><literal>Database password:</literal> &#8592; <link linkend="pass_gen">Saisissez un mot de passe généré</link> ou en générer un en cliquant sur le bouton</simpara>
 </listitem>
 <listitem>
 <simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
@@ -5075,8 +5079,8 @@ SSH_PORT = 2222 <co xml:id="CO30-1"/></programlisting>
 </orderedlist>
 </section>
 </section>
-<section xml:id="_installation_de_seafile">
-<title>Installation de Seafile</title>
+<section xml:id="_installation_du_système_de_partage_de_fichiers_seafile">
+<title>Installation du système de partage de fichiers Seafile</title>
 <simpara>Seafile est un système de partage de fichier simple et efficace écrit en Python. Il existe des clients de connexion pour Windows, Linux, Android, IOS.</simpara>
 <simpara>Cette installation est optionnelle.</simpara>
 <section xml:id="_création_du_site_web_de_seafile">
@@ -5181,10 +5185,10 @@ ProxyPassReverse / http://localhost:8090/</programlisting>
 <simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>seafile</literal> par exemple</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+<simpara><literal>Database password:</literal> &#8592; Saisir <link linkend="pass_gen">votre mot de passe généré</link> ou en générer un en cliquant sur le bouton</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>
+<simpara><literal>Repeat Password:</literal> &#8592; Resaisir de nouveau le mot de passe</simpara>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -5458,8 +5462,8 @@ esac</programlisting>
 </orderedlist>
 </section>
 </section>
-<section xml:id="_installation_de_grafana">
-<title>Installation de Grafana</title>
+<section xml:id="_installation_du_système_de_monitoring_grafana">
+<title>Installation du système de monitoring Grafana</title>
 <simpara>Grafana est un logiciel de visualisation et d&#8217;analyse à code source ouvert. Il vous permet d&#8217;interroger, de visualiser, d&#8217;alerter et d&#8217;explorer vos mesures, quel que soit l&#8217;endroit où elles sont stockées. En clair, il vous fournit des outils pour transformer vos données de base de données de séries chronologiques (TSDB) en de magnifiques graphiques et visualisations.
 Grafana s&#8217;appuie sur Prometheus afin d&#8217;obtenir des métriques.
 Loki est aussi installé pour réaliser une analyse précise des fichiers de logs.</simpara>
@@ -5525,7 +5529,7 @@ ProxyPassReverse / http://localhost:3000/</programlisting>
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="_installation_de_grafana_2">
+<section xml:id="_installation_de_grafana">
 <title>Installation de Grafana</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -5901,8 +5905,8 @@ sudo service promtail status</programlisting>
 </orderedlist>
 </section>
 </section>
-<section xml:id="_borgbackup">
-<title>BorgBackup</title>
+<section xml:id="_installation_du_système_de_backup_borgbackup">
+<title>Installation du système de backup BorgBackup</title>
 <simpara>BorgBackup est un système de backup simple mais offrant des fonctionnalités avancées telles que le backup incrémental, la déduplication de données, la compression, l&#8217;authentification, l&#8217;encryption.</simpara>
 <simpara>Borg backup est un système de backup offsite. Cela signifie que vous devez avoir accès à un espace de stockage sur un autre site pour effectuer cette sauvegarde.</simpara>
 <simpara>Pour le moment, BorgBackup n&#8217;utilise pas de mécanisme de type RClone et il n&#8217;est donc pas encore possible de sauvegarder sur google drive ou autres espaces partagés.</simpara>
@@ -6621,8 +6625,8 @@ systemctl start pritunl</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">pritunl reset-password</programlisting>
 </section>
 </section>
-<section xml:id="_guacamole">
-<title>Guacamole</title>
+<section xml:id="_installation_dun_serveur_de_bureau_à_distance_guacamole">
+<title>Installation d&#8217;un serveur de bureau à distance Guacamole</title>
 <simpara>Apache Guacamole est un logiciel opensource et une application web de bureau à distance qui vous permet d&#8217;accéder à vos machines de bureau par le biais d&#8217;un navigateur web. Il s&#8217;agit d&#8217;une appli web html5 qui prend en charge des protocoles standard comme VNC, RDP et SSH. Vous n&#8217;avez pas besoin d&#8217;installer et d&#8217;utiliser des logiciels ou des plugins sur le serveur. Avec Guacamole, vous pouvez facilement passer d&#8217;un bureau d&#8217;une machine à l&#8217;autre avec le même navigateur</simpara>
 <section xml:id="_création_du_site_web_de_guacamole">
 <title>Création du site web de Guacamole</title>
@@ -6711,7 +6715,7 @@ ProxyPassReverse /guacamole http://localhost:8085/guacamole</programlisting>
 <simpara><literal>Database user:</literal> &#8592;  saisir votre nom d&#8217;utilisateur <literal>guacamole</literal> par exemple</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Database password:</literal> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</simpara>
+<simpara><literal>Database password:</literal> &#8592; <link linkend="pass_gen">Saisissez un mot de passe généré</link> ou en générer un en cliquant sur le bouton</simpara>
 </listitem>
 <listitem>
 <simpara><literal>Repeat Password:</literal> &#8592; saisir de nouveau le mot de passe</simpara>

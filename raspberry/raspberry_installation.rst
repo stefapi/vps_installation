@@ -1,3 +1,9 @@
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Table des matières
+
+
 Avant propos
 ============
 
@@ -707,7 +713,7 @@ Cette installation est optionnelle.
 
         PUSH_REMOTE="origin"
 
-7.  Pour éviter demandes de mot de passe de la part de ``github`` ou
+7.  Pour éviter des demandes de mot de passe de la part de ``github`` ou
     ``gitlab``, il est nécessaire de déclarer une clé publique sur leur
     site. Créez une clé sur votre serveur pour l’utilisateur root:
 
@@ -1641,8 +1647,8 @@ Suivez la procédure suivante:
        a2disconf apache2-doc
        systemctl restart apache2
 
-Installation et Configuration de Mailman
-----------------------------------------
+Installation du gestionnaire de mailing list Mailman
+----------------------------------------------------
 
 Suivez la procédure suivante:
 
@@ -2028,7 +2034,8 @@ Suivez la procédure suivante:
 
           CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; 
 
-      -  ``mypassword`` doit être remplacé par un mot de passe choisi.
+      -  ``mypassword`` doit être remplacé par `un mot de passe
+         choisi. <#pass_gen>`__
 
    d. Accordez des privilèges et sauvez:
 
@@ -2036,7 +2043,8 @@ Suivez la procédure suivante:
 
           GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; 
 
-      -  ``mypassword`` doit être remplacé par un mot de passe choisi.
+      -  ``mypassword`` doit être remplacé par le mot de passe choisi
+         plus haut.
 
    e. Flusher les privilèges:
 
@@ -2103,8 +2111,8 @@ Suivez la procédure suivante:
          ``mypassword`` mettez celui choisi. N’oubliez pas de
          dé-commenter les lignes.
 
-Installation et configuration de Roundcube
-------------------------------------------
+Installation du webmail Roundcube
+---------------------------------
 
 Suivez la procédure suivante:
 
@@ -2176,8 +2184,8 @@ Suivez la procédure suivante:
 
        apt install python3-certbot-apache
 
-Installation d’un scanner de vulnérabilités
--------------------------------------------
+Installation d’un scanner de vulnérabilités Lynis
+-------------------------------------------------
 
 Suivez la procédure suivante:
 
@@ -2396,8 +2404,8 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
         précédente installation qui sont configurés. Effacer les cookies
         de ce site de votre navigateur.
 
-Installation de Webmin
-----------------------
+Installation du système d’administration Webmin
+-----------------------------------------------
 
 Webmin est un outil généraliste de configuration de votre serveur. Son
 usage peut être assez complexe mais il permet une configuration plus
@@ -3065,10 +3073,10 @@ racine auparavant.
 
       iv.  Dans l’onglet ``Statistics`` du même écran
 
-           -  ``Set Webstatistics password:`` ← saisissez un mot de
-              passe
+           -  ``Set Webstatistics password:`` ← `Saisissez un mot de
+              passe généré <#pass_gen>`__
 
-           -  ``Repeat Password:`` ← ressaisissez le mot de passe
+           -  ``Repeat Password:`` ← Ressaisissez le mot de passe
 
       v.   Dans l’onglet ``Options``, il peut être utile pour certains
            types de site qui sont des redirections d’autres sites de
@@ -3371,7 +3379,7 @@ Suivez les étapes ci-après:
 
         htpasswd -c /etc/munin/munin-htpasswd admin
 
-14. Tapez votre mot de passe
+14. Tapez `votre mot de passe généré <#pass_gen>`__
 
 15. Redémarrez apache. Tapez:
 
@@ -3547,13 +3555,20 @@ suivante:
          if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
          if 5 restarts within 5 cycles then timeout
 
-    -  remplacez my\_password par votre mot de passe
+    -  remplacez my\_password par `votre mot de passe
+       généré <#pass_gen>`__
 
 5.  La configuration est assez claire à lire. pour obtenir des
     précisions, référez vous à la documentation de monit
     http://mmonit.com/monit/documentation/monit.html.
 
-6.  Dans la configuration pour apache, la configuration indique que
+6.  Redémarrez apache. Tapez:
+
+    .. code:: bash
+
+        service apache2 restart
+
+7.  Dans la configuration pour apache, la configuration indique que
     monit doit allez chercher sur le port 80 un fichier dans
     ``/monit/token``. Nous devons donc créer ce fichier. Tapez:
 
@@ -3562,19 +3577,19 @@ suivante:
         mkdir /var/www/html/monit
         echo "hello" > /var/www/html/monit/token
 
-7.  Tapez :
+8.  Tapez :
 
     .. code:: bash
 
         service monit restart
 
-8.  Pour monitorer le statut des process en ligne de commande, tapez:
+9.  Pour monitorer le statut des process en ligne de commande, tapez:
 
     .. code:: bash
 
         monit status
 
-9.  Débloquez le port 2812 dans votre firewall
+10. Débloquez le port 2812 dans votre firewall
 
     a. Allez sur le site ispconfig https://example.com:8080/
 
@@ -3585,16 +3600,16 @@ suivante:
 
     d. Cliquez sur ``save``
 
-10. Maintenant naviguez sur le site https://example.com:2812/
+11. Maintenant naviguez sur le site https://example.com:2812/
 
-11. Rentrez le login ``admin`` et votre mot de passe ``my_password``.
+12. Rentrez le login ``admin`` et votre mot de passe ``my_password``.
     Monit affiche alors les informations de monitoring du serveur.
 
 Configuration de la messagerie
 ==============================
 
-Installation de rspamd à la place d' Amavis-new
------------------------------------------------
+Installation de l’antispam rspamd à la place d' Amavis-new
+----------------------------------------------------------
 
 ``rspamd`` est réputé de meilleure qualité que ``Amavis`` dans la chasse
 aux spams. Vous pouvez décider de l’installer à la place d’Amavis. Cette
@@ -3701,7 +3716,8 @@ Suivez la procédure suivante:
 
         rspamadm pw
 
-11. Entrez votre mot de passe. Une hashphrase est générée.
+11. Entrez `votre mot de passe généré <#pass_gen>`__. Une hashphrase est
+    générée.
 
 12. Copiez la.
 
@@ -4261,7 +4277,8 @@ Pour créer une boite de messagerie:
 
    b. ```Email:`` ← mail\_name @ example.com
 
-   c. ``Password:`` ← saisissez un mot de passe ou générez en un
+   c. ``Password:`` ← `Saisissez un mot de passe généré <#pass_gen>`__
+      ou générez en un en cliquant sur le bouton
 
    d. ``Repeat Password`` ← saisissez une deuxième fois votre mot de
       passe
@@ -4432,8 +4449,8 @@ Suivez la procédure suivante:
        rm secretsrc
        rm secretdst
 
-Installation de Joomla ou de Concrete5
-======================================
+Installation des CMS Joomla et Concrete5
+========================================
 
 Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour
 et inclut une foule de plugins Concrete5 est un autre CMS assez connu
@@ -4514,8 +4531,8 @@ Appliquez les opérations suivantes dans ISPConfig:
 10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
     dernière version de Joomla.
 
-Installation de Mediawiki
-=========================
+Installation du portail wiki Mediawiki
+======================================
 
 Mediawiki est le portail wiki mondialement connu et utilisé notamment
 pour le site wikipedia.
@@ -4592,8 +4609,8 @@ Appliquez les opérations suivantes dans ISPConfig:
 10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
     dernière version de Mediawiki.
 
-Installation de Wordpress
-=========================
+Installation d’un gestionnaire de Blog Wordpress
+================================================
 
 Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à
 jour.
@@ -4656,7 +4673,8 @@ Appliquez les opérations suivantes dans ISPConfig:
 
     -  ``Administrator’s login`` ← gardez ce qui est remplit: ``admin``
 
-    -  ``Password`` et ``Repeat Password`` ← Tapez votre mot de passe
+    -  ``Password`` et ``Repeat Password`` ← Tapez `votre mot de passe
+       généré <#pass_gen>`__
 
     -  ``Default site language:`` ← choisissez ``French``
 
@@ -4670,8 +4688,8 @@ Appliquez les opérations suivantes dans ISPConfig:
 10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
     dernière version de Wordpress.
 
-Micro Weber
-===========
+Installation du CMS Micro Weber
+===============================
 
 Microweber est un système de gestion de contenu et un constructeur de
 sites web Open Source. Il est basé sur le langage de programmation PHP
@@ -4735,8 +4753,9 @@ Appliquez les opérations suivantes dans ISPConfig :
           -  ``Database user:`` ← saisir votre nom d’utilisateur
              ``microweber`` par exemple
 
-          -  ``Database password:`` ← saisir un mot de passe ou en
-             générer un en cliquant sur le bouton
+          -  ``Database password:`` ← `Saisissez un mot de passe
+             généré <#pass_gen>`__ ou en générer un en cliquant sur le
+             bouton
 
           -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
 
@@ -4784,13 +4803,13 @@ Suivez la procédure suivante:
 
    -  ``Hote`` ← Laissez ``localhost``
 
-   -  ``Utilisateur`` ← entrez ``cxmicroweber``. x est le numero de
+   -  ``Utilisateur`` ← entrez ``cxmicroweber``. x est le numéro de
       client; habituellement c’est 0
 
    -  ``Mot de passe`` ← Tapez votre mot de passe
 
    -  ``Nom de la Base de données`` ← entrez ``cxmicroweber``. x est le
-      numero de client; habituellement c’est 0
+      numéro de client; habituellement c’est 0
 
    -  ``Préfix des noms de tables`` ← Laissez le champ vide
 
@@ -4807,8 +4826,8 @@ Suivez la procédure suivante:
 8. Vous êtes redirigé sur le site Microweber ou vous pourrez vous loguer
    et commencer à utiliser l’outil
 
-Piwigo
-======
+Installation du gestionnaire de photos Piwigo
+=============================================
 
 Piwigo est une application web pour gérer votre collection de photos, et
 autres médias. Doté de puissantes fonctionnalités, il gère des galeries
@@ -4871,8 +4890,9 @@ Appliquez les opérations suivantes dans ISPConfig :
           -  ``Database user:`` ← saisir votre nom d’utilisateur
              ``piwigo`` par exemple
 
-          -  ``Database password:`` ← saisir un mot de passe ou en
-             générer un en cliquant sur le bouton
+          -  ``Database password:`` ← saisir `un mot de passe
+             généré <#pass_gen>`__ ou en générer un en cliquant sur le
+             bouton
 
           -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
 
@@ -4932,9 +4952,9 @@ Suivez la procédure suivante:
 
    -  ``Nom d’Utilisateur`` ← tapez ``admin``
 
-   -  ``Mot de passe`` ← Tapez votre mot de passe
+   -  ``Mot de passe`` ← Tapez `votre mot de passe généré <#pass_gen>`__
 
-   -  ``Mot de passe [confirmer]`` ← Tapez votre mot de passe
+   -  ``Mot de passe [confirmer]`` ← Retapez votre mot de passe
 
    -  ``Adresse e-mail`` ← Tapez votre adresse mail d’administrateur
 
@@ -4943,8 +4963,8 @@ Suivez la procédure suivante:
 6. Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer et
    commencer à utiliser l’outil
 
-Installation de Nextcloud
-=========================
+Installation du système collaboratif Nextcloud
+==============================================
 
 NextCloud est un serveur d’hébergement et de partage de fichiers gratuit
 et open source, fork du projet ownCloud. Il est très similaire aux
@@ -5052,8 +5072,9 @@ Appliquez les opérations suivantes dans ISPConfig :
           -  ``Database user:`` ← saisir votre nom d’utilisateur
              ``nextcloud`` par exemple
 
-          -  ``Database password:`` ← saisir un mot de passe ou en
-             générer un en cliquant sur le bouton
+          -  ``Database password:`` ← saisir `un mot de passe
+             généré <#pass_gen>`__ ou en générer un en cliquant sur le
+             bouton
 
           -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
 
@@ -5121,8 +5142,8 @@ Suivez la procédure suivante:
 6. Vous êtes redirigé sur le site nextcloud ou vous pourrez vous loguer
    et commencer à utliser l’outil
 
-Installation et configuration de Gitea
-======================================
+Installation du gestionnaire de projet Gitea
+============================================
 
 Gitea est un système simple d’hébergement de code basé sur Git. C’est un
 fork de Gogs. Il montre des fonctionnalités similaires à gitlab ou
@@ -5221,8 +5242,9 @@ Appliquez les opérations suivantes dans ISPConfig :
           -  ``Database user:`` ← saisir votre nom d’utilisateur
              ``gitea`` par exemple
 
-          -  ``Database password:`` ← saisir un mot de passe ou en
-             générer un en cliquant sur le bouton
+          -  ``Database password:`` ← `Saisissez un mot de passe
+             généré <#pass_gen>`__ ou en générer un en cliquant sur le
+             bouton
 
           -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
 
@@ -5412,8 +5434,8 @@ Gitea:
 
 6. Enjoy !
 
-Installation de Seafile
-=======================
+Installation du système de partage de fichiers Seafile
+======================================================
 
 Seafile est un système de partage de fichier simple et efficace écrit en
 Python. Il existe des clients de connexion pour Windows, Linux, Android,
@@ -5504,10 +5526,11 @@ Création de bases de données
           -  ``Database user:`` ← saisir votre nom d’utilisateur
              ``seafile`` par exemple
 
-          -  ``Database password:`` ← saisir un mot de passe ou en
-             générer un en cliquant sur le bouton
+          -  ``Database password:`` ← Saisir `votre mot de passe
+             généré <#pass_gen>`__ ou en générer un en cliquant sur le
+             bouton
 
-          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+          -  ``Repeat Password:`` ← Resaisir de nouveau le mot de passe
 
    b. Aller dans le menu ``Database`` pour définir les bases de données
 
@@ -5757,8 +5780,8 @@ script de lancement automatique de Seafile:
 
 6. Enjoy !
 
-Installation de Grafana
-=======================
+Installation du système de monitoring Grafana
+=============================================
 
 Grafana est un logiciel de visualisation et d’analyse à code source
 ouvert. Il vous permet d’interroger, de visualiser, d’alerter et
@@ -6225,8 +6248,8 @@ Installez maintenant Promtail:
 
         {job="varlogs"}
 
-BorgBackup
-==========
+Installation du système de backup BorgBackup
+============================================
 
 BorgBackup est un système de backup simple mais offrant des
 fonctionnalités avancées telles que le backup incrémental, la
@@ -7018,8 +7041,8 @@ Vous pouvez re-générer un mot de passe en tapant:
 
     pritunl reset-password
 
-Guacamole
-=========
+Installation d’un serveur de bureau à distance Guacamole
+========================================================
 
 Apache Guacamole est un logiciel opensource et une application web de
 bureau à distance qui vous permet d’accéder à vos machines de bureau par
@@ -7098,8 +7121,9 @@ Appliquez les opérations suivantes dans ISPConfig :
           -  ``Database user:`` ← saisir votre nom d’utilisateur
              ``guacamole`` par exemple
 
-          -  ``Database password:`` ← saisir un mot de passe ou en
-             générer un en cliquant sur le bouton
+          -  ``Database password:`` ← `Saisissez un mot de passe
+             généré <#pass_gen>`__ ou en générer un en cliquant sur le
+             bouton
 
           -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
 
