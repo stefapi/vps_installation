@@ -9,7 +9,9 @@ Avant propos
 
 Ce document est disponible sur le site
 `ReadTheDocs <https://vps-installation.readthedocs.io>`__ et sur
-`Github <https://github.com/apiou/vps_installation>`__.
+`Github <https://github.com/apiou/vps_installation>`__. Sur Github vous
+trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc de ce
+document.
 
 Cette documentation décrit la méthode que j’ai utilisé pour installer un
 serveur VPS sur la plate-forme OVH. Elle est le résultat de très

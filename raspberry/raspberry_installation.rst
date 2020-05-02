@@ -9,7 +9,9 @@ Avant propos
 
 Ce document est disponible sur le site
 `ReadTheDocs <https://raspberry-installation.readthedocs.io>`__ et sur
-`Github <https://github.com/apiou/vps_installation>`__.
+`Github <https://github.com/apiou/vps_installation>`__. Sur Github vous
+trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc de ce
+document
 
 Cette documentation décrit la méthode que j’ai utilisé pour installer
 une homebox (site auto hébergé) avec un raspberry PI Elle est le

@@ -4,7 +4,7 @@
 <article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Installation d&#8217;un VPS</title>
-<date>2020-03-27</date>
+<date>2020-05-02</date>
 <author>
 <personname>
 <firstname>Stéphane</firstname>
@@ -16,7 +16,7 @@
 <revhistory>
 <revision>
 <revnumber>1.0</revnumber>
-<date>2020-03-27</date>
+<date>2020-05-02</date>
 <authorinitials>SA</authorinitials>
 </revision>
 </revhistory>
@@ -24,7 +24,7 @@
 <section xml:id="_avant_propos">
 <title>Avant propos</title>
 <simpara>Ce document est disponible sur le site <link xl:href="https://vps-installation.readthedocs.io">ReadTheDocs</link>
-et sur <link xl:href="https://github.com/apiou/vps_installation">Github</link>.</simpara>
+et sur <link xl:href="https://github.com/apiou/vps_installation">Github</link>. Sur Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc de ce document.</simpara>
 <simpara>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer un serveur VPS sur la plate-forme OVH.
 Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
 Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation est facilement transposable pour des versions différentes de Debian ou à Ubuntu ou toute autre distribution basée sur l&#8217;un ou l&#8217;autre.
