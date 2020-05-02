@@ -71,9 +71,12 @@ Sont installés:
    `Loki <https://github.com/grafana/loki>`__, Promtail pour gérer les
    statistiques et les logs du serveur,
 
--  un serveur de sauvegardes `Borg <https://www.borgbackup.org/>`__
+-  un serveur de sauvegardes `Duplicati <https://www.duplicati.com>`__,
 
 -  un serveur de VPN `Pritunl <https://pritunl.com/>`__,
+
+-  un serveur de bureau à distance
+   `Guacamole <https://guacamole.apache.org>`__
 
 Dans ce document nous configurons un nom de domaine principal. Pour la
 clarté du texte, il sera nommé "example.com". Il est à remplacer
@@ -5177,10 +5180,8 @@ Appliquez les opérations suivantes Dans ISPConfig:
           #
 
           SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-          ProxyPass / http://localhost:3000/ 
-          ProxyPassReverse / http://localhost:3000/ 
-
-      -  mettez le nom de votre domaine à la place de example.com
+          ProxyPass / http://localhost:3000/
+          ProxyPassReverse / http://localhost:3000/
 
    h. Cliquez sur ``Save``
 
@@ -7024,6 +7025,349 @@ Vous pouvez re-générer un mot de passe en tapant:
 .. code:: bash
 
     pritunl reset-password
+
+Guacamole
+=========
+
+Apache Guacamole est un logiciel opensource et une application web de
+bureau à distance qui vous permet d’accéder à vos machines de bureau par
+le biais d’un navigateur web. Il s’agit d’une appli web html5 qui prend
+en charge des protocoles standard comme VNC, RDP et SSH. Vous n’avez pas
+besoin d’installer et d’utiliser des logiciels ou des plugins sur le
+serveur. Avec Guacamole, vous pouvez facilement passer d’un bureau d’une
+machine à l’autre avec le même navigateur
+
+Création du site web de Guacamole
+---------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``guacamole``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``guacamole``.
+
+   b. Le faire pointer vers le web folder ``guacamole``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          # guacamole httpserver
+          #
+
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass /guacamole http://localhost:8085/guacamole
+          ProxyPassReverse /guacamole http://localhost:8085/guacamole
+
+   h. Cliquez sur ``Save``
+
+Création des bases de données
+-----------------------------
+
+Appliquez les opérations suivantes dans ISPConfig :
+
+1. Créez une base de données mysql. Aller dans le menu ``Database`` pour
+   définir un utilisateur MariaDB
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``guacamole`` par exemple
+
+          -  ``Database password:`` ← saisir un mot de passe ou en
+             générer un en cliquant sur le bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Cliquez sur ``save``
+
+   c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+      données
+
+   d. Saisissez les informations:
+
+      -  ``Site:`` ← sélectionner le site ``example.com``
+
+      -  ``Database name:`` ← Saisissez le nom de la base de données
+         ``guacamole``
+
+      -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+         ``cxguacamole``. x: est le numéro de client.
+
+   e. Cliquez sur ``save``
+
+Installation du Guacamole
+-------------------------
+
+Suivez la procédure suivante:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Tapez:
+
+    .. code:: bash
+
+        apt install gcc g++ libossp-uuid-dev libavcodec-dev libpango1.0-dev libssh2-1-dev libcairo2-dev libjpeg-dev libpng-dev libavutil-dev libswscale-dev libvncserver-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev libtelnet-dev libswscale-dev libossp-uuid-dev libwebsockets-dev libpulse-dev  mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user
+
+3.  Téléchargez la dernière version de Guacamole en allant sur le site
+    web et en récupérant le `lien de
+    téléchargement <https://guacamole.apache.org/releases/>`__.
+
+4.  tapez:
+
+    .. code:: bash
+
+        curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.1.0/source/guacamole-server-1.1.0.tar.gz' 
+        tar xfz guacamole-server.tar.gz
+        cd guacamole-server-*
+
+    -  insérez ici l’adresse du package serveur à charger
+
+5.  Lancez la configuration. Tapez:
+
+    .. code:: bash
+
+        ./configure --with-init-dir=/etc/init.d
+
+6.  Vous devez obtenir, à la fin de la configuration, une table de ce
+    type:
+
+    ::
+
+        ------------------------------------------------
+        guacamole-server version 1.1.0
+        ------------------------------------------------
+
+           Library status:
+
+             freerdp2 ............ yes
+             pango ............... yes
+             libavcodec .......... yes
+             libavutil ........... yes
+             libssh2 ............. yes
+             libssl .............. yes
+             libswscale .......... yes
+             libtelnet ........... yes
+             libVNCServer ........ yes
+             libvorbis ........... yes
+             libpulse ............ yes
+             libwebsockets ....... yes
+             libwebp ............. yes
+             wsock32 ............. no
+
+           Protocol support:
+
+              Kubernetes .... yes
+              RDP ........... yes
+              SSH ........... yes
+              Telnet ........ yes
+              VNC ........... yes
+
+7.  Si ce n’est pas le cas, c’est qu’une bibliothèque n’est pas
+    installée correctement.
+
+8.  Lancez la compilation et l’installation. Tapez:
+
+    .. code:: bash
+
+        make
+        make install
+
+9.  Activez le démon de gestion guacd. Tapez:
+
+    .. code:: bash
+
+        systemctl enable guacd
+        systemctl start guacd
+
+10. Téléchargez le dernier client ``war`` de Guacamole en allant sur le
+    site web et en récupérant le `lien de
+    téléchargement <https://guacamole.apache.org/releases/>`__.
+    Récupérez le lien puis tapez:
+
+    .. code:: bash
+
+        mkdir -p /usr/local/share/guacamole
+        cd /usr/local/share/guacamole
+        curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.1.0/binary/guacamole-1.1.0.war' 
+        ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/
+        systemctl restart tomcat8
+        systemctl restart guacd
+
+    -  insérez ici l’adresse du war à charger
+
+11. Editez le fichier server.xml. Tapez:
+
+    .. code:: bash
+
+        vi /etc/tomcat8/server.xml
+
+12. Chercher ``Connector port="8080" protocol="HTTP/1.1`` et remplacer
+    partout le port ``8080`` par ``8085``
+
+13. Créez les répertoires de configuration de guacamole. Tapez:
+
+    .. code:: bash
+
+        mkdir -p /etc/guacamole
+        mkdir -p /etc/guacamole/{extensions,lib}
+        ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/
+
+14. Editez le fichier guacamole.properties. Tapez:
+
+    .. code:: bash
+
+        vi /etc/guacamole/guacamole.properties
+
+15. Ajoutez dans le fichier:
+
+    ::
+
+        mysql-hostname: localhost
+        mysql-port: 3306
+        mysql-database: cxguacamole 
+        mysql-username: cxguacamole 
+        mysql-password: <mot_de_passe> 
+
+    -  mettez ici le nom de la base de données, le nom de l’utilisateur
+       de la base et son mot\_de\_passe tels qu’ils ont été saisis dans
+       le chapitre de création de la base de données.
+
+16. Vous devez maintenant télécharger les plugins mysql pour Guacamole.
+    Allez sur le site web de guacamole et récupérez le `lien de
+    téléchargement de
+    guacamole-auth-jdbc <https://guacamole.apache.org/releases/>`__.
+    Tapez:
+
+    .. code:: bash
+
+        cd /tmp
+        curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.1.0/binary/guacamole-auth-jdbc-1.1.0.tar.gz' 
+        tar xfz guacamole-auth-jdbc.tar.gz
+        cd guacamole-auth-jdbc-*/mysql
+        cp guacamole-auth-jdbc-mysql-*.jar /usr/local/share/guacamole/
+        ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/extensions
+
+    -  insérez ici l’adresse du fichier guacamole-auth-jdbc à charger
+
+17. Créez les tables de la base:
+
+    .. code:: bash
+
+        cat *.sql | mysql -u cxguacamole -p cxguacamole 
+
+    -  mettez derrière le ``-u`` le nom d’utilisateur de la base de
+       données et derrière le ``-p`` le nom de la base de données. Un
+       mot de passe vous sera demandé.
+
+18. Redémarrez tomcat et guacd. Tapez:
+
+    .. code:: bash
+
+        systemctl restart tomcat8
+        systemctl restart guacd
+
+19. Allez sur le site de guacamole.example.com
+
+20. Loguez vous avec le compte: guacadmin et password guacadmin
+
+21. Commencez par cliquez sur guacadmin→paramètres → utilisateurs→
+    Nouvel Utilisateur
+
+    -  ``Identifiant`` ← Tapez ``admin``
+
+    -  ``Mot de passe`` ← Tapez votre `mot de passe
+       généré <#pass_gen>`__
+
+    -  ``Répétez mot de passe`` ← Retapez votre mot de passe
+
+    -  ``Permissions`` ← activer toutes les options
+
+22. Deconnectez vous et reconnectez vous avec le login ``admin``
+
+23. cliquez sur admin→paramètres → utilisateurs→ guacadmin
+
+24. Supprimez ce compte utilisateur
+
+25. Si vous avez activé VNC. Cliquez sur Admin→Paramètres →
+    Utilisateurs→ Connexions → Nouvelle Connexion
+
+    -  ``Nom`` ← Tapez ``Local server VNC``
+
+    -  ``Protocole`` ← Sélectionnez ``VNC``
+
+    -  ``Paramètres`` → ``Nom d’hôte`` ← Tapez ``Localhost``
+
+    -  Cochez ``SFTP`` → ``Activer SFTP``
+
+    -  ``SFTP`` → ``Nom d’hôte`` ← Tapez ``Localhost``
+
+    -  ``Paramètres`` → ``port`` ← Tapez ``5900``
+
+    -  ``Paramètres`` → ``Mot de passe`` ← Tapez votre mot de passe VNC
+       de votre machine locale.
+
+    -  ``SFTP`` → ``Mot de passe`` ← Tapez un mot de passe sur votre
+       Hôte
+
+26. Cliquez sur Admin→Paramètres → Utilisateurs→ Connexions → Nouvelle
+    Connexion
+
+    -  ``Nom`` ← Tapez ``Local server SSH``
+
+    -  ``Protocole`` ← Sélectionnez ``SSH``
+
+    -  ``Paramètres`` → ``Nom d’hôte`` ← Tapez ``Localhost``
+
+    -  ``Paramètres`` → ``port`` ← Tapez ``22``
+
+    -  ``Paramètres`` → ``Identifiant`` ← Tapez un login sur votre Hôte
+
+    -  ``Paramètres`` → ``Mot de passe`` ← Tapez votre mot de passe de
+       compte
+
+    -  Cochez ``SFTP`` → ``Activer SFTP``
+
+    -  ``SFTP`` → ``File browser root directory`` ← Tapez ``/``
+
+27. Vous pouvez maintenant vérifier vos connexions en vous loguant avec
+    l’un des deux profils.
+
+28. l’appui simultané sur ``SHIFT`` ``CTRL`` ``ALT`` fait apparaître un
+    menu pour effectuer des chargements de fichiers ou contrôler votre
+    connexion
 
 Annexe
 ======
