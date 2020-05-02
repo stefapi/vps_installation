@@ -616,9 +616,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_mot_de_passe_perdu">23.6. Mot de passe perdu</a></li>
 </ul>
 </li>
-<li><a href="#_annexe">24. Annexe</a>
+<li><a href="#_guacamole">24. Guacamole</a>
 <ul class="sectlevel2">
-<li><a href="#_installation_de_hestia">24.1. Installation de Hestia</a></li>
+<li><a href="#_création_du_site_web_de_guacamole">24.1. Création du site web de Guacamole</a></li>
+<li><a href="#_création_des_bases_de_données_5">24.2. Création des bases de données</a></li>
+<li><a href="#_installation_du_guacamole">24.3. Installation du Guacamole</a></li>
+</ul>
+</li>
+<li><a href="#_annexe">25. Annexe</a>
+<ul class="sectlevel2">
+<li><a href="#_installation_de_hestia">25.1. Installation de Hestia</a></li>
 </ul>
 </li>
 </ul>
@@ -713,10 +720,13 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <p>un serveur <a href="https://grafana.com/">Grafana</a>, <a href="https://prometheus.io/">Prometheus</a>, <a href="https://github.com/grafana/loki">Loki</a>, Promtail pour gérer les statistiques et les logs du serveur,</p>
 </li>
 <li>
-<p>un serveur de sauvegardes <a href="https://www.duplicati.com">Duplicati</a></p>
+<p>un serveur de sauvegardes <a href="https://www.duplicati.com">Duplicati</a>,</p>
 </li>
 <li>
 <p>un serveur de VPN <a href="https://pritunl.com/">Pritunl</a>,</p>
+</li>
+<li>
+<p>un serveur de bureau à distance <a href="https://guacamole.apache.org">Guacamole</a></p>
 </li>
 </ul>
 </div>
@@ -724,7 +734,7 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <p>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</p>
 </div>
 <div class="paragraph">
-<p>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal, que vous savez vous servir de <code>ssh</code> pour Linux ou de <code>putty</code> pour Windows, que vous avez des notions élémentaires de Shell Unix et que vous savez vous servir de l&#8217;éditeur <code>vi</code>. Si <code>vi</code> est trop compliqué pour vous, je vous suggère d&#8217;utiliser l&#8217;éditeur de commande <code>nano</code> à la place et de remplacer <code>vi</code> par <code>nano</code> dans toutes les lignes de commande.</p>
+<p>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal, que vous savez vous servir de <code>ssh</code> pour Linux ou de <code>putty</code> pour Windows, que vous avez des notions élémentaires de Shell Unix et que vous savez vous servir de l&#8217;éditeur <code>vi</code>. Si <code>vi</code> est trop compliqué pour vous, je vous suggère d&#8217;utiliser l&#8217;éditeur de texte <code>nano</code> à la place et de remplacer <code>vi</code> par <code>nano</code> dans toutes les lignes de commande.</p>
 </div>
 <div class="paragraph">
 <p>Dans le document, on peut trouver des textes entourés de &lt;texte&gt;. Cela signifie que vous devez mettre ici votre propre texte selon vos préférences.</p>
@@ -7460,17 +7470,9 @@ Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
-<span class="tok-nb">ProxyPass</span> / http://localhost:3000/ <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-nb">ProxyPassReverse</span> / http://localhost:3000/ <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<span class="tok-nb">ProxyPass</span> / http://localhost:3000/
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost:3000/</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>mettez le nom de votre domaine à la place de example.com</td>
-</tr>
-</table>
 </div>
 </li>
 <li>
@@ -10016,10 +10018,491 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_annexe">24. Annexe</h2>
+<h2 id="_guacamole">24. Guacamole</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apache Guacamole est un logiciel opensource et une application web de bureau à distance qui vous permet d&#8217;accéder à vos machines de bureau par le biais d&#8217;un navigateur web. Il s&#8217;agit d&#8217;une appli web html5 qui prend en charge des protocoles standard comme VNC, RDP et SSH. Vous n&#8217;avez pas besoin d&#8217;installer et d&#8217;utiliser des logiciels ou des plugins sur le serveur. Avec Guacamole, vous pouvez facilement passer d&#8217;un bureau d&#8217;une machine à l&#8217;autre avec le même navigateur</p>
+</div>
+<div class="sect2">
+<h3 id="_création_du_site_web_de_guacamole">24.1. Création du site web de Guacamole</h3>
+<div class="paragraph">
+<p>Appliquez les opérations suivantes Dans ISPConfig:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>guacamole</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>guacamole</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>guacamole</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>Fast CGI</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+
+<span class="tok-c"># guacamole httpserver</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/guacamole</span> http://localhost:8085/guacamole
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-sx">/guacamole</span> http://localhost:8085/guacamole</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_des_bases_de_données_5">24.2. Création des bases de données</h3>
+<div class="paragraph">
+<p>Appliquez les opérations suivantes dans ISPConfig :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Créez une base de données mysql. Aller dans le menu <code>Database</code> pour définir un utilisateur MariaDB</p>
+</li>
+<li>
+<p>Aller dans la rubrique <code>Sites</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aller dans le menu <code>Database users</code> pour définir un utilisateur MariaDB</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur <code>Add new User</code> pour créer un nouvel utilisateur</p>
+</li>
+<li>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Database user:</code> &#8592;  saisir votre nom d&#8217;utilisateur <code>guacamole</code> par exemple</p>
+</li>
+<li>
+<p><code>Database password:</code> &#8592; saisir un mot de passe ou en générer un en cliquant sur le bouton</p>
+</li>
+<li>
+<p><code>Repeat Password:</code> &#8592; saisir de nouveau le mot de passe</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Add new Database</code> pour créer une nouvelle base de données</p>
+</li>
+<li>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Site:</code> &#8592; sélectionner le site <code>example.com</code></p>
+</li>
+<li>
+<p><code>Database name:</code> &#8592; Saisissez le nom de la base de données <code>guacamole</code></p>
+</li>
+<li>
+<p><code>Database user:</code> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <code>cxguacamole</code>. x: est le numéro de client.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_du_guacamole">24.3. Installation du Guacamole</h3>
+<div class="paragraph">
+<p>Suivez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install gcc g++ libossp-uuid-dev libavcodec-dev libpango1.0-dev libssh2-1-dev libcairo2-dev libjpeg-dev libpng-dev libavutil-dev libswscale-dev libvncserver-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev libtelnet-dev libswscale-dev libossp-uuid-dev libwebsockets-dev libpulse-dev  mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Téléchargez la dernière version de Guacamole en allant sur le site web et en récupérant le <a href="https://guacamole.apache.org/releases/">lien de téléchargement</a>.</p>
+</li>
+<li>
+<p>tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>curl -fSL -o guacamole-server.tar.gz <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/source/guacamole-server-1.1.0.tar.gz&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+tar xfz guacamole-server.tar.gz
+<span class="tok-nb">cd</span> guacamole-server-*</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>insérez ici l&#8217;adresse du package serveur à charger</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Lancez la configuration. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>./configure --with-init-dir<span class="tok-o">=</span>/etc/init.d</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Vous devez obtenir, à la fin de la configuration, une table de ce type:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>------------------------------------------------
+guacamole-server version 1.1.0
+------------------------------------------------
+
+   Library status:
+
+     freerdp2 ............ yes
+     pango ............... yes
+     libavcodec .......... yes
+     libavutil ........... yes
+     libssh2 ............. yes
+     libssl .............. yes
+     libswscale .......... yes
+     libtelnet ........... yes
+     libVNCServer ........ yes
+     libvorbis ........... yes
+     libpulse ............ yes
+     libwebsockets ....... yes
+     libwebp ............. yes
+     wsock32 ............. no
+
+   Protocol support:
+
+      Kubernetes .... yes
+      RDP ........... yes
+      SSH ........... yes
+      Telnet ........ yes
+      VNC ........... yes</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Si ce n&#8217;est pas le cas, c&#8217;est qu&#8217;une bibliothèque n&#8217;est pas installée correctement.</p>
+</li>
+<li>
+<p>Lancez la compilation et l&#8217;installation. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>make
+make install</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez le démon de gestion guacd. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl <span class="tok-nb">enable</span> guacd
+systemctl start guacd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Téléchargez le dernier client <code>war</code> de Guacamole en allant sur le site web et en récupérant le <a href="https://guacamole.apache.org/releases/">lien de téléchargement</a>. Récupérez le lien puis tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /usr/local/share/guacamole
+<span class="tok-nb">cd</span> /usr/local/share/guacamole
+curl -fSL -o guacamole.war <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-1.1.0.war&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/
+systemctl restart tomcat8
+systemctl restart guacd</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>insérez ici l&#8217;adresse du war à charger</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Editez le fichier server.xml. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/tomcat8/server.xml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Chercher <code>Connector port="8080" protocol="HTTP/1.1</code> et remplacer partout le port <code>8080</code> par <code>8085</code></p>
+</li>
+<li>
+<p>Créez les répertoires de configuration de guacamole. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /etc/guacamole
+mkdir -p /etc/guacamole/<span class="tok-o">{</span>extensions,lib<span class="tok-o">}</span>
+ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez le fichier guacamole.properties. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/guacamole/guacamole.properties</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez dans le fichier:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>mysql-hostname: localhost
+mysql-port: 3306
+mysql-database: cxguacamole <i class="conum" data-value="1"></i><b>(1)</b>
+mysql-username: cxguacamole <i class="conum" data-value="1"></i><b>(1)</b>
+mysql-password: &lt;mot_de_passe&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettez ici le nom de la base de données, le nom de l&#8217;utilisateur de la base et son mot_de_passe tels qu&#8217;ils ont été saisis dans le chapitre de création de la base de données.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Vous devez maintenant télécharger les plugins mysql pour Guacamole. Allez sur le site web de guacamole et récupérez le <a href="https://guacamole.apache.org/releases/">lien de téléchargement de guacamole-auth-jdbc</a>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp
+curl -fSL -o guacamole-auth-jdbc.tar.gz <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-auth-jdbc-1.1.0.tar.gz&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+tar xfz guacamole-auth-jdbc.tar.gz
+<span class="tok-nb">cd</span> guacamole-auth-jdbc-*/mysql
+cp guacamole-auth-jdbc-mysql-*.jar /usr/local/share/guacamole/
+ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/extensions</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>insérez ici l&#8217;adresse du fichier guacamole-auth-jdbc à charger</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Créez les tables de la base:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cat *.sql <span class="tok-p">|</span> mysql -u cxguacamole -p cxguacamole <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettez derrière le <code>-u</code> le nom d&#8217;utilisateur de la base de données et derrière le <code>-p</code> le nom de la base de données. Un mot de passe vous sera demandé.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Redémarrez tomcat et guacd. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart tomcat8
+systemctl restart guacd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Allez sur le site de guacamole.example.com</p>
+</li>
+<li>
+<p>Loguez vous avec le compte: guacadmin et password guacadmin</p>
+</li>
+<li>
+<p>Commencez par cliquez sur guacadmin&#8594;paramètres &#8594; utilisateurs&#8594; Nouvel Utilisateur</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Identifiant</code> &#8592; Tapez <code>admin</code></p>
+</li>
+<li>
+<p><code>Mot de passe</code> &#8592; Tapez votre <a href="#pass_gen">mot de passe généré</a></p>
+</li>
+<li>
+<p><code>Répétez mot de passe</code> &#8592; Retapez votre mot de passe</p>
+</li>
+<li>
+<p><code>Permissions</code> &#8592; activer toutes les options</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Deconnectez vous et reconnectez vous avec le login <code>admin</code></p>
+</li>
+<li>
+<p>cliquez sur admin&#8594;paramètres &#8594; utilisateurs&#8594; guacadmin</p>
+</li>
+<li>
+<p>Supprimez ce compte utilisateur</p>
+</li>
+<li>
+<p>Si vous avez activé VNC. Cliquez sur Admin&#8594;Paramètres &#8594; Utilisateurs&#8594; Connexions &#8594; Nouvelle Connexion</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Nom</code> &#8592; Tapez <code>Local server VNC</code></p>
+</li>
+<li>
+<p><code>Protocole</code> &#8592; Sélectionnez <code>VNC</code></p>
+</li>
+<li>
+<p><code>Paramètres</code> &#8594; <code>Nom d’hôte</code> &#8592; Tapez <code>Localhost</code></p>
+</li>
+<li>
+<p>Cochez <code>SFTP</code> &#8594; <code>Activer SFTP</code></p>
+</li>
+<li>
+<p><code>SFTP</code> &#8594; <code>Nom d&#8217;hôte</code> &#8592; Tapez <code>Localhost</code></p>
+</li>
+<li>
+<p><code>Paramètres</code> &#8594; <code>port</code> &#8592; Tapez <code>5900</code></p>
+</li>
+<li>
+<p><code>Paramètres</code> &#8594; <code>Mot de passe</code> &#8592; Tapez votre mot de passe VNC de votre machine locale.</p>
+</li>
+<li>
+<p><code>SFTP</code> &#8594; <code>Mot de passe</code> &#8592; Tapez un mot de passe sur votre Hôte</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur Admin&#8594;Paramètres &#8594; Utilisateurs&#8594; Connexions &#8594; Nouvelle Connexion</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Nom</code> &#8592; Tapez <code>Local server SSH</code></p>
+</li>
+<li>
+<p><code>Protocole</code> &#8592; Sélectionnez <code>SSH</code></p>
+</li>
+<li>
+<p><code>Paramètres</code> &#8594; <code>Nom d’hôte</code> &#8592; Tapez <code>Localhost</code></p>
+</li>
+<li>
+<p><code>Paramètres</code> &#8594; <code>port</code> &#8592; Tapez <code>22</code></p>
+</li>
+<li>
+<p><code>Paramètres</code> &#8594; <code>Identifiant</code> &#8592; Tapez un login sur votre Hôte</p>
+</li>
+<li>
+<p><code>Paramètres</code> &#8594; <code>Mot de passe</code> &#8592; Tapez votre mot de passe de compte</p>
+</li>
+<li>
+<p>Cochez <code>SFTP</code> &#8594; <code>Activer SFTP</code></p>
+</li>
+<li>
+<p><code>SFTP</code> &#8594; <code>File browser root directory</code> &#8592; Tapez <code>/</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Vous pouvez maintenant vérifier vos connexions en vous loguant avec l&#8217;un des deux profils.</p>
+</li>
+<li>
+<p>l&#8217;appui simultané sur <code>SHIFT</code> <code>CTRL</code> <code>ALT</code> fait apparaître un menu pour effectuer des chargements de fichiers ou contrôler votre connexion</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_annexe">25. Annexe</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_de_hestia">24.1. Installation de Hestia</h3>
+<h3 id="_installation_de_hestia">25.1. Installation de Hestia</h3>
 <div class="paragraph">
 <p>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
 La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="bare">https://docs.hestiacp.com/</a></p>
@@ -10079,7 +10562,7 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-04-28 02:15:29 +0200
+Last updated 2020-05-02 18:38:36 +0200
 </div>
 </div>
 <style>

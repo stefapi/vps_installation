@@ -87,20 +87,12 @@ un serveur en mode terminal, que vous savez vous servir de ``ssh`` pour
 Linux ou de ``putty`` pour Windows, que vous avez des notions
 élémentaires de Shell Unix et que vous savez vous servir de l’éditeur
 ``vi``. Si ``vi`` est trop compliqué pour vous, je vous suggère
-d’utiliser l’éditeur de commande ``nano`` à la place et de remplacer
-``vi`` par ``nano`` dans toutes les lignes de commande.
+d’utiliser l’éditeur de texte ``nano`` à la place et de remplacer ``vi``
+par ``nano`` dans toutes les lignes de commande.
 
 Dans le document, on peut trouver des textes entourés de <texte>. Cela
 signifie que vous devez mettre ici votre propre texte selon vos
 préférences.
-
-A propos des mots de passe: il est conseillé de saisir des mots de passe
-de 10 caractères contenant des majuscules/minuscules/nombres/caractères
-spéciaux. Une autre façon de faire est de saisir de longues phrases. Par
-exemple: 'J’aime manger de la mousse au chocolat parfumée à la menthe'.
-Ce dernier exemple a un taux de complexité est bien meilleur que les
-mots de passe classiques. Il est aussi plus facile à retenir que
-'Az3~1ym\_a&'.
 
 Le coût pour mettre en oeuvre ce type de serveur est relativement
 faible:
@@ -290,11 +282,11 @@ Pour ce type d’installation, il vous faut un clavier+souris et un écran.
 Installation Headless
 ---------------------
 
-Pour ce type d’installation, pas besoin d’écran et de clavier et de
+Pour ce type d’installation, pas besoin d’écran, de clavier et de
 souris. Tout s’effectue à distance.
 
 Dans la suite, je suppose que vous possèdez un PC fonctionnant avec un
-Linux (la procédure peut être adaptée avec une machine windows en
+Linux (la procédure peut être adaptée pour une machine windows en
 utilisant la ligne de commande et putty)
 
 1. Avant d’enlever votre flash SD du lecteur, appliquez la procédure ci

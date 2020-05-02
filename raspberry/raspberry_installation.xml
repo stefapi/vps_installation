@@ -108,9 +108,8 @@ Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation es
 </listitem>
 </itemizedlist>
 <simpara>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</simpara>
-<simpara>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal, que vous savez vous servir de <literal>ssh</literal> pour Linux ou de <literal>putty</literal> pour Windows, que vous avez des notions élémentaires de Shell Unix et que vous savez vous servir de l&#8217;éditeur <literal>vi</literal>. Si <literal>vi</literal> est trop compliqué pour vous, je vous suggère d&#8217;utiliser l&#8217;éditeur de commande <literal>nano</literal> à la place et de remplacer <literal>vi</literal> par <literal>nano</literal> dans toutes les lignes de commande.</simpara>
+<simpara>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal, que vous savez vous servir de <literal>ssh</literal> pour Linux ou de <literal>putty</literal> pour Windows, que vous avez des notions élémentaires de Shell Unix et que vous savez vous servir de l&#8217;éditeur <literal>vi</literal>. Si <literal>vi</literal> est trop compliqué pour vous, je vous suggère d&#8217;utiliser l&#8217;éditeur de texte <literal>nano</literal> à la place et de remplacer <literal>vi</literal> par <literal>nano</literal> dans toutes les lignes de commande.</simpara>
 <simpara>Dans le document, on peut trouver des textes entourés de &lt;texte&gt;. Cela signifie que vous devez mettre ici votre propre texte selon vos préférences.</simpara>
-<simpara>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'. Ce dernier exemple a un taux de complexité est bien meilleur que les mots de passe classiques. Il est aussi plus facile à retenir que 'Az3~1ym_a&amp;'.</simpara>
 <simpara>Le coût pour mettre en oeuvre ce type de serveur est relativement faible:</simpara>
 <itemizedlist>
 <listitem>
@@ -300,8 +299,8 @@ dpkg -i imager_amd64.deb</programlisting>
 </section>
 <section xml:id="_installation_headless">
 <title>Installation Headless</title>
-<simpara>Pour ce type d&#8217;installation, pas besoin d&#8217;écran et de clavier et de souris. Tout s&#8217;effectue à distance.</simpara>
-<simpara>Dans la suite, je suppose que vous possèdez un PC fonctionnant avec un Linux (la procédure peut être adaptée avec une machine windows en utilisant la ligne de commande et putty)</simpara>
+<simpara>Pour ce type d&#8217;installation, pas besoin d&#8217;écran, de clavier et de souris. Tout s&#8217;effectue à distance.</simpara>
+<simpara>Dans la suite, je suppose que vous possèdez un PC fonctionnant avec un Linux (la procédure peut être adaptée pour une machine windows en utilisant la ligne de commande et putty)</simpara>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Avant d&#8217;enlever votre flash SD du lecteur, appliquez la procédure ci après:</simpara>
