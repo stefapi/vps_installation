@@ -775,8 +775,13 @@ correctement configuré.
 Configurer une IPV6
 -------------------
 
-OVH propose des adresses IPV6. Ces adresses sont indiquées sur le
-panneau de synthèse du VPS (Dashboard).
+OVH propose des adresses IPV6 sur les VPS. Ces adresses sont indiquées
+sur le panneau de synthèse du VPS (Dashboard).
+
+Votre hébergeur peut vous proposer la même chose.
+
+De même pour votre raspberry vous pouvez être tenté d’utiliser l’adresse
+IPV6 proposée par votre fournisseur d’accès internet.
 
 La résolution par DHCP ne semble pas fonctionner. Il faut donc
 configurer l’adresse à la main:
@@ -789,9 +794,9 @@ Suivez la procédure suivante:
 
    .. code:: bash
 
-       vi /etc/network/interfaces
+       vi /etc/network/interfaces.d/99-ipv6-init.cfg
 
-3. Ajoutez ces lignes à la fin:
+3. Ajoutez ces lignes dans le fichier:
 
    .. code:: ini
 
@@ -802,9 +807,9 @@ Suivez la procédure suivante:
        pre-down /sbin/ip -6 route del default via <GW_ADDRESS> dev eth0 
        pre-down /sbin/ip -6 route del <GW_ADDRESS> dev eth0 
 
-   -  Mettre ici l’adresse IPV6 proposée par OVH
+   -  Mettre ici l’adresse IPV6 proposée pour le serveur
 
-   -  Mettre ici l’adresse IPV6 du gateway proposé par OVH
+   -  Mettre ici l’adresse IPV6 du gateway proposé pour le serveur
 
 Interdire le login direct en root
 ---------------------------------
@@ -935,7 +940,7 @@ Pour créer une clé et la déployer:
 
    .. code:: bash
 
-       cat /root/.ssh/id_rsa.pub
+       cat ~/.ssh/id_rsa.pub
 
 3. Déployez votre clé:
 
@@ -1319,13 +1324,6 @@ Suivez la procédure suivante:
 12. La sortie doit être du type:
     ``tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld``
 
-13. Pour les serveur avec peu de ressources quelques éléments de tuning.
-    Editez le fichier 50-server.cnf:
-
-    .. code:: bash
-
-        vi /etc/mysql/mariadb.conf.d/50-server.cnf
-
 Configuration d’Apache
 ----------------------
 
@@ -1644,196 +1642,200 @@ Installation et configuration de phpmyadmin
 
 Suivez la procédure suivante:
 
-1. `Loguez vous comme root sur le serveur <#root_login>`__
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-2. Installez phpmyadmin. Exécutez:
+2.  allez sur le site de
+    `phpMyAdmin <https://www.phpmyadmin.net/downloads/>`__ et copier
+    l’adresse du lien vers la dernière version de l’outil.
 
-   .. code:: bash
+3.  Installez phpmyadmin. Exécutez:
 
-       mkdir /usr/share/phpmyadmin
-       mkdir /etc/phpmyadmin
-       mkdir -p /var/lib/phpmyadmin/tmp
-       chown -R www-data:www-data /var/lib/phpmyadmin
-       touch /etc/phpmyadmin/htpasswd.setup
-       cd /tmp
-       wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
-       tar xfz phpMyAdmin-4.9.0.1-all-languages.tar.gz
-       mv phpMyAdmin-4.9.0.1-all-languages/* /usr/share/phpmyadmin/
-       rm phpMyAdmin-4.9.0.1-all-languages.tar.gz
-       rm -rf phpMyAdmin-4.9.0.1-all-languages
-       cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php
+    .. code:: bash
 
-3. Créez votre chaîne aléatoire en base64. Tapez:
+        mkdir /usr/share/phpmyadmin
+        mkdir /etc/phpmyadmin
+        mkdir -p /var/lib/phpmyadmin/tmp
+        chown -R www-data:www-data /var/lib/phpmyadmin
+        touch /etc/phpmyadmin/htpasswd.setup
+        cd /tmp
+        wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.tar.gz
+        tar xfz phpMyAdmin-5.0.2-all-languages.tar.gz
+        mv phpMyAdmin-5.0.2-all-languages/* /usr/share/phpmyadmin/
+        rm phpMyAdmin-5.0.2-all-languages.tar.gz
+        rm -rf phpMyAdmin-5.0.2-all-languages
+        cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php
 
-   .. code:: bash
+4.  Créez votre chaîne aléatoire en base64. Tapez:
 
-       tr -dc A-Za-z0-9 < /dev/urandom | head -c${1:-32};echo;
+    .. code:: bash
 
-4. Copiez le texte généré
+        tr -dc A-Za-z0-9 < /dev/urandom | head -c${1:-32};echo;
 
-5. Éditez le fichier :
+5.  Copiez le texte généré
 
-   .. code:: bash
+6.  Éditez le fichier :
 
-       vi /usr/share/phpmyadmin/config.inc.php
+    .. code:: bash
 
-   a. Modifier l’entrée ``blowfish_secret`` en ajoutant votre propre
-      chaîne de 32 caractères générée juste avant.
+        vi /usr/share/phpmyadmin/config.inc.php
 
-   b. Éditez le fichier: :
+    a. Modifier l’entrée ``blowfish_secret`` en ajoutant votre propre
+       chaîne de 32 caractères générée juste avant.
 
-      .. code:: bash
+    b. Éditez le fichier: :
 
-          vi /etc/apache2/conf-available/phpmyadmin.conf
+       .. code:: bash
 
-   c. Ajoutez les lignes suivantes:
+           vi /etc/apache2/conf-available/phpmyadmin.conf
 
-      .. code:: apache
+    c. Ajoutez les lignes suivantes:
 
-          # phpMyAdmin default Apache configuration
+       .. code:: apache
 
-          Alias /phpmyadmin /usr/share/phpmyadmin
+           # phpMyAdmin default Apache configuration
 
-          <Directory /usr/share/phpmyadmin>
-           Options FollowSymLinks
-           DirectoryIndex index.php
+           Alias /phpmyadmin /usr/share/phpmyadmin
 
-           <IfModule mod_php7.c>
-           AddType application/x-httpd-php .php
+           <Directory /usr/share/phpmyadmin>
+            Options FollowSymLinks
+            DirectoryIndex index.php
 
-           php_flag magic_quotes_gpc Off
-           php_flag track_vars On
-           php_flag register_globals Off
-           php_value include_path .
-           </IfModule>
+            <IfModule mod_php7.c>
+            AddType application/x-httpd-php .php
 
-          </Directory>
+            php_flag magic_quotes_gpc Off
+            php_flag track_vars On
+            php_flag register_globals Off
+            php_value include_path .
+            </IfModule>
 
-          # Authorize for setup
-          <Directory /usr/share/phpmyadmin/setup>
-           <IfModule mod_authn_file.c>
-           AuthType Basic
-           AuthName "phpMyAdmin Setup"
-           AuthUserFile /etc/phpmyadmin/htpasswd.setup
-           </IfModule>
-           Require valid-user
-          </Directory>
+           </Directory>
 
-          # Disallow web access to directories that don't need it
-          <Directory /usr/share/phpmyadmin/libraries>
-           Order Deny,Allow
-           Deny from All
-          </Directory>
-          <Directory /usr/share/phpmyadmin/setup/lib>
-           Order Deny,Allow
-           Deny from All
-          </Directory>
+           # Authorize for setup
+           <Directory /usr/share/phpmyadmin/setup>
+            <IfModule mod_authn_file.c>
+            AuthType Basic
+            AuthName "phpMyAdmin Setup"
+            AuthUserFile /etc/phpmyadmin/htpasswd.setup
+            </IfModule>
+            Require valid-user
+           </Directory>
 
-6. Activez le module et redémarrez apache. Tapez :
+           # Disallow web access to directories that don't need it
+           <Directory /usr/share/phpmyadmin/libraries>
+            Order Deny,Allow
+            Deny from All
+           </Directory>
+           <Directory /usr/share/phpmyadmin/setup/lib>
+            Order Deny,Allow
+            Deny from All
+           </Directory>
 
-   .. code:: bash
+7.  Activez le module et redémarrez apache. Tapez :
 
-       a2enconf phpmyadmin
-       systemctl restart apache2
+    .. code:: bash
 
-7. Créer la base de donnée phpmyadmin.
+        a2enconf phpmyadmin
+        systemctl restart apache2
 
-   a. Tapez :
+8.  Créer la base de donnée phpmyadmin.
 
-      .. code:: bash
+    a. Tapez :
 
-          mysql -u root -p
+       .. code:: bash
 
-      puis entrer le mot de passe root
+           mysql -u root -p
 
-   b. Créez une base phpmyadmin. Tapez :
+       puis entrer le mot de passe root
 
-      .. code:: sql
+    b. Créez une base phpmyadmin. Tapez :
 
-          CREATE DATABASE phpmyadmin;
+       .. code:: sql
 
-   c. Créez un utilisateur phpmyadmin. Tapez :
+           CREATE DATABASE phpmyadmin;
 
-      .. code:: sql
+    c. Créez un utilisateur phpmyadmin. Tapez :
 
-          CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; 
+       .. code:: sql
 
-      -  ``mypassword`` doit être remplacé par `un mot de passe
-         choisi. <#pass_gen>`__
+           CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; 
 
-   d. Accordez des privilèges et sauvez:
+       -  ``mypassword`` doit être remplacé par `un mot de passe
+          choisi. <#pass_gen>`__
 
-      .. code:: sql
+    d. Accordez des privilèges et sauvez:
 
-          GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; 
+       .. code:: sql
 
-      -  ``mypassword`` doit être remplacé par le mot de passe choisi
-         plus haut.
+           GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; 
 
-   e. Flusher les privilèges:
+       -  ``mypassword`` doit être remplacé par le mot de passe choisi
+          plus haut.
 
-      .. code:: sql
+    e. Flusher les privilèges:
 
-          FLUSH PRIVILEGES;
+       .. code:: sql
 
-   f. et enfin
+           FLUSH PRIVILEGES;
 
-      .. code:: sql
+    f. et enfin
 
-          EXIT;
+       .. code:: sql
 
-8. Chargez les tables sql dans la base phpmyadmin:
+           EXIT;
 
-   .. code:: bash
+9.  Chargez les tables sql dans la base phpmyadmin:
 
-       mysql -u root -p phpmyadmin < /usr/share/phpmyadmin/sql/create_tables.sql
+    .. code:: bash
 
-9. Enfin ajoutez les mots de passe nécessaires dans le fichier de
-   config.
+        mysql -u root -p phpmyadmin < /usr/share/phpmyadmin/sql/create_tables.sql
 
-   a. Tapez:
+10. Enfin ajoutez les mots de passe nécessaires dans le fichier de
+    config.
 
-      .. code:: bash
+    a. Tapez:
 
-          vi /usr/share/phpmyadmin/config.inc.php
+       .. code:: bash
 
-   b. Rechercher le texte contenant ``controlhost`` . Ci-dessous, un
-      exemple:
+           vi /usr/share/phpmyadmin/config.inc.php
 
-      .. code:: php
+    b. Rechercher le texte contenant ``controlhost`` . Ci-dessous, un
+       exemple:
 
-          /* User used to manipulate with storage */
-          $cfg['Servers'][$i]['controlhost'] = 'localhost';
-          $cfg['Servers'][$i]['controlport'] = '';
-          $cfg['Servers'][$i]['controluser'] = 'pma';
-          $cfg['Servers'][$i]['controlpass'] = 'mypassword'; 
+       .. code:: php
+
+           /* User used to manipulate with storage */
+           $cfg['Servers'][$i]['controlhost'] = 'localhost';
+           $cfg['Servers'][$i]['controlport'] = '';
+           $cfg['Servers'][$i]['controluser'] = 'pma';
+           $cfg['Servers'][$i]['controlpass'] = 'mypassword'; 
 
 
-          /* Storage database and tables */
-          $cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
-          $cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
-          $cfg['Servers'][$i]['relation'] = 'pma__relation';
-          $cfg['Servers'][$i]['table_info'] = 'pma__table_info';
-          $cfg['Servers'][$i]['table_coords'] = 'pma__table_coords';
-          $cfg['Servers'][$i]['pdf_pages'] = 'pma__pdf_pages';
-          $cfg['Servers'][$i]['column_info'] = 'pma__column_info';
-          $cfg['Servers'][$i]['history'] = 'pma__history';
-          $cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
-          $cfg['Servers'][$i]['tracking'] = 'pma__tracking';
-          $cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
-          $cfg['Servers'][$i]['recent'] = 'pma__recent';
-          $cfg['Servers'][$i]['favorite'] = 'pma__favorite';
-          $cfg['Servers'][$i]['users'] = 'pma__users';
-          $cfg['Servers'][$i]['usergroups'] = 'pma__usergroups';
-          $cfg['Servers'][$i]['navigationhiding'] = 'pma__navigationhiding';
-          $cfg['Servers'][$i]['savedsearches'] = 'pma__savedsearches';
-          $cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
-          $cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
-          $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';
+           /* Storage database and tables */
+           $cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
+           $cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
+           $cfg['Servers'][$i]['relation'] = 'pma__relation';
+           $cfg['Servers'][$i]['table_info'] = 'pma__table_info';
+           $cfg['Servers'][$i]['table_coords'] = 'pma__table_coords';
+           $cfg['Servers'][$i]['pdf_pages'] = 'pma__pdf_pages';
+           $cfg['Servers'][$i]['column_info'] = 'pma__column_info';
+           $cfg['Servers'][$i]['history'] = 'pma__history';
+           $cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
+           $cfg['Servers'][$i]['tracking'] = 'pma__tracking';
+           $cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
+           $cfg['Servers'][$i]['recent'] = 'pma__recent';
+           $cfg['Servers'][$i]['favorite'] = 'pma__favorite';
+           $cfg['Servers'][$i]['users'] = 'pma__users';
+           $cfg['Servers'][$i]['usergroups'] = 'pma__usergroups';
+           $cfg['Servers'][$i]['navigationhiding'] = 'pma__navigationhiding';
+           $cfg['Servers'][$i]['savedsearches'] = 'pma__savedsearches';
+           $cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
+           $cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
+           $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';
 
-      -  A tous les endroit ou vous voyez dans le texte ci dessus le mot
-         ``mypassword`` mettez celui choisi. N’oubliez pas de
-         dé-commenter les lignes.
+       -  A tous les endroit ou vous voyez dans le texte ci dessus le
+          mot ``mypassword`` mettez celui choisi. N’oubliez pas de
+          dé-commenter les lignes.
 
 Installation du webmail Roundcube
 ---------------------------------
@@ -3039,7 +3041,7 @@ Suivez les étapes ci-après:
         includedir /etc/munin/munin-conf.d
         [...]
         # a simple host tree
-        [server1.example.com]
+        [munin.example.com]
          address 127.0.0.1
          use_node_name yes
         [...]
@@ -3193,8 +3195,8 @@ suivante:
         set daemon 60
         set logfile syslog facility log_daemon
         set mailserver localhost
-        set mail-format { from: monit@fpvview.site }
-        set alert stef@fpvview.site
+        set mail-format { from: monit@example.com } 
+        set alert nom@example.com 
         set httpd port 2812 and
          SSL ENABLE
          PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
@@ -3282,6 +3284,9 @@ suivante:
     -  remplacez my\_password par `votre mot de passe
        généré <#pass_gen>`__
 
+    -  remplacer example.com par votre domaine et nom@example.com par
+       votre email
+
 5.  La configuration est assez claire à lire. pour obtenir des
     précisions, référez vous à la documentation de monit
     http://mmonit.com/monit/documentation/monit.html.
@@ -3349,7 +3354,26 @@ Suivez la procédure suivante:
 
         apt-get install rspamd redis-server
 
-3.  Activez l’apprentissage automatique
+3.  Loguez vous dans ISPConfig
+
+4.  Activer Rspamd dans ISPConfig
+
+    a. Allez dans la rubrique ``system`` → menu ``Server Config`` →
+       Sélectionnez votre serveur → Onglet ``Mail``
+
+    b. Dans le champ ``Content Filter``, sélectionnez ``Rspamd``
+
+    c. Dans le champ ``Rspamd Password``, tapez votre mot de passe
+
+    d. Cliquez sur ``Save``
+
+    e. Revenez dans la rubrique ``system`` → menu ``Server Config`` →
+       Sélectionnez votre serveur → Onglet ``Mail``
+
+    f. Vous pouvez voir le mot de passe de connexion au serveur web
+       Rspamd.
+
+5.  Activez l’apprentissage automatique
 
     .. code:: bash
 
@@ -3358,13 +3382,14 @@ Suivez la procédure suivante:
         echo "new_schema = true;" >> /etc/rspamd/local.d/classifier-bayes.conf
         echo "expire = 8640000;" >> /etc/rspamd/local.d/classifier-bayes.conf
 
-4.  Activez Redis dans la configuration de Rspamd. Tapez:
+6.  Activez Redis dans la configuration de Rspamd. Tapez:
 
     .. code:: bash
 
         echo 'servers = "127.0.0.1";' > /etc/rspamd/local.d/redis.conf
+        echo 'enabled = true;' >> /etc/rspamd/local.d/redis.conf
 
-5.  Fixer des métriques assez élevées pour analyser les spams
+7.  Fixer des métriques assez élevées pour analyser les spams
 
     .. code:: bash
 
@@ -3374,7 +3399,7 @@ Suivez la procédure suivante:
         echo "reject = 50;" >> /etc/rspamd/local.d/metrics.conf
         echo "}" >> /etc/rspamd/local.d/metrics.conf
 
-6.  Augmentez la taille de l’historique de Rspamd, activez la
+8.  Augmentez la taille de l’historique de Rspamd, activez la
     compression.
 
     .. code:: bash
@@ -3383,19 +3408,19 @@ Suivez la procédure suivante:
         echo "compress = true;" >> /etc/rspamd/local.d/history_redis.conf
         echo "subject_privacy = false;" >> /etc/rspamd/local.d/history_redis.conf
 
-7.  Activez la mise à jour automatique de rspamd
+9.  Assignez un calcul automatique de réputation aux URLs
 
     .. code:: bash
 
-        echo 'enabled = true;' > /etc/rspamd/local.d/redis.conf
+        echo 'enabled = true;' > /etc/rspamd/local.d/url_reputation.conf
 
-8.  Enrichissez les headers des mails spams. Tapez:
+10. Enrichissez les headers des mails spams. Tapez:
 
     .. code:: bash
 
         vi /etc/rspamd/local.d/milter_headers.conf
 
-9.  inserez le texte suivant:
+11. inserez le texte suivant:
 
     ::
 
@@ -3434,53 +3459,34 @@ Suivez la procédure suivante:
           # user-defined routines: more on these later
         }
 
-10. Créez un mot de passe. Tapez:
+12. Créez un mot de passe. Tapez:
 
     .. code:: bash
 
         rspamadm pw
 
-11. Entrez `votre mot de passe généré <#pass_gen>`__. Une hashphrase est
+13. Entrez `votre mot de passe généré <#pass_gen>`__. Une hashphrase est
     générée.
 
-12. Copiez la.
+14. Copiez la.
 
-13. Remplacez celle déjà présente dans
+15. Remplacez celle déjà présente dans
     ``/etc/rspamd/local.d/worker-controller.inc``
 
     .. code:: bash
 
         vi /etc/rspamd/local.d/worker-controller.inc
 
-14. Remplacez le texte entre guillemets sur la ligne
+16. Remplacez le texte entre guillemets sur la ligne
     ``password = "$2$g95yw…​…​dq3c5byy";`` par le texte copié.
 
-15. Sauvez
+17. Sauvez
 
-16. Redémarrez Rspamd
+18. Redémarrez Rspamd
 
     .. code:: bash
 
         systemctl restart rspamd
-
-17. Loguez vous dans ISPConfig
-
-18. Activer Rspamd dans ISPConfig
-
-    a. Allez dans la rubrique ``system`` → menu ``Server Config`` →
-       Sélectionnez votre serveur → Onglet ``Mail``
-
-    b. Dans le champ ``Content Filter``, sélectionnez ``Rspamd``
-
-    c. Dans le champ ``Rspamd Password``, tapez votre mot de passe
-
-    d. Cliquez sur ``Save``
-
-    e. Revenez dans la rubrique ``system`` → menu ``Server Config`` →
-       Sélectionnez votre serveur → Onglet ``Mail``
-
-    f. Vous pouvez voir le mot de passe de connexion au serveur web
-       Rspamd.
 
 19. Rendre le site rspamd accessible dans un host
 

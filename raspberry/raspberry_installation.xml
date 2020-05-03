@@ -166,7 +166,7 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 <simpara>Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.</simpara>
 </section>
 <section xml:id="_installation_du_linux_sur_votre_raspberry">
-<title>Installation du linux sur votre raspberry.</title>
+<title>Installation du linux sur votre raspberry</title>
 <simpara>C&#8217;est la première étape.</simpara>
 <simpara>Il vous faudra un lecteur de flash microSD - USB que vous brancherez sur votre PC.</simpara>
 <simpara>Il existe maintenant un outil nommé <link xl:href="https://www.raspberrypi.org/downloads/">Rasberry PI Imager</link> pour la plateforme qui vous convient. C&#8217;est le moyen de plus simple de flasher votre raspberry.</simpara>
@@ -1171,7 +1171,7 @@ chmod 700 ~/.ssh</programlisting>
 </listitem>
 <listitem>
 <simpara>Sur votre PC local afficher la clé à l&#8217;écran. Elle sera copiée-collée par la suite:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cat /root/.ssh/id_rsa.pub</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">cat ~/.ssh/id_rsa.pub</programlisting>
 </listitem>
 <listitem>
 <simpara>Déployez votre clé:</simpara>
@@ -1493,10 +1493,6 @@ systemctl restart mariadb</programlisting>
 <listitem>
 <simpara>La sortie doit être du type: <literal>tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld</literal></simpara>
 </listitem>
-<listitem>
-<simpara>Pour les serveur avec peu de ressources quelques éléments de tuning. Editez le fichier 50-server.cnf:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /etc/mysql/mariadb.conf.d/50-server.cnf</programlisting>
-</listitem>
 </orderedlist>
 </section>
 <section xml:id="_configuration_dapache">
@@ -1770,6 +1766,9 @@ quotaon -avug</programlisting>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
+<simpara>allez sur le site de <link xl:href="https://www.phpmyadmin.net/downloads/">phpMyAdmin</link> et copier l&#8217;adresse du lien vers la dernière version de l&#8217;outil.</simpara>
+</listitem>
+<listitem>
 <simpara>Installez phpmyadmin. Exécutez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir /usr/share/phpmyadmin
 mkdir /etc/phpmyadmin
@@ -1777,11 +1776,11 @@ mkdir -p /var/lib/phpmyadmin/tmp
 chown -R www-data:www-data /var/lib/phpmyadmin
 touch /etc/phpmyadmin/htpasswd.setup
 cd /tmp
-wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
-tar xfz phpMyAdmin-4.9.0.1-all-languages.tar.gz
-mv phpMyAdmin-4.9.0.1-all-languages/* /usr/share/phpmyadmin/
-rm phpMyAdmin-4.9.0.1-all-languages.tar.gz
-rm -rf phpMyAdmin-4.9.0.1-all-languages
+wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.tar.gz
+tar xfz phpMyAdmin-5.0.2-all-languages.tar.gz
+mv phpMyAdmin-5.0.2-all-languages/* /usr/share/phpmyadmin/
+rm phpMyAdmin-5.0.2-all-languages.tar.gz
+rm -rf phpMyAdmin-5.0.2-all-languages
 cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php</programlisting>
 </listitem>
 <listitem>
@@ -3106,7 +3105,7 @@ tmpldir /etc/munin/templates
 includedir /etc/munin/munin-conf.d
 [...]
 # a simple host tree
-[server1.example.com]
+[munin.example.com]
  address 127.0.0.1
  use_node_name yes
 [...]</screen>
@@ -3224,12 +3223,12 @@ vi /etc/monit/monitrc</programlisting>
 <screen>set daemon 60
 set logfile syslog facility log_daemon
 set mailserver localhost
-set mail-format { from: monit@fpvview.site }
-set alert stef@fpvview.site
+set mail-format { from: monit@example.com } <co xml:id="CO23-1"/>
+set alert nom@example.com <co xml:id="CO23-2"/>
 set httpd port 2812 and
  SSL ENABLE
  PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
- allow admin:"my_password" <co xml:id="CO23-1"/>
+ allow admin:"my_password" <co xml:id="CO23-3"/>
 
 check process sshd with pidfile /var/run/sshd.pid
  start program "/usr/sbin/service ssh start"
@@ -3310,8 +3309,11 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
  if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
  if 5 restarts within 5 cycles then timeout</screen>
 <calloutlist>
-<callout arearefs="CO23-1">
+<callout arearefs="CO23-3">
 <para>remplacez my_password par <link linkend="pass_gen">votre mot de passe généré</link></para>
+</callout>
+<callout arearefs="CO23-1 CO23-2">
+<para>remplacer example.com par votre domaine et <link xl:href="mailto:nom@example.com">nom@example.com</link> par votre email</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -3376,6 +3378,32 @@ echo "hello" &gt; /var/www/html/monit/token</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">apt-get install rspamd redis-server</programlisting>
 </listitem>
 <listitem>
+<simpara>Loguez vous dans ISPConfig</simpara>
+</listitem>
+<listitem>
+<simpara>Activer Rspamd dans ISPConfig</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Allez dans la rubrique <literal>system</literal> &#8594; menu <literal>Server Config</literal> &#8594; Sélectionnez votre serveur &#8594; Onglet <literal>Mail</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Dans le champ <literal>Content Filter</literal>, sélectionnez <literal>Rspamd</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Dans le champ <literal>Rspamd Password</literal>, tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Revenez dans la rubrique <literal>system</literal> &#8594; menu <literal>Server Config</literal> &#8594; Sélectionnez votre serveur &#8594; Onglet <literal>Mail</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Vous pouvez voir le mot de passe de connexion au serveur web Rspamd.</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
 <simpara>Activez l&#8217;apprentissage automatique</simpara>
 <programlisting language="bash" linenumbering="unnumbered">echo "autolearn = true;" &gt; /etc/rspamd/local.d/classifier-bayes.conf
 echo 'backend = "redis";' &gt;&gt; /etc/rspamd/local.d/classifier-bayes.conf
@@ -3384,7 +3412,8 @@ echo "expire = 8640000;" &gt;&gt; /etc/rspamd/local.d/classifier-bayes.conf</pro
 </listitem>
 <listitem>
 <simpara>Activez Redis dans la configuration de Rspamd. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">echo 'servers = "127.0.0.1";' &gt; /etc/rspamd/local.d/redis.conf</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">echo 'servers = "127.0.0.1";' &gt; /etc/rspamd/local.d/redis.conf
+echo 'enabled = true;' &gt;&gt; /etc/rspamd/local.d/redis.conf</programlisting>
 </listitem>
 <listitem>
 <simpara>Fixer des métriques assez élevées pour analyser les spams</simpara>
@@ -3401,8 +3430,8 @@ echo "compress = true;" &gt;&gt; /etc/rspamd/local.d/history_redis.conf
 echo "subject_privacy = false;" &gt;&gt; /etc/rspamd/local.d/history_redis.conf</programlisting>
 </listitem>
 <listitem>
-<simpara>Activez la mise à jour automatique de rspamd</simpara>
-<programlisting language="bash" linenumbering="unnumbered">echo 'enabled = true;' &gt; /etc/rspamd/local.d/redis.conf</programlisting>
+<simpara>Assignez un calcul automatique de réputation aux URLs</simpara>
+<programlisting language="bash" linenumbering="unnumbered">echo 'enabled = true;' &gt; /etc/rspamd/local.d/url_reputation.conf</programlisting>
 </listitem>
 <listitem>
 <simpara>Enrichissez les headers des mails spams. Tapez:</simpara>
@@ -3468,32 +3497,6 @@ custom {
 <listitem>
 <simpara>Redémarrez Rspamd</simpara>
 <programlisting language="bash" linenumbering="unnumbered">systemctl restart rspamd</programlisting>
-</listitem>
-<listitem>
-<simpara>Loguez vous dans ISPConfig</simpara>
-</listitem>
-<listitem>
-<simpara>Activer Rspamd dans ISPConfig</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Allez dans la rubrique <literal>system</literal> &#8594; menu <literal>Server Config</literal> &#8594; Sélectionnez votre serveur &#8594; Onglet <literal>Mail</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Dans le champ <literal>Content Filter</literal>, sélectionnez <literal>Rspamd</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Dans le champ <literal>Rspamd Password</literal>, tapez votre mot de passe</simpara>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>Save</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Revenez dans la rubrique <literal>system</literal> &#8594; menu <literal>Server Config</literal> &#8594; Sélectionnez votre serveur &#8594; Onglet <literal>Mail</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Vous pouvez voir le mot de passe de connexion au serveur web Rspamd.</simpara>
-</listitem>
-</orderedlist>
 </listitem>
 <listitem>
 <simpara>Rendre le site rspamd accessible dans un host</simpara>

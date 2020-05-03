@@ -452,7 +452,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#_avant_propos">1. Avant propos</a></li>
 <li><a href="#_choix_du_registrar">2. Choix du registrar</a></li>
-<li><a href="#_installation_du_linux_sur_votre_raspberry">3. Installation du linux sur votre raspberry.</a>
+<li><a href="#_installation_du_linux_sur_votre_raspberry">3. Installation du linux sur votre raspberry</a>
 <ul class="sectlevel2">
 <li><a href="#_installation_avec_écran_et_clavier">3.1. Installation avec écran et clavier</a></li>
 <li><a href="#_installation_headless">3.2. Installation Headless</a></li>
@@ -848,7 +848,7 @@ Avoir un DNS sur au moins deux machines distinctes est la configuration recomman
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_linux_sur_votre_raspberry">3. Installation du linux sur votre raspberry.</h2>
+<h2 id="_installation_du_linux_sur_votre_raspberry">3. Installation du linux sur votre raspberry</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>C&#8217;est la première étape.</p>
@@ -2349,7 +2349,7 @@ chmod <span class="tok-m">700</span> ~/.ssh</code></pre>
 <p>Sur votre PC local afficher la clé à l&#8217;écran. Elle sera copiée-collée par la suite:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>cat /root/.ssh/id_rsa.pub</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cat ~/.ssh/id_rsa.pub</code></pre>
 </div>
 </div>
 </li>
@@ -2893,14 +2893,6 @@ systemctl restart mariadb</code></pre>
 <li>
 <p>La sortie doit être du type: <code>tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld</code></p>
 </li>
-<li>
-<p>Pour les serveur avec peu de ressources quelques éléments de tuning. Editez le fichier 50-server.cnf:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/mysql/mariadb.conf.d/50-server.cnf</code></pre>
-</div>
-</div>
-</li>
 </ol>
 </div>
 </div>
@@ -3354,6 +3346,9 @@ quotaon -avug</code></pre>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
+<p>allez sur le site de <a href="https://www.phpmyadmin.net/downloads/">phpMyAdmin</a> et copier l&#8217;adresse du lien vers la dernière version de l&#8217;outil.</p>
+</li>
+<li>
 <p>Installez phpmyadmin. Exécutez:</p>
 <div class="listingblock">
 <div class="content">
@@ -3363,11 +3358,11 @@ mkdir -p /var/lib/phpmyadmin/tmp
 chown -R www-data:www-data /var/lib/phpmyadmin
 touch /etc/phpmyadmin/htpasswd.setup
 <span class="tok-nb">cd</span> /tmp
-wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
-tar xfz phpMyAdmin-4.9.0.1-all-languages.tar.gz
-mv phpMyAdmin-4.9.0.1-all-languages/* /usr/share/phpmyadmin/
-rm phpMyAdmin-4.9.0.1-all-languages.tar.gz
-rm -rf phpMyAdmin-4.9.0.1-all-languages
+wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.tar.gz
+tar xfz phpMyAdmin-5.0.2-all-languages.tar.gz
+mv phpMyAdmin-5.0.2-all-languages/* /usr/share/phpmyadmin/
+rm phpMyAdmin-5.0.2-all-languages.tar.gz
+rm -rf phpMyAdmin-5.0.2-all-languages
 cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php</code></pre>
 </div>
 </div>
@@ -5248,7 +5243,7 @@ tmpldir /etc/munin/templates
 includedir /etc/munin/munin-conf.d
 [...]
 # a simple host tree
-[server1.example.com]
+[munin.example.com]
  address 127.0.0.1
  use_node_name yes
 [...]</pre>
@@ -5422,8 +5417,8 @@ vi /etc/monit/monitrc</code></pre>
 <pre>set daemon 60
 set logfile syslog facility log_daemon
 set mailserver localhost
-set mail-format { from: monit@fpvview.site }
-set alert stef@fpvview.site
+set mail-format { from: monit@example.com } <i class="conum" data-value="2"></i><b>(2)</b>
+set alert nom@example.com <i class="conum" data-value="2"></i><b>(2)</b>
 set httpd port 2812 and
  SSL ENABLE
  PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
@@ -5514,6 +5509,10 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>remplacez my_password par <a href="#pass_gen">votre mot de passe généré</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>remplacer example.com par votre domaine et <a href="mailto:nom@example.com">nom@example.com</a> par votre email</td>
 </tr>
 </table>
 </div>
@@ -5609,6 +5608,34 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 </div>
 </li>
 <li>
+<p>Loguez vous dans ISPConfig</p>
+</li>
+<li>
+<p>Activer Rspamd dans ISPConfig</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
+</li>
+<li>
+<p>Dans le champ <code>Content Filter</code>, sélectionnez <code>Rspamd</code></p>
+</li>
+<li>
+<p>Dans le champ <code>Rspamd Password</code>, tapez votre mot de passe</p>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+<li>
+<p>Revenez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
+</li>
+<li>
+<p>Vous pouvez voir le mot de passe de connexion au serveur web Rspamd.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
 <p>Activez l&#8217;apprentissage automatique</p>
 <div class="listingblock">
 <div class="content">
@@ -5623,7 +5650,8 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 <p>Activez Redis dans la configuration de Rspamd. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;servers = &quot;127.0.0.1&quot;;&#39;</span> &gt; /etc/rspamd/local.d/redis.conf</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;servers = &quot;127.0.0.1&quot;;&#39;</span> &gt; /etc/rspamd/local.d/redis.conf
+<span class="tok-nb">echo</span> <span class="tok-s1">&#39;enabled = true;&#39;</span> &gt;&gt; /etc/rspamd/local.d/redis.conf</code></pre>
 </div>
 </div>
 </li>
@@ -5650,10 +5678,10 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 </div>
 </li>
 <li>
-<p>Activez la mise à jour automatique de rspamd</p>
+<p>Assignez un calcul automatique de réputation aux URLs</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;enabled = true;&#39;</span> &gt; /etc/rspamd/local.d/redis.conf</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;enabled = true;&#39;</span> &gt; /etc/rspamd/local.d/url_reputation.conf</code></pre>
 </div>
 </div>
 </li>
@@ -5740,34 +5768,6 @@ custom {
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart rspamd</code></pre>
 </div>
-</div>
-</li>
-<li>
-<p>Loguez vous dans ISPConfig</p>
-</li>
-<li>
-<p>Activer Rspamd dans ISPConfig</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Allez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
-</li>
-<li>
-<p>Dans le champ <code>Content Filter</code>, sélectionnez <code>Rspamd</code></p>
-</li>
-<li>
-<p>Dans le champ <code>Rspamd Password</code>, tapez votre mot de passe</p>
-</li>
-<li>
-<p>Cliquez sur <code>Save</code></p>
-</li>
-<li>
-<p>Revenez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
-</li>
-<li>
-<p>Vous pouvez voir le mot de passe de connexion au serveur web Rspamd.</p>
-</li>
-</ol>
 </div>
 </li>
 <li>
@@ -11520,7 +11520,7 @@ EndSection</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2020-05-02 19:56:17 +0200
+Last updated 2020-05-02 20:03:32 +0200
 </div>
 </div>
 <style>

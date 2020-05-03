@@ -1691,7 +1691,13 @@ Le FQDN (nom de machine avant le nom de domaine) doit être déclaré avant le h
 <div class="sect2">
 <h3 id="_configurer_une_ipv6">6.9. Configurer une IPV6</h3>
 <div class="paragraph">
-<p>OVH propose des adresses IPV6. Ces adresses sont indiquées sur le panneau de synthèse du VPS (Dashboard).</p>
+<p>OVH propose des adresses IPV6 sur les VPS. Ces adresses sont indiquées sur le panneau de synthèse du VPS (Dashboard).</p>
+</div>
+<div class="paragraph">
+<p>Votre hébergeur peut vous proposer la même chose.</p>
+</div>
+<div class="paragraph">
+<p>De même pour votre raspberry vous pouvez être tenté d&#8217;utiliser l&#8217;adresse IPV6 proposée par votre fournisseur d&#8217;accès internet.</p>
 </div>
 <div class="paragraph">
 <p>La résolution par DHCP ne semble pas fonctionner. Il faut donc configurer l&#8217;adresse à la main:</p>
@@ -1708,12 +1714,12 @@ Le FQDN (nom de machine avant le nom de domaine) doit être déclaré avant le h
 <p>Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/network/interfaces</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/network/interfaces.d/99-ipv6-init.cfg</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Ajoutez ces lignes à la fin:</p>
+<p>Ajoutez ces lignes dans le fichier:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">iface eth0 inet6 static</span>
@@ -1728,11 +1734,11 @@ Le FQDN (nom de machine avant le nom de domaine) doit être déclaré avant le h
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Mettre ici l&#8217;adresse IPV6 proposée par OVH</td>
+<td>Mettre ici l&#8217;adresse IPV6 proposée pour le serveur</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Mettre ici l&#8217;adresse IPV6 du gateway proposé par OVH</td>
+<td>Mettre ici l&#8217;adresse IPV6 du gateway proposé pour le serveur</td>
 </tr>
 </table>
 </div>
@@ -1923,7 +1929,7 @@ chmod <span class="tok-m">700</span> ~/.ssh</code></pre>
 <p>Sur votre PC local afficher la clé à l&#8217;écran. Elle sera copiée-collée par la suite:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>cat /root/.ssh/id_rsa.pub</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>cat ~/.ssh/id_rsa.pub</code></pre>
 </div>
 </div>
 </li>
@@ -2467,14 +2473,6 @@ systemctl restart mariadb</code></pre>
 <li>
 <p>La sortie doit être du type: <code>tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld</code></p>
 </li>
-<li>
-<p>Pour les serveur avec peu de ressources quelques éléments de tuning. Editez le fichier 50-server.cnf:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/mysql/mariadb.conf.d/50-server.cnf</code></pre>
-</div>
-</div>
-</li>
 </ol>
 </div>
 </div>
@@ -2928,6 +2926,9 @@ quotaon -avug</code></pre>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
+<p>allez sur le site de <a href="https://www.phpmyadmin.net/downloads/">phpMyAdmin</a> et copier l&#8217;adresse du lien vers la dernière version de l&#8217;outil.</p>
+</li>
+<li>
 <p>Installez phpmyadmin. Exécutez:</p>
 <div class="listingblock">
 <div class="content">
@@ -2937,11 +2938,11 @@ mkdir -p /var/lib/phpmyadmin/tmp
 chown -R www-data:www-data /var/lib/phpmyadmin
 touch /etc/phpmyadmin/htpasswd.setup
 <span class="tok-nb">cd</span> /tmp
-wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
-tar xfz phpMyAdmin-4.9.0.1-all-languages.tar.gz
-mv phpMyAdmin-4.9.0.1-all-languages/* /usr/share/phpmyadmin/
-rm phpMyAdmin-4.9.0.1-all-languages.tar.gz
-rm -rf phpMyAdmin-4.9.0.1-all-languages
+wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.tar.gz
+tar xfz phpMyAdmin-5.0.2-all-languages.tar.gz
+mv phpMyAdmin-5.0.2-all-languages/* /usr/share/phpmyadmin/
+rm phpMyAdmin-5.0.2-all-languages.tar.gz
+rm -rf phpMyAdmin-5.0.2-all-languages
 cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php</code></pre>
 </div>
 </div>
@@ -4822,7 +4823,7 @@ tmpldir /etc/munin/templates
 includedir /etc/munin/munin-conf.d
 [...]
 # a simple host tree
-[server1.example.com]
+[munin.example.com]
  address 127.0.0.1
  use_node_name yes
 [...]</pre>
@@ -4996,8 +4997,8 @@ vi /etc/monit/monitrc</code></pre>
 <pre>set daemon 60
 set logfile syslog facility log_daemon
 set mailserver localhost
-set mail-format { from: monit@fpvview.site }
-set alert stef@fpvview.site
+set mail-format { from: monit@example.com } <i class="conum" data-value="2"></i><b>(2)</b>
+set alert nom@example.com <i class="conum" data-value="2"></i><b>(2)</b>
 set httpd port 2812 and
  SSL ENABLE
  PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
@@ -5088,6 +5089,10 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>remplacez my_password par <a href="#pass_gen">votre mot de passe généré</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>remplacer example.com par votre domaine et <a href="mailto:nom@example.com">nom@example.com</a> par votre email</td>
 </tr>
 </table>
 </div>
@@ -5183,6 +5188,34 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 </div>
 </li>
 <li>
+<p>Loguez vous dans ISPConfig</p>
+</li>
+<li>
+<p>Activer Rspamd dans ISPConfig</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Allez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
+</li>
+<li>
+<p>Dans le champ <code>Content Filter</code>, sélectionnez <code>Rspamd</code></p>
+</li>
+<li>
+<p>Dans le champ <code>Rspamd Password</code>, tapez votre mot de passe</p>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+<li>
+<p>Revenez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
+</li>
+<li>
+<p>Vous pouvez voir le mot de passe de connexion au serveur web Rspamd.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
 <p>Activez l&#8217;apprentissage automatique</p>
 <div class="listingblock">
 <div class="content">
@@ -5197,7 +5230,8 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 <p>Activez Redis dans la configuration de Rspamd. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;servers = &quot;127.0.0.1&quot;;&#39;</span> &gt; /etc/rspamd/local.d/redis.conf</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;servers = &quot;127.0.0.1&quot;;&#39;</span> &gt; /etc/rspamd/local.d/redis.conf
+<span class="tok-nb">echo</span> <span class="tok-s1">&#39;enabled = true;&#39;</span> &gt;&gt; /etc/rspamd/local.d/redis.conf</code></pre>
 </div>
 </div>
 </li>
@@ -5224,10 +5258,10 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 </div>
 </li>
 <li>
-<p>Activez la mise à jour automatique de rspamd</p>
+<p>Assignez un calcul automatique de réputation aux URLs</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;enabled = true;&#39;</span> &gt; /etc/rspamd/local.d/redis.conf</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">echo</span> <span class="tok-s1">&#39;enabled = true;&#39;</span> &gt; /etc/rspamd/local.d/url_reputation.conf</code></pre>
 </div>
 </div>
 </li>
@@ -5314,34 +5348,6 @@ custom {
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart rspamd</code></pre>
 </div>
-</div>
-</li>
-<li>
-<p>Loguez vous dans ISPConfig</p>
-</li>
-<li>
-<p>Activer Rspamd dans ISPConfig</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Allez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
-</li>
-<li>
-<p>Dans le champ <code>Content Filter</code>, sélectionnez <code>Rspamd</code></p>
-</li>
-<li>
-<p>Dans le champ <code>Rspamd Password</code>, tapez votre mot de passe</p>
-</li>
-<li>
-<p>Cliquez sur <code>Save</code></p>
-</li>
-<li>
-<p>Revenez dans la rubrique <code>system</code> &#8594; menu <code>Server Config</code> &#8594; Sélectionnez votre serveur &#8594; Onglet <code>Mail</code></p>
-</li>
-<li>
-<p>Vous pouvez voir le mot de passe de connexion au serveur web Rspamd.</p>
-</li>
-</ol>
 </div>
 </li>
 <li>
