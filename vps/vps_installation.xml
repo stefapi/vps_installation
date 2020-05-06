@@ -607,7 +607,9 @@ fi</programlisting>
 <simpara>Si vous souhaitez installer automatiquement les paquets Debian de correction de bugs de sécurité, cette installation est pour vous.</simpara>
 <simpara>Cette installation est optionnelle.</simpara>
 <warning>
-<simpara>L&#8217;installation automatique de paquets peut conduire dans certains cas très rare à des dysfonctionnements du serveur. Il est important de regarder périodiquement les logs d&#8217;installation</simpara>
+<simpara>L&#8217;installation automatique de paquets peut conduire dans certains cas
+très rare à des dysfonctionnements du serveur. Il est important de
+regarder périodiquement les logs d&#8217;installation.</simpara>
 </warning>
 <simpara>Suivez la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
@@ -732,20 +734,30 @@ Respectez bien les étapes de cette procédure:</simpara>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">adduser &lt;sudo_username&gt;</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">adduser &lt;sudo_username&gt; <co xml:id="CO10-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO10-1">
+<para>remplacer ici &lt;sudo_username&gt; par votre login</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Répondez aux questions qui vont sont posées: habituellement le nom complet d&#8217;utilisateur et le mot de passe.</simpara>
 </listitem>
 <listitem>
 <simpara>Donner les attributs sudo à l&#8217;utilisateur <literal>&lt;sudo_username&gt;</literal>. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">usermod -a -G sudo &lt;sudo_username&gt;</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">usermod -a -G sudo &lt;sudo_username&gt; <co xml:id="CO11-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO11-1">
+<para>remplacer ici &lt;sudo_username&gt; par votre login</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Dans une autre fenêtre, se connecter sur le serveur avec votre nouveau compte <literal>&lt;sudo_username&gt;</literal>:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO10-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO12-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO10-1">
+<callout arearefs="CO12-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -779,9 +791,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Faites maintenant l&#8217;essai de vous re-loguer avec le compte root.Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO11-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO13-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO11-1">
+<callout arearefs="CO13-1">
 <para>Remplacer ici &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -828,9 +840,9 @@ chmod 700 ~/.ssh</programlisting>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Loguez vous sur votre serveur distant. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO12-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO14-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO12-1">
+<callout arearefs="CO14-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -860,9 +872,9 @@ chmod 700 ~/.ssh</programlisting>
 </listitem>
 <listitem>
 <simpara>Vérifiez que tout fonctionne en vous connectant. Tapez: :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO13-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO15-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO13-1">
+<callout arearefs="CO15-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -993,7 +1005,7 @@ swapon /swapfile</programlisting>
 <simpara><literal>Type principal de configuration de mail</literal>: &#8592; Sélectionnez <literal>Site Internet</literal></simpara>
 </listitem>
 <listitem>
-<simpara><literal>Nom de courrier</literal>: &#8592; Entrez votre nom de host. Par exemple: mail.example.com</simpara>
+<simpara><literal>Nom de courrier</literal>: &#8592; Entrez votre nom de host. Par exemple: <literal>mail.example.com</literal></simpara>
 </listitem>
 </orderedlist>
 </listitem>
@@ -1160,7 +1172,7 @@ systemctl restart mariadb</programlisting>
 <simpara>Pour ne pas être confronté aux problèmes de sécurité  de type <link xl:href="https://www.howtoforge.com/tutorial/httpoxy-protect-your-server/">HTTPOXY</link>, il est nécessaire de créer un petit module dans apache.</simpara>
 <orderedlist numeration="loweralpha">
 <listitem>
-<simpara>Éditez le fichier httpoxy.conf: :</simpara>
+<simpara>Éditez le fichier <literal>httpoxy.conf</literal> :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /etc/apache2/conf-available/httpoxy.conf</programlisting>
 </listitem>
 <listitem>
@@ -1265,8 +1277,10 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</scre
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
-<simpara>configurer la tache cron d&#8217;awstats: Éditez le fichier :</simpara>
+<simpara>Configurer la tache cron d&#8217;awstats: Éditez le fichier :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /etc/cron.d/awstats</programlisting>
+</listitem>
+<listitem>
 <simpara>Et commentez toutes les lignes:</simpara>
 <screen>#MAILTO=root
 #*/10 * * * * www-data [ -x /usr/share/awstats/tools/update.sh ] &amp;&amp; /usr/share/awstats/tools/update.sh
@@ -1357,7 +1371,7 @@ VIRTUALCHROOT=true</programlisting>
 <simpara><literal>Organizational Unit Name (eg, section) []:</literal> &#8592; Tapez entrée</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Common Name (e.g. server FQDN or YOUR name) []:</literal> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</simpara>
+<simpara><literal>Common Name (e.g. server FQDN or YOUR name) []:</literal> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: <literal>server1.example.com</literal></simpara>
 </listitem>
 <listitem>
 <simpara><literal>Email Address []:</literal> &#8592; Tapez entrée</simpara>
@@ -1513,18 +1527,18 @@ systemctl restart apache2</programlisting>
 </listitem>
 <listitem>
 <simpara>Créez un utilisateur phpmyadmin. Tapez :</simpara>
-<programlisting language="sql" linenumbering="unnumbered">CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; <co xml:id="CO14-1"/></programlisting>
+<programlisting language="sql" linenumbering="unnumbered">CREATE USER 'pma'@'localhost' IDENTIFIED BY 'mypassword'; <co xml:id="CO16-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO14-1">
+<callout arearefs="CO16-1">
 <para><literal>mypassword</literal> doit être remplacé par <link linkend="pass_gen">un mot de passe choisi.</link></para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Accordez des privilèges et sauvez:</simpara>
-<programlisting language="sql" linenumbering="unnumbered">GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; <co xml:id="CO15-1"/></programlisting>
+<programlisting language="sql" linenumbering="unnumbered">GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; <co xml:id="CO17-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO15-1">
+<callout arearefs="CO17-1">
 <para><literal>mypassword</literal> doit être remplacé par le mot de passe choisi plus haut.</para>
 </callout>
 </calloutlist>
@@ -1556,7 +1570,7 @@ systemctl restart apache2</programlisting>
 $cfg['Servers'][$i]['controlhost'] = 'localhost';
 $cfg['Servers'][$i]['controlport'] = '';
 $cfg['Servers'][$i]['controluser'] = 'pma';
-$cfg['Servers'][$i]['controlpass'] = 'mypassword'; <co xml:id="CO16-1"/>
+$cfg['Servers'][$i]['controlpass'] = 'mypassword'; <co xml:id="CO18-1"/>
 
 
 /* Storage database and tables */
@@ -1581,7 +1595,7 @@ $cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
 $cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
 $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';</programlisting>
 <calloutlist>
-<callout arearefs="CO16-1">
+<callout arearefs="CO18-1">
 <para>A tous les endroit ou vous voyez dans le texte ci dessus le mot <literal>mypassword</literal> mettez celui choisi. N&#8217;oubliez pas de dé-commenter les lignes.</para>
 </callout>
 </calloutlist>
@@ -1784,7 +1798,7 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <simpara><literal>Organizational Unit Name (eg, section) []:</literal> &#8592; Tapez entrée</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Common Name (e.g. server FQDN or YOUR name) []:</literal> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</simpara>
+<simpara><literal>Common Name (e.g. server FQDN or YOUR name) []:</literal> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: <literal>server1.example.com</literal></simpara>
 </listitem>
 <listitem>
 <simpara><literal>Email Address []:</literal> &#8592; Tapez entrée</simpara>
@@ -1814,7 +1828,7 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <simpara><literal>Organizational Unit Name (eg, section) []:</literal> &#8592; Tapez entrée</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Common Name (e.g. server FQDN or YOUR name) []:</literal> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</simpara>
+<simpara><literal>Common Name (e.g. server FQDN or YOUR name) []:</literal> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: <literal>server1.example.com</literal></simpara>
 </listitem>
 <listitem>
 <simpara><literal>Email Address []:</literal> &#8592; Tapez entrée</simpara>
@@ -1847,7 +1861,7 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <listitem>
 <simpara>L&#8217;installation est terminée. Vous accédez au serveur à l&#8217;adresse: <link xl:href="https://example.com:8080/">https://example.com:8080/</link> .</simpara>
 <note>
-<simpara>Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur. Pour OVH, elle s&#8217;écrit VPSxxxxxx.ovh.net</simpara>
+<simpara>Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur. Pour OVH, elle s&#8217;écrit <literal>VPSxxxxxx.ovh.net</literal>.</simpara>
 </note>
 </listitem>
 <listitem>
@@ -1893,7 +1907,7 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <literallayout class="monospaced">Débloquez le port 10000 dans votre firewall</literallayout>
 <orderedlist numeration="loweralpha">
 <listitem>
-<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+<simpara>Allez sur le site ispconfig <link xl:href="https://&lt;example.com&gt;:8080/">https://&lt;example.com&gt;:8080/</link></simpara>
 </listitem>
 <listitem>
 <simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
@@ -2179,7 +2193,7 @@ TXT|{DOMAIN}.|v=spf1 mx a ~all|0|3600</programlisting>
 <simpara><literal>IPV6 Address:</literal> &#8592; prendre l’adresse IPV6 du serveur sélectionnée</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Email:</literal> &#8592; votre Email valide exemple <link xl:href="mailto:admin@example.com">admin@example.com</link></simpara>
+<simpara><literal>Email:</literal> &#8592; votre Email valide exemple <literal>admin@example.com</literal></simpara>
 </listitem>
 <listitem>
 <simpara><literal>DKIM:</literal> &#8592; Yes</simpara>
@@ -2328,19 +2342,19 @@ example.com.         3600 TXT            "v=spf1 mx a ~all"</screen>
 </section>
 <section xml:id="_création_dun_sous_domaine">
 <title>Création d&#8217;un sous domaine</title>
-<simpara>Supposons que vous êtes en train de créer un sous domain nommé sub.example.com .
-Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail.sub.example.com ou blog.sub.example.com.</simpara>
+<simpara>Supposons que vous êtes en train de créer un sous domain nommé <literal>sub.example.com</literal> .
+Dans ce sous domaines vous allez créer un ensemble de site web par exemple <literal>mail.sub.example.com</literal> ou <literal>blog.sub.example.com</literal> .</simpara>
 <simpara>Un cas assez classique est que ce sous domaine est délégué à une machine tierce.</simpara>
-<simpara>Par exemple: example.com est installé sur un VPS quelque part sur internet et sub.example.com est hébergé chez vous sur votre Raspberry.</simpara>
+<simpara>Par exemple: <literal>example.com</literal> est installé sur un VPS quelque part sur internet et <literal>sub.example.com</literal> est hébergé chez vous sur votre Raspberry.</simpara>
 <simpara>On suppose que votre domain a été configuré en suivant la procédure du chapitre précédent.</simpara>
-<simpara>Rien de bien sorcier pour votre sous domaine: Vous devez le créer sur votre Raspberry selon la même procédure mais avec le nom du sous domaine (sub.example.com donc).</simpara>
+<simpara>Rien de bien sorcier pour votre sous domaine: Vous devez le créer sur votre Raspberry selon la même procédure mais avec le nom du sous domaine ( <literal>sub.example.com</literal> donc).</simpara>
 <simpara>Vous aurez des actions complémentaires à effectuer sur votre domaine:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Allez dans <literal>DNS</literal> de votre serveur de domaine principal</simpara>
 </listitem>
 <listitem>
-<simpara>Sélectionner le menu <literal>Zones</literal> puis le domaine example.com</simpara>
+<simpara>Sélectionner le menu <literal>Zones</literal> puis le domaine <literal>example.com</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Choisissez l&#8217;onglet <literal>Records</literal> et créez:</simpara>
@@ -2361,12 +2375,12 @@ Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail
 <listitem>
 <simpara>Si vous ne la connaissez pas, tapez dans un terminal texte:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">wget -qO- http://ipecho.net/plain; echo</programlisting>
-<simpara>Ce dernier enregistrement en complétant le Glue record fait le lien avec l&#8217;adresse IP de sub.example.com</simpara>
+<simpara>Ce dernier enregistrement en complétant le Glue record fait le lien avec l&#8217;adresse IP de <literal>sub.example.com</literal></simpara>
 </listitem>
 </itemizedlist>
 </listitem>
 <listitem>
-<simpara>Si vous avez activé DNSSEC sur votre serveur DNS de sub.example.com vous devrez récupérer les entrées DS du champ <literal>DNSSEC DS-Data for registry</literal> de votre domaine sub.example.com et créer dans votre domaine example.com les deux entrées suivantes:</simpara>
+<simpara>Si vous avez activé DNSSEC sur votre serveur DNS de <literal>sub.example.com</literal> vous devrez récupérer les entrées DS du champ <literal>DNSSEC DS-Data for registry</literal> de votre domaine <literal>sub.example.com</literal> et créer dans votre domaine <literal>example.com</literal> les deux entrées suivantes:</simpara>
 <itemizedlist>
 <listitem>
 <simpara>un enregistrement de type <literal>DS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com</literal> et un champ <literal>data</literal> contenant <literal>xxxxx 7 1 &lt;votre_digest_recupérée&gt;</literal></simpara>
@@ -2380,7 +2394,7 @@ Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail
 <simpara>Allez sur le site <link xl:href="https://dnssec-debugger.verisignlabs.com/">DNSSEC Analyzer</link>.</simpara>
 </listitem>
 <listitem>
-<simpara>Entrez votre nom de domaine "sub.example.com" et tapez sur "entrée".</simpara>
+<simpara>Entrez votre nom de domaine <literal>sub.example.com</literal> et tapez sur "entrée".</simpara>
 </listitem>
 </orderedlist>
 <simpara>Le site doit afficher pour les différentes zones le statut des certificats. Tout doit être au vert.
@@ -2388,7 +2402,7 @@ Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore d
 </section>
 <section xml:id="domain-site">
 <title>Création d’un site web</title>
-<simpara>Dans la suite le site web sera nommé "example.com".</simpara>
+<simpara>Dans la suite le site web sera nommé <literal>example.com</literal>.</simpara>
 <simpara>Vous devez avoir avant tout défini le "record" DNS associé au site.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -2582,13 +2596,13 @@ ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]</programl
 <programlisting language="bash" linenumbering="unnumbered">cd /usr/local/ispconfig/interface/ssl/
 mv ispserver.crt ispserver.crt-$(date +"%y%m%d%H%M%S").bak
 mv ispserver.key ispserver.key-$(date +"%y%m%d%H%M%S").bak
-ln -s /etc/letsencrypt/live/example.com/fullchain.pem ispserver.crt <co xml:id="CO17-1"/>
-ln -s /etc/letsencrypt/live/example.com/privkey.pem ispserver.key <co xml:id="CO17-2"/>
+ln -s /etc/letsencrypt/live/example.com/fullchain.pem ispserver.crt <co xml:id="CO19-1"/>
+ln -s /etc/letsencrypt/live/example.com/privkey.pem ispserver.key <co xml:id="CO19-2"/>
 cat ispserver.{key,crt} &gt; ispserver.pem
 chmod 600 ispserver.pem
 systemctl restart apache2</programlisting>
 <calloutlist>
-<callout arearefs="CO17-1 CO17-2">
+<callout arearefs="CO19-1 CO19-2">
 <para>remplacer &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -2603,12 +2617,12 @@ systemctl restart apache2</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">cd /etc/postfix/
 mv smtpd.cert smtpd.cert-$(date +"%y%m%d%H%M%S").bak
 mv smtpd.key smtpd.key-$(date +"%y%m%d%H%M%S").bak
-ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert <co xml:id="CO18-1"/>
-ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key <co xml:id="CO18-2"/>
+ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert <co xml:id="CO20-1"/>
+ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key <co xml:id="CO20-2"/>
 service postfix restart
 service dovecot restart</programlisting>
 <calloutlist>
-<callout arearefs="CO18-1 CO18-2">
+<callout arearefs="CO20-1 CO20-2">
 <para>remplacer &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -2667,9 +2681,9 @@ exit 1</programlisting>
 echo "root" &gt;&gt; /etc/incron.allow
 incrontab -e.</programlisting>
 <simpara>et ajoutez les lignes ci dessous dans le fichier:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <co xml:id="CO19-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <co xml:id="CO21-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO19-1">
+<callout arearefs="CO21-1">
 <para>Remplacer example.com par votre nom de domaine.</para>
 </callout>
 </calloutlist>
@@ -2755,10 +2769,15 @@ tmpldir /etc/munin/templates
 includedir /etc/munin/munin-conf.d
 [...]
 # a simple host tree
-[munin.example.com]
+[munin.example.com] <co xml:id="CO22-1"/>
  address 127.0.0.1
  use_node_name yes
 [...]</screen>
+<calloutlist>
+<callout arearefs="CO22-1">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Activez Munin dans Apache. Tapez:</simpara>
@@ -2873,12 +2892,12 @@ vi /etc/monit/monitrc</programlisting>
 <screen>set daemon 60
 set logfile syslog facility log_daemon
 set mailserver localhost
-set mail-format { from: monit@example.com } <co xml:id="CO20-1"/>
-set alert nom@example.com <co xml:id="CO20-2"/>
+set mail-format { from: monit@example.com } <co xml:id="CO23-1"/>
+set alert nom@example.com <co xml:id="CO23-2"/>
 set httpd port 2812 and
  SSL ENABLE
  PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
- allow admin:"my_password" <co xml:id="CO20-3"/>
+ allow admin:"my_password" <co xml:id="CO23-3"/>
 
 check process sshd with pidfile /var/run/sshd.pid
  start program "/usr/sbin/service ssh start"
@@ -2959,10 +2978,10 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
  if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
  if 5 restarts within 5 cycles then timeout</screen>
 <calloutlist>
-<callout arearefs="CO20-3">
+<callout arearefs="CO23-3">
 <para>remplacez my_password par <link linkend="pass_gen">votre mot de passe généré</link></para>
 </callout>
-<callout arearefs="CO20-1 CO20-2">
+<callout arearefs="CO23-1 CO23-2">
 <para>remplacer example.com par votre domaine et <link xl:href="mailto:nom@example.com">nom@example.com</link> par votre email</para>
 </callout>
 </calloutlist>
@@ -3212,7 +3231,7 @@ ProxyPassReverse / http://localhost:11334/</programlisting>
 </orderedlist>
 </listitem>
 <listitem>
-<simpara>en pointant sur le site rspampd.example.com, et en utilisant le mot de passe saisi plus haut vous pouvez accèder aux fonctions de l&#8217;outil.</simpara>
+<simpara>en pointant sur le site <literal>rspampd.example.com</literal> , et en utilisant le mot de passe saisi plus haut vous pouvez accéder aux fonctions de l&#8217;outil.</simpara>
 </listitem>
 <listitem>
 <simpara>Activer l&#8217;apprentissage par déplacement</simpara>
@@ -3365,10 +3384,10 @@ systemctl disable amavisd-new</programlisting>
 </listitem>
 <listitem>
 <simpara>Rechercher <literal>myhostname</literal> et replacer le texte par:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">myhostname = mail.example.com <co xml:id="CO21-1"/></programlisting>
+<programlisting language="ini" linenumbering="unnumbered">myhostname = mail.example.com <co xml:id="CO24-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO21-1">
-<para>Remplacer example.com par votre nom de domaine.</para>
+<callout arearefs="CO24-1">
+<para>Remplacer <literal>example.com</literal> par votre nom de domaine.</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -3380,13 +3399,13 @@ systemctl disable amavisd-new</programlisting>
 <simpara>Vous pouvez le tester en allant sur le site <link xl:href="https://mxtoolbox.com/diagnostic.aspx">MxToolbox</link>.</simpara>
 <itemizedlist>
 <listitem>
-<simpara>Entrez le nom de host de votre serveur de mail: mail.example.com .</simpara>
+<simpara>Entrez le nom de host de votre serveur de mail: <literal>mail.example.com</literal> .</simpara>
 </listitem>
 <listitem>
 <simpara>cliquez sur <literal>test Email Server</literal></simpara>
 </listitem>
 <listitem>
-<simpara>Tout doit être correct sauf éventuellement le reverse DNS qui doit être configuré pour pointer vers mail.example.com .</simpara>
+<simpara>Tout doit être correct sauf éventuellement le reverse DNS qui doit être configuré pour pointer vers <literal>mail.example.com</literal> .</simpara>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -3434,19 +3453,25 @@ CheckCaseOnly Off</programlisting>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
-<simpara>Dans le répertoire <literal>/var/www/autoconfig.example.com/autoconfig/</literal> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/www/autoconfig.example.com/autoconfig/mail
-chmod 755 /var/www/autoconfig.example.com/autoconfig/mail
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail <co xml:id="CO22-1"/></programlisting>
+<simpara>Dans le répertoire <literal>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</literal> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/www/autoconfig.example.com/autoconfig/mail <co xml:id="CO25-1"/>
+chmod 755 /var/www/autoconfig.example.com/autoconfig/mail <co xml:id="CO25-2"/>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail <co xml:id="CO25-3"/> <co xml:id="CO25-4"/></programlisting>
 <calloutlist>
-<callout arearefs="CO22-1">
+<callout arearefs="CO25-3">
 <para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
-<orderedlist numeration="loweralpha">
+</callout>
+<callout arearefs="CO25-1 CO25-2 CO25-4">
+<para>remplacez <literal>example.com</literal> par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
 <listitem>
 <simpara>A l’intérieur de ce répertoire, Editez un fichier <literal>config-v1.1.xml</literal>. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml</programlisting>
-</listitem>
-</orderedlist>
+<programlisting language="bash" linenumbering="unnumbered">vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <co xml:id="CO26-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO26-1">
+<para>remplacez <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -3458,33 +3483,33 @@ header('Content-Type: application/xml');
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 &lt;clientConfig version="1.1"&gt;
- &lt;emailProvider id="example.com"&gt; <co xml:id="CO23-1"/>
-   &lt;domain&gt;example.com&lt;/domain&gt;
-   &lt;displayName&gt;Example Mail&lt;/displayName&gt; <co xml:id="CO23-2"/>
-   &lt;displayShortName&gt;Example&lt;/displayShortName&gt; <co xml:id="CO23-3"/>
+ &lt;emailProvider id="example.com"&gt; <co xml:id="CO27-1"/>
+   &lt;domain&gt;example.com&lt;/domain&gt;  <co xml:id="CO27-2"/>
+   &lt;displayName&gt;Example Mail&lt;/displayName&gt; <co xml:id="CO27-3"/>
+   &lt;displayShortName&gt;Example&lt;/displayShortName&gt; <co xml:id="CO27-4"/>
    &lt;incomingServer type="imap"&gt;
-     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO23-4"/>
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO27-5"/>
      &lt;port&gt;993&lt;/port&gt;
      &lt;socketType&gt;SSL&lt;/socketType&gt;
      &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
      &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
    &lt;/incomingServer&gt;
    &lt;incomingServer type="pop3"&gt;
-     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO23-5"/>
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO27-6"/>
      &lt;port&gt;995&lt;/port&gt;
      &lt;socketType&gt;SSL&lt;/socketType&gt;
      &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
      &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
    &lt;/incomingServer&gt;
    &lt;outgoingServer type="smtp"&gt;
-     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO23-6"/>
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO27-7"/>
      &lt;port&gt;465&lt;/port&gt;
      &lt;socketType&gt;SSL&lt;/socketType&gt;
      &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
      &lt;username&gt;%EMAILADDRESS%&lt;/username&gt;
    &lt;/outgoingServer&gt;
    &lt;outgoingServer type="smtp"&gt;
-     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO23-7"/>
+     &lt;hostname&gt;mail.example.com&lt;/hostname&gt; <co xml:id="CO27-8"/>
      &lt;port&gt;587&lt;/port&gt;
      &lt;socketType&gt;STARTTLS&lt;/socketType&gt;
      &lt;authentication&gt;password-cleartext&lt;/authentication&gt;
@@ -3493,24 +3518,27 @@ header('Content-Type: application/xml');
  &lt;/emailProvider&gt;
 &lt;/clientConfig&gt;</programlisting>
 <calloutlist>
-<callout arearefs="CO23-1 CO23-4 CO23-5 CO23-6 CO23-7">
-<para>mettre à la place de example.com votre nom de domaine</para>
+<callout arearefs="CO27-1 CO27-2 CO27-5 CO27-6 CO27-7 CO27-8">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
-<callout arearefs="CO23-2">
+<callout arearefs="CO27-3">
 <para>mettre ici votre libellé long pour votre nom de messagerie</para>
 </callout>
-<callout arearefs="CO23-3">
+<callout arearefs="CO27-4">
 <para>mettre ici un libellé court pour votre nom de messagerie</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Donner la permission en lecture seule et affecter les groupes d&#8217;appartenance. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">chmod 644 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <co xml:id="CO24-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">chmod 644 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <co xml:id="CO28-1"/>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <co xml:id="CO28-2"/> <co xml:id="CO28-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO24-1">
+<callout arearefs="CO28-2">
 <para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
+</callout>
+<callout arearefs="CO28-1 CO28-3">
+<para>remplacez <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -3547,12 +3575,12 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.x
 <programlisting language="apache" linenumbering="unnumbered">CheckSpelling On
 CheckCaseOnly On
 RewriteEngine On
-ProxyPass "/" http://autoconfig.example.com/ <co xml:id="CO25-1"/>
-ProxyPassReverse "/" http://autoconfig.example.com/ <co xml:id="CO25-2"/>
+ProxyPass "/" http://autoconfig.example.com/ <co xml:id="CO29-1"/>
+ProxyPassReverse "/" http://autoconfig.example.com/ <co xml:id="CO29-2"/>
 RewriteRule ^/ - [QSA,L]</programlisting>
 <calloutlist>
-<callout arearefs="CO25-1 CO25-2">
-<para>remplacer example.com par votre nom de domaine</para>
+<callout arearefs="CO29-1 CO29-2">
+<para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -3565,19 +3593,25 @@ RewriteRule ^/ - [QSA,L]</programlisting>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
-<simpara>Dans le répertoire <literal>/var/www/autoconfig.example.com/autoconfig/</literal>, créer un répertoire <literal>Autodiscover</literal>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/
-chmod 755 /var/www/autoconfig.example.com/autoconfig/Autodiscover/
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co xml:id="CO26-1"/></programlisting>
+<simpara>Dans le répertoire <literal>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</literal>, créer un répertoire <literal>Autodiscover</literal>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co xml:id="CO30-1"/>
+chmod 755 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co xml:id="CO30-2"/>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co xml:id="CO30-3"/> <co xml:id="CO30-4"/></programlisting>
 <calloutlist>
-<callout arearefs="CO26-1">
+<callout arearefs="CO30-3">
 <para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
-<orderedlist numeration="loweralpha">
+</callout>
+<callout arearefs="CO30-1 CO30-2 CO30-4">
+<para>remplacez <literal>example.com</literal> par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
 <listitem>
 <simpara>A l’intérieur de ce répertoire, Editez un fichier <literal>Autodiscover.xml</literal>. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml</programlisting>
-</listitem>
-</orderedlist>
+<programlisting language="bash" linenumbering="unnumbered">vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <co xml:id="CO31-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO31-1">
+<para>remplacez <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -3592,14 +3626,14 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co 
  &lt;Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006"&gt;
    &lt;Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a"&gt;
      &lt;User&gt;
-       &lt;DisplayName&gt;Example Mail&lt;/DisplayName&gt; <co xml:id="CO27-1"/>
+       &lt;DisplayName&gt;Example Mail&lt;/DisplayName&gt; <co xml:id="CO32-1"/>
      &lt;/User&gt;
      &lt;Account&gt;
        &lt;AccountType&gt;email&lt;/AccountType&gt;
        &lt;Action&gt;settings&lt;/Action&gt;
        &lt;Protocol&gt;
          &lt;Type&gt;IMAP&lt;/Type&gt;
-         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO27-2"/>
+         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO32-2"/>
          &lt;Port&gt;993&lt;/Port&gt;
          &lt;DomainRequired&gt;off&lt;/DomainRequired&gt;
          &lt;SPA&gt;off&lt;/SPA&gt;
@@ -3609,7 +3643,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co 
        &lt;/Protocol&gt;
        &lt;Protocol&gt;
          &lt;Type&gt;SMTP&lt;/Type&gt;
-         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO27-3"/>
+         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO32-3"/>
          &lt;Port&gt;465&lt;/Port&gt;
          &lt;DomainRequired&gt;off&lt;/DomainRequired&gt;
          &lt;SPA&gt;off&lt;/SPA&gt;
@@ -3621,21 +3655,24 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <co 
    &lt;/Response&gt;
  &lt;/Autodiscover&gt;</programlisting>
 <calloutlist>
-<callout arearefs="CO27-2 CO27-3">
-<para>mettre à la place de example.com votre nom de domaine</para>
+<callout arearefs="CO32-2 CO32-3">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
-<callout arearefs="CO27-1">
+<callout arearefs="CO32-1">
 <para>mettre ici votre libellé long pour votre nom de messagerie</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Changez les permissions comme pour le répertoire</simpara>
-<programlisting language="bash" linenumbering="unnumbered">chmod 644 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <co xml:id="CO28-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">chmod 644 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <co xml:id="CO33-1"/>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <co xml:id="CO33-2"/> <co xml:id="CO33-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO28-1">
+<callout arearefs="CO33-2">
 <para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
+</callout>
+<callout arearefs="CO33-1 CO33-3">
+<para>remplacez <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -3684,7 +3721,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 <simpara><literal>Name:</literal> &#8592; mettez votre prénom et votre nom</simpara>
 </listitem>
 <listitem>
-<simpara><literal>`Email:</literal> &#8592; mail_name @ example.com</simpara>
+<simpara><literal>`Email:</literal> &#8592; saisir le &lt;mail_name&gt; <literal>mail_name@example.com</literal></simpara>
 </listitem>
 <listitem>
 <simpara><literal>Password:</literal> &#8592; <link linkend="pass_gen">Saisissez un mot de passe généré</link> ou générez en un en cliquant sur le bouton</simpara>
@@ -3716,7 +3753,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 </listitem>
 </orderedlist>
 <note>
-<simpara>Notez que si vous créez une adresse mail nommée <link xl:href="mailto:mail_name@example.com">mail_name@example.com</link>, vous pouvez utilisez toutes les variantes (nommées tag) derrière le caractère "+". Ainsi <link xl:href="mailto:mail_name+nospam@example.com">mail_name+nospam@example.com</link> sera bien redirigé vers votre boite et l&#8217;extension +nospam vous permettre de trier automatiquement les mails que vous ne voulez pas recevoir.</simpara>
+<simpara>Notez que si vous créez une adresse mail nommée <literal>mail_name@example.com</literal>, vous pouvez utilisez toutes les variantes (nommées tag) derrière le caractère "+". Ainsi <literal>mail_name+nospam@example.com</literal> sera bien redirigé vers votre boite et l&#8217;extension <literal>+nospam</literal> vous permettre de trier automatiquement les mails que vous ne voulez pas recevoir.</simpara>
 </note>
 <note>
 <simpara>Il est possible de changer ce caractère spécial en le modifiant dans le fichier <literal>/etc/postfix/main.cf</literal> sur la ligne commençant par <literal>recipient_delimiter</literal>.</simpara>
@@ -3787,7 +3824,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 </section>
 <section xml:id="_mise_en_oeuvre_du_site_web_de_webmail">
 <title>Mise en oeuvre du site web de webmail</title>
-<simpara>On suppose que vous avez install roundcube lors de la procédure d&#8217;installation initiale et que vous avez déjà créé le host mail.example.com.</simpara>
+<simpara>On suppose que vous avez install roundcube lors de la procédure d&#8217;installation initiale et que vous avez déjà créé le host <literal>mail.example.com</literal> .</simpara>
 <simpara>Il vous reste à appliquer la procédure suivante:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -3852,26 +3889,26 @@ chmod 755 imapsync</screen>
 </listitem>
 <listitem>
 <simpara>Installez les packages perls éventuellement manquants:</simpara>
-<screen>apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl</screen>
+<screen>apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl libencode-imaputf7-perl</screen>
 </listitem>
 <listitem>
 <simpara>Créez deux fichiers temporaires qui contiennent les mots de passe du 1er et  2eme serveur. Tapez:</simpara>
-<screen>echo "passwdsrc" &gt; secretsrc <co xml:id="CO29-1"/>
-echo "passwddst" &gt; secretdst <co xml:id="CO29-2"/>
+<screen>echo "passwdsrc" &gt; secretsrc <co xml:id="CO34-1"/>
+echo "passwddst" &gt; secretdst <co xml:id="CO34-2"/>
 chmod 600 secretsrc
 chmod 600 secretdst</screen>
 <calloutlist>
-<callout arearefs="CO29-1">
+<callout arearefs="CO34-1">
 <para>passwdsrc est à remplacer par le mot de passe du compte sur le serveur source</para>
 </callout>
-<callout arearefs="CO29-2">
+<callout arearefs="CO34-2">
 <para>passwddst est à remplacer par le mot de passe du compte sur le serveur destination</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Nous pouvons maintenant lancer la commande. Tapez:</simpara>
-<screen>./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst</screen>
+<screen>./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 secretdst</screen>
 </listitem>
 <listitem>
 <simpara>Un fois la synchronisation effectuée, vous pouvez supprimer le fichier des mots de passe. tapez:</simpara>
@@ -4193,7 +4230,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <simpara>Cliquez sur <literal>Install</literal></simpara>
 </listitem>
 <listitem>
-<simpara>Pointez votre navigateur sur <link xl:href="https://example.com/">https://example.com/</link> et loguez vous <literal>admin</literal> avec votre mot de passe saisi, c&#8217;est fait !</simpara>
+<simpara>Pointez votre navigateur sur <link xl:href="https://&lt;example.com&gt;/">https://&lt;example.com&gt;/</link> et loguez vous <literal>admin</literal> avec votre mot de passe saisi, c&#8217;est fait !</simpara>
 </listitem>
 <listitem>
 <simpara>N&#8217;oubliez pas d&#8217;administrer le site et de le mettre à jour avec la dernière version de Wordpress.</simpara>
@@ -4323,8 +4360,13 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
-<programlisting language="command" linenumbering="unnumbered">cd /var/www/microweber.example.com/microweber
+<programlisting language="command" linenumbering="unnumbered">cd /var/www/microweber.example.com/microweber <co xml:id="CO35-1"/>
 wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinstall.php</programlisting>
+<calloutlist>
+<callout arearefs="CO35-1">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Un fois téléchargé, faites pointer votre navigateur vers <link xl:href="http://microweber.example.com/netinstall.php">http://microweber.example.com/netinstall.php</link></simpara>
@@ -4501,8 +4543,11 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 <simpara>Tapez la commande suivante:</simpara>
 </listitem>
 </orderedlist>
-<screen>cd /var/www/piwigo.example.com/piwigo
+<screen>cd /var/www/piwigo.example.com/piwigo <co xml:id="CO36-1"/>
 wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinstall.php</screen>
+<calloutlist>
+<callout arearefs="CO36-1">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Un fois téléchargé, faites pointer votre navigateur vers <link xl:href="http://piwigo.example.com/piwigo-netinstall.php">http://piwigo.example.com/piwigo-netinstall.php</link></simpara>
@@ -4552,6 +4597,8 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 <simpara>Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer et commencer à utiliser l&#8217;outil</simpara>
 </listitem>
 </orderedlist>
+</callout>
+</calloutlist>
 </section>
 </section>
 <section xml:id="_installation_du_système_collaboratif_nextcloud">
@@ -4713,8 +4760,11 @@ date.timezone = Asia/Kolkata</programlisting>
 <simpara>Tapez la commande suivante:</simpara>
 </listitem>
 </orderedlist>
-<screen>cd /var/www/nextcloud.example.com/nextcloud
+<screen>cd /var/www/nextcloud.example.com/nextcloud <co xml:id="CO37-1"/>
 wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</screen>
+<calloutlist>
+<callout arearefs="CO37-1">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Un fois téléchargé, faites pointer votre navigateur vers <link xl:href="http://nextcloud.example.com/setup-nextcloud.php">http://nextcloud.example.com/setup-nextcloud.php</link></simpara>
@@ -4747,7 +4797,7 @@ wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</screen
 <simpara><literal>Password de la Base de données</literal> &#8592; Tapez votre mot de passe</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Nom de la Base de données</literal> &#8592; entrez <literal>cxnextcloud</literal>. x est le numero de client; habituellement c&#8217;est 0</simpara>
+<simpara><literal>Nom de la Base de données</literal> &#8592; entrez <literal>cxnextcloud</literal>. x est le numéro de client; habituellement c&#8217;est 0</simpara>
 </listitem>
 <listitem>
 <simpara><literal>nom du serveur</literal> &#8592; Laissez <literal>Localhost</literal></simpara>
@@ -4758,9 +4808,11 @@ wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</screen
 <simpara>Tapez <literal>Next</literal></simpara>
 </listitem>
 <listitem>
-<simpara>Vous êtes redirigé sur le site nextcloud ou vous pourrez vous loguer et commencer à utliser l&#8217;outil</simpara>
+<simpara>Vous êtes redirigé sur le site nextcloud ou vous pourrez vous loguer et commencer à utiliser l&#8217;outil</simpara>
 </listitem>
 </orderedlist>
+</callout>
+</calloutlist>
 </section>
 </section>
 <section xml:id="_installation_du_gestionnaire_de_projet_gitea">
@@ -5050,9 +5102,9 @@ chmod 640 /etc/gitea/app.ini</programlisting>
 <listitem>
 <simpara>Trouvez les lignes suivantes et les remplacer dans le fichier. Chercher et remplacez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">START_SSH_SERVER = true
-SSH_PORT = 2222 <co xml:id="CO30-1"/></programlisting>
+SSH_PORT = 2222 <co xml:id="CO38-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO30-1">
+<callout arearefs="CO38-1">
 <para>mettez ici le numéro de port que vous souhaitez</para>
 </callout>
 </calloutlist>
@@ -5243,23 +5295,27 @@ ProxyPassReverse / http://localhost:8090/</programlisting>
 </listitem>
 <listitem>
 <simpara>Installez quelques paquets Debian complémentaires. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt-get install python2.7 python-setuptools python-simplejson python-pil python-mysqldb python-flup</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt install python3 python3-setuptools python3-pip
+pip3 install --timeout=3600 Pillow pylibmc captcha jinja2 sqlalchemy psd-tools django-pylibmc django-simple-captcha python3-ldap</programlisting>
 </listitem>
 <listitem>
 <simpara>Je préfère faire tourner mes serveurs dans le répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private <co xml:id="CO39-1"/>
 mkdir seafile
 cd seafile
-wget https://download.seadrive.org/seafile-server_7.0.5_x86-64.tar.gz
-tar zxvf seafile-server_7.0.5_x86-64.tar.gz
+wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz
+tar zxvf seafile-server_7.1.3_x86-64.tar.gz
 mkdir installed
 mv seafile-server_* installed
 cd seafile-server-*
 ./setup-seafile-mysql.sh
 cd ../..
-chown -R web1:client0 seafile <co xml:id="CO31-1"/></programlisting>
+chown -R web1:client0 seafile <co xml:id="CO39-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO31-1">
+<callout arearefs="CO39-1">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
+</callout>
+<callout arearefs="CO39-2">
 <para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
 </calloutlist>
@@ -5284,8 +5340,13 @@ chown -R web1:client0 seafile <co xml:id="CO31-1"/></programlisting>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>allez dans le répertoire contenant les configurations et éditez <literal>gunicorn.conf</literal>. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile/conf
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile/conf <co xml:id="CO40-1"/>
 vi gunicorn.conf</programlisting>
+<calloutlist>
+<callout arearefs="CO40-1">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Repèrez le texte <literal>bind=</literal> et mettez un numéro de port 8090 à la place de 8000. Comme ceci:</simpara>
@@ -5296,7 +5357,7 @@ vi gunicorn.conf</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">vi seafile.conf</programlisting>
 </listitem>
 <listitem>
-<simpara>mettez un port 8092 au lieu du port 8080 saisi pour l&#8217;entrée <literal>fileserver</literal>. Le fichier doit contenir ceci:</simpara>
+<simpara>mettez un port 8092 au lieu du port 8082 saisi pour l&#8217;entrée <literal>fileserver</literal>. Le fichier doit contenir ceci:</simpara>
 <programlisting language="ini" linenumbering="unnumbered">[fileserver]
 port = 8092</programlisting>
 </listitem>
@@ -5306,7 +5367,12 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>modifier l&#8217;entrée SERVICE_URL. Le fichier doit contenir ceci:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com <co xml:id="CO41-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO41-1">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Editez le fichier <literal>seahub_settings.py</literal>. Tapez:</simpara>
@@ -5314,14 +5380,23 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>modifier l&#8217;entrée FILE_SERVER_ROOT. Le fichier doit contenir ceci:</simpara>
-<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp'</programlisting>
+<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp' <co xml:id="CO42-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO42-1">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Démarrez Seafile. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">sudo -u web1 ./seafile.sh start <co xml:id="CO32-1"/>
-sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO32-2"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile/seafile-server-latest <co xml:id="CO43-1"/>
+sudo -u web1 ./seafile.sh start <co xml:id="CO43-2"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO43-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO32-1 CO32-2">
+<callout arearefs="CO43-1">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
+</callout>
+<callout arearefs="CO43-2 CO43-3">
 <para>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <literal>Options</literal>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</para>
 </callout>
 </calloutlist>
@@ -5330,7 +5405,7 @@ sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO32-2"/></programlisting>
 <simpara>Débloquez le port 8090 et 8092 dans votre firewall</simpara>
 <orderedlist numeration="loweralpha">
 <listitem>
-<simpara>Allez sur le site ispconfig <link xl:href="https://example.com:8080/">https://example.com:8080/</link></simpara>
+<simpara>Allez sur le site ispconfig <link xl:href="https://&lt;example.com&gt;:8080/">https://&lt;example.com&gt;:8080/</link></simpara>
 </listitem>
 <listitem>
 <simpara>Loguez-vous et cliquez sur la rubrique <literal>System</literal> et le menu <literal>Firewall</literal>. Cliquez sur votre serveur.</simpara>
@@ -5357,20 +5432,26 @@ sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO32-2"/></programlisting>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Créer un script de lancement automatique. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile <co xml:id="CO44-1"/>
 touch startseafile.sh
 chmod +x startseafile.sh
 vi startseafile.sh</programlisting>
+<calloutlist>
+<callout arearefs="CO44-1">
+<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Coller le texte suivant de le fichier ouvert:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/bash
 
 # Change the value of "seafile_dir" to your path of seafile installation
-seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO33-1"/>
+seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO45-1"/>
 script_path=${seafile_dir}/seafile-server-latest
 seafile_init_log=${seafile_dir}/logs/seafile.init.log
 seahub_init_log=${seafile_dir}/logs/seahub.init.log
+seafgc_init_log=${seafile_dir}/logs/seafgc.init.log
 
 case "$1" in
 start)
@@ -5381,17 +5462,24 @@ restart)
 ${script_path}/seafile.sh restart &gt;&gt; ${seafile_init_log}
 ${script_path}/seahub.sh restart 8090 &gt;&gt; ${seahub_init_log}
 ;;
+reload)
+${script_path}/seahub.sh stop &gt;&gt; ${seahub_init_log}
+${script_path}/seafile.sh stop &gt;&gt; ${seafile_init_log}
+${script_path}/seaf-gc.sh &gt;&gt; ${seafgc_init_log}
+${script_path}/seafile.sh start &gt;&gt; ${seafile_init_log}
+${script_path}/seahub.sh start 8090 &gt;&gt; ${seahub_init_log}
+;;
 stop)
 ${script_path}/seahub.sh stop &gt;&gt; ${seahub_init_log}
 ${script_path}/seafile.sh stop &gt;&gt; ${seafile_init_log}
 ;;
 *)
-echo "Usage: /etc/init.d/seafile {start|stop|restart}"
+echo "Usage: /etc/init.d/seafile {start|stop|restart|reload}"
 exit 1
 ;;
 esac</programlisting>
 <calloutlist>
-<callout arearefs="CO33-1">
+<callout arearefs="CO45-1">
 <para>remplacer example.com par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -5421,7 +5509,7 @@ esac</programlisting>
 <simpara><literal>Days of week:</literal> &#8592; mettre *</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/www/seafile.example.com/private/seafile/startseafile.sh start</literal></simpara>
+<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/www/seafile.&lt;example.com&gt;/private/seafile/startseafile.sh start</literal></simpara>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -5452,7 +5540,7 @@ esac</programlisting>
 <simpara><literal>Days of week:</literal> &#8592; mettre *</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/www/seafile.example.com/private/seafile/startseafile.sh restart</literal></simpara>
+<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/www/seafile.&lt;example.com&gt;/private/seafile/startseafile.sh reload</literal></simpara>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -6005,9 +6093,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez en première ligne du fichier :</simpara>
-<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO34-1"/></screen>
+<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO46-1"/></screen>
 <calloutlist>
-<callout arearefs="CO34-1">
+<callout arearefs="CO46-1">
 <para>remplacez SERVERIPADDRESS par l&#8217;adresse IP affichée plus tôt.</para>
 </callout>
 </calloutlist>
@@ -6030,9 +6118,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Puis tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO35-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO47-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO35-1">
+<callout arearefs="CO47-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
 </calloutlist>
@@ -6060,13 +6148,13 @@ chmod 700 borgbackup</programlisting>
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO36-1"/>
-cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO36-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO48-1"/>
+cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO48-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO36-1">
+<callout arearefs="CO48-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
-<callout arearefs="CO36-2">
+<callout arearefs="CO48-2">
 <para>si votre machine est assez puissante, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</para>
 </callout>
 </calloutlist>
@@ -6095,10 +6183,10 @@ cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;st
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO37-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO49-1"/>
 borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO37-1">
+<callout arearefs="CO49-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -6127,10 +6215,10 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</progra
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO38-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO50-1"/>
 borg check --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
 <calloutlist>
-<callout arearefs="CO38-1">
+<callout arearefs="CO50-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -6141,9 +6229,9 @@ borg check --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/bo
 </listitem>
 <listitem>
 <simpara>vous pouvez maintenant vérifier un de vos backup en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO39-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO51-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO39-1">
+<callout arearefs="CO51-1">
 <para>le nom de sauvegarde est récupéré en utilisant la commande borglist.sh</para>
 </callout>
 </calloutlist>
@@ -6165,10 +6253,10 @@ borg check --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/bo
 <simpara>Insérez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO40-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO52-1"/>
 borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
 <calloutlist>
-<callout arearefs="CO40-1">
+<callout arearefs="CO52-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -6219,13 +6307,13 @@ rmdir /mnt/borgbackup</programlisting>
 # - une archive par mois pour les 6 derniers mois.
 
 
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO41-1"/>
-borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO41-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO53-1"/>
+borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO53-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO41-1">
+<callout arearefs="CO53-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
-<callout arearefs="CO41-2">
+<callout arearefs="CO53-2">
 <para>Le nettoyage des sauvegardes va conserver 7 sauvegardes journalières, 4 à la semaine et 12 au mois</para>
 </callout>
 </calloutlist>
@@ -6298,10 +6386,10 @@ pip3 install borgbackup</programlisting>
 <listitem>
 <simpara>Munissez vous du mot de passe &lt;mot_passe&gt; des archives borg et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO42-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO54-1"/>
 borg list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO42-1">
+<callout arearefs="CO54-1">
 <para>remplacez mot_passe par votre mot de passe de borg</para>
 </callout>
 </calloutlist>
@@ -6330,19 +6418,21 @@ chroot . bash
 mkdir -p dev proc run sys tmp
 mount -t devtmpfs dev /dev
 mount -t proc proc /proc
-grub_install /dev/sda <co xml:id="CO43-1"/>
+grub_install /dev/sda <co xml:id="CO55-1"/>
 umount /proc
 umount /dev
 sync
 exit</programlisting>
 <calloutlist>
-<callout arearefs="CO43-1">
+<callout arearefs="CO55-1">
 <para>tapez ici le nom de device de votre disque de boot</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
-<simpara>Créez votre fichier de swap en suivant <link linkend="swap_create">la procédure</link>. Attention le fichier de swap doit être installé dans /mnt/root/swapfile</simpara>
+<simpara>Créez votre fichier de swap en suivant <link linkend="swap_create">la
+procédure</link>. Attention le fichier de swap doit être installé dans
+<literal>/mnt/root/swapfile</literal></simpara>
 </listitem>
 <listitem>
 <simpara>vous pouvez maintenant rebooter votre machine en mode normal.</simpara>
@@ -6772,11 +6862,11 @@ ProxyPassReverse /guacamole http://localhost:8085/guacamole</programlisting>
 </listitem>
 <listitem>
 <simpara>tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/source/guacamole-server-1.1.0.tar.gz' <co xml:id="CO44-1"/>
+<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/source/guacamole-server-1.1.0.tar.gz' <co xml:id="CO56-1"/>
 tar xfz guacamole-server.tar.gz
 cd guacamole-server-*</programlisting>
 <calloutlist>
-<callout arearefs="CO44-1">
+<callout arearefs="CO56-1">
 <para>insérez ici l&#8217;adresse du package serveur à charger</para>
 </callout>
 </calloutlist>
@@ -6833,12 +6923,12 @@ systemctl start guacd</programlisting>
 <simpara>Téléchargez le dernier client <literal>war</literal> de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>. Récupérez le lien puis tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /usr/local/share/guacamole
 cd /usr/local/share/guacamole
-curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-1.1.0.war' <co xml:id="CO45-1"/>
+curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-1.1.0.war' <co xml:id="CO57-1"/>
 ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/
 systemctl restart tomcat8
 systemctl restart guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO45-1">
+<callout arearefs="CO57-1">
 <para>insérez ici l&#8217;adresse du war à charger</para>
 </callout>
 </calloutlist>
@@ -6864,11 +6954,11 @@ ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/</programlisti
 <simpara>Ajoutez dans le fichier:</simpara>
 <screen linenumbering="unnumbered">mysql-hostname: localhost
 mysql-port: 3306
-mysql-database: cxguacamole <co xml:id="CO46-1"/>
-mysql-username: cxguacamole <co xml:id="CO46-2"/>
-mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO46-3"/></screen>
+mysql-database: cxguacamole <co xml:id="CO58-1"/>
+mysql-username: cxguacamole <co xml:id="CO58-2"/>
+mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO58-3"/></screen>
 <calloutlist>
-<callout arearefs="CO46-1 CO46-2 CO46-3">
+<callout arearefs="CO58-1 CO58-2 CO58-3">
 <para>mettez ici le nom de la base de données, le nom de l&#8217;utilisateur de la base et son mot_de_passe tels qu&#8217;ils ont été saisis dans le chapitre de création de la base de données.</para>
 </callout>
 </calloutlist>
@@ -6876,22 +6966,22 @@ mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO46-3"/></screen>
 <listitem>
 <simpara>Vous devez maintenant télécharger les plugins mysql pour Guacamole. Allez sur le site web de guacamole et récupérez le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement de guacamole-auth-jdbc</link>. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-auth-jdbc-1.1.0.tar.gz' <co xml:id="CO47-1"/>
+curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-auth-jdbc-1.1.0.tar.gz' <co xml:id="CO59-1"/>
 tar xfz guacamole-auth-jdbc.tar.gz
 cd guacamole-auth-jdbc-*/mysql
 cp guacamole-auth-jdbc-mysql-*.jar /usr/local/share/guacamole/
 ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/extensions</programlisting>
 <calloutlist>
-<callout arearefs="CO47-1">
+<callout arearefs="CO59-1">
 <para>insérez ici l&#8217;adresse du fichier guacamole-auth-jdbc à charger</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Créez les tables de la base:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO48-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO60-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO48-1">
+<callout arearefs="CO60-1">
 <para>mettez derrière le <literal>-u</literal> le nom d&#8217;utilisateur de la base de données et derrière le <literal>-p</literal> le nom de la base de données. Un mot de passe vous sera demandé.</para>
 </callout>
 </calloutlist>
@@ -6902,13 +6992,13 @@ ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/
 systemctl restart guacd</programlisting>
 </listitem>
 <listitem>
-<simpara>Allez sur le site de guacamole.example.com</simpara>
+<simpara>Allez sur le site de <literal>guacamole.example.com</literal></simpara>
 </listitem>
 <listitem>
-<simpara>Loguez vous avec le compte: guacadmin et password guacadmin</simpara>
+<simpara>Loguez vous avec le compte: <literal>guacadmin</literal> et password: <literal>guacadmin</literal></simpara>
 </listitem>
 <listitem>
-<simpara>Commencez par cliquez sur guacadmin&#8594;paramètres &#8594; utilisateurs&#8594; Nouvel Utilisateur</simpara>
+<simpara>Commencez par cliquez sur <literal>guacadmin</literal> &#8594; <literal>paramètres</literal> &#8594; <literal>utilisateurs</literal>&#8594; <literal>Nouvel Utilisateur</literal></simpara>
 <itemizedlist>
 <listitem>
 <simpara><literal>Identifiant</literal> &#8592; Tapez <literal>admin</literal></simpara>
@@ -6928,13 +7018,13 @@ systemctl restart guacd</programlisting>
 <simpara>Deconnectez vous et reconnectez vous avec le login <literal>admin</literal></simpara>
 </listitem>
 <listitem>
-<simpara>cliquez sur admin&#8594;paramètres &#8594; utilisateurs&#8594; guacadmin</simpara>
+<simpara>cliquez sur <literal>admin</literal> &#8594; <literal>paramètres</literal> &#8594; <literal>utilisateurs</literal> &#8594; <literal>guacadmin</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Supprimez ce compte utilisateur</simpara>
 </listitem>
 <listitem>
-<simpara>Si vous avez activé VNC. Cliquez sur Admin&#8594;Paramètres &#8594; Utilisateurs&#8594; Connexions &#8594; Nouvelle Connexion</simpara>
+<simpara>Si vous avez activé VNC. Cliquez sur <literal>Admin</literal> &#8594; <literal>Paramètres</literal> &#8594; <literal>Utilisateurs</literal> &#8594; <literal>Connexions</literal> &#8594; <literal>Nouvelle Connexion</literal></simpara>
 <itemizedlist>
 <listitem>
 <simpara><literal>Nom</literal> &#8592; Tapez <literal>Local server VNC</literal></simpara>
@@ -6963,7 +7053,7 @@ systemctl restart guacd</programlisting>
 </itemizedlist>
 </listitem>
 <listitem>
-<simpara>Cliquez sur Admin&#8594;Paramètres &#8594; Utilisateurs&#8594; Connexions &#8594; Nouvelle Connexion</simpara>
+<simpara>Cliquez sur <literal>Admin</literal> &#8594; <literal>Paramètres</literal> &#8594; <literal>Utilisateurs</literal> &#8594; <literal>Connexions</literal> &#8594; <literal>Nouvelle Connexion</literal></simpara>
 <itemizedlist>
 <listitem>
 <simpara><literal>Nom</literal> &#8592; Tapez <literal>Local server SSH</literal></simpara>

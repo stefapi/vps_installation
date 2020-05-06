@@ -117,6 +117,154 @@ faible:
 Par rapport à une solution VPS directement dans le cloud, ce budget
 correspond à 7 mois d’abonnement.
 
+Se loguer root sur le serveur
+=============================
+
+A de nombreux endroit dans la documentation, il est demandé de se loguer
+root sur le serveur. Pour se loguer root, et dans l’hypothèse que vous
+avez mis en place un compte sudo:
+
+1. De votre machine locale, loguez vous avec votre compte
+   ``<sudo_username>``. Tapez :
+
+   .. code:: bash
+
+       ssh <sudo_username>@<example.com> 
+
+   -  Mettez ici <sudo\_username> par votre nom de login et
+      <example.com> par votre nom de domaine ou son adresse IP. Au début
+      votre nom de domaine acheté n’est pas encore configuré. Il faut
+      donc utiliser le nom de machine ( par exemple pour un VPS OVH:
+      VPSxxxxxx.ovh.net ou pour un raspberry: raspberrypi.local ) ou
+      votre adresse IP.
+
+   ou utilisez putty si vous êtes sous Windows.
+
+2. Tapez votre mot de passe s’il est demandé. Si vous avez installé une
+   clé de connexion ce ne devrait pas être le cas.
+
+3. Loguez-vous ``root``. Tapez :
+
+   .. code:: bash
+
+       sudo bash
+
+   Un mot de passe vous est demandé. Tapez le mot de passe demandé.
+
+4. Dans le cas contraire (pas de sudo créé et connexion en root directe
+   sur le serveur):
+
+   a. Se loguer root sur le serveur distant. Tapez:
+
+      .. code:: bash
+
+          ssh root@<example.com> 
+
+      -  remplacer ici <example.com> par votre nom de domaine.
+
+      Tapez ensuite votre mot de passe root
+
+Gestion des mots de passe
+=========================
+
+A propos des mots de passe: il est conseillé de saisir des mots de passe
+de 10 caractères contenant des majuscules/minuscules/nombres/caractères
+spéciaux. Une autre façon de faire est de saisir de longues phrases. Par
+exemple: 'J’aime manger de la mousse au chocolat parfumée à la menthe'.
+Ce dernier exemple a un taux de complexité bien meilleur qu’un mot de
+passe classique. Il est aussi plus facile à retenir que 'Az3~1ym\_a&'.
+
+Cependant, si vous êtes en manque d’inspiration et que vous souhaitez
+générer des mots de passe, voici quelques méthodes:
+
+1. En se basant sur la date. Tapez:
+
+   .. code:: bash
+
+       date +%s | sha256sum | base64 | head -c 32 ; echo 
+
+   -  remplacez 32 par la valeur qui vous convient pour générer un mot
+      de passe d’une taille différente de 32 caractères
+
+2. En se basant sur les nombres aléatoires système. Tapez l’une des deux
+   lignes ci dessous :
+
+   .. code:: bash
+
+       tr -cd '[:graph:]' < /dev/urandom | head -c 32; echo 
+       tr -cd A-Za-z0-9 < /dev/urandom | head -c 32;echo 
+
+   -  remplacez 32 par la valeur qui vous convient pour générer un mot
+      de passe d’une taille différente de 32 caractères
+
+3. En utilisant Openssl. Tapez :
+
+   .. code:: bash
+
+       openssl rand -base64 32 | cut -c-32 
+
+   -  remplacez 32 par la valeur qui vous convient pour générer un mot
+      de passe d’une taille différente de 32 caractères
+
+4. En utilisant gpg. Tapez :
+
+   .. code:: bash
+
+       gpg --gen-random --armor 1 32 | cut -c-32 
+
+   -  remplacez 32 par la valeur qui vous convient pour générer un mot
+      de passe d’une taille différente de 32 caractères
+
+5. En utilisant pwgen pour générer des mots de passe qui suivent des
+   règles de longueur et types de caractères.
+
+   a. Pour installer l’outil, tapez:
+
+      .. code:: bash
+
+          apt install pwgen
+
+   b. Ensuite tapez :
+
+      .. code:: bash
+
+          pwgen -Bcny 32 -1 
+
+      -  remplacez 32 par la valeur qui vous convient pour générer un
+         mot de passe d’une taille différente de 32 caractères. La
+         commande crée un mot de passe non ambigue avec au moins une
+         majuscule , une valeur numérique, un symbole.
+
+6. En utilisant apg pour générer des mots de passe prononcables tel que:
+   ``7quiGrikCod+ (SEVEN-qui-Grik-Cod-PLUS_SIGN)``
+
+   a. Pour installer l’outil, tapez:
+
+      .. code:: bash
+
+          apt install apg
+
+   b. Ensuite tapez :
+
+      .. code:: bash
+
+          apg
+
+7. En utilisant xkcdpass pour générer des passphrases comme:
+   ``context smashup spiffy cuddly throttle landfall``
+
+   a. Pour installer l’outil, tapez:
+
+      .. code:: bash
+
+          apt install xkcdpass
+
+   b. Ensuite tapez :
+
+      .. code:: bash
+
+          xkcdpass
+
 Choix du registrar
 ==================
 
@@ -502,153 +650,65 @@ utilisant la ligne de commande et putty)
 26. Vous avez deux options: connexion en mode SSH ou au travers d’une
     connection VNC
 
-Se loguer root sur le serveur
-=============================
+Reconnecter automatiquement votre Raspberry Pi au wifi
+------------------------------------------------------
 
-A de nombreux endroit dans la documentation, il est demandé de se loguer
-root sur le serveur. Pour se loguer root, et dans l’hypothèse que vous
-avez mis en place un compte sudo:
+Si vous connectez votre raspberry pi au réseau au travers du wifi, il
+arrive que le raspberry perde la connexion au réseau de façon
+définitive.
 
-1. De votre machine locale, loguez vous avec votre compte
-   ``<sudo_username>``. Tapez :
+Pour corriger ce problème, il faut reconnecter Raspberry Pi au réseau
+wifi de manière forcée.
 
-   .. code:: bash
+Suivez la procédure ci-après:
 
-       ssh <sudo_username>@<example.com> 
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-   -  Mettez ici <sudo\_username> par votre nom de login et
-      <example.com> par votre nom de domaine ou son adresse IP. Au début
-      votre nom de domaine acheté n’est pas encore configuré. Il faut
-      donc utiliser le nom de machine ( par exemple pour un VPS OVH:
-      VPSxxxxxx.ovh.net ou pour un raspberry: raspberrypi.local ) ou
-      votre adresse IP.
-
-   ou utilisez putty si vous êtes sous Windows.
-
-2. Tapez votre mot de passe s’il est demandé. Si vous avez installé une
-   clé de connexion ce ne devrait pas être le cas.
-
-3. Loguez-vous ``root``. Tapez :
+2. Éditez le fichier ``wifi_rebooter.sh`` :
 
    .. code:: bash
 
-       sudo bash
+       vi /usr/local/bin/wifi_rebooter.sh
 
-   Un mot de passe vous est demandé. Tapez le mot de passe demandé.
-
-4. Dans le cas contraire (pas de sudo créé et connexion en root directe
-   sur le serveur):
-
-   a. Se loguer root sur le serveur distant. Tapez:
-
-      .. code:: bash
-
-          ssh root@<example.com> 
-
-      -  remplacer ici <example.com> par votre nom de domaine.
-
-      Tapez ensuite votre mot de passe root
-
-Gestion des mots de passe
-=========================
-
-A propos des mots de passe: il est conseillé de saisir des mots de passe
-de 10 caractères contenant des majuscules/minuscules/nombres/caractères
-spéciaux. Une autre façon de faire est de saisir de longues phrases. Par
-exemple: 'J’aime manger de la mousse au chocolat parfumée à la menthe'.
-Ce dernier exemple a un taux de complexité bien meilleur qu’un mot de
-passe classique. Il est aussi plus facile à retenir que 'Az3~1ym\_a&'.
-
-Cependant, si vous êtes en manque d’inspiration et que vous souhaitez
-générer des mots de passe, voici quelques méthodes:
-
-1. En se basant sur la date. Tapez:
+3. Collez-y le contenu suivant :
 
    .. code:: bash
 
-       date +%s | sha256sum | base64 | head -c 32 ; echo 
+       #!/bin/bash
 
-   -  remplacez 32 par la valeur qui vous convient pour générer un mot
-      de passe d’une taille différente de 32 caractères
+       SERVER=8.8.8.8
 
-2. En se basant sur les nombres aléatoires système. Tapez l’une des deux
-   lignes ci dessous :
+       # Envoyer seulement 2 pings, et envoyer la sortie vers /dev/null
+       ping -c2 ${SERVER} > /dev/null
 
-   .. code:: bash
+       # Si le code retour du ping ($?) est différent de 0 (qui correspond à une erreur)
+       if [ $? != 0 ]
+       then
+           # Restart the wireless interface
+           # Relancer l'interface wifi
+           ip link set dev wlan0 down
+           ip link set dev wlan0 up
+       fi
 
-       tr -cd '[:graph:]' < /dev/urandom | head -c 32; echo 
-       tr -cd A-Za-z0-9 < /dev/urandom | head -c 32;echo 
-
-   -  remplacez 32 par la valeur qui vous convient pour générer un mot
-      de passe d’une taille différente de 32 caractères
-
-3. En utilisant Openssl. Tapez :
-
-   .. code:: bash
-
-       openssl rand -base64 32 | cut -c-32 
-
-   -  remplacez 32 par la valeur qui vous convient pour générer un mot
-      de passe d’une taille différente de 32 caractères
-
-4. En utilisant gpg. Tapez :
+4. Rendre le script exécutable:
 
    .. code:: bash
 
-       gpg --gen-random --armor 1 32 | cut -c-32 
+       sudo chmod +x /usr/local/bin/wifi_rebooter.sh
 
-   -  remplacez 32 par la valeur qui vous convient pour générer un mot
-      de passe d’une taille différente de 32 caractères
+5. Mettre en place la crontab:
 
-5. En utilisant pwgen pour générer des mots de passe qui suivent des
-   règles de longueur et types de caractères.
+   .. code:: bash
 
-   a. Pour installer l’outil, tapez:
+       crontab -e
 
-      .. code:: bash
+6. Ajouter à la fin du fichier la ligne suivante:
 
-          apt install pwgen
+   .. code:: bash
 
-   b. Ensuite tapez :
+       */5 * * * *   /usr/local/bin/wifi_rebooter.sh
 
-      .. code:: bash
-
-          pwgen -Bcny 32 -1 
-
-      -  remplacez 32 par la valeur qui vous convient pour générer un
-         mot de passe d’une taille différente de 32 caractères. La
-         commande crée un mot de passe non ambigue avec au moins une
-         majuscule , une valeur numérique, un symbole.
-
-6. En utilisant apg pour générer des mots de passe prononcables tel que:
-   ``7quiGrikCod+ (SEVEN-qui-Grik-Cod-PLUS_SIGN)``
-
-   a. Pour installer l’outil, tapez:
-
-      .. code:: bash
-
-          apt install apg
-
-   b. Ensuite tapez :
-
-      .. code:: bash
-
-          apg
-
-7. En utilisant xkcdpass pour générer des passphrases comme:
-   ``context smashup spiffy cuddly throttle landfall``
-
-   a. Pour installer l’outil, tapez:
-
-      .. code:: bash
-
-          apt install xkcdpass
-
-   b. Ensuite tapez :
-
-      .. code:: bash
-
-          xkcdpass
+7. C’est fait !
 
 Configuration basique
 =====================
@@ -990,7 +1050,7 @@ Cette installation est optionnelle.
 
     L’installation automatique de paquets peut conduire dans certains
     cas très rare à des dysfonctionnements du serveur. Il est important
-    de regarder périodiquement les logs d’installation
+    de regarder périodiquement les logs d’installation.
 
 Suivez la procédure suivante:
 
@@ -1101,7 +1161,9 @@ d’autoriser le sudo. Respectez bien les étapes de cette procédure:
 
       .. code:: bash
 
-          adduser <sudo_username>
+          adduser <sudo_username> 
+
+      -  remplacer ici <sudo\_username> par votre login
 
    b. Répondez aux questions qui vont sont posées: habituellement le nom
       complet d’utilisateur et le mot de passe.
@@ -1111,7 +1173,9 @@ d’autoriser le sudo. Respectez bien les étapes de cette procédure:
 
       .. code:: bash
 
-          usermod -a -G sudo <sudo_username>
+          usermod -a -G sudo <sudo_username> 
+
+      -  remplacer ici <sudo\_username> par votre login
 
    d. Dans une autre fenêtre, se connecter sur le serveur avec votre
       nouveau compte ``<sudo_username>``:
@@ -1431,7 +1495,7 @@ Mailman.
       ``Site Internet``
 
    b. ``Nom de courrier``: ← Entrez votre nom de host. Par exemple:
-      mail.example.com
+      ``mail.example.com``
 
 Configuration de Postfix
 ------------------------
@@ -1614,7 +1678,7 @@ Suivez la procédure suivante:
    `HTTPOXY <https://www.howtoforge.com/tutorial/httpoxy-protect-your-server/>`__,
    il est nécessaire de créer un petit module dans apache.
 
-   a. Éditez le fichier httpoxy.conf: :
+   a. Éditez le fichier ``httpoxy.conf`` :
 
       .. code:: bash
 
@@ -1738,13 +1802,13 @@ Suivez la procédure suivante:
 
 1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-2. configurer la tache cron d’awstats: Éditez le fichier :
+2. Configurer la tache cron d’awstats: Éditez le fichier :
 
    .. code:: bash
 
        vi /etc/cron.d/awstats
 
-   Et commentez toutes les lignes:
+3. Et commentez toutes les lignes:
 
    ::
 
@@ -1852,7 +1916,7 @@ Suivez la procédure suivante:
 
       vi.  ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter
            le nom d’hôte de votre serveur. Dans notre cas:
-           server1.example.com
+           ``server1.example.com``
 
       vii. ``Email Address []:`` ← Tapez entrée
 
@@ -2330,7 +2394,8 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
     n. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
 
     o. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le
-       nom d’hôte de votre serveur. Dans notre cas: server1.example.com
+       nom d’hôte de votre serveur. Dans notre cas:
+       ``server1.example.com``
 
     p. ``Email Address []:`` ← Tapez entrée
 
@@ -2355,7 +2420,8 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
     x. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
 
     y. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le
-       nom d’hôte de votre serveur. Dans notre cas: server1.example.com
+       nom d’hôte de votre serveur. Dans notre cas:
+       ``server1.example.com``
 
     z. ``Email Address []:`` ← Tapez entrée
 
@@ -2391,7 +2457,7 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
 
         Lors de votre première connexion, votre domaine n’est pas encore
         configuré. Il faudra alors utiliser le nom DNS donné par votre
-        hébergeur. Pour OVH, elle s’écrit VPSxxxxxx.ovh.net
+        hébergeur. Pour OVH, elle s’écrit ``VPSxxxxxx.ovh.net``.
 
 10. Loguez vous comme admin et avec le mot de passe que vous avez
     choisi. Vous pouvez décider de le changer au premier login
@@ -2450,7 +2516,8 @@ précise des fonctionnalités.
 
        Débloquez le port 10000 dans votre firewall
 
-   a. Allez sur le site ispconfig https://example.com:8080/
+   a. Allez sur le site ispconfig
+      `https://<example.com>:8080/ <https://<example.com>:8080/>`__
 
    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
       ``Firewall``. Cliquez sur votre serveur.
@@ -2698,7 +2765,7 @@ Création de la zone DNS d’un domaine
       -  ``IPV6 Address:`` ← prendre l’adresse IPV6 du serveur
          sélectionnée
 
-      -  ``Email:`` ← votre Email valide exemple admin@example.com
+      -  ``Email:`` ← votre Email valide exemple ``admin@example.com``
 
       -  ``DKIM:`` ← Yes
 
@@ -2878,27 +2945,29 @@ Création d’un sous domaine
 --------------------------
 
 Supposons que vous êtes en train de créer un sous domain nommé
-sub.example.com . Dans ce sous domaines vous allez créer un ensemble de
-site web par exemple mail.sub.example.com ou blog.sub.example.com.
+``sub.example.com`` . Dans ce sous domaines vous allez créer un ensemble
+de site web par exemple ``mail.sub.example.com`` ou
+``blog.sub.example.com`` .
 
 Un cas assez classique est que ce sous domaine est délégué à une machine
 tierce.
 
-Par exemple: example.com est installé sur un VPS quelque part sur
-internet et sub.example.com est hébergé chez vous sur votre Raspberry.
+Par exemple: ``example.com`` est installé sur un VPS quelque part sur
+internet et ``sub.example.com`` est hébergé chez vous sur votre
+Raspberry.
 
 On suppose que votre domain a été configuré en suivant la procédure du
 chapitre précédent.
 
 Rien de bien sorcier pour votre sous domaine: Vous devez le créer sur
 votre Raspberry selon la même procédure mais avec le nom du sous domaine
-(sub.example.com donc).
+( ``sub.example.com`` donc).
 
 Vous aurez des actions complémentaires à effectuer sur votre domaine:
 
 1. Allez dans ``DNS`` de votre serveur de domaine principal
 
-2. Sélectionner le menu ``Zones`` puis le domaine example.com
+2. Sélectionner le menu ``Zones`` puis le domaine ``example.com``
 
 3. Choisissez l’onglet ``Records`` et créez:
 
@@ -2928,12 +2997,13 @@ Vous aurez des actions complémentaires à effectuer sur votre domaine:
           wget -qO- http://ipecho.net/plain; echo
 
       Ce dernier enregistrement en complétant le Glue record fait le
-      lien avec l’adresse IP de sub.example.com
+      lien avec l’adresse IP de ``sub.example.com``
 
-4. Si vous avez activé DNSSEC sur votre serveur DNS de sub.example.com
-   vous devrez récupérer les entrées DS du champ
-   ``DNSSEC DS-Data for registry`` de votre domaine sub.example.com et
-   créer dans votre domaine example.com les deux entrées suivantes:
+4. Si vous avez activé DNSSEC sur votre serveur DNS de
+   ``sub.example.com`` vous devrez récupérer les entrées DS du champ
+   ``DNSSEC DS-Data for registry`` de votre domaine ``sub.example.com``
+   et créer dans votre domaine ``example.com`` les deux entrées
+   suivantes:
 
    -  un enregistrement de type ``DS`` avec une ``Zone`` ←
       ``sub.example.com`` et un champ ``data`` contenant
@@ -2946,7 +3016,8 @@ Vous aurez des actions complémentaires à effectuer sur votre domaine:
 5. Allez sur le site `DNSSEC
    Analyzer <https://dnssec-debugger.verisignlabs.com/>`__.
 
-6. Entrez votre nom de domaine "sub.example.com" et tapez sur "entrée".
+6. Entrez votre nom de domaine ``sub.example.com`` et tapez sur
+   "entrée".
 
 Le site doit afficher pour les différentes zones le statut des
 certificats. Tout doit être au vert. Si ce n’est pas le cas, réessayer
@@ -2958,7 +3029,7 @@ sur votre serveur pour y débusquer une erreur.
 Création d’un site web
 ----------------------
 
-Dans la suite le site web sera nommé "example.com".
+Dans la suite le site web sera nommé ``example.com``.
 
 Vous devez avoir avant tout défini le "record" DNS associé au site.
 
@@ -3314,10 +3385,12 @@ Suivez les étapes ci-après:
         includedir /etc/munin/munin-conf.d
         [...]
         # a simple host tree
-        [munin.example.com]
+        [munin.example.com] 
          address 127.0.0.1
          use_node_name yes
         [...]
+
+    -  mettre à la place de ``example.com`` votre nom de domaine
 
 9.  Activez Munin dans Apache. Tapez:
 
@@ -3812,8 +3885,8 @@ Suivez la procédure suivante:
            ProxyPass / http://localhost:11334/
            ProxyPassReverse / http://localhost:11334/
 
-23. en pointant sur le site rspampd.example.com, et en utilisant le mot
-    de passe saisi plus haut vous pouvez accèder aux fonctions de
+23. en pointant sur le site ``rspampd.example.com`` , et en utilisant le
+    mot de passe saisi plus haut vous pouvez accéder aux fonctions de
     l’outil.
 
 24. Activer l’apprentissage par déplacement
@@ -3991,7 +4064,7 @@ suivantes:
 
        myhostname = mail.example.com 
 
-   -  Remplacer example.com par votre nom de domaine.
+   -  Remplacer ``example.com`` par votre nom de domaine.
 
 4. Redémarrez Postfix. Tapez:
 
@@ -4002,12 +4075,13 @@ suivantes:
 5. Vous pouvez le tester en allant sur le site
    `MxToolbox <https://mxtoolbox.com/diagnostic.aspx>`__.
 
-   -  Entrez le nom de host de votre serveur de mail: mail.example.com .
+   -  Entrez le nom de host de votre serveur de mail:
+      ``mail.example.com`` .
 
    -  cliquez sur ``test Email Server``
 
    -  Tout doit être correct sauf éventuellement le reverse DNS qui doit
-      être configuré pour pointer vers mail.example.com .
+      être configuré pour pointer vers ``mail.example.com`` .
 
 Création de l’autoconfig pour Thunderbird et Android
 ----------------------------------------------------
@@ -4045,27 +4119,31 @@ Appliquez la procédure suivante:
 
 2. `Loguez vous comme root sur le serveur <#root_login>`__
 
-3. Dans le répertoire ``/var/www/autoconfig.example.com/autoconfig/``
+3. Dans le répertoire ``/var/www/autoconfig.<example.com>/autoconfig/``
    créer un répertoire mail. Lui donner les permissions 755 et affecter
    les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:
 
    .. code:: bash
 
-       mkdir -p /var/www/autoconfig.example.com/autoconfig/mail
-       chmod 755 /var/www/autoconfig.example.com/autoconfig/mail
-       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail 
+       mkdir -p /var/www/autoconfig.example.com/autoconfig/mail 
+       chmod 755 /var/www/autoconfig.example.com/autoconfig/mail 
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail  
 
    -  remplacer web1:client0 par les permissions du répertoire
       ``/var/www/autoconfig.example.com``
 
-      a. A l’intérieur de ce répertoire, Editez un fichier
-         ``config-v1.1.xml``. Tapez:
+   -  remplacez ``example.com`` par votre nom de domaine
 
-         .. code:: bash
+4. A l’intérieur de ce répertoire, Editez un fichier
+   ``config-v1.1.xml``. Tapez:
 
-             vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml
+   .. code:: bash
 
-4. Y coller:
+       vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml 
+
+   -  remplacez ``example.com`` par votre nom de domaine
+
+5. Y coller:
 
    .. code:: xml
 
@@ -4076,7 +4154,7 @@ Appliquez la procédure suivante:
 
        <clientConfig version="1.1">
         <emailProvider id="example.com"> 
-          <domain>example.com</domain>
+          <domain>example.com</domain>  
           <displayName>Example Mail</displayName> 
           <displayShortName>Example</displayShortName> 
           <incomingServer type="imap">
@@ -4110,22 +4188,24 @@ Appliquez la procédure suivante:
         </emailProvider>
        </clientConfig>
 
-   -  mettre à la place de example.com votre nom de domaine
+   -  mettre à la place de ``example.com`` votre nom de domaine
 
    -  mettre ici votre libellé long pour votre nom de messagerie
 
    -  mettre ici un libellé court pour votre nom de messagerie
 
-5. Donner la permission en lecture seule et affecter les groupes
+6. Donner la permission en lecture seule et affecter les groupes
    d’appartenance. Tapez:
 
    .. code:: bash
 
-       chmod 644 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml
-       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml 
+       chmod 644 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml 
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml  
 
    -  remplacer web1:client0 par les permissions du répertoire
       ``/var/www/autoconfig.example.com``
+
+   -  remplacez ``example.com`` par votre nom de domaine
 
 Création d’autodiscover pour Outlook
 ------------------------------------
@@ -4161,34 +4241,38 @@ Appliquez la procédure suivante:
           ProxyPassReverse "/" http://autoconfig.example.com/ 
           RewriteRule ^/ - [QSA,L]
 
-      -  remplacer example.com par votre nom de domaine
+      -  remplacer ``example.com`` par votre nom de domaine
 
    h. Sauver.
 
 2. `Loguez vous comme root sur le serveur <#root_login>`__
 
-3. Dans le répertoire ``/var/www/autoconfig.example.com/autoconfig/``,
+3. Dans le répertoire ``/var/www/autoconfig.<example.com>/autoconfig/``,
    créer un répertoire ``Autodiscover``. Lui donner les permissions 755
    et affecter les mêmes possesseurs que pour autres fichiers du
    répertoire. Tapez:
 
    .. code:: bash
 
-       mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/
-       chmod 755 /var/www/autoconfig.example.com/autoconfig/Autodiscover/
-       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ 
+       mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/ 
+       chmod 755 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ 
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/  
 
    -  remplacer web1:client0 par les permissions du répertoire
       ``/var/www/autoconfig.example.com``
 
-      a. A l’intérieur de ce répertoire, Editez un fichier
-         ``Autodiscover.xml``. Tapez:
+   -  remplacez ``example.com`` par votre nom de domaine
 
-         .. code:: bash
+4. A l’intérieur de ce répertoire, Editez un fichier
+   ``Autodiscover.xml``. Tapez:
 
-             vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml
+   .. code:: bash
 
-4. Y coller:
+       vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml 
+
+   -  remplacez ``example.com`` par votre nom de domaine
+
+5. Y coller:
 
    .. code:: xml
 
@@ -4230,26 +4314,28 @@ Appliquez la procédure suivante:
           </Response>
         </Autodiscover>
 
-   -  mettre à la place de example.com votre nom de domaine
+   -  mettre à la place de ``example.com`` votre nom de domaine
 
    -  mettre ici votre libellé long pour votre nom de messagerie
 
-5. Changez les permissions comme pour le répertoire
+6. Changez les permissions comme pour le répertoire
 
    .. code:: bash
 
-       chmod 644 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml
-       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml 
+       chmod 644 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml 
+       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml  
 
    -  remplacer web1:client0 par les permissions du répertoire
       ``/var/www/autoconfig.example.com``
 
-6. Pointer votre navigateur sur le site
+   -  remplacez ``example.com`` par votre nom de domaine
+
+7. Pointer votre navigateur sur le site
    https://autodiscover.example.com/Autodiscover/Autodiscover.xml.
 
-7. Le contenu du fichier xml doit s’afficher
+8. Le contenu du fichier xml doit s’afficher
 
-8. Vous pouvez faire aussi un test sur le `Testeur de connectivité
+9. Vous pouvez faire aussi un test sur le `Testeur de connectivité
    Microsoft <https://testconnectivity.microsoft.com>`__.
 
    a. choisissez: ``Découverte automatique Outlook``
@@ -4278,7 +4364,7 @@ Pour créer une boite de messagerie:
 
    a. ``Name:`` ← mettez votre prénom et votre nom
 
-   b. ```Email:`` ← mail\_name @ example.com
+   b. ```Email:`` ← saisir le <mail\_name> ``mail_name@example.com``
 
    c. ``Password:`` ← `Saisissez un mot de passe généré <#pass_gen>`__
       ou générez en un en cliquant sur le bouton
@@ -4302,11 +4388,11 @@ Pour créer une boite de messagerie:
     **Note**
 
     Notez que si vous créez une adresse mail nommée
-    mail_name@example.com, vous pouvez utilisez toutes les variantes
+    ``mail_name@example.com``, vous pouvez utilisez toutes les variantes
     (nommées tag) derrière le caractère "+". Ainsi
-    mail_name+nospam@example.com sera bien redirigé vers votre boite et
-    l’extension +nospam vous permettre de trier automatiquement les
-    mails que vous ne voulez pas recevoir.
+    ``mail_name+nospam@example.com`` sera bien redirigé vers votre boite
+    et l’extension ``+nospam`` vous permettre de trier automatiquement
+    les mails que vous ne voulez pas recevoir.
 
     **Note**
 
@@ -4354,7 +4440,7 @@ Mise en oeuvre du site web de webmail
 
 On suppose que vous avez install roundcube lors de la procédure
 d’installation initiale et que vous avez déjà créé le host
-mail.example.com.
+``mail.example.com`` .
 
 Il vous reste à appliquer la procédure suivante:
 
@@ -4420,7 +4506,7 @@ Suivez la procédure suivante:
 
    ::
 
-       apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl
+       apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl libencode-imaputf7-perl
 
 4. Créez deux fichiers temporaires qui contiennent les mots de passe du
    1er et 2eme serveur. Tapez:
@@ -4442,7 +4528,7 @@ Suivez la procédure suivante:
 
    ::
 
-       ./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst
+       ./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 secretdst
 
 6. Un fois la synchronisation effectuée, vous pouvez supprimer le
    fichier des mots de passe. tapez:
@@ -4685,7 +4771,8 @@ Appliquez les opérations suivantes dans ISPConfig:
 
 8.  Cliquez sur ``Install``
 
-9.  Pointez votre navigateur sur https://example.com/ et loguez vous
+9.  Pointez votre navigateur sur
+    `https://<example.com>/ <https://<example.com>/>`__ et loguez vous
     ``admin`` avec votre mot de passe saisi, c’est fait !
 
 10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
@@ -4790,8 +4877,10 @@ Suivez la procédure suivante:
 
    .. code:: command
 
-       cd /var/www/microweber.example.com/microweber
+       cd /var/www/microweber.example.com/microweber 
        wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinstall.php
+
+   -  mettre à la place de ``example.com`` votre nom de domaine
 
 3. Un fois téléchargé, faites pointer votre navigateur vers
    http://microweber.example.com/netinstall.php
@@ -4927,44 +5016,47 @@ Suivez la procédure suivante:
 
 ::
 
-    cd /var/www/piwigo.example.com/piwigo
+    cd /var/www/piwigo.example.com/piwigo 
     wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinstall.php
 
-1. Un fois téléchargé, faites pointer votre navigateur vers
-   http://piwigo.example.com/piwigo-netinstall.php
+-  mettre à la place de ``example.com`` votre nom de domaine
 
-2. Indique ``.`` comme répertoire d’installation et cliquez sur
-   ``Téléharger et décompresser Piwigo``
+   1. Un fois téléchargé, faites pointer votre navigateur vers
+      http://piwigo.example.com/piwigo-netinstall.php
 
-3. Une fois le téléchargement terminé cliquez sur ``Installer Piwigo``.
-   Rechargez la page si besoin.
+   2. Indique ``.`` comme répertoire d’installation et cliquez sur
+      ``Téléharger et décompresser Piwigo``
 
-4. Répondez aux questions suivantes:
+   3. Une fois le téléchargement terminé cliquez sur
+      ``Installer Piwigo``. Rechargez la page si besoin.
 
-   -  ``Hote`` ← Laissez ``localhost``
+   4. Répondez aux questions suivantes:
 
-   -  ``Utilisateur`` ← entrez ``cxpiwigo``. x est le numero de client;
-      habituellement c’est 0
+      -  ``Hote`` ← Laissez ``localhost``
 
-   -  ``Mot de passe`` ← Tapez votre mot de passe
+      -  ``Utilisateur`` ← entrez ``cxpiwigo``. x est le numero de
+         client; habituellement c’est 0
 
-   -  ``Nom de la Base de données`` ← entrez ``cxpiwigo``. x est le
-      numero de client; habituellement c’est 0
+      -  ``Mot de passe`` ← Tapez votre mot de passe
 
-   -  ``Préfix des noms de tables`` ← Laissez le champ vide
+      -  ``Nom de la Base de données`` ← entrez ``cxpiwigo``. x est le
+         numero de client; habituellement c’est 0
 
-   -  ``Nom d’Utilisateur`` ← tapez ``admin``
+      -  ``Préfix des noms de tables`` ← Laissez le champ vide
 
-   -  ``Mot de passe`` ← Tapez `votre mot de passe généré <#pass_gen>`__
+      -  ``Nom d’Utilisateur`` ← tapez ``admin``
 
-   -  ``Mot de passe [confirmer]`` ← Retapez votre mot de passe
+      -  ``Mot de passe`` ← Tapez `votre mot de passe
+         généré <#pass_gen>`__
 
-   -  ``Adresse e-mail`` ← Tapez votre adresse mail d’administrateur
+      -  ``Mot de passe [confirmer]`` ← Retapez votre mot de passe
 
-5. Tapez ``Démarrer l’installation``
+      -  ``Adresse e-mail`` ← Tapez votre adresse mail d’administrateur
 
-6. Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer et
-   commencer à utiliser l’outil
+   5. Tapez ``Démarrer l’installation``
+
+   6. Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer
+      et commencer à utiliser l’outil
 
 Installation du système collaboratif Nextcloud
 ==============================================
@@ -5109,41 +5201,44 @@ Suivez la procédure suivante:
 
 ::
 
-    cd /var/www/nextcloud.example.com/nextcloud
+    cd /var/www/nextcloud.example.com/nextcloud 
     wget https://download.nextcloud.com/server/installer/setup-nextcloud.php
 
-1. Un fois téléchargé, faites pointer votre navigateur vers
-   http://nextcloud.example.com/setup-nextcloud.php
+-  mettre à la place de ``example.com`` votre nom de domaine
 
-2. Indique ``.`` comme répertoire d’installation et cliquez sur ``Next``
+   1. Un fois téléchargé, faites pointer votre navigateur vers
+      http://nextcloud.example.com/setup-nextcloud.php
 
-3. Une fois le téléchargement terminé cliquez sur ``Next``. Rechargez la
-   page si besoin.
+   2. Indique ``.`` comme répertoire d’installation et cliquez sur
+      ``Next``
 
-4. Répondez aux questions suivantes:
+   3. Une fois le téléchargement terminé cliquez sur ``Next``. Rechargez
+      la page si besoin.
 
-   -  ``Login Admin`` ← tapez ``admin``
+   4. Répondez aux questions suivantes:
 
-   -  ``Password Admin`` ← Tapez votre mot de passe
+      -  ``Login Admin`` ← tapez ``admin``
 
-   -  ouvrez ``Stockage et base de données``
+      -  ``Password Admin`` ← Tapez votre mot de passe
 
-   -  ``Configurer la base de données`` ← cliquez sur ``MariaDB``
+      -  ouvrez ``Stockage et base de données``
 
-   -  ``Utilisateur de la Base de données`` ← entrez ``cxnextcloud``. x
-      est le numero de client; habituellement c’est 0
+      -  ``Configurer la base de données`` ← cliquez sur ``MariaDB``
 
-   -  ``Password de la Base de données`` ← Tapez votre mot de passe
+      -  ``Utilisateur de la Base de données`` ← entrez ``cxnextcloud``.
+         x est le numero de client; habituellement c’est 0
 
-   -  ``Nom de la Base de données`` ← entrez ``cxnextcloud``. x est le
-      numero de client; habituellement c’est 0
+      -  ``Password de la Base de données`` ← Tapez votre mot de passe
 
-   -  ``nom du serveur`` ← Laissez ``Localhost``
+      -  ``Nom de la Base de données`` ← entrez ``cxnextcloud``. x est
+         le numéro de client; habituellement c’est 0
 
-5. Tapez ``Next``
+      -  ``nom du serveur`` ← Laissez ``Localhost``
 
-6. Vous êtes redirigé sur le site nextcloud ou vous pourrez vous loguer
-   et commencer à utliser l’outil
+   5. Tapez ``Next``
+
+   6. Vous êtes redirigé sur le site nextcloud ou vous pourrez vous
+      loguer et commencer à utiliser l’outil
 
 Installation du gestionnaire de projet Gitea
 ============================================
@@ -5569,24 +5664,27 @@ Appliquez la procédure suivante:
 
    .. code:: bash
 
-       apt-get install python2.7 python-setuptools python-simplejson python-pil python-mysqldb python-flup
+       apt install python3 python3-setuptools python3-pip
+       pip3 install --timeout=3600 Pillow pylibmc captcha jinja2 sqlalchemy psd-tools django-pylibmc django-simple-captcha python3-ldap
 
 3. Je préfère faire tourner mes serveurs dans le répertoire privé plutôt
    que dans le répertoire web pour des questions de sécurité. Tapez:
 
    .. code:: bash
 
-       cd /var/www/seafile.example.com/private
+       cd /var/www/seafile.example.com/private 
        mkdir seafile
        cd seafile
-       wget https://download.seadrive.org/seafile-server_7.0.5_x86-64.tar.gz
-       tar zxvf seafile-server_7.0.5_x86-64.tar.gz
+       wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz
+       tar zxvf seafile-server_7.1.3_x86-64.tar.gz
        mkdir installed
        mv seafile-server_* installed
        cd seafile-server-*
        ./setup-seafile-mysql.sh
        cd ../..
        chown -R web1:client0 seafile 
+
+   -  mettre à la place de ``example.com`` votre nom de domaine
 
    -  choisissez le user et le groupe de votre site web. Ces
       informations sont consultables dans ISPConfig en consultant les
@@ -5614,8 +5712,10 @@ Nous allons effectuer un premier lancement du serveur Seafile:
 
     .. code:: bash
 
-        cd /var/www/seafile.example.com/private/seafile/conf
+        cd /var/www/seafile.example.com/private/seafile/conf 
         vi gunicorn.conf
+
+    -  mettre à la place de ``example.com`` votre nom de domaine
 
 2.  Repèrez le texte ``bind=`` et mettez un numéro de port 8090 à la
     place de 8000. Comme ceci:
@@ -5630,7 +5730,7 @@ Nous allons effectuer un premier lancement du serveur Seafile:
 
         vi seafile.conf
 
-4.  mettez un port 8092 au lieu du port 8080 saisi pour l’entrée
+4.  mettez un port 8092 au lieu du port 8082 saisi pour l’entrée
     ``fileserver``. Le fichier doit contenir ceci:
 
     .. code:: ini
@@ -5648,7 +5748,9 @@ Nous allons effectuer un premier lancement du serveur Seafile:
 
     .. code:: bash
 
-        SERVICE_URL = https://seafile.example.com
+        SERVICE_URL = https://seafile.example.com 
+
+    -  mettre à la place de ``example.com`` votre nom de domaine
 
 7.  Editez le fichier ``seahub_settings.py``. Tapez:
 
@@ -5660,14 +5762,19 @@ Nous allons effectuer un premier lancement du serveur Seafile:
 
     .. code:: python
 
-        FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp'
+        FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp' 
+
+    -  mettre à la place de ``example.com`` votre nom de domaine
 
 9.  Démarrez Seafile. Tapez:
 
     .. code:: bash
 
+        cd /var/www/seafile.example.com/private/seafile/seafile-server-latest 
         sudo -u web1 ./seafile.sh start 
         sudo -u web1 ./seahub.sh start 8090 
+
+    -  mettre à la place de ``example.com`` votre nom de domaine
 
     -  remplacer le nom de user web1 par celui correspondant à celui du
        site web installé (indiqué dans le champ ``Options``\ →\`linux
@@ -5676,7 +5783,8 @@ Nous allons effectuer un premier lancement du serveur Seafile:
 
 10. Débloquez le port 8090 et 8092 dans votre firewall
 
-    a. Allez sur le site ispconfig https://example.com:8080/
+    a. Allez sur le site ispconfig
+       `https://<example.com>:8080/ <https://<example.com>:8080/>`__
 
     b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
        ``Firewall``. Cliquez sur votre serveur.
@@ -5700,10 +5808,12 @@ script de lancement automatique de Seafile:
 
    .. code:: bash
 
-       cd /var/www/seafile.example.com/private/seafile
+       cd /var/www/seafile.example.com/private/seafile 
        touch startseafile.sh
        chmod +x startseafile.sh
        vi startseafile.sh
+
+   -  mettre à la place de ``example.com`` votre nom de domaine
 
 2. Coller le texte suivant de le fichier ouvert:
 
@@ -5716,6 +5826,7 @@ script de lancement automatique de Seafile:
        script_path=${seafile_dir}/seafile-server-latest
        seafile_init_log=${seafile_dir}/logs/seafile.init.log
        seahub_init_log=${seafile_dir}/logs/seahub.init.log
+       seafgc_init_log=${seafile_dir}/logs/seafgc.init.log
 
        case "$1" in
        start)
@@ -5726,12 +5837,19 @@ script de lancement automatique de Seafile:
        ${script_path}/seafile.sh restart >> ${seafile_init_log}
        ${script_path}/seahub.sh restart 8090 >> ${seahub_init_log}
        ;;
+       reload)
+       ${script_path}/seahub.sh stop >> ${seahub_init_log}
+       ${script_path}/seafile.sh stop >> ${seafile_init_log}
+       ${script_path}/seaf-gc.sh >> ${seafgc_init_log}
+       ${script_path}/seafile.sh start >> ${seafile_init_log}
+       ${script_path}/seahub.sh start 8090 >> ${seahub_init_log}
+       ;;
        stop)
        ${script_path}/seahub.sh stop >> ${seahub_init_log}
        ${script_path}/seafile.sh stop >> ${seafile_init_log}
        ;;
        *)
-       echo "Usage: /etc/init.d/seafile {start|stop|restart}"
+       echo "Usage: /etc/init.d/seafile {start|stop|restart|reload}"
        exit 1
        ;;
        esac
@@ -5756,7 +5874,7 @@ script de lancement automatique de Seafile:
       -  ``Days of week:`` ← mettre \*
 
       -  ``Command to run:`` ← mettre
-         ``/var/www/seafile.example.com/private/seafile/startseafile.sh start``
+         ``/var/www/seafile.<example.com>/private/seafile/startseafile.sh start``
 
 4. Créer un second job cron dans ISPConfig pour redémarrer Seafile tous
    les jours
@@ -5777,7 +5895,7 @@ script de lancement automatique de Seafile:
       -  ``Days of week:`` ← mettre \*
 
       -  ``Command to run:`` ← mettre
-         ``/var/www/seafile.example.com/private/seafile/startseafile.sh restart``
+         ``/var/www/seafile.<example.com>/private/seafile/startseafile.sh reload``
 
 5. Arretez le serveur précédemment lancé en tant que root. Tapez:
 
@@ -6771,7 +6889,7 @@ version suffisamment récente.
 
 12. Créez votre fichier de swap en suivant `la
     procédure <#swap_create>`__. Attention le fichier de swap doit être
-    installé dans /mnt/root/swapfile
+    installé dans ``/mnt/root/swapfile``
 
 13. vous pouvez maintenant rebooter votre machine en mode normal.
 
@@ -7318,12 +7436,12 @@ Suivez la procédure suivante:
         systemctl restart tomcat8
         systemctl restart guacd
 
-19. Allez sur le site de guacamole.example.com
+19. Allez sur le site de ``guacamole.example.com``
 
-20. Loguez vous avec le compte: guacadmin et password guacadmin
+20. Loguez vous avec le compte: ``guacadmin`` et password: ``guacadmin``
 
-21. Commencez par cliquez sur guacadmin→paramètres → utilisateurs→
-    Nouvel Utilisateur
+21. Commencez par cliquez sur ``guacadmin`` → ``paramètres`` →
+    ``utilisateurs``\ → ``Nouvel Utilisateur``
 
     -  ``Identifiant`` ← Tapez ``admin``
 
@@ -7336,12 +7454,13 @@ Suivez la procédure suivante:
 
 22. Deconnectez vous et reconnectez vous avec le login ``admin``
 
-23. cliquez sur admin→paramètres → utilisateurs→ guacadmin
+23. cliquez sur ``admin`` → ``paramètres`` → ``utilisateurs`` →
+    ``guacadmin``
 
 24. Supprimez ce compte utilisateur
 
-25. Si vous avez activé VNC. Cliquez sur Admin→Paramètres →
-    Utilisateurs→ Connexions → Nouvelle Connexion
+25. Si vous avez activé VNC. Cliquez sur ``Admin`` → ``Paramètres`` →
+    ``Utilisateurs`` → ``Connexions`` → ``Nouvelle Connexion``
 
     -  ``Nom`` ← Tapez ``Local server VNC``
 
@@ -7361,8 +7480,8 @@ Suivez la procédure suivante:
     -  ``SFTP`` → ``Mot de passe`` ← Tapez un mot de passe sur votre
        Hôte
 
-26. Cliquez sur Admin→Paramètres → Utilisateurs→ Connexions → Nouvelle
-    Connexion
+26. Cliquez sur ``Admin`` → ``Paramètres`` → ``Utilisateurs`` →
+    ``Connexions`` → ``Nouvelle Connexion``
 
     -  ``Nom`` ← Tapez ``Local server SSH``
 

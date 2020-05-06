@@ -1539,7 +1539,9 @@ shellquote<span class="tok-o">()</span> <span class="tok-o">{</span>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-L&#8217;installation automatique de paquets peut conduire dans certains cas très rare à des dysfonctionnements du serveur. Il est important de regarder périodiquement les logs d&#8217;installation
+L&#8217;installation automatique de paquets peut conduire dans certains cas
+très rare à des dysfonctionnements du serveur. Il est important de
+regarder périodiquement les logs d&#8217;installation.
 </td>
 </tr>
 </table>
@@ -1766,8 +1768,16 @@ Respectez bien les étapes de cette procédure:</p>
 <p>Tapez :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>adduser &lt;sudo_username&gt;</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>adduser &lt;sudo_username&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer ici &lt;sudo_username&gt; par votre login</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -1777,8 +1787,16 @@ Respectez bien les étapes de cette procédure:</p>
 <p>Donner les attributs sudo à l&#8217;utilisateur <code>&lt;sudo_username&gt;</code>. Tapez :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>usermod -a -G sudo &lt;sudo_username&gt;</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>usermod -a -G sudo &lt;sudo_username&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer ici &lt;sudo_username&gt; par votre login</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -2234,7 +2252,7 @@ swapon /swapfile</code></pre>
 <p><code>Type principal de configuration de mail</code>: &#8592; Sélectionnez <code>Site Internet</code></p>
 </li>
 <li>
-<p><code>Nom de courrier</code>: &#8592; Entrez votre nom de host. Par exemple: mail.example.com</p>
+<p><code>Nom de courrier</code>: &#8592; Entrez votre nom de host. Par exemple: <code>mail.example.com</code></p>
 </li>
 </ol>
 </div>
@@ -2499,7 +2517,7 @@ systemctl restart mariadb</code></pre>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Éditez le fichier httpoxy.conf: :</p>
+<p>Éditez le fichier <code>httpoxy.conf</code> :</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apache2/conf-available/httpoxy.conf</code></pre>
@@ -2675,15 +2693,15 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
-<p>configurer la tache cron d&#8217;awstats: Éditez le fichier :</p>
+<p>Configurer la tache cron d&#8217;awstats: Éditez le fichier :</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/cron.d/awstats</code></pre>
 </div>
 </div>
-<div class="paragraph">
+</li>
+<li>
 <p>Et commentez toutes les lignes:</p>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>#MAILTO=root
@@ -2827,7 +2845,7 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
 <p><code>Organizational Unit Name (eg, section) []:</code> &#8592; Tapez entrée</p>
 </li>
 <li>
-<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</p>
+<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: <code>server1.example.com</code></p>
 </li>
 <li>
 <p><code>Email Address []:</code> &#8592; Tapez entrée</p>
@@ -3480,7 +3498,7 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 <p><code>Organizational Unit Name (eg, section) []:</code> &#8592; Tapez entrée</p>
 </li>
 <li>
-<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</p>
+<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: <code>server1.example.com</code></p>
 </li>
 <li>
 <p><code>Email Address []:</code> &#8592; Tapez entrée</p>
@@ -3510,7 +3528,7 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 <p><code>Organizational Unit Name (eg, section) []:</code> &#8592; Tapez entrée</p>
 </li>
 <li>
-<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: server1.example.com</p>
+<p><code>Common Name (e.g. server FQDN or YOUR name) []:</code> &#8592; Enter le nom d&#8217;hôte de votre serveur. Dans notre cas: <code>server1.example.com</code></p>
 </li>
 <li>
 <p><code>Email Address []:</code> &#8592; Tapez entrée</p>
@@ -3564,7 +3582,7 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur. Pour OVH, elle s&#8217;écrit VPSxxxxxx.ovh.net
+Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur. Pour OVH, elle s&#8217;écrit <code>VPSxxxxxx.ovh.net</code>.
 </td>
 </tr>
 </table>
@@ -3655,7 +3673,7 @@ Si le message "Possible attack detected. This action has been logged.". Cela sig
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+<p>Allez sur le site ispconfig <a href="https://&lt;example.com&gt;:8080/" class="bare">https://&lt;example.com&gt;:8080/</a></p>
 </li>
 <li>
 <p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
@@ -4010,7 +4028,7 @@ TXT<span class="tok-p">|</span><span class="tok-o">{</span>DOMAIN<span class="to
 <p><code>IPV6 Address:</code> &#8592; prendre l’adresse IPV6 du serveur sélectionnée</p>
 </li>
 <li>
-<p><code>Email:</code> &#8592; votre Email valide exemple <a href="mailto:admin@example.com">admin@example.com</a></p>
+<p><code>Email:</code> &#8592; votre Email valide exemple <code>admin@example.com</code></p>
 </li>
 <li>
 <p><code>DKIM:</code> &#8592; Yes</p>
@@ -4235,20 +4253,20 @@ example.com.         3600 TXT            "v=spf1 mx a ~all"</pre>
 <div class="sect2">
 <h3 id="_création_dun_sous_domaine">9.5. Création d&#8217;un sous domaine</h3>
 <div class="paragraph">
-<p>Supposons que vous êtes en train de créer un sous domain nommé sub.example.com .
-Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail.sub.example.com ou blog.sub.example.com.</p>
+<p>Supposons que vous êtes en train de créer un sous domain nommé <code>sub.example.com</code> .
+Dans ce sous domaines vous allez créer un ensemble de site web par exemple <code>mail.sub.example.com</code> ou <code>blog.sub.example.com</code> .</p>
 </div>
 <div class="paragraph">
 <p>Un cas assez classique est que ce sous domaine est délégué à une machine tierce.</p>
 </div>
 <div class="paragraph">
-<p>Par exemple: example.com est installé sur un VPS quelque part sur internet et sub.example.com est hébergé chez vous sur votre Raspberry.</p>
+<p>Par exemple: <code>example.com</code> est installé sur un VPS quelque part sur internet et <code>sub.example.com</code> est hébergé chez vous sur votre Raspberry.</p>
 </div>
 <div class="paragraph">
 <p>On suppose que votre domain a été configuré en suivant la procédure du chapitre précédent.</p>
 </div>
 <div class="paragraph">
-<p>Rien de bien sorcier pour votre sous domaine: Vous devez le créer sur votre Raspberry selon la même procédure mais avec le nom du sous domaine (sub.example.com donc).</p>
+<p>Rien de bien sorcier pour votre sous domaine: Vous devez le créer sur votre Raspberry selon la même procédure mais avec le nom du sous domaine ( <code>sub.example.com</code> donc).</p>
 </div>
 <div class="paragraph">
 <p>Vous aurez des actions complémentaires à effectuer sur votre domaine:</p>
@@ -4259,7 +4277,7 @@ Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail
 <p>Allez dans <code>DNS</code> de votre serveur de domaine principal</p>
 </li>
 <li>
-<p>Sélectionner le menu <code>Zones</code> puis le domaine example.com</p>
+<p>Sélectionner le menu <code>Zones</code> puis le domaine <code>example.com</code></p>
 </li>
 <li>
 <p>Choisissez l&#8217;onglet <code>Records</code> et créez:</p>
@@ -4288,14 +4306,14 @@ Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail
 </div>
 </div>
 <div class="paragraph">
-<p>Ce dernier enregistrement en complétant le Glue record fait le lien avec l&#8217;adresse IP de sub.example.com</p>
+<p>Ce dernier enregistrement en complétant le Glue record fait le lien avec l&#8217;adresse IP de <code>sub.example.com</code></p>
 </div>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Si vous avez activé DNSSEC sur votre serveur DNS de sub.example.com vous devrez récupérer les entrées DS du champ <code>DNSSEC DS-Data for registry</code> de votre domaine sub.example.com et créer dans votre domaine example.com les deux entrées suivantes:</p>
+<p>Si vous avez activé DNSSEC sur votre serveur DNS de <code>sub.example.com</code> vous devrez récupérer les entrées DS du champ <code>DNSSEC DS-Data for registry</code> de votre domaine <code>sub.example.com</code> et créer dans votre domaine <code>example.com</code> les deux entrées suivantes:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -4311,7 +4329,7 @@ Dans ce sous domaines vous allez créer un ensemble de site web par exemple mail
 <p>Allez sur le site <a href="https://dnssec-debugger.verisignlabs.com/">DNSSEC Analyzer</a>.</p>
 </li>
 <li>
-<p>Entrez votre nom de domaine "sub.example.com" et tapez sur "entrée".</p>
+<p>Entrez votre nom de domaine <code>sub.example.com</code> et tapez sur "entrée".</p>
 </li>
 </ol>
 </div>
@@ -4323,7 +4341,7 @@ Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore d
 <div class="sect2">
 <h3 id="domain-site">9.6. Création d’un site web</h3>
 <div class="paragraph">
-<p>Dans la suite le site web sera nommé "example.com".</p>
+<p>Dans la suite le site web sera nommé <code>example.com</code>.</p>
 </div>
 <div class="paragraph">
 <p>Vous devez avoir avant tout défini le "record" DNS associé au site.</p>
@@ -4823,11 +4841,19 @@ tmpldir /etc/munin/templates
 includedir /etc/munin/munin-conf.d
 [...]
 # a simple host tree
-[munin.example.com]
+[munin.example.com] <i class="conum" data-value="1"></i><b>(1)</b>
  address 127.0.0.1
  use_node_name yes
 [...]</pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -5428,7 +5454,7 @@ systemctl restart apache2</code></pre>
 </div>
 </li>
 <li>
-<p>en pointant sur le site rspampd.example.com, et en utilisant le mot de passe saisi plus haut vous pouvez accèder aux fonctions de l&#8217;outil.</p>
+<p>en pointant sur le site <code>rspampd.example.com</code> , et en utilisant le mot de passe saisi plus haut vous pouvez accéder aux fonctions de l&#8217;outil.</p>
 </li>
 <li>
 <p>Activer l&#8217;apprentissage par déplacement</p>
@@ -5644,7 +5670,7 @@ systemctl disable amavisd-new</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Remplacer example.com par votre nom de domaine.</td>
+<td>Remplacer <code>example.com</code> par votre nom de domaine.</td>
 </tr>
 </table>
 </div>
@@ -5662,13 +5688,13 @@ systemctl disable amavisd-new</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Entrez le nom de host de votre serveur de mail: mail.example.com .</p>
+<p>Entrez le nom de host de votre serveur de mail: <code>mail.example.com</code> .</p>
 </li>
 <li>
 <p>cliquez sur <code>test Email Server</code></p>
 </li>
 <li>
-<p>Tout doit être correct sauf éventuellement le reverse DNS qui doit être configuré pour pointer vers mail.example.com .</p>
+<p>Tout doit être correct sauf éventuellement le reverse DNS qui doit être configuré pour pointer vers <code>mail.example.com</code> .</p>
 </li>
 </ul>
 </div>
@@ -5730,31 +5756,39 @@ systemctl disable amavisd-new</code></pre>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
-<p>Dans le répertoire <code>/var/www/autoconfig.example.com/autoconfig/</code> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
+<p>Dans le répertoire <code>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</code> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/www/autoconfig.example.com/autoconfig/mail
-chmod <span class="tok-m">755</span> /var/www/autoconfig.example.com/autoconfig/mail
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/www/autoconfig.example.com/autoconfig/mail <i class="conum" data-value="2"></i><b>(2)</b>
+chmod <span class="tok-m">755</span> /var/www/autoconfig.example.com/autoconfig/mail <i class="conum" data-value="2"></i><b>(2)</b>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>remplacez <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
 <li>
 <p>A l’intérieur de ce répertoire, Editez un fichier <code>config-v1.1.xml</code>. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
-</li>
-</ol>
-</div></td>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacez <code>example.com</code> par votre nom de domaine</td>
 </tr>
 </table>
 </div>
@@ -5770,7 +5804,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail <i class="con
 
 <span class="tok-nt">&lt;clientConfig</span> <span class="tok-na">version=</span><span class="tok-s">&quot;1.1&quot;</span><span class="tok-nt">&gt;</span>
  <span class="tok-nt">&lt;emailProvider</span> <span class="tok-na">id=</span><span class="tok-s">&quot;example.com&quot;</span><span class="tok-nt">&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
-   <span class="tok-nt">&lt;domain&gt;</span>example.com<span class="tok-nt">&lt;/domain&gt;</span>
+   <span class="tok-nt">&lt;domain&gt;</span>example.com<span class="tok-nt">&lt;/domain&gt;</span>  <i class="conum" data-value="1"></i><b>(1)</b>
    <span class="tok-nt">&lt;displayName&gt;</span>Example Mail<span class="tok-nt">&lt;/displayName&gt;</span> <i class="conum" data-value="2"></i><b>(2)</b>
    <span class="tok-nt">&lt;displayShortName&gt;</span>Example<span class="tok-nt">&lt;/displayShortName&gt;</span> <i class="conum" data-value="3"></i><b>(3)</b>
    <span class="tok-nt">&lt;incomingServer</span> <span class="tok-na">type=</span><span class="tok-s">&quot;imap&quot;</span><span class="tok-nt">&gt;</span>
@@ -5809,7 +5843,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail <i class="con
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>mettre à la place de example.com votre nom de domaine</td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -5826,8 +5860,8 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail <i class="con
 <p>Donner la permission en lecture seule et affecter les groupes d&#8217;appartenance. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">644</span> /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">644</span> /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <i class="conum" data-value="2"></i><b>(2)</b>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -5835,6 +5869,10 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.x
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>remplacez <code>example.com</code> par votre nom de domaine</td>
 </tr>
 </table>
 </div>
@@ -5890,7 +5928,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.x
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer example.com par votre nom de domaine</td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
 </tr>
 </table>
 </div>
@@ -5905,31 +5943,39 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.x
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
-<p>Dans le répertoire <code>/var/www/autoconfig.example.com/autoconfig/</code>, créer un répertoire <code>Autodiscover</code>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
+<p>Dans le répertoire <code>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</code>, créer un répertoire <code>Autodiscover</code>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/
-chmod <span class="tok-m">755</span> /var/www/autoconfig.example.com/autoconfig/Autodiscover/
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i class="conum" data-value="2"></i><b>(2)</b>
+chmod <span class="tok-m">755</span> /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i class="conum" data-value="2"></i><b>(2)</b>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>remplacez <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
 <li>
 <p>A l’intérieur de ce répertoire, Editez un fichier <code>Autodiscover.xml</code>. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
-</li>
-</ol>
-</div></td>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacez <code>example.com</code> par votre nom de domaine</td>
 </tr>
 </table>
 </div>
@@ -5981,7 +6027,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i c
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>mettre à la place de example.com votre nom de domaine</td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -5994,8 +6040,8 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i c
 <p>Changez les permissions comme pour le répertoire</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">644</span> /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">644</span> /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <i class="conum" data-value="2"></i><b>(2)</b>
+chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6003,6 +6049,10 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>remplacez <code>example.com</code> par votre nom de domaine</td>
 </tr>
 </table>
 </div>
@@ -6059,7 +6109,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 <p><code>Name:</code> &#8592; mettez votre prénom et votre nom</p>
 </li>
 <li>
-<p><code>`Email:</code> &#8592; mail_name @ example.com</p>
+<p><code>`Email:</code> &#8592; saisir le &lt;mail_name&gt; <code>mail_name@example.com</code></p>
 </li>
 <li>
 <p><code>Password:</code> &#8592; <a href="#pass_gen">Saisissez un mot de passe généré</a> ou générez en un en cliquant sur le bouton</p>
@@ -6101,7 +6151,7 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Notez que si vous créez une adresse mail nommée <a href="mailto:mail_name@example.com">mail_name@example.com</a>, vous pouvez utilisez toutes les variantes (nommées tag) derrière le caractère "+". Ainsi <a href="mailto:mail_name+nospam@example.com">mail_name+nospam@example.com</a> sera bien redirigé vers votre boite et l&#8217;extension +nospam vous permettre de trier automatiquement les mails que vous ne voulez pas recevoir.
+Notez que si vous créez une adresse mail nommée <code>mail_name@example.com</code>, vous pouvez utilisez toutes les variantes (nommées tag) derrière le caractère "+". Ainsi <code>mail_name+nospam@example.com</code> sera bien redirigé vers votre boite et l&#8217;extension <code>+nospam</code> vous permettre de trier automatiquement les mails que vous ne voulez pas recevoir.
 </td>
 </tr>
 </table>
@@ -6189,7 +6239,7 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 <div class="sect2">
 <h3 id="_mise_en_oeuvre_du_site_web_de_webmail">12.8. Mise en oeuvre du site web de webmail</h3>
 <div class="paragraph">
-<p>On suppose que vous avez install roundcube lors de la procédure d&#8217;installation initiale et que vous avez déjà créé le host mail.example.com.</p>
+<p>On suppose que vous avez install roundcube lors de la procédure d&#8217;installation initiale et que vous avez déjà créé le host <code>mail.example.com</code> .</p>
 </div>
 <div class="paragraph">
 <p>Il vous reste à appliquer la procédure suivante:</p>
@@ -6278,7 +6328,7 @@ chmod 755 imapsync</pre>
 <p>Installez les packages perls éventuellement manquants:</p>
 <div class="listingblock">
 <div class="content">
-<pre>apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl</pre>
+<pre>apt install libregexp-common-perl libfile-tail-perl libsys-meminfo-perl libunicode-string-perl libmail-imapclient-perl libio-tee-perl libio-socket-inet6-perl libfile-copy-recursive-perl libencode-imaputf7-perl</pre>
 </div>
 </div>
 </li>
@@ -6309,7 +6359,7 @@ chmod 600 secretdst</pre>
 <p>Nous pouvons maintenant lancer la commande. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre>./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 /etc/secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 /etc/secretdst</pre>
+<pre>./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 secretdst</pre>
 </div>
 </div>
 </li>
@@ -6703,7 +6753,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <p>Cliquez sur <code>Install</code></p>
 </li>
 <li>
-<p>Pointez votre navigateur sur <a href="https://example.com/" class="bare">https://example.com/</a> et loguez vous <code>admin</code> avec votre mot de passe saisi, c&#8217;est fait !</p>
+<p>Pointez votre navigateur sur <a href="https://&lt;example.com&gt;/" class="bare">https://&lt;example.com&gt;/</a> et loguez vous <code>admin</code> avec votre mot de passe saisi, c&#8217;est fait !</p>
 </li>
 <li>
 <p>N&#8217;oubliez pas d&#8217;administrer le site et de le mettre à jour avec la dernière version de Wordpress.</p>
@@ -6865,9 +6915,17 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <p>Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="command"><span></span>cd /var/www/microweber.example.com/microweber
+<pre class="pygments highlight"><code data-lang="command"><span></span>cd /var/www/microweber.example.com/microweber <i class="conum" data-value="1"></i><b>(1)</b>
 wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinstall.php</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -7082,10 +7140,15 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>cd /var/www/piwigo.example.com/piwigo
+<pre>cd /var/www/piwigo.example.com/piwigo <i class="conum" data-value="1"></i><b>(1)</b>
 wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinstall.php</pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -7138,6 +7201,9 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 <p>Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer et commencer à utiliser l&#8217;outil</p>
 </li>
 </ol>
+</div></td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -7356,10 +7422,15 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>cd /var/www/nextcloud.example.com/nextcloud
+<pre>cd /var/www/nextcloud.example.com/nextcloud <i class="conum" data-value="1"></i><b>(1)</b>
 wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -7394,7 +7465,7 @@ wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</pre>
 <p><code>Password de la Base de données</code> &#8592; Tapez votre mot de passe</p>
 </li>
 <li>
-<p><code>Nom de la Base de données</code> &#8592; entrez <code>cxnextcloud</code>. x est le numero de client; habituellement c&#8217;est 0</p>
+<p><code>Nom de la Base de données</code> &#8592; entrez <code>cxnextcloud</code>. x est le numéro de client; habituellement c&#8217;est 0</p>
 </li>
 <li>
 <p><code>nom du serveur</code> &#8592; Laissez <code>Localhost</code></p>
@@ -7406,9 +7477,12 @@ wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</pre>
 <p>Tapez <code>Next</code></p>
 </li>
 <li>
-<p>Vous êtes redirigé sur le site nextcloud ou vous pourrez vous loguer et commencer à utliser l&#8217;outil</p>
+<p>Vous êtes redirigé sur le site nextcloud ou vous pourrez vous loguer et commencer à utiliser l&#8217;outil</p>
 </li>
 </ol>
+</div></td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -8026,7 +8100,8 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 <p>Installez quelques paquets Debian complémentaires. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt-get install python2.7 python-setuptools python-simplejson python-pil python-mysqldb python-flup</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install python3 python3-setuptools python3-pip
+pip3 install --timeout<span class="tok-o">=</span><span class="tok-m">3600</span> Pillow pylibmc captcha jinja2 sqlalchemy psd-tools django-pylibmc django-simple-captcha python3-ldap</code></pre>
 </div>
 </div>
 </li>
@@ -8034,23 +8109,27 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 <p>Je préfère faire tourner mes serveurs dans le répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/seafile.example.com/private
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/seafile.example.com/private <i class="conum" data-value="1"></i><b>(1)</b>
 mkdir seafile
 <span class="tok-nb">cd</span> seafile
-wget https://download.seadrive.org/seafile-server_7.0.5_x86-64.tar.gz
-tar zxvf seafile-server_7.0.5_x86-64.tar.gz
+wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz
+tar zxvf seafile-server_7.1.3_x86-64.tar.gz
 mkdir installed
 mv seafile-server_* installed
 <span class="tok-nb">cd</span> seafile-server-*
 ./setup-seafile-mysql.sh
 <span class="tok-nb">cd</span> ../..
-chown -R web1:client0 seafile <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+chown -R web1:client0 seafile <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <code>Options</code>&#8594;champs Linux User et Linux Group.</td>
 </tr>
 </table>
@@ -8082,9 +8161,17 @@ chown -R web1:client0 seafile <i class="conum" data-value="1"></i><b>(1)</b></co
 <p>allez dans le répertoire contenant les configurations et éditez <code>gunicorn.conf</code>. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/seafile.example.com/private/seafile/conf
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/seafile.example.com/private/seafile/conf <i class="conum" data-value="1"></i><b>(1)</b>
 vi gunicorn.conf</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -8104,7 +8191,7 @@ vi gunicorn.conf</code></pre>
 </div>
 </li>
 <li>
-<p>mettez un port 8092 au lieu du port 8080 saisi pour l&#8217;entrée <code>fileserver</code>. Le fichier doit contenir ceci:</p>
+<p>mettez un port 8092 au lieu du port 8082 saisi pour l&#8217;entrée <code>fileserver</code>. Le fichier doit contenir ceci:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-k">[fileserver]</span>
@@ -8124,8 +8211,16 @@ vi gunicorn.conf</code></pre>
 <p>modifier l&#8217;entrée SERVICE_URL. Le fichier doit contenir ceci:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">SERVICE_URL</span> <span class="tok-o">=</span> https://seafile.example.com</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">SERVICE_URL</span> <span class="tok-o">=</span> https://seafile.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -8140,22 +8235,35 @@ vi gunicorn.conf</code></pre>
 <p>modifier l&#8217;entrée FILE_SERVER_ROOT. Le fichier doit contenir ceci:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">FILE_SERVER_ROOT</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;https://seafile.example.com/seafhttp&#39;</span></code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Démarrez Seafile. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo -u web1 ./seafile.sh start <i class="conum" data-value="1"></i><b>(1)</b>
-sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">FILE_SERVER_ROOT</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;https://seafile.example.com/seafhttp&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Démarrez Seafile. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/seafile.example.com/private/seafile/seafile-server-latest <i class="conum" data-value="1"></i><b>(1)</b>
+sudo -u web1 ./seafile.sh start <i class="conum" data-value="2"></i><b>(2)</b>
+sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <code>Options</code>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</td>
 </tr>
 </table>
@@ -8166,7 +8274,7 @@ sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" 
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Allez sur le site ispconfig <a href="https://example.com:8080/" class="bare">https://example.com:8080/</a></p>
+<p>Allez sur le site ispconfig <a href="https://&lt;example.com&gt;:8080/" class="bare">https://&lt;example.com&gt;:8080/</a></p>
 </li>
 <li>
 <p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
@@ -8200,11 +8308,19 @@ sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" 
 <p>Créer un script de lancement automatique. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/seafile.example.com/private/seafile
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/seafile.example.com/private/seafile <i class="conum" data-value="1"></i><b>(1)</b>
 touch startseafile.sh
 chmod +x startseafile.sh
 vi startseafile.sh</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -8218,6 +8334,7 @@ vi startseafile.sh</code></pre>
 <span class="tok-nv">script_path</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">seafile_dir</span><span class="tok-si">}</span>/seafile-server-latest
 <span class="tok-nv">seafile_init_log</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">seafile_dir</span><span class="tok-si">}</span>/logs/seafile.init.log
 <span class="tok-nv">seahub_init_log</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">seafile_dir</span><span class="tok-si">}</span>/logs/seahub.init.log
+<span class="tok-nv">seafgc_init_log</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">seafile_dir</span><span class="tok-si">}</span>/logs/seafgc.init.log
 
 <span class="tok-k">case</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$1</span><span class="tok-s2">&quot;</span> in
 start<span class="tok-o">)</span>
@@ -8228,12 +8345,19 @@ restart<span class="tok-o">)</span>
 <span class="tok-si">${</span><span class="tok-nv">script_path</span><span class="tok-si">}</span>/seafile.sh restart &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">seafile_init_log</span><span class="tok-si">}</span>
 <span class="tok-si">${</span><span class="tok-nv">script_path</span><span class="tok-si">}</span>/seahub.sh restart <span class="tok-m">8090</span> &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">seahub_init_log</span><span class="tok-si">}</span>
 <span class="tok-p">;;</span>
+reload<span class="tok-o">)</span>
+<span class="tok-si">${</span><span class="tok-nv">script_path</span><span class="tok-si">}</span>/seahub.sh stop &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">seahub_init_log</span><span class="tok-si">}</span>
+<span class="tok-si">${</span><span class="tok-nv">script_path</span><span class="tok-si">}</span>/seafile.sh stop &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">seafile_init_log</span><span class="tok-si">}</span>
+<span class="tok-si">${</span><span class="tok-nv">script_path</span><span class="tok-si">}</span>/seaf-gc.sh &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">seafgc_init_log</span><span class="tok-si">}</span>
+<span class="tok-si">${</span><span class="tok-nv">script_path</span><span class="tok-si">}</span>/seafile.sh start &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">seafile_init_log</span><span class="tok-si">}</span>
+<span class="tok-si">${</span><span class="tok-nv">script_path</span><span class="tok-si">}</span>/seahub.sh start <span class="tok-m">8090</span> &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">seahub_init_log</span><span class="tok-si">}</span>
+<span class="tok-p">;;</span>
 stop<span class="tok-o">)</span>
 <span class="tok-si">${</span><span class="tok-nv">script_path</span><span class="tok-si">}</span>/seahub.sh stop &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">seahub_init_log</span><span class="tok-si">}</span>
 <span class="tok-si">${</span><span class="tok-nv">script_path</span><span class="tok-si">}</span>/seafile.sh stop &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">seafile_init_log</span><span class="tok-si">}</span>
 <span class="tok-p">;;</span>
 *<span class="tok-o">)</span>
-<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Usage: /etc/init.d/seafile {start|stop|restart}&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Usage: /etc/init.d/seafile {start|stop|restart|reload}&quot;</span>
 <span class="tok-nb">exit</span> <span class="tok-m">1</span>
 <span class="tok-p">;;</span>
 <span class="tok-k">esac</span></code></pre>
@@ -8275,7 +8399,7 @@ stop<span class="tok-o">)</span>
 <p><code>Days of week:</code> &#8592; mettre *</p>
 </li>
 <li>
-<p><code>Command to run:</code> &#8592; mettre <code>/var/www/seafile.example.com/private/seafile/startseafile.sh start</code></p>
+<p><code>Command to run:</code> &#8592; mettre <code>/var/www/seafile.&lt;example.com&gt;/private/seafile/startseafile.sh start</code></p>
 </li>
 </ul>
 </div>
@@ -8310,7 +8434,7 @@ stop<span class="tok-o">)</span>
 <p><code>Days of week:</code> &#8592; mettre *</p>
 </li>
 <li>
-<p><code>Command to run:</code> &#8592; mettre <code>/var/www/seafile.example.com/private/seafile/startseafile.sh restart</code></p>
+<p><code>Command to run:</code> &#8592; mettre <code>/var/www/seafile.&lt;example.com&gt;/private/seafile/startseafile.sh reload</code></p>
 </li>
 </ul>
 </div>
@@ -9642,7 +9766,9 @@ sync
 </div>
 </li>
 <li>
-<p>Créez votre fichier de swap en suivant <a href="#swap_create">la procédure</a>. Attention le fichier de swap doit être installé dans /mnt/root/swapfile</p>
+<p>Créez votre fichier de swap en suivant <a href="#swap_create">la
+procédure</a>. Attention le fichier de swap doit être installé dans
+<code>/mnt/root/swapfile</code></p>
 </li>
 <li>
 <p>vous pouvez maintenant rebooter votre machine en mode normal.</p>
@@ -10406,13 +10532,13 @@ systemctl restart guacd</code></pre>
 </div>
 </li>
 <li>
-<p>Allez sur le site de guacamole.example.com</p>
+<p>Allez sur le site de <code>guacamole.example.com</code></p>
 </li>
 <li>
-<p>Loguez vous avec le compte: guacadmin et password guacadmin</p>
+<p>Loguez vous avec le compte: <code>guacadmin</code> et password: <code>guacadmin</code></p>
 </li>
 <li>
-<p>Commencez par cliquez sur guacadmin&#8594;paramètres &#8594; utilisateurs&#8594; Nouvel Utilisateur</p>
+<p>Commencez par cliquez sur <code>guacadmin</code> &#8594; <code>paramètres</code> &#8594; <code>utilisateurs</code>&#8594; <code>Nouvel Utilisateur</code></p>
 <div class="ulist">
 <ul>
 <li>
@@ -10434,13 +10560,13 @@ systemctl restart guacd</code></pre>
 <p>Deconnectez vous et reconnectez vous avec le login <code>admin</code></p>
 </li>
 <li>
-<p>cliquez sur admin&#8594;paramètres &#8594; utilisateurs&#8594; guacadmin</p>
+<p>cliquez sur <code>admin</code> &#8594; <code>paramètres</code> &#8594; <code>utilisateurs</code> &#8594; <code>guacadmin</code></p>
 </li>
 <li>
 <p>Supprimez ce compte utilisateur</p>
 </li>
 <li>
-<p>Si vous avez activé VNC. Cliquez sur Admin&#8594;Paramètres &#8594; Utilisateurs&#8594; Connexions &#8594; Nouvelle Connexion</p>
+<p>Si vous avez activé VNC. Cliquez sur <code>Admin</code> &#8594; <code>Paramètres</code> &#8594; <code>Utilisateurs</code> &#8594; <code>Connexions</code> &#8594; <code>Nouvelle Connexion</code></p>
 <div class="ulist">
 <ul>
 <li>
@@ -10471,7 +10597,7 @@ systemctl restart guacd</code></pre>
 </div>
 </li>
 <li>
-<p>Cliquez sur Admin&#8594;Paramètres &#8594; Utilisateurs&#8594; Connexions &#8594; Nouvelle Connexion</p>
+<p>Cliquez sur <code>Admin</code> &#8594; <code>Paramètres</code> &#8594; <code>Utilisateurs</code> &#8594; <code>Connexions</code> &#8594; <code>Nouvelle Connexion</code></p>
 <div class="ulist">
 <ul>
 <li>
