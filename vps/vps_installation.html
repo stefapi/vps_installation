@@ -604,6 +604,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_supprimer_vos_vieux_backups">22.8. Supprimer vos vieux backups</a></li>
 <li><a href="#_automatisez_votre_sauvegarde">22.9. Automatisez votre sauvegarde</a></li>
 <li><a href="#_restauration_durgence">22.10. Restauration d&#8217;urgence.</a></li>
+<li><a href="#_installation_de_borgweb">22.11. Installation de Borgweb</a></li>
+<li><a href="#_création_du_site_web_de_borgweb">22.12. Création du site web de Borgweb</a></li>
 </ul>
 </li>
 <li><a href="#_installation_dun_serveur_de_vpn_pritunl">23. Installation d&#8217;un serveur de VPN Pritunl</a>
@@ -2229,7 +2231,7 @@ swapon /swapfile</code></pre>
 <p>Tapez :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron jailkit</code></pre>
 </div>
 </div>
 </li>
@@ -4317,10 +4319,10 @@ Dans ce sous domaines vous allez créer un ensemble de site web par exemple <cod
 <div class="ulist">
 <ul>
 <li>
-<p>un enregistrement de type <code>DS</code> avec une <code>Zone</code> &#8592; <code>sub.example.com</code> et un champ <code>data</code> contenant <code>xxxxx 7 1 &lt;votre_digest_recupérée&gt;</code></p>
+<p>un enregistrement de type <code>DS</code> avec une <code>Zone</code> &#8592; <code>sub.example.com.</code> et un champ <code>data</code> contenant <code>xxxxx 7 1 &lt;votre_digest_recupérée&gt;</code></p>
 </li>
 <li>
-<p>un enregistrement de type <code>DS</code> avec une <code>Zone</code> &#8592; <code>sub.example.com</code> et un champ <code>data</code> contenant <code>xxxxx 7 2 &lt;votre_digest_recupérée&gt;</code></p>
+<p>un enregistrement de type <code>DS</code> avec une <code>Zone</code> &#8592; <code>sub.example.com.</code> et un champ <code>data</code> contenant <code>xxxxx 7 2 &lt;votre_digest_recupérée&gt;</code></p>
 </li>
 </ul>
 </div>
@@ -4363,6 +4365,12 @@ Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore d
 <p>Saisissez les informations:</p>
 <div class="ulist">
 <ul>
+<li>
+<p><code>Client:</code> &#8592; laisser vide ou mettre le client que vous avez créé.</p>
+</li>
+<li>
+<p><code>IPv4-Address:</code> &#8592; mettre <code>*</code>. Si vous mettez votre adresse IPV4 vous allez rencontrer quelques disfonctionnements.</p>
+</li>
 <li>
 <p><code>Domain:</code> &#8592; mettre <code>example.com</code></p>
 </li>
@@ -5291,6 +5299,18 @@ check process dovecot with pidfile /var/run/dovecot/master.pid
 </div>
 </div>
 </li>
+<li>
+<p>Mettez à jour automatiquement les règles de filtre:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>echo 'enabled = true;' &gt; /etc/rspamd/local.d/rspamd_update.conf</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Enrichissez les headers des mails spams. Tapez:</p>
 <div class="listingblock">
@@ -9780,6 +9800,289 @@ procédure</a>. Attention le fichier de swap doit être installé dans
 <pre class="pygments highlight"><code data-lang="bash"><span></span>borg export-tar --list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::&lt;votre_archive&gt; restore.tar.xz</code></pre>
 </div>
 </div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_borgweb">22.11. Installation de Borgweb</h3>
+<div class="paragraph">
+<p>Borgweb existe en version officielle. Cette version n&#8217;a pas trop d&#8217;intéret pour nous étant donnée qu&#8217;elle n&#8217;interroge pas le serveur de stockage pour obtenir les informations des backups réalisés. Il existe un clone de repository qui implémente une fonctionnalité qui liste tous les backups effectués sur le serveur de stockage</p>
+</div>
+<div class="paragraph">
+<p>Suivez la procédure suivante sur le serveur de stockage:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur &lt;storing_srv&gt;. </a></p>
+</li>
+<li>
+<p>Installez pip  pour python3 et NPM. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install python3-pip3 npm</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installer le logiciel dans le répertoire <code>/var/lib/borgweb</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/lib/borgweb
+git clone https://github.com/vche/borgweb.git</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Dans la version testée, le fichier <code>README.rst</code> est utilisé par l&#8217;installeur mais plus présent dans le repo. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> borgweb
+touch README.rst</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lancez l&#8217;installation. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>pip install -e .
+<span class="tok-nb">cd</span> js
+npm install</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Editez la configuration. Comme la variable d&#8217;environnement <code>BORG_CONFIG</code> semble n&#8217;avoir aucun effet, éditez directement le fichier de configuration du repository. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/lib/borgweb/borgweb/borgweb
+vi config.py</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Mettez ce texte dans le fichier édité:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">Config</span><span class="tok-p">(</span><span class="tok-nb">object</span><span class="tok-p">):</span>
+    <span class="tok-sd">&quot;&quot;&quot;This is the basic configuration class for BorgWeb.&quot;&quot;&quot;</span>
+
+    <span class="tok-c1">#: builtin web server configuration</span>
+    <span class="tok-n">HOST</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;127.0.0.1&#39;</span>  <span class="tok-c1"># use 0.0.0.0 to bind to all interfaces</span>
+    <span class="tok-n">PORT</span> <span class="tok-o">=</span> <span class="tok-mi">5000</span>  <span class="tok-c1"># ports &lt; 1024 need root</span>
+    <span class="tok-n">DEBUG</span><span class="tok-o">=</span><span class="tok-bp">False</span>
+
+    <span class="tok-c1">#: borg / borgweb configuration</span>
+    <span class="tok-n">LOG_DIR</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;/var/log/borg&#39;</span>
+    <span class="tok-n">BORG_PATH</span><span class="tok-o">=</span><span class="tok-s2">&quot;/usr/bin/borg&quot;</span>
+
+    <span class="tok-c1"># Repo status cache configuration. TTL in secs</span>
+    <span class="tok-n">STATUS_CACHE_TTL</span><span class="tok-o">=</span><span class="tok-mi">43200</span>
+    <span class="tok-n">STATUS_CACHE_PATH</span><span class="tok-o">=</span><span class="tok-s2">&quot;/tmp/borgweb.cache&quot;</span>
+
+    <span class="tok-n">BACKUP_REPOS</span> <span class="tok-o">=</span> <span class="tok-p">{</span>
+        <span class="tok-c1"># Repo  name</span>
+        <span class="tok-s2">&quot;example.com&quot;</span><span class="tok-p">:</span> <span class="tok-p">{</span> <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="tok-c1"># Repo absolute path</span>
+            <span class="tok-s2">&quot;repo_path&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;/home/borgbackup/borgbackup&quot;</span><span class="tok-p">,</span>
+
+            <span class="tok-c1"># Repo logs absolute path, or relative to the main LOG_DIR</span>
+            <span class="tok-s2">&quot;log_path&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;/var/log/borg/&quot;</span><span class="tok-p">,</span>
+
+            <span class="tok-c1"># Repo password</span>
+            <span class="tok-s2">&quot;repo_pwd&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;your_password&quot;</span><span class="tok-p">,</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+            <span class="tok-c1"># Command/script to run to manually start a backup.</span>
+            <span class="tok-c1"># If left empty or not specified, the backup won&#39;t be</span>
+            <span class="tok-c1"># manually runnable</span>
+            <span class="tok-s2">&quot;script&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;script&quot;</span><span class="tok-p">,</span>
+
+            <span class="tok-c1"># Filled with discovered backups in the repo</span>
+            <span class="tok-s2">&quot;backups&quot;</span><span class="tok-p">:</span> <span class="tok-p">[]</span>
+        <span class="tok-p">}</span>
+    <span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Insérez ici le mot de passe du dépot Borg Backup</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Mettez ici le nom de votre domaine sauvegardé</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Créez un service <code>systemd</code>. Editez le fichier de service. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systemd/system/borgweb.service</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Insérez dans le fichier le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>[Unit]
+Description=Borgweb Daemon
+After=syslog.target network.target
+
+[Service]
+WorkingDirectory=/var/lib/borgweb
+User=root
+Group=root
+UMask=0002
+Restart=on-failure
+RestartSec=5
+Type=simple
+ExecStart=/usr/local/bin/borgweb
+KillSignal=SIGINT
+TimeoutStopSec=20
+SyslogIdentifier=borgweb
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Recharge la base de systemd. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl daemon-reload</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Activez et démarrez <code>borgweb</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl <span class="tok-nb">enable</span> borgweb.service
+systemctl start borgweb.service</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_du_site_web_de_borgweb">22.12. Création du site web de Borgweb</h3>
+<div class="paragraph">
+<p>Appliquez les opérations suivantes Dans ISPConfig de votre serveur de stockage &lt;storing_srv&gt;:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>borgweb</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>borgweb</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>borgweb</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>Fast CGI</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-c"># borgweb httpserver</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nt">&lt;Location</span> <span class="tok-s">/</span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AllowOverride</span> AuthConfig
+    <span class="tok-nb">AuthUserFile</span> <span class="tok-sx">/var/lib/borgweb/borgweb-htpasswd</span>
+    <span class="tok-nb">AuthName</span> <span class="tok-s2">&quot;Borgweb&quot;</span>
+    <span class="tok-nb">AuthType</span> Basic
+    <span class="tok-nb">Require</span> valid-user
+
+    <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+    <span class="tok-nb">ProxyPass</span> / http://localhost:5000/
+    <span class="tok-nb">ProxyPassReverse</span> / http://localhost:5000/
+
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">auth_basic</span> <span class="tok-k">off</span>;
+
+    <span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+    <span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+    <span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+
+<span class="tok-nt">&lt;/Location&gt;</span></code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><a href="#root_login">Loguez vous comme root sur &lt;storing_srv&gt;. </a></p>
+</li>
+<li>
+<p>Créez ensuite le fichier de mot de passe de borgweb dans votre &lt;storing_srv&gt;:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>htpasswd -c /var/lib/borgweb/borgweb-htpasswd admin</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez <a href="#pass_gen">votre mot de passe généré</a></p>
+</li>
+<li>
+<p>Redémarrez apache. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service apache2 restart</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pointez votre navigateur sur <a href="https://borgweb.storing_srv" class="bare">https://borgweb.storing_srv</a> , un mot de passe vous est demandé. Tapez <code>admin</code> pour le user et le password saisi. Vous accédez aux informations de sauvegarde de votre site.</p>
 </li>
 </ol>
 </div>

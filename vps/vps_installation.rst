@@ -1148,7 +1148,7 @@ Mailman.
 
       .. code:: bash
 
-          apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron
+          apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron jailkit
 
    b. Pour les systèmes avec plus de mémoire tapez :
 
@@ -2673,11 +2673,11 @@ Vous aurez des actions complémentaires à effectuer sur votre domaine:
    suivantes:
 
    -  un enregistrement de type ``DS`` avec une ``Zone`` ←
-      ``sub.example.com`` et un champ ``data`` contenant
+      ``sub.example.com.`` et un champ ``data`` contenant
       ``xxxxx 7 1 <votre_digest_recupérée>``
 
    -  un enregistrement de type ``DS`` avec une ``Zone`` ←
-      ``sub.example.com`` et un champ ``data`` contenant
+      ``sub.example.com.`` et un champ ``data`` contenant
       ``xxxxx 7 2 <votre_digest_recupérée>``
 
 5. Allez sur le site `DNSSEC
@@ -2707,6 +2707,13 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
       i.   Cliquez sur "Add new website"
 
       ii.  Saisissez les informations:
+
+           -  ``Client:`` ← laisser vide ou mettre le client que vous
+              avez créé.
+
+           -  ``IPv4-Address:`` ← mettre ``*``. Si vous mettez votre
+              adresse IPV4 vous allez rencontrer quelques
+              disfonctionnements.
 
            -  ``Domain:`` ← mettre ``example.com``
 
@@ -3427,13 +3434,19 @@ Suivez la procédure suivante:
 
         echo 'enabled = true;' > /etc/rspamd/local.d/url_reputation.conf
 
-10. Enrichissez les headers des mails spams. Tapez:
+10. Mettez à jour automatiquement les règles de filtre:
+
+::
+
+    echo 'enabled = true;' > /etc/rspamd/local.d/rspamd_update.conf
+
+1.  Enrichissez les headers des mails spams. Tapez:
 
     .. code:: bash
 
         vi /etc/rspamd/local.d/milter_headers.conf
 
-11. inserez le texte suivant:
+2.  inserez le texte suivant:
 
     ::
 
@@ -3472,45 +3485,45 @@ Suivez la procédure suivante:
           # user-defined routines: more on these later
         }
 
-12. Créez un mot de passe. Tapez:
+3.  Créez un mot de passe. Tapez:
 
     .. code:: bash
 
         rspamadm pw
 
-13. Entrez `votre mot de passe généré <#pass_gen>`__. Une hashphrase est
+4.  Entrez `votre mot de passe généré <#pass_gen>`__. Une hashphrase est
     générée.
 
-14. Copiez la.
+5.  Copiez la.
 
-15. Remplacez celle déjà présente dans
+6.  Remplacez celle déjà présente dans
     ``/etc/rspamd/local.d/worker-controller.inc``
 
     .. code:: bash
 
         vi /etc/rspamd/local.d/worker-controller.inc
 
-16. Remplacez le texte entre guillemets sur la ligne
+7.  Remplacez le texte entre guillemets sur la ligne
     ``password = "$2$g95yw…​…​dq3c5byy";`` par le texte copié.
 
-17. Sauvez
+8.  Sauvez
 
-18. Redémarrez Rspamd
+9.  Redémarrez Rspamd
 
     .. code:: bash
 
         systemctl restart rspamd
 
-19. Rendre le site rspamd accessible dans un host
+10. Rendre le site rspamd accessible dans un host
 
-20. Activez le module proxy dans apache
+11. Activez le module proxy dans apache
 
     .. code:: bash
 
         a2enmod proxy
         systemctl restart apache2
 
-21. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+12. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
     Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
 
     a. Cliquez sur ``A`` et saisissez:
@@ -3522,7 +3535,7 @@ Suivez la procédure suivante:
 
     b. Cliquez sur ``Save``
 
-22. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+13. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
     configurateur de ``sites``.
 
     a. Lui donner le nom ``rspamd``.
@@ -3552,11 +3565,11 @@ Suivez la procédure suivante:
            ProxyPass / http://localhost:11334/
            ProxyPassReverse / http://localhost:11334/
 
-23. en pointant sur le site ``rspampd.example.com`` , et en utilisant le
+14. en pointant sur le site ``rspampd.example.com`` , et en utilisant le
     mot de passe saisi plus haut vous pouvez accéder aux fonctions de
     l’outil.
 
-24. Activer l’apprentissage par déplacement
+15. Activer l’apprentissage par déplacement
 
     a. Couplé avec Dovecot, Rspamd nous propose de pouvoir apprendre
        également en fonction des actions des utilisateurs. Si un mail
@@ -3671,7 +3684,7 @@ Suivez la procédure suivante:
        et ``/var/log/rspamd/rspamd.log`` doivent montrer les actions de
        recalcul des spams.
 
-25. Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:
+16. Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:
 
     .. code:: bash
 
@@ -6568,6 +6581,231 @@ version suffisamment récente.
     .. code:: bash
 
         borg export-tar --list borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::<votre_archive> restore.tar.xz
+
+Installation de Borgweb
+-----------------------
+
+Borgweb existe en version officielle. Cette version n’a pas trop
+d’intéret pour nous étant donnée qu’elle n’interroge pas le serveur de
+stockage pour obtenir les informations des backups réalisés. Il existe
+un clone de repository qui implémente une fonctionnalité qui liste tous
+les backups effectués sur le serveur de stockage
+
+Suivez la procédure suivante sur le serveur de stockage:
+
+1.  `Loguez vous comme root sur <storing\_srv>. <#root_login>`__
+
+2.  Installez pip pour python3 et NPM. Tapez:
+
+    .. code:: bash
+
+        apt install python3-pip3 npm
+
+3.  Installer le logiciel dans le répertoire ``/var/lib/borgweb``.
+    Tapez:
+
+    .. code:: bash
+
+        mkdir -p /var/lib/borgweb
+        git clone https://github.com/vche/borgweb.git
+
+4.  Dans la version testée, le fichier ``README.rst`` est utilisé par
+    l’installeur mais plus présent dans le repo. Tapez:
+
+    .. code:: bash
+
+        cd borgweb
+        touch README.rst
+
+5.  Lancez l’installation. Tapez:
+
+    .. code:: bash
+
+        pip install -e .
+        cd js
+        npm install
+
+6.  Editez la configuration. Comme la variable d’environnement
+    ``BORG_CONFIG`` semble n’avoir aucun effet, éditez directement le
+    fichier de configuration du repository. Tapez:
+
+    .. code:: bash
+
+        cd /var/lib/borgweb/borgweb/borgweb
+        vi config.py
+
+7.  Mettez ce texte dans le fichier édité:
+
+    .. code:: python
+
+        class Config(object):
+            """This is the basic configuration class for BorgWeb."""
+
+            #: builtin web server configuration
+            HOST = '127.0.0.1'  # use 0.0.0.0 to bind to all interfaces
+            PORT = 5000  # ports < 1024 need root
+            DEBUG=False
+
+            #: borg / borgweb configuration
+            LOG_DIR = '/var/log/borg'
+            BORG_PATH="/usr/bin/borg"
+
+            # Repo status cache configuration. TTL in secs
+            STATUS_CACHE_TTL=43200
+            STATUS_CACHE_PATH="/tmp/borgweb.cache"
+
+            BACKUP_REPOS = {
+                # Repo  name
+                "example.com": { 
+                    # Repo absolute path
+                    "repo_path": "/home/borgbackup/borgbackup",
+
+                    # Repo logs absolute path, or relative to the main LOG_DIR
+                    "log_path": "/var/log/borg/",
+
+                    # Repo password
+                    "repo_pwd": "your_password", 
+
+                    # Command/script to run to manually start a backup.
+                    # If left empty or not specified, the backup won't be
+                    # manually runnable
+                    "script": "script",
+
+                    # Filled with discovered backups in the repo
+                    "backups": []
+                }
+            }
+
+    -  Insérez ici le mot de passe du dépot Borg Backup
+
+    -  Mettez ici le nom de votre domaine sauvegardé
+
+8.  Créez un service ``systemd``. Editez le fichier de service. Tapez:
+
+    .. code:: bash
+
+        vi /etc/systemd/system/borgweb.service
+
+9.  Insérez dans le fichier le texte suivant:
+
+    ::
+
+        [Unit]
+        Description=Borgweb Daemon
+        After=syslog.target network.target
+
+        [Service]
+        WorkingDirectory=/var/lib/borgweb
+        User=root
+        Group=root
+        UMask=0002
+        Restart=on-failure
+        RestartSec=5
+        Type=simple
+        ExecStart=/usr/local/bin/borgweb
+        KillSignal=SIGINT
+        TimeoutStopSec=20
+        SyslogIdentifier=borgweb
+
+        [Install]
+        WantedBy=multi-user.target
+
+10. Recharge la base de systemd. Tapez:
+
+    .. code:: bash
+
+        systemctl daemon-reload
+
+11. Activez et démarrez ``borgweb``. Tapez:
+
+    .. code:: bash
+
+        systemctl enable borgweb.service
+        systemctl start borgweb.service
+
+Création du site web de Borgweb
+-------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig de votre serveur de
+stockage <storing\_srv>:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``borgweb``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``borgweb``.
+
+   b. Le faire pointer vers le web folder ``borgweb``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+          # borgweb httpserver
+          #
+
+          <Location />
+              AllowOverride AuthConfig
+              AuthUserFile /var/lib/borgweb/borgweb-htpasswd
+              AuthName "Borgweb"
+              AuthType Basic
+              Require valid-user
+
+              SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+              ProxyPass / http://localhost:5000/
+              ProxyPassReverse / http://localhost:5000/
+
+          </Location>
+
+          <Location /.well-known >
+              Require all granted
+              auth_basic off;
+
+              ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+              ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+              RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+          </Location>
+
+3. `Loguez vous comme root sur <storing\_srv>. <#root_login>`__
+
+4. Créez ensuite le fichier de mot de passe de borgweb dans votre
+   <storing\_srv>:
+
+   .. code:: bash
+
+       htpasswd -c /var/lib/borgweb/borgweb-htpasswd admin
+
+5. Tapez `votre mot de passe généré <#pass_gen>`__
+
+6. Redémarrez apache. Tapez:
+
+   .. code:: bash
+
+       service apache2 restart
+
+7. Pointez votre navigateur sur https://borgweb.storing_srv , un mot de
+   passe vous est demandé. Tapez ``admin`` pour le user et le password
+   saisi. Vous accédez aux informations de sauvegarde de votre site.
 
 Installation d’un serveur de VPN Pritunl
 ========================================

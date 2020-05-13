@@ -4,7 +4,7 @@
 <article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Installation d&#8217;un serveur Linux sur un Raspberry</title>
-<date>2020-05-02</date>
+<date>2020-05-14</date>
 <author>
 <personname>
 <firstname>Stéphane</firstname>
@@ -15,8 +15,8 @@
 <authorinitials>SA</authorinitials>
 <revhistory>
 <revision>
-<revnumber>1.0</revnumber>
-<date>2020-05-02</date>
+<revnumber>1.1</revnumber>
+<date>2020-05-14</date>
 <authorinitials>SA</authorinitials>
 </revision>
 </revhistory>
@@ -1388,7 +1388,7 @@ swapon /swapfile</programlisting>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron jailkit</programlisting>
 </listitem>
 <listitem>
 <simpara>Pour les systèmes avec plus de mémoire tapez :</simpara>
@@ -2781,10 +2781,10 @@ Dans ce sous domaines vous allez créer un ensemble de site web par exemple <lit
 <simpara>Si vous avez activé DNSSEC sur votre serveur DNS de <literal>sub.example.com</literal> vous devrez récupérer les entrées DS du champ <literal>DNSSEC DS-Data for registry</literal> de votre domaine <literal>sub.example.com</literal> et créer dans votre domaine <literal>example.com</literal> les deux entrées suivantes:</simpara>
 <itemizedlist>
 <listitem>
-<simpara>un enregistrement de type <literal>DS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com</literal> et un champ <literal>data</literal> contenant <literal>xxxxx 7 1 &lt;votre_digest_recupérée&gt;</literal></simpara>
+<simpara>un enregistrement de type <literal>DS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com.</literal> et un champ <literal>data</literal> contenant <literal>xxxxx 7 1 &lt;votre_digest_recupérée&gt;</literal></simpara>
 </listitem>
 <listitem>
-<simpara>un enregistrement de type <literal>DS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com</literal> et un champ <literal>data</literal> contenant <literal>xxxxx 7 2 &lt;votre_digest_recupérée&gt;</literal></simpara>
+<simpara>un enregistrement de type <literal>DS</literal> avec une <literal>Zone</literal> &#8592; <literal>sub.example.com.</literal> et un champ <literal>data</literal> contenant <literal>xxxxx 7 2 &lt;votre_digest_recupérée&gt;</literal></simpara>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -2815,6 +2815,12 @@ Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore d
 <listitem>
 <simpara>Saisissez les informations:</simpara>
 <itemizedlist>
+<listitem>
+<simpara><literal>Client:</literal> &#8592; laisser vide ou mettre le client que vous avez créé.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>IPv4-Address:</literal> &#8592; mettre <literal>*</literal>. Si vous mettez votre adresse IPV4 vous allez rencontrer quelques disfonctionnements.</simpara>
+</listitem>
 <listitem>
 <simpara><literal>Domain:</literal> &#8592; mettre <literal>example.com</literal></simpara>
 </listitem>
@@ -3500,6 +3506,12 @@ echo "subject_privacy = false;" &gt;&gt; /etc/rspamd/local.d/history_redis.conf<
 <simpara>Assignez un calcul automatique de réputation aux URLs</simpara>
 <programlisting language="bash" linenumbering="unnumbered">echo 'enabled = true;' &gt; /etc/rspamd/local.d/url_reputation.conf</programlisting>
 </listitem>
+<listitem>
+<simpara>Mettez à jour automatiquement les règles de filtre:</simpara>
+</listitem>
+</orderedlist>
+<screen>echo 'enabled = true;' &gt; /etc/rspamd/local.d/rspamd_update.conf</screen>
+<orderedlist numeration="arabic">
 <listitem>
 <simpara>Enrichissez les headers des mails spams. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /etc/rspamd/local.d/milter_headers.conf</programlisting>
@@ -6841,6 +6853,217 @@ procédure</link>. Attention le fichier de swap doit être installé dans
 </listitem>
 </orderedlist>
 </section>
+<section xml:id="_installation_de_borgweb">
+<title>Installation de Borgweb</title>
+<simpara>Borgweb existe en version officielle. Cette version n&#8217;a pas trop d&#8217;intéret pour nous étant donnée qu&#8217;elle n&#8217;interroge pas le serveur de stockage pour obtenir les informations des backups réalisés. Il existe un clone de repository qui implémente une fonctionnalité qui liste tous les backups effectués sur le serveur de stockage</simpara>
+<simpara>Suivez la procédure suivante sur le serveur de stockage:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur &lt;storing_srv&gt;. </link></simpara>
+</listitem>
+<listitem>
+<simpara>Installez pip  pour python3 et NPM. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install python3-pip3 npm</programlisting>
+</listitem>
+<listitem>
+<simpara>Installer le logiciel dans le répertoire <literal>/var/lib/borgweb</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/lib/borgweb
+git clone https://github.com/vche/borgweb.git</programlisting>
+</listitem>
+<listitem>
+<simpara>Dans la version testée, le fichier <literal>README.rst</literal> est utilisé par l&#8217;installeur mais plus présent dans le repo. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd borgweb
+touch README.rst</programlisting>
+</listitem>
+<listitem>
+<simpara>Lancez l&#8217;installation. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pip install -e .
+cd js
+npm install</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez la configuration. Comme la variable d&#8217;environnement <literal>BORG_CONFIG</literal> semble n&#8217;avoir aucun effet, éditez directement le fichier de configuration du repository. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/lib/borgweb/borgweb/borgweb
+vi config.py</programlisting>
+</listitem>
+<listitem>
+<simpara>Mettez ce texte dans le fichier édité:</simpara>
+<programlisting language="python" linenumbering="unnumbered">class Config(object):
+    """This is the basic configuration class for BorgWeb."""
+
+    #: builtin web server configuration
+    HOST = '127.0.0.1'  # use 0.0.0.0 to bind to all interfaces
+    PORT = 5000  # ports &lt; 1024 need root
+    DEBUG=False
+
+    #: borg / borgweb configuration
+    LOG_DIR = '/var/log/borg'
+    BORG_PATH="/usr/bin/borg"
+
+    # Repo status cache configuration. TTL in secs
+    STATUS_CACHE_TTL=43200
+    STATUS_CACHE_PATH="/tmp/borgweb.cache"
+
+    BACKUP_REPOS = {
+        # Repo  name
+        "example.com": { <co xml:id="CO59-1"/>
+            # Repo absolute path
+            "repo_path": "/home/borgbackup/borgbackup",
+
+            # Repo logs absolute path, or relative to the main LOG_DIR
+            "log_path": "/var/log/borg/",
+
+            # Repo password
+            "repo_pwd": "your_password", <co xml:id="CO59-2"/>
+
+            # Command/script to run to manually start a backup.
+            # If left empty or not specified, the backup won't be
+            # manually runnable
+            "script": "script",
+
+            # Filled with discovered backups in the repo
+            "backups": []
+        }
+    }</programlisting>
+<calloutlist>
+<callout arearefs="CO59-2">
+<para>Insérez ici le mot de passe du dépot Borg Backup</para>
+</callout>
+<callout arearefs="CO59-1">
+<para>Mettez ici le nom de votre domaine sauvegardé</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Créez un service <literal>systemd</literal>. Editez le fichier de service. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/systemd/system/borgweb.service</programlisting>
+</listitem>
+<listitem>
+<simpara>Insérez dans le fichier le texte suivant:</simpara>
+<screen linenumbering="unnumbered">[Unit]
+Description=Borgweb Daemon
+After=syslog.target network.target
+
+[Service]
+WorkingDirectory=/var/lib/borgweb
+User=root
+Group=root
+UMask=0002
+Restart=on-failure
+RestartSec=5
+Type=simple
+ExecStart=/usr/local/bin/borgweb
+KillSignal=SIGINT
+TimeoutStopSec=20
+SyslogIdentifier=borgweb
+
+[Install]
+WantedBy=multi-user.target</screen>
+</listitem>
+<listitem>
+<simpara>Recharge la base de systemd. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl daemon-reload</programlisting>
+</listitem>
+<listitem>
+<simpara>Activez et démarrez <literal>borgweb</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl enable borgweb.service
+systemctl start borgweb.service</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_du_site_web_de_borgweb">
+<title>Création du site web de Borgweb</title>
+<simpara>Appliquez les opérations suivantes Dans ISPConfig de votre serveur de stockage &lt;storing_srv&gt;:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>borgweb</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>borgweb</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>borgweb</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered"># borgweb httpserver
+#
+
+&lt;Location /&gt;
+    AllowOverride AuthConfig
+    AuthUserFile /var/lib/borgweb/borgweb-htpasswd
+    AuthName "Borgweb"
+    AuthType Basic
+    Require valid-user
+
+    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+    ProxyPass / http://localhost:5000/
+    ProxyPassReverse / http://localhost:5000/
+
+&lt;/Location&gt;
+
+&lt;Location /.well-known &gt;
+    Require all granted
+    auth_basic off;
+
+    ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+    ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+    RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+
+&lt;/Location&gt;</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur &lt;storing_srv&gt;. </link></simpara>
+</listitem>
+<listitem>
+<simpara>Créez ensuite le fichier de mot de passe de borgweb dans votre &lt;storing_srv&gt;:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">htpasswd -c /var/lib/borgweb/borgweb-htpasswd admin</programlisting>
+</listitem>
+<listitem>
+<simpara>Tapez <link linkend="pass_gen">votre mot de passe généré</link></simpara>
+</listitem>
+<listitem>
+<simpara>Redémarrez apache. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">service apache2 restart</programlisting>
+</listitem>
+<listitem>
+<simpara>Pointez votre navigateur sur <link xl:href="https://borgweb.storing_srv">https://borgweb.storing_srv</link> , un mot de passe vous est demandé. Tapez <literal>admin</literal> pour le user et le password saisi. Vous accédez aux informations de sauvegarde de votre site.</simpara>
+</listitem>
+</orderedlist>
+</section>
 </section>
 <section xml:id="_installation_dun_serveur_de_vpn_pritunl">
 <title>Installation d&#8217;un serveur de VPN Pritunl</title>
@@ -7260,11 +7483,11 @@ ProxyPassReverse /guacamole http://localhost:8085/guacamole</programlisting>
 </listitem>
 <listitem>
 <simpara>tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/source/guacamole-server-1.1.0.tar.gz' <co xml:id="CO59-1"/>
+<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/source/guacamole-server-1.1.0.tar.gz' <co xml:id="CO60-1"/>
 tar xfz guacamole-server.tar.gz
 cd guacamole-server-*</programlisting>
 <calloutlist>
-<callout arearefs="CO59-1">
+<callout arearefs="CO60-1">
 <para>insérez ici l&#8217;adresse du package serveur à charger</para>
 </callout>
 </calloutlist>
@@ -7321,12 +7544,12 @@ systemctl start guacd</programlisting>
 <simpara>Téléchargez le dernier client <literal>war</literal> de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>. Récupérez le lien puis tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /usr/local/share/guacamole
 cd /usr/local/share/guacamole
-curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-1.1.0.war' <co xml:id="CO60-1"/>
+curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-1.1.0.war' <co xml:id="CO61-1"/>
 ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/
 systemctl restart tomcat8
 systemctl restart guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO60-1">
+<callout arearefs="CO61-1">
 <para>insérez ici l&#8217;adresse du war à charger</para>
 </callout>
 </calloutlist>
@@ -7352,11 +7575,11 @@ ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/</programlisti
 <simpara>Ajoutez dans le fichier:</simpara>
 <screen linenumbering="unnumbered">mysql-hostname: localhost
 mysql-port: 3306
-mysql-database: cxguacamole <co xml:id="CO61-1"/>
-mysql-username: cxguacamole <co xml:id="CO61-2"/>
-mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO61-3"/></screen>
+mysql-database: cxguacamole <co xml:id="CO62-1"/>
+mysql-username: cxguacamole <co xml:id="CO62-2"/>
+mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO62-3"/></screen>
 <calloutlist>
-<callout arearefs="CO61-1 CO61-2 CO61-3">
+<callout arearefs="CO62-1 CO62-2 CO62-3">
 <para>mettez ici le nom de la base de données, le nom de l&#8217;utilisateur de la base et son mot_de_passe tels qu&#8217;ils ont été saisis dans le chapitre de création de la base de données.</para>
 </callout>
 </calloutlist>
@@ -7364,22 +7587,22 @@ mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO61-3"/></screen>
 <listitem>
 <simpara>Vous devez maintenant télécharger les plugins mysql pour Guacamole. Allez sur le site web de guacamole et récupérez le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement de guacamole-auth-jdbc</link>. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-auth-jdbc-1.1.0.tar.gz' <co xml:id="CO62-1"/>
+curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-auth-jdbc-1.1.0.tar.gz' <co xml:id="CO63-1"/>
 tar xfz guacamole-auth-jdbc.tar.gz
 cd guacamole-auth-jdbc-*/mysql
 cp guacamole-auth-jdbc-mysql-*.jar /usr/local/share/guacamole/
 ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/extensions</programlisting>
 <calloutlist>
-<callout arearefs="CO62-1">
+<callout arearefs="CO63-1">
 <para>insérez ici l&#8217;adresse du fichier guacamole-auth-jdbc à charger</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Créez les tables de la base:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO63-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO64-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO63-1">
+<callout arearefs="CO64-1">
 <para>mettez derrière le <literal>-u</literal> le nom d&#8217;utilisateur de la base de données et derrière le <literal>-p</literal> le nom de la base de données. Un mot de passe vous sera demandé.</para>
 </callout>
 </calloutlist>
