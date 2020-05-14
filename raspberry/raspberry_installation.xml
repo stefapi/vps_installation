@@ -7027,21 +7027,20 @@ systemctl start borgweb.service</programlisting>
     AuthType Basic
     Require valid-user
 
-    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-    ProxyPass / http://localhost:5000/
-    ProxyPassReverse / http://localhost:5000/
-
 &lt;/Location&gt;
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / http://localhost:5000/
+ProxyPassReverse / http://localhost:5000/
 
 &lt;Location /.well-known &gt;
     Require all granted
-    auth_basic off;
+    AuthType None
+&lt;/Location&gt;
 
-    ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-    ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-    RewriteRule ^/.well-known/acme-challenge - [QSA,L]
-
-&lt;/Location&gt;</programlisting>
+ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]</programlisting>
 </listitem>
 </orderedlist>
 </listitem>

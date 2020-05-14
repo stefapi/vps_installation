@@ -10535,21 +10535,20 @@ systemctl start borgweb.service</code></pre>
     <span class="tok-nb">AuthType</span> Basic
     <span class="tok-nb">Require</span> valid-user
 
-    <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
-    <span class="tok-nb">ProxyPass</span> / http://localhost:5000/
-    <span class="tok-nb">ProxyPassReverse</span> / http://localhost:5000/
-
 <span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> / http://localhost:5000/
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost:5000/
 
 <span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
     <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">auth_basic</span> <span class="tok-k">off</span>;
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
 
-    <span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-    <span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-    <span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
-
-<span class="tok-nt">&lt;/Location&gt;</span></code></pre>
+<span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]</code></pre>
 </div>
 </div>
 </li>

@@ -6770,21 +6770,20 @@ stockage <storing\_srv>:
               AuthType Basic
               Require valid-user
 
-              SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-              ProxyPass / http://localhost:5000/
-              ProxyPassReverse / http://localhost:5000/
-
           </Location>
+
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPass / http://localhost:5000/
+          ProxyPassReverse / http://localhost:5000/
 
           <Location /.well-known >
               Require all granted
-              auth_basic off;
-
-              ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-              ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-              RewriteRule ^/.well-known/acme-challenge - [QSA,L]
-
+              AuthType None
           </Location>
+
+          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
 
 3. `Loguez vous comme root sur <storing\_srv>. <#root_login>`__
 

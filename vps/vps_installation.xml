@@ -4,7 +4,7 @@
 <article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Installation d&#8217;un VPS</title>
-<date>2020-05-02</date>
+<date>2020-05-14</date>
 <author>
 <personname>
 <firstname>Stéphane</firstname>
@@ -15,8 +15,8 @@
 <authorinitials>SA</authorinitials>
 <revhistory>
 <revision>
-<revnumber>1.0</revnumber>
-<date>2020-05-02</date>
+<revnumber>1.1</revnumber>
+<date>2020-05-14</date>
 <authorinitials>SA</authorinitials>
 </revision>
 </revhistory>
@@ -6629,21 +6629,20 @@ systemctl start borgweb.service</programlisting>
     AuthType Basic
     Require valid-user
 
-    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-    ProxyPass / http://localhost:5000/
-    ProxyPassReverse / http://localhost:5000/
-
 &lt;/Location&gt;
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / http://localhost:5000/
+ProxyPassReverse / http://localhost:5000/
 
 &lt;Location /.well-known &gt;
     Require all granted
-    auth_basic off;
+    AuthType None
+&lt;/Location&gt;
 
-    ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-    ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-    RewriteRule ^/.well-known/acme-challenge - [QSA,L]
-
-&lt;/Location&gt;</programlisting>
+ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
+RewriteRule ^/.well-known/acme-challenge - [QSA,L]</programlisting>
 </listitem>
 </orderedlist>
 </listitem>

@@ -444,8 +444,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Stéphane Apiou</span><br>
 <span id="email" class="email"><a href="mailto:stephane@apiou.org">stephane@apiou.org</a></span><br>
-<span id="revnumber">version 1.0,</span>
-<span id="revdate">2020-05-02</span>
+<span id="revnumber">version 1.1,</span>
+<span id="revdate">2020-05-14</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -10038,21 +10038,20 @@ systemctl start borgweb.service</code></pre>
     <span class="tok-nb">AuthType</span> Basic
     <span class="tok-nb">Require</span> valid-user
 
-    <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
-    <span class="tok-nb">ProxyPass</span> / http://localhost:5000/
-    <span class="tok-nb">ProxyPassReverse</span> / http://localhost:5000/
-
 <span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPass</span> / http://localhost:5000/
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost:5000/
 
 <span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
     <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">auth_basic</span> <span class="tok-k">off</span>;
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
 
-    <span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-    <span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-    <span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
-
-<span class="tok-nt">&lt;/Location&gt;</span></code></pre>
+<span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
+<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]</code></pre>
 </div>
 </div>
 </li>
@@ -11004,8 +11003,8 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0<br>
-Last updated 2020-05-02 19:56:24 +0200
+Version 1.1<br>
+Last updated 2020-05-14 01:33:18 +0200
 </div>
 </div>
 <style>
