@@ -454,18 +454,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#root_login">2. Se loguer root sur le serveur</a></li>
 <li><a href="#pass_gen">3. Gestion des mots de passe</a></li>
 <li><a href="#_choix_du_registrar">4. Choix du registrar</a></li>
-<li><a href="#_installation_du_linux_sur_votre_raspberry">5. Installation du linux sur votre raspberry</a>
+<li><a href="#_installation_du_linux_sur_votre_raspberry_pi">5. Installation du linux sur votre Raspberry Pi</a>
 <ul class="sectlevel2">
 <li><a href="#_installation_avec_écran_et_clavier">5.1. Installation avec écran et clavier</a></li>
-<li><a href="#_installation_headless">5.2. Installation Headless</a></li>
-<li><a href="#_reconnecter_automatiquement_votre_raspberry_pi_au_wifi">5.3. Reconnecter automatiquement votre Raspberry Pi au wifi</a></li>
+<li><a href="#_installation_headless_de_raspbian">5.2. Installation Headless de Raspbian</a></li>
+<li><a href="#_installation_headless_de_ubuntu_64">5.3. Installation Headless de Ubuntu 64</a></li>
+<li><a href="#_reconnecter_automatiquement_votre_raspberry_pi_au_wifi">5.4. Reconnecter automatiquement votre Raspberry Pi au wifi</a></li>
 </ul>
 </li>
 <li><a href="#_configuration_basique">6. Configuration basique</a>
 <ul class="sectlevel2">
 <li><a href="#_mettre_léditeur_de_votre_choix">6.1. Mettre l&#8217;éditeur de votre choix</a></li>
 <li><a href="#_installation_dun_repository_pour_etc">6.2. Installation d&#8217;un repository pour <code>/etc</code></a></li>
-<li><a href="#_mise_à_jour_des_sources_de_paquets_debian">6.3. Mise à jour des sources de paquets Debian</a></li>
+<li><a href="#_mise_à_jour_des_sources_de_paquets_debian_ou_ubuntu">6.3. Mise à jour des sources de paquets Debian ou Ubuntu</a></li>
 <li><a href="#_installation_des_paquets_de_base">6.4. Installation des paquets de base</a></li>
 <li><a href="#_installer_loutil_debfoster">6.5. Installer l&#8217;outil Debfoster</a></li>
 <li><a href="#_création_dun_fichier_keeper_dans_etc">6.6. Création d&#8217;un fichier keeper dans /etc</a></li>
@@ -616,8 +617,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_installation_dun_serveur_de_vpn_pritunl">23. Installation d&#8217;un serveur de VPN Pritunl</a>
 <ul class="sectlevel2">
 <li><a href="#_création_du_site_web_de_pritunl">23.1. Création du site web de Pritunl</a></li>
-<li><a href="#_installation_de_pritunl">23.2. Installation de Pritunl</a></li>
-<li><a href="#_configuration_de_pritunl">23.3. Configuration de Pritunl</a></li>
+<li><a href="#_installation_de_pritunl_sur_un_vps">23.2. Installation de Pritunl sur un VPS</a></li>
+<li><a href="#_installation_de_pritunl_sur_un_raspberrypi">23.3. Installation de Pritunl sur un Raspberrypi</a></li>
 <li><a href="#_se_connecter_au_serveur_de_vpn">23.4. Se connecter au serveur de VPN</a></li>
 <li><a href="#_réparer_une_base_pritunl">23.5. Réparer une base Pritunl</a></li>
 <li><a href="#_mot_de_passe_perdu">23.6. Mot de passe perdu</a></li>
@@ -645,12 +646,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="paragraph">
 <p>Ce document est disponible sur le site <a href="https://raspberry-installation.readthedocs.io">ReadTheDocs</a>
-et sur <a href="https://github.com/apiou/vps_installation">Github</a>. Sur Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc de ce document</p>
+et sur <a href="https://github.com/stefapi/vps_installation">Github</a>. Sur Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc de ce document</p>
 </div>
 <div class="paragraph">
-<p>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer une homebox (site auto hébergé) avec un raspberry PI
-Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
-Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation est facilement transposable pour des versions différentes de Debian.</p>
+<p>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer une homebox (site auto hébergé) avec un raspberry PI.</p>
+</div>
+<div class="paragraph">
+<p>Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
+Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentation décrit aussi l&#8217;installation pour une Raspbian.</p>
 </div>
 <div class="paragraph">
 <p>Dans ce document, je montre la configuration de nombreux types de sites web et services dans un domaine en utilisant ISPConfig.</p>
@@ -1080,16 +1083,21 @@ Avoir un DNS sur au moins deux machines distinctes est la configuration recomman
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_linux_sur_votre_raspberry">5. Installation du linux sur votre raspberry</h2>
+<h2 id="_installation_du_linux_sur_votre_raspberry_pi">5. Installation du linux sur votre Raspberry Pi</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>C&#8217;est la première étape.</p>
 </div>
 <div class="paragraph">
+<p>Il vous faut bien choisir le type de linux que vous souhaitez installer:
+* Raspbian: C&#8217;est la distribution la plus connue et celle qui offre le plus de possibilités juste après l&#8217;installation (notamment pour faire de la domotique, utiliser le GPIO &#8230;&#8203;) . Elle présente l&#8217;inconvénient de ne pas être 64 bits et de ne pas permettre l&#8217;installation d&#8217;un certain nombre de programmes qui ne sont aujourd&#8217;hui disponibles que pour ces plateformes. Certains paquets sont aussi ancien (tels que Mongodb) ce qui pose quelques problèmes d&#8217;installation.
+* Ubuntu 64: Elle est plus proche d&#8217;une ubuntu standard et propose beaucoup de paquets pour faire fonctionner votre raspberry en serveur web.</p>
+</div>
+<div class="paragraph">
 <p>Il vous faudra un lecteur de flash microSD - USB que vous brancherez sur votre PC.</p>
 </div>
 <div class="paragraph">
-<p>Il existe maintenant un outil nommé <a href="https://www.raspberrypi.org/downloads/">Rasberry PI Imager</a> pour la plateforme qui vous convient. C&#8217;est le moyen de plus simple de flasher votre raspberry.</p>
+<p>Il existe maintenant un outil nommé <a href="https://www.raspberrypi.org/downloads/">Rasberry PI Imager</a> pour la plateforme qui vous convient. C&#8217;est le moyen de plus simple de flasher votre raspberry pi.</p>
 </div>
 <div class="paragraph">
 <p>Pour Windows, très simple, il suffit de lancer le programme téléchargé.
@@ -1121,7 +1129,7 @@ dpkg -i imager_amd64.deb</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Sélectionnez <code>Choose OS</code> et dans la liste choisissez <code>Raspbian</code></p>
+<p>Sélectionnez <code>Choose OS</code> et dans la liste choisissez <code>Raspbian</code> ou <code>Ubuntu 64</code></p>
 </li>
 <li>
 <p>Sélectionnez <code>CHoose SD CARD</code> et sélectionnez votre lecteur de carte SD</p>
@@ -1241,7 +1249,7 @@ dpkg -i imager_amd64.deb</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_headless">5.2. Installation Headless</h3>
+<h3 id="_installation_headless_de_raspbian">5.2. Installation Headless de Raspbian</h3>
 <div class="paragraph">
 <p>Pour ce type d&#8217;installation, pas besoin d&#8217;écran, de clavier et de souris. Tout s&#8217;effectue à distance.</p>
 </div>
@@ -1329,6 +1337,19 @@ network={
 <div class="content">
 <pre>PING raspberrypi.local (192.168.3.212) 56(84) bytes of data.
 64 bytes from raspberrypi.local (192.168.3.212): icmp_seq=1 ttl=64 time=1.32 ms</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Vous pouvez aussi utiliser la commande suivante:
++</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre> arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)"</pre>
 </div>
 </div>
 <div class="olist arabic">
@@ -1516,7 +1537,214 @@ vncviewer adresse_ip:5900 <i class="conum" data-value="1"></i><b>(1)</b></code><
 </div>
 </div>
 <div class="sect2">
-<h3 id="_reconnecter_automatiquement_votre_raspberry_pi_au_wifi">5.3. Reconnecter automatiquement votre Raspberry Pi au wifi</h3>
+<h3 id="_installation_headless_de_ubuntu_64">5.3. Installation Headless de Ubuntu 64</h3>
+<div class="paragraph">
+<p>Pour ce type d&#8217;installation, pas besoin d&#8217;écran, de clavier et de souris. Tout s&#8217;effectue à distance.</p>
+</div>
+<div class="paragraph">
+<p>Dans la suite, je suppose que vous possédez un PC fonctionnant avec un Linux (la procédure peut être adaptée pour une machine Windows en utilisant la ligne de commande et putty)</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Avant d&#8217;enlever votre flash SD du lecteur, appliquez la procédure ci après:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Sur la flash, 2 partitions ont été crées. Montez la partition <code>system-boot</code></p>
+</li>
+<li>
+<p>sur cette partition, editez le fichier <code>network-config</code> et éditez le avec un éditeur de text (Nano ou vi sous linux ou Notepad sous windows).</p>
+</li>
+<li>
+<p>Mettez y le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>version: 2
+ethernets:
+  eth0:
+    dhcp4: true
+    optional: true
+wifis:
+  wlan0:
+    dhcp4: true
+    optional: true
+    access-points:
+      YOURSSID: <i class="conum" data-value="1"></i><b>(1)</b>
+        password: &quot;YOURPASSWORD&quot; <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacez <code>YOURSSID</code> par le nom SSID de votre wifi local</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>remplacez <code>YOURPASSWORD</code> par le mot de passe de votre wifi local</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>sauvez le fichier</p>
+</li>
+<li>
+<p>démontez la partition</p>
+</li>
+<li>
+<p>au boot sur la carte SD, le fichier sera recopié dans votre configuration et le réseau wifi sera ainsi accessible</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enlevez la carte SD de votre lecteur et insérez la dans votre Raspberry PI.</p>
+</li>
+<li>
+<p>Démarrez votre raspberry.</p>
+</li>
+<li>
+<p>Attendez environ 2 minutes le temps que le premier boot se termine. Tout pendant la procédure de boot, la petite led d&#8217;accès disque doit clignoter.</p>
+</li>
+<li>
+<p>Vous devez maintenant découvrir l&#8217;adresse IP de votre Raspberry, pour cela tapez la commande suivante:
++</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre> arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)"</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ensuite testez l&#8217;adresse ip trouvée</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ping <span class="tok-m">192</span>.168.0.100 <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettez ici l&#8217;adresse IP qui a été découverte.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Si le Raspberry a démarré correctement, cette commande doit montrer l&#8217;adresse IP du raspberry et une réponse correcte au ping</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>PING 192.168.0.100 (192.168.0.100) 56(84) bytes of data.
+64 bytes from 192.168.0.100: icmp_seq=1 ttl=64 time=1.49 ms</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Si vous n&#8217;obtenez aucun résultat essayer la commande <code>nmap</code> sur le subnet de votre réseau local</p>
+<div class="ulist">
+<ul>
+<li>
+<p>On obtient l&#8217;adresse local du subnet en tapant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>hostname -I</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>l&#8217;adresse IP de votre PC est affichée comme premier mot. Par exemple :`192.168.3.10`</p>
+</li>
+<li>
+<p>le subnet se déduit de cette adresse en gardant les 3 premiers nombres (cas général de la plupart des utilisateurs).</p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>nmap -sn <span class="tok-m">192</span>.168.3.0/24</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>la commande affiche alors les adresses IP et mac de toutes les machines présentes sur le réseau.</p>
+</li>
+<li>
+<p>le Raspberry se reconnait par son nom de machine qui contient le terme <code>ubuntu</code> ou par son adresse mac qui est reconnue du type <code>Raspberry Pi Foundation</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>vous pouvez alors directement vous connecter. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ssh ubuntu@adresse_ip <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Se loguer avec le mot de passe <code>ubuntu</code></p>
+</li>
+<li>
+<p>Un nouveau mot de passe vous sera demandé puis vous serez déconnecté.</p>
+</li>
+<li>
+<p>Reconnectez vous.</p>
+</li>
+<li>
+<p>Installez la langue française. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install language-pack-fr manpages-fr</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installer la locale qui vous plait. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>dpkg-reconfigure locales</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Choisissez votre langue locale. Par exemple: <code>fr_FR.UTF-8</code></p>
+</li>
+<li>
+<p>Installer la la timezone qui vous plait. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>dpkg-reconfigure tzdata</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Choisissez votre Timezone. Par exemple: <code>Europe/Paris</code></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reconnecter_automatiquement_votre_raspberry_pi_au_wifi">5.4. Reconnecter automatiquement votre Raspberry Pi au wifi</h3>
 <div class="paragraph">
 <p>Si vous connectez votre raspberry pi au réseau au travers du wifi, il arrive que le raspberry perde la connexion au réseau de façon définitive.</p>
 </div>
@@ -1535,7 +1763,8 @@ vncviewer adresse_ip:5900 <i class="conum" data-value="1"></i><b>(1)</b></code><
 <p>Éditez le fichier <code>wifi_rebooter.sh</code> :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /usr/local/bin/wifi_rebooter.sh</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install iw
+vi /usr/local/bin/wifi_rebooter.sh</code></pre>
 </div>
 </div>
 </li>
@@ -1553,10 +1782,14 @@ ping -c2 <span class="tok-si">${</span><span class="tok-nv">SERVER</span><span c
 <span class="tok-c1"># Si le code retour du ping ($?) est différent de 0 (qui correspond à une erreur)</span>
 <span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-nv">$?</span> !<span class="tok-o">=</span> <span class="tok-m">0</span> <span class="tok-o">]</span>
 <span class="tok-k">then</span>
-    <span class="tok-c1"># Restart the wireless interface</span>
+    <span class="tok-c1"># Power save off</span>
+
     <span class="tok-c1"># Relancer l&#39;interface wifi</span>
     ip link <span class="tok-nb">set</span> dev wlan0 down
+    sleep <span class="tok-m">2</span>
     ip link <span class="tok-nb">set</span> dev wlan0 up
+    sleep <span class="tok-m">2</span>
+    iw dev wlan0 <span class="tok-nb">set</span> power_save off
 <span class="tok-k">fi</span></code></pre>
 </div>
 </div>
@@ -1565,7 +1798,7 @@ ping -c2 <span class="tok-si">${</span><span class="tok-nv">SERVER</span><span c
 <p>Rendre le script exécutable:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo chmod +x /usr/local/bin/wifi_rebooter.sh</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod +x /usr/local/bin/wifi_rebooter.sh</code></pre>
 </div>
 </div>
 </li>
@@ -1578,10 +1811,11 @@ ping -c2 <span class="tok-si">${</span><span class="tok-nv">SERVER</span><span c
 </div>
 </li>
 <li>
-<p>Ajouter à la fin du fichier la ligne suivante:</p>
+<p>Ajouter à la fin du fichier les lignes suivantes:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>*/5 * * * *   /usr/local/bin/wifi_rebooter.sh</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>@reboot
+*/5 * * * *   /usr/local/bin/wifi_rebooter.sh</code></pre>
 </div>
 </div>
 </li>
@@ -1744,14 +1978,17 @@ git push -u origin master</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mise_à_jour_des_sources_de_paquets_debian">6.3. Mise à jour des sources de paquets Debian</h3>
+<h3 id="_mise_à_jour_des_sources_de_paquets_debian_ou_ubuntu">6.3. Mise à jour des sources de paquets Debian ou Ubuntu</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
-<p>Modifier la liste standard de paquets</p>
+<p>Selon la distribution installée suivez la procédure ci-après ou celle suivante.</p>
+</li>
+<li>
+<p>Modifier la liste standard de paquets Debian</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1777,6 +2014,24 @@ git push -u origin master</code></pre>
 <span class="tok-c1">#deb-src http://raspbian.raspberrypi.org/raspbian/ buster main contrib non-free rpi</span></code></pre>
 </div>
 </div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Modifier la liste standard de paquets Ubuntu</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Éditer le fichier <code>/etc/apt/sources.list</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/apt/sources.list</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Dé-commenter les lignes débutant par <code>deb</code> enlever le # en début de ligne</p>
 </li>
 </ol>
 </div>
@@ -1878,7 +2133,7 @@ Tous les autres paquets seront supprimés.</p>
 </ol>
 </div>
 <div class="paragraph">
-<p>Ci dessous une petite liste de paquets à conserver sur une installation basique:</p>
+<p>Ci dessous une petite liste de paquets à conserver sur une installation basique Raspian:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2000,6 +2255,49 @@ Tous les autres paquets seront supprimés.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">xsel</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">xserver-xorg-video-fbdev</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">zip</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>La même liste pour un Ubuntu pour Raspberry Pi</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">apt-file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">apt-listchanges</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">apt-rdepends</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">apt-transport-https</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cloud-init</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debfoster</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">etckeeper</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">language-pack-fr</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">linux-firmware-raspi2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">linux-raspi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">manpages-fr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ntpdate</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">openssh-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">u-boot-rpi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ubuntu-standard</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wpasupplicant</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
@@ -2728,8 +3026,21 @@ swapon /swapfile</code></pre>
 <p>Tapez :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron jailkit</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell  php-sqlite3 php-tidy php-xmlrpc memcached php-memcache php-imagick php-zip php-mbstring libapache2-mod-passenger php-soap php-fpm php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron php-gettext php-recode php-opcache php-xsl unrar jailkit</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>jailkit</code> et <code>unrar</code> ne sont pas disponible sur Raspbian. Il faut donc les supprimer de cette liste. Les paquets <code>php-ocache</code> et <code>php-xsl</code> doivent être remplacés par la version la plus récente sur Raspbian.
+NOTE: pour Ubuntu 20, php-gettext et php-recode n&#8217;existent pas. Il faut donc les supprimer de la liste.
+</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -3170,7 +3481,7 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
 <p>Vous pouvez accéder à la page admin Mailman à <a href="http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/" class="bare">http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/</a></p>
 </li>
 <li>
-<p>La page web utilisateur de la mailing list est accessible  ici <a href="http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/" class="bare">http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/</a>.</p>
+<p>La page web utilisateur de la mailing list est accessible  ici <a href="http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/" class="bare">http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/</a></p>
 </li>
 <li>
 <p>Sous <a href="http://&lt;server1.example.com&gt;/pipermail/mailman" class="bare">http://&lt;server1.example.com&gt;/pipermail/mailman</a> vous avez accès aux archives.</p>
@@ -3397,7 +3708,11 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
 </div>
 </li>
 <li>
-<p>Pour le Raspberry, éditez le fichier rc.local pour créer /dev/root à chaque reboot:</p>
+<p>Pour une Raspbian:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Editez le fichier rc.local pour créer /dev/root à chaque reboot:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>ln -s /dev/mmblk0p7 /dev/root
@@ -3411,6 +3726,9 @@ vi /etc/rc.local</code></pre>
 <div class="content">
 <pre class="pygments highlight"><code><span></span>ln -s /dev/mmcblk0p7 /dev/root</code></pre>
 </div>
+</div>
+</li>
+</ul>
 </div>
 </li>
 <li>
@@ -4062,7 +4380,7 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 </div>
 </li>
 <li>
-<p>Remplacez la ligne <code>SSLProtocol All</code> par:</p>
+<p>Remplacez les lignes <code>SSLProtocol All</code> par:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1</span></code></pre>
@@ -4070,6 +4388,16 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 </div>
 </li>
 </ol>
+</div>
+</li>
+<li>
+<p>Décommenter la ligne commencant par <code>SSLCipherSuite</code> et les 3 lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">&lt;IfModule mod_headers.c&gt;</span>
+<span class="tok-na">Header always add Strict-Transport-Security &quot;max-age</span><span class="tok-o">=</span><span class="tok-s">15768000&quot;</span>
+<span class="tok-na">&lt;/IfModule&gt;</span></code></pre>
+</div>
 </div>
 </li>
 <li>
@@ -4240,6 +4568,19 @@ Si le message "Possible attack detected. This action has been logged.". Cela sig
 </li>
 <li>
 <p>Connectez vous sur l&#8217;url de votre site Webmin. Tout doit fonctionner</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Compléments de configuration</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Pour augmenter la sécurité, vous pouvez désactiver le login <code>root</code> et creer un autre compte admin en allant dans: <code>Webmin</code> &#8594; <code>Webmin Users</code> &#8594; <code>Create a new privileged user</code>. Pour le user <code>root</code>, modifier le <code>Password</code> en mettant <code>No password accepted</code></p>
+</li>
+<li>
+<p>Allez dans <code>Webmin</code> &#8594; <code>Webmin Configuration</code> &#8594; <code>SSL Encryption</code> &#8594; onglet <code>Let&#8217;s Encrypt</code> &#8594; <code>Request Certificate</code></p>
 </li>
 </ol>
 </div>
@@ -5210,7 +5551,7 @@ service apache2 restart
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>chmod +x /etc/init.d/le_ispc_pem.sh
 <span class="tok-nb">echo</span> <span class="tok-s2">&quot;root&quot;</span> &gt;&gt; /etc/incron.allow
-incrontab -e.</code></pre>
+incrontab -e</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9635,6 +9976,9 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <p>Copiez-collez le mot de passe généré lorsqu&#8217;il est demandé</p>
 </li>
 <li>
+<p>se loguer comme <code>borgbackup</code></p>
+</li>
+<li>
 <p>Créer un répertoire <code>~/.ssh</code> s&#8217;il n&#8217;existe pas. tapez :</p>
 <div class="listingblock">
 <div class="content">
@@ -9944,7 +10288,7 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code><
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/sh</span>
 <span class="tok-nb">export</span> <span class="tok-nv">BORG_PASSPHRASE</span><span class="tok-o">=</span><span class="tok-s1">&#39;mot_passe&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
-borg check --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="tok-nv">$1</span></code></pre>
+borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="tok-nv">$1</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -10318,7 +10662,7 @@ procédure</a>. Attention le fichier de swap doit être installé dans
 <p>Installez pip  pour python3 et NPM. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install python3-pip3 npm</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install python3-pip npm</code></pre>
 </div>
 </div>
 </li>
@@ -10327,6 +10671,7 @@ procédure</a>. Attention le fichier de swap doit être installé dans
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/lib/borgweb
+<span class="tok-nb">cd</span> /var/lib/borgweb
 git clone https://github.com/vche/borgweb.git</code></pre>
 </div>
 </div>
@@ -10344,7 +10689,7 @@ touch README.rst</code></pre>
 <p>Lancez l&#8217;installation. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>pip install -e .
+<pre class="pygments highlight"><code data-lang="bash"><span></span>pip3 install -e .
 <span class="tok-nb">cd</span> js
 npm install</code></pre>
 </div>
@@ -10589,7 +10934,8 @@ systemctl start borgweb.service</code></pre>
 <h2 id="_installation_dun_serveur_de_vpn_pritunl">23. Installation d&#8217;un serveur de VPN Pritunl</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Pritunl est un serveur VPN basé sur OpenVPN.</p>
+<p>Pritunl est un serveur VPN basé sur OpenVPN.
+[WARNING] Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une distribution Raspbian.</p>
 </div>
 <div class="sect2">
 <h3 id="_création_du_site_web_de_pritunl">23.1. Création du site web de Pritunl</h3>
@@ -10672,9 +11018,9 @@ systemctl start borgweb.service</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_pritunl">23.2. Installation de Pritunl</h3>
+<h3 id="_installation_de_pritunl_sur_un_vps">23.2. Installation de Pritunl sur un VPS</h3>
 <div class="paragraph">
-<p>Veuillez suivre la procédure suivante:</p>
+<p>Veuillez suivre la procédure suivante si vous installer sur un serveur debian (pour le Raspberrypi voir le chapitre suivant):</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -10699,6 +11045,112 @@ apt-get --assume-yes install pritunl mongodb-org</code></pre>
 </div>
 </div>
 </li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_pritunl_sur_un_raspberrypi">23.3. Installation de Pritunl sur un Raspberrypi</h3>
+<div class="paragraph">
+<p>Pritunl n&#8217;est pas installable avec une distribution Raspbian qui est uniquement 32 bits.
+Veuillez suivre la procédure suivante si vous installer sur un Raspberrypi avec Ubuntu 64 bits:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Comme pritunl n&#8217;est pas nativement sur Ubuntu, il faut l&#8217;installer à la main. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>tee /etc/apt/sources.list.d/mongodb-org.list <span class="tok-s">&lt;&lt; EOF</span>
+<span class="tok-s">deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse</span>
+<span class="tok-s">EOF</span>
+apt install dirmngr
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+apt update
+apt install mongodb-org golang
+mkdir -p /var/lib/pritunl
+<span class="tok-nb">cd</span> /var/lib/pritunl
+<span class="tok-nb">export</span> <span class="tok-nv">GOPATH</span><span class="tok-o">=</span>/var/lib/pritunl
+go get -u github.com/pritunl/pritunl-dns
+go get -u github.com/pritunl/pritunl-web</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>La compilation peut échouer, notamment si la version de go installée sur votre système est une 1.11 ou antérieure.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>tapez les commandes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/lib/pritunl/src/github.com/pritunl/pritunl-web
+git checkout b6b07a4fa422d666385e951dd25e24ec527636d1
+go install
+<span class="tok-nb">cd</span> /var/lib/pritunl/</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Liez cette version dans <code>/usr/local</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ln -s /var/lib/pritunl/bin/pritunl-dns /usr/local/bin/pritunl-dns
+ln -s /var/lib/pritunl/bin/pritunl-web /usr/local/bin/pritunl-web</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installer le logiciel pour python2. Comme il y a encore des problèmes de dépendances, Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>git clone https://github.com/pritunl/pritunl.git
+apt install libpython2.7-dev libffi-dev
+curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
+python2 get-pip.py
+rm get-pip.py
+<span class="tok-nb">cd</span> pritunl
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;jaraco.functools==2.0&quot;</span> &gt;&gt; requirements.txt
+python2 setup.py build
+pip2 install -r requirements.txt
+python2 setup.py install</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Printunl S&#8217;installe dans <code>/usr/local/bin</code>. Il faut changer le fichier service. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systemd/system/pritunl.service</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Changer <code>ExecStart=/usr/bin/pritunl start</code> par <code>ExecStart=/usr/local/bin/pritunl start</code></p>
+</li>
+<li>
+<p>Rechargez les configs de systemd. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl daemon-reload</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>=== Configuration de Pritunl</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Votre service Pritunl est installé. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Pritunl utilise en standard le port 80 et 443. Ces deux ports sont utilisés dans notre configuration par le serveur apache</p>
 </li>
@@ -10711,14 +11163,14 @@ apt-get --assume-yes install pritunl mongodb-org</code></pre>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Plus aucun site web ne sera servit. Danger donc.
+Plus aucun site web ne sera servi. Danger donc.
 </td>
 </tr>
 </table>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop apache2</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop monit apache2</code></pre>
 </div>
 </div>
 </li>
@@ -10731,16 +11183,6 @@ systemctl <span class="tok-nb">enable</span> mongod pritunl</code></pre>
 </div>
 </div>
 </li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_configuration_de_pritunl">23.3. Configuration de Pritunl</h3>
-<div class="paragraph">
-<p>Votre service Pritunl est actif. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
 <li>
 <p>pointez votre navigateur sur le site web de Pritunl: <a href="https://example.com" class="bare">https://example.com</a></p>
 </li>
@@ -10783,6 +11225,7 @@ pritunl <span class="tok-nb">set</span> app.redirect_server <span class="tok-nb"
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl start apache2
+systemctl start monit
 systemctl start pritunl</code></pre>
 </div>
 </div>
@@ -12025,7 +12468,7 @@ EndSection</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.1<br>
-Last updated 2020-05-14 01:33:33 +0200
+Last updated 2020-05-22 20:26:36 +0200
 </div>
 </div>
 <style>

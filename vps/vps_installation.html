@@ -611,8 +611,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_installation_dun_serveur_de_vpn_pritunl">23. Installation d&#8217;un serveur de VPN Pritunl</a>
 <ul class="sectlevel2">
 <li><a href="#_création_du_site_web_de_pritunl">23.1. Création du site web de Pritunl</a></li>
-<li><a href="#_installation_de_pritunl">23.2. Installation de Pritunl</a></li>
-<li><a href="#_configuration_de_pritunl">23.3. Configuration de Pritunl</a></li>
+<li><a href="#_installation_de_pritunl_sur_un_vps">23.2. Installation de Pritunl sur un VPS</a></li>
+<li><a href="#_installation_de_pritunl_sur_un_raspberrypi">23.3. Installation de Pritunl sur un Raspberrypi</a></li>
 <li><a href="#_se_connecter_au_serveur_de_vpn">23.4. Se connecter au serveur de VPN</a></li>
 <li><a href="#_réparer_une_base_pritunl">23.5. Réparer une base Pritunl</a></li>
 <li><a href="#_mot_de_passe_perdu">23.6. Mot de passe perdu</a></li>
@@ -639,7 +639,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="paragraph">
 <p>Ce document est disponible sur le site <a href="https://vps-installation.readthedocs.io">ReadTheDocs</a>
-et sur <a href="https://github.com/apiou/vps_installation">Github</a>. Sur Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc de ce document.</p>
+et sur <a href="https://github.com/stefapi/vps_installation">Github</a>. Sur Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc de ce document.</p>
 </div>
 <div class="paragraph">
 <p>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer un serveur VPS sur la plate-forme OVH.
@@ -2231,8 +2231,21 @@ swapon /swapfile</code></pre>
 <p>Tapez :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron jailkit</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell  php-sqlite3 php-tidy php-xmlrpc memcached php-memcache php-imagick php-zip php-mbstring libapache2-mod-passenger php-soap php-fpm php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron php-gettext php-recode php-opcache php-xsl unrar jailkit</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>jailkit</code> et <code>unrar</code> ne sont pas disponible sur Raspbian. Il faut donc les supprimer de cette liste. Les paquets <code>php-ocache</code> et <code>php-xsl</code> doivent être remplacés par la version la plus récente sur Raspbian.
+NOTE: pour Ubuntu 20, php-gettext et php-recode n&#8217;existent pas. Il faut donc les supprimer de la liste.
+</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -2673,7 +2686,7 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
 <p>Vous pouvez accéder à la page admin Mailman à <a href="http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/" class="bare">http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/</a></p>
 </li>
 <li>
-<p>La page web utilisateur de la mailing list est accessible  ici <a href="http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/" class="bare">http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/</a>.</p>
+<p>La page web utilisateur de la mailing list est accessible  ici <a href="http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/" class="bare">http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/</a></p>
 </li>
 <li>
 <p>Sous <a href="http://&lt;server1.example.com&gt;/pipermail/mailman" class="bare">http://&lt;server1.example.com&gt;/pipermail/mailman</a> vous avez accès aux archives.</p>
@@ -2900,7 +2913,11 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</pre>
 </div>
 </li>
 <li>
-<p>Pour le Raspberry, éditez le fichier rc.local pour créer /dev/root à chaque reboot:</p>
+<p>Pour une Raspbian:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Editez le fichier rc.local pour créer /dev/root à chaque reboot:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>ln -s /dev/mmblk0p7 /dev/root
@@ -2914,6 +2931,9 @@ vi /etc/rc.local</code></pre>
 <div class="content">
 <pre class="pygments highlight"><code><span></span>ln -s /dev/mmcblk0p7 /dev/root</code></pre>
 </div>
+</div>
+</li>
+</ul>
 </div>
 </li>
 <li>
@@ -3565,7 +3585,7 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 </div>
 </li>
 <li>
-<p>Remplacez la ligne <code>SSLProtocol All</code> par:</p>
+<p>Remplacez les lignes <code>SSLProtocol All</code> par:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1</span></code></pre>
@@ -3573,6 +3593,16 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 </div>
 </li>
 </ol>
+</div>
+</li>
+<li>
+<p>Décommenter la ligne commencant par <code>SSLCipherSuite</code> et les 3 lignes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">&lt;IfModule mod_headers.c&gt;</span>
+<span class="tok-na">Header always add Strict-Transport-Security &quot;max-age</span><span class="tok-o">=</span><span class="tok-s">15768000&quot;</span>
+<span class="tok-na">&lt;/IfModule&gt;</span></code></pre>
+</div>
 </div>
 </li>
 <li>
@@ -3743,6 +3773,19 @@ Si le message "Possible attack detected. This action has been logged.". Cela sig
 </li>
 <li>
 <p>Connectez vous sur l&#8217;url de votre site Webmin. Tout doit fonctionner</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Compléments de configuration</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Pour augmenter la sécurité, vous pouvez désactiver le login <code>root</code> et creer un autre compte admin en allant dans: <code>Webmin</code> &#8594; <code>Webmin Users</code> &#8594; <code>Create a new privileged user</code>. Pour le user <code>root</code>, modifier le <code>Password</code> en mettant <code>No password accepted</code></p>
+</li>
+<li>
+<p>Allez dans <code>Webmin</code> &#8594; <code>Webmin Configuration</code> &#8594; <code>SSL Encryption</code> &#8594; onglet <code>Let&#8217;s Encrypt</code> &#8594; <code>Request Certificate</code></p>
 </li>
 </ol>
 </div>
@@ -4713,7 +4756,7 @@ service apache2 restart
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>chmod +x /etc/init.d/le_ispc_pem.sh
 <span class="tok-nb">echo</span> <span class="tok-s2">&quot;root&quot;</span> &gt;&gt; /etc/incron.allow
-incrontab -e.</code></pre>
+incrontab -e</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9138,6 +9181,9 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <p>Copiez-collez le mot de passe généré lorsqu&#8217;il est demandé</p>
 </li>
 <li>
+<p>se loguer comme <code>borgbackup</code></p>
+</li>
+<li>
 <p>Créer un répertoire <code>~/.ssh</code> s&#8217;il n&#8217;existe pas. tapez :</p>
 <div class="listingblock">
 <div class="content">
@@ -9447,7 +9493,7 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code><
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/sh</span>
 <span class="tok-nb">export</span> <span class="tok-nv">BORG_PASSPHRASE</span><span class="tok-o">=</span><span class="tok-s1">&#39;mot_passe&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
-borg check --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="tok-nv">$1</span></code></pre>
+borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="tok-nv">$1</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -9821,7 +9867,7 @@ procédure</a>. Attention le fichier de swap doit être installé dans
 <p>Installez pip  pour python3 et NPM. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install python3-pip3 npm</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install python3-pip npm</code></pre>
 </div>
 </div>
 </li>
@@ -9830,6 +9876,7 @@ procédure</a>. Attention le fichier de swap doit être installé dans
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/lib/borgweb
+<span class="tok-nb">cd</span> /var/lib/borgweb
 git clone https://github.com/vche/borgweb.git</code></pre>
 </div>
 </div>
@@ -9847,7 +9894,7 @@ touch README.rst</code></pre>
 <p>Lancez l&#8217;installation. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>pip install -e .
+<pre class="pygments highlight"><code data-lang="bash"><span></span>pip3 install -e .
 <span class="tok-nb">cd</span> js
 npm install</code></pre>
 </div>
@@ -10092,7 +10139,8 @@ systemctl start borgweb.service</code></pre>
 <h2 id="_installation_dun_serveur_de_vpn_pritunl">23. Installation d&#8217;un serveur de VPN Pritunl</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Pritunl est un serveur VPN basé sur OpenVPN.</p>
+<p>Pritunl est un serveur VPN basé sur OpenVPN.
+[WARNING] Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une distribution Raspbian.</p>
 </div>
 <div class="sect2">
 <h3 id="_création_du_site_web_de_pritunl">23.1. Création du site web de Pritunl</h3>
@@ -10175,9 +10223,9 @@ systemctl start borgweb.service</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_pritunl">23.2. Installation de Pritunl</h3>
+<h3 id="_installation_de_pritunl_sur_un_vps">23.2. Installation de Pritunl sur un VPS</h3>
 <div class="paragraph">
-<p>Veuillez suivre la procédure suivante:</p>
+<p>Veuillez suivre la procédure suivante si vous installer sur un serveur debian (pour le Raspberrypi voir le chapitre suivant):</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -10202,6 +10250,112 @@ apt-get --assume-yes install pritunl mongodb-org</code></pre>
 </div>
 </div>
 </li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_pritunl_sur_un_raspberrypi">23.3. Installation de Pritunl sur un Raspberrypi</h3>
+<div class="paragraph">
+<p>Pritunl n&#8217;est pas installable avec une distribution Raspbian qui est uniquement 32 bits.
+Veuillez suivre la procédure suivante si vous installer sur un Raspberrypi avec Ubuntu 64 bits:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Comme pritunl n&#8217;est pas nativement sur Ubuntu, il faut l&#8217;installer à la main. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>tee /etc/apt/sources.list.d/mongodb-org.list <span class="tok-s">&lt;&lt; EOF</span>
+<span class="tok-s">deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse</span>
+<span class="tok-s">EOF</span>
+apt install dirmngr
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+apt update
+apt install mongodb-org golang
+mkdir -p /var/lib/pritunl
+<span class="tok-nb">cd</span> /var/lib/pritunl
+<span class="tok-nb">export</span> <span class="tok-nv">GOPATH</span><span class="tok-o">=</span>/var/lib/pritunl
+go get -u github.com/pritunl/pritunl-dns
+go get -u github.com/pritunl/pritunl-web</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>La compilation peut échouer, notamment si la version de go installée sur votre système est une 1.11 ou antérieure.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>tapez les commandes suivantes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/lib/pritunl/src/github.com/pritunl/pritunl-web
+git checkout b6b07a4fa422d666385e951dd25e24ec527636d1
+go install
+<span class="tok-nb">cd</span> /var/lib/pritunl/</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Liez cette version dans <code>/usr/local</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ln -s /var/lib/pritunl/bin/pritunl-dns /usr/local/bin/pritunl-dns
+ln -s /var/lib/pritunl/bin/pritunl-web /usr/local/bin/pritunl-web</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installer le logiciel pour python2. Comme il y a encore des problèmes de dépendances, Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>git clone https://github.com/pritunl/pritunl.git
+apt install libpython2.7-dev libffi-dev
+curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
+python2 get-pip.py
+rm get-pip.py
+<span class="tok-nb">cd</span> pritunl
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;jaraco.functools==2.0&quot;</span> &gt;&gt; requirements.txt
+python2 setup.py build
+pip2 install -r requirements.txt
+python2 setup.py install</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Printunl S&#8217;installe dans <code>/usr/local/bin</code>. Il faut changer le fichier service. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systemd/system/pritunl.service</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Changer <code>ExecStart=/usr/bin/pritunl start</code> par <code>ExecStart=/usr/local/bin/pritunl start</code></p>
+</li>
+<li>
+<p>Rechargez les configs de systemd. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl daemon-reload</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>=== Configuration de Pritunl</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Votre service Pritunl est installé. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Pritunl utilise en standard le port 80 et 443. Ces deux ports sont utilisés dans notre configuration par le serveur apache</p>
 </li>
@@ -10214,14 +10368,14 @@ apt-get --assume-yes install pritunl mongodb-org</code></pre>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Plus aucun site web ne sera servit. Danger donc.
+Plus aucun site web ne sera servi. Danger donc.
 </td>
 </tr>
 </table>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop apache2</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop monit apache2</code></pre>
 </div>
 </div>
 </li>
@@ -10234,16 +10388,6 @@ systemctl <span class="tok-nb">enable</span> mongod pritunl</code></pre>
 </div>
 </div>
 </li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_configuration_de_pritunl">23.3. Configuration de Pritunl</h3>
-<div class="paragraph">
-<p>Votre service Pritunl est actif. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
 <li>
 <p>pointez votre navigateur sur le site web de Pritunl: <a href="https://example.com" class="bare">https://example.com</a></p>
 </li>
@@ -10286,6 +10430,7 @@ pritunl <span class="tok-nb">set</span> app.redirect_server <span class="tok-nb"
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl start apache2
+systemctl start monit
 systemctl start pritunl</code></pre>
 </div>
 </div>
@@ -11004,7 +11149,7 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 <div id="footer">
 <div id="footer-text">
 Version 1.1<br>
-Last updated 2020-05-14 01:33:18 +0200
+Last updated 2020-05-22 20:26:23 +0200
 </div>
 </div>
 <style>

@@ -24,7 +24,7 @@
 <section xml:id="_avant_propos">
 <title>Avant propos</title>
 <simpara>Ce document est disponible sur le site <link xl:href="https://vps-installation.readthedocs.io">ReadTheDocs</link>
-et sur <link xl:href="https://github.com/apiou/vps_installation">Github</link>. Sur Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc de ce document.</simpara>
+et sur <link xl:href="https://github.com/stefapi/vps_installation">Github</link>. Sur Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc de ce document.</simpara>
 <simpara>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer un serveur VPS sur la plate-forme OVH.
 Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
 Sur mon serveur, j&#8217;ai installé un Linux Debian 10. Cette documentation est facilement transposable pour des versions différentes de Debian ou à Ubuntu ou toute autre distribution basée sur l&#8217;un ou l&#8217;autre.
@@ -990,7 +990,11 @@ swapon /swapfile</programlisting>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron jailkit</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell  php-sqlite3 php-tidy php-xmlrpc memcached php-memcache php-imagick php-zip php-mbstring libapache2-mod-passenger php-soap php-fpm php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron php-gettext php-recode php-opcache php-xsl unrar jailkit</programlisting>
+<note>
+<simpara><literal>jailkit</literal> et <literal>unrar</literal> ne sont pas disponible sur Raspbian. Il faut donc les supprimer de cette liste. Les paquets <literal>php-ocache</literal> et <literal>php-xsl</literal> doivent être remplacés par la version la plus récente sur Raspbian.
+NOTE: pour Ubuntu 20, php-gettext et php-recode n&#8217;existent pas. Il faut donc les supprimer de la liste.</simpara>
+</note>
 </listitem>
 <listitem>
 <simpara>Pour les systèmes avec plus de mémoire tapez :</simpara>
@@ -1260,7 +1264,7 @@ mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"</scre
 <simpara>Vous pouvez accéder à la page admin Mailman à <link xl:href="http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/">http://&lt;server1.example.com&gt;/cgi-bin/mailman/admin/</link></simpara>
 </listitem>
 <listitem>
-<simpara>La page web utilisateur de la mailing list est accessible  ici <link xl:href="http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/">http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/</link>.</simpara>
+<simpara>La page web utilisateur de la mailing list est accessible  ici <link xl:href="http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/">http://&lt;server1.example.com/cgi-bin&gt;/mailman/listinfo/</link></simpara>
 </listitem>
 <listitem>
 <simpara>Sous <link xl:href="http://&lt;server1.example.com&gt;/pipermail/mailman">http://&lt;server1.example.com&gt;/pipermail/mailman</link> vous avez accès aux archives.</simpara>
@@ -1402,13 +1406,18 @@ VIRTUALCHROOT=true</programlisting>
 <screen linenumbering="unnumbered">UUID=45576b38-39e8-4994-b8c1-ea4870e2e614 / ext4 errors=remount-ro,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 0 1</screen>
 </listitem>
 <listitem>
-<simpara>Pour le Raspberry, éditez le fichier rc.local pour créer /dev/root à chaque reboot:</simpara>
+<simpara>Pour une Raspbian:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Editez le fichier rc.local pour créer /dev/root à chaque reboot:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">ln -s /dev/mmblk0p7 /dev/root
 vi /etc/rc.local</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez avant <literal>exit 0</literal>:</simpara>
 <screen linenumbering="unnumbered">ln -s /dev/mmcblk0p7 /dev/root</screen>
+</listitem>
+</itemizedlist>
 </listitem>
 <listitem>
 <simpara>Pour activer les quotas, tapez:</simpara>
@@ -1853,10 +1862,16 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master</programlisting>
 </listitem>
 <listitem>
-<simpara>Remplacez la ligne <literal>SSLProtocol All</literal> par:</simpara>
+<simpara>Remplacez les lignes <literal>SSLProtocol All</literal> par:</simpara>
 <programlisting language="ini" linenumbering="unnumbered">SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1</programlisting>
 </listitem>
 </orderedlist>
+</listitem>
+<listitem>
+<simpara>Décommenter la ligne commencant par <literal>SSLCipherSuite</literal> et les 3 lignes suivantes:</simpara>
+<programlisting language="ini" linenumbering="unnumbered">&lt;IfModule mod_headers.c&gt;
+Header always add Strict-Transport-Security "max-age=15768000"
+&lt;/IfModule&gt;</programlisting>
 </listitem>
 <listitem>
 <simpara>L&#8217;installation est terminée. Vous accédez au serveur à l&#8217;adresse: <link xl:href="https://example.com:8080/">https://example.com:8080/</link> .</simpara>
@@ -1967,6 +1982,17 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 </listitem>
 <listitem>
 <simpara>Connectez vous sur l&#8217;url de votre site Webmin. Tout doit fonctionner</simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Compléments de configuration</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Pour augmenter la sécurité, vous pouvez désactiver le login <literal>root</literal> et creer un autre compte admin en allant dans: <literal>Webmin</literal> &#8594; <literal>Webmin Users</literal> &#8594; <literal>Create a new privileged user</literal>. Pour le user <literal>root</literal>, modifier le <literal>Password</literal> en mettant <literal>No password accepted</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans <literal>Webmin</literal> &#8594; <literal>Webmin Configuration</literal> &#8594; <literal>SSL Encryption</literal> &#8594; onglet <literal>Let&#8217;s Encrypt</literal> &#8594; <literal>Request Certificate</literal></simpara>
 </listitem>
 </orderedlist>
 </listitem>
@@ -2685,7 +2711,7 @@ exit 1</programlisting>
 <simpara>Sauvez et quittez. Tapez ensuite:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">chmod +x /etc/init.d/le_ispc_pem.sh
 echo "root" &gt;&gt; /etc/incron.allow
-incrontab -e.</programlisting>
+incrontab -e</programlisting>
 <simpara>et ajoutez les lignes ci dessous dans le fichier:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">/etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <co xml:id="CO21-1"/></programlisting>
 <calloutlist>
@@ -6047,6 +6073,9 @@ Nous nommerons le serveur qu&#8217;il faut sauvegarder: serveur sauvegardé et i
 <simpara>Copiez-collez le mot de passe généré lorsqu&#8217;il est demandé</simpara>
 </listitem>
 <listitem>
+<simpara>se loguer comme <literal>borgbackup</literal></simpara>
+</listitem>
+<listitem>
 <simpara>Créer un répertoire <literal>~/.ssh</literal> s&#8217;il n&#8217;existe pas. tapez :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p $HOME/.ssh
 chmod 700 ~/.ssh</programlisting>
@@ -6228,7 +6257,7 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</progra
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 export BORG_PASSPHRASE='mot_passe' <co xml:id="CO50-1"/>
-borg check --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
+borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
 <calloutlist>
 <callout arearefs="CO50-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
@@ -6465,11 +6494,12 @@ procédure</link>. Attention le fichier de swap doit être installé dans
 </listitem>
 <listitem>
 <simpara>Installez pip  pour python3 et NPM. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install python3-pip3 npm</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt install python3-pip npm</programlisting>
 </listitem>
 <listitem>
 <simpara>Installer le logiciel dans le répertoire <literal>/var/lib/borgweb</literal>. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/lib/borgweb
+cd /var/lib/borgweb
 git clone https://github.com/vche/borgweb.git</programlisting>
 </listitem>
 <listitem>
@@ -6479,7 +6509,7 @@ touch README.rst</programlisting>
 </listitem>
 <listitem>
 <simpara>Lancez l&#8217;installation. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">pip install -e .
+<programlisting language="bash" linenumbering="unnumbered">pip3 install -e .
 cd js
 npm install</programlisting>
 </listitem>
@@ -6668,7 +6698,8 @@ RewriteRule ^/.well-known/acme-challenge - [QSA,L]</programlisting>
 </section>
 <section xml:id="_installation_dun_serveur_de_vpn_pritunl">
 <title>Installation d&#8217;un serveur de VPN Pritunl</title>
-<simpara>Pritunl est un serveur VPN basé sur OpenVPN.</simpara>
+<simpara>Pritunl est un serveur VPN basé sur OpenVPN.
+[WARNING] Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une distribution Raspbian.</simpara>
 <section xml:id="_création_du_site_web_de_pritunl">
 <title>Création du site web de Pritunl</title>
 <simpara>Appliquez la procédure suivante:</simpara>
@@ -6735,9 +6766,9 @@ ProxyPreserveHost On</programlisting>
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="_installation_de_pritunl">
-<title>Installation de Pritunl</title>
-<simpara>Veuillez suivre la procédure suivante:</simpara>
+<section xml:id="_installation_de_pritunl_sur_un_vps">
+<title>Installation de Pritunl sur un VPS</title>
+<simpara>Veuillez suivre la procédure suivante si vous installer sur un serveur debian (pour le Raspberrypi voir le chapitre suivant):</simpara>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
@@ -6756,27 +6787,91 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586
 apt-get update
 apt-get --assume-yes install pritunl mongodb-org</programlisting>
 </listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_de_pritunl_sur_un_raspberrypi">
+<title>Installation de Pritunl sur un Raspberrypi</title>
+<simpara>Pritunl n&#8217;est pas installable avec une distribution Raspbian qui est uniquement 32 bits.
+Veuillez suivre la procédure suivante si vous installer sur un Raspberrypi avec Ubuntu 64 bits:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Comme pritunl n&#8217;est pas nativement sur Ubuntu, il faut l&#8217;installer à la main. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">tee /etc/apt/sources.list.d/mongodb-org.list &lt;&lt; EOF
+deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse
+EOF
+apt install dirmngr
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+apt update
+apt install mongodb-org golang
+mkdir -p /var/lib/pritunl
+cd /var/lib/pritunl
+export GOPATH=/var/lib/pritunl
+go get -u github.com/pritunl/pritunl-dns
+go get -u github.com/pritunl/pritunl-web</programlisting>
+</listitem>
+<listitem>
+<simpara>La compilation peut échouer, notamment si la version de go installée sur votre système est une 1.11 ou antérieure.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>tapez les commandes suivantes:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/lib/pritunl/src/github.com/pritunl/pritunl-web
+git checkout b6b07a4fa422d666385e951dd25e24ec527636d1
+go install
+cd /var/lib/pritunl/</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Liez cette version dans <literal>/usr/local</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ln -s /var/lib/pritunl/bin/pritunl-dns /usr/local/bin/pritunl-dns
+ln -s /var/lib/pritunl/bin/pritunl-web /usr/local/bin/pritunl-web</programlisting>
+</listitem>
+<listitem>
+<simpara>Installer le logiciel pour python2. Comme il y a encore des problèmes de dépendances, Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">git clone https://github.com/pritunl/pritunl.git
+apt install libpython2.7-dev libffi-dev
+curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
+python2 get-pip.py
+rm get-pip.py
+cd pritunl
+echo "jaraco.functools==2.0" &gt;&gt; requirements.txt
+python2 setup.py build
+pip2 install -r requirements.txt
+python2 setup.py install</programlisting>
+</listitem>
+<listitem>
+<simpara>Printunl S&#8217;installe dans <literal>/usr/local/bin</literal>. Il faut changer le fichier service. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/systemd/system/pritunl.service</programlisting>
+</listitem>
+<listitem>
+<simpara>Changer <literal>ExecStart=/usr/bin/pritunl start</literal> par <literal>ExecStart=/usr/local/bin/pritunl start</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Rechargez les configs de systemd. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl daemon-reload</programlisting>
+<simpara>=== Configuration de Pritunl</simpara>
+</listitem>
+</orderedlist>
+<simpara>Votre service Pritunl est installé. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</simpara>
+<orderedlist numeration="arabic">
 <listitem>
 <simpara>Pritunl utilise en standard le port 80 et 443. Ces deux ports sont utilisés dans notre configuration par le serveur apache</simpara>
 </listitem>
 <listitem>
 <simpara>On commence par arrêter apache. Tapez:</simpara>
 <warning>
-<simpara>Plus aucun site web ne sera servit. Danger donc.</simpara>
+<simpara>Plus aucun site web ne sera servi. Danger donc.</simpara>
 </warning>
-<programlisting language="bash" linenumbering="unnumbered">systemctl stop apache2</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop monit apache2</programlisting>
 </listitem>
 <listitem>
 <simpara>Démarrez Mongodb ainsi que Pritunl. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">systemctl start mongod pritunl
 systemctl enable mongod pritunl</programlisting>
 </listitem>
-</orderedlist>
-</section>
-<section xml:id="_configuration_de_pritunl">
-<title>Configuration de Pritunl</title>
-<simpara>Votre service Pritunl est actif. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</simpara>
-<orderedlist numeration="arabic">
 <listitem>
 <simpara>pointez votre navigateur sur le site web de Pritunl: <link xl:href="https://example.com">https://example.com</link></simpara>
 </listitem>
@@ -6805,6 +6900,7 @@ pritunl set app.redirect_server false</programlisting>
 <listitem>
 <simpara>Redémarrez apache et pritunl</simpara>
 <programlisting language="bash" linenumbering="unnumbered">systemctl start apache2
+systemctl start monit
 systemctl start pritunl</programlisting>
 </listitem>
 <listitem>

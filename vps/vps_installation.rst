@@ -9,9 +9,9 @@ Avant propos
 
 Ce document est disponible sur le site
 `ReadTheDocs <https://vps-installation.readthedocs.io>`__ et sur
-`Github <https://github.com/apiou/vps_installation>`__. Sur Github vous
-trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc de ce
-document.
+`Github <https://github.com/stefapi/vps_installation>`__. Sur Github
+vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc
+de ce document.
 
 Cette documentation décrit la méthode que j’ai utilisé pour installer un
 serveur VPS sur la plate-forme OVH. Elle est le résultat de très
@@ -1148,7 +1148,16 @@ Mailman.
 
       .. code:: bash
 
-          apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell php-recode php-sqlite3 php-tidy php-xmlrpc php-xsl memcached php-memcache php-imagick php-gettext php-zip php-mbstring memcached libapache2-mod-passenger php-soap php-fpm php-opcache php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron jailkit
+          apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell  php-sqlite3 php-tidy php-xmlrpc memcached php-memcache php-imagick php-zip php-mbstring libapache2-mod-passenger php-soap php-fpm php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron php-gettext php-recode php-opcache php-xsl unrar jailkit
+
+          **Note**
+
+          ``jailkit`` et ``unrar`` ne sont pas disponible sur Raspbian.
+          Il faut donc les supprimer de cette liste. Les paquets
+          ``php-ocache`` et ``php-xsl`` doivent être remplacés par la
+          version la plus récente sur Raspbian. NOTE: pour Ubuntu 20,
+          php-gettext et php-recode n’existent pas. Il faut donc les
+          supprimer de la liste.
 
    b. Pour les systèmes avec plus de mémoire tapez :
 
@@ -1456,7 +1465,7 @@ Suivez la procédure suivante:
       `http://<server1.example.com>/cgi-bin/mailman/admin/ <http://<server1.example.com>/cgi-bin/mailman/admin/>`__
 
    b. La page web utilisateur de la mailing list est accessible ici
-      `http://<server1.example.com/cgi-bin>/mailman/listinfo/ <http://<server1.example.com/cgi-bin>/mailman/listinfo/>`__.
+      `http://<server1.example.com/cgi-bin>/mailman/listinfo/ <http://<server1.example.com/cgi-bin>/mailman/listinfo/>`__
 
    c. Sous
       `http://<server1.example.com>/pipermail/mailman <http://<server1.example.com>/pipermail/mailman>`__
@@ -1619,19 +1628,21 @@ Suivez la procédure suivante:
 
              UUID=45576b38-39e8-4994-b8c1-ea4870e2e614 / ext4 errors=remount-ro,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 0 1
 
-      -  Pour le Raspberry, éditez le fichier rc.local pour créer
-         /dev/root à chaque reboot:
+      -  Pour une Raspbian:
 
-         .. code:: bash
+         -  Editez le fichier rc.local pour créer /dev/root à chaque
+            reboot:
 
-             ln -s /dev/mmblk0p7 /dev/root
-             vi /etc/rc.local
+            .. code:: bash
 
-      -  Ajoutez avant ``exit 0``:
+                ln -s /dev/mmblk0p7 /dev/root
+                vi /etc/rc.local
 
-         ::
+         -  Ajoutez avant ``exit 0``:
 
-             ln -s /dev/mmcblk0p7 /dev/root
+            ::
+
+                ln -s /dev/mmcblk0p7 /dev/root
 
       -  Pour activer les quotas, tapez:
 
@@ -2111,13 +2122,22 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
 
            vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master
 
-    e. Remplacez la ligne ``SSLProtocol All`` par:
+    e. Remplacez les lignes ``SSLProtocol All`` par:
 
        .. code:: ini
 
            SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
 
-9.  L’installation est terminée. Vous accédez au serveur à l’adresse:
+9.  Décommenter la ligne commencant par ``SSLCipherSuite`` et les 3
+    lignes suivantes:
+
+    .. code:: ini
+
+        <IfModule mod_headers.c>
+        Header always add Strict-Transport-Security "max-age=15768000"
+        </IfModule>
+
+10. L’installation est terminée. Vous accédez au serveur à l’adresse:
     https://example.com:8080/ .
 
         **Note**
@@ -2126,7 +2146,7 @@ ISPConfig 3.1 a été utilisé dans ce tutoriel.
         configuré. Il faudra alors utiliser le nom DNS donné par votre
         hébergeur. Pour OVH, elle s’écrit ``VPSxxxxxx.ovh.net``.
 
-10. Loguez vous comme admin et avec le mot de passe que vous avez
+11. Loguez vous comme admin et avec le mot de passe que vous avez
     choisi. Vous pouvez décider de le changer au premier login
 
         **Note**
@@ -2143,113 +2163,125 @@ Webmin est un outil généraliste de configuration de votre serveur. Son
 usage peut être assez complexe mais il permet une configuration plus
 précise des fonctionnalités.
 
-1. `Loguez vous comme root sur le serveur <#root_login>`__
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-2. Ajoutez le repository Webmin
+2.  Ajoutez le repository Webmin
 
-   a. allez dans le répertoire des repositories. Tapez :
+    a. allez dans le répertoire des repositories. Tapez :
 
-      .. code:: bash
+       .. code:: bash
 
-          cd /etc/apt/sources.list.d
+           cd /etc/apt/sources.list.d
 
-   b. Tapez: :
+    b. Tapez: :
 
-      .. code:: bash
+       .. code:: bash
 
-          echo "deb http://download.webmin.com/download/repository sarge contrib" >> webmin.list
+           echo "deb http://download.webmin.com/download/repository sarge contrib" >> webmin.list
 
-   c. Ajoutez la clé. Tapez :
+    c. Ajoutez la clé. Tapez :
 
-      .. code:: bash
+       .. code:: bash
 
-          curl -fsSL http://www.webmin.com/jcameron-key.asc | sudo apt-key add -
+           curl -fsSL http://www.webmin.com/jcameron-key.asc | sudo apt-key add -
 
-      Le message ``OK`` s’affiche
+       Le message ``OK`` s’affiche
 
-3. Mise à jour. Tapez :
+3.  Mise à jour. Tapez :
 
-   .. code:: bash
+    .. code:: bash
 
-       apt update
+        apt update
 
-4. Installation de Webmin. Tapez :
+4.  Installation de Webmin. Tapez :
 
-   .. code:: bash
+    .. code:: bash
 
-       apt install webmin
+        apt install webmin
 
-   ::
+    ::
 
-       Débloquez le port 10000 dans votre firewall
+        Débloquez le port 10000 dans votre firewall
 
-   a. Allez sur le site ispconfig
-      `https://<example.com>:8080/ <https://<example.com>:8080/>`__
+    a. Allez sur le site ispconfig
+       `https://<example.com>:8080/ <https://<example.com>:8080/>`__
 
-   b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-      ``Firewall``. Cliquez sur votre serveur.
+    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+       ``Firewall``. Cliquez sur votre serveur.
 
-   c. dans la rubrique ``Open TCP ports:``, ajoutez le port 10000
+    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 10000
 
-   d. Cliquez sur ``save``
+    d. Cliquez sur ``save``
 
-5. Connectez vous avec votre navigateur sur l’url
-   `https://<example.com>:10000 <https://<example.com>:10000>`__. Un
-   message indique un problème de sécurité. Cela vient du certificat
-   auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et
-   poursuivre'.
+5.  Connectez vous avec votre navigateur sur l’url
+    `https://<example.com>:10000 <https://<example.com>:10000>`__. Un
+    message indique un problème de sécurité. Cela vient du certificat
+    auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et
+    poursuivre'.
 
-6. Loguez-vous ``root``. Tapez le mot de passe de ``root``. Le dashboard
-   s’affiche.
+6.  Loguez-vous ``root``. Tapez le mot de passe de ``root``. Le
+    dashboard s’affiche.
 
-7. Restreignez l’adressage IP
+7.  Restreignez l’adressage IP
 
-   a. Obtenez votre adresse IP en allant par exemples sur le site
-      https://www.showmyip.com/
+    a. Obtenez votre adresse IP en allant par exemples sur le site
+       https://www.showmyip.com/
 
-   b. Sur votre URL Webmin ou vous êtes logué, allez dans Webmin→Webmin
-      Configuration
+    b. Sur votre URL Webmin ou vous êtes logué, allez dans Webmin→Webmin
+       Configuration
 
-   c. Dans l’écran choisir l’icône ``Ip Access Control``.
+    c. Dans l’écran choisir l’icône ``Ip Access Control``.
 
-   d. Choisissez ``Only allow from listed addresses``
+    d. Choisissez ``Only allow from listed addresses``
 
-   e. Puis dans le champ ``Allowed IP addresses`` tapez votre adresse IP
-      récupérée sur showmyip
+    e. Puis dans le champ ``Allowed IP addresses`` tapez votre adresse
+       IP récupérée sur showmyip
 
-   f. Cliquez sur ``Save``
+    f. Cliquez sur ``Save``
 
-   g. Vous devriez avoir une brève déconnexion le temps que le serveur
-      Webmin redémarre puis une reconnexion.
+    g. Vous devriez avoir une brève déconnexion le temps que le serveur
+       Webmin redémarre puis une reconnexion.
 
-8. Si vous n’arrivez pas à vous reconnecter c’est que l’adresse IP n’est
-   pas la bonne. Le seul moyen de se reconnecter est de:
+8.  Si vous n’arrivez pas à vous reconnecter c’est que l’adresse IP
+    n’est pas la bonne. Le seul moyen de se reconnecter est de:
 
-   a. `Loguez vous comme root sur le serveur <#root_login>`__
+    a. `Loguez vous comme root sur le serveur <#root_login>`__
 
-   b. Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne
-      ``allow= …​``
+    b. Éditez le fichier /etc/webmin/miniserv.conf et supprimez la ligne
+       ``allow= …​``
 
-   c. Tapez :
+    c. Tapez :
 
-      .. code:: bash
+       .. code:: bash
 
-          service webmin restart
+           service webmin restart
 
-   d. Connectez vous sur l’url de votre site Webmin. Tout doit
-      fonctionner
+    d. Connectez vous sur l’url de votre site Webmin. Tout doit
+       fonctionner
 
-9. Passez en Français. Pour les personnes non anglophone. Les
-   traductions française ont des problèmes d’encodage de caractère ce
-   n’est donc pas recommandé. La suite de mon tutoriel suppose que vous
-   êtes resté en anglais.
+9.  Compléments de configuration
 
-   a. Sur votre url Webmin ou vous êtes logué, allez dans Webmin→Webmin
-      Configuration
+    a. Pour augmenter la sécurité, vous pouvez désactiver le login
+       ``root`` et creer un autre compte admin en allant dans:
+       ``Webmin`` → ``Webmin Users`` → ``Create a new privileged user``.
+       Pour le user ``root``, modifier le ``Password`` en mettant
+       ``No password accepted``
 
-   b. Dans l’écran choisir l’icône ``Language and Locale``.
+    b. Allez dans ``Webmin`` → ``Webmin Configuration`` →
+       ``SSL Encryption`` → onglet ``Let’s Encrypt`` →
+       ``Request Certificate``
 
-   c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
+10. Passez en Français. Pour les personnes non anglophone. Les
+    traductions française ont des problèmes d’encodage de caractère ce
+    n’est donc pas recommandé. La suite de mon tutoriel suppose que vous
+    êtes resté en anglais.
+
+    a. Sur votre url Webmin ou vous êtes logué, allez dans Webmin→Webmin
+       Configuration
+
+    b. Dans l’écran choisir l’icône ``Language and Locale``.
+
+    c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
 
 Configuration d’un domaine
 ==========================
@@ -2949,7 +2981,7 @@ services de base:
 
           chmod +x /etc/init.d/le_ispc_pem.sh
           echo "root" >> /etc/incron.allow
-          incrontab -e.
+          incrontab -e
 
       et ajoutez les lignes ci dessous dans le fichier:
 
@@ -6107,32 +6139,34 @@ Suivez la procédure suivante:
 
 5.  Copiez-collez le mot de passe généré lorsqu’il est demandé
 
-6.  Créer un répertoire ``~/.ssh`` s’il n’existe pas. tapez :
+6.  se loguer comme ``borgbackup``
+
+7.  Créer un répertoire ``~/.ssh`` s’il n’existe pas. tapez :
 
     .. code:: bash
 
         mkdir -p $HOME/.ssh
         chmod 700 ~/.ssh
 
-7.  Allez dans le répertoire. Tapez :
+8.  Allez dans le répertoire. Tapez :
 
     .. code:: bash
 
         cd ~/.ssh
 
-8.  Générez vous clés. Tapez :
+9.  Générez vous clés. Tapez :
 
     .. code:: bash
 
         ssh-keygen -t rsa
 
-9.  Un ensemble de questions apparaît. Si un texte vous explique que le
+10. Un ensemble de questions apparaît. Si un texte vous explique que le
     fichier existe déjà, arrêtez la procédure. Cela signifie que vous
     avez déjà créé une clé et que vous risquez de perdre la connexion à
     d’autres serveurs si vous en générez une nouvelle. Sinon, appuyez
     sur Entrée à chaque fois pour accepter les valeurs par défaut.
 
-10. Créez maintenant le répertoire pour recevoir les sauvegardes
+11. Créez maintenant le répertoire pour recevoir les sauvegardes
 
     .. code:: bash
 
@@ -6322,7 +6356,7 @@ Nous allons créer un script de vérification :
 
        #!/bin/sh
        export BORG_PASSPHRASE='mot_passe' 
-       borg check --stats --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
+       borg check --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
 
    -  mot\_passe doit être remplacé par celui généré plus haut.
 
@@ -6599,7 +6633,7 @@ Suivez la procédure suivante sur le serveur de stockage:
 
     .. code:: bash
 
-        apt install python3-pip3 npm
+        apt install python3-pip npm
 
 3.  Installer le logiciel dans le répertoire ``/var/lib/borgweb``.
     Tapez:
@@ -6607,6 +6641,7 @@ Suivez la procédure suivante sur le serveur de stockage:
     .. code:: bash
 
         mkdir -p /var/lib/borgweb
+        cd /var/lib/borgweb
         git clone https://github.com/vche/borgweb.git
 
 4.  Dans la version testée, le fichier ``README.rst`` est utilisé par
@@ -6621,7 +6656,7 @@ Suivez la procédure suivante sur le serveur de stockage:
 
     .. code:: bash
 
-        pip install -e .
+        pip3 install -e .
         cd js
         npm install
 
@@ -6809,7 +6844,9 @@ stockage <storing\_srv>:
 Installation d’un serveur de VPN Pritunl
 ========================================
 
-Pritunl est un serveur VPN basé sur OpenVPN.
+Pritunl est un serveur VPN basé sur OpenVPN. [WARNING] Printunl ne peut
+pas être installé sur une plateforme 32 bits et donc sur une
+distribution Raspbian.
 
 Création du site web de Pritunl
 -------------------------------
@@ -6863,10 +6900,11 @@ Appliquez la procédure suivante:
           ProxyPassReverse / https://localhost:8070/
           ProxyPreserveHost On
 
-Installation de Pritunl
------------------------
+Installation de Pritunl sur un VPS
+----------------------------------
 
-Veuillez suivre la procédure suivante:
+Veuillez suivre la procédure suivante si vous installer sur un serveur
+debian (pour le Raspberrypi voir le chapitre suivant):
 
 1. `Loguez vous comme root sur le serveur <#root_login>`__
 
@@ -6886,55 +6924,132 @@ Veuillez suivre la procédure suivante:
        apt-get update
        apt-get --assume-yes install pritunl mongodb-org
 
-3. Pritunl utilise en standard le port 80 et 443. Ces deux ports sont
-   utilisés dans notre configuration par le serveur apache
+Installation de Pritunl sur un Raspberrypi
+------------------------------------------
 
-4. On commence par arrêter apache. Tapez:
+Pritunl n’est pas installable avec une distribution Raspbian qui est
+uniquement 32 bits. Veuillez suivre la procédure suivante si vous
+installer sur un Raspberrypi avec Ubuntu 64 bits:
 
-       **Warning**
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-       Plus aucun site web ne sera servit. Danger donc.
-
-   .. code:: bash
-
-       systemctl stop apache2
-
-5. Démarrez Mongodb ainsi que Pritunl. Tapez:
+2. Comme pritunl n’est pas nativement sur Ubuntu, il faut l’installer à
+   la main. Tapez:
 
    .. code:: bash
 
-       systemctl start mongod pritunl
-       systemctl enable mongod pritunl
+       tee /etc/apt/sources.list.d/mongodb-org.list << EOF
+       deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse
+       EOF
+       apt install dirmngr
+       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+       apt update
+       apt install mongodb-org golang
+       mkdir -p /var/lib/pritunl
+       cd /var/lib/pritunl
+       export GOPATH=/var/lib/pritunl
+       go get -u github.com/pritunl/pritunl-dns
+       go get -u github.com/pritunl/pritunl-web
 
-Configuration de Pritunl
-------------------------
+3. La compilation peut échouer, notamment si la version de go installée
+   sur votre système est une 1.11 ou antérieure.
 
-Votre service Pritunl est actif. Vous devez maintenant le configurer
+   a. tapez les commandes suivantes:
+
+      .. code:: bash
+
+          cd /var/lib/pritunl/src/github.com/pritunl/pritunl-web
+          git checkout b6b07a4fa422d666385e951dd25e24ec527636d1
+          go install
+          cd /var/lib/pritunl/
+
+4. Liez cette version dans ``/usr/local``. Tapez:
+
+   .. code:: bash
+
+       ln -s /var/lib/pritunl/bin/pritunl-dns /usr/local/bin/pritunl-dns
+       ln -s /var/lib/pritunl/bin/pritunl-web /usr/local/bin/pritunl-web
+
+5. Installer le logiciel pour python2. Comme il y a encore des problèmes
+   de dépendances, Tapez:
+
+   .. code:: bash
+
+       git clone https://github.com/pritunl/pritunl.git
+       apt install libpython2.7-dev libffi-dev
+       curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
+       python2 get-pip.py
+       rm get-pip.py
+       cd pritunl
+       echo "jaraco.functools==2.0" >> requirements.txt
+       python2 setup.py build
+       pip2 install -r requirements.txt
+       python2 setup.py install
+
+6. Printunl S’installe dans ``/usr/local/bin``. Il faut changer le
+   fichier service. Tapez:
+
+   .. code:: bash
+
+       vi /etc/systemd/system/pritunl.service
+
+7. Changer ``ExecStart=/usr/bin/pritunl start`` par
+   ``ExecStart=/usr/local/bin/pritunl start``
+
+8. Rechargez les configs de systemd. Tapez:
+
+   .. code:: bash
+
+       systemctl daemon-reload
+
+   === Configuration de Pritunl
+
+Votre service Pritunl est installé. Vous devez maintenant le configurer
 pour qu’il fonctionne:
 
-1.  pointez votre navigateur sur le site web de Pritunl:
+1.  Pritunl utilise en standard le port 80 et 443. Ces deux ports sont
+    utilisés dans notre configuration par le serveur apache
+
+2.  On commence par arrêter apache. Tapez:
+
+        **Warning**
+
+        Plus aucun site web ne sera servi. Danger donc.
+
+    .. code:: bash
+
+        systemctl stop monit apache2
+
+3.  Démarrez Mongodb ainsi que Pritunl. Tapez:
+
+    .. code:: bash
+
+        systemctl start mongod pritunl
+        systemctl enable mongod pritunl
+
+4.  pointez votre navigateur sur le site web de Pritunl:
     https://example.com
 
-2.  Accepter le certificat non sécurisé. La page de setup de Pritunl
+5.  Accepter le certificat non sécurisé. La page de setup de Pritunl
     s’affiche.
 
-3.  Obtenez la clé d’activation. Tapez:
+6.  Obtenez la clé d’activation. Tapez:
 
     .. code:: bash
 
         pritunl setup-key
 
-4.  copier la clé dans la page web. Cliquez sur ``Save``
+7.  copier la clé dans la page web. Cliquez sur ``Save``
 
-5.  La page web s’affiche en erreur. Pas d’inquiétude à avoir.
+8.  La page web s’affiche en erreur. Pas d’inquiétude à avoir.
 
-6.  Arrêtez le serveur Pritunl. Tapez:
+9.  Arrêtez le serveur Pritunl. Tapez:
 
     .. code:: bash
 
         systemctl stop pritunl
 
-7.  Configurez le serveur pour qu’il n’utilise plus le port 80 et le
+10. Configurez le serveur pour qu’il n’utilise plus le port 80 et le
     port 443
 
     .. code:: bash
@@ -6942,33 +7057,34 @@ pour qu’il fonctionne:
         pritunl set app.server_port 8070
         pritunl set app.redirect_server false
 
-8.  Redémarrez apache et pritunl
+11. Redémarrez apache et pritunl
 
     .. code:: bash
 
         systemctl start apache2
+        systemctl start monit
         systemctl start pritunl
 
-9.  Pointez maintenant votre navigateur sur le site
+12. Pointez maintenant votre navigateur sur le site
     https://pritunl.example.com . La page de login de pritunl doit
     s’afficher. Si ce n’est pas le cas, revérifier votre configuration
     de site web dans ISPConfig et que le port 8070 est bien activé.
 
-10. Sur le serveur, tapez:
+13. Sur le serveur, tapez:
 
     .. code:: bash
 
         pritunl default-password
 
-11. Entrez dans la page web la valeur de ``username`` et de ``password``
+14. Entrez dans la page web la valeur de ``username`` et de ``password``
     affichés dans le terminal.
 
-12. Une boite de dialogue ``initial setup`` s’affiche. Ne changez rien
+15. Une boite de dialogue ``initial setup`` s’affiche. Ne changez rien
     mais tapez votre mot de passe.
 
-13. Vous êtes maintenant connecté sur le site web.
+16. Vous êtes maintenant connecté sur le site web.
 
-14. Cliquez sur l’onglet ``Users``
+17. Cliquez sur l’onglet ``Users``
 
     a. Cliquez sur ``Add Organization``
 
@@ -6992,7 +7108,7 @@ pour qu’il fonctionne:
 
     f. Cliquez sur ``Add``
 
-15. Allez sur l’onglet ``Servers``
+18. Allez sur l’onglet ``Servers``
 
     a. Cliquez sur ``Add Server``
 
@@ -7012,7 +7128,7 @@ pour qu’il fonctionne:
 
     f. Cliquez sur ``Attach``
 
-16. Débloquez le port VPN dans votre firewall
+19. Débloquez le port VPN dans votre firewall
 
     a. Allez sur le site ispconfig https://example.com:8080/
 
@@ -7024,12 +7140,12 @@ pour qu’il fonctionne:
 
     d. Cliquez sur ``save``
 
-17. Retourner dans l’interface de Pritunl. retournez sur l’onglet
+20. Retourner dans l’interface de Pritunl. retournez sur l’onglet
     ``Servers``
 
     a. Cliquez sur ``Start server``
 
-18. Votre serveur de VPN est opérationnel.
+21. Votre serveur de VPN est opérationnel.
 
 Se connecter au serveur de VPN
 ------------------------------
