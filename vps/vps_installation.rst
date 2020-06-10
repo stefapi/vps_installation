@@ -29,31 +29,31 @@ web et services dans un domaine en utilisant ISPConfig.
 
 Sont installés:
 
--  un panel `ISPConfig <https://www.ispconfig.org/>`__
+-  un panel `ISPConfig <https://www.ispconfig.org/>`__,
 
--  un configurateur `Webmin <http://www.webmin.com/>`__
+-  un configurateur `Webmin <http://www.webmin.com/>`__,
 
 -  un serveur apache avec sa configuration let’s encrypt et les plugins
-   PHP, python et ruby
+   PHP, Python et Ruby,
 
 -  un serveur de mail avec antispam, sécurisation d’envoi des mails et
-   autoconfiguration pour Outlook, Thunderbird, Android.
+   autoconfiguration pour Outlook, Thunderbird, Android,
 
 -  un webmail `roundcube <https://roundcube.net>`__,
 
 -  un serveur de mailing list `mailman <https://www.list.org>`__,
 
--  un serveur ftp et sftp sécurisé.
+-  un serveur ftp et sftp sécurisé,
 
--  un serveur de base de données et son interface web d’administration
-   `phpmyadmin <https://www.phpmyadmin.net/>`__.
+-  un serveur de base de données MariaDB et son interface web
+   d’administration `phpmyadmin <https://www.phpmyadmin.net/>`__,
 
 -  des outils de sécurisation, de mise à jour automatique et d’audit du
-   serveur
+   serveur,
 
--  un outil de Monitoring `Munin <http://munin-monitoring.org/>`__
+-  un outil de Monitoring `Munin <http://munin-monitoring.org/>`__,
 
--  un outil de Monitoring `Monit <http://mmonit.com/monit/>`__
+-  un outil de Monitoring `Monit <http://mmonit.com/monit/>`__,
 
 -  un sous domaine pointant sur un site auto-hébergé (l’installation du
    site n’est pas décrite ici; Se référer à
@@ -83,7 +83,8 @@ Sont installés:
    `Loki <https://github.com/grafana/loki>`__, Promtail pour gérer les
    statistiques et les logs du serveur,
 
--  un serveur de sauvegardes `Duplicati <https://www.duplicati.com>`__,
+-  un serveur de sauvegardes
+   `BorgBackup <https://borgbackup.readthedocs.io/>`__,
 
 -  un serveur de VPN `Pritunl <https://pritunl.com/>`__,
 
@@ -110,17 +111,18 @@ Le coût pour mettre en oeuvre ce type de serveur est relativement
 faible: \* Compter 15-18€TTC/an pour un nom de domaine classique (mais
 il peut y avoir des promos) \* Compter 5€TTC/mois pour un VPS de base
 (2Go de Ram, un coeur, 20Go de SSD). Une machine plus sérieuse sera à
-15€/mois (8Go de Ram, 2 coeurs, 80Go de SSD).
+15€/mois (8Go de Ram, 2 coeurs, 80Go de SSD). Il existe aussi des
+solutions VPS avec des HDD très abordables.
 
 Le budget est donc de 6-7€TTC/mois pour une offre d’entrée de gamme. Il
-faut plus sérieusement compter sur 16€/mois tout compris.
+faut plus sérieusement compter sur 10-15€/mois tout compris.
 
 Choix du VPS
 ============
 
 Cette partie du guide s’adresse aux utilisateurs d’OVH. J’ai pour ma
-part choisi un serveur VPS SSD chez OVH avec 2Go de RAM. Au moment ou
-j’écris ce document il possède un seul coeur et 20 Go de disque.
+part choisi un serveur VPS SSD chez OVH avec 4Go de RAM. Au moment ou
+j’écris ce document il possède deux coeurs et 80 Go de disque.
 
 Choisissez d’installer une image Linux seule avec Debian 10. Une fois
 l’installation effectuée, vous recevez un Email sur l’adresse mail de
@@ -1128,7 +1130,7 @@ PHP, Let’s Encrypt, PureFTPd, Bind, Webalizer, AWStats, fail2Ban, UFW
 Firewall, PHPMyadmin, RoundCube.
 
 Pour les systèmes ayant 2 Go de RAM ou plus, il est fortement conseillé
-d’installer les outils ci après : Amavisd, SPamAssassin, ClamAV,
+d’installer les outils ci après : Amavisd, SpamAssassin, ClamAV,
 Mailman.
 
 1. `Loguez vous comme root sur le serveur <#root_login>`__
@@ -1155,9 +1157,12 @@ Mailman.
           ``jailkit`` et ``unrar`` ne sont pas disponible sur Raspbian.
           Il faut donc les supprimer de cette liste. Les paquets
           ``php-ocache`` et ``php-xsl`` doivent être remplacés par la
-          version la plus récente sur Raspbian. NOTE: pour Ubuntu 20,
-          php-gettext et php-recode n’existent pas. Il faut donc les
-          supprimer de la liste.
+          version la plus récente sur Raspbian.
+
+          **Note**
+
+          pour Ubuntu 20, php-gettext et php-recode n’existent pas. Il
+          faut donc les supprimer de la liste.
 
    b. Pour les systèmes avec plus de mémoire tapez :
 
@@ -3837,9 +3842,10 @@ Appliquez la procédure suivante:
 
    .. code:: bash
 
-       mkdir -p /var/www/autoconfig.example.com/autoconfig/mail 
-       chmod 755 /var/www/autoconfig.example.com/autoconfig/mail 
-       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail  
+       cd /var/www/autoconfig.example.com 
+       mkdir -p autoconfig/mail
+       chmod 755 autoconfig/mail
+       chown web1:client0 autoconfig/mail 
 
    -  remplacer web1:client0 par les permissions du répertoire
       ``/var/www/autoconfig.example.com``
@@ -3851,9 +3857,7 @@ Appliquez la procédure suivante:
 
    .. code:: bash
 
-       vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml 
-
-   -  remplacez ``example.com`` par votre nom de domaine
+       vi autoconfig/mail/config-v1.1.xml
 
 5. Y coller:
 
@@ -3911,13 +3915,11 @@ Appliquez la procédure suivante:
 
    .. code:: bash
 
-       chmod 644 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml 
-       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml  
+       chmod 644 autoconfig/mail/config-v1.1.xml
+       chown web1:client0 autoconfig/mail/config-v1.1.xml 
 
    -  remplacer web1:client0 par les permissions du répertoire
       ``/var/www/autoconfig.example.com``
-
-   -  remplacez ``example.com`` par votre nom de domaine
 
 Création d’autodiscover pour Outlook
 ------------------------------------
@@ -3966,9 +3968,10 @@ Appliquez la procédure suivante:
 
    .. code:: bash
 
-       mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/ 
-       chmod 755 /var/www/autoconfig.example.com/autoconfig/Autodiscover/ 
-       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/  
+       cd /var/www/autoconfig.example.com 
+       mkdir -p autoconfig/Autodiscover/
+       chmod 755 autoconfig/Autodiscover/
+       chown web1:client0 autoconfig/Autodiscover/ 
 
    -  remplacer web1:client0 par les permissions du répertoire
       ``/var/www/autoconfig.example.com``
@@ -3980,9 +3983,7 @@ Appliquez la procédure suivante:
 
    .. code:: bash
 
-       vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml 
-
-   -  remplacez ``example.com`` par votre nom de domaine
+       vi autoconfig/Autodiscover/Autodiscover.xml
 
 5. Y coller:
 
@@ -4034,13 +4035,11 @@ Appliquez la procédure suivante:
 
    .. code:: bash
 
-       chmod 644 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml 
-       chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml  
+       chmod 644 autoconfig/Autodiscover/Autodiscover.xml
+       chown web1:client0 autoconfig/Autodiscover/Autodiscover.xml 
 
    -  remplacer web1:client0 par les permissions du répertoire
       ``/var/www/autoconfig.example.com``
-
-   -  remplacez ``example.com`` par votre nom de domaine
 
 7. Pointer votre navigateur sur le site
    https://autodiscover.example.com/Autodiscover/Autodiscover.xml.
@@ -5232,7 +5231,7 @@ Gitea:
    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
       ``Firewall``. Cliquez sur votre serveur.
 
-   c. dans la rubrique ``Open TCP ports:``, ajoutez le port 222
+   c. dans la rubrique ``Open TCP ports:``, ajoutez le port 2222
 
    d. Cliquez sur ``save``
 
@@ -6427,7 +6426,13 @@ Nous allons créer un script de montage sous forme de système de fichier
        umount /mnt/borgbackup
        rmdir /mnt/borgbackup
 
-8. vous pouvez maintenant demonter vos backups. Tapez:
+8. changez les permissions du script. Tapez:
+
+   .. code:: bash
+
+       chmod 700 /usr/local/bin/borgumount.sh
+
+9. vous pouvez maintenant demonter vos backups. Tapez:
 
    .. code:: bash
 
@@ -6505,13 +6510,19 @@ Automatisez votre sauvegarde
        /usr/local/bin/borgbackup.sh >> ${LOG_PATH} 2>&1
        /usr/local/bin/borgprune.sh >> ${LOG_PATH} 2>&1
 
-3. vous pouvez ensuite planifier votre backup à 1h du matin. Tapez:
+3. changez les permissions du script. Tapez:
+
+   .. code:: bash
+
+       chmod 700 /usr/local/bin/borgcron.sh
+
+4. vous pouvez ensuite planifier votre backup à 1h du matin. Tapez:
 
    .. code:: bash
 
        crontab -e
 
-4. Inserez ensuite le texte suivant:
+5. Inserez ensuite le texte suivant:
 
 ::
 
@@ -6844,9 +6855,12 @@ stockage <storing\_srv>:
 Installation d’un serveur de VPN Pritunl
 ========================================
 
-Pritunl est un serveur VPN basé sur OpenVPN. [WARNING] Printunl ne peut
-pas être installé sur une plateforme 32 bits et donc sur une
-distribution Raspbian.
+Pritunl est un serveur VPN basé sur OpenVPN.
+
+    **Warning**
+
+    Printunl ne peut pas être installé sur une plateforme 32 bits et
+    donc sur une distribution Raspbian.
 
 Création du site web de Pritunl
 -------------------------------
@@ -6986,7 +7000,7 @@ installer sur un Raspberrypi avec Ubuntu 64 bits:
        pip2 install -r requirements.txt
        python2 setup.py install
 
-6. Printunl S’installe dans ``/usr/local/bin``. Il faut changer le
+6. Printunl s’installe dans ``/usr/local/bin``. Il faut changer le
    fichier service. Tapez:
 
    .. code:: bash
