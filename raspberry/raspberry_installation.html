@@ -664,16 +664,16 @@ Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentat
 <div class="ulist">
 <ul>
 <li>
-<p>un panel <a href="https://www.ispconfig.org/">ISPConfig</a></p>
+<p>un panel <a href="https://www.ispconfig.org/">ISPConfig</a>,</p>
 </li>
 <li>
-<p>un configurateur <a href="http://www.webmin.com/">Webmin</a></p>
+<p>un configurateur <a href="http://www.webmin.com/">Webmin</a>,</p>
 </li>
 <li>
-<p>un serveur apache avec sa configuration let&#8217;s encrypt et les plugins PHP, python et ruby</p>
+<p>un serveur apache avec sa configuration let&#8217;s encrypt et les plugins PHP, Python et Ruby,</p>
 </li>
 <li>
-<p>un serveur de mail avec antispam, sécurisation d&#8217;envoi des mails et autoconfiguration pour Outlook, Thunderbird, Android.</p>
+<p>un serveur de mail avec antispam, sécurisation d&#8217;envoi des mails et autoconfiguration pour Outlook, Thunderbird, Android,</p>
 </li>
 <li>
 <p>un webmail <a href="https://roundcube.net">roundcube</a>,</p>
@@ -682,19 +682,19 @@ Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentat
 <p>un serveur de mailing list <a href="https://www.list.org">mailman</a>,</p>
 </li>
 <li>
-<p>un serveur ftp et sftp sécurisé.</p>
+<p>un serveur ftp et sftp sécurisé,</p>
 </li>
 <li>
-<p>un serveur de base de données et son interface web d&#8217;administration <a href="https://www.phpmyadmin.net/">phpmyadmin</a>.</p>
+<p>un serveur de base de données MariaDB et son interface web d&#8217;administration <a href="https://www.phpmyadmin.net/">phpmyadmin</a>,</p>
 </li>
 <li>
-<p>des outils de sécurisation, de mise à jour automatique et d&#8217;audit du serveur</p>
+<p>des outils de sécurisation, de mise à jour automatique et d&#8217;audit du serveur,</p>
 </li>
 <li>
-<p>un outil de Monitoring <a href="http://munin-monitoring.org/">Munin</a></p>
+<p>un outil de Monitoring <a href="http://munin-monitoring.org/">Munin</a>,</p>
 </li>
 <li>
-<p>un outil de Monitoring <a href="http://mmonit.com/monit/">Monit</a></p>
+<p>un outil de Monitoring <a href="http://mmonit.com/monit/">Monit</a>,</p>
 </li>
 <li>
 <p>un sous domaine pointant sur un site auto-hébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <a href="https://yunohost.org">Yunohost</a>),</p>
@@ -730,7 +730,7 @@ Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentat
 <p>un serveur <a href="https://grafana.com/">Grafana</a>, <a href="https://prometheus.io/">Prometheus</a>, <a href="https://github.com/grafana/loki">Loki</a>, Promtail pour gérer les statistiques et les logs du serveur,</p>
 </li>
 <li>
-<p>un serveur de sauvegardes <a href="https://www.duplicati.com">Duplicati</a>,</p>
+<p>un serveur de sauvegardes <a href="https://borgbackup.readthedocs.io/">BorgBackup</a>,</p>
 </li>
 <li>
 <p>un serveur de VPN <a href="https://pritunl.com/">Pritunl</a>,</p>
@@ -763,7 +763,7 @@ Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentat
 </ul>
 </div>
 <div class="paragraph">
-<p>Par rapport à une solution VPS directement dans le cloud, ce budget correspond à 7 mois d&#8217;abonnement.</p>
+<p>Par rapport à une solution VPS directement dans le cloud, ce budget correspond à 7-10 mois d&#8217;abonnement.</p>
 </div>
 </div>
 </div>
@@ -1814,8 +1814,7 @@ ping -c2 <span class="tok-si">${</span><span class="tok-nv">SERVER</span><span c
 <p>Ajouter à la fin du fichier les lignes suivantes:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>@reboot
-*/5 * * * *   /usr/local/bin/wifi_rebooter.sh</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>*/5 * * * *   /usr/local/bin/wifi_rebooter.sh</code></pre>
 </div>
 </div>
 </li>
@@ -3000,7 +2999,7 @@ swapon /swapfile</code></pre>
 <p>La procédure d&#8217;installation ci-dessous configure ISPconfig avec les fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Apache, PHP, Let&#8217;s Encrypt, PureFTPd, Bind, Webalizer, AWStats, fail2Ban, UFW Firewall, PHPMyadmin, RoundCube.</p>
 </div>
 <div class="paragraph">
-<p>Pour les systèmes ayant 2 Go de RAM ou plus, il est fortement conseillé d&#8217;installer les outils ci après :  Amavisd, SPamAssassin, ClamAV, Mailman.</p>
+<p>Pour les systèmes ayant 2 Go de RAM ou plus, il est fortement conseillé d&#8217;installer les outils ci après :  Amavisd, SpamAssassin, ClamAV, Mailman.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -3037,7 +3036,18 @@ swapon /swapfile</code></pre>
 </td>
 <td class="content">
 <code>jailkit</code> et <code>unrar</code> ne sont pas disponible sur Raspbian. Il faut donc les supprimer de cette liste. Les paquets <code>php-ocache</code> et <code>php-xsl</code> doivent être remplacés par la version la plus récente sur Raspbian.
-NOTE: pour Ubuntu 20, php-gettext et php-recode n&#8217;existent pas. Il faut donc les supprimer de la liste.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+pour Ubuntu 20, php-gettext et php-recode n&#8217;existent pas. Il faut donc les supprimer de la liste.
 </td>
 </tr>
 </table>
@@ -6617,9 +6627,10 @@ systemctl disable amavisd-new</code></pre>
 <p>Dans le répertoire <code>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</code> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/www/autoconfig.example.com/autoconfig/mail <i class="conum" data-value="2"></i><b>(2)</b>
-chmod <span class="tok-m">755</span> /var/www/autoconfig.example.com/autoconfig/mail <i class="conum" data-value="2"></i><b>(2)</b>
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/autoconfig.example.com <i class="conum" data-value="2"></i><b>(2)</b>
+mkdir -p autoconfig/mail
+chmod <span class="tok-m">755</span> autoconfig/mail
+chown web1:client0 autoconfig/mail <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6639,16 +6650,8 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail  <i class="co
 <p>A l’intérieur de ce répertoire, Editez un fichier <code>config-v1.1.xml</code>. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi autoconfig/mail/config-v1.1.xml</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacez <code>example.com</code> par votre nom de domaine</td>
-</tr>
-</table>
 </div>
 </li>
 <li>
@@ -6718,8 +6721,8 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail  <i class="co
 <p>Donner la permission en lecture seule et affecter les groupes d&#8217;appartenance. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">644</span> /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml <i class="conum" data-value="2"></i><b>(2)</b>
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.xml  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">644</span> autoconfig/mail/config-v1.1.xml
+chown web1:client0 autoconfig/mail/config-v1.1.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6727,10 +6730,6 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.x
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>remplacez <code>example.com</code> par votre nom de domaine</td>
 </tr>
 </table>
 </div>
@@ -6804,9 +6803,10 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/mail/config-v1.1.x
 <p>Dans le répertoire <code>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</code>, créer un répertoire <code>Autodiscover</code>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i class="conum" data-value="2"></i><b>(2)</b>
-chmod <span class="tok-m">755</span> /var/www/autoconfig.example.com/autoconfig/Autodiscover/ <i class="conum" data-value="2"></i><b>(2)</b>
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/autoconfig.example.com <i class="conum" data-value="2"></i><b>(2)</b>
+mkdir -p autoconfig/Autodiscover/
+chmod <span class="tok-m">755</span> autoconfig/Autodiscover/
+chown web1:client0 autoconfig/Autodiscover/ <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6826,16 +6826,8 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/  <i 
 <p>A l’intérieur de ce répertoire, Editez un fichier <code>Autodiscover.xml</code>. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi autoconfig/Autodiscover/Autodiscover.xml</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacez <code>example.com</code> par votre nom de domaine</td>
-</tr>
-</table>
 </div>
 </li>
 <li>
@@ -6898,8 +6890,8 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/  <i 
 <p>Changez les permissions comme pour le répertoire</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">644</span> /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml <i class="conum" data-value="2"></i><b>(2)</b>
-chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autodiscover.xml  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">644</span> autoconfig/Autodiscover/Autodiscover.xml
+chown web1:client0 autoconfig/Autodiscover/Autodiscover.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6907,10 +6899,6 @@ chown web1:client0 /var/www/autoconfig.example.com/autoconfig/Autodiscover/Autod
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>remplacez <code>example.com</code> par votre nom de domaine</td>
 </tr>
 </table>
 </div>
@@ -8739,7 +8727,7 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 <p>Loguez-vous et cliquez sur la rubrique <code>System</code> et le menu <code>Firewall</code>. Cliquez sur votre serveur.</p>
 </li>
 <li>
-<p>dans la rubrique <code>Open TCP ports:</code>, ajoutez le port 222</p>
+<p>dans la rubrique <code>Open TCP ports:</code>, ajoutez le port 2222</p>
 </li>
 <li>
 <p>Cliquez sur <code>save</code></p>
@@ -10399,6 +10387,14 @@ rmdir /mnt/borgbackup</code></pre>
 </div>
 </li>
 <li>
+<p>changez les permissions du script. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">700</span> /usr/local/bin/borgumount.sh</code></pre>
+</div>
+</div>
+</li>
+<li>
 <p>vous pouvez maintenant demonter vos backups. Tapez:</p>
 <div class="listingblock">
 <div class="content">
@@ -10504,6 +10500,14 @@ vi /usr/local/bin/borgcron.sh</code></pre>
 
 /usr/local/bin/borgbackup.sh &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">LOG_PATH</span><span class="tok-si">}</span> <span class="tok-m">2</span>&gt;<span class="tok-p">&amp;</span><span class="tok-m">1</span>
 /usr/local/bin/borgprune.sh &gt;&gt; <span class="tok-si">${</span><span class="tok-nv">LOG_PATH</span><span class="tok-si">}</span> <span class="tok-m">2</span>&gt;<span class="tok-p">&amp;</span><span class="tok-m">1</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>changez les permissions du script. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chmod <span class="tok-m">700</span> /usr/local/bin/borgcron.sh</code></pre>
 </div>
 </div>
 </li>
@@ -10934,8 +10938,19 @@ systemctl start borgweb.service</code></pre>
 <h2 id="_installation_dun_serveur_de_vpn_pritunl">23. Installation d&#8217;un serveur de VPN Pritunl</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Pritunl est un serveur VPN basé sur OpenVPN.
-[WARNING] Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une distribution Raspbian.</p>
+<p>Pritunl est un serveur VPN basé sur OpenVPN.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une distribution Raspbian.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_création_du_site_web_de_pritunl">23.1. Création du site web de Pritunl</h3>
@@ -11123,7 +11138,7 @@ python2 setup.py install</code></pre>
 </div>
 </li>
 <li>
-<p>Printunl S&#8217;installe dans <code>/usr/local/bin</code>. Il faut changer le fichier service. Tapez:</p>
+<p>Printunl s&#8217;installe dans <code>/usr/local/bin</code>. Il faut changer le fichier service. Tapez:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systemd/system/pritunl.service</code></pre>
@@ -12468,7 +12483,7 @@ EndSection</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.1<br>
-Last updated 2020-05-22 20:26:36 +0200
+Last updated 2020-06-09 21:21:57 +0200
 </div>
 </div>
 <style>
