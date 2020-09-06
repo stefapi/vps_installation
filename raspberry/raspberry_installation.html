@@ -11583,9 +11583,12 @@ systemctl start pritunl</code></pre>
 <p>Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install gcc g++ libossp-uuid-dev libavcodec-dev libpango1.0-dev libssh2-1-dev libcairo2-dev libjpeg-dev libpng-dev libavutil-dev libswscale-dev libvncserver-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev libtelnet-dev libswscale-dev libossp-uuid-dev libwebsockets-dev libpulse-dev  mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install gcc g++ libossp-uuid-dev libavcodec-dev libpango1.0-dev libssh2-1-dev libcairo2-dev libjpeg-dev libpng-dev libavutil-dev libavformat-dev libswscale-dev libvncserver-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev libtelnet-dev libswscale-dev libossp-uuid-dev libwebsockets-dev libpulse-dev  mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user</code></pre>
 </div>
 </div>
+</li>
+<li>
+<p>Sur Ubuntu, remplacer <code>mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user</code> par <code>libmariadb-java tomcat9 tomcat9-admin tomcat9-common tomcat9-user</code></p>
 </li>
 <li>
 <p>Téléchargez la dernière version de Guacamole en allant sur le site web et en récupérant le <a href="https://guacamole.apache.org/releases/">lien de téléchargement</a>.</p>
@@ -11594,7 +11597,7 @@ systemctl start pritunl</code></pre>
 <p>tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>curl -fSL -o guacamole-server.tar.gz <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/source/guacamole-server-1.1.0.tar.gz&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>curl -fSL -o guacamole-server.tar.gz <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
 tar xfz guacamole-server.tar.gz
 <span class="tok-nb">cd</span> guacamole-server-*</code></pre>
 </div>
@@ -11621,7 +11624,7 @@ tar xfz guacamole-server.tar.gz
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code><span></span>------------------------------------------------
-guacamole-server version 1.1.0
+guacamole-server version 1.2.0
 ------------------------------------------------
 
    Library status:
@@ -11629,6 +11632,7 @@ guacamole-server version 1.1.0
      freerdp2 ............ yes
      pango ............... yes
      libavcodec .......... yes
+     libavformat.......... yes
      libavutil ........... yes
      libssh2 ............. yes
      libssl .............. yes
@@ -11647,7 +11651,13 @@ guacamole-server version 1.1.0
       RDP ........... yes
       SSH ........... yes
       Telnet ........ yes
-      VNC ........... yes</code></pre>
+      VNC ........... yes
+
+   Services / tools:
+
+      guacd ...... yes
+      guacenc .... yes
+      guaclog .... yes</code></pre>
 </div>
 </div>
 </li>
@@ -11659,7 +11669,8 @@ guacamole-server version 1.1.0
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>make
-make install</code></pre>
+make install
+ldconfig</code></pre>
 </div>
 </div>
 </li>
@@ -11678,9 +11689,9 @@ systemctl start guacd</code></pre>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /usr/local/share/guacamole
 <span class="tok-nb">cd</span> /usr/local/share/guacamole
-curl -fSL -o guacamole.war <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-1.1.0.war&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
-ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/
-systemctl restart tomcat8
+curl -fSL -o guacamole.war <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ <i class="conum" data-value="2"></i><b>(2)</b>
+systemctl restart tomcat8 <i class="conum" data-value="2"></i><b>(2)</b>
 systemctl restart guacd</code></pre>
 </div>
 </div>
@@ -11690,6 +11701,10 @@ systemctl restart guacd</code></pre>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>insérez ici l&#8217;adresse du war à charger</td>
 </tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>ou tomcat9 pour Ubuntu</td>
+</tr>
 </table>
 </div>
 </li>
@@ -11697,8 +11712,16 @@ systemctl restart guacd</code></pre>
 <p>Editez le fichier server.xml. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/tomcat8/server.xml</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/tomcat8/server.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>ou tomcat9 pour Ubuntu</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -11709,9 +11732,35 @@ systemctl restart guacd</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p /etc/guacamole
-mkdir -p /etc/guacamole/<span class="tok-o">{</span>extensions,lib<span class="tok-o">}</span>
-ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/</code></pre>
+mkdir -p /etc/guacamole/<span class="tok-o">{</span>extensions,lib<span class="tok-o">}</span></code></pre>
 </div>
+</div>
+</li>
+<li>
+<p>Récupérez le driver mysql/mariadb pour java. Sur la plupart des Linux, il est présent dans <code>/usr/share/java</code>. Pour le copier, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Il se peut que ce driver ne soit pas présent: allez sur le site <a href="https://dev.mysql.com/downloads/connector/j/">Mysql</a> et téléchargez la version Platform independant. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>curl -fSL -o mysql-java.tar.gz <span class="tok-s1">&#39;https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+tar xfz mysql-java.tar.gz
+<span class="tok-nb">cd</span> mysql-connector-java-*
+cp mysql-connector-java-*.jar /etc/guacamole/lib/mysql-connector-java.jar</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Collez ici le lien récupéré sur le site de Mysql.</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -11747,7 +11796,7 @@ mysql-password: &lt;mot_de_passe&gt; <i class="conum" data-value="1"></i><b>(1)<
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp
-curl -fSL -o guacamole-auth-jdbc.tar.gz <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-auth-jdbc-1.1.0.tar.gz&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+curl -fSL -o guacamole-auth-jdbc.tar.gz <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
 tar xfz guacamole-auth-jdbc.tar.gz
 <span class="tok-nb">cd</span> guacamole-auth-jdbc-*/mysql
 cp guacamole-auth-jdbc-mysql-*.jar /usr/local/share/guacamole/
@@ -11767,7 +11816,8 @@ ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/
 <p>Créez les tables de la base:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>cat *.sql <span class="tok-p">|</span> mysql -u cxguacamole -p cxguacamole <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> schema
+cat *.sql <span class="tok-p">|</span> mysql -u cxguacamole -p cxguacamole <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -11783,9 +11833,17 @@ ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/
 <p>Redémarrez tomcat et guacd. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart tomcat8
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart tomcat8 <i class="conum" data-value="1"></i><b>(1)</b>
 systemctl restart guacd</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>ou mettre tomcat9 pour Ubuntu</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -12483,7 +12541,7 @@ EndSection</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.1<br>
-Last updated 2020-06-09 21:21:57 +0200
+Last updated 2020-06-14 20:48:19 +0200
 </div>
 </div>
 <style>

@@ -7171,14 +7171,17 @@ ProxyPassReverse /guacamole http://localhost:8085/guacamole</programlisting>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install gcc g++ libossp-uuid-dev libavcodec-dev libpango1.0-dev libssh2-1-dev libcairo2-dev libjpeg-dev libpng-dev libavutil-dev libswscale-dev libvncserver-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev libtelnet-dev libswscale-dev libossp-uuid-dev libwebsockets-dev libpulse-dev  mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt install gcc g++ libossp-uuid-dev libavcodec-dev libpango1.0-dev libssh2-1-dev libcairo2-dev libjpeg-dev libpng-dev libavutil-dev libavformat-dev libswscale-dev libvncserver-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev libtelnet-dev libswscale-dev libossp-uuid-dev libwebsockets-dev libpulse-dev  mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user</programlisting>
+</listitem>
+<listitem>
+<simpara>Sur Ubuntu, remplacer <literal>mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user</literal> par <literal>libmariadb-java tomcat9 tomcat9-admin tomcat9-common tomcat9-user</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Téléchargez la dernière version de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>.</simpara>
 </listitem>
 <listitem>
 <simpara>tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/source/guacamole-server-1.1.0.tar.gz' <co xml:id="CO55-1"/>
+<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO55-1"/>
 tar xfz guacamole-server.tar.gz
 cd guacamole-server-*</programlisting>
 <calloutlist>
@@ -7194,7 +7197,7 @@ cd guacamole-server-*</programlisting>
 <listitem>
 <simpara>Vous devez obtenir, à la fin de la configuration, une table de ce type:</simpara>
 <screen linenumbering="unnumbered">------------------------------------------------
-guacamole-server version 1.1.0
+guacamole-server version 1.2.0
 ------------------------------------------------
 
    Library status:
@@ -7202,6 +7205,7 @@ guacamole-server version 1.1.0
      freerdp2 ............ yes
      pango ............... yes
      libavcodec .......... yes
+     libavformat.......... yes
      libavutil ........... yes
      libssh2 ............. yes
      libssl .............. yes
@@ -7220,7 +7224,13 @@ guacamole-server version 1.1.0
       RDP ........... yes
       SSH ........... yes
       Telnet ........ yes
-      VNC ........... yes</screen>
+      VNC ........... yes
+
+   Services / tools:
+
+      guacd ...... yes
+      guacenc .... yes
+      guaclog .... yes</screen>
 </listitem>
 <listitem>
 <simpara>Si ce n&#8217;est pas le cas, c&#8217;est qu&#8217;une bibliothèque n&#8217;est pas installée correctement.</simpara>
@@ -7228,7 +7238,8 @@ guacamole-server version 1.1.0
 <listitem>
 <simpara>Lancez la compilation et l&#8217;installation. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">make
-make install</programlisting>
+make install
+ldconfig</programlisting>
 </listitem>
 <listitem>
 <simpara>Activez le démon de gestion guacd. Tapez:</simpara>
@@ -7239,19 +7250,27 @@ systemctl start guacd</programlisting>
 <simpara>Téléchargez le dernier client <literal>war</literal> de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>. Récupérez le lien puis tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /usr/local/share/guacamole
 cd /usr/local/share/guacamole
-curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-1.1.0.war' <co xml:id="CO56-1"/>
-ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/
-systemctl restart tomcat8
+curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO56-1"/>
+ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ <co xml:id="CO56-2"/>
+systemctl restart tomcat8 <co xml:id="CO56-3"/>
 systemctl restart guacd</programlisting>
 <calloutlist>
 <callout arearefs="CO56-1">
 <para>insérez ici l&#8217;adresse du war à charger</para>
 </callout>
+<callout arearefs="CO56-2 CO56-3">
+<para>ou tomcat9 pour Ubuntu</para>
+</callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Editez le fichier server.xml. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /etc/tomcat8/server.xml</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/tomcat8/server.xml <co xml:id="CO57-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO57-1">
+<para>ou tomcat9 pour Ubuntu</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Chercher <literal>Connector port="8080" protocol="HTTP/1.1</literal> et remplacer partout le port <literal>8080</literal> par <literal>8085</literal></simpara>
@@ -7259,8 +7278,23 @@ systemctl restart guacd</programlisting>
 <listitem>
 <simpara>Créez les répertoires de configuration de guacamole. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /etc/guacamole
-mkdir -p /etc/guacamole/{extensions,lib}
-ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/</programlisting>
+mkdir -p /etc/guacamole/{extensions,lib}</programlisting>
+</listitem>
+<listitem>
+<simpara>Récupérez le driver mysql/mariadb pour java. Sur la plupart des Linux, il est présent dans <literal>/usr/share/java</literal>. Pour le copier, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/</programlisting>
+</listitem>
+<listitem>
+<simpara>Il se peut que ce driver ne soit pas présent: allez sur le site <link xl:href="https://dev.mysql.com/downloads/connector/j/">Mysql</link> et téléchargez la version Platform independant. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o mysql-java.tar.gz 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz' <co xml:id="CO58-1"/>
+tar xfz mysql-java.tar.gz
+cd mysql-connector-java-*
+cp mysql-connector-java-*.jar /etc/guacamole/lib/mysql-connector-java.jar</programlisting>
+<calloutlist>
+<callout arearefs="CO58-1">
+<para>Collez ici le lien récupéré sur le site de Mysql.</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Editez le fichier guacamole.properties. Tapez:</simpara>
@@ -7270,11 +7304,11 @@ ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/</programlisti
 <simpara>Ajoutez dans le fichier:</simpara>
 <screen linenumbering="unnumbered">mysql-hostname: localhost
 mysql-port: 3306
-mysql-database: cxguacamole <co xml:id="CO57-1"/>
-mysql-username: cxguacamole <co xml:id="CO57-2"/>
-mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO57-3"/></screen>
+mysql-database: cxguacamole <co xml:id="CO59-1"/>
+mysql-username: cxguacamole <co xml:id="CO59-2"/>
+mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO59-3"/></screen>
 <calloutlist>
-<callout arearefs="CO57-1 CO57-2 CO57-3">
+<callout arearefs="CO59-1 CO59-2 CO59-3">
 <para>mettez ici le nom de la base de données, le nom de l&#8217;utilisateur de la base et son mot_de_passe tels qu&#8217;ils ont été saisis dans le chapitre de création de la base de données.</para>
 </callout>
 </calloutlist>
@@ -7282,30 +7316,36 @@ mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO57-3"/></screen>
 <listitem>
 <simpara>Vous devez maintenant télécharger les plugins mysql pour Guacamole. Allez sur le site web de guacamole et récupérez le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement de guacamole-auth-jdbc</link>. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.1.0/binary/guacamole-auth-jdbc-1.1.0.tar.gz' <co xml:id="CO58-1"/>
+curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz' <co xml:id="CO60-1"/>
 tar xfz guacamole-auth-jdbc.tar.gz
 cd guacamole-auth-jdbc-*/mysql
 cp guacamole-auth-jdbc-mysql-*.jar /usr/local/share/guacamole/
 ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/extensions</programlisting>
 <calloutlist>
-<callout arearefs="CO58-1">
+<callout arearefs="CO60-1">
 <para>insérez ici l&#8217;adresse du fichier guacamole-auth-jdbc à charger</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Créez les tables de la base:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO59-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">cd schema
+cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO61-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO59-1">
+<callout arearefs="CO61-1">
 <para>mettez derrière le <literal>-u</literal> le nom d&#8217;utilisateur de la base de données et derrière le <literal>-p</literal> le nom de la base de données. Un mot de passe vous sera demandé.</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Redémarrez tomcat et guacd. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl restart tomcat8
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart tomcat8 <co xml:id="CO62-1"/>
 systemctl restart guacd</programlisting>
+<calloutlist>
+<callout arearefs="CO62-1">
+<para>ou mettre tomcat9 pour Ubuntu</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Allez sur le site de <literal>guacamole.example.com</literal></simpara>
