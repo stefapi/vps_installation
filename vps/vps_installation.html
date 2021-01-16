@@ -3513,7 +3513,7 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 <p>ISPConfig est un système de configuration de sites web totalement compatible avec Webmin.</p>
 </div>
 <div class="paragraph">
-<p>Pour installer ISPConfig, vous devez suivre la procédure ci-dessous. ISPConfig 3.1 a été utilisé dans ce tutoriel.</p>
+<p>Pour installer ISPConfig, vous devez suivre la procédure ci-dessous. ISPConfig 3.2 a été utilisé dans ce tutoriel.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -3646,53 +3646,6 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 <p><code>Email Address []:</code> &#8592; Tapez entrée</p>
 </li>
 </ol>
-</div>
-</li>
-<li>
-<p>Sécurisez Apache</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Il est maintenant recommandé de désactiver les protocoles TLS 1.0 et TLS 1.1. Ce n&#8217;est pas la configuration par défaut d&#8217;ISPconfig</p>
-</li>
-<li>
-<p><a href="#root_login">Loguez vous comme root sur le serveur</a>.</p>
-</li>
-<li>
-<p>Copier le fichier <code>vhost.conf.master</code> dans la zone custom</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>cp /usr/local/ispconfig/server/conf/vhost.conf.master /usr/local/ispconfig/server/conf-custom/vhost.conf.master</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Editer le fichier dans la zone custom. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Remplacez les lignes <code>SSLProtocol All</code> par:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1</span></code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Décommenter la ligne commencant par <code>SSLCipherSuite</code> et les 3 lignes suivantes:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-na">&lt;IfModule mod_headers.c&gt;</span>
-<span class="tok-na">Header always add Strict-Transport-Security &quot;max-age</span><span class="tok-o">=</span><span class="tok-s">15768000&quot;</span>
-<span class="tok-na">&lt;/IfModule&gt;</span></code></pre>
-</div>
 </div>
 </li>
 <li>
@@ -11416,7 +11369,7 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 <div id="footer">
 <div id="footer-text">
 Version 1.1<br>
-Last updated 2021-01-16 19:16:51 +0100
+Last updated 2021-01-16 20:16:10 +0100
 </div>
 </div>
 </body>

@@ -2617,162 +2617,125 @@ ISPConfig est un système de configuration de sites web totalement
 compatible avec Webmin.
 
 Pour installer ISPConfig, vous devez suivre la procédure ci-dessous.
-ISPConfig 3.1 a été utilisé dans ce tutoriel.
+ISPConfig 3.2 a été utilisé dans ce tutoriel.
 
-1.  `Loguez vous comme root sur le serveur <#root_login>`__
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-2.  Tapez:
+2. Tapez:
 
-    .. code:: bash
+   .. code:: bash
 
-       cd /tmp
+      cd /tmp
 
-3.  Cherchez la dernière version d’ISPConfig sur le site
-    `ISPConfig <https://www.ispconfig.org/ispconfig/download/>`__
+3. Cherchez la dernière version d’ISPConfig sur le site
+   `ISPConfig <https://www.ispconfig.org/ispconfig/download/>`__
 
-4.  Installez cette version en tapant: :
+4. Installez cette version en tapant: :
 
-    .. code:: bash
+   .. code:: bash
 
-       wget <la_version_a_telecharger>.tar.gz
+      wget <la_version_a_telecharger>.tar.gz
 
-5.  Décompressez la version en tapant: :
+5. Décompressez la version en tapant: :
 
-    .. code:: bash
+   .. code:: bash
 
-       tar xfz <la_version>.tar.gz
+      tar xfz <la_version>.tar.gz
 
-6.  Enfin allez dans le répertoire d’installation: :
+6. Enfin allez dans le répertoire d’installation: :
 
-    .. code:: bash
+   .. code:: bash
 
-       cd ispconfig3_install/install/
+      cd ispconfig3_install/install/
 
-7.  Lancez l’installation: :
+7. Lancez l’installation: :
 
-    .. code:: bash
+   .. code:: bash
 
-       php -q install.php
+      php -q install.php
 
-    et répondez aux questions:
+   et répondez aux questions:
 
-    a. ``Select language (en,de) [en]:`` ← Tapez entrée
+   a. ``Select language (en,de) [en]:`` ← Tapez entrée
 
-    b. ``Installation mode (standard,expert) [standard]:`` ← Tapez
-       entrée
+   b. ``Installation mode (standard,expert) [standard]:`` ← Tapez entrée
 
-    c. ``Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:``
-       ← Tapez entrée
+   c. ``Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:``
+      ← Tapez entrée
 
-    d. ``MySQL server hostname [localhost]:`` ← Tapez entrée
+   d. ``MySQL server hostname [localhost]:`` ← Tapez entrée
 
-    e. ``MySQL server port [3306]:`` ← Tapez entrée
+   e. ``MySQL server port [3306]:`` ← Tapez entrée
 
-    f. ``MySQL root username [root]:`` ← Tapez entrée
+   f. ``MySQL root username [root]:`` ← Tapez entrée
 
-    g. ``MySQL root password []:`` ← Enter your MySQL root password
+   g. ``MySQL root password []:`` ← Enter your MySQL root password
 
-    h. ``MySQL database to create [dbispconfig]:`` ← Tapez entrée
+   h. ``MySQL database to create [dbispconfig]:`` ← Tapez entrée
 
-    i. ``MySQL charset [utf8]:`` ← Tapez entrée
+   i. ``MySQL charset [utf8]:`` ← Tapez entrée
 
-    j. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
-       lettres
+   j. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
+      lettres
 
-    k. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
-       nom d’état
+   k. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
+      nom d’état
 
-    l. ``Locality Name (eg, city) []:`` ← Entrer votre ville
+   l. ``Locality Name (eg, city) []:`` ← Entrer votre ville
 
-    m. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
-       Entrez votre entreprise ou tapez entrée
+   m. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
+      Entrez votre entreprise ou tapez entrée
 
-    n. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
+   n. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
 
-    o. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le
-       nom d’hôte de votre serveur. Dans notre cas:
-       ``server1.example.com``
+   o. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le nom
+      d’hôte de votre serveur. Dans notre cas: ``server1.example.com``
 
-    p. ``Email Address []:`` ← Tapez entrée
+   p. ``Email Address []:`` ← Tapez entrée
 
-    q. ``ISPConfig Port [8080]:`` ← Tapez entrée
+   q. ``ISPConfig Port [8080]:`` ← Tapez entrée
 
-    r. ``Admin password [admin]:`` ← Tapez entrée
+   r. ``Admin password [admin]:`` ← Tapez entrée
 
-    s. ``Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:``
-       ←- Tapez entrée
+   s. ``Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:``
+      ←- Tapez entrée
 
-    t. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
-       lettres
+   t. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
+      lettres
 
-    u. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
-       nom d’état
+   u. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
+      nom d’état
 
-    v. ``Locality Name (eg, city) []:`` ← Entrer votre ville
+   v. ``Locality Name (eg, city) []:`` ← Entrer votre ville
 
-    w. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
-       Entrez votre entreprise ou tapez entrée
+   w. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
+      Entrez votre entreprise ou tapez entrée
 
-    x. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
+   x. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
 
-    y. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le
-       nom d’hôte de votre serveur. Dans notre cas:
-       ``server1.example.com``
+   y. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le nom
+      d’hôte de votre serveur. Dans notre cas: ``server1.example.com``
 
-    z. ``Email Address []:`` ← Tapez entrée
+   z. ``Email Address []:`` ← Tapez entrée
 
-8.  Sécurisez Apache
+8. L’installation est terminée. Vous accédez au serveur à l’adresse:
+   https://example.com:8080/ .
 
-    a. Il est maintenant recommandé de désactiver les protocoles TLS 1.0
-       et TLS 1.1. Ce n’est pas la configuration par défaut d’ISPconfig
+   .. note::
 
-    b. `Loguez vous comme root sur le serveur <#root_login>`__.
+      Lors de votre première connexion, votre domaine n’est pas encore
+      configuré. Il faudra alors utiliser le nom DNS donné par votre
+      hébergeur. Pour OVH, elle s’écrit ``VPSxxxxxx.ovh.net``.
 
-    c. Copier le fichier ``vhost.conf.master`` dans la zone custom
+9. Loguez vous comme admin et avec le mot de passe que vous avez choisi.
+   Vous pouvez décider de le changer au premier login
 
-       .. code:: bash
+   .. note::
 
-          cp /usr/local/ispconfig/server/conf/vhost.conf.master /usr/local/ispconfig/server/conf-custom/vhost.conf.master
-
-    d. Editer le fichier dans la zone custom. Tapez:
-
-       .. code:: bash
-
-          vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master
-
-    e. Remplacez les lignes ``SSLProtocol All`` par:
-
-       .. code:: ini
-
-          SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
-
-9.  Décommenter la ligne commencant par ``SSLCipherSuite`` et les 3
-    lignes suivantes:
-
-    .. code:: ini
-
-       <IfModule mod_headers.c>
-       Header always add Strict-Transport-Security "max-age=15768000"
-       </IfModule>
-
-10. L’installation est terminée. Vous accédez au serveur à l’adresse:
-    https://example.com:8080/ .
-
-    .. note::
-
-       Lors de votre première connexion, votre domaine n’est pas encore
-       configuré. Il faudra alors utiliser le nom DNS donné par votre
-       hébergeur. Pour OVH, elle s’écrit ``VPSxxxxxx.ovh.net``.
-
-11. Loguez vous comme admin et avec le mot de passe que vous avez
-    choisi. Vous pouvez décider de le changer au premier login
-
-    .. note::
-
-       Si le message "Possible attack detected. This action has been
-       logged.". Cela signifie que vous avez des cookies d’une
-       précédente installation qui sont configurés. Effacer les cookies
-       de ce site de votre navigateur.
+      Si le message "Possible attack detected. This action has been
+      logged.". Cela signifie que vous avez des cookies d’une précédente
+      installation qui sont configurés. Effacer les cookies de ce site
+      de votre navigateur.
 
 .. __installation_du_système_dadministration_webmin:
 

@@ -1737,7 +1737,7 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <section xml:id="_installation_et_configuration_de_ispconfig">
 <title>Installation et configuration de ISPConfig</title>
 <simpara>ISPConfig est un système de configuration de sites web totalement compatible avec Webmin.</simpara>
-<simpara>Pour installer ISPConfig, vous devez suivre la procédure ci-dessous. ISPConfig 3.1 a été utilisé dans ce tutoriel.</simpara>
+<simpara>Pour installer ISPConfig, vous devez suivre la procédure ci-dessous. ISPConfig 3.2 a été utilisé dans ce tutoriel.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
@@ -1845,35 +1845,6 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <simpara><literal>Email Address []:</literal> &#8592; Tapez entrée</simpara>
 </listitem>
 </orderedlist>
-</listitem>
-<listitem>
-<simpara>Sécurisez Apache</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>Il est maintenant recommandé de désactiver les protocoles TLS 1.0 et TLS 1.1. Ce n&#8217;est pas la configuration par défaut d&#8217;ISPconfig</simpara>
-</listitem>
-<listitem>
-<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link>.</simpara>
-</listitem>
-<listitem>
-<simpara>Copier le fichier <literal>vhost.conf.master</literal> dans la zone custom</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cp /usr/local/ispconfig/server/conf/vhost.conf.master /usr/local/ispconfig/server/conf-custom/vhost.conf.master</programlisting>
-</listitem>
-<listitem>
-<simpara>Editer le fichier dans la zone custom. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /usr/local/ispconfig/server/conf-custom/vhost.conf.master</programlisting>
-</listitem>
-<listitem>
-<simpara>Remplacez les lignes <literal>SSLProtocol All</literal> par:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1</programlisting>
-</listitem>
-</orderedlist>
-</listitem>
-<listitem>
-<simpara>Décommenter la ligne commencant par <literal>SSLCipherSuite</literal> et les 3 lignes suivantes:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">&lt;IfModule mod_headers.c&gt;
-Header always add Strict-Transport-Security "max-age=15768000"
-&lt;/IfModule&gt;</programlisting>
 </listitem>
 <listitem>
 <simpara>L&#8217;installation est terminée. Vous accédez au serveur à l&#8217;adresse: <link xl:href="https://example.com:8080/">https://example.com:8080/</link> .</simpara>
