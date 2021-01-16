@@ -321,8 +321,11 @@ Pour que tout cela fonctionne bien, ajoutez des Glue records:
    votre serveur n’est à faire qu’après avoir défini le premier domaine
    de votre serveur
 
-Il y a la possibilité chez OVH d’utiliser un DNS secondaire. Je ne l’ai
-pas mis en oeuvre.
+Il y a la possibilité chez OVH d’utiliser un DNS secondaire. Dans ce
+cas, enregistrez votre nom de domaine sur le serveur de dns secondaire
+de votre hébergeur. Notez ensuite le nom de domaine de ce DNS secondaire
+et ajoutez une entrée supplémentaire sur le serveur de votre registrar
+avec l’adresse DNS secondaire.
 
 .. note::
 
@@ -1734,7 +1737,7 @@ Mailman.
 
       .. code:: bash
 
-         apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell  php-sqlite3 php-tidy php-xmlrpc memcached php-memcache php-imagick php-zip php-mbstring libapache2-mod-passenger php-soap php-fpm php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron php-gettext php-recode php-opcache php-xsl unrar jailkit
+         apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell  php-sqlite3 php-tidy php-xmlrpc memcached php-memcache php-imagick php-zip php-mbstring libapache2-mod-passenger php-soap php-fpm php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron goaccess php-gettext php-recode php-opcache php-xsl xz-utils lzip unrar jailkit
 
       .. note::
 
@@ -3622,9 +3625,9 @@ services de base:
 
       .. code:: bash
 
-         /etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh 
+         /etc/letsencrypt/archive/mail.example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh 
 
-      -  Remplacer example.com par votre nom de domaine.
+      -  Remplacer mail.example.com par votre nom de domaine du mail.
 
 .. __surveillance_du_serveur_avec_munin_et_monit:
 
@@ -4447,6 +4450,105 @@ suivantes:
 
    -  Tout doit être correct sauf éventuellement le reverse DNS qui doit
       être configuré pour pointer vers ``mail.example.com`` .
+
+6. Testez votre email sur le site `Phishing
+   Scoreboard <https://www.phishingscorecard.com/>`__
+
+   -  Entrez votre adresse mail: ``admin@example.com``
+
+   -  Entrez votre nom de domaine: ``example.com``
+
+   -  Entrez votre clé dkim: ``default``
+
+7. Enfin, vous pouvez tester votre statut de spammer potentiel en
+   envoyant allant sur le site `Newsletter Spam
+   test <https://www.mail-tester.com/>`__
+
+   -  suivez les instructions (envoi d’un email à l’adresse donnée)
+
+   -  le site vous donnera des informations intéressantes sur la
+      configuration du serveur et des informations complémentaires liées
+      au contenu du mail. Pour ces dernières ne pas en tenir compte.
+
+.. __surveillance_du_statut_de_spammer:
+
+Surveillance du statut de Spammer
+---------------------------------
+
+Il est nécessaire aujourd’hui de surveiller le statut de votre serveur
+de mail et de vérifier notamment si votre configuration SPF, DKIM et
+DMARC est correctement comprise par les serveurs de mails les plus
+connus comme Gmail, Yahoo, Hotmail …​
+
+Pour cela un peu de configuration est nécessaire.
+
+En premier, il faut créer un compte:
+
+1. Allez sur le site `Dmarcian <https://dmarcian.com>`__
+
+2. Cliquez sur ``Sign up Free``
+
+3. Choisissez votre région, ``Europe`` par exemple.
+
+4. Enregistrez votre compte (mail, mot de passe) et votre nom de domaine
+   ``example.com``
+
+5. notez bien l’adresse email qui va vous être donnée par dmarcian de la
+   forme ``xyzabcd@ag.dmarcian.eu`` pour la réception de messages de
+   type abuse te de la forme ``xyzabcd@fr.dmarcian.eu`` pour des
+   forensic. Notez bien ces deux adresses.
+
+Ensuite, vous devez modifier votre configuration DMARC:
+
+1.  Allez dans ``DNS`` de votre serveur de domaine principal
+
+2.  Sélectionnez le menu ``Zones`` puis le domaine ``example.com``
+
+3.  Choisissez l’onglet ``Records`` et éditez l’entrée ``TXT`` nommée
+    \_dmarc
+
+4.  modifiez le champ ``Text`` avec :
+    ``v=DMARC1;p=reject;sp=quarantine;pct=100;rua=mailto:abuse@example.com;ruf=mailto:forensic@example.com``
+
+5.  Allez ensuite dans ``Email``
+
+6.  Allez dans le menu ``Email Forward``
+
+7.  cliquez sur ``Add new Email Forward``
+
+8.  Saisissez dans ``Email`` la valeur ``abuse``
+
+9.  Saisissez dans Destination Email sur 2 lignes l’adresse de votre
+    mail de réception interne et l’adresse mail qui vous a été fournie
+    par ``dmarcian.com`` pour l’adresse abuse ( de la forme
+    ``xyzabcd@ag.dmarcian.eu`` )
+
+10. Cliquez sur ``Save``
+
+11. cliquez sur ``Add new Email Forward``
+
+12. Saisissez dans ``Email`` la valeur ``forensic``
+
+13. Saisissez dans Destination Email sur 2 lignes l’adresse de votre
+    mail de réception interne et l’adresse mail qui vous a été fournie
+    par ``dmarcian.com`` pour l’adresse forensic ( de la forme
+    ``xyzabcd@fr.dmarcian.eu`` )
+
+14. Cliquez sur ``Save``
+
+15. le site ``dmarcian.com`` va commencer à recevoir tous les comptes
+    rendus de mails refusés par les destinataires de messagerie et
+    élaborer des statistiques ainsi que des comptes rendus que vous
+    pourrez consulter sur votre compte.
+
+Il est intéressant de vérifier votre statut de spammer en vérifiant les
+différentes blacklist qui existent.
+
+Pour cela allez sur le site `Email Blacklist
+Check <https://mxtoolbox.com/blacklists.aspx>`__ entrez votre nom de
+domaine ``example.com`` et cliquez sur le bouton ``Blacklist Check``.
+
+Tous les sites doivent indiquer que votre domaine n’est pas blacklisté.
 
 .. __création_de_lautoconfig_pour_thunderbird_et_android:
 
@@ -6011,13 +6113,6 @@ Appliquez la procédure suivante:
          RewriteEngine On
 
          <Location /media>
-         Require all granted
-         </Location>
-
-         Alias /.well-known {DOCROOT}/private/seafile/.well-known
-         RewriteEngine On
-
-         <Location /.well-known>
          Require all granted
          </Location>
 

@@ -287,7 +287,7 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 <note>
 <simpara>Cette configuration du lien chez votre registrar des deux DNS de votre serveur n&#8217;est à faire qu&#8217;après avoir défini le premier domaine de votre serveur</simpara>
 </note>
-<simpara>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Je ne l&#8217;ai pas mis en oeuvre.</simpara>
+<simpara>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Dans ce cas, enregistrez votre nom de domaine sur le serveur de dns secondaire de votre hébergeur. Notez ensuite le nom de domaine de ce DNS secondaire et ajoutez une entrée supplémentaire sur le serveur de votre registrar avec l&#8217;adresse DNS secondaire.</simpara>
 <note>
 <simpara>Avoir un DNS sur au moins deux machines distinctes est la configuration recommandée.</simpara>
 </note>
@@ -1602,7 +1602,7 @@ swapon /swapfile</programlisting>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell  php-sqlite3 php-tidy php-xmlrpc memcached php-memcache php-imagick php-zip php-mbstring libapache2-mod-passenger php-soap php-fpm php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron php-gettext php-recode php-opcache php-xsl unrar jailkit</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell  php-sqlite3 php-tidy php-xmlrpc memcached php-memcache php-imagick php-zip php-mbstring libapache2-mod-passenger php-soap php-fpm php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron goaccess php-gettext php-recode php-opcache php-xsl xz-utils lzip unrar jailkit</programlisting>
 <note>
 <simpara><literal>jailkit</literal> et <literal>unrar</literal> ne sont pas disponible sur Raspbian. Il faut donc les supprimer de cette liste. Les paquets <literal>php-ocache</literal> et <literal>php-xsl</literal> doivent être remplacés par la version la plus récente sur Raspbian.</simpara>
 </note>
@@ -3327,10 +3327,10 @@ exit 1</programlisting>
 echo "root" &gt;&gt; /etc/incron.allow
 incrontab -e</programlisting>
 <simpara>et ajoutez les lignes ci dessous dans le fichier:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/etc/letsencrypt/archive/example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <co xml:id="CO27-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/etc/letsencrypt/archive/mail.example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <co xml:id="CO27-1"/></programlisting>
 <calloutlist>
 <callout arearefs="CO27-1">
-<para>Remplacer example.com par votre nom de domaine.</para>
+<para>Remplacer mail.example.com par votre nom de domaine du mail.</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -4061,7 +4061,106 @@ systemctl disable amavisd-new</programlisting>
 </listitem>
 </itemizedlist>
 </listitem>
+<listitem>
+<simpara>Testez votre email sur le site <link xl:href="https://www.phishingscorecard.com/">Phishing Scoreboard</link></simpara>
+<itemizedlist>
+<listitem>
+<simpara>Entrez votre adresse mail: <literal>admin@example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Entrez votre nom de domaine: <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Entrez votre clé dkim: <literal>default</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Enfin, vous pouvez tester votre statut de spammer potentiel en envoyant allant sur le site <link xl:href="https://www.mail-tester.com/">Newsletter Spam test</link></simpara>
+<itemizedlist>
+<listitem>
+<simpara>suivez les instructions (envoi d&#8217;un email à l&#8217;adresse donnée)</simpara>
+</listitem>
+<listitem>
+<simpara>le site vous donnera des informations intéressantes sur la configuration du serveur et des informations complémentaires liées au contenu du mail. Pour ces dernières ne pas en tenir compte.</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
 </orderedlist>
+</section>
+<section xml:id="_surveillance_du_statut_de_spammer">
+<title>Surveillance du statut de Spammer</title>
+<simpara>Il est nécessaire aujourd&#8217;hui de surveiller le statut de votre serveur de mail et de vérifier notamment si votre configuration SPF, DKIM et DMARC est correctement comprise par les serveurs de mails les plus connus comme Gmail, Yahoo, Hotmail &#8230;&#8203;</simpara>
+<simpara>Pour cela un peu de configuration est nécessaire.</simpara>
+<simpara>En premier, il faut créer un compte:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez sur le site <link xl:href="https://dmarcian.com">Dmarcian</link></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Sign up Free</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez votre région, <literal>Europe</literal> par exemple.</simpara>
+</listitem>
+<listitem>
+<simpara>Enregistrez votre compte (mail, mot de passe) et votre nom de domaine <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara>notez bien l&#8217;adresse email qui va vous être donnée par dmarcian de la forme <literal>xyzabcd@ag.dmarcian.eu</literal> pour la réception de messages de type abuse te de la forme <literal>xyzabcd@fr.dmarcian.eu</literal> pour des forensic. Notez bien ces deux adresses.</simpara>
+</listitem>
+</orderedlist>
+<simpara>Ensuite, vous devez modifier votre configuration DMARC:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans <literal>DNS</literal> de votre serveur de domaine principal</simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionnez le menu <literal>Zones</literal> puis le domaine <literal>example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Choisissez l&#8217;onglet <literal>Records</literal> et éditez l&#8217;entrée <literal>TXT</literal> nommée _dmarc</simpara>
+</listitem>
+<listitem>
+<simpara>modifiez le champ <literal>Text</literal> avec : <literal>v=DMARC1;p=reject;sp=quarantine;pct=100;rua=mailto:abuse@example.com;ruf=mailto:forensic@example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Allez ensuite dans <literal>Email</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans le menu <literal>Email Forward</literal></simpara>
+</listitem>
+<listitem>
+<simpara>cliquez sur  <literal>Add new Email Forward</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez dans <literal>Email</literal> la valeur <literal>abuse</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez dans Destination Email sur 2 lignes l&#8217;adresse de votre mail de réception interne et l&#8217;adresse mail qui vous a été fournie par <literal>dmarcian.com</literal> pour l&#8217;adresse abuse ( de la forme <literal>xyzabcd@ag.dmarcian.eu</literal> )</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>cliquez sur  <literal>Add new Email Forward</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez dans <literal>Email</literal> la valeur <literal>forensic</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Saisissez dans Destination Email sur 2 lignes l&#8217;adresse de votre mail de réception interne et l&#8217;adresse mail qui vous a été fournie par <literal>dmarcian.com</literal> pour l&#8217;adresse forensic ( de la forme <literal>xyzabcd@fr.dmarcian.eu</literal> )</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+<listitem>
+<simpara>le site <literal>dmarcian.com</literal> va commencer à recevoir tous les comptes rendus de mails refusés par les destinataires de messagerie et élaborer des statistiques ainsi que des comptes rendus que vous pourrez consulter sur votre compte.</simpara>
+</listitem>
+</orderedlist>
+<simpara>Il est intéressant de vérifier votre statut de spammer en vérifiant les différentes blacklist qui existent.</simpara>
+<simpara>Pour cela allez sur le site <link xl:href="https://mxtoolbox.com/blacklists.aspx">Email Blacklist Check</link> entrez votre nom de domaine <literal>example.com</literal> et cliquez sur le bouton <literal>Blacklist Check</literal>.</simpara>
+<simpara>Tous les sites doivent indiquer que votre domaine n&#8217;est pas blacklisté.</simpara>
 </section>
 <section xml:id="_création_de_lautoconfig_pour_thunderbird_et_android">
 <title>Création de l’autoconfig pour Thunderbird et Android</title>
@@ -5828,13 +5927,6 @@ SSH_PORT = 2222 <co xml:id="CO42-1"/></programlisting>
 RewriteEngine On
 
 &lt;Location /media&gt;
-Require all granted
-&lt;/Location&gt;
-
-Alias /.well-known {DOCROOT}/private/seafile/.well-known
-RewriteEngine On
-
-&lt;Location /.well-known&gt;
 Require all granted
 &lt;/Location&gt;
 
