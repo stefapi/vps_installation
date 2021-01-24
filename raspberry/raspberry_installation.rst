@@ -3381,21 +3381,67 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
            -  ``Number of backup copies:`` ← saisir ``1``
 
       vi.  Dans l’onglet ``Options``, il peut être utile pour certains
-           types de site qui sont des redirections d’autres sites de
-           saisir dans la zone ``Apache Directives:``
+           types de site qui sont des redirections d’autres sites
+           (locaux, d’autres machines ou de container docker) de saisir
+           dans la zone ``Apache Directives:``
 
-           .. code:: apache
+           -  Pour un site en HTTP (attention dans ce cas, ce site doit
+              être local ou dans un container pour des raisons de
+              sécurité) :
 
-              ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-              ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-              RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+              .. code:: apache
 
-              # redirect from server
-              #
+                 <Location /.well-known >
+                     AuthType None
+                     Options None
+                     AllowOverride None
+                     Require all granted
+                     AddDefaultCharset off
+                 </Location>
 
-              SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-              ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
-              ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
+                 # Don't transfer to proxy let's encrypt URLs
+                 ProxyPass /.well-known !
+
+                 # redirect from server
+                 #
+
+                 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+                 ProxyPreserveHost    On
+                 ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
+                 ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
+
+                 RedirectMatch ^/$ https://sub.example.com 
+
+              -  remplacer ``example.com`` par votre nom de domaine
+
+           -  Pour un site en HTTPS :
+
+              .. code:: apache
+
+                 <Location /.well-known >
+                     AuthType None
+                     Options None
+                     AllowOverride None
+                     Require all granted
+                     AddDefaultCharset off
+                 </Location>
+
+                 # Don't transfer to proxy let's encrypt URLs
+                 ProxyPass /.well-known !
+
+                 # redirect from server
+                 #
+
+                 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+                 SSLProxyEngine On # Comment this out if no https required
+                 RequestHeader set Front-End-Https "On" # Comment this out if no https required
+                 ProxyPreserveHost    On
+                 ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
+                 ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
+
+                 RedirectMatch ^/$ https://sub.example.com 
+
+              -  remplacer ``example.com`` par votre nom de domaine
 
 2. Vous pouvez maintenant tester la qualité de la connexion de votre
    site en allant sur: `SSL Server
@@ -3454,21 +3500,67 @@ racine auparavant.
            -  ``Repeat Password:`` ← Ressaisissez le mot de passe
 
       v.   Dans l’onglet ``Options``, il peut être utile pour certains
-           types de site qui sont des redirections d’autres sites de
-           saisir dans la zone ``Apache Directives:``
+           types de site qui sont des redirections d’autres sites
+           (locaux, d’autres machines ou de container docker) de saisir
+           dans la zone ``Apache Directives:``
 
-           .. code:: apache
+           -  Pour un site en HTTP (attention dans ce cas, ce site doit
+              être local ou dans un container pour des raisons de
+              sécurité) :
 
-              ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-              ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-              RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+              .. code:: apache
 
-              # redirect from server
-              #
+                 <Location /.well-known >
+                     AuthType None
+                     Options None
+                     AllowOverride None
+                     Require all granted
+                     AddDefaultCharset off
+                 </Location>
 
-              SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-              ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
-              ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
+                 # Don't transfer to proxy let's encrypt URLs
+                 ProxyPass /.well-known !
+
+                 # redirect from server
+                 #
+
+                 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+                 ProxyPreserveHost    On
+                 ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
+                 ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
+
+                 RedirectMatch ^/$ https://sub.example.com 
+
+              -  remplacer ``example.com`` par votre nom de domaine
+
+           -  Pour un site en HTTPS :
+
+              .. code:: apache
+
+                 <Location /.well-known >
+                     AuthType None
+                     Options None
+                     AllowOverride None
+                     Require all granted
+                     AddDefaultCharset off
+                 </Location>
+
+                 # Don't transfer to proxy let's encrypt URLs
+                 ProxyPass /.well-known !
+
+                 # redirect from server
+                 #
+
+                 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+                 SSLProxyEngine On # Comment this out if no https required
+                 RequestHeader set Front-End-Https "On" # Comment this out if no https required
+                 ProxyPreserveHost    On
+                 ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
+                 ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
+
+                 RedirectMatch ^/$ https://sub.example.com 
+
+              -  remplacer ``example.com`` par votre nom de domaine
 
 2. Vous pouvez maintenant tester la qualité de la connexion de votre
    site en allant sur: `SSL Server
@@ -4201,16 +4293,28 @@ Suivez la procédure suivante:
 
        .. code:: apache
 
-          ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-          ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-          RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+          <Location /.well-known >
+              AuthType None
+              Options None
+              AllowOverride None
+              Require all granted
+              AddDefaultCharset off
+          </Location>
+
+          # Don't transfer to proxy let's encrypt URLs
+          ProxyPass /.well-known !
 
           # rspamd httpserver
           #
 
           SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPreserveHost    On
           ProxyPass / http://localhost:11334/
           ProxyPassReverse / http://localhost:11334/
+
+          RedirectMatch ^/$ https://rspamd.example.com 
+
+       -  remplacer ``example.com`` par votre nom de domaine
 
 14. en pointant sur le site ``rspampd.example.com`` , et en utilisant le
     mot de passe saisi plus haut vous pouvez accéder aux fonctions de
@@ -4668,6 +4772,8 @@ Appliquez la procédure suivante:
          CheckSpelling On
          CheckCaseOnly On
          RewriteEngine On
+         SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         ProxyPreserveHost    On
          ProxyPass "/" http://autoconfig.example.com/ 
          ProxyPassReverse "/" http://autoconfig.example.com/ 
          RewriteRule ^/ - [QSA,L]
@@ -4898,21 +5004,32 @@ Il vous reste à appliquer la procédure suivante:
 
       .. code:: apache
 
-         ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+         <Location /.well-known >
+             AuthType None
+             Options None
+             AllowOverride None
+             Require all granted
+             AddDefaultCharset off
+         </Location>
+
+         # Don't transfer to proxy let's encrypt URLs
+         ProxyPass /.well-known !
 
          # roundcube httpserver
 
-         SSLProxyEngine On
-         SSLProxyCheckPeerCN Off
-         SSLProxyCheckPeerName Off
-         SSLProxyVerify none
-
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         SSLProxyEngine On # Comment this out if no https required
+         RequestHeader set Front-End-Https "On" # Comment this out if no https required
+         ProxyPreserveHost    On # Comment this out if no https required
+         SSLProxyCheckPeerCN Off # Comment this out if no https required
+         SSLProxyCheckPeerName Off # Comment this out if no https required
+         SSLProxyVerify none # Comment this out if no https required
          ProxyPass / https://localhost:8080/webmail/
          ProxyPassReverse / https://localhost:8080/webmail/
-         ProxyPreserveHost On
+
+         RedirectMatch ^/$ https://mail.example.com 
+
+      -  remplacer ``example.com`` par votre nom de domaine
 
 2. C’est fait, vous pouvez accéder à Roundcube directement sur
    https://mail.example.com
@@ -4974,6 +5091,456 @@ Suivez la procédure suivante:
 
       rm secretsrc
       rm secretdst
+
+.. __installation_de_docker_et_des_outils_associés:
+
+Installation de Docker et des outils associés
+=============================================
+
+Le logiciel « Docker » est une technologie de conteneurisation qui
+permet la création et l’utilisation de conteneurs Linux. En clair,
+Docker permet d’installer et de configurer rapidement toute une appli
+web complexe dans un environnement isolé et avec tout son échosystème de
+bibliothèques logicielles spécifiques.
+
+Il est ainsi possible d’effectuer rapidement des installations, de
+suivre des mises à jours et d’isoler ces environnements du système
+principal.
+
+.. __a_propos_des_raspberry_pi:
+
+A propos des Raspberry Pi
+-------------------------
+
+.. warning::
+
+   Les raspberry utilisent une architecture ARM, tous les containeurs ne
+   seront pas forcément compatibles "out of the box" ( Exemple pour
+   MySQL). Sur le `Docker Hub <https://hub.docker.com/>`__, il faut
+   choisir par un Raspberry Pi 4 en Ubuntu une architecture de type
+   ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type
+   ARM.
+
+.. __installation_de_docker:
+
+Installation de Docker
+----------------------
+
+L’installation de Docker est relativement simple.
+
+Il faut suivre les étapes suivantes:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Désinstallez les éventuelles anciennes versions de docker. tapez:
+
+    .. code:: bash
+
+       apt remove --purge docker docker-engine docker.io containerd runc
+
+3.  Tapez:
+
+    .. code:: bash
+
+       apt update
+       apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+       curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+
+4.  tapez :
+
+    .. code:: bash
+
+       lsb_release -cs
+
+5.  Ici la version de votre distribution doit s’afficher.
+
+    .. warning::
+
+       pour des installations hybride d’une distribution debian, la
+       version qui est proposée peut être la future SID ou la Testing
+       pour lesquelles il n’existe pas obligatoirement de version
+       installable de docker. Dans ce cas vous devrez sélectionner vous
+       même la version de la distribution stable.
+
+6.  Tapez (et remplacer éventuellement la commande $(lsb_release -cs)
+    par le nom de votre distribution stable). De la même manière,
+    remplacez l’architecture ``amd64`` par ``arm64`` pour un raspberry
+    pi 4 ou par ``armhf`` pour un raspberry pi 3 :
+
+    .. code:: bash
+
+       add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+
+7.  Une fois installé avec succès, tapez:
+
+    .. code:: bash
+
+       apt update
+
+8.  Si vous obtenez une erreur c’est que vous avez ajouté un repository
+    qui n’est pas suppporté par Docker. Vérifiez les fichier
+    ``/etc/apt/sources.list``.
+
+9.  Une fois mis à jour avec succès, tapez:
+
+    .. code:: bash
+
+       apt install docker-ce docker-ce-cli containerd.io
+
+10. vérifiez que votre installation de ``Docker`` est fonctionnelle.
+    Tapez:
+
+    .. code:: bash
+
+       docker run hello-world
+
+11. Cette commande exécute un conteneur simple. Si aucune erreur
+    n’apparaît c’est que l’installation est réussie.
+
+.. __installation_de_docker_compose:
+
+Installation de docker-compose
+------------------------------
+
+Docker-compose est un outil qui aide à l’installation de plusieurs
+container de façon simultané. Il permet surtout de vérifier que
+l’échosystème installé interagit bien.
+
+Il faut suivre les étapes suivantes:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Installez quelques paquets Debian de base. Tapez:
+
+   .. code:: bash
+
+      apt install libffi-dev libssl-dev
+      apt install -y python3 python3-pip 
+
+   -  Pour Ubuntu, remplacez ces paquets par ``python`` et
+      ``python-pip``
+
+3. Installez docker-compose :
+
+   .. code:: bash
+
+      pip install docker-compose
+
+.. __installation_de_docker_swarm:
+
+Installation de docker swarm
+----------------------------
+
+Docker contient nativement le mode Swarm afin de gérer un ensemble de
+Docker Engines. Cette installation est optionnelle puisque l’on peut
+faire fonctionner Docker sans cette Option.
+
+Il y a deux types de machines: les **Managers** et les **Workers**.
+
+Les managers : Ce sont les nodes gestionnaires de votre cluster. Ils
+distribuent les tâches aux nodes workers et ils effectuent également les
+fonctions d’orchestration et de gestion.
+
+Les workers : Ils vont exécuter les tâches confiées par les managers. Un
+agent s’exécute sur chaque nœud et rend compte des tâches qui lui sont
+affectées. Il informe ainsi les nodes managers de l’état des tâches
+affectées.
+
+Il faut suivre les étapes suivantes:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+      docker swarm init
+
+3. Le résultat de la commande donne la commande ``docker swarm join`` a
+   exécuter sur un "worker" pour lui faire rejoindre le "swarm". A noter
+   que le "manager" que nous venons de creer est aussi un worker. De ce
+   fait, un swarm peut être installé de façon standalone sur un VPS.
+
+4. Vous pouvez maintenant vérifier l’état de votre cluster. Tapez:
+
+   .. code:: bash
+
+      docker node ls
+
+.. __choix_des_images_docker:
+
+Choix des images docker
+-----------------------
+
+Les images docker sont accessibles sur le `Docker
+Hub <https://hub.docker.com/>`__.
+
+Mais voilà, c’est un peu la jungle. Un bon moyen de trouver des images à
+jour d’un point de vue sécurité et non compromises est de ne
+sélectionner que des images "Docker Certified" ou "Verified Publisher"
+ou "Official Images".
+
+Du moins on est sûr que ces images ont été à minima vérifiées par les
+équipes Docker.
+
+Pour mémoire: **Le nombre de chargement d’une image n’est pas un gage de
+qualité !**
+
+Si vous n’utilisez pas une image du type mentionné ci dessus, l’accès
+facile au fichier Dockerfile est un gage de qualité et de transparence.
+En tout cas, il vous sera facilement possible de regarder comment
+l’image est construite et quels sont les package dockers de base et si
+ces packages dockers de base sont récents et certifiés.
+
+.. __mise_à_jour_automatique_des_images:
+
+Mise à jour automatique des images
+----------------------------------
+
+Vos images docker peuvent être mise à jour automatiquement si vous les
+avez installés à partir du docker hub ou de n’importe quel autre
+repository compatible.
+
+Un outil automatise cette mise à jour c’est
+`ouroboros <https://github.com/pyouroboros/ouroboros>`__.
+
+Pour l’installe, rien de plus simple:
+
+1. Tapez:
+
+   .. code:: bash
+
+      docker run -d --name ouroboros -e CLEANUP=true -e LATEST=true -e SELF_UPDATE=true --restart=always -v /var/run/docker.sock:/var/run/docker.sock pyouroboros/ouroboros
+
+2. Les options ``CLEANUP``, ``LATEST`` et ``SELF_UPDATE`` sont
+   respectivement pour effacer les anciennes images docker, coller les
+   containeurs à la version ``latest`` du repository et effectuer une
+   mise à jour automatique de ouroboros.
+
+La documentation de ouroboros est
+`ici <https://github.com/pyouroboros/ouroboros/wiki/Usage>`__.
+
+.. warning::
+
+   Ouroboros n’est plus maintenu depuis fin 2019. Une alternative est à
+   trouver.
+
+.. __installation_de_yacht:
+
+Installation de Yacht
+---------------------
+
+Yacht est un outil d’administration de vos instances docker sous forme
+de site web. Yacht est très facile d’utilisation mais manque de
+possibilités du moins dans la version actuelle. Si vous souhaitez
+administrer de façon plus avancée vos instances docker, il est conseillé
+d’utiliser Portainer.
+
+Yacht s’installe comme un conteneur docker pour simplifier son
+déploiement.
+
+Pour la création du site web, il faut suivre les étapes suivantes:
+
+1.  Allez dans ISPConfig dans la rubrique ``DNS``, sélectionnez le menu
+    ``Zones``, Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+    a. Cliquez sur ``A`` et saisissez:
+
+       -  ``Hostname:`` ← Tapez ``yacht``
+
+       -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+          de votre serveur
+
+    b. Cliquez sur ``Save``
+
+2.  Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+    configurateur de sites.
+
+    a. Lui donner le nom ``yacht``.
+
+    b. Le faire pointer vers le web folder ``yacht``.
+
+    c. Activer let’s encrypt ssl
+
+    d. Activer ``Fast CGI`` pour PHP
+
+    e. Laisser le reste par défaut.
+
+    f. Dans l’onglet Options:
+
+    g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+       .. code:: apache
+
+          <Location /.well-known >
+              AuthType None
+              Options None
+              AllowOverride None
+              Require all granted
+              AddDefaultCharset off
+          </Location>
+
+          # yacht httpserver
+          #
+
+          ProxyPass "/.well-known" !
+
+          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          ProxyPreserveHost    On
+          ProxyPass / http://localhost:8061/
+          ProxyPassReverse / http://localhost:8061/
+
+          RedirectMatch ^/$ https://yacht.example.com 
+
+       -  remplacer ``example.com`` par votre nom de domaine
+
+3.  Puis sur votre serveur, `Loguez vous comme root sur le
+    serveur <#root_login>`__
+
+4.  Tapez:
+
+    .. code:: bash
+
+       docker volume create yacht_data
+       docker run -d -p 8061:8000 -v /var/run/docker.sock:/var/run/docker.sock --restart=always -v yacht_data:/config selfhostedpro/yacht
+
+5.  Ouvrez un navigateur et pointez sur http://yacht.example.com
+
+6.  L’utilisateur par défaut est login: ``admin@yacht.local`` et mot de
+    passe: ``pass``.
+
+7.  Une fois loggué, Cliquez sur l’utilisateur en haut à droite et
+    ``user``.
+
+8.  Cliquez sur ``change password``
+
+9.  Modifier votre Email de login et saisissez un nouveau mot de passe.
+
+10. Cliquez ensuite sur ``Templates`` dans la barre vertical de gauche
+    puis sur ``New templates``
+
+11. Copiez la suggestion de template proposée.
+
+12. Saisissez un titre ``Yacht`` dans le champ ``Title`` puis collez
+    l’URL du json dans le champ ``URL``
+
+13. Cliquez sur Submit.
+
+14. Allez dans ``Templates`` → ``View Templates``.
+
+15. cliquez sur ``Yacht``; vous avez maintenant accès à une foule de
+    templates.
+
+16. Vous pouvez maintenant administrer vos machines docker. Référez vous
+    à la documentation de `Yacht <https://yacht.sh/Pages/dashboard/>`__
+    pour installer de nouvelles machines docker
+
+.. __installation_de_portainer:
+
+Installation de Portainer
+-------------------------
+
+Portainer est un outil d’administration de vos instances docker sous
+forme de site web. Portainer est plus complexe à utiliser que Yacht,
+mais offre cependant beaucoup plus de possibilités.
+
+Portainer s’installe comme un conteneur docker pour simplifier son
+déploiement. Portainer gère une bonne partie des éléments de docker :
+conteneurs, images, volumes, réseaux, utilisateurs
+
+Pour la création du site web, il faut suivre les étapes suivantes:
+
+1. Allez dans ISPConfig dans la rubrique ``DNS``, sélectionnez le menu
+   ``Zones``, Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``portainer``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``portainer``.
+
+   b. Le faire pointer vers le web folder ``portainer``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+         <Location /.well-known >
+             AuthType None
+             Options None
+             AllowOverride None
+             Require all granted
+             AddDefaultCharset off
+         </Location>
+
+         # portainer httpserver
+         #
+
+         ProxyPass "/.well-known" !
+
+         SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         ProxyPreserveHost    On
+         ProxyPass / http://localhost:9050/
+         ProxyPassReverse / http://localhost:9050/
+
+         RedirectMatch ^/$ https://portainer.example.com 
+
+      -  remplacer ``example.com`` par votre nom de domaine
+
+3. Puis sur votre serveur, `Loguez vous comme root sur le
+   serveur <#root_login>`__
+
+4. Tapez:
+
+   .. code:: bash
+
+      docker volume create portainer_data
+      docker run -d -p 8060:8000 -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+
+5. Ouvrez un navigateur et pointez sur http://portainer.example.com
+
+6. Créez votre utilisateur de ``admin`` avec un mot de passe sécurisé.
+
+7. Ajoutez un endpoint ``Local``
+
+8. Vous pouvez maintenant administrer vos machines docker. Référez vous
+   à la documentation de
+   `portainer <https://documentation.portainer.io/v2.0/stacks/create/>`__
+   pour installer de nouvelles machines docker
+
+Portainer offre la possibilité d’installer des templates par défaut.
+Vous pouvez soit garder le repository par défault :
+``https://raw.githubusercontent.com/portainer/templates/master/templates-2.0.json``
+ou utiliser un autre repository comme:
+``https://raw.githubusercontent.com/Qballjos/portainer_templates/master/Template/template.json``:
+
+1. allez sur votre site web portainer.
+
+2. puis dans le menu Settings
+
+3. Dans la zone ``App Templates`` saisissez le repository de votre choix
+   dans le champ ``URL``
+
+4. Cliquez sur ``Save Settings``
+
+5. retournez dans le menu ``App Templates``; vos nouveau templates sont
+   maintenant affichés.
 
 .. __installation_des_cms_joomla_et_concrete5:
 
@@ -5768,16 +6335,27 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
       .. code:: apache
 
-         ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+         <Location /.well-known >
+             AuthType None
+             Options None
+             AllowOverride None
+             Require all granted
+             AddDefaultCharset off
+         </Location>
 
+         # Don't transfer to proxy let's encrypt URLs
+         ProxyPass /.well-known !
          # gitea httpserver
          #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         ProxyPreserveHost    On
          ProxyPass / http://localhost:3000/
          ProxyPassReverse / http://localhost:3000/
+
+         RedirectMatch ^/$ https://gitea.example.com 
+
+      -  remplacer ``example.com`` par votre nom de domaine
 
    h. Cliquez sur ``Save``
 
@@ -6072,6 +6650,19 @@ Appliquez la procédure suivante:
 
       .. code:: apache
 
+         <Location /.well-known >
+             AuthType None
+             Options None
+             AllowOverride None
+             Require all granted
+             AddDefaultCharset off
+         </Location>
+
+         # Don't transfer to proxy let's encrypt URLs
+         ProxyPass /.well-known !
+
+         # Seafile configuration
+
          Alias /media {DOCROOT}/private/seafile/seafile-server-latest/seahub/media
          RewriteEngine On
 
@@ -6079,19 +6670,18 @@ Appliquez la procédure suivante:
          Require all granted
          </Location>
 
-         ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         RewriteRule ^/.well-known/acme-challenge - [QSA,L]
-
          # seafile httpserver
          #
+         SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         ProxyPreserveHost    On
          ProxyPass /seafhttp http://localhost:8092
          ProxyPassReverse /seafhttp http://localhost:8092
          RewriteRule ^/seafhttp - [QSA,L]
-         #
+
          # seahub
          #
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         ProxyPreserveHost    On
          ProxyPass / http://localhost:8090/
          ProxyPassReverse / http://localhost:8090/
 
@@ -6452,16 +7042,28 @@ Appliquez la procédure suivante:
 
       .. code:: apache
 
-         ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+         <Location /.well-known >
+             AuthType None
+             Options None
+             AllowOverride None
+             Require all granted
+             AddDefaultCharset off
+         </Location>
+
+         # Don't transfer to proxy let's encrypt URLs
+         ProxyPass /.well-known !
 
          # grafana httpserver
          #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-         ProxyPass / http://localhost:3000/
-         ProxyPassReverse / http://localhost:3000/
+         ProxyPreserveHost    On
+         ProxyPass / http://localhost:3100/
+         ProxyPassReverse / http://localhost:3100/
+
+         RedirectMatch ^/$ https://grafana.example.com 
+
+      -  remplacer ``example.com`` par votre nom de domaine
 
 .. __installation_de_grafana:
 
@@ -7627,6 +8229,14 @@ stockage <storing_srv>:
 
       .. code:: apache
 
+         <Location /.well-known >
+             AuthType None
+             Options None
+             AllowOverride None
+             Require all granted
+             AddDefaultCharset off
+         </Location>
+
          # borgweb httpserver
          #
 
@@ -7639,18 +8249,16 @@ stockage <storing_srv>:
 
          </Location>
 
+         ProxyPass "/.well-known" !
+
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         ProxyPreserveHost    On
          ProxyPass / http://localhost:5000/
          ProxyPassReverse / http://localhost:5000/
 
-         <Location /.well-known >
-             Require all granted
-             AuthType None
-         </Location>
+         RedirectMatch ^/$ https://borgweb.example.com 
 
-         ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+      -  remplacer ``example.com`` par votre nom de domaine
 
 3. `Loguez vous comme root sur <storing_srv>. <#root_login>`__
 
@@ -7723,21 +8331,33 @@ Appliquez la procédure suivante:
 
       .. code:: apache
 
-         ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+         <Location /.well-known >
+             AuthType None
+             Options None
+             AllowOverride None
+             Require all granted
+             AddDefaultCharset off
+         </Location>
+
+         # Don't transfer to proxy let's encrypt URLs
+         ProxyPass /.well-known !
 
          # Pritunl httpserver
          #
-           SSLProxyEngine On
-           SSLProxyCheckPeerCN Off
-           SSLProxyCheckPeerName Off
-           SSLProxyVerify none
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         SSLProxyEngine On # Comment this out if no https required
+         RequestHeader set Front-End-Https "On" # Comment this out if no https required
+         ProxyPreserveHost    On # Comment this out if no https required
+         SSLProxyCheckPeerCN Off # Comment this out if no https required
+         SSLProxyCheckPeerName Off # Comment this out if no https required
+         SSLProxyVerify none # Comment this out if no https required
          ProxyPass / https://localhost:8070/
          ProxyPassReverse / https://localhost:8070/
-         ProxyPreserveHost On
+
+         RedirectMatch ^/$ https://pritunl.example.com 
+
+      -  remplacer ``example.com`` par votre nom de domaine
 
 .. __installation_de_pritunl_sur_un_vps:
 
@@ -8082,16 +8702,28 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
       .. code:: apache
 
-         ProxyPass "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         ProxyPassReverse "/.well-known/acme-challenge" http://localhost:80/.well-known/acme-challenge
-         RewriteRule ^/.well-known/acme-challenge - [QSA,L]
+         <Location /.well-known >
+             AuthType None
+             Options None
+             AllowOverride None
+             Require all granted
+             AddDefaultCharset off
+         </Location>
+
+         # Don't transfer to proxy let's encrypt URLs
+         ProxyPass /.well-known !
 
          # guacamole httpserver
          #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         ProxyPreserveHost    On
          ProxyPass /guacamole http://localhost:8085/guacamole
          ProxyPassReverse /guacamole http://localhost:8085/guacamole
+
+         RedirectMatch ^/$ https://guacamole.example.com 
+
+      -  remplacer ``example.com`` par votre nom de domaine
 
    h. Cliquez sur ``Save``
 

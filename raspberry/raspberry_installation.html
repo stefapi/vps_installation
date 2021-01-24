@@ -522,8 +522,8 @@ pre.pygments .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Int
 <div class="details">
 <span id="author" class="author">Stéphane Apiou</span><br>
 <span id="email" class="email"><a href="mailto:stephane@apiou.org">stephane@apiou.org</a></span><br>
-<span id="revnumber">version 1.1,</span>
-<span id="revdate">2020-05-14</span>
+<span id="revnumber">version 1.2,</span>
+<span id="revdate">2021-01-24</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -612,108 +612,120 @@ pre.pygments .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Int
 <li><a href="#_transfert_de_vos_boites_mails_imap">12.10. Transfert de vos boites mails IMAP</a></li>
 </ul>
 </li>
-<li><a href="#_installation_des_cms_joomla_et_concrete5">13. Installation des CMS Joomla et Concrete5</a>
+<li><a href="#_installation_de_docker_et_des_outils_associés">13. Installation de Docker et des outils associés</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_joomla">13.1. Création du site web de Joomla</a></li>
-<li><a href="#_création_de_lapplication_joomla">13.2. Création de l&#8217;application Joomla</a></li>
+<li><a href="#_a_propos_des_raspberry_pi">13.1. A propos des Raspberry Pi</a></li>
+<li><a href="#_installation_de_docker">13.2. Installation de Docker</a></li>
+<li><a href="#_installation_de_docker_compose">13.3. Installation de docker-compose</a></li>
+<li><a href="#_installation_de_docker_swarm">13.4. Installation de docker swarm</a></li>
+<li><a href="#_choix_des_images_docker">13.5. Choix des images docker</a></li>
+<li><a href="#_mise_à_jour_automatique_des_images">13.6. Mise à jour automatique des images</a></li>
+<li><a href="#_installation_de_yacht">13.7. Installation de Yacht</a></li>
+<li><a href="#_installation_de_portainer">13.8. Installation de Portainer</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_portail_wiki_mediawiki">14. Installation du portail wiki Mediawiki</a>
+<li><a href="#_installation_des_cms_joomla_et_concrete5">14. Installation des CMS Joomla et Concrete5</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_mediawiki">14.1. Création du site web de Mediawiki</a></li>
-<li><a href="#_création_de_lapplication_mediawiki">14.2. Création de l&#8217;application Mediawiki</a></li>
+<li><a href="#_création_du_site_web_de_joomla">14.1. Création du site web de Joomla</a></li>
+<li><a href="#_création_de_lapplication_joomla">14.2. Création de l&#8217;application Joomla</a></li>
 </ul>
 </li>
-<li><a href="#_installation_dun_gestionnaire_de_blog_wordpress">15. Installation d&#8217;un gestionnaire de Blog Wordpress</a>
+<li><a href="#_installation_du_portail_wiki_mediawiki">15. Installation du portail wiki Mediawiki</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_wordpress">15.1. Création du site web de Wordpress</a></li>
-<li><a href="#_création_de_lapplication_wordpress">15.2. Création de l&#8217;application Wordpress</a></li>
+<li><a href="#_création_du_site_web_de_mediawiki">15.1. Création du site web de Mediawiki</a></li>
+<li><a href="#_création_de_lapplication_mediawiki">15.2. Création de l&#8217;application Mediawiki</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_cms_micro_weber">16. Installation du CMS Micro Weber</a>
+<li><a href="#_installation_dun_gestionnaire_de_blog_wordpress">16. Installation d&#8217;un gestionnaire de Blog Wordpress</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_microweber">16.1. Création du site web de Microweber</a></li>
-<li><a href="#_création_des_bases_de_données">16.2. Création des bases de données</a></li>
-<li><a href="#_installation_de_microweber">16.3. Installation de Microweber</a></li>
+<li><a href="#_création_du_site_web_de_wordpress">16.1. Création du site web de Wordpress</a></li>
+<li><a href="#_création_de_lapplication_wordpress">16.2. Création de l&#8217;application Wordpress</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_gestionnaire_de_photos_piwigo">17. Installation du gestionnaire de photos Piwigo</a>
+<li><a href="#_installation_du_cms_micro_weber">17. Installation du CMS Micro Weber</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_piwigo">17.1. Création du site web de Piwigo</a></li>
-<li><a href="#_création_des_bases_de_données_2">17.2. Création des bases de données</a></li>
-<li><a href="#_installation_de_piwigo">17.3. Installation de Piwigo</a></li>
+<li><a href="#_création_du_site_web_de_microweber">17.1. Création du site web de Microweber</a></li>
+<li><a href="#_création_des_bases_de_données">17.2. Création des bases de données</a></li>
+<li><a href="#_installation_de_microweber">17.3. Installation de Microweber</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_système_collaboratif_nextcloud">18. Installation du système collaboratif Nextcloud</a>
+<li><a href="#_installation_du_gestionnaire_de_photos_piwigo">18. Installation du gestionnaire de photos Piwigo</a>
 <ul class="sectlevel2">
-<li><a href="#_installation_initiale">18.1. Installation initiale</a></li>
-<li><a href="#_création_du_site_web_de_nextcloud">18.2. Création du site web de Nextcloud</a></li>
-<li><a href="#_création_des_bases_de_données_3">18.3. Création des bases de données</a></li>
-<li><a href="#_installation_de_nextcloud">18.4. Installation de Nextcloud</a></li>
+<li><a href="#_création_du_site_web_de_piwigo">18.1. Création du site web de Piwigo</a></li>
+<li><a href="#_création_des_bases_de_données_2">18.2. Création des bases de données</a></li>
+<li><a href="#_installation_de_piwigo">18.3. Installation de Piwigo</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_gestionnaire_de_projet_gitea">19. Installation du gestionnaire de projet Gitea</a>
+<li><a href="#_installation_du_système_collaboratif_nextcloud">19. Installation du système collaboratif Nextcloud</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_gitea">19.1. Création du site web de Gitea</a></li>
-<li><a href="#_création_des_bases_de_données_4">19.2. Création des bases de données</a></li>
-<li><a href="#_téléchargez_et_installez_gitea">19.3. Téléchargez et installez Gitea</a></li>
-<li><a href="#_activer_une_connexion_ssh_dédiée">19.4. Activer une connexion SSH dédiée</a></li>
+<li><a href="#_installation_initiale">19.1. Installation initiale</a></li>
+<li><a href="#_création_du_site_web_de_nextcloud">19.2. Création du site web de Nextcloud</a></li>
+<li><a href="#_création_des_bases_de_données_3">19.3. Création des bases de données</a></li>
+<li><a href="#_installation_de_nextcloud">19.4. Installation de Nextcloud</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_système_de_partage_de_fichiers_seafile">20. Installation du système de partage de fichiers Seafile</a>
+<li><a href="#_installation_du_gestionnaire_de_projet_gitea">20. Installation du gestionnaire de projet Gitea</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_seafile">20.1. Création du site web de Seafile</a></li>
-<li><a href="#_création_de_bases_de_données">20.2. Création de bases de données</a></li>
-<li><a href="#_téléchargez_et_installez_seafile">20.3. Téléchargez et installez Seafile</a></li>
-<li><a href="#_lancement_initial">20.4. Lancement initial</a></li>
-<li><a href="#_lancement_automatique_de_seafile">20.5. Lancement automatique de Seafile</a></li>
+<li><a href="#_création_du_site_web_de_gitea">20.1. Création du site web de Gitea</a></li>
+<li><a href="#_création_des_bases_de_données_4">20.2. Création des bases de données</a></li>
+<li><a href="#_téléchargez_et_installez_gitea">20.3. Téléchargez et installez Gitea</a></li>
+<li><a href="#_activer_une_connexion_ssh_dédiée">20.4. Activer une connexion SSH dédiée</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_système_de_monitoring_grafana">21. Installation du système de monitoring Grafana</a>
+<li><a href="#_installation_du_système_de_partage_de_fichiers_seafile">21. Installation du système de partage de fichiers Seafile</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_grafana">21.1. Création du site web de Grafana</a></li>
-<li><a href="#_installation_de_grafana">21.2. Installation de Grafana</a></li>
-<li><a href="#_installation_et_configuration_de_loki">21.3. Installation et configuration de Loki</a></li>
-<li><a href="#_installation_et_configuration_de_promtail">21.4. Installation et configuration de Promtail</a></li>
+<li><a href="#_création_du_site_web_de_seafile">21.1. Création du site web de Seafile</a></li>
+<li><a href="#_création_de_bases_de_données">21.2. Création de bases de données</a></li>
+<li><a href="#_téléchargez_et_installez_seafile">21.3. Téléchargez et installez Seafile</a></li>
+<li><a href="#_lancement_initial">21.4. Lancement initial</a></li>
+<li><a href="#_lancement_automatique_de_seafile">21.5. Lancement automatique de Seafile</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_système_de_backup_borgbackup">22. Installation du système de backup BorgBackup</a>
+<li><a href="#_installation_du_système_de_monitoring_grafana">22. Installation du système de monitoring Grafana</a>
 <ul class="sectlevel2">
-<li><a href="#_introduction">22.1. Introduction</a></li>
-<li><a href="#_installation_du_serveur_de_stockage">22.2. Installation du serveur de stockage</a></li>
-<li><a href="#_installation_sur_le_serveur_sauvegardé">22.3. Installation sur le serveur sauvegardé</a></li>
-<li><a href="#_effectuer_un_backup">22.4. Effectuer un backup</a></li>
-<li><a href="#_lister_les_backups">22.5. Lister les backups</a></li>
-<li><a href="#_vérifier_un_backup">22.6. Vérifier un backup</a></li>
-<li><a href="#_restaurer_un_backup">22.7. Restaurer un backup</a></li>
-<li><a href="#_supprimer_vos_vieux_backups">22.8. Supprimer vos vieux backups</a></li>
-<li><a href="#_automatisez_votre_sauvegarde">22.9. Automatisez votre sauvegarde</a></li>
-<li><a href="#_restauration_durgence">22.10. Restauration d&#8217;urgence.</a></li>
-<li><a href="#_installation_de_borgweb">22.11. Installation de Borgweb</a></li>
-<li><a href="#_création_du_site_web_de_borgweb">22.12. Création du site web de Borgweb</a></li>
+<li><a href="#_création_du_site_web_de_grafana">22.1. Création du site web de Grafana</a></li>
+<li><a href="#_installation_de_grafana">22.2. Installation de Grafana</a></li>
+<li><a href="#_installation_et_configuration_de_loki">22.3. Installation et configuration de Loki</a></li>
+<li><a href="#_installation_et_configuration_de_promtail">22.4. Installation et configuration de Promtail</a></li>
 </ul>
 </li>
-<li><a href="#_installation_dun_serveur_de_vpn_pritunl">23. Installation d&#8217;un serveur de VPN Pritunl</a>
+<li><a href="#_installation_du_système_de_backup_borgbackup">23. Installation du système de backup BorgBackup</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_pritunl">23.1. Création du site web de Pritunl</a></li>
-<li><a href="#_installation_de_pritunl_sur_un_vps">23.2. Installation de Pritunl sur un VPS</a></li>
-<li><a href="#_installation_de_pritunl_sur_un_raspberrypi">23.3. Installation de Pritunl sur un Raspberrypi</a></li>
-<li><a href="#_se_connecter_au_serveur_de_vpn">23.4. Se connecter au serveur de VPN</a></li>
-<li><a href="#_réparer_une_base_pritunl">23.5. Réparer une base Pritunl</a></li>
-<li><a href="#_mot_de_passe_perdu">23.6. Mot de passe perdu</a></li>
+<li><a href="#_introduction">23.1. Introduction</a></li>
+<li><a href="#_installation_du_serveur_de_stockage">23.2. Installation du serveur de stockage</a></li>
+<li><a href="#_installation_sur_le_serveur_sauvegardé">23.3. Installation sur le serveur sauvegardé</a></li>
+<li><a href="#_effectuer_un_backup">23.4. Effectuer un backup</a></li>
+<li><a href="#_lister_les_backups">23.5. Lister les backups</a></li>
+<li><a href="#_vérifier_un_backup">23.6. Vérifier un backup</a></li>
+<li><a href="#_restaurer_un_backup">23.7. Restaurer un backup</a></li>
+<li><a href="#_supprimer_vos_vieux_backups">23.8. Supprimer vos vieux backups</a></li>
+<li><a href="#_automatisez_votre_sauvegarde">23.9. Automatisez votre sauvegarde</a></li>
+<li><a href="#_restauration_durgence">23.10. Restauration d&#8217;urgence.</a></li>
+<li><a href="#_installation_de_borgweb">23.11. Installation de Borgweb</a></li>
+<li><a href="#_création_du_site_web_de_borgweb">23.12. Création du site web de Borgweb</a></li>
 </ul>
 </li>
-<li><a href="#_installation_dun_serveur_de_bureau_à_distance_guacamole">24. Installation d&#8217;un serveur de bureau à distance Guacamole</a>
+<li><a href="#_installation_dun_serveur_de_vpn_pritunl">24. Installation d&#8217;un serveur de VPN Pritunl</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_guacamole">24.1. Création du site web de Guacamole</a></li>
-<li><a href="#_création_des_bases_de_données_5">24.2. Création des bases de données</a></li>
-<li><a href="#_installation_du_guacamole">24.3. Installation du Guacamole</a></li>
+<li><a href="#_création_du_site_web_de_pritunl">24.1. Création du site web de Pritunl</a></li>
+<li><a href="#_installation_de_pritunl_sur_un_vps">24.2. Installation de Pritunl sur un VPS</a></li>
+<li><a href="#_installation_de_pritunl_sur_un_raspberrypi">24.3. Installation de Pritunl sur un Raspberrypi</a></li>
+<li><a href="#_se_connecter_au_serveur_de_vpn">24.4. Se connecter au serveur de VPN</a></li>
+<li><a href="#_réparer_une_base_pritunl">24.5. Réparer une base Pritunl</a></li>
+<li><a href="#_mot_de_passe_perdu">24.6. Mot de passe perdu</a></li>
 </ul>
 </li>
-<li><a href="#_annexe">25. Annexe</a>
+<li><a href="#_installation_dun_serveur_de_bureau_à_distance_guacamole">25. Installation d&#8217;un serveur de bureau à distance Guacamole</a>
 <ul class="sectlevel2">
-<li><a href="#_installation_de_hestia">25.1. Installation de Hestia</a></li>
-<li><a href="#_configuration_dun_écran_3_5inch_rpi_lcd_a">25.2. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</a></li>
+<li><a href="#_création_du_site_web_de_guacamole">25.1. Création du site web de Guacamole</a></li>
+<li><a href="#_création_des_bases_de_données_5">25.2. Création des bases de données</a></li>
+<li><a href="#_installation_du_guacamole">25.3. Installation du Guacamole</a></li>
+</ul>
+</li>
+<li><a href="#_annexe">26. Annexe</a>
+<ul class="sectlevel2">
+<li><a href="#_installation_de_hestia">26.1. Installation de Hestia</a></li>
+<li><a href="#_configuration_dun_écran_3_5inch_rpi_lcd_a">26.2. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</a></li>
 </ul>
 </li>
 </ul>
@@ -5312,20 +5324,84 @@ Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore d
 </div>
 </li>
 <li>
-<p>Dans l&#8217;onglet <code>Options</code>, il peut être utile pour certains types de site qui sont des redirections d&#8217;autres sites de saisir dans la zone <code>Apache Directives:</code></p>
+<p>Dans l&#8217;onglet <code>Options</code>, il peut être utile pour certains types de site qui sont des redirections d&#8217;autres sites (locaux, d&#8217;autres machines ou de container docker) de saisir dans la zone <code>Apache Directives:</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pour un site en HTTP (attention dans ce cas, ce site doit être local ou dans un container pour des raisons de sécurité) :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+<pre class="pygments highlight"><code data-lang="apache"><span></span>
+<span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
+<span class="tok-nb">ProxyPass</span> /.well-known !
 
 <span class="tok-c"># redirect from server</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 <span class="tok-nb">ProxyPass</span> / http://localhost[:port_number_if_any]/[path_if_any]
-<span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]</code></pre>
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://sub.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Pour un site en HTTPS :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span>
+<span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
+<span class="tok-nb">ProxyPass</span> /.well-known !
+
+<span class="tok-c"># redirect from server</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span> # Comment this out if no https required
+<span class="tok-nb">RequestHeader</span> set Front-End-Https <span class="tok-s2">&quot;On&quot;</span> # Comment this out if no https required
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+<span class="tok-nb">ProxyPass</span> / http://localhost[:port_number_if_any]/[path_if_any]
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://sub.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
 </div>
 </li>
 </ol>
@@ -5417,20 +5493,84 @@ Vous ne pouvez définir un sous-domaine que si vous avez défini le site web rac
 </div>
 </li>
 <li>
-<p>Dans l&#8217;onglet <code>Options</code>, il peut être utile pour certains types de site qui sont des redirections d&#8217;autres sites de saisir dans la zone <code>Apache Directives:</code></p>
+<p>Dans l&#8217;onglet <code>Options</code>, il peut être utile pour certains types de site qui sont des redirections d&#8217;autres sites (locaux, d&#8217;autres machines ou de container docker) de saisir dans la zone <code>Apache Directives:</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pour un site en HTTP (attention dans ce cas, ce site doit être local ou dans un container pour des raisons de sécurité) :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+<pre class="pygments highlight"><code data-lang="apache"><span></span>
+<span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
+<span class="tok-nb">ProxyPass</span> /.well-known !
 
 <span class="tok-c"># redirect from server</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 <span class="tok-nb">ProxyPass</span> / http://localhost[:port_number_if_any]/[path_if_any]
-<span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]</code></pre>
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://sub.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Pour un site en HTTPS :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span>
+<span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
+<span class="tok-nb">ProxyPass</span> /.well-known !
+
+<span class="tok-c"># redirect from server</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span> # Comment this out if no https required
+<span class="tok-nb">RequestHeader</span> set Front-End-Https <span class="tok-s2">&quot;On&quot;</span> # Comment this out if no https required
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+<span class="tok-nb">ProxyPass</span> / http://localhost[:port_number_if_any]/[path_if_any]
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://sub.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
 </div>
 </li>
 </ol>
@@ -6337,17 +6477,35 @@ systemctl restart apache2</code></pre>
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
+<span class="tok-nb">ProxyPass</span> /.well-known !
 
 <span class="tok-c"># rspamd httpserver</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 <span class="tok-nb">ProxyPass</span> / http://localhost:11334/
-<span class="tok-nb">ProxyPassReverse</span> / http://localhost:11334/</code></pre>
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost:11334/
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://rspamd.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 </ol>
@@ -6929,6 +7087,8 @@ chown web1:client0 autoconfig/mail/config-v1.1.xml <i class="conum" data-value="
 <pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">CheckSpelling</span> <span class="tok-k">On</span>
 <span class="tok-nb">CheckCaseOnly</span> <span class="tok-k">On</span>
 <span class="tok-nb">RewriteEngine</span> <span class="tok-k">On</span>
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 <span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/&quot;</span> http://autoconfig.example.com/ <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/&quot;</span> http://autoconfig.example.com/ <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-nb">RewriteRule</span> ^/ - [QSA,L]</code></pre>
@@ -7271,22 +7431,39 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
+<span class="tok-nb">ProxyPass</span> /.well-known !
 
 <span class="tok-c"># roundcube httpserver</span>
 
-<span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span>
-<span class="tok-nb">SSLProxyCheckPeerCN</span> <span class="tok-k">Off</span>
-<span class="tok-nb">SSLProxyCheckPeerName</span> <span class="tok-k">Off</span>
-<span class="tok-nb">SSLProxyVerify</span> <span class="tok-k">none</span>
-
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span> # Comment this out if no https required
+<span class="tok-nb">RequestHeader</span> set Front-End-Https <span class="tok-s2">&quot;On&quot;</span> # Comment this out if no https required
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span> # Comment this out if no https required
+<span class="tok-nb">SSLProxyCheckPeerCN</span> <span class="tok-k">Off</span> # Comment this out if no https required
+<span class="tok-nb">SSLProxyCheckPeerName</span> <span class="tok-k">Off</span> # Comment this out if no https required
+<span class="tok-nb">SSLProxyVerify</span> <span class="tok-k">none</span> # Comment this out if no https required
 <span class="tok-nb">ProxyPass</span> / https://localhost:8080/webmail/
 <span class="tok-nb">ProxyPassReverse</span> / https://localhost:8080/webmail/
-<span class="tok-nb">ProxyPreserveHost</span> <span class="tok-k">On</span></code></pre>
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://mail.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 </ol>
@@ -7377,7 +7554,565 @@ rm secretdst</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_des_cms_joomla_et_concrete5">13. Installation des CMS Joomla et Concrete5</h2>
+<h2 id="_installation_de_docker_et_des_outils_associés">13. Installation de Docker et des outils associés</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Le logiciel « Docker » est une technologie de conteneurisation qui permet la création et l&#8217;utilisation de conteneurs Linux.
+En clair, Docker permet d&#8217;installer et de configurer rapidement toute une appli web complexe dans un environnement isolé et avec tout son échosystème de bibliothèques logicielles spécifiques.</p>
+</div>
+<div class="paragraph">
+<p>Il est ainsi possible d&#8217;effectuer rapidement des installations, de suivre des mises à jours et d&#8217;isoler ces environnements du système principal.</p>
+</div>
+<div class="sect2">
+<h3 id="_a_propos_des_raspberry_pi">13.1. A propos des Raspberry Pi</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas forcément compatibles "out of the box" ( Exemple pour MySQL). Sur le <a href="https://hub.docker.com/">Docker Hub</a>, il faut choisir par un Raspberry Pi 4 en Ubuntu une architecture de type ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type ARM.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_docker">13.2. Installation de Docker</h3>
+<div class="paragraph">
+<p>L&#8217;installation de Docker est relativement simple.</p>
+</div>
+<div class="paragraph">
+<p>Il faut suivre les étapes suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Désinstallez les éventuelles anciennes versions de docker. tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt remove --purge docker docker-engine docker.io containerd runc</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt update
+apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+curl -fsSL https://download.docker.com/linux/debian/gpg <span class="tok-p">|</span> apt-key add -</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>lsb_release -cs</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ici la version de votre distribution doit s&#8217;afficher.</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+pour des installations hybride d&#8217;une distribution debian, la version qui est proposée peut être la future SID ou la Testing pour lesquelles il n&#8217;existe pas obligatoirement de version installable de docker. Dans ce cas vous devrez sélectionner vous même la version de la distribution stable.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Tapez (et remplacer éventuellement la commande $(lsb_release -cs) par le nom de votre distribution stable). De la même manière, remplacez l&#8217;architecture <code>amd64</code> par <code>arm64</code> pour un raspberry pi 4  ou par <code>armhf</code> pour un raspberry pi 3 :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>add-apt-repository <span class="tok-s2">&quot;deb [arch=amd64] https://download.docker.com/linux/debian </span><span class="tok-k">$(</span>lsb_release -cs<span class="tok-k">)</span><span class="tok-s2"> stable&quot;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Une fois installé avec succès, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt update</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Si vous obtenez une erreur c&#8217;est que vous avez ajouté un repository qui n&#8217;est pas suppporté par Docker. Vérifiez les fichier <code>/etc/apt/sources.list</code>.</p>
+</li>
+<li>
+<p>Une fois mis à jour avec succès, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install docker-ce docker-ce-cli containerd.io</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>vérifiez que votre installation de <code>Docker</code> est fonctionnelle. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker run hello-world</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Cette commande exécute un conteneur simple. Si aucune erreur n’apparaît c&#8217;est que l&#8217;installation est réussie.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_docker_compose">13.3. Installation de docker-compose</h3>
+<div class="paragraph">
+<p>Docker-compose est un outil qui aide à l&#8217;installation de plusieurs container de façon simultané. Il permet surtout de vérifier que l&#8217;échosystème installé interagit bien.</p>
+</div>
+<div class="paragraph">
+<p>Il faut suivre les étapes suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Installez quelques paquets Debian de base. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install libffi-dev libssl-dev
+apt install -y python3 python3-pip <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Pour Ubuntu, remplacez ces paquets par <code>python</code> et <code>python-pip</code></td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Installez docker-compose :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>pip install docker-compose</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_docker_swarm">13.4. Installation de docker swarm</h3>
+<div class="paragraph">
+<p>Docker contient nativement le mode Swarm afin de gérer un ensemble de Docker Engines.
+Cette installation est optionnelle puisque l&#8217;on peut faire fonctionner Docker sans cette Option.</p>
+</div>
+<div class="paragraph">
+<p>Il y a deux types de machines: les <strong>Managers</strong> et les <strong>Workers</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Les managers : Ce sont les nodes gestionnaires de votre cluster. Ils distribuent les tâches aux nodes workers et ils effectuent également les fonctions d&#8217;orchestration et de gestion.</p>
+</div>
+<div class="paragraph">
+<p>Les workers : Ils vont exécuter les tâches confiées par les managers. Un agent s&#8217;exécute sur chaque nœud et rend compte des tâches qui lui sont affectées. Il informe ainsi les nodes managers de l&#8217;état des tâches affectées.</p>
+</div>
+<div class="paragraph">
+<p>Il faut suivre les étapes suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker swarm init</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Le résultat de la commande donne la commande <code>docker swarm join</code> a exécuter sur un "worker"  pour lui faire rejoindre le "swarm". A noter que le "manager" que nous venons de creer est aussi un worker. De ce fait, un swarm peut être installé de façon standalone sur un VPS.</p>
+</li>
+<li>
+<p>Vous pouvez maintenant vérifier l&#8217;état de votre cluster. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker node ls</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_choix_des_images_docker">13.5. Choix des images docker</h3>
+<div class="paragraph">
+<p>Les images docker sont accessibles sur le <a href="https://hub.docker.com/">Docker Hub</a>.</p>
+</div>
+<div class="paragraph">
+<p>Mais voilà, c&#8217;est un peu la jungle. Un bon moyen de trouver des images à jour d&#8217;un point de vue sécurité et non compromises est de ne sélectionner que des images "Docker Certified" ou "Verified Publisher" ou "Official Images".</p>
+</div>
+<div class="paragraph">
+<p>Du moins on est sûr que ces images ont été à minima vérifiées par les équipes Docker.</p>
+</div>
+<div class="paragraph">
+<p>Pour mémoire: <strong>Le nombre de chargement d&#8217;une image n&#8217;est pas un gage de qualité !</strong></p>
+</div>
+<div class="paragraph">
+<p>Si vous n&#8217;utilisez pas une image du type mentionné ci dessus, l&#8217;accès facile au fichier Dockerfile est un gage de qualité et de transparence. En tout cas, il vous sera facilement possible de regarder comment l&#8217;image est construite et quels sont les package dockers de base et si ces packages dockers de base sont récents et certifiés.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mise_à_jour_automatique_des_images">13.6. Mise à jour automatique des images</h3>
+<div class="paragraph">
+<p>Vos images docker peuvent être mise à jour automatiquement si vous les avez installés à partir du docker hub ou de n&#8217;importe quel autre repository compatible.</p>
+</div>
+<div class="paragraph">
+<p>Un outil automatise cette mise à jour c&#8217;est <a href="https://github.com/pyouroboros/ouroboros">ouroboros</a>.</p>
+</div>
+<div class="paragraph">
+<p>Pour l&#8217;installe, rien de plus simple:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker run -d --name ouroboros -e <span class="tok-nv">CLEANUP</span><span class="tok-o">=</span><span class="tok-nb">true</span> -e <span class="tok-nv">LATEST</span><span class="tok-o">=</span><span class="tok-nb">true</span> -e <span class="tok-nv">SELF_UPDATE</span><span class="tok-o">=</span><span class="tok-nb">true</span> --restart<span class="tok-o">=</span>always -v /var/run/docker.sock:/var/run/docker.sock pyouroboros/ouroboros</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Les options <code>CLEANUP</code>, <code>LATEST</code> et <code>SELF_UPDATE</code> sont respectivement pour effacer les anciennes images docker, coller les containeurs à la version <code>latest</code> du repository et effectuer une mise à jour automatique de ouroboros.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>La documentation de ouroboros est <a href="https://github.com/pyouroboros/ouroboros/wiki/Usage">ici</a>.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Ouroboros n&#8217;est plus maintenu depuis fin 2019. Une alternative est à trouver.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_yacht">13.7. Installation de Yacht</h3>
+<div class="paragraph">
+<p>Yacht est un outil d&#8217;administration de vos instances docker sous forme de site web. Yacht est très facile d&#8217;utilisation mais manque de possibilités du moins dans la version actuelle. Si vous souhaitez administrer de façon plus avancée vos instances docker, il est conseillé d&#8217;utiliser Portainer.</p>
+</div>
+<div class="paragraph">
+<p>Yacht s’installe comme un conteneur docker pour simplifier son déploiement.</p>
+</div>
+<div class="paragraph">
+<p>Pour la création du site web, il faut suivre les étapes suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans ISPConfig dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>yacht</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>yacht</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>yacht</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>Fast CGI</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># yacht httpserver</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known&quot;</span> !
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+<span class="tok-nb">ProxyPass</span> / http://localhost:8061/
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost:8061/
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://yacht.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Puis sur votre serveur, <a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker volume create yacht_data
+docker run -d -p <span class="tok-m">8061</span>:8000 -v /var/run/docker.sock:/var/run/docker.sock --restart<span class="tok-o">=</span>always -v yacht_data:/config selfhostedpro/yacht</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ouvrez un navigateur et pointez sur <a href="http://yacht.example.com" class="bare">http://yacht.example.com</a></p>
+</li>
+<li>
+<p>L&#8217;utilisateur par défaut est login: <code>admin@yacht.local</code> et mot de passe: <code>pass</code>.</p>
+</li>
+<li>
+<p>Une fois loggué, Cliquez sur l&#8217;utilisateur en haut à droite et <code>user</code>.</p>
+</li>
+<li>
+<p>Cliquez sur <code>change password</code></p>
+</li>
+<li>
+<p>Modifier votre Email de login et saisissez un nouveau mot de passe.</p>
+</li>
+<li>
+<p>Cliquez ensuite sur <code>Templates</code> dans la barre vertical de gauche puis sur <code>New templates</code></p>
+</li>
+<li>
+<p>Copiez la suggestion de template proposée.</p>
+</li>
+<li>
+<p>Saisissez un titre <code>Yacht</code> dans le champ <code>Title</code> puis collez l&#8217;URL du json dans le champ <code>URL</code></p>
+</li>
+<li>
+<p>Cliquez sur Submit.</p>
+</li>
+<li>
+<p>Allez dans <code>Templates</code> &#8594; <code>View Templates</code>.</p>
+</li>
+<li>
+<p>cliquez sur <code>Yacht</code>; vous avez maintenant accès à une foule de templates.</p>
+</li>
+<li>
+<p>Vous pouvez maintenant administrer vos machines docker. Référez vous à la documentation de <a href="https://yacht.sh/Pages/dashboard/">Yacht</a> pour installer de nouvelles machines docker</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_portainer">13.8. Installation de Portainer</h3>
+<div class="paragraph">
+<p>Portainer est un outil d&#8217;administration de vos instances docker sous forme de site web. Portainer est plus complexe à utiliser que Yacht, mais offre cependant beaucoup plus de possibilités.</p>
+</div>
+<div class="paragraph">
+<p>Portainer s’installe comme un conteneur docker pour simplifier son déploiement. Portainer gère une bonne partie des éléments de docker : conteneurs, images, volumes, réseaux, utilisateurs</p>
+</div>
+<div class="paragraph">
+<p>Pour la création du site web, il faut suivre les étapes suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans ISPConfig dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>portainer</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>portainer</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>portainer</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>Fast CGI</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># portainer httpserver</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known&quot;</span> !
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+<span class="tok-nb">ProxyPass</span> / http://localhost:9050/
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost:9050/
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://portainer.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Puis sur votre serveur, <a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker volume create portainer_data
+docker run -d -p <span class="tok-m">8060</span>:8000 -p <span class="tok-m">9050</span>:9000 --name<span class="tok-o">=</span>portainer --restart<span class="tok-o">=</span>always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ouvrez un navigateur et pointez sur <a href="http://portainer.example.com" class="bare">http://portainer.example.com</a></p>
+</li>
+<li>
+<p>Créez votre utilisateur de <code>admin</code> avec un mot de passe sécurisé.</p>
+</li>
+<li>
+<p>Ajoutez un endpoint <code>Local</code></p>
+</li>
+<li>
+<p>Vous pouvez maintenant administrer vos machines docker. Référez vous à la documentation de <a href="https://documentation.portainer.io/v2.0/stacks/create/">portainer</a> pour installer de nouvelles machines docker</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Portainer offre la possibilité d&#8217;installer des templates par défaut. Vous pouvez soit garder le repository par défault : <code><a href="https://raw.githubusercontent.com/portainer/templates/master/templates-2.0.json" class="bare">https://raw.githubusercontent.com/portainer/templates/master/templates-2.0.json</a></code> ou utiliser un autre repository comme: <code><a href="https://raw.githubusercontent.com/Qballjos/portainer_templates/master/Template/template.json" class="bare">https://raw.githubusercontent.com/Qballjos/portainer_templates/master/Template/template.json</a></code>:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>allez sur votre site web portainer.</p>
+</li>
+<li>
+<p>puis dans le menu Settings</p>
+</li>
+<li>
+<p>Dans la zone <code>App Templates</code> saisissez le repository de votre choix dans le champ <code>URL</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Save Settings</code></p>
+</li>
+<li>
+<p>retournez dans le menu <code>App Templates</code>; vos nouveau templates sont maintenant affichés.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_des_cms_joomla_et_concrete5">14. Installation des CMS Joomla et Concrete5</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour et inclut une foule de plugins
@@ -7388,7 +8123,7 @@ Concrete5 est un autre CMS assez connu  avec un design plus moderne.</p>
 Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;appliquer à l&#8217;identique pour concrete5 en remplacant les textes joomla par concrete5.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_joomla">13.1. Création du site web de Joomla</h3>
+<h3 id="_création_du_site_web_de_joomla">14.1. Création du site web de Joomla</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -7443,7 +8178,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_de_lapplication_joomla">13.2. Création de l&#8217;application Joomla</h3>
+<h3 id="_création_de_lapplication_joomla">14.2. Création de l&#8217;application Joomla</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig:</p>
 </div>
@@ -7507,7 +8242,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_portail_wiki_mediawiki">14. Installation du portail wiki Mediawiki</h2>
+<h2 id="_installation_du_portail_wiki_mediawiki">15. Installation du portail wiki Mediawiki</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Mediawiki est le portail wiki mondialement connu et utilisé notamment pour le site wikipedia.</p>
@@ -7516,7 +8251,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <p>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_mediawiki">14.1. Création du site web de Mediawiki</h3>
+<h3 id="_création_du_site_web_de_mediawiki">15.1. Création du site web de Mediawiki</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -7571,7 +8306,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_de_lapplication_mediawiki">14.2. Création de l&#8217;application Mediawiki</h3>
+<h3 id="_création_de_lapplication_mediawiki">15.2. Création de l&#8217;application Mediawiki</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig:</p>
 </div>
@@ -7635,7 +8370,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_dun_gestionnaire_de_blog_wordpress">15. Installation d&#8217;un gestionnaire de Blog Wordpress</h2>
+<h2 id="_installation_dun_gestionnaire_de_blog_wordpress">16. Installation d&#8217;un gestionnaire de Blog Wordpress</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à jour.</p>
@@ -7644,7 +8379,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <p>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_wordpress">15.1. Création du site web de Wordpress</h3>
+<h3 id="_création_du_site_web_de_wordpress">16.1. Création du site web de Wordpress</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -7699,7 +8434,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_de_lapplication_wordpress">15.2. Création de l&#8217;application Wordpress</h3>
+<h3 id="_création_de_lapplication_wordpress">16.2. Création de l&#8217;application Wordpress</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig:</p>
 </div>
@@ -7763,13 +8498,13 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_cms_micro_weber">16. Installation du CMS Micro Weber</h2>
+<h2 id="_installation_du_cms_micro_weber">17. Installation du CMS Micro Weber</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Microweber est un système de gestion de contenu et un constructeur de sites web Open Source. Il est basé sur le langage de programmation PHP et le framework web Laravel 5, utilisant le glisser-déposer et permettant aux utilisateurs de créer rapidement du contenu, tout en programmant et en gérant plusieurs affichages. Il dispose d&#8217;une fonction d&#8217;édition en direct qui permet aux utilisateurs de visualiser leurs modifications telles qu&#8217;elles apparaîtraient.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_microweber">16.1. Création du site web de Microweber</h3>
+<h3 id="_création_du_site_web_de_microweber">17.1. Création du site web de Microweber</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -7830,7 +8565,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_des_bases_de_données">16.2. Création des bases de données</h3>
+<h3 id="_création_des_bases_de_données">17.2. Création des bases de données</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -7901,7 +8636,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_microweber">16.3. Installation de Microweber</h3>
+<h3 id="_installation_de_microweber">17.3. Installation de Microweber</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -7982,7 +8717,7 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_gestionnaire_de_photos_piwigo">17. Installation du gestionnaire de photos Piwigo</h2>
+<h2 id="_installation_du_gestionnaire_de_photos_piwigo">18. Installation du gestionnaire de photos Piwigo</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Piwigo est une application web pour gérer votre collection de photos, et autres médias. Doté de puissantes fonctionnalités, il gère des galeries partout dans le monde. Elle est écrite en PHP et nécessite une base de données MySQL.</p>
@@ -7991,7 +8726,7 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 <p>Piwigo était auparavant connu sous le nom PhpWebGallery.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_piwigo">17.1. Création du site web de Piwigo</h3>
+<h3 id="_création_du_site_web_de_piwigo">18.1. Création du site web de Piwigo</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -8052,7 +8787,7 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_des_bases_de_données_2">17.2. Création des bases de données</h3>
+<h3 id="_création_des_bases_de_données_2">18.2. Création des bases de données</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -8123,7 +8858,7 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_piwigo">17.3. Installation de Piwigo</h3>
+<h3 id="_installation_de_piwigo">18.3. Installation de Piwigo</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -8208,7 +8943,7 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_système_collaboratif_nextcloud">18. Installation du système collaboratif Nextcloud</h2>
+<h2 id="_installation_du_système_collaboratif_nextcloud">19. Installation du système collaboratif Nextcloud</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>NextCloud est un serveur d&#8217;hébergement et de partage de fichiers gratuit et open source, fork du projet ownCloud.
@@ -8220,7 +8955,7 @@ Vous pouvez installer le client NextCloud sur un  ou plusieurs PC pour synchroni
 Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation, y compris Windows, macOS, FreeBSD, et Linux.</p>
 </div>
 <div class="sect2">
-<h3 id="_installation_initiale">18.1. Installation initiale</h3>
+<h3 id="_installation_initiale">19.1. Installation initiale</h3>
 <div class="paragraph">
 <p>NextCloud est écrit en PHP et utilise une base de données MariaDB pour stocker ses données.</p>
 </div>
@@ -8276,7 +9011,7 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_nextcloud">18.2. Création du site web de Nextcloud</h3>
+<h3 id="_création_du_site_web_de_nextcloud">19.2. Création du site web de Nextcloud</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -8334,7 +9069,7 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_des_bases_de_données_3">18.3. Création des bases de données</h3>
+<h3 id="_création_des_bases_de_données_3">19.3. Création des bases de données</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -8405,7 +9140,7 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_nextcloud">18.4. Installation de Nextcloud</h3>
+<h3 id="_installation_de_nextcloud">19.4. Installation de Nextcloud</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -8487,14 +9222,14 @@ wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_gestionnaire_de_projet_gitea">19. Installation du gestionnaire de projet Gitea</h2>
+<h2 id="_installation_du_gestionnaire_de_projet_gitea">20. Installation du gestionnaire de projet Gitea</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Gitea est un système simple d&#8217;hébergement de code basé sur Git. C&#8217;est un fork de Gogs.
 Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un code plus simple.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_gitea">19.1. Création du site web de Gitea</h3>
+<h3 id="_création_du_site_web_de_gitea">20.1. Création du site web de Gitea</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -8549,17 +9284,34 @@ Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
 
+<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
+<span class="tok-nb">ProxyPass</span> /.well-known !
 <span class="tok-c"># gitea httpserver</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 <span class="tok-nb">ProxyPass</span> / http://localhost:3000/
-<span class="tok-nb">ProxyPassReverse</span> / http://localhost:3000/</code></pre>
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost:3000/
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://gitea.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -8603,7 +9355,7 @@ chmod <span class="tok-m">770</span> /etc/gitea</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_des_bases_de_données_4">19.2. Création des bases de données</h3>
+<h3 id="_création_des_bases_de_données_4">20.2. Création des bases de données</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -8674,7 +9426,7 @@ chmod <span class="tok-m">770</span> /etc/gitea</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_téléchargez_et_installez_gitea">19.3. Téléchargez et installez Gitea</h3>
+<h3 id="_téléchargez_et_installez_gitea">20.3. Téléchargez et installez Gitea</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes:</p>
 </div>
@@ -8835,7 +9587,7 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_activer_une_connexion_ssh_dédiée">19.4. Activer une connexion SSH dédiée</h3>
+<h3 id="_activer_une_connexion_ssh_dédiée">20.4. Activer une connexion SSH dédiée</h3>
 <div class="paragraph">
 <p>En option, vous pouvez avoir envie de dédier une connexion SSH pour Gitea:</p>
 </div>
@@ -8905,7 +9657,7 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_système_de_partage_de_fichiers_seafile">20. Installation du système de partage de fichiers Seafile</h2>
+<h2 id="_installation_du_système_de_partage_de_fichiers_seafile">21. Installation du système de partage de fichiers Seafile</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Seafile est un système de partage de fichier simple et efficace écrit en Python. Il existe des clients de connexion pour Windows, Linux, Android, IOS.</p>
@@ -8914,7 +9666,7 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 <p>Cette installation est optionnelle.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_seafile">20.1. Création du site web de Seafile</h3>
+<h3 id="_création_du_site_web_de_seafile">21.1. Création du site web de Seafile</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -8969,26 +9721,38 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">Alias</span> <span class="tok-sx">/media</span> {DOCROOT}/private/seafile/seafile-server-latest/seahub/media
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
+<span class="tok-nb">ProxyPass</span> /.well-known !
+
+<span class="tok-c"># Seafile configuration</span>
+
+<span class="tok-nb">Alias</span> <span class="tok-sx">/media</span> {DOCROOT}/private/seafile/seafile-server-latest/seahub/media
 <span class="tok-nb">RewriteEngine</span> <span class="tok-k">On</span>
 
 <span class="tok-nt">&lt;Location</span> <span class="tok-s">/media</span><span class="tok-nt">&gt;</span>
 <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
 <span class="tok-nt">&lt;/Location&gt;</span>
 
-<span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
-
 <span class="tok-c"># seafile httpserver</span>
 <span class="tok-c">#</span>
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 <span class="tok-nb">ProxyPass</span> <span class="tok-sx">/seafhttp</span> http://localhost:8092
 <span class="tok-nb">ProxyPassReverse</span> <span class="tok-sx">/seafhttp</span> http://localhost:8092
 <span class="tok-nb">RewriteRule</span> ^/seafhttp - [QSA,L]
-<span class="tok-c">#</span>
+
 <span class="tok-c"># seahub</span>
 <span class="tok-c">#</span>
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 <span class="tok-nb">ProxyPass</span> / http://localhost:8090/
 <span class="tok-nb">ProxyPassReverse</span> / http://localhost:8090/</code></pre>
 </div>
@@ -9001,7 +9765,7 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_de_bases_de_données">20.2. Création de bases de données</h3>
+<h3 id="_création_de_bases_de_données">21.2. Création de bases de données</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -9079,7 +9843,7 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_téléchargez_et_installez_seafile">20.3. Téléchargez et installez Seafile</h3>
+<h3 id="_téléchargez_et_installez_seafile">21.3. Téléchargez et installez Seafile</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -9143,7 +9907,7 @@ chown -R web1:client0 seafile <i class="conum" data-value="2"></i><b>(2)</b></co
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lancement_initial">20.4. Lancement initial</h3>
+<h3 id="_lancement_initial">21.4. Lancement initial</h3>
 <div class="paragraph">
 <p>Nous allons effectuer un premier lancement du serveur Seafile:</p>
 </div>
@@ -9290,7 +10054,7 @@ sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lancement_automatique_de_seafile">20.5. Lancement automatique de Seafile</h3>
+<h3 id="_lancement_automatique_de_seafile">21.5. Lancement automatique de Seafile</h3>
 <div class="paragraph">
 <p>Afin de s&#8217;assurer que Seafile tourne en permanence, on doit créer un script de lancement automatique de Seafile:</p>
 </div>
@@ -9446,7 +10210,7 @@ stop<span class="tok-o">)</span>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_système_de_monitoring_grafana">21. Installation du système de monitoring Grafana</h2>
+<h2 id="_installation_du_système_de_monitoring_grafana">22. Installation du système de monitoring Grafana</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Grafana est un logiciel de visualisation et d&#8217;analyse à code source ouvert. Il vous permet d&#8217;interroger, de visualiser, d&#8217;alerter et d&#8217;explorer vos mesures, quel que soit l&#8217;endroit où elles sont stockées. En clair, il vous fournit des outils pour transformer vos données de base de données de séries chronologiques (TSDB) en de magnifiques graphiques et visualisations.
@@ -9457,7 +10221,7 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 <p>Cette installation est optionnelle puisque Munin est déjà installé sur votre système.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_grafana">21.1. Création du site web de Grafana</h3>
+<h3 id="_création_du_site_web_de_grafana">22.1. Création du site web de Grafana</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -9512,17 +10276,35 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
+<span class="tok-nb">ProxyPass</span> /.well-known !
 
 <span class="tok-c"># grafana httpserver</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
-<span class="tok-nb">ProxyPass</span> / http://localhost:3000/
-<span class="tok-nb">ProxyPassReverse</span> / http://localhost:3000/</code></pre>
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+<span class="tok-nb">ProxyPass</span> / http://localhost:3100/
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost:3100/
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://grafana.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 </ol>
@@ -9532,7 +10314,7 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_grafana">21.2. Installation de Grafana</h3>
+<h3 id="_installation_de_grafana">22.2. Installation de Grafana</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -9699,7 +10481,7 @@ apt install grafana prometheus prometheus-mysqld-exporter prometheus-apache-expo
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_et_configuration_de_loki">21.3. Installation et configuration de Loki</h3>
+<h3 id="_installation_et_configuration_de_loki">22.3. Installation et configuration de Loki</h3>
 <div class="paragraph">
 <p>Pour installer Loki, appliquez la procédure suivante:</p>
 </div>
@@ -9883,7 +10665,7 @@ sudo service loki status</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_et_configuration_de_promtail">21.4. Installation et configuration de Promtail</h3>
+<h3 id="_installation_et_configuration_de_promtail">22.4. Installation et configuration de Promtail</h3>
 <div class="paragraph">
 <p>Installez maintenant Promtail:</p>
 </div>
@@ -10043,7 +10825,7 @@ sudo service promtail status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_système_de_backup_borgbackup">22. Installation du système de backup BorgBackup</h2>
+<h2 id="_installation_du_système_de_backup_borgbackup">23. Installation du système de backup BorgBackup</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>BorgBackup est un système de backup simple mais offrant des fonctionnalités avancées telles que le backup incrémental, la déduplication de données, la compression, l&#8217;authentification, l&#8217;encryption.</p>
@@ -10055,7 +10837,7 @@ sudo service promtail status</code></pre>
 <p>Pour le moment, BorgBackup n&#8217;utilise pas de mécanisme de type RClone et il n&#8217;est donc pas encore possible de sauvegarder sur google drive ou autres espaces partagés.</p>
 </div>
 <div class="sect2">
-<h3 id="_introduction">22.1. Introduction</h3>
+<h3 id="_introduction">23.1. Introduction</h3>
 <div class="paragraph">
 <p>BorgBackup permet de stocker des backups sur un serveur distant.
 Nous nommerons le serveur sur lequel les sauvegardes seront stockées : serveur de stockage et identifié par &lt;storing_srv&gt;.
@@ -10063,7 +10845,7 @@ Nous nommerons le serveur qu&#8217;il faut sauvegarder: serveur sauvegardé et i
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_du_serveur_de_stockage">22.2. Installation du serveur de stockage</h3>
+<h3 id="_installation_du_serveur_de_stockage">23.2. Installation du serveur de stockage</h3>
 <div class="paragraph">
 <p>Il est préférable pour des questions de sécurité de créer un compte utilisateur spécifique.</p>
 </div>
@@ -10154,7 +10936,7 @@ chmod <span class="tok-m">700</span> borgbackup</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_sur_le_serveur_sauvegardé">22.3. Installation sur le serveur sauvegardé</h3>
+<h3 id="_installation_sur_le_serveur_sauvegardé">23.3. Installation sur le serveur sauvegardé</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -10285,7 +11067,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_effectuer_un_backup">22.4. Effectuer un backup</h3>
+<h3 id="_effectuer_un_backup">23.4. Effectuer un backup</h3>
 <div class="paragraph">
 <p>Nous allons créer tout d&#8217;abord un script de backup pour sauvegarder tout le serveur sauf les répertoires système:</p>
 </div>
@@ -10344,7 +11126,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lister_les_backups">22.5. Lister les backups</h3>
+<h3 id="_lister_les_backups">23.5. Lister les backups</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de listage :</p>
 </div>
@@ -10399,7 +11181,7 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code><
 </div>
 </div>
 <div class="sect2">
-<h3 id="_vérifier_un_backup">22.6. Vérifier un backup</h3>
+<h3 id="_vérifier_un_backup">23.6. Vérifier un backup</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de vérification :</p>
 </div>
@@ -10462,7 +11244,7 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 </div>
 </div>
 <div class="sect2">
-<h3 id="_restaurer_un_backup">22.7. Restaurer un backup</h3>
+<h3 id="_restaurer_un_backup">23.7. Restaurer un backup</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de montage sous forme de système de fichier :</p>
 </div>
@@ -10552,7 +11334,7 @@ rmdir /mnt/borgbackup</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_supprimer_vos_vieux_backups">22.8. Supprimer vos vieux backups</h3>
+<h3 id="_supprimer_vos_vieux_backups">23.8. Supprimer vos vieux backups</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de ménage des backups :</p>
 </div>
@@ -10619,7 +11401,7 @@ borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/bo
 </div>
 </div>
 <div class="sect2">
-<h3 id="_automatisez_votre_sauvegarde">22.9. Automatisez votre sauvegarde</h3>
+<h3 id="_automatisez_votre_sauvegarde">23.9. Automatisez votre sauvegarde</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -10678,7 +11460,7 @@ vi /usr/local/bin/borgcron.sh</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_restauration_durgence">22.10. Restauration d&#8217;urgence.</h3>
+<h3 id="_restauration_durgence">23.10. Restauration d&#8217;urgence.</h3>
 <div class="paragraph">
 <p>En cas de crash du serveur, l’intérêt du backup offsite est de pouvoir remonter la dernière sauvegarde sans souci.
 Pour cela il faut avoir un moyen de booter le serveur dans un mode rescue (boot du VPS en mode rescue, utilisation d&#8217;un clé USB bootable, boot réseau ou autre moyen).</p>
@@ -10796,7 +11578,7 @@ procédure</a>. Attention le fichier de swap doit être installé dans
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_borgweb">22.11. Installation de Borgweb</h3>
+<h3 id="_installation_de_borgweb">23.11. Installation de Borgweb</h3>
 <div class="paragraph">
 <p>Borgweb existe en version officielle. Cette version n&#8217;a pas trop d&#8217;intéret pour nous étant donnée qu&#8217;elle n&#8217;interroge pas le serveur de stockage pour obtenir les informations des backups réalisés. Il existe un clone de repository qui implémente une fonctionnalité qui liste tous les backups effectués sur le serveur de stockage</p>
 </div>
@@ -10965,7 +11747,7 @@ systemctl start borgweb.service</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_borgweb">22.12. Création du site web de Borgweb</h3>
+<h3 id="_création_du_site_web_de_borgweb">23.12. Création du site web de Borgweb</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig de votre serveur de stockage &lt;storing_srv&gt;:</p>
 </div>
@@ -11020,7 +11802,15 @@ systemctl start borgweb.service</code></pre>
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-c"># borgweb httpserver</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># borgweb httpserver</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nt">&lt;Location</span> <span class="tok-s">/</span><span class="tok-nt">&gt;</span>
@@ -11032,19 +11822,23 @@ systemctl start borgweb.service</code></pre>
 
 <span class="tok-nt">&lt;/Location&gt;</span>
 
+<span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known&quot;</span> !
+
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 <span class="tok-nb">ProxyPass</span> / http://localhost:5000/
 <span class="tok-nb">ProxyPassReverse</span> / http://localhost:5000/
 
-<span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
-
-<span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]</code></pre>
+<span class="tok-nb">RedirectMatch</span> ^/$ https://borgweb.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 </ol>
@@ -11081,7 +11875,7 @@ systemctl start borgweb.service</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_dun_serveur_de_vpn_pritunl">23. Installation d&#8217;un serveur de VPN Pritunl</h2>
+<h2 id="_installation_dun_serveur_de_vpn_pritunl">24. Installation d&#8217;un serveur de VPN Pritunl</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Pritunl est un serveur VPN basé sur OpenVPN.</p>
@@ -11099,7 +11893,7 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 </table>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_pritunl">23.1. Création du site web de Pritunl</h3>
+<h3 id="_création_du_site_web_de_pritunl">24.1. Création du site web de Pritunl</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -11154,22 +11948,40 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
+<span class="tok-nb">ProxyPass</span> /.well-known !
 
 <span class="tok-c"># Pritunl httpserver</span>
 <span class="tok-c">#</span>
-  <span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span>
-  <span class="tok-nb">SSLProxyCheckPeerCN</span> <span class="tok-k">Off</span>
-  <span class="tok-nb">SSLProxyCheckPeerName</span> <span class="tok-k">Off</span>
-  <span class="tok-nb">SSLProxyVerify</span> <span class="tok-k">none</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span> # Comment this out if no https required
+<span class="tok-nb">RequestHeader</span> set Front-End-Https <span class="tok-s2">&quot;On&quot;</span> # Comment this out if no https required
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span> # Comment this out if no https required
+<span class="tok-nb">SSLProxyCheckPeerCN</span> <span class="tok-k">Off</span> # Comment this out if no https required
+<span class="tok-nb">SSLProxyCheckPeerName</span> <span class="tok-k">Off</span> # Comment this out if no https required
+<span class="tok-nb">SSLProxyVerify</span> <span class="tok-k">none</span> # Comment this out if no https required
 <span class="tok-nb">ProxyPass</span> / https://localhost:8070/
 <span class="tok-nb">ProxyPassReverse</span> / https://localhost:8070/
-<span class="tok-nb">ProxyPreserveHost</span> <span class="tok-k">On</span></code></pre>
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://pritunl.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 </ol>
@@ -11179,7 +11991,7 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_pritunl_sur_un_vps">23.2. Installation de Pritunl sur un VPS</h3>
+<h3 id="_installation_de_pritunl_sur_un_vps">24.2. Installation de Pritunl sur un VPS</h3>
 <div class="paragraph">
 <p>Veuillez suivre la procédure suivante si vous installer sur un serveur debian (pour le Raspberrypi voir le chapitre suivant):</p>
 </div>
@@ -11210,7 +12022,7 @@ apt-get --assume-yes install pritunl mongodb-org</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_pritunl_sur_un_raspberrypi">23.3. Installation de Pritunl sur un Raspberrypi</h3>
+<h3 id="_installation_de_pritunl_sur_un_raspberrypi">24.3. Installation de Pritunl sur un Raspberrypi</h3>
 <div class="paragraph">
 <p>Pritunl n&#8217;est pas installable avec une distribution Raspbian qui est uniquement 32 bits.
 Veuillez suivre la procédure suivante si vous installer sur un Raspberrypi avec Ubuntu 64 bits:</p>
@@ -11523,7 +12335,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_se_connecter_au_serveur_de_vpn">23.4. Se connecter au serveur de VPN</h3>
+<h3 id="_se_connecter_au_serveur_de_vpn">24.4. Se connecter au serveur de VPN</h3>
 <div class="paragraph">
 <p>Comme Pritunl est compatible OpenVPN n&#8217;importe quel logiciel compatible OpenVPN peut être utilisé.
 Pritunl founit un <a href="https://client.pritunl.com/">client</a> compatible pour Linux, macOS, and Windows.</p>
@@ -11535,7 +12347,7 @@ Une fois fait, une compte apparaît dans le logiciel client. Vous pourrez vous c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_réparer_une_base_pritunl">23.5. Réparer une base Pritunl</h3>
+<h3 id="_réparer_une_base_pritunl">24.5. Réparer une base Pritunl</h3>
 <div class="paragraph">
 <p>Si jamais votre base est corrompue, vous pourrez la réparer en tapant:</p>
 </div>
@@ -11548,7 +12360,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mot_de_passe_perdu">23.6. Mot de passe perdu</h3>
+<h3 id="_mot_de_passe_perdu">24.6. Mot de passe perdu</h3>
 <div class="paragraph">
 <p>Vous pouvez re-générer un mot de passe en tapant:</p>
 </div>
@@ -11561,13 +12373,13 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_dun_serveur_de_bureau_à_distance_guacamole">24. Installation d&#8217;un serveur de bureau à distance Guacamole</h2>
+<h2 id="_installation_dun_serveur_de_bureau_à_distance_guacamole">25. Installation d&#8217;un serveur de bureau à distance Guacamole</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Apache Guacamole est un logiciel opensource et une application web de bureau à distance qui vous permet d&#8217;accéder à vos machines de bureau par le biais d&#8217;un navigateur web. Il s&#8217;agit d&#8217;une appli web html5 qui prend en charge des protocoles standard comme VNC, RDP et SSH. Vous n&#8217;avez pas besoin d&#8217;installer et d&#8217;utiliser des logiciels ou des plugins sur le serveur. Avec Guacamole, vous pouvez facilement passer d&#8217;un bureau d&#8217;une machine à l&#8217;autre avec le même navigateur</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_guacamole">24.1. Création du site web de Guacamole</h3>
+<h3 id="_création_du_site_web_de_guacamole">25.1. Création du site web de Guacamole</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -11622,17 +12434,35 @@ systemctl start pritunl</code></pre>
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/.well-known/acme-challenge&quot;</span> http://localhost:80/.well-known/acme-challenge
-<span class="tok-nb">RewriteRule</span> ^/.well-known/acme-challenge - [QSA,L]
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
+    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
+    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
+    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
+    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
+<span class="tok-nt">&lt;/Location&gt;</span>
+
+<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
+<span class="tok-nb">ProxyPass</span> /.well-known !
 
 <span class="tok-c"># guacamole httpserver</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 <span class="tok-nb">ProxyPass</span> <span class="tok-sx">/guacamole</span> http://localhost:8085/guacamole
-<span class="tok-nb">ProxyPassReverse</span> <span class="tok-sx">/guacamole</span> http://localhost:8085/guacamole</code></pre>
+<span class="tok-nb">ProxyPassReverse</span> <span class="tok-sx">/guacamole</span> http://localhost:8085/guacamole
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://guacamole.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -11645,7 +12475,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_des_bases_de_données_5">24.2. Création des bases de données</h3>
+<h3 id="_création_des_bases_de_données_5">25.2. Création des bases de données</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -11716,7 +12546,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_du_guacamole">24.3. Installation du Guacamole</h3>
+<h3 id="_installation_du_guacamole">25.3. Installation du Guacamole</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -12100,10 +12930,10 @@ systemctl restart guacd</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_annexe">25. Annexe</h2>
+<h2 id="_annexe">26. Annexe</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_de_hestia">25.1. Installation de Hestia</h3>
+<h3 id="_installation_de_hestia">26.1. Installation de Hestia</h3>
 <div class="paragraph">
 <p>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
 La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="bare">https://docs.hestiacp.com/</a></p>
@@ -12158,9 +12988,9 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuration_dun_écran_3_5inch_rpi_lcd_a">25.2. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</h3>
+<h3 id="_configuration_dun_écran_3_5inch_rpi_lcd_a">26.2. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</h3>
 <div class="sect3">
-<h4 id="_pour_commencer">25.2.1. Pour commencer</h4>
+<h4 id="_pour_commencer">26.2.1. Pour commencer</h4>
 <div class="paragraph">
 <p>Le RPi LCD peut être piloté de deux manières :</p>
 </div>
@@ -12225,7 +13055,7 @@ cd LCD-show/</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_basculer_entre_laffichage_lcd_et_hdmi">25.2.2. Basculer entre l&#8217;affichage LCD et HDMI</h4>
+<h4 id="_basculer_entre_laffichage_lcd_et_hdmi">26.2.2. Basculer entre l&#8217;affichage LCD et HDMI</h4>
 <div class="paragraph">
 <p>Une fois que l&#8217;écran LCD est activé, les paramètres par défaut pour HDMI sont modifiés. Si vous souhaitez utiliser un autre moniteur HDMI, veuillez exécuter la commande suivante :</p>
 </div>
@@ -12246,7 +13076,7 @@ cd LCD-show/</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_paramètres_dorientation_de_lécran">25.2.3. Paramètres d&#8217;orientation de l&#8217;écran</h4>
+<h4 id="_paramètres_dorientation_de_lécran">26.2.3. Paramètres d&#8217;orientation de l&#8217;écran</h4>
 <div class="paragraph">
 <p>Une fois le pilote tactile installé, l&#8217;orientation de l&#8217;écran peut être définie par ces commandes :</p>
 </div>
@@ -12304,7 +13134,7 @@ cd LCD-show/</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_calibrage_de_lécran_tactile">25.2.4. Calibrage de l&#8217;écran tactile</h4>
+<h4 id="_calibrage_de_lécran_tactile">26.2.4. Calibrage de l&#8217;écran tactile</h4>
 <div class="paragraph">
 <p>Cet écran LCD peut être calibré à l&#8217;aide d&#8217;un programme appelé <code>xinput_calibrator</code> . Il n&#8217;est pas préinstallé sur le système d&#8217;exploitation Raspbian original. Vous devez donc le télécharger et installer le programme manuellement.</p>
 </div>
@@ -12383,7 +13213,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_installer_un_clavier_virtuel">25.2.5. Installer un clavier virtuel</h4>
+<h4 id="_installer_un_clavier_virtuel">26.2.5. Installer un clavier virtuel</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -12487,7 +13317,7 @@ X-MB-INPUT-MECHANSIM=True</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ressources">25.2.6. Ressources</h4>
+<h4 id="_ressources">26.2.6. Ressources</h4>
 <div class="sect4">
 <h5 id="_manuel_utilisateur">Manuel utilisateur</h5>
 <div class="ulist">
@@ -12686,8 +13516,8 @@ EndSection</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.1<br>
-Last updated 2021-01-16 20:16:10 +0100
+Version 1.2<br>
+Last updated 2021-01-24 20:14:02 +0100
 </div>
 </div>
 </body>
