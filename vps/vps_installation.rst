@@ -2848,26 +2848,27 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
 
               .. code:: apache
 
-                 <Location /.well-known >
-                     AuthType None
-                     Options None
-                     AllowOverride None
-                     Require all granted
-                     AddDefaultCharset off
-                 </Location>
+                 <Proxy *>
+                 Order deny,allow
+                 Allow from all
+                 </Proxy>
 
-                 # Don't transfer to proxy let's encrypt URLs
-                 ProxyPass /.well-known !
+                 ProxyRequests Off
+                 ProxyPass /stats !
+                 ProxyPass /.well-known/acme-challenge !
 
-                 # redirect from server
+                 # yacht httpserver
                  #
 
                  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
                  ProxyPreserveHost    On
+
+                 ProxyPassMatch ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
+
                  ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
                  ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
 
-                 RedirectMatch ^/$ https://sub.example.com 
+                 RedirectMatch ^/$ https://www.example.com 
 
               -  remplacer ``example.com`` par votre nom de domaine
 
@@ -2875,16 +2876,14 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
 
               .. code:: apache
 
-                 <Location /.well-known >
-                     AuthType None
-                     Options None
-                     AllowOverride None
-                     Require all granted
-                     AddDefaultCharset off
-                 </Location>
+                 <Proxy *>
+                 Order deny,allow
+                 Allow from all
+                 </Proxy>
 
-                 # Don't transfer to proxy let's encrypt URLs
-                 ProxyPass /.well-known !
+                 ProxyRequests Off
+                 ProxyPass /stats !
+                 ProxyPass /.well-known/acme-challenge !
 
                  # redirect from server
                  #
@@ -2893,10 +2892,12 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
                  SSLProxyEngine On # Comment this out if no https required
                  RequestHeader set Front-End-Https "On" # Comment this out if no https required
                  ProxyPreserveHost    On
-                 ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
-                 ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
 
-                 RedirectMatch ^/$ https://sub.example.com 
+                 ProxyPassMatch ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
+                 ProxyPass / https://localhost[:port_number_if_any]/[path_if_any]
+                 ProxyPassReverse / https://localhost[:port_number_if_any]/[path_if_any]
+
+                 RedirectMatch ^/$ https://www.example.com 
 
               -  remplacer ``example.com`` par votre nom de domaine
 
@@ -2967,22 +2968,23 @@ racine auparavant.
 
               .. code:: apache
 
-                 <Location /.well-known >
-                     AuthType None
-                     Options None
-                     AllowOverride None
-                     Require all granted
-                     AddDefaultCharset off
-                 </Location>
+                 <Proxy *>
+                 Order deny,allow
+                 Allow from all
+                 </Proxy>
 
-                 # Don't transfer to proxy let's encrypt URLs
-                 ProxyPass /.well-known !
+                 ProxyRequests Off
+                 ProxyPass /stats !
+                 ProxyPass /.well-known/acme-challenge !
 
-                 # redirect from server
+                 # yacht httpserver
                  #
 
                  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
                  ProxyPreserveHost    On
+
+                 ProxyPassMatch ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
+
                  ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
                  ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
 
@@ -2994,16 +2996,14 @@ racine auparavant.
 
               .. code:: apache
 
-                 <Location /.well-known >
-                     AuthType None
-                     Options None
-                     AllowOverride None
-                     Require all granted
-                     AddDefaultCharset off
-                 </Location>
+                 <Proxy *>
+                 Order deny,allow
+                 Allow from all
+                 </Proxy>
 
-                 # Don't transfer to proxy let's encrypt URLs
-                 ProxyPass /.well-known !
+                 ProxyRequests Off
+                 ProxyPass /stats !
+                 ProxyPass /.well-known/acme-challenge !
 
                  # redirect from server
                  #
@@ -3012,8 +3012,10 @@ racine auparavant.
                  SSLProxyEngine On # Comment this out if no https required
                  RequestHeader set Front-End-Https "On" # Comment this out if no https required
                  ProxyPreserveHost    On
-                 ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
-                 ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
+
+                 ProxyPassMatch ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
+                 ProxyPass / https://localhost[:port_number_if_any]/[path_if_any]
+                 ProxyPassReverse / https://localhost[:port_number_if_any]/[path_if_any]
 
                  RedirectMatch ^/$ https://sub.example.com 
 
@@ -3750,16 +3752,14 @@ Suivez la procédure suivante:
 
        .. code:: apache
 
-          <Location /.well-known >
-              AuthType None
-              Options None
-              AllowOverride None
-              Require all granted
-              AddDefaultCharset off
-          </Location>
+          <Proxy *>
+          Order deny,allow
+          Allow from all
+          </Proxy>
 
-          # Don't transfer to proxy let's encrypt URLs
-          ProxyPass /.well-known !
+          ProxyRequests Off
+          ProxyPass /stats !
+          ProxyPass /.well-known/acme-challenge !
 
           # rspamd httpserver
           #
@@ -4226,6 +4226,15 @@ Appliquez la procédure suivante:
 
       .. code:: apache
 
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
+
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
+
          CheckSpelling On
          CheckCaseOnly On
          RewriteEngine On
@@ -4234,6 +4243,7 @@ Appliquez la procédure suivante:
          ProxyPass "/" http://autoconfig.example.com/ 
          ProxyPassReverse "/" http://autoconfig.example.com/ 
          RewriteRule ^/ - [QSA,L]
+         RedirectMatch ^/$ https://autoconfig.example.com 
 
       -  remplacer ``example.com`` par votre nom de domaine
 
@@ -4461,16 +4471,14 @@ Il vous reste à appliquer la procédure suivante:
 
       .. code:: apache
 
-         <Location /.well-known >
-             AuthType None
-             Options None
-             AllowOverride None
-             Require all granted
-             AddDefaultCharset off
-         </Location>
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
 
-         # Don't transfer to proxy let's encrypt URLs
-         ProxyPass /.well-known !
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
 
          # roundcube httpserver
 
@@ -4593,7 +4601,10 @@ Il faut suivre les étapes suivantes:
 
     .. code:: bash
 
-       apt remove --purge docker docker-engine docker.io containerd runc
+       apt remove --purge docker docker-engine docker.io containerd runc 
+
+    -  docker-engine n’existe pas dans une distribution ubuntu. C’est à
+       enlever.
 
 3.  Tapez:
 
@@ -4620,13 +4631,16 @@ Il faut suivre les étapes suivantes:
        même la version de la distribution stable.
 
 6.  Tapez (et remplacer éventuellement la commande $(lsb_release -cs)
-    par le nom de votre distribution stable). De la même manière,
-    remplacez l’architecture ``amd64`` par ``arm64`` pour un raspberry
-    pi 4 ou par ``armhf`` pour un raspberry pi 3 :
+    par le nom de votre distribution stable). :
 
     .. code:: bash
 
-       add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+       add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" 
+
+    -  ici il faut remplacer l’architecture ``amd64`` par ``arm64`` pour
+       un raspberry pi 4 ou par ``armhf`` pour un raspberry pi 3. De la
+       même manière, remplacez debian par ubuntu si vous utilisez une
+       distribution ubuntu/
 
 7.  Une fois installé avec succès, tapez:
 
@@ -4681,7 +4695,7 @@ Il faut suivre les étapes suivantes:
 
    .. code:: bash
 
-      pip install docker-compose
+      pip3 install docker-compose
 
 .. __installation_de_docker_swarm:
 
@@ -4748,6 +4762,19 @@ facile au fichier Dockerfile est un gage de qualité et de transparence.
 En tout cas, il vous sera facilement possible de regarder comment
 l’image est construite et quels sont les package dockers de base et si
 ces packages dockers de base sont récents et certifiés.
+
+Pour les plateformes de type Raspberry, il faut bien vérifier que
+l’image docker que vous chargez est compatible de votre plateforme. Sur
+Docker Hub, vous devez allez sur l’onglet Tag de votre package et
+vérifier que le champ OS/ARCH contient bien votre plateforme.
+
+Pour un Raspberry Pi 4 ce doit être: ``Linux/arm64``
+
+Pour un Raspberry Pi 3 ce doit être: ``Linux/arm``
+
+Par exemple pour les docker de ``Yacht`` et de ``Portainer`` décrits ci
+après, on peut voir que les containers sont multiplateforme et
+conviennent très bien pour de l’Intel ou de l’ARM.
 
 .. __mise_à_jour_automatique_des_images:
 
@@ -4829,21 +4856,21 @@ Pour la création du site web, il faut suivre les étapes suivantes:
 
        .. code:: apache
 
-          <Location /.well-known >
-              AuthType None
-              Options None
-              AllowOverride None
-              Require all granted
-              AddDefaultCharset off
-          </Location>
+          <Proxy *>
+          Order deny,allow
+          Allow from all
+          </Proxy>
+
+          ProxyRequests Off
+          ProxyPass /stats !
+          ProxyPass /.well-known/acme-challenge !
 
           # yacht httpserver
           #
 
-          ProxyPass "/.well-known" !
-
           SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
           ProxyPreserveHost    On
+
           ProxyPass / http://localhost:8061/
           ProxyPassReverse / http://localhost:8061/
 
@@ -4938,21 +4965,21 @@ Pour la création du site web, il faut suivre les étapes suivantes:
 
       .. code:: apache
 
-         <Location /.well-known >
-             AuthType None
-             Options None
-             AllowOverride None
-             Require all granted
-             AddDefaultCharset off
-         </Location>
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
 
-         # portainer httpserver
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
+
+         # yacht httpserver
          #
-
-         ProxyPass "/.well-known" !
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
          ProxyPreserveHost    On
+
          ProxyPass / http://localhost:9050/
          ProxyPassReverse / http://localhost:9050/
 
@@ -5792,21 +5819,21 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
       .. code:: apache
 
-         <Location /.well-known >
-             AuthType None
-             Options None
-             AllowOverride None
-             Require all granted
-             AddDefaultCharset off
-         </Location>
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
 
-         # Don't transfer to proxy let's encrypt URLs
-         ProxyPass /.well-known !
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
+
          # gitea httpserver
          #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
          ProxyPreserveHost    On
+
          ProxyPass / http://localhost:3000/
          ProxyPassReverse / http://localhost:3000/
 
@@ -6107,16 +6134,14 @@ Appliquez la procédure suivante:
 
       .. code:: apache
 
-         <Location /.well-known >
-             AuthType None
-             Options None
-             AllowOverride None
-             Require all granted
-             AddDefaultCharset off
-         </Location>
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
 
-         # Don't transfer to proxy let's encrypt URLs
-         ProxyPass /.well-known !
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
 
          # Seafile configuration
 
@@ -6499,22 +6524,21 @@ Appliquez la procédure suivante:
 
       .. code:: apache
 
-         <Location /.well-known >
-             AuthType None
-             Options None
-             AllowOverride None
-             Require all granted
-             AddDefaultCharset off
-         </Location>
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
 
-         # Don't transfer to proxy let's encrypt URLs
-         ProxyPass /.well-known !
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
 
          # grafana httpserver
          #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
          ProxyPreserveHost    On
+
          ProxyPass / http://localhost:3100/
          ProxyPassReverse / http://localhost:3100/
 
@@ -7686,13 +7710,10 @@ stockage <storing_srv>:
 
       .. code:: apache
 
-         <Location /.well-known >
-             AuthType None
-             Options None
-             AllowOverride None
-             Require all granted
-             AddDefaultCharset off
-         </Location>
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
 
          # borgweb httpserver
          #
@@ -7706,7 +7727,13 @@ stockage <storing_srv>:
 
          </Location>
 
-         ProxyPass "/.well-known" !
+
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
+
+         # borgweb httpserver
+         #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
          ProxyPreserveHost    On
@@ -7788,16 +7815,14 @@ Appliquez la procédure suivante:
 
       .. code:: apache
 
-         <Location /.well-known >
-             AuthType None
-             Options None
-             AllowOverride None
-             Require all granted
-             AddDefaultCharset off
-         </Location>
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
 
-         # Don't transfer to proxy let's encrypt URLs
-         ProxyPass /.well-known !
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
 
          # Pritunl httpserver
          #
@@ -8159,22 +8184,21 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
       .. code:: apache
 
-         <Location /.well-known >
-             AuthType None
-             Options None
-             AllowOverride None
-             Require all granted
-             AddDefaultCharset off
-         </Location>
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
 
-         # Don't transfer to proxy let's encrypt URLs
-         ProxyPass /.well-known !
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
 
          # guacamole httpserver
          #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
          ProxyPreserveHost    On
+
          ProxyPass /guacamole http://localhost:8085/guacamole
          ProxyPassReverse /guacamole http://localhost:8085/guacamole
 

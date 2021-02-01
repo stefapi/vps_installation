@@ -4537,27 +4537,27 @@ Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore d
 <p>Pour un site en HTTP (attention dans ce cas, ce site doit être local ou dans un container pour des raisons de sécurité) :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span>
-<span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
-<span class="tok-nb">ProxyPass</span> /.well-known !
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
-<span class="tok-c"># redirect from server</span>
+<span class="tok-c"># yacht httpserver</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+
+<span class="tok-nb">ProxyPassMatch</span> ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
+
 <span class="tok-nb">ProxyPass</span> / http://localhost[:port_number_if_any]/[path_if_any]
 <span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]
 
-<span class="tok-nb">RedirectMatch</span> ^/$ https://sub.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<span class="tok-nb">RedirectMatch</span> ^/$ https://www.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4573,17 +4573,14 @@ Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore d
 <p>Pour un site en HTTPS :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span>
-<span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
-<span class="tok-nb">ProxyPass</span> /.well-known !
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
 <span class="tok-c"># redirect from server</span>
 <span class="tok-c">#</span>
@@ -4592,10 +4589,12 @@ Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore d
 <span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span> # Comment this out if no https required
 <span class="tok-nb">RequestHeader</span> set Front-End-Https <span class="tok-s2">&quot;On&quot;</span> # Comment this out if no https required
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
-<span class="tok-nb">ProxyPass</span> / http://localhost[:port_number_if_any]/[path_if_any]
-<span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]
 
-<span class="tok-nb">RedirectMatch</span> ^/$ https://sub.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<span class="tok-nb">ProxyPassMatch</span> ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
+<span class="tok-nb">ProxyPass</span> / https://localhost[:port_number_if_any]/[path_if_any]
+<span class="tok-nb">ProxyPassReverse</span> / https://localhost[:port_number_if_any]/[path_if_any]
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://www.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4706,23 +4705,23 @@ Vous ne pouvez définir un sous-domaine que si vous avez défini le site web rac
 <p>Pour un site en HTTP (attention dans ce cas, ce site doit être local ou dans un container pour des raisons de sécurité) :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span>
-<span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
-<span class="tok-nb">ProxyPass</span> /.well-known !
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
-<span class="tok-c"># redirect from server</span>
+<span class="tok-c"># yacht httpserver</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+
+<span class="tok-nb">ProxyPassMatch</span> ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
+
 <span class="tok-nb">ProxyPass</span> / http://localhost[:port_number_if_any]/[path_if_any]
 <span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]
 
@@ -4742,17 +4741,14 @@ Vous ne pouvez définir un sous-domaine que si vous avez défini le site web rac
 <p>Pour un site en HTTPS :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span>
-<span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
-<span class="tok-nb">ProxyPass</span> /.well-known !
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
 <span class="tok-c"># redirect from server</span>
 <span class="tok-c">#</span>
@@ -4761,8 +4757,10 @@ Vous ne pouvez définir un sous-domaine que si vous avez défini le site web rac
 <span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span> # Comment this out if no https required
 <span class="tok-nb">RequestHeader</span> set Front-End-Https <span class="tok-s2">&quot;On&quot;</span> # Comment this out if no https required
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
-<span class="tok-nb">ProxyPass</span> / http://localhost[:port_number_if_any]/[path_if_any]
-<span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]
+
+<span class="tok-nb">ProxyPassMatch</span> ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
+<span class="tok-nb">ProxyPass</span> / https://localhost[:port_number_if_any]/[path_if_any]
+<span class="tok-nb">ProxyPassReverse</span> / https://localhost[:port_number_if_any]/[path_if_any]
 
 <span class="tok-nb">RedirectMatch</span> ^/$ https://sub.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
@@ -5683,16 +5681,14 @@ systemctl restart apache2</code></pre>
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
-<span class="tok-nb">ProxyPass</span> /.well-known !
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
 <span class="tok-c"># rspamd httpserver</span>
 <span class="tok-c">#</span>
@@ -6290,14 +6286,24 @@ chown web1:client0 autoconfig/mail/config-v1.1.xml <i class="conum" data-value="
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">CheckSpelling</span> <span class="tok-k">On</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
+
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
+
+<span class="tok-nb">CheckSpelling</span> <span class="tok-k">On</span>
 <span class="tok-nb">CheckCaseOnly</span> <span class="tok-k">On</span>
 <span class="tok-nb">RewriteEngine</span> <span class="tok-k">On</span>
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 <span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/&quot;</span> http://autoconfig.example.com/ <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-nb">ProxyPassReverse</span> <span class="tok-s2">&quot;/&quot;</span> http://autoconfig.example.com/ <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-nb">RewriteRule</span> ^/ - [QSA,L]</code></pre>
+<span class="tok-nb">RewriteRule</span> ^/ - [QSA,L]
+<span class="tok-nb">RedirectMatch</span> ^/$ https://autoconfig.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6637,16 +6643,14 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
-<span class="tok-nb">ProxyPass</span> /.well-known !
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
 <span class="tok-c"># roundcube httpserver</span>
 
@@ -6801,8 +6805,16 @@ Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas
 <p>Désinstallez les éventuelles anciennes versions de docker. tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt remove --purge docker docker-engine docker.io containerd runc</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt remove --purge docker docker-engine docker.io containerd runc <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>docker-engine n&#8217;existe pas dans une distribution ubuntu. C&#8217;est à enlever.</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -6839,11 +6851,19 @@ pour des installations hybride d&#8217;une distribution debian, la version qui e
 </div>
 </li>
 <li>
-<p>Tapez (et remplacer éventuellement la commande $(lsb_release -cs) par le nom de votre distribution stable). De la même manière, remplacez l&#8217;architecture <code>amd64</code> par <code>arm64</code> pour un raspberry pi 4  ou par <code>armhf</code> pour un raspberry pi 3 :</p>
+<p>Tapez (et remplacer éventuellement la commande $(lsb_release -cs) par le nom de votre distribution stable).  :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>add-apt-repository <span class="tok-s2">&quot;deb [arch=amd64] https://download.docker.com/linux/debian </span><span class="tok-k">$(</span>lsb_release -cs<span class="tok-k">)</span><span class="tok-s2"> stable&quot;</span></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>add-apt-repository <span class="tok-s2">&quot;deb [arch=amd64] https://download.docker.com/linux/debian </span><span class="tok-k">$(</span>lsb_release -cs<span class="tok-k">)</span><span class="tok-s2"> stable&quot;</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>ici il faut remplacer l&#8217;architecture <code>amd64</code> par <code>arm64</code> pour un raspberry pi 4  ou par <code>armhf</code> pour un raspberry pi 3. De la même manière, remplacez debian par ubuntu si vous utilisez une distribution ubuntu/</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -6913,7 +6933,7 @@ apt install -y python3 python3-pip <i class="conum" data-value="1"></i><b>(1)</b
 <p>Installez docker-compose :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>pip install docker-compose</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>pip3 install docker-compose</code></pre>
 </div>
 </div>
 </li>
@@ -6981,6 +7001,18 @@ Cette installation est optionnelle puisque l&#8217;on peut faire fonctionner Doc
 </div>
 <div class="paragraph">
 <p>Si vous n&#8217;utilisez pas une image du type mentionné ci dessus, l&#8217;accès facile au fichier Dockerfile est un gage de qualité et de transparence. En tout cas, il vous sera facilement possible de regarder comment l&#8217;image est construite et quels sont les package dockers de base et si ces packages dockers de base sont récents et certifiés.</p>
+</div>
+<div class="paragraph">
+<p>Pour les plateformes de type Raspberry, il faut bien vérifier que l&#8217;image docker que vous chargez est compatible de votre plateforme. Sur Docker Hub, vous devez allez sur l&#8217;onglet Tag de votre package et vérifier que le champ OS/ARCH contient bien votre plateforme.</p>
+</div>
+<div class="paragraph">
+<p>Pour un Raspberry Pi 4 ce doit être: <code>Linux/arm64</code></p>
+</div>
+<div class="paragraph">
+<p>Pour un Raspberry Pi 3 ce doit être: <code>Linux/arm</code></p>
+</div>
+<div class="paragraph">
+<p>Par exemple pour les docker de <code>Yacht</code> et de <code>Portainer</code> décrits ci après, on peut voir que les containers sont multiplateforme et conviennent très bien pour de l&#8217;Intel ou de l&#8217;ARM.</p>
 </div>
 </div>
 <div class="sect2">
@@ -7087,21 +7119,21 @@ Ouroboros n&#8217;est plus maintenu depuis fin 2019. Une alternative est à trou
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
+
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
 <span class="tok-c"># yacht httpserver</span>
 <span class="tok-c">#</span>
 
-<span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known&quot;</span> !
-
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+
 <span class="tok-nb">ProxyPass</span> / http://localhost:8061/
 <span class="tok-nb">ProxyPassReverse</span> / http://localhost:8061/
 
@@ -7233,21 +7265,21 @@ docker run -d -p <span class="tok-m">8061</span>:8000 -v /var/run/docker.sock:/v
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># portainer httpserver</span>
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
+
+<span class="tok-c"># yacht httpserver</span>
 <span class="tok-c">#</span>
-
-<span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known&quot;</span> !
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+
 <span class="tok-nb">ProxyPass</span> / http://localhost:9050/
 <span class="tok-nb">ProxyPassReverse</span> / http://localhost:9050/
 
@@ -8490,21 +8522,21 @@ Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
-<span class="tok-nb">ProxyPass</span> /.well-known !
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
+
 <span class="tok-c"># gitea httpserver</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+
 <span class="tok-nb">ProxyPass</span> / http://localhost:3000/
 <span class="tok-nb">ProxyPassReverse</span> / http://localhost:3000/
 
@@ -8927,16 +8959,14 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
-<span class="tok-nb">ProxyPass</span> /.well-known !
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
 <span class="tok-c"># Seafile configuration</span>
 
@@ -9482,22 +9512,21 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
-<span class="tok-nb">ProxyPass</span> /.well-known !
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
 <span class="tok-c"># grafana httpserver</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+
 <span class="tok-nb">ProxyPass</span> / http://localhost:3100/
 <span class="tok-nb">ProxyPassReverse</span> / http://localhost:3100/
 
@@ -11008,13 +11037,10 @@ systemctl start borgweb.service</code></pre>
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
 <span class="tok-c"># borgweb httpserver</span>
 <span class="tok-c">#</span>
@@ -11028,7 +11054,13 @@ systemctl start borgweb.service</code></pre>
 
 <span class="tok-nt">&lt;/Location&gt;</span>
 
-<span class="tok-nb">ProxyPass</span> <span class="tok-s2">&quot;/.well-known&quot;</span> !
+
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
+
+<span class="tok-c"># borgweb httpserver</span>
+<span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
@@ -11154,16 +11186,14 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
-<span class="tok-nb">ProxyPass</span> /.well-known !
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
 <span class="tok-c"># Pritunl httpserver</span>
 <span class="tok-c">#</span>
@@ -11640,22 +11670,21 @@ systemctl start pritunl</code></pre>
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Location</span> <span class="tok-s">/.well-known </span><span class="tok-nt">&gt;</span>
-    <span class="tok-nb">AuthType</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Options</span> <span class="tok-k">None</span>
-    <span class="tok-nb">AllowOverride</span> <span class="tok-k">None</span>
-    <span class="tok-nb">Require</span> <span class="tok-k">all</span> granted
-    <span class="tok-nb">AddDefaultCharset</span> <span class="tok-k">off</span>
-<span class="tok-nt">&lt;/Location&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
 
-<span class="tok-c"># Don&#39;t transfer to proxy let&#39;s encrypt URLs</span>
-<span class="tok-nb">ProxyPass</span> /.well-known !
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
 <span class="tok-c"># guacamole httpserver</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+
 <span class="tok-nb">ProxyPass</span> <span class="tok-sx">/guacamole</span> http://localhost:8085/guacamole
 <span class="tok-nb">ProxyPassReverse</span> <span class="tok-sx">/guacamole</span> http://localhost:8085/guacamole
 
@@ -12199,7 +12228,7 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 <div id="footer">
 <div id="footer-text">
 Version 1.2<br>
-Last updated 2021-01-24 20:13:48 +0100
+Last updated 2021-01-24 20:21:44 +0100
 </div>
 </div>
 </body>
