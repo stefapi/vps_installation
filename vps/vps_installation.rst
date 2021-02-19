@@ -57,6 +57,9 @@ Sont installés:
 
 -  un outil de Monitoring `Monit <http://mmonit.com/monit/>`__,
 
+-  L’installation de `Docker <https://hub.docker.com/>`__ et des outils
+   `Portainer <https://portainer.io>`__ et `Yacht <https://yacht.sh>`__,
+
 -  un sous domaine pointant sur un site auto-hébergé (l’installation du
    site n’est pas décrite ici; Se référer à
    `Yunohost <https://yunohost.org>`__),
@@ -76,6 +79,8 @@ Sont installés:
 -  un site Collaboratif sous `Nextcloud <https://nextcloud.com>`__,
 
 -  un site `Gitea <https://gitea.io>`__ et son repository GIT,
+
+-  un serveur de mots de passe `Bitwarden <https://bitwarden.com/>`__,
 
 -  un serveur et un site de partage de fichiers
    `Seafile <https://www.seafile.com>`__,
@@ -1994,10 +1999,15 @@ Suivez la procédure suivante:
 
       apt install python3-certbot-apache
 
+.. __scan_des_vulnérabilités:
+
+Scan des vulnérabilités
+-----------------------
+
 .. __installation_dun_scanner_de_vulnérabilités_lynis:
 
 Installation d’un scanner de vulnérabilités Lynis
--------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suivez la procédure suivante:
 
@@ -2026,6 +2036,20 @@ Suivez la procédure suivante:
 
 4. L’outil vous listera dans une forme très synthétique la liste des
    vulnérabilités et des améliorations de sécurité à appliquer.
+
+.. __installation_et_utilisation_de_nmap:
+
+Installation et utilisation de NMAP
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+nmap -A -T4 example.com
+
+whatweb -a 3 cogen.apiou.org
+
+nikto -h apiou.org
+
+docker run -it -d --name zap -u zap -p 8080:8080 -p 8091:8090 -i
+owasp/zap2docker-stable zap-webswing.sh
 
 .. __installation_dun_panel:
 
@@ -4562,11 +4586,11 @@ Suivez la procédure suivante:
 Installation de Docker et des outils associés
 =============================================
 
-Le logiciel « Docker » est une technologie de conteneurisation qui
+Le logiciel ``Docker`` est une technologie de conteneurisation qui
 permet la création et l’utilisation de conteneurs Linux. En clair,
-Docker permet d’installer et de configurer rapidement toute une appli
-web complexe dans un environnement isolé et avec tout son échosystème de
-bibliothèques logicielles spécifiques.
+``Docker`` permet d’installer et de configurer rapidement toute une
+appli web complexe dans un environnement isolé et avec tout son
+échosystème de bibliothèques logicielles spécifiques.
 
 Il est ainsi possible d’effectuer rapidement des installations, de
 suivre des mises à jours et d’isoler ces environnements du système
@@ -4974,7 +4998,7 @@ Pour la création du site web, il faut suivre les étapes suivantes:
          ProxyPass /stats !
          ProxyPass /.well-known/acme-challenge !
 
-         # yacht httpserver
+         # portainer httpserver
          #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
@@ -6084,6 +6108,269 @@ Gitea:
       systemctl restart gitea.service
 
 6. Enjoy !
+
+.. __installation_de_bitwarden:
+
+Installation de Bitwarden
+=========================
+
+le logiciel ``Bitwarden`` est un gestionnaire de mots de passe
+relativement complet et gratuit. Il peut être installé sur votre serveur
+VPS de manière indépendante de l’éditeur Bitwarden.
+
+Il reste cependant un bémol puisque l’installation s’effectue à l’aide
+de containers dockers qui sont eux générés par l’éditeur de
+``bitwarden``.
+
+.. __prérequis:
+
+Prérequis
+---------
+
+Il vous faudra tout d’abord installer ``docker`` en vous référant au
+chapitre qui y est consacré. Ensuite il faut créer une entrée DNS:
+
+1. Allez dans ISPConfig dans la rubrique ``DNS``, sélectionnez le menu
+   ``Zones``, Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``bitwarden``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+.. __installation_du_serveur_bitwarden:
+
+Installation du serveur Bitwarden
+---------------------------------
+
+Tout d’abord, il faut récupèrer sur le site de bitwarden une clé
+gratuite d’installation. Allez sur
+`Bitwarden <https://bitwarden.com/host/>`__.
+
+Récupérez l’id et la clé. Par exemple:
+
+::
+
+   Installation Id: fa933c4f-377f-4b5c-439f-aed410d385cf
+   Installation Key: ZKFy8njSlaRwjtYHyJaI
+
+Ensuite ouvrez un terminer et:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Allez dans le répertoire de root
+
+3.  Téléchargez Bitwarden. Tapez:
+
+    .. code:: bash
+
+       curl -Lso bitwarden.sh https://go.btwrdn.co/bw-sh
+       chmod +x bitwarden.sh
+
+4.  Installez ensuite Bitwarden. Tapez:
+
+    .. code:: bash
+
+       ./bitwarden.sh install
+
+5.  répondez aux questions suivantes:
+
+    -  ``Enter the domain name for your Bitwarden instance`` ← Tapez
+       votre nom de domaine ``bitwarden.example.com``
+
+    -  ``Do you want to use Let’s Encrypt to generate a free SSL certificate?``
+       ← 'n'
+
+    -  ``Enter your installation id`` ← tapez le ``Installation Id``
+       récupéré
+
+    -  ``Enter your installation key`` ← tapez le ``Installation Key``
+       récupéré
+
+    -  ``Do you have a SSL certificate to use?`` ← ``n``
+
+    -  ``Do you want to generate a self-signed SSL certificate?`` ←
+       ``n``
+
+6.  Bitwarden vous prévient que vous devez mettre un reverse proxy en
+    frontal. C’est ce que nous allons maintenant faire.
+
+7.  Editez le fichier ``./bwdata/config.yml``. Tapez:
+
+    .. code:: bash
+
+       vi ./bwdata/config.yml
+
+8.  Cherchez ``http_port``, remplacez ``80`` par ``1280``
+
+9.  Cherchez ``https_port``, remplacez ``443`` par ``12443``
+
+10. Cherchez ``database_docker_volume``, remplacez ``false`` par
+    ``true``
+
+11. Sauvegardez
+
+12. Mettez la configuration à jour. Tapez:
+
+    .. code:: bash
+
+       ./bitwarden.sh updateconf
+
+13. Il faut maintenant éditer le fichier ``global.override.env`` généré.
+    Tapez:
+
+    .. code:: bash
+
+       vi bwdata/env/global.override.env
+
+14. Dans ce fichier, rechercher les chaines ``http://`` et replacez les
+    toutes par ``https://``
+
+15. Toujours dans ce fichier, remplissez le pavé suivant:
+
+    ::
+
+       globalSettings__mail__replyToEmail=no-reply@example.com 
+       globalSettings__mail__smtp__host=mail.example.com 
+       globalSettings__mail__smtp__port=587
+       globalSettings__mail__smtp__ssl=false
+       globalSettings__mail__smtp__username=username 
+       globalSettings__mail__smtp__password=password 
+
+    -  remplacez ``example.com`` par votre nom de domaine principal
+
+    -  replacez ``username`` par un mail valide d’administration que
+       vous avez déjà créé par exemple: ``admin@example.com``
+
+    -  replacez ``password`` par un mot de passe valide associé à votre
+       mail
+
+16. Démarrez Bitwarden. Tapez:
+
+    .. code:: bash
+
+       ./bitwarden.sh start
+
+17. Créez un service systemd pour lancer automatiquement bitwarden au
+    boot.
+
+18. Tapez:
+
+    .. code:: bash
+
+       vi /etc/systemd/system/bitwarden.service
+
+19. Dans l’éditeur qui s’ouvre, collez le texte suivant:
+
+    .. code:: systemd
+
+       [Unit]
+       Description=Bitwarden
+       Requires=docker.service
+       After=docker.service
+
+       [Service]
+       Type=oneshot
+       User=bitwarden
+       Group=bitwarden
+       ExecStart=<your-install-directory>/bitwarden.sh start 
+       ExecStop=<your-install-directory>/bitwarden.sh stop 
+       RemainAfterExit=true
+
+       [Install]
+       WantedBy=multi-user.target
+
+    -  remplacez ``<your-install-directory>`` par le répertoire ou se
+       trouve le script ``bitwarden.sh``. Si vous avez suivi cette
+       procédure, il se trouve dans ``/root``
+
+20. Sauvez et quittez
+
+21. Tapez ensuite:
+
+    .. code:: bash
+
+       chmod 644 /etc/systemd/system/bitwarden.service
+       systemctl daemon-reload
+       systemctl enable bitwarden.service
+
+.. __création_du_site_web_de_bitwarden:
+
+Création du site web de Bitwarden
+---------------------------------
+
+Appliquez la procédure suivante:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``bitwarden``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``bitwarden``.
+
+   b. Le faire pointer vers le web folder ``bitwarden``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
+
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
+
+         # bitwarden httpserver
+         #
+
+         SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         ProxyPreserveHost    On
+
+         ProxyPass / http://localhost:1280/
+         ProxyPassReverse / http://localhost:1280/
+
+         RedirectMatch ^/$ https://bitwarden.example.com
+
+.. __configuration_du_site_bitwarden:
+
+Configuration du site bitwarden
+-------------------------------
+
+Votre site web ``Bitwarden`` est installé et opérationnel.
+
+Pointez votre navigateur sur votre site web ``bitwarden``
+
+Créez un compte avec votre login et choisissez un mot de passe. Sur
+votre smartphone on dans votre navigateur, configurez Bitwarden pour
+pointer vers votre serveur en y configurant l’URL:
+``https://bitwarden.example.com``
+
+Tout est prêt!
 
 .. __installation_du_système_de_partage_de_fichiers_seafile:
 

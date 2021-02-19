@@ -65,6 +65,9 @@ Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentat
 <simpara>un outil de Monitoring <link xl:href="http://mmonit.com/monit/">Monit</link>,</simpara>
 </listitem>
 <listitem>
+<simpara>L&#8217;installation de <link xl:href="https://hub.docker.com/">Docker</link> et des outils <link xl:href="https://portainer.io">Portainer</link> et <link xl:href="https://yacht.sh">Yacht</link>,</simpara>
+</listitem>
+<listitem>
 <simpara>un sous domaine pointant sur un site auto-hébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <link xl:href="https://yunohost.org">Yunohost</link>),</simpara>
 </listitem>
 <listitem>
@@ -90,6 +93,9 @@ Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentat
 </listitem>
 <listitem>
 <simpara>un site <link xl:href="https://gitea.io">Gitea</link> et son repository GIT,</simpara>
+</listitem>
+<listitem>
+<simpara>un serveur de mots de passe <link xl:href="https://bitwarden.com/">Bitwarden</link>,</simpara>
 </listitem>
 <listitem>
 <simpara>un serveur et un site  de partage de fichiers <link xl:href="https://www.seafile.com">Seafile</link>,</simpara>
@@ -2289,6 +2295,8 @@ chmod a+x certbot-auto
 </listitem>
 </orderedlist>
 </section>
+<section xml:id="_scan_des_vulnérabilités">
+<title>Scan des vulnérabilités</title>
 <section xml:id="_installation_dun_scanner_de_vulnérabilités_lynis">
 <title>Installation d&#8217;un scanner de vulnérabilités Lynis</title>
 <simpara>Suivez la procédure suivante:</simpara>
@@ -2318,6 +2326,14 @@ git clone https://github.com/CISOfy/lynis</programlisting>
 <simpara>L&#8217;outil vous listera dans une forme très synthétique la liste des vulnérabilités et des améliorations de sécurité à appliquer.</simpara>
 </listitem>
 </orderedlist>
+</section>
+<section xml:id="_installation_et_utilisation_de_nmap">
+<title>Installation et utilisation de NMAP</title>
+<simpara>nmap -A -T4 example.com</simpara>
+<simpara>whatweb -a 3 cogen.apiou.org</simpara>
+<simpara>nikto -h apiou.org</simpara>
+<simpara>docker run -it -d --name zap -u zap -p 8080:8080 -p 8091:8090 -i owasp/zap2docker-stable zap-webswing.sh</simpara>
+</section>
 </section>
 </section>
 <section xml:id="_installation_dun_panel">
@@ -4767,8 +4783,8 @@ rm secretdst</screen>
 </section>
 <section xml:id="_installation_de_docker_et_des_outils_associés">
 <title>Installation de Docker et des outils associés</title>
-<simpara>Le logiciel « Docker » est une technologie de conteneurisation qui permet la création et l&#8217;utilisation de conteneurs Linux.
-En clair, Docker permet d&#8217;installer et de configurer rapidement toute une appli web complexe dans un environnement isolé et avec tout son échosystème de bibliothèques logicielles spécifiques.</simpara>
+<simpara>Le logiciel <literal>Docker</literal> est une technologie de conteneurisation qui permet la création et l&#8217;utilisation de conteneurs Linux.
+En clair, <literal>Docker</literal> permet d&#8217;installer et de configurer rapidement toute une appli web complexe dans un environnement isolé et avec tout son échosystème de bibliothèques logicielles spécifiques.</simpara>
 <simpara>Il est ainsi possible d&#8217;effectuer rapidement des installations, de suivre des mises à jours et d&#8217;isoler ces environnements du système principal.</simpara>
 <section xml:id="_a_propos_des_raspberry_pi">
 <title>A propos des Raspberry Pi</title>
@@ -5096,7 +5112,7 @@ ProxyRequests Off
 ProxyPass /stats !
 ProxyPass /.well-known/acme-challenge !
 
-# yacht httpserver
+# portainer httpserver
 #
 
 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
@@ -6387,6 +6403,257 @@ SSH_PORT = 2222 <co xml:id="CO54-1"/></programlisting>
 </orderedlist>
 </section>
 </section>
+<section xml:id="_installation_de_bitwarden">
+<title>Installation de Bitwarden</title>
+<simpara>le logiciel <literal>Bitwarden</literal> est un gestionnaire de mots de passe relativement complet et gratuit. Il peut être installé sur votre serveur VPS de manière indépendante de l&#8217;éditeur Bitwarden.</simpara>
+<simpara>Il reste cependant un bémol puisque l&#8217;installation s&#8217;effectue à l&#8217;aide de containers dockers qui sont eux générés par l&#8217;éditeur de <literal>bitwarden</literal>.</simpara>
+<section xml:id="_prérequis">
+<title>Prérequis</title>
+<simpara>Il vous faudra tout d&#8217;abord installer <literal>docker</literal> en vous référant au chapitre qui y est consacré.
+Ensuite il faut créer une entrée DNS:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans ISPConfig dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>bitwarden</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_installation_du_serveur_bitwarden">
+<title>Installation du serveur Bitwarden</title>
+<simpara>Tout d&#8217;abord, il faut récupèrer sur le site de bitwarden une clé gratuite d&#8217;installation.
+Allez sur <link xl:href="https://bitwarden.com/host/">Bitwarden</link>.</simpara>
+<simpara>Récupérez l&#8217;id et la clé. Par exemple:</simpara>
+<screen linenumbering="unnumbered">Installation Id: fa933c4f-377f-4b5c-439f-aed410d385cf
+Installation Key: ZKFy8njSlaRwjtYHyJaI</screen>
+<simpara>Ensuite ouvrez un terminer et:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans le répertoire de root</simpara>
+</listitem>
+<listitem>
+<simpara>Téléchargez Bitwarden. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">curl -Lso bitwarden.sh https://go.btwrdn.co/bw-sh
+chmod +x bitwarden.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Installez ensuite Bitwarden. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">./bitwarden.sh install</programlisting>
+</listitem>
+<listitem>
+<simpara>répondez aux questions suivantes:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Enter the domain name for your Bitwarden instance</literal> &#8592; Tapez votre nom de domaine <literal>bitwarden.example.com</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Do you want to use Let&#8217;s Encrypt to generate a free SSL certificate?</literal> &#8592; 'n'</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Enter your installation id</literal> &#8592; tapez le <literal>Installation Id</literal> récupéré</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Enter your installation key</literal> &#8592; tapez le <literal>Installation Key</literal> récupéré</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Do you have a SSL certificate to use?</literal> &#8592; <literal>n</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>Do you want to generate a self-signed SSL certificate?</literal> &#8592; <literal>n</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Bitwarden vous prévient que vous devez mettre un reverse proxy en frontal. C&#8217;est ce que nous allons maintenant faire.</simpara>
+</listitem>
+<listitem>
+<simpara>Editez le fichier <literal>./bwdata/config.yml</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi ./bwdata/config.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Cherchez <literal>http_port</literal>, remplacez <literal>80</literal> par <literal>1280</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cherchez <literal>https_port</literal>, remplacez <literal>443</literal> par <literal>12443</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cherchez <literal>database_docker_volume</literal>, remplacez <literal>false</literal> par <literal>true</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Sauvegardez</simpara>
+</listitem>
+<listitem>
+<simpara>Mettez la configuration à jour. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">./bitwarden.sh updateconf</programlisting>
+</listitem>
+<listitem>
+<simpara>Il faut maintenant éditer le fichier <literal>global.override.env</literal> généré. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi bwdata/env/global.override.env</programlisting>
+</listitem>
+<listitem>
+<simpara>Dans ce fichier, rechercher les chaines <literal>http://</literal> et replacez les toutes par <literal>https://</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Toujours dans ce fichier, remplissez le pavé suivant:</simpara>
+<screen linenumbering="unnumbered">globalSettings__mail__replyToEmail=no-reply@example.com <co xml:id="CO55-1"/>
+globalSettings__mail__smtp__host=mail.example.com <co xml:id="CO55-2"/>
+globalSettings__mail__smtp__port=587
+globalSettings__mail__smtp__ssl=false
+globalSettings__mail__smtp__username=username <co xml:id="CO55-3"/>
+globalSettings__mail__smtp__password=password <co xml:id="CO55-4"/></screen>
+<calloutlist>
+<callout arearefs="CO55-1 CO55-2">
+<para>remplacez <literal>example.com</literal> par votre nom de domaine principal</para>
+</callout>
+<callout arearefs="CO55-3">
+<para>replacez <literal>username</literal> par un mail valide d&#8217;administration que vous avez déjà créé par exemple: <literal>admin@example.com</literal></para>
+</callout>
+<callout arearefs="CO55-4">
+<para>replacez <literal>password</literal> par un mot de passe valide associé à votre mail</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Démarrez Bitwarden. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">./bitwarden.sh start</programlisting>
+</listitem>
+<listitem>
+<simpara>Créez un service systemd pour lancer automatiquement bitwarden au boot.</simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/systemd/system/bitwarden.service</programlisting>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;éditeur  qui s&#8217;ouvre, collez le texte suivant:</simpara>
+<programlisting language="systemd" linenumbering="unnumbered">[Unit]
+Description=Bitwarden
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+User=bitwarden
+Group=bitwarden
+ExecStart=&lt;your-install-directory&gt;/bitwarden.sh start <co xml:id="CO56-1"/>
+ExecStop=&lt;your-install-directory&gt;/bitwarden.sh stop <co xml:id="CO56-2"/>
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target</programlisting>
+<calloutlist>
+<callout arearefs="CO56-1 CO56-2">
+<para>remplacez <literal>&lt;your-install-directory&gt;</literal> par le répertoire ou se trouve le script <literal>bitwarden.sh</literal>. Si vous avez suivi cette procédure, il se trouve dans <literal>/root</literal></para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Sauvez et quittez</simpara>
+</listitem>
+<listitem>
+<simpara>Tapez ensuite:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 644 /etc/systemd/system/bitwarden.service
+systemctl daemon-reload
+systemctl enable bitwarden.service</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_du_site_web_de_bitwarden">
+<title>Création du site web de Bitwarden</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>bitwarden</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>bitwarden</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>bitwarden</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">&lt;Proxy *&gt;
+Order deny,allow
+Allow from all
+&lt;/Proxy&gt;
+
+ProxyRequests Off
+ProxyPass /stats !
+ProxyPass /.well-known/acme-challenge !
+
+# bitwarden httpserver
+#
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPreserveHost    On
+
+ProxyPass / http://localhost:1280/
+ProxyPassReverse / http://localhost:1280/
+
+RedirectMatch ^/$ https://bitwarden.example.com</programlisting>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_du_site_bitwarden">
+<title>Configuration du site bitwarden</title>
+<simpara>Votre site web <literal>Bitwarden</literal> est installé et opérationnel.</simpara>
+<simpara>Pointez votre navigateur sur votre site web <literal>bitwarden</literal></simpara>
+<simpara>Créez un compte avec votre login et choisissez un mot de passe.
+Sur votre smartphone on dans votre navigateur, configurez Bitwarden pour pointer vers votre serveur en y configurant l&#8217;URL: <literal><link xl:href="https://bitwarden.example.com">https://bitwarden.example.com</link></literal></simpara>
+<simpara>Tout est prêt!</simpara>
+</section>
+</section>
 <section xml:id="_installation_du_système_de_partage_de_fichiers_seafile">
 <title>Installation du système de partage de fichiers Seafile</title>
 <simpara>Seafile est un système de partage de fichier simple et efficace écrit en Python. Il existe des clients de connexion pour Windows, Linux, Android, IOS.</simpara>
@@ -6554,7 +6821,7 @@ pip3 install --timeout=3600 Pillow pylibmc captcha jinja2 sqlalchemy psd-tools d
 </listitem>
 <listitem>
 <simpara>Je préfère faire tourner mes serveurs dans le répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private <co xml:id="CO55-1"/>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private <co xml:id="CO57-1"/>
 mkdir seafile
 cd seafile
 wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz
@@ -6564,12 +6831,12 @@ mv seafile-server_* installed
 cd seafile-server-*
 ./setup-seafile-mysql.sh
 cd ../..
-chown -R web1:client0 seafile <co xml:id="CO55-2"/></programlisting>
+chown -R web1:client0 seafile <co xml:id="CO57-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO55-1">
+<callout arearefs="CO57-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
-<callout arearefs="CO55-2">
+<callout arearefs="CO57-2">
 <para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
 </calloutlist>
@@ -6594,10 +6861,10 @@ chown -R web1:client0 seafile <co xml:id="CO55-2"/></programlisting>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>allez dans le répertoire contenant les configurations et éditez <literal>gunicorn.conf</literal>. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile/conf <co xml:id="CO56-1"/>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile/conf <co xml:id="CO58-1"/>
 vi gunicorn.conf</programlisting>
 <calloutlist>
-<callout arearefs="CO56-1">
+<callout arearefs="CO58-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -6621,9 +6888,9 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>modifier l&#8217;entrée SERVICE_URL. Le fichier doit contenir ceci:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com <co xml:id="CO57-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com <co xml:id="CO59-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO57-1">
+<callout arearefs="CO59-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -6634,23 +6901,23 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>modifier l&#8217;entrée FILE_SERVER_ROOT. Le fichier doit contenir ceci:</simpara>
-<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp' <co xml:id="CO58-1"/></programlisting>
+<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp' <co xml:id="CO60-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO58-1">
+<callout arearefs="CO60-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Démarrez Seafile. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile/seafile-server-latest <co xml:id="CO59-1"/>
-sudo -u web1 ./seafile.sh start <co xml:id="CO59-2"/>
-sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO59-3"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile/seafile-server-latest <co xml:id="CO61-1"/>
+sudo -u web1 ./seafile.sh start <co xml:id="CO61-2"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO61-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO59-1">
+<callout arearefs="CO61-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
-<callout arearefs="CO59-2 CO59-3">
+<callout arearefs="CO61-2 CO61-3">
 <para>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <literal>Options</literal>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</para>
 </callout>
 </calloutlist>
@@ -6686,12 +6953,12 @@ sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO59-3"/></programlisting>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Créer un script de lancement automatique. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile <co xml:id="CO60-1"/>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile <co xml:id="CO62-1"/>
 touch startseafile.sh
 chmod +x startseafile.sh
 vi startseafile.sh</programlisting>
 <calloutlist>
-<callout arearefs="CO60-1">
+<callout arearefs="CO62-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -6701,7 +6968,7 @@ vi startseafile.sh</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/bash
 
 # Change the value of "seafile_dir" to your path of seafile installation
-seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO61-1"/>
+seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO63-1"/>
 script_path=${seafile_dir}/seafile-server-latest
 seafile_init_log=${seafile_dir}/logs/seafile.init.log
 seahub_init_log=${seafile_dir}/logs/seahub.init.log
@@ -6733,7 +7000,7 @@ exit 1
 ;;
 esac</programlisting>
 <calloutlist>
-<callout arearefs="CO61-1">
+<callout arearefs="CO63-1">
 <para>remplacer example.com par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -6879,9 +7146,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:3100/
 ProxyPassReverse / http://localhost:3100/
 
-RedirectMatch ^/$ https://grafana.example.com <co xml:id="CO62-1"/></programlisting>
+RedirectMatch ^/$ https://grafana.example.com <co xml:id="CO64-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO62-1">
+<callout arearefs="CO64-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -7364,9 +7631,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez en première ligne du fichier :</simpara>
-<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO63-1"/></screen>
+<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO65-1"/></screen>
 <calloutlist>
-<callout arearefs="CO63-1">
+<callout arearefs="CO65-1">
 <para>remplacez SERVERIPADDRESS par l&#8217;adresse IP affichée plus tôt.</para>
 </callout>
 </calloutlist>
@@ -7389,9 +7656,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Puis tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO64-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO66-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO64-1">
+<callout arearefs="CO66-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
 </calloutlist>
@@ -7419,13 +7686,13 @@ chmod 700 borgbackup</programlisting>
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO65-1"/>
-cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO65-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO67-1"/>
+cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO67-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO65-1">
+<callout arearefs="CO67-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
-<callout arearefs="CO65-2">
+<callout arearefs="CO67-2">
 <para>si votre machine est assez puissante, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</para>
 </callout>
 </calloutlist>
@@ -7454,10 +7721,10 @@ cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;st
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO66-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO68-1"/>
 borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO66-1">
+<callout arearefs="CO68-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -7486,10 +7753,10 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</progra
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO67-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO69-1"/>
 borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
 <calloutlist>
-<callout arearefs="CO67-1">
+<callout arearefs="CO69-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -7500,9 +7767,9 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 </listitem>
 <listitem>
 <simpara>vous pouvez maintenant vérifier un de vos backup en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO68-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO70-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO68-1">
+<callout arearefs="CO70-1">
 <para>le nom de sauvegarde est récupéré en utilisant la commande borglist.sh</para>
 </callout>
 </calloutlist>
@@ -7524,10 +7791,10 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 <simpara>Insérez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO69-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO71-1"/>
 borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
 <calloutlist>
-<callout arearefs="CO69-1">
+<callout arearefs="CO71-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -7582,13 +7849,13 @@ rmdir /mnt/borgbackup</programlisting>
 # - une archive par mois pour les 6 derniers mois.
 
 
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO70-1"/>
-borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO70-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO72-1"/>
+borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO72-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO70-1">
+<callout arearefs="CO72-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
-<callout arearefs="CO70-2">
+<callout arearefs="CO72-2">
 <para>Le nettoyage des sauvegardes va conserver 7 sauvegardes journalières, 4 à la semaine et 12 au mois</para>
 </callout>
 </calloutlist>
@@ -7665,10 +7932,10 @@ pip3 install borgbackup</programlisting>
 <listitem>
 <simpara>Munissez vous du mot de passe &lt;mot_passe&gt; des archives borg et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO71-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO73-1"/>
 borg list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO71-1">
+<callout arearefs="CO73-1">
 <para>remplacez mot_passe par votre mot de passe de borg</para>
 </callout>
 </calloutlist>
@@ -7697,13 +7964,13 @@ chroot . bash
 mkdir -p dev proc run sys tmp
 mount -t devtmpfs dev /dev
 mount -t proc proc /proc
-grub_install /dev/sda <co xml:id="CO72-1"/>
+grub_install /dev/sda <co xml:id="CO74-1"/>
 umount /proc
 umount /dev
 sync
 exit</programlisting>
 <calloutlist>
-<callout arearefs="CO72-1">
+<callout arearefs="CO74-1">
 <para>tapez ici le nom de device de votre disque de boot</para>
 </callout>
 </calloutlist>
@@ -7776,7 +8043,7 @@ vi config.py</programlisting>
 
     BACKUP_REPOS = {
         # Repo  name
-        "example.com": { <co xml:id="CO73-1"/>
+        "example.com": { <co xml:id="CO75-1"/>
             # Repo absolute path
             "repo_path": "/home/borgbackup/borgbackup",
 
@@ -7784,7 +8051,7 @@ vi config.py</programlisting>
             "log_path": "/var/log/borg/",
 
             # Repo password
-            "repo_pwd": "your_password", <co xml:id="CO73-2"/>
+            "repo_pwd": "your_password", <co xml:id="CO75-2"/>
 
             # Command/script to run to manually start a backup.
             # If left empty or not specified, the backup won't be
@@ -7796,10 +8063,10 @@ vi config.py</programlisting>
         }
     }</programlisting>
 <calloutlist>
-<callout arearefs="CO73-2">
+<callout arearefs="CO75-2">
 <para>Insérez ici le mot de passe du dépot Borg Backup</para>
 </callout>
-<callout arearefs="CO73-1">
+<callout arearefs="CO75-1">
 <para>Mettez ici le nom de votre domaine sauvegardé</para>
 </callout>
 </calloutlist>
@@ -7917,9 +8184,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:5000/
 ProxyPassReverse / http://localhost:5000/
 
-RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO74-1"/></programlisting>
+RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO76-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO74-1">
+<callout arearefs="CO76-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -8020,9 +8287,9 @@ SSLProxyVerify none # Comment this out if no https required
 ProxyPass / https://localhost:8070/
 ProxyPassReverse / https://localhost:8070/
 
-RedirectMatch ^/$ https://pritunl.example.com <co xml:id="CO75-1"/></programlisting>
+RedirectMatch ^/$ https://pritunl.example.com <co xml:id="CO77-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO75-1">
+<callout arearefs="CO77-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -8370,9 +8637,9 @@ ProxyPreserveHost    On
 ProxyPass /guacamole http://localhost:8085/guacamole
 ProxyPassReverse /guacamole http://localhost:8085/guacamole
 
-RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO76-1"/></programlisting>
+RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO78-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO76-1">
+<callout arearefs="CO78-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -8462,11 +8729,11 @@ RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO76-1"/></programli
 </listitem>
 <listitem>
 <simpara>tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO77-1"/>
+<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO79-1"/>
 tar xfz guacamole-server.tar.gz
 cd guacamole-server-*</programlisting>
 <calloutlist>
-<callout arearefs="CO77-1">
+<callout arearefs="CO79-1">
 <para>insérez ici l&#8217;adresse du package serveur à charger</para>
 </callout>
 </calloutlist>
@@ -8531,24 +8798,24 @@ systemctl start guacd</programlisting>
 <simpara>Téléchargez le dernier client <literal>war</literal> de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>. Récupérez le lien puis tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /usr/local/share/guacamole
 cd /usr/local/share/guacamole
-curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO78-1"/>
-ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ <co xml:id="CO78-2"/>
-systemctl restart tomcat8 <co xml:id="CO78-3"/>
+curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO80-1"/>
+ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ <co xml:id="CO80-2"/>
+systemctl restart tomcat8 <co xml:id="CO80-3"/>
 systemctl restart guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO78-1">
+<callout arearefs="CO80-1">
 <para>insérez ici l&#8217;adresse du war à charger</para>
 </callout>
-<callout arearefs="CO78-2 CO78-3">
+<callout arearefs="CO80-2 CO80-3">
 <para>ou tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Editez le fichier server.xml. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /etc/tomcat8/server.xml <co xml:id="CO79-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/tomcat8/server.xml <co xml:id="CO81-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO79-1">
+<callout arearefs="CO81-1">
 <para>ou tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
@@ -8567,12 +8834,12 @@ mkdir -p /etc/guacamole/{extensions,lib}</programlisting>
 </listitem>
 <listitem>
 <simpara>Il se peut que ce driver ne soit pas présent: allez sur le site <link xl:href="https://dev.mysql.com/downloads/connector/j/">Mysql</link> et téléchargez la version Platform independant. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o mysql-java.tar.gz 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz' <co xml:id="CO80-1"/>
+<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o mysql-java.tar.gz 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz' <co xml:id="CO82-1"/>
 tar xfz mysql-java.tar.gz
 cd mysql-connector-java-*
 cp mysql-connector-java-*.jar /etc/guacamole/lib/mysql-connector-java.jar</programlisting>
 <calloutlist>
-<callout arearefs="CO80-1">
+<callout arearefs="CO82-1">
 <para>Collez ici le lien récupéré sur le site de Mysql.</para>
 </callout>
 </calloutlist>
@@ -8585,11 +8852,11 @@ cp mysql-connector-java-*.jar /etc/guacamole/lib/mysql-connector-java.jar</progr
 <simpara>Ajoutez dans le fichier:</simpara>
 <screen linenumbering="unnumbered">mysql-hostname: localhost
 mysql-port: 3306
-mysql-database: cxguacamole <co xml:id="CO81-1"/>
-mysql-username: cxguacamole <co xml:id="CO81-2"/>
-mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO81-3"/></screen>
+mysql-database: cxguacamole <co xml:id="CO83-1"/>
+mysql-username: cxguacamole <co xml:id="CO83-2"/>
+mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO83-3"/></screen>
 <calloutlist>
-<callout arearefs="CO81-1 CO81-2 CO81-3">
+<callout arearefs="CO83-1 CO83-2 CO83-3">
 <para>mettez ici le nom de la base de données, le nom de l&#8217;utilisateur de la base et son mot_de_passe tels qu&#8217;ils ont été saisis dans le chapitre de création de la base de données.</para>
 </callout>
 </calloutlist>
@@ -8597,13 +8864,13 @@ mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO81-3"/></screen>
 <listitem>
 <simpara>Vous devez maintenant télécharger les plugins mysql pour Guacamole. Allez sur le site web de guacamole et récupérez le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement de guacamole-auth-jdbc</link>. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz' <co xml:id="CO82-1"/>
+curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz' <co xml:id="CO84-1"/>
 tar xfz guacamole-auth-jdbc.tar.gz
 cd guacamole-auth-jdbc-*/mysql
 cp guacamole-auth-jdbc-mysql-*.jar /usr/local/share/guacamole/
 ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/extensions</programlisting>
 <calloutlist>
-<callout arearefs="CO82-1">
+<callout arearefs="CO84-1">
 <para>insérez ici l&#8217;adresse du fichier guacamole-auth-jdbc à charger</para>
 </callout>
 </calloutlist>
@@ -8611,19 +8878,19 @@ ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/
 <listitem>
 <simpara>Créez les tables de la base:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd schema
-cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO83-1"/></programlisting>
+cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO85-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO83-1">
+<callout arearefs="CO85-1">
 <para>mettez derrière le <literal>-u</literal> le nom d&#8217;utilisateur de la base de données et derrière le <literal>-p</literal> le nom de la base de données. Un mot de passe vous sera demandé.</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Redémarrez tomcat et guacd. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl restart tomcat8 <co xml:id="CO84-1"/>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart tomcat8 <co xml:id="CO86-1"/>
 systemctl restart guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO84-1">
+<callout arearefs="CO86-1">
 <para>ou mettre tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
