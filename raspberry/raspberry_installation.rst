@@ -1742,7 +1742,7 @@ Mailman.
 
       .. code:: bash
 
-         apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell  php-sqlite3 php-tidy php-xmlrpc memcached php-memcache php-imagick php-zip php-mbstring libapache2-mod-passenger php-soap php-fpm php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron goaccess php-gettext php-recode php-opcache php-xsl xz-utils lzip unrar jailkit
+         apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell  php-sqlite3 php-tidy php-xmlrpc memcached php-memcache php-imagick php-zip php-mbstring libapache2-mod-passenger php-soap php-fpm php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron goaccess php-gettext php-recode php-opcache php-xsl xz-utils lzip unrar jailkit libapache2-mod-perl2 libapache2-reload-perl libbsd-resource-perl libdevel-symdump-perl php7.3-xsl
 
       .. note::
 
@@ -5124,6 +5124,219 @@ Suivez la procédure suivante:
       rm secretsrc
       rm secretdst
 
+.. __remplacer_apache_par_nginx:
+
+Remplacer apache par nginx
+==========================
+
+Nous allons voir comment remplacer apache par nginx. Il y a quelques
+différences entre apache et nginx, il se peut donc que vous deviez
+ajuster certains paramètres pour vos sites web.
+
+Par exemple:
+
+-  nginx ne prend pas en charge les fichiers .htaccess.
+
+-  nginx n’utilise pas les différents modules d’Apache comme
+   mod_rewrite.
+
+Vous pouvez utiliser différents convertisseurs en ligne comme
+`winginx.com <https://winginx.com/en/htaccess>`__ pour réécrire les
+configurations d’apache à nginx. Mais gardez à l’esprit, qu’il n’est pas
+garanti que le convertisseur fonctionne sans aucune erreur. C’est le cas
+notamment pour les commandes ``Proxypass``
+
+Si vous changez le serveur web dans ISPConfig d’apache à nginx, vous ne
+pouvez pas voir vos directives apache supplémentaires dans l’interface
+(mais elles sont toujours dans la base de données). Vous pouvez
+parcourir tous vos sites web et écrire les directives ou les récupérer
+de la base de données en utilisant **phpmyadmin** ou **mysql** avec
+cette commande sql :
+
+.. code:: sql
+
+   SELECT domaine, apache_directives FROM web_domain WHERE apache_directives != '';
+
+Pour trouver tous les fichiers ``.htaccess`` à convertir, vous pouvez
+exécuter la commande suivante :
+
+.. code:: bash
+
+   find /var/www/clients/ -name .htaccess -not -path "*/stats/*"
+
+Les étapes sont les suivantes:
+
+1.  installez nginx
+
+    .. code:: bash
+
+       apt-get install nginx
+
+2.  installez php-fpm
+
+    .. code:: bash
+
+       apt-get install php-fpm
+
+3.  Assurez vous que /etc/php7/fpm/php.ini contient:
+
+    .. code:: php
+
+       cgi.fix_pathinfo=0
+       date.timezone=”Europe/Berlin”
+
+4.  Redémarrez php-fpm en tapant:
+
+    .. code:: bash
+
+       /etc/init.d/php5-fpm reload
+
+5.  Maintenant nginx est installé mais apache est toujours votre serveur
+    web actif.
+
+6.  Activez le mode Maintenance:
+
+    -  Activez le mode maintenance dans ISPConfig sous Système /
+       Mainconfig dans l’onglet Misc pour empêcher les changements
+       pendant la migration.
+
+7.  passer à nginx dans ISPConfig:
+
+    -  Connectez-vous en tant que root dans phpmyadmin, ouvrez la base
+       de données dbispconfig, sélectionnez la table server et éditez le
+       serveur.
+
+    -  Faites défiler jusqu’à ``config`` et trouvez la ligne
+       ``[global]`` finden. Dans la ligne suivante, remplacez:
+
+       ::
+
+          webserver=apache
+
+       par
+
+       ::
+
+          webserver=nginx
+
+    -  Descendez encore plus bas jusqu’à la ligne ``[web]`` et changez
+       la ligne suivante de :
+
+       ::
+
+          server_type=apache
+
+       à
+
+       ::
+
+          server_type=nginx
+
+8.  Créez ``ispconfig.vhost`` dans ``/etc/nginx/sites-available``.
+    Tapez:
+
+    .. code:: bash
+
+       vi /etc/nginx/sites-avalaible/ispconfig.vhost
+
+9.  Et ajoutez le contenu suivant :
+
+    -  avec du SSL:
+
+       ::
+
+          server {
+              listen 8080;
+                  ssl on;
+                  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+                  ssl_certificate /usr/local/ispconfig/interface/ssl/ispserver.crt;
+                  ssl_certificate_key /usr/local/ispconfig/interface/ssl/ispserver.key;
+              server_name _;
+              root /usr/local/ispconfig/interface/web/;
+              client_max_body_size 20M;
+              location / {
+                  index index.php index.html;
+              }
+
+          # serve static files directly
+              location ~* ^.+.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt)$ {
+                  access_log off;
+              }
+              location ~ \.php$ {
+                  try_files $uri =404;
+                  include /etc/nginx/fastcgi_params;
+                  fastcgi_pass unix:/var/lib/php5-fpm/ispconfig.sock;
+                  fastcgi_index index.php;
+                  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                  #fastcgi_param PATH_INFO $fastcgi_script_name;
+                  fastcgi_buffer_size 128k;
+                  fastcgi_buffers 256 4k;
+                  fastcgi_busy_buffers_size 256k;
+                  fastcgi_temp_file_write_size 256k;
+              }
+
+              location ~ /\. {
+                  deny all;
+              }
+          }
+
+    -  Sans du SSL:
+
+       ::
+
+          server {
+              listen 8080;
+                  ssl off;
+              server_name _;
+              root /usr/local/ispconfig/interface/web/;
+              client_max_body_size 20M;
+              location / {
+                  index index.php index.html;
+              }
+
+          # serve static files directly
+              location ~* ^.+.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt)$ {
+                  access_log off;
+              }
+              location ~ \.php$ {
+                  try_files $uri =404;
+                  include /etc/nginx/fastcgi_params;
+                  fastcgi_pass unix:/var/lib/php5-fpm/ispconfig.sock;
+                  fastcgi_index index.php;
+                  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                  #fastcgi_param PATH_INFO $fastcgi_script_name;
+                  fastcgi_buffer_size 128k;
+                  fastcgi_buffers 256 4k;
+                  fastcgi_busy_buffers_size 256k;
+                  fastcgi_temp_file_write_size 256k;
+              }
+              location ~ /\. {
+                  deny all;
+              }
+          }
+
+10. Créez le lien symbolique en tapant:
+
+    .. code:: bash
+
+       ln -s /etc/nginx/sites-available/ispconfig.vhost /etc/nginx/sites-enabled/000-ispconfig.vhost
+
+11. Ajustez les sites web. Désactivez le mode Maintenance et
+    convertissez les ``htaccess-file`` et ``apache-directives``
+    existants. Insérez les nouvelles valeurs dans l’interface web de
+    chaque site web.
+
+12. Si vous n’avez pas modifié tous les sites web, exécutez l’outil
+    ``resyn-tool`` pour les sites web.
+
+13. Désactivez apache et démarrez nginx. Tapez:
+
+    .. code:: bash
+
+       /etc/init.d/apache2 stop
+       update-rc.d -f apache2 remove
+       /etc/init.d/nginx start
+
 .. __installation_de_docker_et_des_outils_associés:
 
 Installation de Docker et des outils associés
@@ -6671,175 +6884,42 @@ Prérequis
 ---------
 
 Il vous faudra tout d’abord installer ``docker`` en vous référant au
-chapitre qui y est consacré. Ensuite il faut créer une entrée DNS:
-
-1. Allez dans ISPConfig dans la rubrique ``DNS``, sélectionnez le menu
-   ``Zones``, Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
-
-   a. Cliquez sur ``A`` et saisissez:
-
-      -  ``Hostname:`` ← Tapez ``bitwarden``
-
-      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
-         de votre serveur
-
-   b. Cliquez sur ``Save``
+chapitre qui y est consacré.
 
 .. __installation_du_serveur_bitwarden:
 
 Installation du serveur Bitwarden
 ---------------------------------
 
-Tout d’abord, il faut récupèrer sur le site de bitwarden une clé
-gratuite d’installation. Allez sur
-`Bitwarden <https://bitwarden.com/host/>`__.
+Nous allons installer Bitwarden_rs qui est la version libre de bitwarden
+et compatible avec les APIs. Cette version est plus complète que la
+version officielle, consomme moins de ressources et est plus rapide.
 
-Récupérez l’id et la clé. Par exemple:
+Ouvrez un terminal et suivez la procédure:
 
-::
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-   Installation Id: fa933c4f-377f-4b5c-439f-aed410d385cf
-   Installation Key: ZKFy8njSlaRwjtYHyJaI
+2. Allez dans le répertoire de root
 
-Ensuite ouvrez un terminer et:
+3. Créez un code de hashage valide et notez le. tapez:
 
-1.  `Loguez vous comme root sur le serveur <#root_login>`__
+   .. code:: bash
 
-2.  Allez dans le répertoire de root
+      openssl rand -base64 48
 
-3.  Téléchargez Bitwarden. Tapez:
+4. Créez le docker de Bitwarden_rs. Tapez:
 
-    .. code:: bash
+   .. code:: bash
 
-       curl -Lso bitwarden.sh https://go.btwrdn.co/bw-sh
-       chmod +x bitwarden.sh
+      docker volume create bitwarden_data
+      docker run -d -p 1280:80 --name=bitwarden --restart=always -v bitwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com bitwardenrs/server:latest 
 
-4.  Installez ensuite Bitwarden. Tapez:
-
-    .. code:: bash
-
-       ./bitwarden.sh install
-
-5.  répondez aux questions suivantes:
-
-    -  ``Enter the domain name for your Bitwarden instance`` ← Tapez
-       votre nom de domaine ``bitwarden.example.com``
-
-    -  ``Do you want to use Let’s Encrypt to generate a free SSL certificate?``
-       ← 'n'
-
-    -  ``Enter your installation id`` ← tapez le ``Installation Id``
-       récupéré
-
-    -  ``Enter your installation key`` ← tapez le ``Installation Key``
-       récupéré
-
-    -  ``Do you have a SSL certificate to use?`` ← ``n``
-
-    -  ``Do you want to generate a self-signed SSL certificate?`` ←
-       ``n``
-
-6.  Bitwarden vous prévient que vous devez mettre un reverse proxy en
-    frontal. C’est ce que nous allons maintenant faire.
-
-7.  Editez le fichier ``./bwdata/config.yml``. Tapez:
-
-    .. code:: bash
-
-       vi ./bwdata/config.yml
-
-8.  Cherchez ``http_port``, remplacez ``80`` par ``1280``
-
-9.  Cherchez ``https_port``, remplacez ``443`` par ``12443``
-
-10. Cherchez ``database_docker_volume``, remplacez ``false`` par
-    ``true``
-
-11. Sauvegardez
-
-12. Mettez la configuration à jour. Tapez:
-
-    .. code:: bash
-
-       ./bitwarden.sh updateconf
-
-13. Il faut maintenant éditer le fichier ``global.override.env`` généré.
-    Tapez:
-
-    .. code:: bash
-
-       vi bwdata/env/global.override.env
-
-14. Dans ce fichier, rechercher les chaines ``http://`` et replacez les
-    toutes par ``https://``
-
-15. Toujours dans ce fichier, remplissez le pavé suivant:
-
-    ::
-
-       globalSettings__mail__replyToEmail=no-reply@example.com 
-       globalSettings__mail__smtp__host=mail.example.com 
-       globalSettings__mail__smtp__port=587
-       globalSettings__mail__smtp__ssl=false
-       globalSettings__mail__smtp__username=username 
-       globalSettings__mail__smtp__password=password 
-
-    -  remplacez ``example.com`` par votre nom de domaine principal
-
-    -  replacez ``username`` par un mail valide d’administration que
-       vous avez déjà créé par exemple: ``admin@example.com``
-
-    -  replacez ``password`` par un mot de passe valide associé à votre
-       mail
-
-16. Démarrez Bitwarden. Tapez:
-
-    .. code:: bash
-
-       ./bitwarden.sh start
-
-17. Créez un service systemd pour lancer automatiquement bitwarden au
-    boot.
-
-18. Tapez:
-
-    .. code:: bash
-
-       vi /etc/systemd/system/bitwarden.service
-
-19. Dans l’éditeur qui s’ouvre, collez le texte suivant:
-
-    .. code:: systemd
-
-       [Unit]
-       Description=Bitwarden
-       Requires=docker.service
-       After=docker.service
-
-       [Service]
-       Type=oneshot
-       User=bitwarden
-       Group=bitwarden
-       ExecStart=<your-install-directory>/bitwarden.sh start 
-       ExecStop=<your-install-directory>/bitwarden.sh stop 
-       RemainAfterExit=true
-
-       [Install]
-       WantedBy=multi-user.target
-
-    -  remplacez ``<your-install-directory>`` par le répertoire ou se
-       trouve le script ``bitwarden.sh``. Si vous avez suivi cette
-       procédure, il se trouve dans ``/root``
-
-20. Sauvez et quittez
-
-21. Tapez ensuite:
-
-    .. code:: bash
-
-       chmod 644 /etc/systemd/system/bitwarden.service
-       systemctl daemon-reload
-       systemctl enable bitwarden.service
+   -  ici il faut remplacer ``example.com`` par votre nom de domaine. Il
+      faut aussi remplacer ``mailname@example.com`` par une boite mail
+      valide sur le serveur et ``mailpassword`` par le mot de passe de
+      cette boite mail valide. ``Hashcode`` doit être remplacé par le
+      code de hashage généré. Ce code protège l’accès ``admin`` de
+      Bitwarden.
 
 .. __création_du_site_web_de_bitwarden:
 
@@ -6906,12 +6986,39 @@ Configuration du site bitwarden
 
 Votre site web ``Bitwarden`` est installé et opérationnel.
 
-Pointez votre navigateur sur votre site web ``bitwarden``
+1. Pointez votre navigateur sur votre site web ``bitwarden``
 
-Créez un compte avec votre login et choisissez un mot de passe. Sur
-votre smartphone on dans votre navigateur, configurez Bitwarden pour
+2. Créez un compte avec votre login et choisissez un mot de passe.
+
+3. Loggez vous sur le site vous pouvez maintenant créer des droits
+   d’accès ou importer ceux d’un autre outil tel que ``lastpass`` ou
+   ``1password``.
+
+4. Vous pouvez aussi vous connecter en tant qu’admin en allant sur l’url
+   https://bitwarden.example.com/admin
+
+5. Une fenetre apparait vous demandant le code de hachage que vous avez
+   configuré à l’installation. Saisissez le.
+
+6. vous pouvez maintenant configurer des options dans bitwarden.
+
+7. une option qu’il est important de configurer est la désactivation de
+   la création de compte. Pour cela:
+
+   -  allez dans ``General Settings``
+
+   -  désactivez ``Allow new signups``. Cliquez sur ``Save`` (en bas à
+      gauche).
+
+8. Les utilisateurs non invités ne pourront plus créer de compte sur
+   votre serveur.
+
+9. Une autre façon de faire est de démarrer le container docker avec
+   l’option ``-e SIGNUPS_ALLOWED=false``
+
+Sur votre smartphone on dans votre navigateur, configurez Bitwarden pour
 pointer vers votre serveur en y configurant l’URL:
-``https://bitwarden.example.com``
+``https://bitwarden.example.com`` Logguez vous.
 
 Tout est prêt!
 
