@@ -54,12 +54,12 @@ Sont installés:
 
 -  un outil de Monitoring `Monit <http://mmonit.com/monit/>`__,
 
--  L’installation de `Docker <https://hub.docker.com/>`__ et des outils
+-  l’installation de `Docker <https://hub.docker.com/>`__ et des outils
    `Portainer <https://portainer.io>`__ et `Yacht <https://yacht.sh>`__,
 
 -  un sous domaine pointant sur un site auto-hébergé (l’installation du
    site n’est pas décrite ici; Se référer à
-   `Yunohost <https://yunohost.org>`__),
+   `Yunohost <https://yunohost.org>`__ ) par exemple,
 
 -  un site CMS sous `Joomla <https://www.joomla.fr/>`__,
 
@@ -67,17 +67,23 @@ Sont installés:
 
 -  un site WIKI sous `Mediawiki <https://www.mediawiki.org>`__,
 
--  un site `Wordpress <https://wordpress.com>`__,
+-  un site de blog `Wordpress <https://wordpress.com>`__,
 
 -  un site `Microweber <https://microweber.org/>`__,
 
 -  un site Photo sous `Piwigo <https://piwigo.org/>`__,
+
+-  un site de partage de recettes de cuisine
+   `Mealie <https://hay-kot.github.io/mealie/>`__
 
 -  un site Collaboratif sous `Nextcloud <https://nextcloud.com>`__,
 
 -  un site `Gitea <https://gitea.io>`__ et son repository GIT,
 
 -  un serveur de mots de passe `Bitwarden <https://bitwarden.com/>`__,
+
+-  un dashboard pour vos sites web
+   `Heimdall <https://heimdall.site/>`__,
 
 -  un serveur et un site de partage de fichiers
    `Seafile <https://www.seafile.com>`__,
@@ -124,7 +130,9 @@ faible:
    achetez tout le kit.
 
 Par rapport à une solution VPS directement dans le cloud, ce budget
-correspond à 7-10 mois d’abonnement.
+correspond à 7-10 mois d’abonnement. Si vous avez la Fibre chez vous, il
+est nettement plus rentable d’utiliser un Raspberry que de prendre un
+abonne VPS.
 
 .. _root_login:
 
@@ -2265,8 +2273,13 @@ Suivez la procédure suivante:
 
 .. __installation_et_configuration_de_phpmyadmin:
 
-Installation et configuration de phpmyadmin
+Installation et configuration de Phpmyadmin
 -------------------------------------------
+
+.. __installation_de_phpmyadmin:
+
+Installation de Phpmyadmin
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suivez la procédure suivante:
 
@@ -2459,11 +2472,54 @@ Suivez la procédure suivante:
           $cfg['Servers'][$i]['savedsearches'] = 'pma__savedsearches';
           $cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
           $cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
-          $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';
+          $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';o
+
+          $cfg['TempDir'] = '/var/lib/phpmyadmin/tmp';
 
        -  A tous les endroit ou vous voyez dans le texte ci dessus le
           mot ``mypassword`` mettez celui choisi. N’oubliez pas de
           dé-commenter les lignes.
+
+.. __upgrade_de_phpmyadmin:
+
+Upgrade de Phpmyadmin
+~~~~~~~~~~~~~~~~~~~~~
+
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. allez sur le site de
+   `phpMyAdmin <https://www.phpmyadmin.net/downloads/>`__ et copier
+   l’adresse du lien vers la dernière version de l’outil.
+
+3. Mettez à jour phpmyadmin. Exécutez:
+
+   .. code:: bash
+
+      mv /usr/share/phpmyadmin /usr/share/phpmyadmin.old
+      mkdir /usr/share/phpmyadmin
+      cd /tmp
+      wget https://files.phpmyadmin.net/phpMyAdmin/5.1.0/phpMyAdmin-5.1.0-all-languages.tar.gz
+      tar xfz phpMyAdmin-5.1.0-all-languages.tar.gz
+      mv phpMyAdmin-5.1.0-all-languages/* /usr/share/phpmyadmin/
+      rm phpMyAdmin-5.1.0-all-languages.tar.gz
+      rm -rf phpMyAdmin-5.1.0-all-languages
+      cp /usr/share/phpmyadmin.old/config.inc.php  /usr/share/phpmyadmin/config.inc.php
+
+4. Redémarrez apache. Tapez :
+
+   .. code:: bash
+
+      systemctl restart apache2
+
+5. Vérifiez que tout fonctionne correctement sur le site phpmyadmin
+
+6. Supprimez l’ancien répertoire
+
+   .. code:: bash
+
+      rm -rf /usr/share/phpmyadmin.old
 
 .. __installation_du_webmail_roundcube:
 
@@ -2580,16 +2636,35 @@ Suivez la procédure suivante:
 4. L’outil vous listera dans une forme très synthétique la liste des
    vulnérabilités et des améliorations de sécurité à appliquer.
 
-.. __installation_et_utilisation_de_nmap:
+.. __upgrade_de_lynis:
 
-Installation et utilisation de NMAP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Upgrade de Lynis
+~~~~~~~~~~~~~~~~
+
+Pour effectuer la mise à jour de Lynis appliquez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez :
+
+   .. code:: bash
+
+      cd
+      cd lynis
+      git pull
+
+.. __installation_et_utilisation_de_nmap_et_autres_outils:
+
+Installation et utilisation de NMAP et autres outils
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ce paragraphe est à rédiger …​
 
 nmap -A -T4 example.com
 
-whatweb -a 3 cogen.apiou.org
+whatweb -a 3 example.com
 
-nikto -h apiou.org
+nikto -h example.com
 
 docker run -it -d --name zap -u zap -p 8080:8080 -p 8091:8090 -i
 owasp/zap2docker-stable zap-webswing.sh
@@ -3550,8 +3625,6 @@ racine auparavant.
                  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
                  ProxyPreserveHost    On
 
-                 ProxyPassMatch ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
-
                  ProxyPass / http://localhost[:port_number_if_any]/[path_if_any]
                  ProxyPassReverse / http://localhost[:port_number_if_any]/[path_if_any]
 
@@ -3577,10 +3650,8 @@ racine auparavant.
 
                  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
                  SSLProxyEngine On # Comment this out if no https required
-                 RequestHeader set Front-End-Https "On" # Comment this out if no https required
                  ProxyPreserveHost    On
 
-                 ProxyPassMatch ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
                  ProxyPass / https://localhost[:port_number_if_any]/[path_if_any]
                  ProxyPassReverse / https://localhost[:port_number_if_any]/[path_if_any]
 
@@ -5589,6 +5660,11 @@ La documentation de ouroboros est
    Ouroboros n’est plus maintenu depuis fin 2019. Une alternative est à
    trouver.
 
+.. __outils_web_de_gestion_des_containers:
+
+Outils web de gestion des containers
+====================================
+
 .. __installation_de_yacht:
 
 Installation de Yacht
@@ -5666,7 +5742,7 @@ Pour la création du site web, il faut suivre les étapes suivantes:
     .. code:: bash
 
        docker volume create yacht_data
-       docker run -d -p 8061:8000 -v /var/run/docker.sock:/var/run/docker.sock --restart=always -v yacht_data:/config selfhostedpro/yacht
+       docker run -d -p 8061:8000 --name=yacht -v /var/run/docker.sock:/var/run/docker.sock --restart=always -v yacht_data:/config selfhostedpro/yacht
 
 5.  Ouvrez un navigateur et pointez sur http://yacht.example.com
 
@@ -5698,6 +5774,48 @@ Pour la création du site web, il faut suivre les étapes suivantes:
 16. Vous pouvez maintenant administrer vos machines docker. Référez vous
     à la documentation de `Yacht <https://yacht.sh/Pages/dashboard/>`__
     pour installer de nouvelles machines docker
+
+.. _yacht_container_updt:
+
+Upgrade d’un container dans Yacht
+---------------------------------
+
+Plutôt que d’effectuer des mises à jour automatiques avec Ouroboros,
+vous préférerez mettre à jour manuellement avec Yacht.
+
+Appliquez la procédure suivante:
+
+1. Ouvrez un navigateur et pointez sur http://yacht.example.com
+
+2. Logguez vous en tant qu'`admin\`
+
+3. Allez dans l’onglet ``Applications``
+
+4. Cliquez sur le bouton ``Updates``
+
+.. __upgrade_de_yacht:
+
+Upgrade de Yacht
+----------------
+
+Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+pouvez aussi appliquer la procédure de mise à jour des `containers à
+l’aide de ``Portainer`` <#port_container_updt>`__
+
+Sinon, effectuez les opérations suivantes:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Allez dans le répertoire de root
+
+3. Mettez à jour le docker de Yacht. Tapez:
+
+   .. code:: bash
+
+      docker pull selfhostedpro/yacht
+      docker stop yacht
+      docker rm yacht
+      docker run -d -p 8061:8000 --name=yacht -v /var/run/docker.sock:/var/run/docker.sock --restart=always -v yacht_data:/config selfhostedpro/yacht
 
 .. __installation_de_portainer:
 
@@ -5806,19 +5924,60 @@ ou utiliser un autre repository comme:
 5. retournez dans le menu ``App Templates``; vos nouveau templates sont
    maintenant affichés.
 
-.. __installation_des_cms_joomla_et_concrete5:
+.. _port_container_updt:
 
-Installation des CMS Joomla et Concrete5
-========================================
+Upgrade d’un container dans Portainer
+-------------------------------------
+
+Plutôt que d’effectuer des mises à jour automatiques avec Ouroboros,
+vous préférerez mettre à jour manuellement avec Portainer.
+
+Appliquez la procédure suivante:
+
+1. Ouvrez un navigateur et pointez sur http://portainer.example.com
+
+2. Logguez vous en tant qu'`admin\`
+
+3. Allez dans l’onglet ``Containers``
+
+4. Double-cliquez sur le container à mettre à jour
+
+5. Dans le nouvel écran ``Container details`` cliquez sur l’icone
+   ``recreate``
+
+6. Sélectionnez ``Pull latest image`` et cliquez ``recreate``
+
+.. __upgrade_de_portainer:
+
+Upgrade de Portainer
+--------------------
+
+Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+pouvez aussi appliquer la procédure de mise à jour des containers à
+l’aide de ```Yacht`` <#yacht_container_updt>`__
+
+Sinon, effectuez les opérations suivantes:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Allez dans le répertoire de root
+
+3. Mettez à jour le docker de Yacht. Tapez:
+
+   .. code:: bash
+
+      docker pull portainer/portainer-ce
+      docker stop portainer
+      docker rm portainer
+      docker run -d -p 8060:8000 -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+
+.. __installation_des_cms_joomla:
+
+Installation des CMS Joomla
+===========================
 
 Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour
-et inclut une foule de plugins Concrete5 est un autre CMS assez connu
-avec un design plus moderne.
-
-L’installation s’effectue à 100% avec ISPConfig. Dans la procédure ci
-dessous qui est taillée pour Joomla, vous pouvez l’appliquer à
-l’identique pour concrete5 en remplacant les textes joomla par
-concrete5.
+et inclut une foule de plugins
 
 .. __création_du_site_web_de_joomla:
 
@@ -5846,53 +6005,334 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    b. Le faire pointer vers le web folder ``joomla``.
 
-   c. Activer let’s encrypt ssl
+   c. Pour ``Auto-Subdomain`` sélectionnez ``None``
 
-   d. Activer ``PHP-FPM`` pour PHP
+   d. Activer let’s encrypt ssl
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
+
+   f. Laisser le reste par défaut.
+
+.. __création_des_bases_de_données:
+
+Création des bases de données
+-----------------------------
+
+Appliquez les opérations suivantes dans ISPConfig :
+
+1. Créez une base de données mysql. Aller dans le menu ``Database`` pour
+   définir un utilisateur MariaDB
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``joomla`` par exemple
+
+          -  ``Database password:`` ← saisir `un mot de passe
+             généré <#pass_gen>`__ ou en générer un en cliquant sur le
+             bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Cliquez sur ``save``
+
+   c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+      données
+
+   d. Saisissez les informations:
+
+      -  ``Site:`` ← sélectionner le site ``example.com``
+
+      -  ``Database name:`` ← Saisissez le nom de la base de données
+         ``joomla``
+
+      -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+         ``cxjoomla``. x: est le numéro de client.
+
+   e. Cliquez sur ``save``
 
 .. __création_de_lapplication_joomla:
 
 Création de l’application Joomla
 --------------------------------
 
-Appliquez les opérations suivantes dans ISPConfig:
+La procédure d’installation officielle de Joomla se trouve
+`ici <https://docs.joomla.org/J3.x:Installing_Joomla>`__
 
-1.  Allez dans la rubrique ``Sites``, le menu ``Update Packagelist``.
+Suivez la procédure suivante:
 
-2.  Cliquez sur ``Update Packagelist``
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-3.  Allez dans la rubrique ``Sites``, le menu ``Available packages``.
+2.  allez sur le site de `Joomla <https://downloads.joomla.org/>`__ et
+    copier l’adresse du lien vers la dernière version de l’outil en
+    format tarball.
 
-4.  Faites une recherche par ``Name``. Tapez ``joomla``
+3.  Installez Joomla. Exécutez:
 
-5.  Cliquez sur le package ``joomla``
+    .. code:: bash
 
-6.  Cliquez sur ``Install this package``
+       cd /tmp
+       wget -O joomla.tar.gz https://downloads.joomla.org/cms/joomla3/3-9-26/Joomla_3-9-26-Stable-Full_Package.tar.gz?format=gz 
+       cd /var/www/joomla.example.com/joomla/ 
+       tar -xvzf /tmp/joomla.tar.gz
+       rm /tmp/joomla.tar.gz
+       chown -R web[x]:client[y] /var/www/joomla.example.com/joomla  
 
-7.  Remplissez tous les champs:
+    -  Remplacez [x] et [y] par les numéros de site web et de client.
+       Ces informations sont consultables dans ISPConfig en consultant
+       les informations du Web Domain→onglet ``Options``\ →champs Linux
+       User et Linux Group.
 
-    -  ``Install location:`` ← choisissez votre domain (``example.com``)
-       et laissez vide le chemin.
+    -  mettre ici votre site web à la place de joomla.example.com et le
+       répertoire d’installation à la place de joomla
 
-    -  ``New database password`` ← gardez ce qui est remplit
+    -  coller ici l’adresse de téléchargement récupérée sur le site de
+       Joomla.
 
-    -  ``Administrator’s login`` ← gardez ce qui est remplit: ``admin``
+4.  Pointez votre navigateur sur https://joomla.example.com.
 
-    -  ``Password`` et ``Repeat Password`` ← Tapez votre mot de passe
+5.  Dans l’onglet ``configuration`` :
 
-    -  ``Default site language:`` ← choisissez ``French``
+    a. Choisissez votre langue ``fr``.
 
-    -  ``I accept the license`` ← cochez la case
+    b. ``Nom du site`` ← mettez le nom de votre site web
 
-8.  Cliquez sur ``Install``
+    c. ``Description`` ← mettez une description courte de votre site
 
-9.  Pointez votre navigateur sur https://example.com/ et loguez vous
-    ``admin`` avec votre mot de passe saisi, c’est fait !
+    d. ``Email`` ← indiquez votre email d’admin
 
-10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
-    dernière version de Joomla.
+    e. Saisissez le ``identifiant`` du compte administrateur
+
+    f. Saisissez 2 fois `un mot de passe généré <#pass_gen>`__ dans
+       ``mot de passe``
+
+6.  Cliquez ``suivant``
+
+    a. Choisissez une base ``MySQLi``
+
+    b. mettez ``Localhost`` comme ``Nom du serveur``
+
+    c. Dans le ``nom d’utilisateur`` mettez ``cxjoomla`` comme créé plus
+       haut
+
+    d. Dans le ``mot de passe`` saisissez le mot de passe de créé pour
+       la base.
+
+    e. Dans le ``nom de la base de données`` mettez ``cxjoomla`` comme
+       créé plus haut
+
+    f. Vous pouvez laisser le prefixe des tables ou mettre à vide si
+       votre base est dédiée.
+
+7.  Cliquez ``suivant``
+
+    a. Dans l’écran suivant, vous choisissez le ``type de site``
+
+    b. Vérifiez votre configuration
+
+8.  Cliquez ``suivant``
+
+9.  L’installation s’effectue. Une fois terminée avec succès, vous
+    pouvez décider d’installer des langues
+
+10. N’oubliez pas ensuite de supprimer le répertoire ``installation`` en
+    cliquant sur le bouton ``Supprimer le répertoire``
+
+11. Cliquez ensuite sur le bouton ``Administration`` pour continuer à
+    configurer votre site ou sur ``Site`` pour voir votre installation
+    par défaut
+
+.. __update_de_joomla:
+
+Update de Joomla
+----------------
+
+La mise à jour de Joomla s’effectue au travers du portail
+d’administration Joomla vous prévient d’un mise à jour du moteur et vous
+propose de le mettre à jour. CLiquez sur le lien qui vous est présenté
+dans l’interface.
+
+.. __installation_des_cms_concrete5:
+
+Installation des CMS Concrete5
+==============================
+
+Concrete5 est un CMS très connu écrit en PHP. Il est fréquemment mis à
+jour et permet une configuration wysiwyg
+
+.. __création_du_site_web_de_concrete5:
+
+Création du site web de Concrete5
+---------------------------------
+
+Appliquez les opérations suivantes Dans ISPConfig:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``Concrete5``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``Concrete5``.
+
+   b. Le faire pointer vers le web folder ``Concrete5``.
+
+   c. Pour ``Auto-Subdomain`` sélectionnez ``None``
+
+   d. Activer let’s encrypt ssl
+
+   e. Activer ``PHP-FPM`` pour PHP
+
+   f. Laisser le reste par défaut.
+
+.. __création_des_bases_de_données_2:
+
+Création des bases de données
+-----------------------------
+
+Appliquez les opérations suivantes dans ISPConfig :
+
+1. Créez une base de données mysql. Aller dans le menu ``Database`` pour
+   définir un utilisateur MariaDB
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``Concrete5`` par exemple
+
+          -  ``Database password:`` ← saisir `un mot de passe
+             généré <#pass_gen>`__ ou en générer un en cliquant sur le
+             bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Cliquez sur ``save``
+
+   c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+      données
+
+   d. Saisissez les informations:
+
+      -  ``Site:`` ← sélectionner le site ``example.com``
+
+      -  ``Database name:`` ← Saisissez le nom de la base de données
+         ``Concrete5``
+
+      -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+         ``cxConcrete5``. x: est le numéro de client.
+
+   e. Cliquez sur ``save``
+
+.. __création_de_lapplication_concrete5:
+
+Création de l’application Concrete5
+-----------------------------------
+
+La procédure d’installation officielle de Concrete5 se trouve
+`ici <https://documentation.concrete5.org/developers/introduction/installation>`__
+
+Suivez la procédure suivante:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  allez sur le site de
+    `Concrete5 <https://www.concrete5.org/download>`__ et téléchargez la
+    dernière version de l’outil en format zip.
+
+3.  Uploader ce fichier dans votre répertoire /tmp de votre serveur au
+    moyen de filezilla
+
+4.  Installez Concrete5. Exécutez:
+
+    .. code:: bash
+
+       cd /tmp
+       unzip concrete5-8.5.5.zip 
+       mv concrete5-8.5.5/* /var/www/concrete5.example.com/concrete5/  
+       rm -rf concrete5-8.5.5 
+       rm concrete5-8.5.5.zip 
+       chown -R web[x]:client[y] /var/www/concrete5.example.com/concrete5  
+
+    -  Remplacez [x] et [y] par les numéros de site web et de client.
+       Ces informations sont consultables dans ISPConfig en consultant
+       les informations du Web Domain→onglet ``Options``\ →champs Linux
+       User et Linux Group.
+
+    -  mettre ici votre site web à la place de concrete5.example.com et
+       le répertoire d’installation à la place de concrete5
+
+    -  le nom du fichier zip dépend de la version que vous avez
+       téléchargé. De même le nom du répertoire est dépendant de la
+       version.
+
+5.  Pointez votre navigateur sur https://concrete5.example.com.
+
+6.  Choisissez votre langue ``français``.
+
+7.  Le système check que la configuration est correcte.
+
+8.  Cliquez sur ``continuer l’installation``
+
+9.  ``Nom`` ← saisissez le nom de votre site
+
+10. ``Adresse de courriel administrateur`` ← indiquez votre email
+    d’admin
+
+11. Saisissez 2 fois `un mot de passe généré <#pass_gen>`__ dans
+    ``Mot de passe administrateur``
+
+12. Choisissez le ``point de départ``
+
+13. mettez ``Localhost`` comme ``Serveur``
+
+14. Dans le ``Utilisateur MySQL`` mettez ``cxconcrete5`` comme créé plus
+    haut
+
+15. Dans le ``Mot de passe MySQL`` saisissez le mot de passe de créé
+    pour la base.
+
+16. Dans le ``nom de la base de données`` mettez ``cxconcrete5`` comme
+    créé plus haut
+
+17. Cliquez sur la case à cocher de la ``politique de confidentialité``
+
+18. Cliquez ``Installer Concrete5``
+
+19. L’installation s’effectue. Une fois terminée avec succès, Cliquez
+    sur ``Modifier votre site``
+
+.. __update_de_concrete5:
+
+Update de concrete5
+-------------------
+
+La mise à jour de concrete5 s’effectue au travers du portail
+d’administration concrete5 vous prévient d’un mise à jour du moteur et
+vous propose de le mettre à jour. Cliquez sur le lien qui vous est
+présenté dans l’interface.
 
 .. __installation_du_portail_wiki_mediawiki:
 
@@ -5901,8 +6341,6 @@ Installation du portail wiki Mediawiki
 
 Mediawiki est le portail wiki mondialement connu et utilisé notamment
 pour le site wikipedia.
-
-L’installation s’effectue à 100% avec ISPConfig.
 
 .. __création_du_site_web_de_mediawiki:
 
@@ -5930,53 +6368,261 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    b. Le faire pointer vers le web folder ``mediawiki``.
 
-   c. Activer let’s encrypt ssl
+   c. Pour ``Auto-Subdomain`` sélectionnez ``None``
 
-   d. Activer ``PHP-FPM`` pour PHP
+   d. Activer let’s encrypt ssl
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
+
+   f. Laisser le reste par défaut.
+
+.. __création_des_bases_de_données_3:
+
+Création des bases de données
+-----------------------------
+
+Appliquez les opérations suivantes dans ISPConfig :
+
+1. Créez une base de données mysql. Aller dans le menu ``Database`` pour
+   définir un utilisateur MariaDB
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``mediawiki`` par exemple
+
+          -  ``Database password:`` ← saisir `un mot de passe
+             généré <#pass_gen>`__ ou en générer un en cliquant sur le
+             bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Cliquez sur ``save``
+
+   c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+      données
+
+   d. Saisissez les informations:
+
+      -  ``Site:`` ← sélectionner le site ``example.com``
+
+      -  ``Database name:`` ← Saisissez le nom de la base de données
+         ``mediawiki``
+
+      -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+         ``cxmediawiki``. x: est le numéro de client.
+
+   e. Cliquez sur ``save``
 
 .. __création_de_lapplication_mediawiki:
 
 Création de l’application Mediawiki
 -----------------------------------
 
-Appliquez les opérations suivantes dans ISPConfig:
+La procédure d’installation officielle de Mediawiki se trouve
+`ici <https://www.mediawiki.org/wiki/Manual:Installation_guide>`__
 
-1.  Allez dans la rubrique ``Sites``, le menu ``Update Packagelist``.
+Suivez la procédure suivante:
 
-2.  Cliquez sur ``Update Packagelist``
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-3.  Allez dans la rubrique ``Sites``, le menu ``Available packages``.
+2.  allez sur le site de
+    `Mediawiki <https://www.mediawiki.org/wiki/Download>`__ et copier
+    l’adresse du lien vers la dernière version de l’outil en format
+    tarball.
 
-4.  Faites une recherche par ``Name``. Tapez ``mediawiki``
+3.  Installez Mediawiki. Exécutez:
 
-5.  Cliquez sur le package ``mediawiki``
+    .. code:: bash
 
-6.  Cliquez sur ``Install this package``
+       cd /tmp
+       wget https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz 
+       tar -xvzf mediawiki-1.35.2.tar.gz
+       mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/ 
+       rm mediawiki-1.35.2.tar.gz
+       rm -rf mediawiki-1.35.2
+       chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki  
 
-7.  Remplissez tous les champs:
+    -  Remplacez [x] et [y] par les numéros de site web et de client.
+       Ces informations sont consultables dans ISPConfig en consultant
+       les informations du Web Domain→onglet ``Options``\ →champs Linux
+       User et Linux Group.
 
-    -  ``Install location:`` ← choisissez votre domain (``example.com``)
-       et laissez vide le chemin.
+    -  mettre ici votre site web à la place de mediawiki.example.com et
+       le répertoire d’installation à la place de mediawiki
 
-    -  ``New database password`` ← gardez ce qui est remplit
+    -  coller ici le lien de téléchargement déjà copié
 
-    -  ``Administrator’s login`` ← gardez ce qui est remplit: ``admin``
+4.  Pointez votre navigateur sur https://mediawiki.example.com.
 
-    -  ``Password`` et ``Repeat Password`` ← Tapez votre mot de passe
+5.  Cliquez sur ``set up the wiki``.La procédure d’installation se
+    déclenche :
 
-    -  ``Default site language:`` ← choisissez ``French``
+6.  Choisissez votre langue ``fr``. Cliquez sur ``continuer``
 
-    -  ``I accept the license`` ← cochez la case
+    a. L’environnement est vérifié. Assurez vous que le texte
+       ``L’environnement a été vérifié. Vous pouvez installer MediaWiki.``
+       s’affiche.
 
-8.  Cliquez sur ``Install``
+    b. Choisissez une base ``MariaDB``
 
-9.  Pointez votre navigateur sur https://example.com/ et loguez vous
-    ``admin`` avec votre mot de passe saisi, c’est fait !
+    c. mettez ``Localhost`` comme nom d’hote de la Base
 
-10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
-    dernière version de Mediawiki.
+    d. Dans le ``nom de la base de données`` mettez ``cxmediawiki``
+       comme créé plus haut
+
+    e. Dans le ``nom d’utilisateur de la base de données`` mettez
+       ``cxmediawiki`` comme créé plus haut
+
+    f. Dans le ``mot de passe`` saisissez le mot de passe de créé pour
+       la base.
+
+7.  Cliquez sur ``continuer``
+
+    a. Dans l’écran suivant, cliquez ``continuer`` sans rien changer
+
+    b. Saisissez le ``nom du wiki``
+
+    c. Saisissez le ``nom d’utilisateur`` du compte administrateur
+
+    d. Saisissez 2 fois `un mot de passe généré <#pass_gen>`__
+
+    e. Saisissez ``Adresse de courriel`` ← votre Email.
+
+8.  Cliquez sur ``continuer``
+
+    a. Répondez en fonction de vos besoins aux questions suivantes.
+
+9.  Cliquez sur ``continuer``
+
+10. Lisez le texte et cliquez sur ``continuer``
+
+11. L’installation s’effectue et se termine avec succès. Cliquez sur
+    ``continuer``
+
+12. le fichier LocalSettings.php vous est proposé au téléchargement.
+    Enregistrez le et ouvrez le dans un éditeur. Copier tout le contenu
+    du fichier dans le presse papier
+
+13. `Loguez vous comme root sur le serveur <#root_login>`__
+
+14. Créez le fichier LocalSettings.php. Tapez:
+
+    .. code:: bash
+
+       vi /var/www/mediawiki.example.com/mediawiki/LocalSettings.php 
+
+    -  mettre ici votre site web à la place de mediawiki.example.com et
+       le répertoire d’installation à la place de mediawiki
+
+15. Coller tout le texte dans le fichier édité. Sauvegardez et quittez.
+
+16. Tapez:
+
+    .. code:: bash
+
+       chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki/LocalSettings.php  
+       chmod 644 /var/www/mediawiki.example.com/mediawiki/LocalSettings.php 
+
+    -  Remplacez [x] et [y] par les numéros de site web et de client.
+       Ces informations sont consultables dans ISPConfig en consultant
+       les informations du Web Domain→onglet ``Options``\ →champs Linux
+       User et Linux Group.
+
+    -  mettre ici votre site web à la place de mediawiki.example.com et
+       le répertoire d’installation à la place de mediawiki
+
+17. Dans votre navigateur cliquez sur ``accéder à votre wiki``
+
+18. C’est fait
+
+.. __update_du_serveur_mediawiki:
+
+Update du serveur Mediawiki
+---------------------------
+
+La procédure de mise à jour officielle de Mediawiki se trouve
+`ici <https://www.mediawiki.org/wiki/Manual:Upgrading>`__
+
+Suivez la procédure suivante:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  allez sur le site de
+    `Mediawiki <https://www.mediawiki.org/wiki/Download>`__ et copier
+    l’adresse du lien vers la dernière version de l’outil en format
+    tarball.
+
+3.  Mettez à jour Mediawiki. Exécutez:
+
+    .. code:: bash
+
+       mkdir /tmp/mediawiki.old
+       mv /var/www/mediawiki.example.com/mediawiki/* /tmp/mediawiki.old 
+       cd /tmp
+       wget -O mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz 
+       tar -xvzf mediawiki.tar.gz
+       mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/  
+       rm mediawiki.tar.gz
+       rm -rf mediawiki-1.35.2 
+       cp /tmp/mediawiki.old/LocalSettings.php  /var/www/mediawiki.example.com/mediawiki/LocalSettings.php 
+       cp -r /tmp/mediawiki.old/images/*  /var/www/mediawiki.example.com/mediawiki/images/ 
+       chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki  
+
+    -  Remplacez [x] et [y] par les numéros de site web et de client.
+       Ces informations sont consultables dans ISPConfig en consultant
+       les informations du Web Domain→onglet ``Options``\ →champs Linux
+       User et Linux Group.
+
+    -  mettre ici votre site web à la place de mediawiki.example.com et
+       le répertoire d’installation à la place de mediawiki
+
+    -  coller ici l’adresse de téléchargement récupérée sur le site de
+       Mediawiki.
+
+    -  le nom du fichier tar.gz dépend de la version que vous avez
+       téléchargé. De même le nom du répertoire est dépendant de la
+       version.
+
+4.  vous pouvez aussi copier vos logos du répertoire resources/assets de
+    l’ancien mediawiki.
+
+5.  Mettez à jour vos extensions avec les dernières versions
+    compatibles.
+
+6.  Suivez les recommandations de mise à jour de Mediawiki pour le
+    fichier ``LocalSettings.php``
+
+7.  exécuter le script d’update. Tapez:
+
+    .. code:: bash
+
+       cd /var/www/mediawiki.example.com/mediawiki/maintenance
+       php update.php
+
+8.  Vérifiez que tout s’est bien passé. Se référer à la documentation de
+    Mediawiki pour résoudre les problèmes.
+
+9.  Redémarrez apache. Tapez :
+
+    .. code:: bash
+
+       systemctl restart apache2
+
+10. Vérifiez que tout fonctionne correctement sur le site phpmyadmin
+
+11. Supprimez l’ancien répertoire
+
+    .. code:: bash
+
+       rm -rf /tmp/mediawiki.old
 
 .. __installation_dun_gestionnaire_de_blog_wordpress:
 
@@ -5985,8 +6631,6 @@ Installation d’un gestionnaire de Blog Wordpress
 
 Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à
 jour.
-
-L’installation s’effectue à 100% avec ISPConfig.
 
 .. __création_du_site_web_de_wordpress:
 
@@ -6014,55 +6658,143 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    b. Le faire pointer vers le web folder ``wordpress``.
 
-   c. Activer let’s encrypt ssl
+   c. Pour ``Auto-Subdomain`` sélectionnez ``None``
 
-   d. Activer ``PHP-FPM`` pour PHP
+   d. Activer let’s encrypt ssl
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
+
+   f. Laisser le reste par défaut.
+
+.. __création_des_bases_de_données_4:
+
+Création des bases de données
+-----------------------------
+
+Appliquez les opérations suivantes dans ISPConfig :
+
+1. Créez une base de données mysql. Aller dans le menu ``Database`` pour
+   définir un utilisateur MariaDB
+
+2. Aller dans la rubrique ``Sites``
+
+   a. Aller dans le menu ``Database users`` pour définir un utilisateur
+      MariaDB
+
+      i.  Cliquez sur ``Add new User`` pour créer un nouvel utilisateur
+
+      ii. Saisissez les informations:
+
+          -  ``Database user:`` ← saisir votre nom d’utilisateur
+             ``wordpress`` par exemple
+
+          -  ``Database password:`` ← saisir `un mot de passe
+             généré <#pass_gen>`__ ou en générer un en cliquant sur le
+             bouton
+
+          -  ``Repeat Password:`` ← saisir de nouveau le mot de passe
+
+   b. Cliquez sur ``save``
+
+   c. Cliquez sur ``Add new Database`` pour créer une nouvelle base de
+      données
+
+   d. Saisissez les informations:
+
+      -  ``Site:`` ← sélectionner le site ``example.com``
+
+      -  ``Database name:`` ← Saisissez le nom de la base de données
+         ``wordpress``
+
+      -  ``Database user:`` ← Saisir ici le nom d’utilisateur créé:
+         ``cxwordpress``. x: est le numéro de client.
+
+   e. Cliquez sur ``save``
 
 .. __création_de_lapplication_wordpress:
 
 Création de l’application Wordpress
 -----------------------------------
 
-Appliquez les opérations suivantes dans ISPConfig:
+La procédure d’installation officielle de Wordpress se trouve
+`ici <https://fr.wordpress.org/support/article/how-to-install-wordpress/>`__
 
-1.  Allez dans la rubrique ``Sites``, le menu ``Update Packagelist``.
+Suivez la procédure suivante:
 
-2.  Cliquez sur ``Update Packagelist``
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-3.  Allez dans la rubrique ``Sites``, le menu ``Available packages``.
+2.  allez sur le site de
+    `Wordpress <https://fr.wordpress.org/download/>`__ et copier
+    l’adresse du lien vers la dernière version de l’outil en format
+    tarball.
 
-4.  Faites une recherche par ``Name``. Tapez ``wordpress``
+3.  Installez Wordpress. Exécutez:
 
-5.  Cliquez sur le package ``wordpress``
+    .. code:: bash
 
-6.  Cliquez sur ``Install this package``
+       cd /tmp
+       wget -O wordpress.tar.gz https://wordpress.org/latest.tar.gz
+       tar -xvzf wordpress.tar.gz
+       mv wordpress/* /var/www/wordpress.example.com/wordpress/ 
+       rm wordpress.tar.gz
+       rm -rf wordpress
+       chown -R web[x]:client[y] /var/www/wordpress.example.com/wordpress  
 
-7.  Remplissez tous les champs:
+    -  Remplacez [x] et [y] par les numéros de site web et de client.
+       Ces informations sont consultables dans ISPConfig en consultant
+       les informations du Web Domain→onglet ``Options``\ →champs Linux
+       User et Linux Group.
 
-    -  ``Install location:`` ← choisissez votre domain (``example.com``)
-       et laissez vide le chemin.
+    -  mettre ici votre site web à la place de wordpress.example.com et
+       le répertoire d’installation à la place de wordpress
 
-    -  ``New database password`` ← gardez ce qui est remplit
+4.  Pointez votre navigateur sur https://wordpress.example.com.
 
-    -  ``Administrator’s login`` ← gardez ce qui est remplit: ``admin``
+5.  Choisissez votre langue ``français``. Cliquez sur ``continuer``.
 
-    -  ``Password`` et ``Repeat Password`` ← Tapez `votre mot de passe
-       généré <#pass_gen>`__
+6.  Lisez le texte et cliquez sur ``C’est parti !``
 
-    -  ``Default site language:`` ← choisissez ``French``
+7.  Dans le ``nom de la base de données`` mettez ``cxwordpress`` comme
+    créé plus haut
 
-    -  ``I accept the license`` ← cochez la case
+8.  Dans le ``Identifiant`` mettez ``cxwordpress`` comme créé plus haut
 
-8.  Cliquez sur ``Install``
+9.  Dans le ``Mot de passe`` saisissez le mot de passe de créé pour la
+    base.
 
-9.  Pointez votre navigateur sur
-    `https://<example.com>/ <https://<example.com>/>`__ et loguez vous
-    ``admin`` avec votre mot de passe saisi, c’est fait !
+10. mettez ``Localhost`` comme ``Adresse de la base de données``
 
-10. N’oubliez pas d’administrer le site et de le mettre à jour avec la
-    dernière version de Wordpress.
+11. Vous pouvez laisser le ``préfixe des tables`` ou mettre à vide si
+    votre base est dédiée.
+
+12. Cliquez sur ``Envoyer``.
+
+13. Cliquez ensuite sur ``Lancer l’installation``
+
+14. ``Titre du site`` ← mettez le nom de votre site web
+
+15. Saisissez le ``identifiant`` du compte administrateur
+
+    a. Saisissez `un mot de passe généré <#pass_gen>`__ dans
+       ``mot de passe``
+
+    b. ``Votre e-mail`` ← indiquez votre email d’admin
+
+16. Cliquez ``Installer Wordpress``
+
+17. C’est fini.
+
+18. Vous pouvez ensuite cliquer sur ``Se connecter`` pour administrer
+    votre site
+
+.. __update_de_wordpress:
+
+Update de wordpress
+-------------------
+
+La mise à jour de wordpress s’effectue directement dans le site web en
+allant sur ``Dashboard`` et l’item ``updates``. Il n’y a rien d’autre à
+faire.
 
 .. __installation_du_cms_micro_weber:
 
@@ -6113,7 +6845,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
 3. `Loguez vous comme root sur le serveur <#root_login>`__
 
-.. __création_des_bases_de_données:
+.. __création_des_bases_de_données_5:
 
 Création des bases de données
 -----------------------------
@@ -6180,7 +6912,7 @@ Suivez la procédure suivante:
    http://microweber.example.com/netinstall.php
 
 4. Indique ``.`` comme répertoire d’installation et cliquez sur
-   ``Télécharger et décompresser Piwigo``
+   ``Télécharger et décompresser microweber``
 
 5. Une fois le téléchargement terminé cliquez sur
    ``Installer Microweber``. Rechargez la page si besoin.
@@ -6211,6 +6943,151 @@ Suivez la procédure suivante:
 
 8. Vous êtes redirigé sur le site Microweber ou vous pourrez vous loguer
    et commencer à utiliser l’outil
+
+.. __installation_de_mealie:
+
+Installation de Mealie
+======================
+
+le logiciel ``Mealie`` est un gestionnaire de recettes et un
+planificateur de repas auto-hébergés avec un backend RestAPI et une
+application frontale responsive construite en Vue pour une expérience
+utilisateur agréable pour toute la famille.
+
+.. __prérequis:
+
+Prérequis
+---------
+
+Il vous faudra tout d’abord installer ``docker`` en vous référant au
+chapitre qui y est consacré.
+
+.. __installation_du_serveur_mealie:
+
+Installation du serveur Mealie
+------------------------------
+
+Nous allons installer Mealie à partir de son container Docker.
+
+Ouvrez un terminal et suivez la procédure:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Allez dans le répertoire de root
+
+3. Créez le docker de Mealie. Tapez:
+
+   .. code:: bash
+
+      docker volume create mealie_data
+      docker run -d -p 1282:80 --name=mealie --restart=always -v mealie_data:'/app/data/' -e PGID=1000 -e PUID=1000  hkotel/mealie:latest
+
+.. __création_du_site_web_de_mealie:
+
+Création du site web de mealie
+------------------------------
+
+Appliquez la procédure suivante:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``mealie``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``mealie``.
+
+   b. Le faire pointer vers le web folder ``mealie``.
+
+   c. Dans auto-Subdomain ← Sélectionnez ``None``
+
+   d. Activer let’s encrypt ssl
+
+   e. Activer ``Fast CGI`` pour PHP
+
+   f. Laisser le reste par défaut.
+
+   g. Dans l’onglet Options:
+
+   h. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
+
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
+
+         # mealie httpserver
+         #
+
+         SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         ProxyPreserveHost    On
+
+         ProxyPass / http://localhost:1282/
+         ProxyPassReverse / http://localhost:1282/
+
+         RedirectMatch ^/$ https://mealie.example.com 
+
+      -  remplacer ``example.com`` par votre nom de domaine
+
+.. __configuration_du_site_mealie:
+
+Configuration du site mealie
+----------------------------
+
+Votre site web ``mealie`` est installé et opérationnel.
+
+1. Pointez votre navigateur sur votre site web ``mealie``
+
+2. Loggez vous avec le mail ``changeme@email.com`` et le mot de passe
+   ``MyPassword``
+
+3. Vous devez ensuite aller dans le menu de configuration de
+   l’utilisateur pour changer ce mail et ce mot de passe par défaut
+
+4. Vous pouvez maintenant ajouter des utilisateurs et des recettes de
+   cuisine.
+
+5. C’est prêt !
+
+.. __upgrade_de_mealie:
+
+Upgrade de Mealie
+-----------------
+
+Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+pouvez aussi appliquer la procédure de mise à jour des containers à
+l’aide de ```Portainer`` <#port_container_updt>`__ ou à l’aide
+```Yacht`` <#yacht_container_updt>`__
+
+Sinon, effectuez les opérations suivantes:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Allez dans le répertoire de root
+
+3. Mettez à jour le docker de Mealie. Tapez:
+
+   .. code:: bash
+
+      docker pull hkotel/mealie:latest
+      docker stop mealie
+      docker rm mealie
+      docker run -d -p 1282:80 --name=mealie --restart=always -v mealie_data:'/app/data/' -e PGID=1000 -e PUID=1000  hkotel/mealie:latest
 
 .. __installation_du_gestionnaire_de_photos_piwigo:
 
@@ -6260,7 +7137,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
 3. `Loguez vous comme root sur le serveur <#root_login>`__
 
-.. __création_des_bases_de_données_2:
+.. __création_des_bases_de_données_6:
 
 Création des bases de données
 -----------------------------
@@ -6451,11 +7328,14 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    d. Activer ``PHP-FPM`` pour PHP
 
-   e. Laisser le reste par défaut.
+   e. Aller dans l’onglet ``Statistics`` pour ``Webstatistics program``
+      sélectionnez ``None``
 
-   f. Cliquez sur ``Save``
+   f. Laisser le reste par défaut.
 
-.. __création_des_bases_de_données_3:
+   g. Cliquez sur ``Save``
+
+.. __création_des_bases_de_données_7:
 
 Création des bases de données
 -----------------------------
@@ -6552,6 +7432,15 @@ Suivez la procédure suivante:
    6. Vous êtes redirigé sur le site nextcloud ou vous pourrez vous
       loguer et commencer à utiliser l’outil
 
+.. __upgrade_de_nextcloud:
+
+Upgrade de Nextcloud
+--------------------
+
+La mise à jour de nextcloud se fait directement dans nextcloud avec
+l’outil de mise à jour intégré à l’interface. Il faut se connecter en
+mode Admin
+
 .. __installation_du_gestionnaire_de_projet_gitea:
 
 Installation du gestionnaire de projet Gitea
@@ -6647,7 +7536,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
       chmod -R 750 /var/lib/gitea
       chmod 770 /etc/gitea
 
-.. __création_des_bases_de_données_4:
+.. __création_des_bases_de_données_8:
 
 Création des bases de données
 -----------------------------
@@ -6707,7 +7596,7 @@ Appliquez les opérations suivantes:
 
     .. code:: bash
 
-       wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
+       wget https://dl.gitea.io/gitea/main/gitea-main-linux-amd64 -O /usr/local/bin/gitea
        chmod 755 /usr/local/bin/gitea
 
 3.  Créez maintenant une entrée pour le launcher systemd. Tapez:
@@ -6865,6 +7754,26 @@ Gitea:
 
 6. Enjoy !
 
+.. __update_de_gitea:
+
+Update de Gitea
+---------------
+
+Appliquez les opérations suivantes:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Téléchargez gitea du `site de
+   chargement <https://dl.gitea.io/gitea/>`__. Tapez pour un système 64
+   bits:
+
+   .. code:: bash
+
+      service gitea stop
+      wget https://dl.gitea.io/gitea/main/gitea-main-linux-amd64 -O /usr/local/bin/gitea
+      chmod 755 /usr/local/bin/gitea
+      service gitea start
+
 .. __installation_de_bitwarden:
 
 Installation de Bitwarden
@@ -6878,7 +7787,7 @@ Il reste cependant un bémol puisque l’installation s’effectue à l’aide
 de containers dockers qui sont eux générés par l’éditeur de
 ``bitwarden``.
 
-.. __prérequis:
+.. __prérequis_2:
 
 Prérequis
 ---------
@@ -6981,7 +7890,7 @@ Appliquez la procédure suivante:
 
 .. __configuration_du_site_bitwarden:
 
-Configuration du site bitwarden
+Configuration du site Bitwarden
 -------------------------------
 
 Votre site web ``Bitwarden`` est installé et opérationnel.
@@ -7021,6 +7930,188 @@ pointer vers votre serveur en y configurant l’URL:
 ``https://bitwarden.example.com`` Logguez vous.
 
 Tout est prêt!
+
+.. __upgrade_de_bitwarden:
+
+Upgrade de Bitwarden
+--------------------
+
+Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+pouvez aussi appliquer la procédure de mise à jour des containers à
+l’aide de ```Portainer`` <#port_container_updt>`__ ou à l’aide
+```Yacht`` <#yacht_container_updt>`__
+
+Sinon, effectuez les opérations suivantes:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Allez dans le répertoire de root
+
+3. Mettez à jour le docker de Bitwarden_rs. Tapez:
+
+   .. code:: bash
+
+      docker pull bitwardenrs/server:latest
+      docker stop bitwarden
+      docker rm bitwarden
+      docker run -d -p 1280:80 --name=bitwarden --restart=always -v bitwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com bitwardenrs/server:latest 
+
+   -  ici il faut remplacer ``example.com`` par votre nom de domaine. Il
+      faut aussi remplacer ``mailname@example.com`` par une boite mail
+      valide sur le serveur et ``mailpassword`` par le mot de passe de
+      cette boite mail valide. ``Hashcode`` doit être remplacé par le
+      code de hashage généré. Ce code protège l’accès ``admin`` de
+      Bitwarden.
+
+.. __installation_de_heimdall:
+
+Installation de Heimdall
+========================
+
+le logiciel ``Heimdall`` est un logiciel de portail offrant de
+nombreuses possibilités de configuration.
+
+.. __prérequis_3:
+
+Prérequis
+---------
+
+Il vous faudra tout d’abord installer ``docker`` en vous référant au
+chapitre qui y est consacré.
+
+.. __installation_du_serveur_heimdall:
+
+Installation du serveur Heimdall
+--------------------------------
+
+Nous allons installer Heimdall à partir de son container Docker.
+
+Ouvrez un terminal et suivez la procédure:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Allez dans le répertoire de root
+
+3. Créez le docker de heimdall. Tapez:
+
+   .. code:: bash
+
+      docker volume create heimdall_data
+      docker run -d -p 1281:443 --name=heimdall --restart=always -v heimdall_data:/config:rw -e PGID=1000 -e PUID=1000  linuxserver/heimdall
+
+.. __création_du_site_web_de_heimdall:
+
+Création du site web de heimdall
+--------------------------------
+
+Appliquez la procédure suivante:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``heimdall``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``heimdall``.
+
+   b. Le faire pointer vers le web folder ``heimdall``.
+
+   c. Activer let’s encrypt ssl
+
+   d. Activer ``Fast CGI`` pour PHP
+
+   e. Laisser le reste par défaut.
+
+   f. Dans l’onglet Options:
+
+   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
+
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
+
+         # redirect from server
+         #
+
+         SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         SSLProxyEngine On # Comment this out if no https required
+         ProxyPreserveHost    On
+         SSLProxyVerify none
+         SSLProxyCheckPeerCN off
+         SSLProxyCheckPeerName off
+         SSLProxyCheckPeerExpire off
+
+         ProxyPass / https://localhost:1281/
+         ProxyPassReverse / https://localhost:1281/
+
+         RedirectMatch ^/$ https://heimdall.example.com 
+
+      -  remplacer ``example.com`` par votre nom de domaine
+
+.. __configuration_du_site_heimdall:
+
+Configuration du site heimdall
+------------------------------
+
+Votre site web ``heimdall`` est installé et opérationnel.
+
+1. Pointez votre navigateur sur votre site web ``heimdall``
+
+2. Créez un compte avec votre login et choisissez un mot de passe.
+
+3. Sélectionnez l’icone User (3 éme icone en forme de portrait à
+   droite).
+
+4. Sélectionnez Admin et cliquez sur l’icone modifier
+
+5. Tapez un mot de passe, le confirmer. Sélectionnez "Allow logging in
+   from a specific URL". Cliquez sur "Enregistrez"
+
+6. Une URL est maintenant disponible vous pouvez la mettre comme page
+   d’accueil de votre navigateur
+
+Tout est prêt!
+
+.. __upgrade_de_heimdall:
+
+Upgrade de Heimdall
+-------------------
+
+Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+pouvez aussi appliquer la procédure de mise à jour des containers à
+l’aide de ```Portainer`` <#port_container_updt>`__ ou à l’aide
+```Yacht`` <#yacht_container_updt>`__
+
+Sinon, effectuez les opérations suivantes:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Allez dans le répertoire de root
+
+3. Mettez à jour le docker de heimdall. Tapez:
+
+   .. code:: bash
+
+      docker pull linuxserver/heimdall
+      docker stop heimdall
+      docker rm heimdall
+      docker run -d -p 1281:443 --name=heimdall --restart=always -v heimdall_data:/config:rw -e PGID=1000 -e PUID=1000  linuxserver/heimdall
 
 .. __installation_du_système_de_partage_de_fichiers_seafile:
 
@@ -9145,7 +10236,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    h. Cliquez sur ``Save``
 
-.. __création_des_bases_de_données_5:
+.. __création_des_bases_de_données_9:
 
 Création des bases de données
 -----------------------------
@@ -9483,17 +10574,18 @@ Annexe
 Installation de Hestia
 ----------------------
 
-Hestia est basé sur VestaCP. C’est une alternative opensource et plus
-moderne de cet outiL. La documentation est proposée ici:
+``Hestia`` est basé sur VestaCP. C’est une alternative opensource et
+plus moderne de cet outil. La documentation est proposée ici:
 https://docs.hestiacp.com/
 
-Attention Hestia n’est pas compatible de Webmin dans le sens que webmin
-est incapable de lire et d’interpréter les fichiers créés par Hestia.
+Attention ``Hestia`` n’est pas compatible de ``Webmin`` dans le sens que
+``Webmin`` est incapable de lire et d’interpréter les fichiers créés par
+``Hestia``.
 
-De même, Hestia est principalement compatible de PHP. Si vous utilisez
-des système web basés sur des applicatifs écrits en Python ou en Ruby,
-la configuration sera à faire à la main avec tous les problèmes de
-compatibilité que cela impose.
+De même, ``Hestia`` est principalement compatible de PHP. Si vous
+utilisez des système web basés sur des applicatifs écrits en Python ou
+en Ruby, la configuration sera à faire à la main avec tous les problèmes
+de compatibilité que cela impose.
 
 Pour installer:
 
@@ -9521,13 +10613,14 @@ Pour installer:
       serveur qui sera installé. ce peut être une adresse gmail.com par
       exemple.
 
-3. Hestia est installé. Il est important de bien noter le mot de passe
-   du compte admin de Hestia ainsi que le numéro de port du site web
+3. ``Hestia`` est installé. Il est important de bien noter le mot de
+   passe du compte admin de ``Hestia`` ainsi que le numéro de port du
+   site web
 
-.. __configuration_dun_écran_3_5inch_rpi_lcd_a:
+.. __configuration_dun_écran_3_5_inch_rpi_lcd_a:
 
-Configuration d’un écran 3.5inch RPi LCD (A)
---------------------------------------------
+Configuration d’un écran 3.5 inch RPI LCD (A)
+---------------------------------------------
 
 .. __pour_commencer:
 
@@ -9544,7 +10637,7 @@ Le RPi LCD peut être piloté de deux manières :
 3. Téléchargez la dernière image sur le site web de Raspberry Pi et
    écrivez-la sur la carte SD.
 
-4. Connectez l’écran LCD RPi à Raspberry Pi et connectez le Pi au
+4. Connectez l’écran LCD RPI à Raspberry Pi et connectez le Pi au
    réseau.
 
 5. Configurez votre Pi :
@@ -9560,8 +10653,8 @@ Le RPi LCD peut être piloté de deux manières :
    -  Boot Option → Desktop Autologin (peut différer selon la révision
       Raspbian)
 
-7. Ouvrez le terminal du Raspberry Pi (Vous devrez peut-être connecter
-   un clavier et un écran LCD HDMI à Pi pour l’installation du pilote).
+7. Ouvrez le terminal du Raspberry PI (Vous devrez peut-être connecter
+   un clavier et un écran LCD HDMI à PI pour l’installation du pilote).
    Tapez:
 
    ::
@@ -9578,7 +10671,7 @@ Le RPi LCD peut être piloté de deux manières :
       chmod +x LCD35-show
       ./LCD35-show
 
-8. Après le redémarrage du système, le RPi LCD est prêt à l’emploi.
+8. Après le redémarrage du système, le RPI LCD est prêt à l’emploi.
 
 .. __basculer_entre_laffichage_lcd_et_hdmi:
 

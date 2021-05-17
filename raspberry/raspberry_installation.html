@@ -522,8 +522,8 @@ pre.pygments .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Int
 <div class="details">
 <span id="author" class="author">Stéphane Apiou</span><br>
 <span id="email" class="email"><a href="mailto:stephane@apiou.org">stephane@apiou.org</a></span><br>
-<span id="revnumber">version 1.2,</span>
-<span id="revdate">2021-01-24</span>
+<span id="revnumber">version 1.3,</span>
+<span id="revdate">2021-05-15</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -566,7 +566,7 @@ pre.pygments .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Int
 <li><a href="#_configuration_d_awstats">7.5. Configuration d' Awstats</a></li>
 <li><a href="#_configuration_de_fail2ban">7.6. Configuration de Fail2ban</a></li>
 <li><a href="#_installation_et_configuration_de_pureftpd">7.7. Installation et configuration de PureFTPd</a></li>
-<li><a href="#_installation_et_configuration_de_phpmyadmin">7.8. Installation et configuration de phpmyadmin</a></li>
+<li><a href="#_installation_et_configuration_de_phpmyadmin">7.8. Installation et configuration de Phpmyadmin</a></li>
 <li><a href="#_installation_du_webmail_roundcube">7.9. Installation du webmail Roundcube</a></li>
 <li><a href="#_installation_de_lets_encrypt">7.10. Installation de Let&#8217;s Encrypt</a></li>
 <li><a href="#_scan_des_vulnérabilités">7.11. Scan des vulnérabilités</a></li>
@@ -621,120 +621,163 @@ pre.pygments .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Int
 <li><a href="#_installation_de_docker_swarm">14.4. Installation de docker swarm</a></li>
 <li><a href="#_choix_des_images_docker">14.5. Choix des images docker</a></li>
 <li><a href="#_mise_à_jour_automatique_des_images">14.6. Mise à jour automatique des images</a></li>
-<li><a href="#_installation_de_yacht">14.7. Installation de Yacht</a></li>
-<li><a href="#_installation_de_portainer">14.8. Installation de Portainer</a></li>
 </ul>
 </li>
-<li><a href="#_installation_des_cms_joomla_et_concrete5">15. Installation des CMS Joomla et Concrete5</a>
+<li><a href="#_outils_web_de_gestion_des_containers">15. Outils web de gestion des containers</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_joomla">15.1. Création du site web de Joomla</a></li>
-<li><a href="#_création_de_lapplication_joomla">15.2. Création de l&#8217;application Joomla</a></li>
+<li><a href="#_installation_de_yacht">15.1. Installation de Yacht</a></li>
+<li><a href="#yacht_container_updt">15.2. Upgrade d&#8217;un container dans Yacht</a></li>
+<li><a href="#_upgrade_de_yacht">15.3. Upgrade de Yacht</a></li>
+<li><a href="#_installation_de_portainer">15.4. Installation de Portainer</a></li>
+<li><a href="#port_container_updt">15.5. Upgrade d&#8217;un container dans Portainer</a></li>
+<li><a href="#_upgrade_de_portainer">15.6. Upgrade de Portainer</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_portail_wiki_mediawiki">16. Installation du portail wiki Mediawiki</a>
+<li><a href="#_installation_des_cms_joomla">16. Installation des CMS Joomla</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_mediawiki">16.1. Création du site web de Mediawiki</a></li>
-<li><a href="#_création_de_lapplication_mediawiki">16.2. Création de l&#8217;application Mediawiki</a></li>
+<li><a href="#_création_du_site_web_de_joomla">16.1. Création du site web de Joomla</a></li>
+<li><a href="#_création_des_bases_de_données">16.2. Création des bases de données</a></li>
+<li><a href="#_création_de_lapplication_joomla">16.3. Création de l&#8217;application Joomla</a></li>
+<li><a href="#_update_de_joomla">16.4. Update de Joomla</a></li>
 </ul>
 </li>
-<li><a href="#_installation_dun_gestionnaire_de_blog_wordpress">17. Installation d&#8217;un gestionnaire de Blog Wordpress</a>
+<li><a href="#_installation_des_cms_concrete5">17. Installation des CMS Concrete5</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_wordpress">17.1. Création du site web de Wordpress</a></li>
-<li><a href="#_création_de_lapplication_wordpress">17.2. Création de l&#8217;application Wordpress</a></li>
+<li><a href="#_création_du_site_web_de_concrete5">17.1. Création du site web de Concrete5</a></li>
+<li><a href="#_création_des_bases_de_données_2">17.2. Création des bases de données</a></li>
+<li><a href="#_création_de_lapplication_concrete5">17.3. Création de l&#8217;application Concrete5</a></li>
+<li><a href="#_update_de_concrete5">17.4. Update de concrete5</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_cms_micro_weber">18. Installation du CMS Micro Weber</a>
+<li><a href="#_installation_du_portail_wiki_mediawiki">18. Installation du portail wiki Mediawiki</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_microweber">18.1. Création du site web de Microweber</a></li>
-<li><a href="#_création_des_bases_de_données">18.2. Création des bases de données</a></li>
-<li><a href="#_installation_de_microweber">18.3. Installation de Microweber</a></li>
+<li><a href="#_création_du_site_web_de_mediawiki">18.1. Création du site web de Mediawiki</a></li>
+<li><a href="#_création_des_bases_de_données_3">18.2. Création des bases de données</a></li>
+<li><a href="#_création_de_lapplication_mediawiki">18.3. Création de l&#8217;application Mediawiki</a></li>
+<li><a href="#_update_du_serveur_mediawiki">18.4. Update du serveur Mediawiki</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_gestionnaire_de_photos_piwigo">19. Installation du gestionnaire de photos Piwigo</a>
+<li><a href="#_installation_dun_gestionnaire_de_blog_wordpress">19. Installation d&#8217;un gestionnaire de Blog Wordpress</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_piwigo">19.1. Création du site web de Piwigo</a></li>
-<li><a href="#_création_des_bases_de_données_2">19.2. Création des bases de données</a></li>
-<li><a href="#_installation_de_piwigo">19.3. Installation de Piwigo</a></li>
+<li><a href="#_création_du_site_web_de_wordpress">19.1. Création du site web de Wordpress</a></li>
+<li><a href="#_création_des_bases_de_données_4">19.2. Création des bases de données</a></li>
+<li><a href="#_création_de_lapplication_wordpress">19.3. Création de l&#8217;application Wordpress</a></li>
+<li><a href="#_update_de_wordpress">19.4. Update de wordpress</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_système_collaboratif_nextcloud">20. Installation du système collaboratif Nextcloud</a>
+<li><a href="#_installation_du_cms_micro_weber">20. Installation du CMS Micro Weber</a>
 <ul class="sectlevel2">
-<li><a href="#_installation_initiale">20.1. Installation initiale</a></li>
-<li><a href="#_création_du_site_web_de_nextcloud">20.2. Création du site web de Nextcloud</a></li>
-<li><a href="#_création_des_bases_de_données_3">20.3. Création des bases de données</a></li>
-<li><a href="#_installation_de_nextcloud">20.4. Installation de Nextcloud</a></li>
+<li><a href="#_création_du_site_web_de_microweber">20.1. Création du site web de Microweber</a></li>
+<li><a href="#_création_des_bases_de_données_5">20.2. Création des bases de données</a></li>
+<li><a href="#_installation_de_microweber">20.3. Installation de Microweber</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_gestionnaire_de_projet_gitea">21. Installation du gestionnaire de projet Gitea</a>
+<li><a href="#_installation_de_mealie">21. Installation de Mealie</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_gitea">21.1. Création du site web de Gitea</a></li>
-<li><a href="#_création_des_bases_de_données_4">21.2. Création des bases de données</a></li>
-<li><a href="#_téléchargez_et_installez_gitea">21.3. Téléchargez et installez Gitea</a></li>
-<li><a href="#_activer_une_connexion_ssh_dédiée">21.4. Activer une connexion SSH dédiée</a></li>
+<li><a href="#_prérequis">21.1. Prérequis</a></li>
+<li><a href="#_installation_du_serveur_mealie">21.2. Installation du serveur Mealie</a></li>
+<li><a href="#_création_du_site_web_de_mealie">21.3. Création du site web de mealie</a></li>
+<li><a href="#_configuration_du_site_mealie">21.4. Configuration du site mealie</a></li>
+<li><a href="#_upgrade_de_mealie">21.5. Upgrade de Mealie</a></li>
 </ul>
 </li>
-<li><a href="#_installation_de_bitwarden">22. Installation de Bitwarden</a>
+<li><a href="#_installation_du_gestionnaire_de_photos_piwigo">22. Installation du gestionnaire de photos Piwigo</a>
 <ul class="sectlevel2">
-<li><a href="#_prérequis">22.1. Prérequis</a></li>
-<li><a href="#_installation_du_serveur_bitwarden">22.2. Installation du serveur Bitwarden</a></li>
-<li><a href="#_création_du_site_web_de_bitwarden">22.3. Création du site web de Bitwarden</a></li>
-<li><a href="#_configuration_du_site_bitwarden">22.4. Configuration du site bitwarden</a></li>
+<li><a href="#_création_du_site_web_de_piwigo">22.1. Création du site web de Piwigo</a></li>
+<li><a href="#_création_des_bases_de_données_6">22.2. Création des bases de données</a></li>
+<li><a href="#_installation_de_piwigo">22.3. Installation de Piwigo</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_système_de_partage_de_fichiers_seafile">23. Installation du système de partage de fichiers Seafile</a>
+<li><a href="#_installation_du_système_collaboratif_nextcloud">23. Installation du système collaboratif Nextcloud</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_seafile">23.1. Création du site web de Seafile</a></li>
-<li><a href="#_création_de_bases_de_données">23.2. Création de bases de données</a></li>
-<li><a href="#_téléchargez_et_installez_seafile">23.3. Téléchargez et installez Seafile</a></li>
-<li><a href="#_lancement_initial">23.4. Lancement initial</a></li>
-<li><a href="#_lancement_automatique_de_seafile">23.5. Lancement automatique de Seafile</a></li>
+<li><a href="#_installation_initiale">23.1. Installation initiale</a></li>
+<li><a href="#_création_du_site_web_de_nextcloud">23.2. Création du site web de Nextcloud</a></li>
+<li><a href="#_création_des_bases_de_données_7">23.3. Création des bases de données</a></li>
+<li><a href="#_installation_de_nextcloud">23.4. Installation de Nextcloud</a></li>
+<li><a href="#_upgrade_de_nextcloud">23.5. Upgrade de Nextcloud</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_système_de_monitoring_grafana">24. Installation du système de monitoring Grafana</a>
+<li><a href="#_installation_du_gestionnaire_de_projet_gitea">24. Installation du gestionnaire de projet Gitea</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_grafana">24.1. Création du site web de Grafana</a></li>
-<li><a href="#_installation_de_grafana">24.2. Installation de Grafana</a></li>
-<li><a href="#_installation_et_configuration_de_loki">24.3. Installation et configuration de Loki</a></li>
-<li><a href="#_installation_et_configuration_de_promtail">24.4. Installation et configuration de Promtail</a></li>
+<li><a href="#_création_du_site_web_de_gitea">24.1. Création du site web de Gitea</a></li>
+<li><a href="#_création_des_bases_de_données_8">24.2. Création des bases de données</a></li>
+<li><a href="#_téléchargez_et_installez_gitea">24.3. Téléchargez et installez Gitea</a></li>
+<li><a href="#_activer_une_connexion_ssh_dédiée">24.4. Activer une connexion SSH dédiée</a></li>
+<li><a href="#_update_de_gitea">24.5. Update de Gitea</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_système_de_backup_borgbackup">25. Installation du système de backup BorgBackup</a>
+<li><a href="#_installation_de_bitwarden">25. Installation de Bitwarden</a>
 <ul class="sectlevel2">
-<li><a href="#_introduction">25.1. Introduction</a></li>
-<li><a href="#_installation_du_serveur_de_stockage">25.2. Installation du serveur de stockage</a></li>
-<li><a href="#_installation_sur_le_serveur_sauvegardé">25.3. Installation sur le serveur sauvegardé</a></li>
-<li><a href="#_effectuer_un_backup">25.4. Effectuer un backup</a></li>
-<li><a href="#_lister_les_backups">25.5. Lister les backups</a></li>
-<li><a href="#_vérifier_un_backup">25.6. Vérifier un backup</a></li>
-<li><a href="#_restaurer_un_backup">25.7. Restaurer un backup</a></li>
-<li><a href="#_supprimer_vos_vieux_backups">25.8. Supprimer vos vieux backups</a></li>
-<li><a href="#_automatisez_votre_sauvegarde">25.9. Automatisez votre sauvegarde</a></li>
-<li><a href="#_restauration_durgence">25.10. Restauration d&#8217;urgence.</a></li>
-<li><a href="#_installation_de_borgweb">25.11. Installation de Borgweb</a></li>
-<li><a href="#_création_du_site_web_de_borgweb">25.12. Création du site web de Borgweb</a></li>
+<li><a href="#_prérequis_2">25.1. Prérequis</a></li>
+<li><a href="#_installation_du_serveur_bitwarden">25.2. Installation du serveur Bitwarden</a></li>
+<li><a href="#_création_du_site_web_de_bitwarden">25.3. Création du site web de Bitwarden</a></li>
+<li><a href="#_configuration_du_site_bitwarden">25.4. Configuration du site Bitwarden</a></li>
+<li><a href="#_upgrade_de_bitwarden">25.5. Upgrade de Bitwarden</a></li>
 </ul>
 </li>
-<li><a href="#_installation_dun_serveur_de_vpn_pritunl">26. Installation d&#8217;un serveur de VPN Pritunl</a>
+<li><a href="#_installation_de_heimdall">26. Installation de Heimdall</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_pritunl">26.1. Création du site web de Pritunl</a></li>
-<li><a href="#_installation_de_pritunl_sur_un_vps">26.2. Installation de Pritunl sur un VPS</a></li>
-<li><a href="#_installation_de_pritunl_sur_un_raspberrypi">26.3. Installation de Pritunl sur un Raspberrypi</a></li>
-<li><a href="#_se_connecter_au_serveur_de_vpn">26.4. Se connecter au serveur de VPN</a></li>
-<li><a href="#_réparer_une_base_pritunl">26.5. Réparer une base Pritunl</a></li>
-<li><a href="#_mot_de_passe_perdu">26.6. Mot de passe perdu</a></li>
+<li><a href="#_prérequis_3">26.1. Prérequis</a></li>
+<li><a href="#_installation_du_serveur_heimdall">26.2. Installation du serveur Heimdall</a></li>
+<li><a href="#_création_du_site_web_de_heimdall">26.3. Création du site web de heimdall</a></li>
+<li><a href="#_configuration_du_site_heimdall">26.4. Configuration du site heimdall</a></li>
+<li><a href="#_upgrade_de_heimdall">26.5. Upgrade de Heimdall</a></li>
 </ul>
 </li>
-<li><a href="#_installation_dun_serveur_de_bureau_à_distance_guacamole">27. Installation d&#8217;un serveur de bureau à distance Guacamole</a>
+<li><a href="#_installation_du_système_de_partage_de_fichiers_seafile">27. Installation du système de partage de fichiers Seafile</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_guacamole">27.1. Création du site web de Guacamole</a></li>
-<li><a href="#_création_des_bases_de_données_5">27.2. Création des bases de données</a></li>
-<li><a href="#_installation_du_guacamole">27.3. Installation du Guacamole</a></li>
+<li><a href="#_création_du_site_web_de_seafile">27.1. Création du site web de Seafile</a></li>
+<li><a href="#_création_de_bases_de_données">27.2. Création de bases de données</a></li>
+<li><a href="#_téléchargez_et_installez_seafile">27.3. Téléchargez et installez Seafile</a></li>
+<li><a href="#_lancement_initial">27.4. Lancement initial</a></li>
+<li><a href="#_lancement_automatique_de_seafile">27.5. Lancement automatique de Seafile</a></li>
 </ul>
 </li>
-<li><a href="#_annexe">28. Annexe</a>
+<li><a href="#_installation_du_système_de_monitoring_grafana">28. Installation du système de monitoring Grafana</a>
 <ul class="sectlevel2">
-<li><a href="#_installation_de_hestia">28.1. Installation de Hestia</a></li>
-<li><a href="#_configuration_dun_écran_3_5inch_rpi_lcd_a">28.2. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</a></li>
+<li><a href="#_création_du_site_web_de_grafana">28.1. Création du site web de Grafana</a></li>
+<li><a href="#_installation_de_grafana">28.2. Installation de Grafana</a></li>
+<li><a href="#_installation_et_configuration_de_loki">28.3. Installation et configuration de Loki</a></li>
+<li><a href="#_installation_et_configuration_de_promtail">28.4. Installation et configuration de Promtail</a></li>
+</ul>
+</li>
+<li><a href="#_installation_du_système_de_backup_borgbackup">29. Installation du système de backup BorgBackup</a>
+<ul class="sectlevel2">
+<li><a href="#_introduction">29.1. Introduction</a></li>
+<li><a href="#_installation_du_serveur_de_stockage">29.2. Installation du serveur de stockage</a></li>
+<li><a href="#_installation_sur_le_serveur_sauvegardé">29.3. Installation sur le serveur sauvegardé</a></li>
+<li><a href="#_effectuer_un_backup">29.4. Effectuer un backup</a></li>
+<li><a href="#_lister_les_backups">29.5. Lister les backups</a></li>
+<li><a href="#_vérifier_un_backup">29.6. Vérifier un backup</a></li>
+<li><a href="#_restaurer_un_backup">29.7. Restaurer un backup</a></li>
+<li><a href="#_supprimer_vos_vieux_backups">29.8. Supprimer vos vieux backups</a></li>
+<li><a href="#_automatisez_votre_sauvegarde">29.9. Automatisez votre sauvegarde</a></li>
+<li><a href="#_restauration_durgence">29.10. Restauration d&#8217;urgence.</a></li>
+<li><a href="#_installation_de_borgweb">29.11. Installation de Borgweb</a></li>
+<li><a href="#_création_du_site_web_de_borgweb">29.12. Création du site web de Borgweb</a></li>
+</ul>
+</li>
+<li><a href="#_installation_dun_serveur_de_vpn_pritunl">30. Installation d&#8217;un serveur de VPN Pritunl</a>
+<ul class="sectlevel2">
+<li><a href="#_création_du_site_web_de_pritunl">30.1. Création du site web de Pritunl</a></li>
+<li><a href="#_installation_de_pritunl_sur_un_vps">30.2. Installation de Pritunl sur un VPS</a></li>
+<li><a href="#_installation_de_pritunl_sur_un_raspberrypi">30.3. Installation de Pritunl sur un Raspberrypi</a></li>
+<li><a href="#_se_connecter_au_serveur_de_vpn">30.4. Se connecter au serveur de VPN</a></li>
+<li><a href="#_réparer_une_base_pritunl">30.5. Réparer une base Pritunl</a></li>
+<li><a href="#_mot_de_passe_perdu">30.6. Mot de passe perdu</a></li>
+</ul>
+</li>
+<li><a href="#_installation_dun_serveur_de_bureau_à_distance_guacamole">31. Installation d&#8217;un serveur de bureau à distance Guacamole</a>
+<ul class="sectlevel2">
+<li><a href="#_création_du_site_web_de_guacamole">31.1. Création du site web de Guacamole</a></li>
+<li><a href="#_création_des_bases_de_données_9">31.2. Création des bases de données</a></li>
+<li><a href="#_installation_du_guacamole">31.3. Installation du Guacamole</a></li>
+</ul>
+</li>
+<li><a href="#_annexe">32. Annexe</a>
+<ul class="sectlevel2">
+<li><a href="#_installation_de_hestia">32.1. Installation de Hestia</a></li>
+<li><a href="#_configuration_dun_écran_3_5_inch_rpi_lcd_a">32.2. Configuration d&#8217;un écran 3.5 inch RPI LCD (A)</a></li>
 </ul>
 </li>
 </ul>
@@ -797,10 +840,10 @@ Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentat
 <p>un outil de Monitoring <a href="http://mmonit.com/monit/">Monit</a>,</p>
 </li>
 <li>
-<p>L&#8217;installation de <a href="https://hub.docker.com/">Docker</a> et des outils <a href="https://portainer.io">Portainer</a> et <a href="https://yacht.sh">Yacht</a>,</p>
+<p>l&#8217;installation de <a href="https://hub.docker.com/">Docker</a> et des outils <a href="https://portainer.io">Portainer</a> et <a href="https://yacht.sh">Yacht</a>,</p>
 </li>
 <li>
-<p>un sous domaine pointant sur un site auto-hébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <a href="https://yunohost.org">Yunohost</a>),</p>
+<p>un sous domaine pointant sur un site auto-hébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <a href="https://yunohost.org">Yunohost</a> ) par exemple,</p>
 </li>
 <li>
 <p>un site CMS sous <a href="https://www.joomla.fr/">Joomla</a>,</p>
@@ -812,13 +855,16 @@ Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentat
 <p>un site WIKI sous <a href="https://www.mediawiki.org">Mediawiki</a>,</p>
 </li>
 <li>
-<p>un site <a href="https://wordpress.com">Wordpress</a>,</p>
+<p>un site de blog <a href="https://wordpress.com">Wordpress</a>,</p>
 </li>
 <li>
 <p>un site <a href="https://microweber.org/">Microweber</a>,</p>
 </li>
 <li>
 <p>un site Photo sous <a href="https://piwigo.org/">Piwigo</a>,</p>
+</li>
+<li>
+<p>un site de partage de recettes de cuisine <a href="https://hay-kot.github.io/mealie/">Mealie</a></p>
 </li>
 <li>
 <p>un site Collaboratif sous <a href="https://nextcloud.com">Nextcloud</a>,</p>
@@ -828,6 +874,9 @@ Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentat
 </li>
 <li>
 <p>un serveur de mots de passe <a href="https://bitwarden.com/">Bitwarden</a>,</p>
+</li>
+<li>
+<p>un dashboard pour vos sites web <a href="https://heimdall.site/">Heimdall</a>,</p>
 </li>
 <li>
 <p>un serveur et un site  de partage de fichiers <a href="https://www.seafile.com">Seafile</a>,</p>
@@ -869,7 +918,7 @@ Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentat
 </ul>
 </div>
 <div class="paragraph">
-<p>Par rapport à une solution VPS directement dans le cloud, ce budget correspond à 7-10 mois d&#8217;abonnement.</p>
+<p>Par rapport à une solution VPS directement dans le cloud, ce budget correspond à 7-10 mois d&#8217;abonnement. Si vous avez la Fibre chez vous, il est nettement plus rentable d&#8217;utiliser un Raspberry que de prendre un abonne VPS.</p>
 </div>
 </div>
 </div>
@@ -3867,7 +3916,9 @@ quotaon -avug</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_et_configuration_de_phpmyadmin">7.8. Installation et configuration de phpmyadmin</h3>
+<h3 id="_installation_et_configuration_de_phpmyadmin">7.8. Installation et configuration de Phpmyadmin</h3>
+<div class="sect3">
+<h4 id="_installation_de_phpmyadmin">7.8.1. Installation de Phpmyadmin</h4>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -4111,7 +4162,9 @@ systemctl restart apache2</code></pre>
 <span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;savedsearches&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__savedsearches&#39;</span><span class="tok-p">;</span>
 <span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;central_columns&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__central_columns&#39;</span><span class="tok-p">;</span>
 <span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;designer_settings&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__designer_settings&#39;</span><span class="tok-p">;</span>
-<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;export_templates&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__export_templates&#39;</span><span class="tok-p">;</span></code></pre>
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;Servers&#39;</span><span class="tok-p">][</span><span class="tok-nv">$i</span><span class="tok-p">][</span><span class="tok-s1">&#39;export_templates&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;pma__export_templates&#39;</span><span class="tok-p">;</span><span class="tok-nx">o</span>
+
+<span class="tok-nv">$cfg</span><span class="tok-p">[</span><span class="tok-s1">&#39;TempDir&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;/var/lib/phpmyadmin/tmp&#39;</span><span class="tok-p">;</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4127,6 +4180,58 @@ systemctl restart apache2</code></pre>
 </div>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_upgrade_de_phpmyadmin">7.8.2. Upgrade de Phpmyadmin</h4>
+<div class="paragraph">
+<p>Suivez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>allez sur le site de <a href="https://www.phpmyadmin.net/downloads/">phpMyAdmin</a> et copier l&#8217;adresse du lien vers la dernière version de l&#8217;outil.</p>
+</li>
+<li>
+<p>Mettez à jour phpmyadmin. Exécutez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mv /usr/share/phpmyadmin /usr/share/phpmyadmin.old
+mkdir /usr/share/phpmyadmin
+<span class="tok-nb">cd</span> /tmp
+wget https://files.phpmyadmin.net/phpMyAdmin/5.1.0/phpMyAdmin-5.1.0-all-languages.tar.gz
+tar xfz phpMyAdmin-5.1.0-all-languages.tar.gz
+mv phpMyAdmin-5.1.0-all-languages/* /usr/share/phpmyadmin/
+rm phpMyAdmin-5.1.0-all-languages.tar.gz
+rm -rf phpMyAdmin-5.1.0-all-languages
+cp /usr/share/phpmyadmin.old/config.inc.php  /usr/share/phpmyadmin/config.inc.php</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez apache. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart apache2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Vérifiez que tout fonctionne correctement sur le site phpmyadmin</p>
+</li>
+<li>
+<p>Supprimez l&#8217;ancien répertoire</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>rm -rf /usr/share/phpmyadmin.old</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -4288,15 +4393,41 @@ git clone https://github.com/CISOfy/lynis</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_installation_et_utilisation_de_nmap">7.11.2. Installation et utilisation de NMAP</h4>
+<h4 id="_upgrade_de_lynis">7.11.2. Upgrade de Lynis</h4>
+<div class="paragraph">
+<p>Pour effectuer la mise à jour de Lynis appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span>
+<span class="tok-nb">cd</span> lynis
+git pull</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_installation_et_utilisation_de_nmap_et_autres_outils">7.11.3. Installation et utilisation de NMAP et autres outils</h4>
+<div class="paragraph">
+<p>Ce paragraphe est à rédiger &#8230;&#8203;</p>
+</div>
 <div class="paragraph">
 <p>nmap -A -T4 example.com</p>
 </div>
 <div class="paragraph">
-<p>whatweb -a 3 cogen.apiou.org</p>
+<p>whatweb -a 3 example.com</p>
 </div>
 <div class="paragraph">
-<p>nikto -h apiou.org</p>
+<p>nikto -h example.com</p>
 </div>
 <div class="paragraph">
 <p>docker run -it -d --name zap -u zap -p 8080:8080 -p 8091:8090 -i owasp/zap2docker-stable zap-webswing.sh</p>
@@ -5547,8 +5678,6 @@ Vous ne pouvez définir un sous-domaine que si vous avez défini le site web rac
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 
-<span class="tok-nb">ProxyPassMatch</span> ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
-
 <span class="tok-nb">ProxyPass</span> / http://localhost[:port_number_if_any]/[path_if_any]
 <span class="tok-nb">ProxyPassReverse</span> / http://localhost[:port_number_if_any]/[path_if_any]
 
@@ -5582,10 +5711,8 @@ Vous ne pouvez définir un sous-domaine que si vous avez défini le site web rac
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span> # Comment this out if no https required
-<span class="tok-nb">RequestHeader</span> set Front-End-Https <span class="tok-s2">&quot;On&quot;</span> # Comment this out if no https required
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
 
-<span class="tok-nb">ProxyPassMatch</span> ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
 <span class="tok-nb">ProxyPass</span> / https://localhost[:port_number_if_any]/[path_if_any]
 <span class="tok-nb">ProxyPassReverse</span> / https://localhost[:port_number_if_any]/[path_if_any]
 
@@ -8137,8 +8264,13 @@ Ouroboros n&#8217;est plus maintenu depuis fin 2019. Une alternative est à trou
 </table>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_outils_web_de_gestion_des_containers">15. Outils web de gestion des containers</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_de_yacht">14.7. Installation de Yacht</h3>
+<h3 id="_installation_de_yacht">15.1. Installation de Yacht</h3>
 <div class="paragraph">
 <p>Yacht est un outil d&#8217;administration de vos instances docker sous forme de site web. Yacht est très facile d&#8217;utilisation mais manque de possibilités du moins dans la version actuelle. Si vous souhaitez administrer de façon plus avancée vos instances docker, il est conseillé d&#8217;utiliser Portainer.</p>
 </div>
@@ -8240,7 +8372,7 @@ Ouroboros n&#8217;est plus maintenu depuis fin 2019. Une alternative est à trou
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>docker volume create yacht_data
-docker run -d -p <span class="tok-m">8061</span>:8000 -v /var/run/docker.sock:/var/run/docker.sock --restart<span class="tok-o">=</span>always -v yacht_data:/config selfhostedpro/yacht</code></pre>
+docker run -d -p <span class="tok-m">8061</span>:8000 --name<span class="tok-o">=</span>yacht -v /var/run/docker.sock:/var/run/docker.sock --restart<span class="tok-o">=</span>always -v yacht_data:/config selfhostedpro/yacht</code></pre>
 </div>
 </div>
 </li>
@@ -8284,7 +8416,63 @@ docker run -d -p <span class="tok-m">8061</span>:8000 -v /var/run/docker.sock:/v
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_portainer">14.8. Installation de Portainer</h3>
+<h3 id="yacht_container_updt">15.2. Upgrade d&#8217;un container dans Yacht</h3>
+<div class="paragraph">
+<p>Plutôt que d’effectuer des mises à jour automatiques avec Ouroboros, vous préférerez mettre à jour manuellement avec Yacht.</p>
+</div>
+<div class="paragraph">
+<p>Appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ouvrez un navigateur et pointez sur <a href="http://yacht.example.com" class="bare">http://yacht.example.com</a></p>
+</li>
+<li>
+<p>Logguez vous en tant qu'`admin`</p>
+</li>
+<li>
+<p>Allez  dans l&#8217;onglet <code>Applications</code></p>
+</li>
+<li>
+<p>Cliquez sur le bouton <code>Updates</code></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_upgrade_de_yacht">15.3. Upgrade de Yacht</h3>
+<div class="paragraph">
+<p>Rien a faire pour la mise à jour si vous utilisez <code>Ouroboros</code>
+Vous pouvez aussi appliquer la procédure de mise à jour des <a href="#port_container_updt">containers à l&#8217;aide de <code>Portainer</code></a></p>
+</div>
+<div class="paragraph">
+<p>Sinon, effectuez les opérations suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Allez dans le répertoire de root</p>
+</li>
+<li>
+<p>Mettez à jour le docker de Yacht. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker pull selfhostedpro/yacht
+docker stop yacht
+docker rm yacht
+docker run -d -p <span class="tok-m">8061</span>:8000 --name<span class="tok-o">=</span>yacht -v /var/run/docker.sock:/var/run/docker.sock --restart<span class="tok-o">=</span>always -v yacht_data:/config selfhostedpro/yacht</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_de_portainer">15.4. Installation de Portainer</h3>
 <div class="paragraph">
 <p>Portainer est un outil d&#8217;administration de vos instances docker sous forme de site web. Portainer est plus complexe à utiliser que Yacht, mais offre cependant beaucoup plus de possibilités.</p>
 </div>
@@ -8427,21 +8615,78 @@ docker run -d -p <span class="tok-m">8060</span>:8000 -p <span class="tok-m">905
 </ol>
 </div>
 </div>
+<div class="sect2">
+<h3 id="port_container_updt">15.5. Upgrade d&#8217;un container dans Portainer</h3>
+<div class="paragraph">
+<p>Plutôt que d’effectuer des mises à jour automatiques avec Ouroboros, vous préférerez mettre à jour manuellement avec Portainer.</p>
+</div>
+<div class="paragraph">
+<p>Appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ouvrez un navigateur et pointez sur <a href="http://portainer.example.com" class="bare">http://portainer.example.com</a></p>
+</li>
+<li>
+<p>Logguez vous en tant qu'`admin`</p>
+</li>
+<li>
+<p>Allez  dans l&#8217;onglet <code>Containers</code></p>
+</li>
+<li>
+<p>Double-cliquez sur le container à mettre à jour</p>
+</li>
+<li>
+<p>Dans le nouvel écran <code>Container details</code> cliquez sur l&#8217;icone <code>recreate</code></p>
+</li>
+<li>
+<p>Sélectionnez <code>Pull latest image</code> et cliquez <code>recreate</code></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_upgrade_de_portainer">15.6. Upgrade de Portainer</h3>
+<div class="paragraph">
+<p>Rien a faire pour la mise à jour si vous utilisez <code>Ouroboros</code>
+Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8217;aide de <a href="#yacht_container_updt"><code>Yacht</code></a></p>
+</div>
+<div class="paragraph">
+<p>Sinon, effectuez les opérations suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Allez dans le répertoire de root</p>
+</li>
+<li>
+<p>Mettez à jour le docker de Yacht. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker pull portainer/portainer-ce
+docker stop portainer
+docker rm portainer
+docker run -d -p <span class="tok-m">8060</span>:8000 -p <span class="tok-m">9050</span>:9000 --name<span class="tok-o">=</span>portainer --restart<span class="tok-o">=</span>always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_des_cms_joomla_et_concrete5">15. Installation des CMS Joomla et Concrete5</h2>
+<h2 id="_installation_des_cms_joomla">16. Installation des CMS Joomla</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour et inclut une foule de plugins
-Concrete5 est un autre CMS assez connu  avec un design plus moderne.</p>
-</div>
-<div class="paragraph">
-<p>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.
-Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;appliquer à l&#8217;identique pour concrete5 en remplacant les textes joomla par concrete5.</p>
+<p>Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour et inclut une foule de plugins</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_joomla">15.1. Création du site web de Joomla</h3>
+<h3 id="_création_du_site_web_de_joomla">16.1. Création du site web de Joomla</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -8481,6 +8726,9 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <p>Le faire pointer vers le web folder <code>joomla</code>.</p>
 </li>
 <li>
+<p>Pour <code>Auto-Subdomain</code> sélectionnez <code>None</code></p>
+</li>
+<li>
 <p>Activer let’s encrypt ssl</p>
 </li>
 <li>
@@ -8496,80 +8744,461 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_de_lapplication_joomla">15.2. Création de l&#8217;application Joomla</h3>
+<h3 id="_création_des_bases_de_données">16.2. Création des bases de données</h3>
 <div class="paragraph">
-<p>Appliquez les opérations suivantes dans ISPConfig:</p>
+<p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Allez dans la rubrique <code>Sites</code>, le menu <code>Update Packagelist</code>.</p>
+<p>Créez une base de données mysql. Aller dans le menu <code>Database</code> pour définir un utilisateur MariaDB</p>
 </li>
 <li>
-<p>Cliquez sur <code>Update Packagelist</code></p>
+<p>Aller dans la rubrique <code>Sites</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aller dans le menu <code>Database users</code> pour définir un utilisateur MariaDB</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur <code>Add new User</code> pour créer un nouvel utilisateur</p>
 </li>
 <li>
-<p>Allez dans la rubrique <code>Sites</code>, le menu <code>Available packages</code>.</p>
-</li>
-<li>
-<p>Faites une recherche par <code>Name</code>. Tapez <code>joomla</code></p>
-</li>
-<li>
-<p>Cliquez sur le package <code>joomla</code></p>
-</li>
-<li>
-<p>Cliquez sur <code>Install this package</code></p>
-</li>
-<li>
-<p>Remplissez tous les champs:</p>
+<p>Saisissez les informations:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>Install location:</code> &#8592; choisissez votre domain (<code>example.com</code>) et laissez vide le chemin.</p>
+<p><code>Database user:</code> &#8592;  saisir votre nom d&#8217;utilisateur <code>joomla</code> par exemple</p>
 </li>
 <li>
-<p><code>New database password</code> &#8592; gardez ce qui est remplit</p>
+<p><code>Database password:</code> &#8592; saisir <a href="#pass_gen">un mot de passe généré</a> ou en générer un en cliquant sur le bouton</p>
 </li>
 <li>
-<p><code>Administrator&#8217;s login</code> &#8592; gardez ce qui est remplit: <code>admin</code></p>
+<p><code>Repeat Password:</code> &#8592; saisir de nouveau le mot de passe</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 <li>
-<p><code>Password</code> et <code>Repeat Password</code> &#8592; Tapez votre mot de passe</p>
+<p>Cliquez sur <code>save</code></p>
 </li>
 <li>
-<p><code>Default site language:</code> &#8592; choisissez <code>French</code></p>
+<p>Cliquez sur <code>Add new Database</code> pour créer une nouvelle base de données</p>
 </li>
 <li>
-<p><code>I accept the license</code> &#8592; cochez la case</p>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Site:</code> &#8592; sélectionner le site <code>example.com</code></p>
+</li>
+<li>
+<p><code>Database name:</code> &#8592; Saisissez le nom de la base de données <code>joomla</code></p>
+</li>
+<li>
+<p><code>Database user:</code> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <code>cxjoomla</code>. x: est le numéro de client.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Cliquez sur <code>Install</code></p>
-</li>
-<li>
-<p>Pointez votre navigateur sur <a href="https://example.com/" class="bare">https://example.com/</a> et loguez vous <code>admin</code> avec votre mot de passe saisi, c&#8217;est fait !</p>
-</li>
-<li>
-<p>N&#8217;oubliez pas d&#8217;administrer le site et de le mettre à jour avec la dernière version de Joomla.</p>
+<p>Cliquez sur <code>save</code></p>
 </li>
 </ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_de_lapplication_joomla">16.3. Création de l&#8217;application Joomla</h3>
+<div class="paragraph">
+<p>La procédure d&#8217;installation officielle de Joomla se trouve <a href="https://docs.joomla.org/J3.x:Installing_Joomla">ici</a></p>
+</div>
+<div class="paragraph">
+<p>Suivez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>allez sur le site de <a href="https://downloads.joomla.org/">Joomla</a> et copier l&#8217;adresse du lien vers la dernière version de l&#8217;outil en format tarball.</p>
+</li>
+<li>
+<p>Installez Joomla. Exécutez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp
+wget -O joomla.tar.gz https://downloads.joomla.org/cms/joomla3/3-9-26/Joomla_3-9-26-Stable-Full_Package.tar.gz?format<span class="tok-o">=</span>gz <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nb">cd</span> /var/www/joomla.example.com/joomla/ <i class="conum" data-value="2"></i><b>(2)</b>
+tar -xvzf /tmp/joomla.tar.gz
+rm /tmp/joomla.tar.gz
+chown -R web<span class="tok-o">[</span>x<span class="tok-o">]</span>:client<span class="tok-o">[</span>y<span class="tok-o">]</span> /var/www/joomla.example.com/joomla  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <code>Options</code>&#8594;champs Linux User et Linux Group.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>mettre ici votre site web à la place de joomla.example.com et le répertoire d&#8217;installation à la place de joomla</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Joomla.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Pointez votre navigateur sur <a href="https://joomla.example.com" class="bare">https://joomla.example.com</a>.</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet <code>configuration</code> :</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Choisissez votre langue <code>fr</code>.</p>
+</li>
+<li>
+<p><code>Nom du site</code> &#8592; mettez le nom de votre site web</p>
+</li>
+<li>
+<p><code>Description</code> &#8592; mettez une description courte de votre site</p>
+</li>
+<li>
+<p><code>Email</code> &#8592; indiquez votre email d&#8217;admin</p>
+</li>
+<li>
+<p>Saisissez le <code>identifiant</code> du compte administrateur</p>
+</li>
+<li>
+<p>Saisissez 2 fois <a href="#pass_gen">un mot de passe généré</a> dans <code>mot de passe</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Cliquez <code>suivant</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Choisissez une base <code>MySQLi</code></p>
+</li>
+<li>
+<p>mettez <code>Localhost</code> comme <code>Nom du serveur</code></p>
+</li>
+<li>
+<p>Dans le <code>nom d&#8217;utilisateur</code>  mettez <code>cxjoomla</code> comme créé plus haut</p>
+</li>
+<li>
+<p>Dans le <code>mot de passe</code> saisissez le mot de passe de créé pour la base.</p>
+</li>
+<li>
+<p>Dans le <code>nom de la base de données</code> mettez <code>cxjoomla</code> comme créé plus haut</p>
+</li>
+<li>
+<p>Vous pouvez laisser le prefixe des tables ou mettre à vide si votre base est dédiée.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Cliquez <code>suivant</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Dans l&#8217;écran suivant, vous choisissez le <code>type de site</code></p>
+</li>
+<li>
+<p>Vérifiez votre configuration</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Cliquez <code>suivant</code></p>
+</li>
+<li>
+<p>L&#8217;installation s&#8217;effectue. Une fois terminée avec succès, vous pouvez décider d&#8217;installer des langues</p>
+</li>
+<li>
+<p>N&#8217;oubliez pas ensuite de supprimer le répertoire <code>installation</code> en cliquant sur le bouton <code>Supprimer le répertoire</code></p>
+</li>
+<li>
+<p>Cliquez ensuite sur le bouton <code>Administration</code> pour continuer à configurer votre site ou sur <code>Site</code> pour voir votre installation par défaut</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_de_joomla">16.4. Update de Joomla</h3>
+<div class="paragraph">
+<p>La mise à jour de Joomla s&#8217;effectue au travers du portail d&#8217;administration
+Joomla vous prévient d&#8217;un mise à jour du moteur et vous propose de le mettre à jour.
+CLiquez sur le lien qui vous est présenté dans l&#8217;interface.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_portail_wiki_mediawiki">16. Installation du portail wiki Mediawiki</h2>
+<h2 id="_installation_des_cms_concrete5">17. Installation des CMS Concrete5</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Concrete5 est un CMS très connu écrit en PHP. Il est fréquemment mis à jour et permet une configuration wysiwyg</p>
+</div>
+<div class="sect2">
+<h3 id="_création_du_site_web_de_concrete5">17.1. Création du site web de Concrete5</h3>
+<div class="paragraph">
+<p>Appliquez les opérations suivantes Dans ISPConfig:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>Concrete5</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>Concrete5</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>Concrete5</code>.</p>
+</li>
+<li>
+<p>Pour <code>Auto-Subdomain</code> sélectionnez <code>None</code></p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_des_bases_de_données_2">17.2. Création des bases de données</h3>
+<div class="paragraph">
+<p>Appliquez les opérations suivantes dans ISPConfig :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Créez une base de données mysql. Aller dans le menu <code>Database</code> pour définir un utilisateur MariaDB</p>
+</li>
+<li>
+<p>Aller dans la rubrique <code>Sites</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aller dans le menu <code>Database users</code> pour définir un utilisateur MariaDB</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur <code>Add new User</code> pour créer un nouvel utilisateur</p>
+</li>
+<li>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Database user:</code> &#8592;  saisir votre nom d&#8217;utilisateur <code>Concrete5</code> par exemple</p>
+</li>
+<li>
+<p><code>Database password:</code> &#8592; saisir <a href="#pass_gen">un mot de passe généré</a> ou en générer un en cliquant sur le bouton</p>
+</li>
+<li>
+<p><code>Repeat Password:</code> &#8592; saisir de nouveau le mot de passe</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Add new Database</code> pour créer une nouvelle base de données</p>
+</li>
+<li>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Site:</code> &#8592; sélectionner le site <code>example.com</code></p>
+</li>
+<li>
+<p><code>Database name:</code> &#8592; Saisissez le nom de la base de données <code>Concrete5</code></p>
+</li>
+<li>
+<p><code>Database user:</code> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <code>cxConcrete5</code>. x: est le numéro de client.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_de_lapplication_concrete5">17.3. Création de l&#8217;application Concrete5</h3>
+<div class="paragraph">
+<p>La procédure d&#8217;installation officielle de Concrete5 se trouve <a href="https://documentation.concrete5.org/developers/introduction/installation">ici</a></p>
+</div>
+<div class="paragraph">
+<p>Suivez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>allez sur le site de <a href="https://www.concrete5.org/download">Concrete5</a> et téléchargez la dernière version de l&#8217;outil en format zip.</p>
+</li>
+<li>
+<p>Uploader ce fichier dans votre répertoire /tmp de votre serveur au moyen de filezilla</p>
+</li>
+<li>
+<p>Installez Concrete5. Exécutez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp
+unzip concrete5-8.5.5.zip <i class="conum" data-value="3"></i><b>(3)</b>
+mv concrete5-8.5.5/* /var/www/concrete5.example.com/concrete5/  <i class="conum" data-value="3"></i><b>(3)</b> <i class="conum" data-value="2"></i><b>(2)</b>
+rm -rf concrete5-8.5.5 <i class="conum" data-value="3"></i><b>(3)</b>
+rm concrete5-8.5.5.zip <i class="conum" data-value="3"></i><b>(3)</b>
+chown -R web<span class="tok-o">[</span>x<span class="tok-o">]</span>:client<span class="tok-o">[</span>y<span class="tok-o">]</span> /var/www/concrete5.example.com/concrete5  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <code>Options</code>&#8594;champs Linux User et Linux Group.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>mettre ici votre site web à la place de concrete5.example.com et le répertoire d&#8217;installation à la place de concrete5</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>le nom du fichier zip dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Pointez votre navigateur sur <a href="https://concrete5.example.com" class="bare">https://concrete5.example.com</a>.</p>
+</li>
+<li>
+<p>Choisissez votre langue <code>français</code>.</p>
+</li>
+<li>
+<p>Le système check que la configuration est correcte.</p>
+</li>
+<li>
+<p>Cliquez sur <code>continuer l&#8217;installation</code></p>
+</li>
+<li>
+<p><code>Nom</code> &#8592; saisissez le nom de votre site</p>
+</li>
+<li>
+<p><code>Adresse de courriel administrateur</code> &#8592; indiquez votre email d&#8217;admin</p>
+</li>
+<li>
+<p>Saisissez 2 fois <a href="#pass_gen">un mot de passe généré</a> dans <code>Mot de passe administrateur</code></p>
+</li>
+<li>
+<p>Choisissez le <code>point de départ</code></p>
+</li>
+<li>
+<p>mettez <code>Localhost</code> comme <code>Serveur</code></p>
+</li>
+<li>
+<p>Dans le <code>Utilisateur MySQL</code>  mettez <code>cxconcrete5</code> comme créé plus haut</p>
+</li>
+<li>
+<p>Dans le <code>Mot de passe MySQL</code> saisissez le mot de passe de créé pour la base.</p>
+</li>
+<li>
+<p>Dans le <code>nom de la base de données</code> mettez <code>cxconcrete5</code> comme créé plus haut</p>
+</li>
+<li>
+<p>Cliquez sur la case à cocher de la <code>politique de confidentialité</code></p>
+</li>
+<li>
+<p>Cliquez <code>Installer Concrete5</code></p>
+</li>
+<li>
+<p>L&#8217;installation s&#8217;effectue. Une fois terminée avec succès, Cliquez sur <code>Modifier votre site</code></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_de_concrete5">17.4. Update de concrete5</h3>
+<div class="paragraph">
+<p>La mise à jour de concrete5 s&#8217;effectue au travers du portail d&#8217;administration
+concrete5 vous prévient d&#8217;un mise à jour du moteur et vous propose de le mettre à jour.
+Cliquez sur le lien qui vous est présenté dans l&#8217;interface.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_du_portail_wiki_mediawiki">18. Installation du portail wiki Mediawiki</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Mediawiki est le portail wiki mondialement connu et utilisé notamment pour le site wikipedia.</p>
 </div>
-<div class="paragraph">
-<p>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</p>
-</div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_mediawiki">16.1. Création du site web de Mediawiki</h3>
+<h3 id="_création_du_site_web_de_mediawiki">18.1. Création du site web de Mediawiki</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -8609,6 +9238,9 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <p>Le faire pointer vers le web folder <code>mediawiki</code>.</p>
 </li>
 <li>
+<p>Pour <code>Auto-Subdomain</code> sélectionnez <code>None</code></p>
+</li>
+<li>
 <p>Activer let’s encrypt ssl</p>
 </li>
 <li>
@@ -8624,63 +9256,342 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_de_lapplication_mediawiki">16.2. Création de l&#8217;application Mediawiki</h3>
+<h3 id="_création_des_bases_de_données_3">18.2. Création des bases de données</h3>
 <div class="paragraph">
-<p>Appliquez les opérations suivantes dans ISPConfig:</p>
+<p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Allez dans la rubrique <code>Sites</code>, le menu <code>Update Packagelist</code>.</p>
+<p>Créez une base de données mysql. Aller dans le menu <code>Database</code> pour définir un utilisateur MariaDB</p>
 </li>
 <li>
-<p>Cliquez sur <code>Update Packagelist</code></p>
+<p>Aller dans la rubrique <code>Sites</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aller dans le menu <code>Database users</code> pour définir un utilisateur MariaDB</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur <code>Add new User</code> pour créer un nouvel utilisateur</p>
 </li>
 <li>
-<p>Allez dans la rubrique <code>Sites</code>, le menu <code>Available packages</code>.</p>
-</li>
-<li>
-<p>Faites une recherche par <code>Name</code>. Tapez <code>mediawiki</code></p>
-</li>
-<li>
-<p>Cliquez sur le package <code>mediawiki</code></p>
-</li>
-<li>
-<p>Cliquez sur <code>Install this package</code></p>
-</li>
-<li>
-<p>Remplissez tous les champs:</p>
+<p>Saisissez les informations:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>Install location:</code> &#8592; choisissez votre domain (<code>example.com</code>) et laissez vide le chemin.</p>
+<p><code>Database user:</code> &#8592;  saisir votre nom d&#8217;utilisateur <code>mediawiki</code> par exemple</p>
 </li>
 <li>
-<p><code>New database password</code> &#8592; gardez ce qui est remplit</p>
+<p><code>Database password:</code> &#8592; saisir <a href="#pass_gen">un mot de passe généré</a> ou en générer un en cliquant sur le bouton</p>
 </li>
 <li>
-<p><code>Administrator&#8217;s login</code> &#8592; gardez ce qui est remplit: <code>admin</code></p>
+<p><code>Repeat Password:</code> &#8592; saisir de nouveau le mot de passe</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 <li>
-<p><code>Password</code> et <code>Repeat Password</code> &#8592; Tapez votre mot de passe</p>
+<p>Cliquez sur <code>save</code></p>
 </li>
 <li>
-<p><code>Default site language:</code> &#8592; choisissez <code>French</code></p>
+<p>Cliquez sur <code>Add new Database</code> pour créer une nouvelle base de données</p>
 </li>
 <li>
-<p><code>I accept the license</code> &#8592; cochez la case</p>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Site:</code> &#8592; sélectionner le site <code>example.com</code></p>
+</li>
+<li>
+<p><code>Database name:</code> &#8592; Saisissez le nom de la base de données <code>mediawiki</code></p>
+</li>
+<li>
+<p><code>Database user:</code> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <code>cxmediawiki</code>. x: est le numéro de client.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Cliquez sur <code>Install</code></p>
+<p>Cliquez sur <code>save</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_de_lapplication_mediawiki">18.3. Création de l&#8217;application Mediawiki</h3>
+<div class="paragraph">
+<p>La procédure d&#8217;installation officielle de Mediawiki se trouve <a href="https://www.mediawiki.org/wiki/Manual:Installation_guide">ici</a></p>
+</div>
+<div class="paragraph">
+<p>Suivez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
-<p>Pointez votre navigateur sur <a href="https://example.com/" class="bare">https://example.com/</a> et loguez vous <code>admin</code> avec votre mot de passe saisi, c&#8217;est fait !</p>
+<p>allez sur le site de <a href="https://www.mediawiki.org/wiki/Download">Mediawiki</a> et copier l&#8217;adresse du lien vers la dernière version de l&#8217;outil en format tarball.</p>
 </li>
 <li>
-<p>N&#8217;oubliez pas d&#8217;administrer le site et de le mettre à jour avec la dernière version de Mediawiki.</p>
+<p>Installez Mediawiki. Exécutez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp
+wget https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz <i class="conum" data-value="3"></i><b>(3)</b>
+tar -xvzf mediawiki-1.35.2.tar.gz
+mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/ <i class="conum" data-value="2"></i><b>(2)</b>
+rm mediawiki-1.35.2.tar.gz
+rm -rf mediawiki-1.35.2
+chown -R web<span class="tok-o">[</span>x<span class="tok-o">]</span>:client<span class="tok-o">[</span>y<span class="tok-o">]</span> /var/www/mediawiki.example.com/mediawiki  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <code>Options</code>&#8594;champs Linux User et Linux Group.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>mettre ici votre site web à la place de mediawiki.example.com et le répertoire d&#8217;installation à la place de mediawiki</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>coller ici le lien de téléchargement déjà copié</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Pointez votre navigateur sur <a href="https://mediawiki.example.com" class="bare">https://mediawiki.example.com</a>.</p>
+</li>
+<li>
+<p>Cliquez sur <code>set up the wiki</code>.La procédure d&#8217;installation se déclenche :</p>
+</li>
+<li>
+<p>Choisissez votre langue <code>fr</code>. Cliquez sur <code>continuer</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>L&#8217;environnement est vérifié. Assurez vous que le texte <code>L’environnement a été vérifié. Vous pouvez installer MediaWiki.</code> s&#8217;affiche.</p>
+</li>
+<li>
+<p>Choisissez une base <code>MariaDB</code></p>
+</li>
+<li>
+<p>mettez <code>Localhost</code> comme nom d&#8217;hote de la Base</p>
+</li>
+<li>
+<p>Dans le <code>nom de la base de données</code> mettez <code>cxmediawiki</code> comme créé plus haut</p>
+</li>
+<li>
+<p>Dans le <code>nom d&#8217;utilisateur de la base de données</code> mettez <code>cxmediawiki</code> comme créé plus haut</p>
+</li>
+<li>
+<p>Dans le <code>mot de passe</code> saisissez le mot de passe de créé pour la base.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>continuer</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Dans l&#8217;écran suivant, cliquez <code>continuer</code> sans rien changer</p>
+</li>
+<li>
+<p>Saisissez le <code>nom du wiki</code></p>
+</li>
+<li>
+<p>Saisissez le <code>nom d&#8217;utilisateur</code> du compte administrateur</p>
+</li>
+<li>
+<p>Saisissez 2 fois <a href="#pass_gen">un mot de passe généré</a></p>
+</li>
+<li>
+<p>Saisissez <code>Adresse de courriel</code> &#8592; votre Email.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>continuer</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Répondez en fonction de vos besoins aux questions suivantes.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>continuer</code></p>
+</li>
+<li>
+<p>Lisez le texte et cliquez sur <code>continuer</code></p>
+</li>
+<li>
+<p>L&#8217;installation s&#8217;effectue et se termine avec succès. Cliquez sur <code>continuer</code></p>
+</li>
+<li>
+<p>le fichier LocalSettings.php vous est proposé au téléchargement. Enregistrez le et ouvrez le dans un éditeur. Copier tout le contenu du fichier dans le presse papier</p>
+</li>
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Créez le fichier LocalSettings.php. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre ici votre site web à la place de mediawiki.example.com et le répertoire d&#8217;installation à la place de mediawiki</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Coller tout le texte dans le fichier édité. Sauvegardez et quittez.</p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>chown -R web<span class="tok-o">[</span>x<span class="tok-o">]</span>:client<span class="tok-o">[</span>y<span class="tok-o">]</span> /var/www/mediawiki.example.com/mediawiki/LocalSettings.php  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b>
+chmod <span class="tok-m">644</span> /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <code>Options</code>&#8594;champs Linux User et Linux Group.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>mettre ici votre site web à la place de mediawiki.example.com et le répertoire d&#8217;installation à la place de mediawiki</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Dans votre navigateur cliquez sur <code>accéder à votre wiki</code></p>
+</li>
+<li>
+<p>C&#8217;est fait</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_du_serveur_mediawiki">18.4. Update du serveur Mediawiki</h3>
+<div class="paragraph">
+<p>La procédure de mise à jour officielle de Mediawiki se trouve <a href="https://www.mediawiki.org/wiki/Manual:Upgrading">ici</a></p>
+</div>
+<div class="paragraph">
+<p>Suivez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>allez sur le site de <a href="https://www.mediawiki.org/wiki/Download">Mediawiki</a> et copier l&#8217;adresse du lien vers la dernière version de l&#8217;outil en format tarball.</p>
+</li>
+<li>
+<p>Mettez à jour Mediawiki. Exécutez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir /tmp/mediawiki.old
+mv /var/www/mediawiki.example.com/mediawiki/* /tmp/mediawiki.old <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nb">cd</span> /tmp
+wget -O mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz <i class="conum" data-value="3"></i><b>(3)</b>
+tar -xvzf mediawiki.tar.gz
+mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/  <i class="conum" data-value="4"></i><b>(4)</b> <i class="conum" data-value="2"></i><b>(2)</b>
+rm mediawiki.tar.gz
+rm -rf mediawiki-1.35.2 <i class="conum" data-value="4"></i><b>(4)</b>
+cp /tmp/mediawiki.old/LocalSettings.php  /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <i class="conum" data-value="2"></i><b>(2)</b>
+cp -r /tmp/mediawiki.old/images/*  /var/www/mediawiki.example.com/mediawiki/images/ <i class="conum" data-value="2"></i><b>(2)</b>
+chown -R web<span class="tok-o">[</span>x<span class="tok-o">]</span>:client<span class="tok-o">[</span>y<span class="tok-o">]</span> /var/www/mediawiki.example.com/mediawiki  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <code>Options</code>&#8594;champs Linux User et Linux Group.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>mettre ici votre site web à la place de mediawiki.example.com et le répertoire d&#8217;installation à la place de mediawiki</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Mediawiki.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>vous pouvez aussi copier vos logos du répertoire resources/assets de l&#8217;ancien mediawiki.</p>
+</li>
+<li>
+<p>Mettez à jour vos extensions avec les dernières versions compatibles.</p>
+</li>
+<li>
+<p>Suivez les recommandations de mise à jour de Mediawiki pour le fichier <code>LocalSettings.php</code></p>
+</li>
+<li>
+<p>exécuter le script d&#8217;update. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/mediawiki.example.com/mediawiki/maintenance
+php update.php</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Vérifiez que tout s&#8217;est bien passé. Se référer à la documentation de Mediawiki pour résoudre les problèmes.</p>
+</li>
+<li>
+<p>Redémarrez apache. Tapez :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl restart apache2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Vérifiez que tout fonctionne correctement sur le site phpmyadmin</p>
+</li>
+<li>
+<p>Supprimez l&#8217;ancien répertoire</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>rm -rf /tmp/mediawiki.old</code></pre>
+</div>
+</div>
 </li>
 </ol>
 </div>
@@ -8688,16 +9599,13 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_dun_gestionnaire_de_blog_wordpress">17. Installation d&#8217;un gestionnaire de Blog Wordpress</h2>
+<h2 id="_installation_dun_gestionnaire_de_blog_wordpress">19. Installation d&#8217;un gestionnaire de Blog Wordpress</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à jour.</p>
 </div>
-<div class="paragraph">
-<p>L&#8217;installation s&#8217;effectue à 100% avec ISPConfig.</p>
-</div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_wordpress">17.1. Création du site web de Wordpress</h3>
+<h3 id="_création_du_site_web_de_wordpress">19.1. Création du site web de Wordpress</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -8737,6 +9645,9 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 <p>Le faire pointer vers le web folder <code>wordpress</code>.</p>
 </li>
 <li>
+<p>Pour <code>Auto-Subdomain</code> sélectionnez <code>None</code></p>
+</li>
+<li>
 <p>Activer let’s encrypt ssl</p>
 </li>
 <li>
@@ -8752,77 +9663,192 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_de_lapplication_wordpress">17.2. Création de l&#8217;application Wordpress</h3>
+<h3 id="_création_des_bases_de_données_4">19.2. Création des bases de données</h3>
 <div class="paragraph">
-<p>Appliquez les opérations suivantes dans ISPConfig:</p>
+<p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Allez dans la rubrique <code>Sites</code>, le menu <code>Update Packagelist</code>.</p>
+<p>Créez une base de données mysql. Aller dans le menu <code>Database</code> pour définir un utilisateur MariaDB</p>
 </li>
 <li>
-<p>Cliquez sur <code>Update Packagelist</code></p>
+<p>Aller dans la rubrique <code>Sites</code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Aller dans le menu <code>Database users</code> pour définir un utilisateur MariaDB</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Cliquez sur <code>Add new User</code> pour créer un nouvel utilisateur</p>
 </li>
 <li>
-<p>Allez dans la rubrique <code>Sites</code>, le menu <code>Available packages</code>.</p>
-</li>
-<li>
-<p>Faites une recherche par <code>Name</code>. Tapez <code>wordpress</code></p>
-</li>
-<li>
-<p>Cliquez sur le package <code>wordpress</code></p>
-</li>
-<li>
-<p>Cliquez sur <code>Install this package</code></p>
-</li>
-<li>
-<p>Remplissez tous les champs:</p>
+<p>Saisissez les informations:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>Install location:</code> &#8592; choisissez votre domain (<code>example.com</code>) et laissez vide le chemin.</p>
+<p><code>Database user:</code> &#8592;  saisir votre nom d&#8217;utilisateur <code>wordpress</code> par exemple</p>
 </li>
 <li>
-<p><code>New database password</code> &#8592; gardez ce qui est remplit</p>
+<p><code>Database password:</code> &#8592; saisir <a href="#pass_gen">un mot de passe généré</a> ou en générer un en cliquant sur le bouton</p>
 </li>
 <li>
-<p><code>Administrator&#8217;s login</code> &#8592; gardez ce qui est remplit: <code>admin</code></p>
+<p><code>Repeat Password:</code> &#8592; saisir de nouveau le mot de passe</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </li>
 <li>
-<p><code>Password</code> et <code>Repeat Password</code> &#8592; Tapez <a href="#pass_gen">votre mot de passe généré</a></p>
+<p>Cliquez sur <code>save</code></p>
 </li>
 <li>
-<p><code>Default site language:</code> &#8592; choisissez <code>French</code></p>
+<p>Cliquez sur <code>Add new Database</code> pour créer une nouvelle base de données</p>
 </li>
 <li>
-<p><code>I accept the license</code> &#8592; cochez la case</p>
+<p>Saisissez les informations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Site:</code> &#8592; sélectionner le site <code>example.com</code></p>
+</li>
+<li>
+<p><code>Database name:</code> &#8592; Saisissez le nom de la base de données <code>wordpress</code></p>
+</li>
+<li>
+<p><code>Database user:</code> &#8592; Saisir ici le nom d&#8217;utilisateur créé: <code>cxwordpress</code>. x: est le numéro de client.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Cliquez sur <code>Install</code></p>
-</li>
-<li>
-<p>Pointez votre navigateur sur <a href="https://&lt;example.com&gt;/" class="bare">https://&lt;example.com&gt;/</a> et loguez vous <code>admin</code> avec votre mot de passe saisi, c&#8217;est fait !</p>
-</li>
-<li>
-<p>N&#8217;oubliez pas d&#8217;administrer le site et de le mettre à jour avec la dernière version de Wordpress.</p>
+<p>Cliquez sur <code>save</code></p>
 </li>
 </ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_de_lapplication_wordpress">19.3. Création de l&#8217;application Wordpress</h3>
+<div class="paragraph">
+<p>La procédure d&#8217;installation officielle de Wordpress se trouve <a href="https://fr.wordpress.org/support/article/how-to-install-wordpress/">ici</a></p>
+</div>
+<div class="paragraph">
+<p>Suivez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>allez sur le site de <a href="https://fr.wordpress.org/download/">Wordpress</a> et copier l&#8217;adresse du lien vers la dernière version de l&#8217;outil en format tarball.</p>
+</li>
+<li>
+<p>Installez Wordpress. Exécutez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp
+wget -O wordpress.tar.gz https://wordpress.org/latest.tar.gz
+tar -xvzf wordpress.tar.gz
+mv wordpress/* /var/www/wordpress.example.com/wordpress/ <i class="conum" data-value="2"></i><b>(2)</b>
+rm wordpress.tar.gz
+rm -rf wordpress
+chown -R web<span class="tok-o">[</span>x<span class="tok-o">]</span>:client<span class="tok-o">[</span>y<span class="tok-o">]</span> /var/www/wordpress.example.com/wordpress  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <code>Options</code>&#8594;champs Linux User et Linux Group.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>mettre ici votre site web à la place de wordpress.example.com et le répertoire d&#8217;installation à la place de wordpress</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Pointez votre navigateur sur <a href="https://wordpress.example.com" class="bare">https://wordpress.example.com</a>.</p>
+</li>
+<li>
+<p>Choisissez votre langue <code>français</code>. Cliquez sur <code>continuer</code>.</p>
+</li>
+<li>
+<p>Lisez le texte et cliquez sur <code>C&#8217;est parti !</code></p>
+</li>
+<li>
+<p>Dans le <code>nom de la base de données</code> mettez <code>cxwordpress</code> comme créé plus haut</p>
+</li>
+<li>
+<p>Dans le <code>Identifiant</code>  mettez <code>cxwordpress</code> comme créé plus haut</p>
+</li>
+<li>
+<p>Dans le <code>Mot de passe</code> saisissez le mot de passe de créé pour la base.</p>
+</li>
+<li>
+<p>mettez <code>Localhost</code> comme <code>Adresse de la base de données</code></p>
+</li>
+<li>
+<p>Vous pouvez laisser le <code>préfixe des tables</code> ou mettre à vide si votre base est dédiée.</p>
+</li>
+<li>
+<p>Cliquez sur <code>Envoyer</code>.</p>
+</li>
+<li>
+<p>Cliquez ensuite sur <code>Lancer l&#8217;installation</code></p>
+</li>
+<li>
+<p><code>Titre du site</code> &#8592; mettez le nom de votre site web</p>
+</li>
+<li>
+<p>Saisissez le <code>identifiant</code> du compte administrateur</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Saisissez <a href="#pass_gen">un mot de passe généré</a> dans <code>mot de passe</code></p>
+</li>
+<li>
+<p><code>Votre e-mail</code> &#8592; indiquez votre email d&#8217;admin</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Cliquez <code>Installer Wordpress</code></p>
+</li>
+<li>
+<p>C&#8217;est fini.</p>
+</li>
+<li>
+<p>Vous pouvez ensuite cliquer sur <code>Se connecter</code> pour administrer votre site</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_de_wordpress">19.4. Update de wordpress</h3>
+<div class="paragraph">
+<p>La mise à jour de wordpress s&#8217;effectue directement dans le site web en allant sur <code>Dashboard</code> et l&#8217;item <code>updates</code>. Il n&#8217;y a rien d&#8217;autre à faire.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_cms_micro_weber">18. Installation du CMS Micro Weber</h2>
+<h2 id="_installation_du_cms_micro_weber">20. Installation du CMS Micro Weber</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Microweber est un système de gestion de contenu et un constructeur de sites web Open Source. Il est basé sur le langage de programmation PHP et le framework web Laravel 5, utilisant le glisser-déposer et permettant aux utilisateurs de créer rapidement du contenu, tout en programmant et en gérant plusieurs affichages. Il dispose d&#8217;une fonction d&#8217;édition en direct qui permet aux utilisateurs de visualiser leurs modifications telles qu&#8217;elles apparaîtraient.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_microweber">18.1. Création du site web de Microweber</h3>
+<h3 id="_création_du_site_web_de_microweber">20.1. Création du site web de Microweber</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -8883,7 +9909,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_des_bases_de_données">18.2. Création des bases de données</h3>
+<h3 id="_création_des_bases_de_données_5">20.2. Création des bases de données</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -8954,7 +9980,7 @@ Dans la procédure ci dessous qui est taillée pour Joomla, vous pouvez l&#8217;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_microweber">18.3. Installation de Microweber</h3>
+<h3 id="_installation_de_microweber">20.3. Installation de Microweber</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -8984,7 +10010,7 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 <p>Un fois téléchargé, faites pointer votre navigateur vers <a href="http://microweber.example.com/netinstall.php" class="bare">http://microweber.example.com/netinstall.php</a></p>
 </li>
 <li>
-<p>Indique <code>.</code> comme répertoire d&#8217;installation et cliquez sur <code>Télécharger et décompresser Piwigo</code></p>
+<p>Indique <code>.</code> comme répertoire d&#8217;installation et cliquez sur <code>Télécharger et décompresser microweber</code></p>
 </li>
 <li>
 <p>Une fois le téléchargement terminé cliquez sur <code>Installer Microweber</code>. Rechargez la page si besoin.</p>
@@ -9035,7 +10061,200 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_gestionnaire_de_photos_piwigo">19. Installation du gestionnaire de photos Piwigo</h2>
+<h2 id="_installation_de_mealie">21. Installation de Mealie</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>le logiciel <code>Mealie</code> est un gestionnaire de recettes et un planificateur de repas auto-hébergés avec un backend RestAPI et une application frontale responsive construite en Vue pour une expérience utilisateur agréable pour toute la famille.</p>
+</div>
+<div class="sect2">
+<h3 id="_prérequis">21.1. Prérequis</h3>
+<div class="paragraph">
+<p>Il vous faudra tout d&#8217;abord installer <code>docker</code> en vous référant au chapitre qui y est consacré.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_du_serveur_mealie">21.2. Installation du serveur Mealie</h3>
+<div class="paragraph">
+<p>Nous allons installer Mealie à partir de son container Docker.</p>
+</div>
+<div class="paragraph">
+<p>Ouvrez un terminal et suivez la procédure:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Allez dans le répertoire de root</p>
+</li>
+<li>
+<p>Créez le docker de Mealie. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker volume create mealie_data
+docker run -d -p <span class="tok-m">1282</span>:80 --name<span class="tok-o">=</span>mealie --restart<span class="tok-o">=</span>always -v mealie_data:<span class="tok-s1">&#39;/app/data/&#39;</span> -e <span class="tok-nv">PGID</span><span class="tok-o">=</span><span class="tok-m">1000</span> -e <span class="tok-nv">PUID</span><span class="tok-o">=</span><span class="tok-m">1000</span>  hkotel/mealie:latest</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_du_site_web_de_mealie">21.3. Création du site web de mealie</h3>
+<div class="paragraph">
+<p>Appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>mealie</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>mealie</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>mealie</code>.</p>
+</li>
+<li>
+<p>Dans auto-Subdomain &#8592; Sélectionnez <code>None</code></p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>Fast CGI</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
+
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
+
+<span class="tok-c"># mealie httpserver</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+
+<span class="tok-nb">ProxyPass</span> / http://localhost:1282/
+<span class="tok-nb">ProxyPassReverse</span> / http://localhost:1282/
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://mealie.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_du_site_mealie">21.4. Configuration du site mealie</h3>
+<div class="paragraph">
+<p>Votre site web <code>mealie</code> est installé et opérationnel.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pointez votre navigateur sur votre site web <code>mealie</code></p>
+</li>
+<li>
+<p>Loggez vous avec le mail <code>changeme@email.com</code> et le mot de passe <code>MyPassword</code></p>
+</li>
+<li>
+<p>Vous devez ensuite aller dans le menu de configuration de l&#8217;utilisateur pour changer ce mail et ce mot de passe par défaut</p>
+</li>
+<li>
+<p>Vous pouvez maintenant ajouter des utilisateurs et des recettes de cuisine.</p>
+</li>
+<li>
+<p>C&#8217;est prêt !</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_upgrade_de_mealie">21.5. Upgrade de Mealie</h3>
+<div class="paragraph">
+<p>Rien a faire pour la mise à jour si vous utilisez <code>Ouroboros</code>
+Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8217;aide de <a href="#port_container_updt"><code>Portainer</code></a> ou à l&#8217;aide <a href="#yacht_container_updt"><code>Yacht</code></a></p>
+</div>
+<div class="paragraph">
+<p>Sinon, effectuez les opérations suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Allez dans le répertoire de root</p>
+</li>
+<li>
+<p>Mettez à jour le docker de Mealie. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker pull hkotel/mealie:latest
+docker stop mealie
+docker rm mealie
+docker run -d -p <span class="tok-m">1282</span>:80 --name<span class="tok-o">=</span>mealie --restart<span class="tok-o">=</span>always -v mealie_data:<span class="tok-s1">&#39;/app/data/&#39;</span> -e <span class="tok-nv">PGID</span><span class="tok-o">=</span><span class="tok-m">1000</span> -e <span class="tok-nv">PUID</span><span class="tok-o">=</span><span class="tok-m">1000</span>  hkotel/mealie:latest</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_du_gestionnaire_de_photos_piwigo">22. Installation du gestionnaire de photos Piwigo</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Piwigo est une application web pour gérer votre collection de photos, et autres médias. Doté de puissantes fonctionnalités, il gère des galeries partout dans le monde. Elle est écrite en PHP et nécessite une base de données MySQL.</p>
@@ -9044,7 +10263,7 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 <p>Piwigo était auparavant connu sous le nom PhpWebGallery.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_piwigo">19.1. Création du site web de Piwigo</h3>
+<h3 id="_création_du_site_web_de_piwigo">22.1. Création du site web de Piwigo</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -9105,7 +10324,7 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_des_bases_de_données_2">19.2. Création des bases de données</h3>
+<h3 id="_création_des_bases_de_données_6">22.2. Création des bases de données</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -9176,7 +10395,7 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_piwigo">19.3. Installation de Piwigo</h3>
+<h3 id="_installation_de_piwigo">22.3. Installation de Piwigo</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -9261,7 +10480,7 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_système_collaboratif_nextcloud">20. Installation du système collaboratif Nextcloud</h2>
+<h2 id="_installation_du_système_collaboratif_nextcloud">23. Installation du système collaboratif Nextcloud</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>NextCloud est un serveur d&#8217;hébergement et de partage de fichiers gratuit et open source, fork du projet ownCloud.
@@ -9273,7 +10492,7 @@ Vous pouvez installer le client NextCloud sur un  ou plusieurs PC pour synchroni
 Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation, y compris Windows, macOS, FreeBSD, et Linux.</p>
 </div>
 <div class="sect2">
-<h3 id="_installation_initiale">20.1. Installation initiale</h3>
+<h3 id="_installation_initiale">23.1. Installation initiale</h3>
 <div class="paragraph">
 <p>NextCloud est écrit en PHP et utilise une base de données MariaDB pour stocker ses données.</p>
 </div>
@@ -9329,7 +10548,7 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_nextcloud">20.2. Création du site web de Nextcloud</h3>
+<h3 id="_création_du_site_web_de_nextcloud">23.2. Création du site web de Nextcloud</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -9375,6 +10594,9 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 <p>Activer <code>PHP-FPM</code> pour PHP</p>
 </li>
 <li>
+<p>Aller dans l&#8217;onglet <code>Statistics</code> pour <code>Webstatistics program</code> sélectionnez <code>None</code></p>
+</li>
+<li>
 <p>Laisser le reste par défaut.</p>
 </li>
 <li>
@@ -9387,7 +10609,7 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_des_bases_de_données_3">20.3. Création des bases de données</h3>
+<h3 id="_création_des_bases_de_données_7">23.3. Création des bases de données</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -9458,7 +10680,7 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_nextcloud">20.4. Installation de Nextcloud</h3>
+<h3 id="_installation_de_nextcloud">23.4. Installation de Nextcloud</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -9537,17 +10759,24 @@ wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</pre>
 </table>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_upgrade_de_nextcloud">23.5. Upgrade de Nextcloud</h3>
+<div class="paragraph">
+<p>La mise à jour de nextcloud se fait directement dans nextcloud avec l&#8217;outil de mise à jour intégré à l&#8217;interface.
+Il faut se connecter en mode Admin</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_gestionnaire_de_projet_gitea">21. Installation du gestionnaire de projet Gitea</h2>
+<h2 id="_installation_du_gestionnaire_de_projet_gitea">24. Installation du gestionnaire de projet Gitea</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Gitea est un système simple d&#8217;hébergement de code basé sur Git. C&#8217;est un fork de Gogs.
 Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un code plus simple.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_gitea">21.1. Création du site web de Gitea</h3>
+<h3 id="_création_du_site_web_de_gitea">24.1. Création du site web de Gitea</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -9673,7 +10902,7 @@ chmod <span class="tok-m">770</span> /etc/gitea</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_des_bases_de_données_4">21.2. Création des bases de données</h3>
+<h3 id="_création_des_bases_de_données_8">24.2. Création des bases de données</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -9744,7 +10973,7 @@ chmod <span class="tok-m">770</span> /etc/gitea</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_téléchargez_et_installez_gitea">21.3. Téléchargez et installez Gitea</h3>
+<h3 id="_téléchargez_et_installez_gitea">24.3. Téléchargez et installez Gitea</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes:</p>
 </div>
@@ -9757,7 +10986,7 @@ chmod <span class="tok-m">770</span> /etc/gitea</code></pre>
 <p>Téléchargez gitea du <a href="https://dl.gitea.io/gitea/">site de chargement</a>. Tapez pour un système 64 bits:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>wget https://dl.gitea.io/gitea/master/gitea-master-linux-amd64 -O /usr/local/bin/gitea
+<pre class="pygments highlight"><code data-lang="bash"><span></span>wget https://dl.gitea.io/gitea/main/gitea-main-linux-amd64 -O /usr/local/bin/gitea
 chmod <span class="tok-m">755</span> /usr/local/bin/gitea</code></pre>
 </div>
 </div>
@@ -9905,7 +11134,7 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_activer_une_connexion_ssh_dédiée">21.4. Activer une connexion SSH dédiée</h3>
+<h3 id="_activer_une_connexion_ssh_dédiée">24.4. Activer une connexion SSH dédiée</h3>
 <div class="paragraph">
 <p>En option, vous pouvez avoir envie de dédier une connexion SSH pour Gitea:</p>
 </div>
@@ -9972,10 +11201,34 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 </ol>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_update_de_gitea">24.5. Update de Gitea</h3>
+<div class="paragraph">
+<p>Appliquez les opérations suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Téléchargez gitea du <a href="https://dl.gitea.io/gitea/">site de chargement</a>. Tapez pour un système 64 bits:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>service gitea stop
+wget https://dl.gitea.io/gitea/main/gitea-main-linux-amd64 -O /usr/local/bin/gitea
+chmod <span class="tok-m">755</span> /usr/local/bin/gitea
+service gitea start</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_de_bitwarden">22. Installation de Bitwarden</h2>
+<h2 id="_installation_de_bitwarden">25. Installation de Bitwarden</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>le logiciel <code>Bitwarden</code> est un gestionnaire de mots de passe relativement complet et gratuit. Il peut être installé sur votre serveur VPS de manière indépendante de l&#8217;éditeur Bitwarden.</p>
@@ -9984,13 +11237,13 @@ chmod <span class="tok-m">640</span> /etc/gitea/app.ini</code></pre>
 <p>Il reste cependant un bémol puisque l&#8217;installation s&#8217;effectue à l&#8217;aide de containers dockers qui sont eux générés par l&#8217;éditeur de <code>bitwarden</code>.</p>
 </div>
 <div class="sect2">
-<h3 id="_prérequis">22.1. Prérequis</h3>
+<h3 id="_prérequis_2">25.1. Prérequis</h3>
 <div class="paragraph">
 <p>Il vous faudra tout d&#8217;abord installer <code>docker</code> en vous référant au chapitre qui y est consacré.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_du_serveur_bitwarden">22.2. Installation du serveur Bitwarden</h3>
+<h3 id="_installation_du_serveur_bitwarden">25.2. Installation du serveur Bitwarden</h3>
 <div class="paragraph">
 <p>Nous allons installer Bitwarden_rs qui est la version libre de bitwarden et compatible avec les APIs.
 Cette version est plus complète que la version officielle, consomme moins de ressources et est plus rapide.</p>
@@ -10035,7 +11288,7 @@ docker run -d -p <span class="tok-m">1280</span>:80 --name<span class="tok-o">=<
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_bitwarden">22.3. Création du site web de Bitwarden</h3>
+<h3 id="_création_du_site_web_de_bitwarden">25.3. Création du site web de Bitwarden</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -10119,7 +11372,7 @@ docker run -d -p <span class="tok-m">1280</span>:80 --name<span class="tok-o">=<
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuration_du_site_bitwarden">22.4. Configuration du site bitwarden</h3>
+<h3 id="_configuration_du_site_bitwarden">25.4. Configuration du site Bitwarden</h3>
 <div class="paragraph">
 <p>Votre site web <code>Bitwarden</code> est installé et opérationnel.</p>
 </div>
@@ -10172,10 +11425,251 @@ Logguez vous.</p>
 <p>Tout est prêt!</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_upgrade_de_bitwarden">25.5. Upgrade de Bitwarden</h3>
+<div class="paragraph">
+<p>Rien a faire pour la mise à jour si vous utilisez <code>Ouroboros</code>
+Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8217;aide de <a href="#port_container_updt"><code>Portainer</code></a> ou à l&#8217;aide <a href="#yacht_container_updt"><code>Yacht</code></a></p>
+</div>
+<div class="paragraph">
+<p>Sinon, effectuez les opérations suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Allez dans le répertoire de root</p>
+</li>
+<li>
+<p>Mettez à jour le docker de Bitwarden_rs. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker pull bitwardenrs/server:latest
+docker stop bitwarden
+docker rm bitwarden
+docker run -d -p <span class="tok-m">1280</span>:80 --name<span class="tok-o">=</span>bitwarden --restart<span class="tok-o">=</span>always -v bitwarden_data:/data:rw -e <span class="tok-nv">ROCKET_ENV</span><span class="tok-o">=</span>staging -e <span class="tok-nv">ROCKET_PORT</span><span class="tok-o">=</span><span class="tok-m">80</span> -e <span class="tok-nv">ROCKET_WORKERS</span><span class="tok-o">=</span><span class="tok-m">10</span> -e <span class="tok-nv">SMTP_HOST</span><span class="tok-o">=</span>mail.example.com -e <span class="tok-nv">SMTP_FROM</span><span class="tok-o">=</span>mailname@example.com -e <span class="tok-nv">SMTP_PORT</span><span class="tok-o">=</span><span class="tok-m">587</span> -e <span class="tok-nv">SMTP_SSL</span><span class="tok-o">=</span><span class="tok-nb">true</span> -e <span class="tok-nv">SMTP_USERNAME</span><span class="tok-o">=</span>mailname@example.com -e <span class="tok-nv">SMTP_PASSWORD</span><span class="tok-o">=</span>mailpassword -e <span class="tok-nv">WEBSOCKET_ENABLED</span><span class="tok-o">=</span><span class="tok-nb">true</span> -e <span class="tok-nv">ADMIN_TOKEN</span><span class="tok-o">=</span>Hashcode -e <span class="tok-nv">SIGNUPS_ALLOWED</span><span class="tok-o">=</span><span class="tok-nb">false</span> -e <span class="tok-nv">DOMAIN</span><span class="tok-o">=</span>https://bitwarden.example.com bitwardenrs/server:latest <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>ici il faut remplacer <code>example.com</code> par votre nom de domaine. Il faut aussi remplacer <code>mailname@example.com</code> par une boite mail valide sur le serveur et <code>mailpassword</code> par le mot de passe de cette boite mail valide. <code>Hashcode</code> doit être remplacé par le code de hashage généré. Ce code protège l&#8217;accès <code>admin</code> de Bitwarden.</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_système_de_partage_de_fichiers_seafile">23. Installation du système de partage de fichiers Seafile</h2>
+<h2 id="_installation_de_heimdall">26. Installation de Heimdall</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>le logiciel <code>Heimdall</code> est un logiciel de portail offrant de nombreuses possibilités de configuration.</p>
+</div>
+<div class="sect2">
+<h3 id="_prérequis_3">26.1. Prérequis</h3>
+<div class="paragraph">
+<p>Il vous faudra tout d&#8217;abord installer <code>docker</code> en vous référant au chapitre qui y est consacré.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installation_du_serveur_heimdall">26.2. Installation du serveur Heimdall</h3>
+<div class="paragraph">
+<p>Nous allons installer Heimdall à partir de son container Docker.</p>
+</div>
+<div class="paragraph">
+<p>Ouvrez un terminal et suivez la procédure:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Allez dans le répertoire de root</p>
+</li>
+<li>
+<p>Créez le docker de heimdall. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker volume create heimdall_data
+docker run -d -p <span class="tok-m">1281</span>:443 --name<span class="tok-o">=</span>heimdall --restart<span class="tok-o">=</span>always -v heimdall_data:/config:rw -e <span class="tok-nv">PGID</span><span class="tok-o">=</span><span class="tok-m">1000</span> -e <span class="tok-nv">PUID</span><span class="tok-o">=</span><span class="tok-m">1000</span>  linuxserver/heimdall</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_du_site_web_de_heimdall">26.3. Création du site web de heimdall</h3>
+<div class="paragraph">
+<p>Appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allez dans la rubrique <code>DNS</code>, sélectionnez le menu <code>Zones</code>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <code>Records</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Cliquez sur <code>A</code> et saisissez:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Hostname:</code> &#8592; Tapez <code>heimdall</code></p>
+</li>
+<li>
+<p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Créer un <a href="#subdomain-site">sub-domain (vhost)</a> dans le configurateur de sites.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Lui donner le nom <code>heimdall</code>.</p>
+</li>
+<li>
+<p>Le faire pointer vers le web folder <code>heimdall</code>.</p>
+</li>
+<li>
+<p>Activer let’s encrypt ssl</p>
+</li>
+<li>
+<p>Activer <code>Fast CGI</code> pour PHP</p>
+</li>
+<li>
+<p>Laisser le reste par défaut.</p>
+</li>
+<li>
+<p>Dans l’onglet Options:</p>
+</li>
+<li>
+<p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="apache"><span></span>
+<span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<span class="tok-nb">Order</span> deny,allow
+<span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
+<span class="tok-nt">&lt;/Proxy&gt;</span>
+
+<span class="tok-nb">ProxyRequests</span> <span class="tok-k">Off</span>
+<span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
+<span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
+
+<span class="tok-c"># redirect from server</span>
+<span class="tok-c">#</span>
+
+<span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
+<span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span> # Comment this out if no https required
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+<span class="tok-nb">SSLProxyVerify</span> <span class="tok-k">none</span>
+<span class="tok-nb">SSLProxyCheckPeerCN</span> <span class="tok-k">off</span>
+<span class="tok-nb">SSLProxyCheckPeerName</span> <span class="tok-k">off</span>
+<span class="tok-nb">SSLProxyCheckPeerExpire</span> <span class="tok-k">off</span>
+
+<span class="tok-nb">ProxyPass</span> / https://localhost:1281/
+<span class="tok-nb">ProxyPassReverse</span> / https://localhost:1281/
+
+<span class="tok-nb">RedirectMatch</span> ^/$ https://heimdall.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_du_site_heimdall">26.4. Configuration du site heimdall</h3>
+<div class="paragraph">
+<p>Votre site web <code>heimdall</code> est installé et opérationnel.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pointez votre navigateur sur votre site web <code>heimdall</code></p>
+</li>
+<li>
+<p>Créez un compte avec votre login et choisissez un mot de passe.</p>
+</li>
+<li>
+<p>Sélectionnez l&#8217;icone User (3 éme icone en forme de portrait à droite).</p>
+</li>
+<li>
+<p>Sélectionnez Admin et cliquez sur l&#8217;icone modifier</p>
+</li>
+<li>
+<p>Tapez un mot de passe, le confirmer. Sélectionnez "Allow logging in from a specific URL". Cliquez sur "Enregistrez"</p>
+</li>
+<li>
+<p>Une URL est maintenant disponible vous pouvez la mettre comme page d&#8217;accueil de votre navigateur</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Tout est prêt!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_upgrade_de_heimdall">26.5. Upgrade de Heimdall</h3>
+<div class="paragraph">
+<p>Rien a faire pour la mise à jour si vous utilisez <code>Ouroboros</code>
+Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8217;aide de <a href="#port_container_updt"><code>Portainer</code></a> ou à l&#8217;aide <a href="#yacht_container_updt"><code>Yacht</code></a></p>
+</div>
+<div class="paragraph">
+<p>Sinon, effectuez les opérations suivantes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Allez dans le répertoire de root</p>
+</li>
+<li>
+<p>Mettez à jour le docker de heimdall. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>docker pull linuxserver/heimdall
+docker stop heimdall
+docker rm heimdall
+docker run -d -p <span class="tok-m">1281</span>:443 --name<span class="tok-o">=</span>heimdall --restart<span class="tok-o">=</span>always -v heimdall_data:/config:rw -e <span class="tok-nv">PGID</span><span class="tok-o">=</span><span class="tok-m">1000</span> -e <span class="tok-nv">PUID</span><span class="tok-o">=</span><span class="tok-m">1000</span>  linuxserver/heimdall</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_du_système_de_partage_de_fichiers_seafile">27. Installation du système de partage de fichiers Seafile</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Seafile est un système de partage de fichier simple et efficace écrit en Python. Il existe des clients de connexion pour Windows, Linux, Android, IOS.</p>
@@ -10184,7 +11678,7 @@ Logguez vous.</p>
 <p>Cette installation est optionnelle.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_seafile">23.1. Création du site web de Seafile</h3>
+<h3 id="_création_du_site_web_de_seafile">27.1. Création du site web de Seafile</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -10281,7 +11775,7 @@ Logguez vous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_de_bases_de_données">23.2. Création de bases de données</h3>
+<h3 id="_création_de_bases_de_données">27.2. Création de bases de données</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -10359,7 +11853,7 @@ Logguez vous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_téléchargez_et_installez_seafile">23.3. Téléchargez et installez Seafile</h3>
+<h3 id="_téléchargez_et_installez_seafile">27.3. Téléchargez et installez Seafile</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -10423,7 +11917,7 @@ chown -R web1:client0 seafile <i class="conum" data-value="2"></i><b>(2)</b></co
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lancement_initial">23.4. Lancement initial</h3>
+<h3 id="_lancement_initial">27.4. Lancement initial</h3>
 <div class="paragraph">
 <p>Nous allons effectuer un premier lancement du serveur Seafile:</p>
 </div>
@@ -10570,7 +12064,7 @@ sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lancement_automatique_de_seafile">23.5. Lancement automatique de Seafile</h3>
+<h3 id="_lancement_automatique_de_seafile">27.5. Lancement automatique de Seafile</h3>
 <div class="paragraph">
 <p>Afin de s&#8217;assurer que Seafile tourne en permanence, on doit créer un script de lancement automatique de Seafile:</p>
 </div>
@@ -10726,7 +12220,7 @@ stop<span class="tok-o">)</span>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_système_de_monitoring_grafana">24. Installation du système de monitoring Grafana</h2>
+<h2 id="_installation_du_système_de_monitoring_grafana">28. Installation du système de monitoring Grafana</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Grafana est un logiciel de visualisation et d&#8217;analyse à code source ouvert. Il vous permet d&#8217;interroger, de visualiser, d&#8217;alerter et d&#8217;explorer vos mesures, quel que soit l&#8217;endroit où elles sont stockées. En clair, il vous fournit des outils pour transformer vos données de base de données de séries chronologiques (TSDB) en de magnifiques graphiques et visualisations.
@@ -10737,7 +12231,7 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 <p>Cette installation est optionnelle puisque Munin est déjà installé sur votre système.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_grafana">24.1. Création du site web de Grafana</h3>
+<h3 id="_création_du_site_web_de_grafana">28.1. Création du site web de Grafana</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -10829,7 +12323,7 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_grafana">24.2. Installation de Grafana</h3>
+<h3 id="_installation_de_grafana">28.2. Installation de Grafana</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -10996,7 +12490,7 @@ apt install grafana prometheus prometheus-mysqld-exporter prometheus-apache-expo
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_et_configuration_de_loki">24.3. Installation et configuration de Loki</h3>
+<h3 id="_installation_et_configuration_de_loki">28.3. Installation et configuration de Loki</h3>
 <div class="paragraph">
 <p>Pour installer Loki, appliquez la procédure suivante:</p>
 </div>
@@ -11180,7 +12674,7 @@ sudo service loki status</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_et_configuration_de_promtail">24.4. Installation et configuration de Promtail</h3>
+<h3 id="_installation_et_configuration_de_promtail">28.4. Installation et configuration de Promtail</h3>
 <div class="paragraph">
 <p>Installez maintenant Promtail:</p>
 </div>
@@ -11340,7 +12834,7 @@ sudo service promtail status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_système_de_backup_borgbackup">25. Installation du système de backup BorgBackup</h2>
+<h2 id="_installation_du_système_de_backup_borgbackup">29. Installation du système de backup BorgBackup</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>BorgBackup est un système de backup simple mais offrant des fonctionnalités avancées telles que le backup incrémental, la déduplication de données, la compression, l&#8217;authentification, l&#8217;encryption.</p>
@@ -11352,7 +12846,7 @@ sudo service promtail status</code></pre>
 <p>Pour le moment, BorgBackup n&#8217;utilise pas de mécanisme de type RClone et il n&#8217;est donc pas encore possible de sauvegarder sur google drive ou autres espaces partagés.</p>
 </div>
 <div class="sect2">
-<h3 id="_introduction">25.1. Introduction</h3>
+<h3 id="_introduction">29.1. Introduction</h3>
 <div class="paragraph">
 <p>BorgBackup permet de stocker des backups sur un serveur distant.
 Nous nommerons le serveur sur lequel les sauvegardes seront stockées : serveur de stockage et identifié par &lt;storing_srv&gt;.
@@ -11360,7 +12854,7 @@ Nous nommerons le serveur qu&#8217;il faut sauvegarder: serveur sauvegardé et i
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_du_serveur_de_stockage">25.2. Installation du serveur de stockage</h3>
+<h3 id="_installation_du_serveur_de_stockage">29.2. Installation du serveur de stockage</h3>
 <div class="paragraph">
 <p>Il est préférable pour des questions de sécurité de créer un compte utilisateur spécifique.</p>
 </div>
@@ -11451,7 +12945,7 @@ chmod <span class="tok-m">700</span> borgbackup</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_sur_le_serveur_sauvegardé">25.3. Installation sur le serveur sauvegardé</h3>
+<h3 id="_installation_sur_le_serveur_sauvegardé">29.3. Installation sur le serveur sauvegardé</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -11582,7 +13076,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_effectuer_un_backup">25.4. Effectuer un backup</h3>
+<h3 id="_effectuer_un_backup">29.4. Effectuer un backup</h3>
 <div class="paragraph">
 <p>Nous allons créer tout d&#8217;abord un script de backup pour sauvegarder tout le serveur sauf les répertoires système:</p>
 </div>
@@ -11641,7 +13135,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lister_les_backups">25.5. Lister les backups</h3>
+<h3 id="_lister_les_backups">29.5. Lister les backups</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de listage :</p>
 </div>
@@ -11696,7 +13190,7 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code><
 </div>
 </div>
 <div class="sect2">
-<h3 id="_vérifier_un_backup">25.6. Vérifier un backup</h3>
+<h3 id="_vérifier_un_backup">29.6. Vérifier un backup</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de vérification :</p>
 </div>
@@ -11759,7 +13253,7 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 </div>
 </div>
 <div class="sect2">
-<h3 id="_restaurer_un_backup">25.7. Restaurer un backup</h3>
+<h3 id="_restaurer_un_backup">29.7. Restaurer un backup</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de montage sous forme de système de fichier :</p>
 </div>
@@ -11849,7 +13343,7 @@ rmdir /mnt/borgbackup</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_supprimer_vos_vieux_backups">25.8. Supprimer vos vieux backups</h3>
+<h3 id="_supprimer_vos_vieux_backups">29.8. Supprimer vos vieux backups</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de ménage des backups :</p>
 </div>
@@ -11916,7 +13410,7 @@ borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/bo
 </div>
 </div>
 <div class="sect2">
-<h3 id="_automatisez_votre_sauvegarde">25.9. Automatisez votre sauvegarde</h3>
+<h3 id="_automatisez_votre_sauvegarde">29.9. Automatisez votre sauvegarde</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -11975,7 +13469,7 @@ vi /usr/local/bin/borgcron.sh</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_restauration_durgence">25.10. Restauration d&#8217;urgence.</h3>
+<h3 id="_restauration_durgence">29.10. Restauration d&#8217;urgence.</h3>
 <div class="paragraph">
 <p>En cas de crash du serveur, l’intérêt du backup offsite est de pouvoir remonter la dernière sauvegarde sans souci.
 Pour cela il faut avoir un moyen de booter le serveur dans un mode rescue (boot du VPS en mode rescue, utilisation d&#8217;un clé USB bootable, boot réseau ou autre moyen).</p>
@@ -12093,7 +13587,7 @@ procédure</a>. Attention le fichier de swap doit être installé dans
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_borgweb">25.11. Installation de Borgweb</h3>
+<h3 id="_installation_de_borgweb">29.11. Installation de Borgweb</h3>
 <div class="paragraph">
 <p>Borgweb existe en version officielle. Cette version n&#8217;a pas trop d&#8217;intéret pour nous étant donnée qu&#8217;elle n&#8217;interroge pas le serveur de stockage pour obtenir les informations des backups réalisés. Il existe un clone de repository qui implémente une fonctionnalité qui liste tous les backups effectués sur le serveur de stockage</p>
 </div>
@@ -12262,7 +13756,7 @@ systemctl start borgweb.service</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_borgweb">25.12. Création du site web de Borgweb</h3>
+<h3 id="_création_du_site_web_de_borgweb">29.12. Création du site web de Borgweb</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig de votre serveur de stockage &lt;storing_srv&gt;:</p>
 </div>
@@ -12393,7 +13887,7 @@ systemctl start borgweb.service</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_dun_serveur_de_vpn_pritunl">26. Installation d&#8217;un serveur de VPN Pritunl</h2>
+<h2 id="_installation_dun_serveur_de_vpn_pritunl">30. Installation d&#8217;un serveur de VPN Pritunl</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Pritunl est un serveur VPN basé sur OpenVPN.</p>
@@ -12411,7 +13905,7 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 </table>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_pritunl">26.1. Création du site web de Pritunl</h3>
+<h3 id="_création_du_site_web_de_pritunl">30.1. Création du site web de Pritunl</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -12507,7 +14001,7 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_pritunl_sur_un_vps">26.2. Installation de Pritunl sur un VPS</h3>
+<h3 id="_installation_de_pritunl_sur_un_vps">30.2. Installation de Pritunl sur un VPS</h3>
 <div class="paragraph">
 <p>Veuillez suivre la procédure suivante si vous installer sur un serveur debian (pour le Raspberrypi voir le chapitre suivant):</p>
 </div>
@@ -12538,7 +14032,7 @@ apt-get --assume-yes install pritunl mongodb-org</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_pritunl_sur_un_raspberrypi">26.3. Installation de Pritunl sur un Raspberrypi</h3>
+<h3 id="_installation_de_pritunl_sur_un_raspberrypi">30.3. Installation de Pritunl sur un Raspberrypi</h3>
 <div class="paragraph">
 <p>Pritunl n&#8217;est pas installable avec une distribution Raspbian qui est uniquement 32 bits.
 Veuillez suivre la procédure suivante si vous installer sur un Raspberrypi avec Ubuntu 64 bits:</p>
@@ -12851,7 +14345,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_se_connecter_au_serveur_de_vpn">26.4. Se connecter au serveur de VPN</h3>
+<h3 id="_se_connecter_au_serveur_de_vpn">30.4. Se connecter au serveur de VPN</h3>
 <div class="paragraph">
 <p>Comme Pritunl est compatible OpenVPN n&#8217;importe quel logiciel compatible OpenVPN peut être utilisé.
 Pritunl founit un <a href="https://client.pritunl.com/">client</a> compatible pour Linux, macOS, and Windows.</p>
@@ -12863,7 +14357,7 @@ Une fois fait, une compte apparaît dans le logiciel client. Vous pourrez vous c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_réparer_une_base_pritunl">26.5. Réparer une base Pritunl</h3>
+<h3 id="_réparer_une_base_pritunl">30.5. Réparer une base Pritunl</h3>
 <div class="paragraph">
 <p>Si jamais votre base est corrompue, vous pourrez la réparer en tapant:</p>
 </div>
@@ -12876,7 +14370,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mot_de_passe_perdu">26.6. Mot de passe perdu</h3>
+<h3 id="_mot_de_passe_perdu">30.6. Mot de passe perdu</h3>
 <div class="paragraph">
 <p>Vous pouvez re-générer un mot de passe en tapant:</p>
 </div>
@@ -12889,13 +14383,13 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_dun_serveur_de_bureau_à_distance_guacamole">27. Installation d&#8217;un serveur de bureau à distance Guacamole</h2>
+<h2 id="_installation_dun_serveur_de_bureau_à_distance_guacamole">31. Installation d&#8217;un serveur de bureau à distance Guacamole</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Apache Guacamole est un logiciel opensource et une application web de bureau à distance qui vous permet d&#8217;accéder à vos machines de bureau par le biais d&#8217;un navigateur web. Il s&#8217;agit d&#8217;une appli web html5 qui prend en charge des protocoles standard comme VNC, RDP et SSH. Vous n&#8217;avez pas besoin d&#8217;installer et d&#8217;utiliser des logiciels ou des plugins sur le serveur. Avec Guacamole, vous pouvez facilement passer d&#8217;un bureau d&#8217;une machine à l&#8217;autre avec le même navigateur</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_guacamole">27.1. Création du site web de Guacamole</h3>
+<h3 id="_création_du_site_web_de_guacamole">31.1. Création du site web de Guacamole</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -12990,7 +14484,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_des_bases_de_données_5">27.2. Création des bases de données</h3>
+<h3 id="_création_des_bases_de_données_9">31.2. Création des bases de données</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -13061,7 +14555,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_du_guacamole">27.3. Installation du Guacamole</h3>
+<h3 id="_installation_du_guacamole">31.3. Installation du Guacamole</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -13445,19 +14939,19 @@ systemctl restart guacd</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_annexe">28. Annexe</h2>
+<h2 id="_annexe">32. Annexe</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_de_hestia">28.1. Installation de Hestia</h3>
+<h3 id="_installation_de_hestia">32.1. Installation de Hestia</h3>
 <div class="paragraph">
-<p>Hestia est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outiL.
+<p><code>Hestia</code> est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outil.
 La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="bare">https://docs.hestiacp.com/</a></p>
 </div>
 <div class="paragraph">
-<p>Attention Hestia n&#8217;est pas compatible de Webmin dans le sens que webmin est incapable de lire et d&#8217;interpréter les fichiers créés par Hestia.</p>
+<p>Attention <code>Hestia</code> n&#8217;est pas compatible de <code>Webmin</code> dans le sens que <code>Webmin</code> est incapable de lire et d&#8217;interpréter les fichiers créés par <code>Hestia</code>.</p>
 </div>
 <div class="paragraph">
-<p>De même, Hestia est principalement compatible de PHP. Si vous utilisez des système web basés sur des applicatifs écrits en Python ou en Ruby, la configuration sera à faire à la main avec tous les problèmes de compatibilité que cela impose.</p>
+<p>De même, <code>Hestia</code> est principalement compatible de PHP. Si vous utilisez des système web basés sur des applicatifs écrits en Python ou en Ruby, la configuration sera à faire à la main avec tous les problèmes de compatibilité que cela impose.</p>
 </div>
 <div class="paragraph">
 <p>Pour installer:</p>
@@ -13497,15 +14991,15 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 </div>
 </li>
 <li>
-<p>Hestia est installé. Il est important de bien noter le mot de passe du compte admin de Hestia ainsi que le numéro de port du site web</p>
+<p><code>Hestia</code> est installé. Il est important de bien noter le mot de passe du compte admin de <code>Hestia</code> ainsi que le numéro de port du site web</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuration_dun_écran_3_5inch_rpi_lcd_a">28.2. Configuration d&#8217;un écran 3.5inch RPi LCD (A)</h3>
+<h3 id="_configuration_dun_écran_3_5_inch_rpi_lcd_a">32.2. Configuration d&#8217;un écran 3.5 inch RPI LCD (A)</h3>
 <div class="sect3">
-<h4 id="_pour_commencer">28.2.1. Pour commencer</h4>
+<h4 id="_pour_commencer">32.2.1. Pour commencer</h4>
 <div class="paragraph">
 <p>Le RPi LCD peut être piloté de deux manières :</p>
 </div>
@@ -13522,7 +15016,7 @@ Raspbian OS.</p>
 <p>Téléchargez la dernière image sur le site web de Raspberry Pi et écrivez-la sur la carte SD.</p>
 </li>
 <li>
-<p>Connectez l&#8217;écran LCD RPi à Raspberry Pi et connectez le Pi au réseau.</p>
+<p>Connectez l&#8217;écran LCD RPI à Raspberry Pi et connectez le Pi au réseau.</p>
 </li>
 <li>
 <p>Configurez votre Pi :</p>
@@ -13546,7 +15040,7 @@ Raspbian OS.</p>
 </div>
 </li>
 <li>
-<p>Ouvrez le terminal du Raspberry Pi (Vous devrez peut-être connecter un clavier et un écran LCD HDMI à Pi pour l&#8217;installation du pilote). Tapez:</p>
+<p>Ouvrez le terminal du Raspberry PI (Vous devrez peut-être connecter un clavier et un écran LCD HDMI à PI pour l&#8217;installation du pilote). Tapez:</p>
 <div class="literalblock">
 <div class="content">
 <pre>git clone https://github.com/waveshare/LCD-show.git
@@ -13564,13 +15058,13 @@ cd LCD-show/</pre>
 </div>
 </li>
 <li>
-<p>Après le redémarrage du système, le RPi LCD est prêt à l&#8217;emploi.</p>
+<p>Après le redémarrage du système, le RPI LCD est prêt à l&#8217;emploi.</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_basculer_entre_laffichage_lcd_et_hdmi">28.2.2. Basculer entre l&#8217;affichage LCD et HDMI</h4>
+<h4 id="_basculer_entre_laffichage_lcd_et_hdmi">32.2.2. Basculer entre l&#8217;affichage LCD et HDMI</h4>
 <div class="paragraph">
 <p>Une fois que l&#8217;écran LCD est activé, les paramètres par défaut pour HDMI sont modifiés. Si vous souhaitez utiliser un autre moniteur HDMI, veuillez exécuter la commande suivante :</p>
 </div>
@@ -13591,7 +15085,7 @@ cd LCD-show/</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_paramètres_dorientation_de_lécran">28.2.3. Paramètres d&#8217;orientation de l&#8217;écran</h4>
+<h4 id="_paramètres_dorientation_de_lécran">32.2.3. Paramètres d&#8217;orientation de l&#8217;écran</h4>
 <div class="paragraph">
 <p>Une fois le pilote tactile installé, l&#8217;orientation de l&#8217;écran peut être définie par ces commandes :</p>
 </div>
@@ -13649,7 +15143,7 @@ cd LCD-show/</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_calibrage_de_lécran_tactile">28.2.4. Calibrage de l&#8217;écran tactile</h4>
+<h4 id="_calibrage_de_lécran_tactile">32.2.4. Calibrage de l&#8217;écran tactile</h4>
 <div class="paragraph">
 <p>Cet écran LCD peut être calibré à l&#8217;aide d&#8217;un programme appelé <code>xinput_calibrator</code> . Il n&#8217;est pas préinstallé sur le système d&#8217;exploitation Raspbian original. Vous devez donc le télécharger et installer le programme manuellement.</p>
 </div>
@@ -13728,7 +15222,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_installer_un_clavier_virtuel">28.2.5. Installer un clavier virtuel</h4>
+<h4 id="_installer_un_clavier_virtuel">32.2.5. Installer un clavier virtuel</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -13832,7 +15326,7 @@ X-MB-INPUT-MECHANSIM=True</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ressources">28.2.6. Ressources</h4>
+<h4 id="_ressources">32.2.6. Ressources</h4>
 <div class="sect4">
 <h5 id="_manuel_utilisateur">Manuel utilisateur</h5>
 <div class="ulist">
@@ -14031,8 +15525,8 @@ EndSection</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.2<br>
-Last updated 2021-04-28 20:52:34 +0200
+Version 1.3<br>
+Last updated 2021-05-17 23:56:23 +0200
 </div>
 </div>
 </body>
