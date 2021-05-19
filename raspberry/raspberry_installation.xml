@@ -4,7 +4,7 @@
 <article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Installation d&#8217;un serveur Linux sur un Raspberry</title>
-<date>2021-05-15</date>
+<date>2021-05-19</date>
 <author>
 <personname>
 <firstname>Stéphane</firstname>
@@ -16,7 +16,7 @@
 <revhistory>
 <revision>
 <revnumber>1.3</revnumber>
-<date>2021-05-15</date>
+<date>2021-05-19</date>
 <authorinitials>SA</authorinitials>
 </revision>
 </revhistory>
@@ -3213,10 +3213,12 @@ ProxyPass /.well-known/acme-challenge !
 
 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 SSLProxyEngine On # Comment this out if no https required
-RequestHeader set Front-End-Https "On" # Comment this out if no https required
 ProxyPreserveHost    On
+SSLProxyVerify none
+SSLProxyCheckPeerCN off
+SSLProxyCheckPeerName off
+SSLProxyCheckPeerExpire off
 
-ProxyPassMatch ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
 ProxyPass / https://localhost[:port_number_if_any]/[path_if_any]
 ProxyPassReverse / https://localhost[:port_number_if_any]/[path_if_any]
 
@@ -4768,15 +4770,17 @@ ProxyRequests Off
 ProxyPass /stats !
 ProxyPass /.well-known/acme-challenge !
 
-# roundcube httpserver
+# redirect from server
+#
 
 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 SSLProxyEngine On # Comment this out if no https required
-RequestHeader set Front-End-Https "On" # Comment this out if no https required
-ProxyPreserveHost    On # Comment this out if no https required
-SSLProxyCheckPeerCN Off # Comment this out if no https required
-SSLProxyCheckPeerName Off # Comment this out if no https required
-SSLProxyVerify none # Comment this out if no https required
+ProxyPreserveHost    On
+SSLProxyVerify none
+SSLProxyCheckPeerCN off
+SSLProxyCheckPeerName off
+SSLProxyCheckPeerExpire off
+
 ProxyPass / https://localhost:8080/webmail/
 ProxyPassReverse / https://localhost:8080/webmail/
 
@@ -6027,21 +6031,24 @@ Cliquez sur le lien qui vous est présenté dans l&#8217;interface.</simpara>
 <listitem>
 <simpara>Installez Mediawiki. Exécutez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-wget https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz <co xml:id="CO52-1"/>
-tar -xvzf mediawiki-1.35.2.tar.gz
-mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/ <co xml:id="CO52-2"/>
-rm mediawiki-1.35.2.tar.gz
-rm -rf mediawiki-1.35.2
-chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki <co xml:id="CO52-3"/> <co xml:id="CO52-4"/></programlisting>
+wget -O mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz <co xml:id="CO52-1"/>
+tar -xvzf mediawiki.tar.gz <co xml:id="CO52-2"/>
+mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/ <co xml:id="CO52-3"/> <co xml:id="CO52-4"/>
+rm mediawiki.tar.gz
+rm -rf mediawiki-1.35.2 <co xml:id="CO52-5"/>
+chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki <co xml:id="CO52-6"/> <co xml:id="CO52-7"/></programlisting>
 <calloutlist>
-<callout arearefs="CO52-3">
+<callout arearefs="CO52-6">
 <para>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
-<callout arearefs="CO52-2 CO52-4">
+<callout arearefs="CO52-4 CO52-7">
 <para>mettre ici votre site web à la place de mediawiki.example.com et le répertoire d&#8217;installation à la place de mediawiki</para>
 </callout>
 <callout arearefs="CO52-1">
-<para>coller ici le lien de téléchargement déjà copié</para>
+<para>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Mediawiki.</para>
+</callout>
+<callout arearefs="CO52-2 CO52-3 CO52-5">
+<para>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -6562,41 +6569,51 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 <simpara>Répondez aux questions suivantes:</simpara>
 <itemizedlist>
 <listitem>
-<simpara><literal>Hote</literal> &#8592; Laissez <literal>localhost</literal></simpara>
+<simpara><literal>Database Engine</literal> &#8592; <literal>MySQL</literal></simpara>
 </listitem>
 <listitem>
-<simpara><literal>Utilisateur</literal> &#8592; entrez <literal>cxmicroweber</literal>. x est le numéro de client; habituellement c&#8217;est 0</simpara>
+<simpara><literal>Hostname</literal> &#8592; Laissez <literal>localhost</literal></simpara>
 </listitem>
 <listitem>
-<simpara><literal>Mot de passe</literal> &#8592; Tapez votre mot de passe</simpara>
+<simpara><literal>Username</literal> &#8592; entrez <literal>cxmicroweber</literal>. x est le numéro de client; habituellement c&#8217;est 0</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Nom de la Base de données</literal> &#8592; entrez <literal>cxmicroweber</literal>. x est le numéro de client; habituellement c&#8217;est 0</simpara>
+<simpara><literal>Password</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Database</literal> &#8592; entrez <literal>cxmicroweber</literal>. x est le numéro de client; habituellement c&#8217;est 0</simpara>
 </listitem>
 <listitem>
 <simpara><literal>Préfix des noms de tables</literal> &#8592; Laissez le champ vide</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Nom d&#8217;Utilisateur</literal> &#8592; tapez <literal>admin</literal></simpara>
+<simpara><literal>Website Default Language</literal> &#8592; <literal>French</literal></simpara>
 </listitem>
 <listitem>
-<simpara><literal>Mot de passe</literal> &#8592; Tapez votre mot de passe</simpara>
+<simpara><literal>Admin username</literal> &#8592; tapez <literal>admin</literal></simpara>
 </listitem>
 <listitem>
-<simpara><literal>Mot de passe [confirmer]</literal> &#8592; Tapez votre mot de passe</simpara>
+<simpara><literal>Admin password</literal> &#8592; Tapez votre mot de passe</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Adresse e-mail</literal> &#8592; Tapez votre adresse mail d&#8217;administrateur</simpara>
+<simpara><literal>Repeat password</literal> &#8592; Tapez votre mot de passe</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Admin email</literal> &#8592; Tapez votre adresse mail d&#8217;administrateur</simpara>
 </listitem>
 </itemizedlist>
 </listitem>
 <listitem>
-<simpara>Tapez <literal>Démarrer l&#8217;installation</literal></simpara>
+<simpara>Tapez <literal>Install</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Vous êtes redirigé sur le site Microweber ou vous pourrez vous loguer et commencer à utiliser l&#8217;outil</simpara>
 </listitem>
 </orderedlist>
+</section>
+<section xml:id="_update_de_microweber">
+<title>Update de Microweber</title>
+<simpara>La mise à jour de Microweber s&#8217;effectue directement dans le site web en allant sur <literal>Dashboard</literal> et l&#8217;item <literal>updates</literal>. Il n&#8217;y a rien d&#8217;autre à faire.</simpara>
 </section>
 </section>
 <section xml:id="_installation_de_mealie">
@@ -6880,7 +6897,10 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 <simpara>Un fois téléchargé, faites pointer votre navigateur vers <link xl:href="http://piwigo.example.com/piwigo-netinstall.php">http://piwigo.example.com/piwigo-netinstall.php</link></simpara>
 </listitem>
 <listitem>
-<simpara>Indique <literal>.</literal> comme répertoire d&#8217;installation et cliquez sur <literal>Téléharger et décompresser Piwigo</literal></simpara>
+<simpara>Choisissez votre <literal>Langue</literal> à <literal>Français</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Indique <literal>.</literal> comme répertoire d&#8217;installation et cliquez sur <literal>Télécharger et décompresser Piwigo</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Une fois le téléchargement terminé cliquez sur <literal>Installer Piwigo</literal>. Rechargez la page si besoin.</simpara>
@@ -6888,6 +6908,9 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 <listitem>
 <simpara>Répondez aux questions suivantes:</simpara>
 <itemizedlist>
+<listitem>
+<simpara><literal>Langue par défaut de la galerie</literal> &#8592; <literal>Français</literal></simpara>
+</listitem>
 <listitem>
 <simpara><literal>Hote</literal> &#8592; Laissez <literal>localhost</literal></simpara>
 </listitem>
@@ -6926,6 +6949,10 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 </orderedlist>
 </callout>
 </calloutlist>
+</section>
+<section xml:id="_update_de_piwigo">
+<title>Update de Piwigo</title>
+<simpara>La mise à jour de Piwigo s&#8217;effectue directement dans le site web en allant sur <literal>Dashboard Admin</literal> et l&#8217;item <literal>Mises à jour</literal>. Il n&#8217;y a rien d&#8217;autre à faire.</simpara>
 </section>
 </section>
 <section xml:id="_installation_du_système_collaboratif_nextcloud">
@@ -7992,28 +8019,34 @@ ProxyPassReverse / http://localhost:8090/</programlisting>
 </listitem>
 <listitem>
 <simpara>Installez quelques paquets Debian complémentaires. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install python3 python3-setuptools python3-pip
-pip3 install --timeout=3600 Pillow pylibmc captcha jinja2 sqlalchemy psd-tools django-pylibmc django-simple-captcha python3-ldap</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt install python3 python3-setuptools python3-pip default-libmysqlclient-dev
+pip3 install --timeout=3600 Pillow pylibmc captcha jinja2 future mysqlclient sqlalchemy==1.4.3 psd-tools django-pylibmc django-simple-captcha python3-ldap</programlisting>
 </listitem>
 <listitem>
-<simpara>Je préfère faire tourner mes serveurs dans le répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private <co xml:id="CO66-1"/>
+<simpara>Allez sur le site de téléchargement de <link xl:href="https://www.seafile.com/en/download/">Seafile</link> et copier le lien de téléchargement pour <literal>Server for generic Linux</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Il est préférable d&#8217;exécuter les serveurs dans un répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/lib
 mkdir seafile
 cd seafile
-wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz
-tar zxvf seafile-server_7.1.3_x86-64.tar.gz
+wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO66-1"/>
+tar zxvf seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO66-2"/>
 mkdir installed
 mv seafile-server_* installed
 cd seafile-server-*
 ./setup-seafile-mysql.sh
 cd ../..
-chown -R web1:client0 seafile <co xml:id="CO66-2"/></programlisting>
+chown -R web1:client0 seafile <co xml:id="CO66-3"/></programlisting>
 <calloutlist>
+<callout arearefs="CO66-3">
+<para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
+</callout>
 <callout arearefs="CO66-1">
-<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
+<para>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Seafile.</para>
 </callout>
 <callout arearefs="CO66-2">
-<para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
+<para>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -8037,13 +8070,8 @@ chown -R web1:client0 seafile <co xml:id="CO66-2"/></programlisting>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>allez dans le répertoire contenant les configurations et éditez <literal>gunicorn.conf</literal>. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile/conf <co xml:id="CO67-1"/>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/lib/seafile/conf
 vi gunicorn.conf</programlisting>
-<calloutlist>
-<callout arearefs="CO67-1">
-<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
-</callout>
-</calloutlist>
 </listitem>
 <listitem>
 <simpara>Repèrez le texte <literal>bind=</literal> et mettez un numéro de port 8090 à la place de 8000. Comme ceci:</simpara>
@@ -8064,9 +8092,9 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>modifier l&#8217;entrée SERVICE_URL. Le fichier doit contenir ceci:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com <co xml:id="CO68-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com <co xml:id="CO67-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO68-1">
+<callout arearefs="CO67-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -8077,23 +8105,20 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>modifier l&#8217;entrée FILE_SERVER_ROOT. Le fichier doit contenir ceci:</simpara>
-<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp' <co xml:id="CO69-1"/></programlisting>
+<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp' <co xml:id="CO68-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO69-1">
+<callout arearefs="CO68-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Démarrez Seafile. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile/seafile-server-latest <co xml:id="CO70-1"/>
-sudo -u web1 ./seafile.sh start <co xml:id="CO70-2"/>
-sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO70-3"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/lib/seafile/seafile-server-latest
+sudo -u web1 ./seafile.sh start <co xml:id="CO69-1"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO69-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO70-1">
-<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
-</callout>
-<callout arearefs="CO70-2 CO70-3">
+<callout arearefs="CO69-1 CO69-2">
 <para>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <literal>Options</literal>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</para>
 </callout>
 </calloutlist>
@@ -8129,22 +8154,17 @@ sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO70-3"/></programlisting>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Créer un script de lancement automatique. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/seafile.example.com/private/seafile <co xml:id="CO71-1"/>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/lib/seafile
 touch startseafile.sh
 chmod +x startseafile.sh
 vi startseafile.sh</programlisting>
-<calloutlist>
-<callout arearefs="CO71-1">
-<para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
-</callout>
-</calloutlist>
 </listitem>
 <listitem>
 <simpara>Coller le texte suivant de le fichier ouvert:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/bash
 
 # Change the value of "seafile_dir" to your path of seafile installation
-seafile_dir=/var/www/seafile.example.com/private/seafile <co xml:id="CO72-1"/>
+seafile_dir=/var/lib/seafile
 script_path=${seafile_dir}/seafile-server-latest
 seafile_init_log=${seafile_dir}/logs/seafile.init.log
 seahub_init_log=${seafile_dir}/logs/seahub.init.log
@@ -8175,11 +8195,6 @@ echo "Usage: /etc/init.d/seafile {start|stop|restart|reload}"
 exit 1
 ;;
 esac</programlisting>
-<calloutlist>
-<callout arearefs="CO72-1">
-<para>remplacer example.com par votre nom de domaine</para>
-</callout>
-</calloutlist>
 </listitem>
 <listitem>
 <simpara>Créer un job cron dans ISPConfig pour démarrer Seafile au démarrage</simpara>
@@ -8206,7 +8221,7 @@ esac</programlisting>
 <simpara><literal>Days of week:</literal> &#8592; mettre *</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/www/seafile.&lt;example.com&gt;/private/seafile/startseafile.sh start</literal></simpara>
+<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/lib/seafile/startseafile.sh start</literal></simpara>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -8237,7 +8252,7 @@ esac</programlisting>
 <simpara><literal>Days of week:</literal> &#8592; mettre *</simpara>
 </listitem>
 <listitem>
-<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/www/seafile.&lt;example.com&gt;/private/seafile/startseafile.sh reload</literal></simpara>
+<simpara><literal>Command to run:</literal> &#8592; mettre <literal>/var/lib/seafile/startseafile.sh reload</literal></simpara>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -8251,6 +8266,53 @@ esac</programlisting>
 </listitem>
 </orderedlist>
 </section>
+</section>
+<section xml:id="_upgrade_de_seafile">
+<title>Upgrade de Seafile</title>
+<simpara>La procédure de mise à jour officielle de Seafile se trouve <link xl:href="https://manual.seafile.com/upgrade/upgrade/">ici</link></simpara>
+<simpara>Suivez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Allez sur le site de téléchargement de <link xl:href="https://www.seafile.com/en/download/">Seafile</link> et copier le lien de téléchargement pour <literal>Server for generic Linux</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Il est préférable d&#8217;exécuter les serveurs dans un répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/lib/seafile
+wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO70-1"/>
+tar zxvf seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO70-2"/>
+./startseafile.sh stop
+mv seafile-server_* installed
+cd seafile-server-7.1.3 <co xml:id="CO70-3"/>
+cd upgrade
+./upgrade_7.1.2.sh <co xml:id="CO70-4"/>
+./setup-seafile-mysql.sh
+cd ../../..
+chown -R web1:client0 seafile <co xml:id="CO70-5"/>
+cd seafile/seafile-server-latest
+sudo -u web1 ./seafile.sh start <co xml:id="CO70-6"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO70-7"/></programlisting>
+<calloutlist>
+<callout arearefs="CO70-1">
+<para>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Seafile.</para>
+</callout>
+<callout arearefs="CO70-5 CO70-6 CO70-7">
+<para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
+</callout>
+<callout arearefs="CO70-2 CO70-3">
+<para>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</para>
+</callout>
+<callout arearefs="CO70-4">
+<para>exécutez tous les scripts d&#8217;upgrade dont le numéro de version est supérieur ou égal au numéro de version du seafile installé préalablement.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Vérifiez que vous savez accéder à Seafile tant sur le site web qu&#8217;avec vos applis PC et smartphone</simpara>
+</listitem>
+</orderedlist>
 </section>
 <section xml:id="_installation_du_système_de_monitoring_grafana">
 <title>Installation du système de monitoring Grafana</title>
@@ -8322,9 +8384,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:3100/
 ProxyPassReverse / http://localhost:3100/
 
-RedirectMatch ^/$ https://grafana.example.com <co xml:id="CO73-1"/></programlisting>
+RedirectMatch ^/$ https://grafana.example.com <co xml:id="CO71-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO73-1">
+<callout arearefs="CO71-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -8450,7 +8512,7 @@ service prometheus-process-exporter restart</programlisting>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
-<simpara>Allez sur le site de <link xl:href="https://github.com/grafana/loki/releases">loki</link> et repérez la dernière version à charger.</simpara>
+<simpara>allez sur le site de <link xl:href="https://github.com/grafana/loki/releases/">Loki</link> et copier l&#8217;adresse du lien vers la dernière version de loki-linux-amd64.zip (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip pour raspberry pi 4)</simpara>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
@@ -8595,13 +8657,16 @@ sudo service loki status</programlisting>
 <simpara>Installez maintenant Promtail:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
+<simpara>allez sur le site de <link xl:href="https://github.com/grafana/loki/releases/">Loki</link> et copier l&#8217;adresse du lien vers la dernière version de promtail-linux-amd64.zip (ou promtail-linux-arm.zip pour raspberry pi 3 ou promtail-linux-arm64.zip pour raspberry pi 4)</simpara>
+</listitem>
+<listitem>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /usr/local/bin
-curl -fSL -o promtail.gz https://github.com/grafana/loki/releases/download/v1.4.1/promtail-linux-amd64.zip
-gunzip promtail.gz
+curl -fSL -o promtail.zip https://github.com/grafana/loki/releases/download/v1.4.1/promtail-linux-amd64.zip
+gunzip promtail.zip
 chmod a+x promtail</programlisting>
 </listitem>
 <listitem>
@@ -8708,6 +8773,46 @@ sudo service promtail status</programlisting>
 </listitem>
 </orderedlist>
 </section>
+<section xml:id="_upgrade_de_grafana">
+<title>Upgrade de Grafana</title>
+<simpara>Comme grafana est installé à partir de paquets Debian, la mise à jour s&#8217;effectue automatiquement avec le système.</simpara>
+<simpara>Il reste cependant Loki et Promtail à mettre à jour.</simpara>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>allez sur le site de <link xl:href="https://github.com/grafana/loki/releases/">Loki</link> et copier l&#8217;adresse du lien vers la dernière version de loki-linux-amd64.zip (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip pour raspberry pi 4)</simpara>
+</listitem>
+<listitem>
+<simpara>allez sur le site de <link xl:href="https://github.com/grafana/loki/releases/">Loki</link> et copier l&#8217;adresse du lien vers la dernière version de promtail-linux-amd64.zip (ou promtail-linux-arm.zip pour raspberry pi 3 ou promtail-linux-arm64.zip pour raspberry pi 4)</simpara>
+</listitem>
+<listitem>
+<simpara>Mettez à jour Loki et Promtail à jour. Exécutez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/bin
+curl -fSL -o loki.gz https://github.com/grafana/loki/releases/download/v2.2.1/loki-linux-amd64.zip
+gunzip loki.gz
+chmod a+x loki
+curl -fSL -o promtail.zip https://github.com/grafana/loki/releases/download/v2.2.1/promtail-linux-amd64.zip
+gunzip promtail.zip
+chmod a+x promtail</programlisting>
+</listitem>
+<listitem>
+<simpara>redémarrez les service. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo service loki restart
+sudo service loki status
+sudo service promtail restart
+sudo service promtail status</programlisting>
+</listitem>
+<listitem>
+<simpara>Allez sur votre site Grafana <link xl:href="http://grafana.example.com">http://grafana.example.com</link></simpara>
+</listitem>
+<listitem>
+<simpara>Vérifiez que tout fonctionne</simpara>
+</listitem>
+</orderedlist>
+</section>
 </section>
 <section xml:id="_installation_du_système_de_backup_borgbackup">
 <title>Installation du système de backup BorgBackup</title>
@@ -8807,9 +8912,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez en première ligne du fichier :</simpara>
-<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO74-1"/></screen>
+<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO72-1"/></screen>
 <calloutlist>
-<callout arearefs="CO74-1">
+<callout arearefs="CO72-1">
 <para>remplacez SERVERIPADDRESS par l&#8217;adresse IP affichée plus tôt.</para>
 </callout>
 </calloutlist>
@@ -8832,9 +8937,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Puis tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO75-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO73-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO75-1">
+<callout arearefs="CO73-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
 </calloutlist>
@@ -8862,13 +8967,13 @@ chmod 700 borgbackup</programlisting>
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO76-1"/>
-cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO76-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO74-1"/>
+cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO74-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO76-1">
+<callout arearefs="CO74-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
-<callout arearefs="CO76-2">
+<callout arearefs="CO74-2">
 <para>si votre machine est assez puissante, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</para>
 </callout>
 </calloutlist>
@@ -8897,10 +9002,10 @@ cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;st
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO77-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO75-1"/>
 borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO77-1">
+<callout arearefs="CO75-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -8929,10 +9034,10 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</progra
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO78-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO76-1"/>
 borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
 <calloutlist>
-<callout arearefs="CO78-1">
+<callout arearefs="CO76-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -8943,9 +9048,9 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 </listitem>
 <listitem>
 <simpara>vous pouvez maintenant vérifier un de vos backup en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO79-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO77-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO79-1">
+<callout arearefs="CO77-1">
 <para>le nom de sauvegarde est récupéré en utilisant la commande borglist.sh</para>
 </callout>
 </calloutlist>
@@ -8967,10 +9072,10 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 <simpara>Insérez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO80-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO78-1"/>
 borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
 <calloutlist>
-<callout arearefs="CO80-1">
+<callout arearefs="CO78-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -9025,13 +9130,13 @@ rmdir /mnt/borgbackup</programlisting>
 # - une archive par mois pour les 6 derniers mois.
 
 
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO81-1"/>
-borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO81-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO79-1"/>
+borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO79-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO81-1">
+<callout arearefs="CO79-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
-<callout arearefs="CO81-2">
+<callout arearefs="CO79-2">
 <para>Le nettoyage des sauvegardes va conserver 7 sauvegardes journalières, 4 à la semaine et 12 au mois</para>
 </callout>
 </calloutlist>
@@ -9108,10 +9213,10 @@ pip3 install borgbackup</programlisting>
 <listitem>
 <simpara>Munissez vous du mot de passe &lt;mot_passe&gt; des archives borg et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO82-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO80-1"/>
 borg list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO82-1">
+<callout arearefs="CO80-1">
 <para>remplacez mot_passe par votre mot de passe de borg</para>
 </callout>
 </calloutlist>
@@ -9140,13 +9245,13 @@ chroot . bash
 mkdir -p dev proc run sys tmp
 mount -t devtmpfs dev /dev
 mount -t proc proc /proc
-grub_install /dev/sda <co xml:id="CO83-1"/>
+grub_install /dev/sda <co xml:id="CO81-1"/>
 umount /proc
 umount /dev
 sync
 exit</programlisting>
 <calloutlist>
-<callout arearefs="CO83-1">
+<callout arearefs="CO81-1">
 <para>tapez ici le nom de device de votre disque de boot</para>
 </callout>
 </calloutlist>
@@ -9219,7 +9324,7 @@ vi config.py</programlisting>
 
     BACKUP_REPOS = {
         # Repo  name
-        "example.com": { <co xml:id="CO84-1"/>
+        "example.com": { <co xml:id="CO82-1"/>
             # Repo absolute path
             "repo_path": "/home/borgbackup/borgbackup",
 
@@ -9227,7 +9332,7 @@ vi config.py</programlisting>
             "log_path": "/var/log/borg/",
 
             # Repo password
-            "repo_pwd": "your_password", <co xml:id="CO84-2"/>
+            "repo_pwd": "your_password", <co xml:id="CO82-2"/>
 
             # Command/script to run to manually start a backup.
             # If left empty or not specified, the backup won't be
@@ -9239,10 +9344,10 @@ vi config.py</programlisting>
         }
     }</programlisting>
 <calloutlist>
-<callout arearefs="CO84-2">
+<callout arearefs="CO82-2">
 <para>Insérez ici le mot de passe du dépot Borg Backup</para>
 </callout>
-<callout arearefs="CO84-1">
+<callout arearefs="CO82-1">
 <para>Mettez ici le nom de votre domaine sauvegardé</para>
 </callout>
 </calloutlist>
@@ -9360,9 +9465,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:5000/
 ProxyPassReverse / http://localhost:5000/
 
-RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO85-1"/></programlisting>
+RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO83-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO85-1">
+<callout arearefs="CO83-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -9393,7 +9498,7 @@ RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO85-1"/></programlist
 <title>Installation d&#8217;un serveur de VPN Pritunl</title>
 <simpara>Pritunl est un serveur VPN basé sur OpenVPN.</simpara>
 <warning>
-<simpara>Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une distribution Raspbian.</simpara>
+<simpara>Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une distribution Raspbian d&#8217;un raspberry pi</simpara>
 </warning>
 <section xml:id="_création_du_site_web_de_pritunl">
 <title>Création du site web de Pritunl</title>
@@ -9450,22 +9555,23 @@ ProxyRequests Off
 ProxyPass /stats !
 ProxyPass /.well-known/acme-challenge !
 
-# Pritunl httpserver
+# redirect from server
 #
 
 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 SSLProxyEngine On # Comment this out if no https required
-RequestHeader set Front-End-Https "On" # Comment this out if no https required
-ProxyPreserveHost    On # Comment this out if no https required
-SSLProxyCheckPeerCN Off # Comment this out if no https required
-SSLProxyCheckPeerName Off # Comment this out if no https required
-SSLProxyVerify none # Comment this out if no https required
+ProxyPreserveHost    On
+SSLProxyVerify none
+SSLProxyCheckPeerCN off
+SSLProxyCheckPeerName off
+SSLProxyCheckPeerExpire off
+
 ProxyPass / https://localhost:8070/
 ProxyPassReverse / https://localhost:8070/
 
-RedirectMatch ^/$ https://pritunl.example.com <co xml:id="CO86-1"/></programlisting>
+RedirectMatch ^/$ https://pritunl.example.com <co xml:id="CO84-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO86-1">
+<callout arearefs="CO84-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -9493,7 +9599,7 @@ apt-get install dirmngr
 apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
 apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
 apt-get update
-apt-get --assume-yes install pritunl mongodb-org</programlisting>
+apt-get --assume-yes install pritunl mongodb-org openvpn</programlisting>
 </listitem>
 </orderedlist>
 </section>
@@ -9510,7 +9616,7 @@ Veuillez suivre la procédure suivante si vous installer sur un Raspberrypi avec
 <programlisting language="bash" linenumbering="unnumbered">tee /etc/apt/sources.list.d/mongodb-org.list &lt;&lt; EOF
 deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse
 EOF
-apt install dirmngr
+apt install dirmngr openvpn python3-pip
 apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
 apt update
 apt install mongodb-org golang
@@ -9538,17 +9644,12 @@ cd /var/lib/pritunl/</programlisting>
 ln -s /var/lib/pritunl/bin/pritunl-web /usr/local/bin/pritunl-web</programlisting>
 </listitem>
 <listitem>
-<simpara>Installer le logiciel pour python2. Comme il y a encore des problèmes de dépendances, Tapez:</simpara>
+<simpara>Installer le logiciel pour python3. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">git clone https://github.com/pritunl/pritunl.git
-apt install libpython2.7-dev libffi-dev
-curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
-python2 get-pip.py
-rm get-pip.py
 cd pritunl
-echo "jaraco.functools==2.0" &gt;&gt; requirements.txt
-python2 setup.py build
-pip2 install -r requirements.txt
-python2 setup.py install</programlisting>
+python3 setup.py build
+pip3 install -r requirements.txt
+python3 setup.py install</programlisting>
 </listitem>
 <listitem>
 <simpara>Printunl s&#8217;installe dans <literal>/usr/local/bin</literal>. Il faut changer le fichier service. Tapez:</simpara>
@@ -9560,9 +9661,11 @@ python2 setup.py install</programlisting>
 <listitem>
 <simpara>Rechargez les configs de systemd. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">systemctl daemon-reload</programlisting>
-<simpara>=== Configuration de Pritunl</simpara>
 </listitem>
 </orderedlist>
+</section>
+<section xml:id="_configuration_de_pritunl">
+<title>Configuration de Pritunl</title>
 <simpara>Votre service Pritunl est installé. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -9581,7 +9684,7 @@ python2 setup.py install</programlisting>
 systemctl enable mongod pritunl</programlisting>
 </listitem>
 <listitem>
-<simpara>pointez votre navigateur sur le site web de Pritunl: <link xl:href="https://example.com">https://example.com</link></simpara>
+<simpara>pointez votre navigateur sur le site web de Pritunl: <link xl:href="https://pritunl.example.com">https://pritunl.example.com</link></simpara>
 </listitem>
 <listitem>
 <simpara>Accepter le certificat non sécurisé. La page de setup de Pritunl s&#8217;affiche.</simpara>
@@ -9594,7 +9697,7 @@ systemctl enable mongod pritunl</programlisting>
 <simpara>copier la clé dans la page web. Cliquez sur <literal>Save</literal></simpara>
 </listitem>
 <listitem>
-<simpara>La page web s&#8217;affiche en erreur. Pas d&#8217;inquiétude à avoir.</simpara>
+<simpara>La page web peut s&#8217;affiche en erreur. Pas d&#8217;inquiétude à avoir.</simpara>
 </listitem>
 <listitem>
 <simpara>Arrêtez le serveur Pritunl. Tapez:</simpara>
@@ -9623,6 +9726,9 @@ systemctl start pritunl</programlisting>
 </listitem>
 <listitem>
 <simpara>Une boite de dialogue <literal>initial setup</literal> s&#8217;affiche. Ne changez rien mais tapez votre mot de passe.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Vous êtes maintenant connecté sur le site web.</simpara>
@@ -9745,6 +9851,59 @@ systemctl start pritunl</programlisting>
 <simpara>Vous pouvez re-générer un mot de passe en tapant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">pritunl reset-password</programlisting>
 </section>
+<section xml:id="_update_de_pritunl">
+<title>Update de Pritunl</title>
+<simpara>Pour une installation sur un système Intel, il n&#8217;y a rien à faire.</simpara>
+<simpara>En revanche sur un Raspberry, il est nécessaire de regénérer les logiciels avec les dernières versions.</simpara>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Arrêtez le serveur pritunl</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop pritunl</programlisting>
+</listitem>
+<listitem>
+<simpara>Installez les paquets à jour. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/lib/pritunl
+export GOPATH=/var/lib/pritunl
+go get -u github.com/pritunl/pritunl-dns
+go get -u github.com/pritunl/pritunl-web</programlisting>
+</listitem>
+<listitem>
+<simpara>Mettez ensuite à jour le système client web. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd pritunl
+git pull https://github.com/pritunl/pritunl.git
+python3 setup.py build
+pip3 install -r requirements.txt
+python3 setup.py install</programlisting>
+</listitem>
+<listitem>
+<simpara>Printunl s&#8217;installe dans <literal>/usr/local/bin</literal>. Il faut changer le fichier service. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/systemd/system/pritunl.service</programlisting>
+</listitem>
+<listitem>
+<simpara>Changer <literal>ExecStart=/usr/bin/pritunl start</literal> par <literal>ExecStart=/usr/local/bin/pritunl start</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Rechargez les configs de systemd. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl daemon-reload</programlisting>
+</listitem>
+<listitem>
+<simpara>Configurez le serveur pour qu&#8217;il n&#8217;utilise plus le port 80 et le port 443 (c&#8217;est écrasé à la réinstallation) :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">pritunl set app.server_port 8070
+pritunl set app.redirect_server false</programlisting>
+</listitem>
+<listitem>
+<simpara>Redémarrez le serveur pritunl</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop pritunl</programlisting>
+</listitem>
+<listitem>
+<simpara>Vérifiez que tout est correct</simpara>
+</listitem>
+</orderedlist>
+</section>
 </section>
 <section xml:id="_installation_dun_serveur_de_bureau_à_distance_guacamole">
 <title>Installation d&#8217;un serveur de bureau à distance Guacamole</title>
@@ -9813,9 +9972,9 @@ ProxyPreserveHost    On
 ProxyPass /guacamole http://localhost:8085/guacamole
 ProxyPassReverse /guacamole http://localhost:8085/guacamole
 
-RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO87-1"/></programlisting>
+RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO85-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO87-1">
+<callout arearefs="CO85-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -9905,11 +10064,12 @@ RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO87-1"/></programli
 </listitem>
 <listitem>
 <simpara>tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO88-1"/>
+<programlisting language="bash" linenumbering="unnumbered">cd /tmp
+curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO86-1"/>
 tar xfz guacamole-server.tar.gz
 cd guacamole-server-*</programlisting>
 <calloutlist>
-<callout arearefs="CO88-1">
+<callout arearefs="CO86-1">
 <para>insérez ici l&#8217;adresse du package serveur à charger</para>
 </callout>
 </calloutlist>
@@ -9967,31 +10127,32 @@ ldconfig</programlisting>
 </listitem>
 <listitem>
 <simpara>Activez le démon de gestion guacd. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl enable guacd
+<programlisting language="bash" linenumbering="unnumbered">systemctl daemon-reload
+systemctl enable guacd
 systemctl start guacd</programlisting>
 </listitem>
 <listitem>
 <simpara>Téléchargez le dernier client <literal>war</literal> de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>. Récupérez le lien puis tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /usr/local/share/guacamole
 cd /usr/local/share/guacamole
-curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO89-1"/>
-ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ <co xml:id="CO89-2"/>
-systemctl restart tomcat8 <co xml:id="CO89-3"/>
+curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO87-1"/>
+ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ <co xml:id="CO87-2"/>
+systemctl restart tomcat8 <co xml:id="CO87-3"/>
 systemctl restart guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO89-1">
+<callout arearefs="CO87-1">
 <para>insérez ici l&#8217;adresse du war à charger</para>
 </callout>
-<callout arearefs="CO89-2 CO89-3">
+<callout arearefs="CO87-2 CO87-3">
 <para>ou tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Editez le fichier server.xml. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /etc/tomcat8/server.xml <co xml:id="CO90-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/tomcat8/server.xml <co xml:id="CO88-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO90-1">
+<callout arearefs="CO88-1">
 <para>ou tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
@@ -10010,12 +10171,12 @@ mkdir -p /etc/guacamole/{extensions,lib}</programlisting>
 </listitem>
 <listitem>
 <simpara>Il se peut que ce driver ne soit pas présent: allez sur le site <link xl:href="https://dev.mysql.com/downloads/connector/j/">Mysql</link> et téléchargez la version Platform independant. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o mysql-java.tar.gz 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz' <co xml:id="CO91-1"/>
+<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o mysql-java.tar.gz 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz' <co xml:id="CO89-1"/>
 tar xfz mysql-java.tar.gz
 cd mysql-connector-java-*
 cp mysql-connector-java-*.jar /etc/guacamole/lib/mysql-connector-java.jar</programlisting>
 <calloutlist>
-<callout arearefs="CO91-1">
+<callout arearefs="CO89-1">
 <para>Collez ici le lien récupéré sur le site de Mysql.</para>
 </callout>
 </calloutlist>
@@ -10028,11 +10189,11 @@ cp mysql-connector-java-*.jar /etc/guacamole/lib/mysql-connector-java.jar</progr
 <simpara>Ajoutez dans le fichier:</simpara>
 <screen linenumbering="unnumbered">mysql-hostname: localhost
 mysql-port: 3306
-mysql-database: cxguacamole <co xml:id="CO92-1"/>
-mysql-username: cxguacamole <co xml:id="CO92-2"/>
-mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO92-3"/></screen>
+mysql-database: cxguacamole <co xml:id="CO90-1"/>
+mysql-username: cxguacamole <co xml:id="CO90-2"/>
+mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO90-3"/></screen>
 <calloutlist>
-<callout arearefs="CO92-1 CO92-2 CO92-3">
+<callout arearefs="CO90-1 CO90-2 CO90-3">
 <para>mettez ici le nom de la base de données, le nom de l&#8217;utilisateur de la base et son mot_de_passe tels qu&#8217;ils ont été saisis dans le chapitre de création de la base de données.</para>
 </callout>
 </calloutlist>
@@ -10040,13 +10201,13 @@ mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO92-3"/></screen>
 <listitem>
 <simpara>Vous devez maintenant télécharger les plugins mysql pour Guacamole. Allez sur le site web de guacamole et récupérez le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement de guacamole-auth-jdbc</link>. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz' <co xml:id="CO93-1"/>
+curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz' <co xml:id="CO91-1"/>
 tar xfz guacamole-auth-jdbc.tar.gz
 cd guacamole-auth-jdbc-*/mysql
 cp guacamole-auth-jdbc-mysql-*.jar /usr/local/share/guacamole/
 ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/extensions</programlisting>
 <calloutlist>
-<callout arearefs="CO93-1">
+<callout arearefs="CO91-1">
 <para>insérez ici l&#8217;adresse du fichier guacamole-auth-jdbc à charger</para>
 </callout>
 </calloutlist>
@@ -10054,25 +10215,25 @@ ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/
 <listitem>
 <simpara>Créez les tables de la base:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd schema
-cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO94-1"/></programlisting>
+cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO92-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO94-1">
+<callout arearefs="CO92-1">
 <para>mettez derrière le <literal>-u</literal> le nom d&#8217;utilisateur de la base de données et derrière le <literal>-p</literal> le nom de la base de données. Un mot de passe vous sera demandé.</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Redémarrez tomcat et guacd. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl restart tomcat8 <co xml:id="CO95-1"/>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart tomcat8 <co xml:id="CO93-1"/>
 systemctl restart guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO95-1">
+<callout arearefs="CO93-1">
 <para>ou mettre tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
-<simpara>Allez sur le site de <literal>guacamole.example.com</literal></simpara>
+<simpara>Allez sur le site de <literal>guacamole.example.com/guacamole</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Loguez vous avec le compte: <literal>guacadmin</literal> et password: <literal>guacadmin</literal></simpara>
@@ -10166,6 +10327,67 @@ systemctl restart guacd</programlisting>
 </listitem>
 <listitem>
 <simpara>l&#8217;appui simultané sur <literal>SHIFT</literal> <literal>CTRL</literal> <literal>ALT</literal> fait apparaître un menu pour effectuer des chargements de fichiers ou contrôler votre connexion</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_upgrade_de_guacamole">
+<title>Upgrade de Guacamole</title>
+<simpara>Il est nécessaire de regénérer les logiciels avec les dernières versions.</simpara>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Arrêtez le serveur guacamole</simpara>
+<programlisting language="bash" linenumbering="unnumbered">systemctl stop guacd</programlisting>
+</listitem>
+<listitem>
+<simpara>Téléchargez la dernière version de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /tmp
+curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO94-1"/>
+tar xfz guacamole-server.tar.gz
+cd guacamole-server-*</programlisting>
+<calloutlist>
+<callout arearefs="CO94-1">
+<para>insérez ici l&#8217;adresse du package serveur à charger</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Lancez la configuration. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">./configure --with-init-dir=/etc/init.d</programlisting>
+</listitem>
+<listitem>
+<simpara>Lancez la compilation et l&#8217;installation. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">make
+make install
+ldconfig</programlisting>
+</listitem>
+<listitem>
+<simpara>Téléchargez le dernier client <literal>war</literal> de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>. Récupérez le lien puis tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /usr/local/share/guacamole
+curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO95-1"/>
+systemctl daemon-reload
+systemctl restart tomcat8 <co xml:id="CO95-2"/>
+systemctl start guacd</programlisting>
+<calloutlist>
+<callout arearefs="CO95-1">
+<para>insérez ici l&#8217;adresse du war à charger</para>
+</callout>
+<callout arearefs="CO95-2">
+<para>ou tomcat9 pour Ubuntu</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Allez sur le site de <literal>guacamole.example.com/guacamole</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Vérifiez que tout fonctionne</simpara>
 </listitem>
 </orderedlist>
 </section>

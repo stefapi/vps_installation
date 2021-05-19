@@ -3532,10 +3532,12 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
 
                  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
                  SSLProxyEngine On # Comment this out if no https required
-                 RequestHeader set Front-End-Https "On" # Comment this out if no https required
                  ProxyPreserveHost    On
+                 SSLProxyVerify none
+                 SSLProxyCheckPeerCN off
+                 SSLProxyCheckPeerName off
+                 SSLProxyCheckPeerExpire off
 
-                 ProxyPassMatch ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
                  ProxyPass / https://localhost[:port_number_if_any]/[path_if_any]
                  ProxyPassReverse / https://localhost[:port_number_if_any]/[path_if_any]
 
@@ -5118,15 +5120,17 @@ Il vous reste à appliquer la procédure suivante:
          ProxyPass /stats !
          ProxyPass /.well-known/acme-challenge !
 
-         # roundcube httpserver
+         # redirect from server
+         #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
          SSLProxyEngine On # Comment this out if no https required
-         RequestHeader set Front-End-Https "On" # Comment this out if no https required
-         ProxyPreserveHost    On # Comment this out if no https required
-         SSLProxyCheckPeerCN Off # Comment this out if no https required
-         SSLProxyCheckPeerName Off # Comment this out if no https required
-         SSLProxyVerify none # Comment this out if no https required
+         ProxyPreserveHost    On
+         SSLProxyVerify none
+         SSLProxyCheckPeerCN off
+         SSLProxyCheckPeerName off
+         SSLProxyCheckPeerExpire off
+
          ProxyPass / https://localhost:8080/webmail/
          ProxyPassReverse / https://localhost:8080/webmail/
 
@@ -6443,11 +6447,11 @@ Suivez la procédure suivante:
     .. code:: bash
 
        cd /tmp
-       wget https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz 
-       tar -xvzf mediawiki-1.35.2.tar.gz
-       mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/ 
-       rm mediawiki-1.35.2.tar.gz
-       rm -rf mediawiki-1.35.2
+       wget -O mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz 
+       tar -xvzf mediawiki.tar.gz 
+       mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/  
+       rm mediawiki.tar.gz
+       rm -rf mediawiki-1.35.2 
        chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki  
 
     -  Remplacez [x] et [y] par les numéros de site web et de client.
@@ -6458,7 +6462,12 @@ Suivez la procédure suivante:
     -  mettre ici votre site web à la place de mediawiki.example.com et
        le répertoire d’installation à la place de mediawiki
 
-    -  coller ici le lien de téléchargement déjà copié
+    -  coller ici l’adresse de téléchargement récupérée sur le site de
+       Mediawiki.
+
+    -  le nom du fichier tar.gz dépend de la version que vous avez
+       téléchargé. De même le nom du répertoire est dépendant de la
+       version.
 
 4.  Pointez votre navigateur sur https://mediawiki.example.com.
 
@@ -6919,30 +6928,43 @@ Suivez la procédure suivante:
 
 6. Répondez aux questions suivantes:
 
-   -  ``Hote`` ← Laissez ``localhost``
+   -  ``Database Engine`` ← ``MySQL``
 
-   -  ``Utilisateur`` ← entrez ``cxmicroweber``. x est le numéro de
-      client; habituellement c’est 0
+   -  ``Hostname`` ← Laissez ``localhost``
 
-   -  ``Mot de passe`` ← Tapez votre mot de passe
+   -  ``Username`` ← entrez ``cxmicroweber``. x est le numéro de client;
+      habituellement c’est 0
 
-   -  ``Nom de la Base de données`` ← entrez ``cxmicroweber``. x est le
-      numéro de client; habituellement c’est 0
+   -  ``Password`` ← Tapez votre mot de passe
+
+   -  ``Database`` ← entrez ``cxmicroweber``. x est le numéro de client;
+      habituellement c’est 0
 
    -  ``Préfix des noms de tables`` ← Laissez le champ vide
 
-   -  ``Nom d’Utilisateur`` ← tapez ``admin``
+   -  ``Website Default Language`` ← ``French``
 
-   -  ``Mot de passe`` ← Tapez votre mot de passe
+   -  ``Admin username`` ← tapez ``admin``
 
-   -  ``Mot de passe [confirmer]`` ← Tapez votre mot de passe
+   -  ``Admin password`` ← Tapez votre mot de passe
 
-   -  ``Adresse e-mail`` ← Tapez votre adresse mail d’administrateur
+   -  ``Repeat password`` ← Tapez votre mot de passe
 
-7. Tapez ``Démarrer l’installation``
+   -  ``Admin email`` ← Tapez votre adresse mail d’administrateur
+
+7. Tapez ``Install``
 
 8. Vous êtes redirigé sur le site Microweber ou vous pourrez vous loguer
    et commencer à utiliser l’outil
+
+.. __update_de_microweber:
+
+Update de Microweber
+--------------------
+
+La mise à jour de Microweber s’effectue directement dans le site web en
+allant sur ``Dashboard`` et l’item ``updates``. Il n’y a rien d’autre à
+faire.
 
 .. __installation_de_mealie:
 
@@ -7203,13 +7225,17 @@ Suivez la procédure suivante:
    1. Un fois téléchargé, faites pointer votre navigateur vers
       http://piwigo.example.com/piwigo-netinstall.php
 
-   2. Indique ``.`` comme répertoire d’installation et cliquez sur
-      ``Téléharger et décompresser Piwigo``
+   2. Choisissez votre ``Langue`` à ``Français``
 
-   3. Une fois le téléchargement terminé cliquez sur
+   3. Indique ``.`` comme répertoire d’installation et cliquez sur
+      ``Télécharger et décompresser Piwigo``
+
+   4. Une fois le téléchargement terminé cliquez sur
       ``Installer Piwigo``. Rechargez la page si besoin.
 
-   4. Répondez aux questions suivantes:
+   5. Répondez aux questions suivantes:
+
+      -  ``Langue par défaut de la galerie`` ← ``Français``
 
       -  ``Hote`` ← Laissez ``localhost``
 
@@ -7232,10 +7258,19 @@ Suivez la procédure suivante:
 
       -  ``Adresse e-mail`` ← Tapez votre adresse mail d’administrateur
 
-   5. Tapez ``Démarrer l’installation``
+   6. Tapez ``Démarrer l’installation``
 
-   6. Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer
+   7. Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer
       et commencer à utiliser l’outil
+
+.. __update_de_piwigo:
+
+Update de Piwigo
+----------------
+
+La mise à jour de Piwigo s’effectue directement dans le site web en
+allant sur ``Dashboard Admin`` et l’item ``Mises à jour``. Il n’y a rien
+d’autre à faire.
 
 .. __installation_du_système_collaboratif_nextcloud:
 
@@ -8256,19 +8291,24 @@ Appliquez la procédure suivante:
 
    .. code:: bash
 
-      apt install python3 python3-setuptools python3-pip
-      pip3 install --timeout=3600 Pillow pylibmc captcha jinja2 sqlalchemy psd-tools django-pylibmc django-simple-captcha python3-ldap
+      apt install python3 python3-setuptools python3-pip default-libmysqlclient-dev
+      pip3 install --timeout=3600 Pillow pylibmc captcha jinja2 future mysqlclient sqlalchemy==1.4.3 psd-tools django-pylibmc django-simple-captcha python3-ldap
 
-3. Je préfère faire tourner mes serveurs dans le répertoire privé plutôt
-   que dans le répertoire web pour des questions de sécurité. Tapez:
+3. Allez sur le site de téléchargement de
+   `Seafile <https://www.seafile.com/en/download/>`__ et copier le lien
+   de téléchargement pour ``Server for generic Linux``
+
+4. Il est préférable d’exécuter les serveurs dans un répertoire privé
+   plutôt que dans le répertoire web pour des questions de sécurité.
+   Tapez:
 
    .. code:: bash
 
-      cd /var/www/seafile.example.com/private 
+      cd /var/lib
       mkdir seafile
       cd seafile
-      wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz
-      tar zxvf seafile-server_7.1.3_x86-64.tar.gz
+      wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz 
+      tar zxvf seafile-server_7.1.3_x86-64.tar.gz 
       mkdir installed
       mv seafile-server_* installed
       cd seafile-server-*
@@ -8276,22 +8316,27 @@ Appliquez la procédure suivante:
       cd ../..
       chown -R web1:client0 seafile 
 
-   -  mettre à la place de ``example.com`` votre nom de domaine
-
    -  choisissez le user et le groupe de votre site web. Ces
       informations sont consultables dans ISPConfig en consultant les
       informations du Web Domain→onglet ``Options``\ →champs Linux User
       et Linux Group.
 
-4. A ce moment, vous devez répondre à un certain nombre de questions.
+   -  coller ici l’adresse de téléchargement récupérée sur le site de
+      Seafile.
 
-5. Choisissez le mode de configuration 2) pour indiquer vous même les
+   -  le nom du fichier tar.gz dépend de la version que vous avez
+      téléchargé. De même le nom du répertoire est dépendant de la
+      version.
+
+5. A ce moment, vous devez répondre à un certain nombre de questions.
+
+6. Choisissez le mode de configuration 2) pour indiquer vous même les
    informations sur les bases de données créées.
 
-6. Vous devrez ensuite donner le nom d’utilisateur pour la base de
+7. Vous devrez ensuite donner le nom d’utilisateur pour la base de
    données, le mot de passe ainsi que le nom des 3 bases de données.
 
-7. Si tout est saisi correctement le programme doit donner une synthèse
+8. Si tout est saisi correctement le programme doit donner une synthèse
    de ce qui a été configuré
 
 .. __lancement_initial:
@@ -8306,10 +8351,8 @@ Nous allons effectuer un premier lancement du serveur Seafile:
 
     .. code:: bash
 
-       cd /var/www/seafile.example.com/private/seafile/conf 
+       cd /var/lib/seafile/conf
        vi gunicorn.conf
-
-    -  mettre à la place de ``example.com`` votre nom de domaine
 
 2.  Repèrez le texte ``bind=`` et mettez un numéro de port 8090 à la
     place de 8000. Comme ceci:
@@ -8364,11 +8407,9 @@ Nous allons effectuer un premier lancement du serveur Seafile:
 
     .. code:: bash
 
-       cd /var/www/seafile.example.com/private/seafile/seafile-server-latest 
+       cd /var/lib/seafile/seafile-server-latest
        sudo -u web1 ./seafile.sh start 
        sudo -u web1 ./seahub.sh start 8090 
-
-    -  mettre à la place de ``example.com`` votre nom de domaine
 
     -  remplacer le nom de user web1 par celui correspondant à celui du
        site web installé (indiqué dans le champ ``Options``\ →`linux
@@ -8404,12 +8445,10 @@ script de lancement automatique de Seafile:
 
    .. code:: bash
 
-      cd /var/www/seafile.example.com/private/seafile 
+      cd /var/lib/seafile
       touch startseafile.sh
       chmod +x startseafile.sh
       vi startseafile.sh
-
-   -  mettre à la place de ``example.com`` votre nom de domaine
 
 2. Coller le texte suivant de le fichier ouvert:
 
@@ -8418,7 +8457,7 @@ script de lancement automatique de Seafile:
       #!/bin/bash
 
       # Change the value of "seafile_dir" to your path of seafile installation
-      seafile_dir=/var/www/seafile.example.com/private/seafile 
+      seafile_dir=/var/lib/seafile
       script_path=${seafile_dir}/seafile-server-latest
       seafile_init_log=${seafile_dir}/logs/seafile.init.log
       seahub_init_log=${seafile_dir}/logs/seahub.init.log
@@ -8450,8 +8489,6 @@ script de lancement automatique de Seafile:
       ;;
       esac
 
-   -  remplacer example.com par votre nom de domaine
-
 3. Créer un job cron dans ISPConfig pour démarrer Seafile au démarrage
 
    a. Allez dans la rubrique ``Sites`` puis dans le menu ``Cron Jobs``.
@@ -8470,7 +8507,7 @@ script de lancement automatique de Seafile:
       -  ``Days of week:`` ← mettre \*
 
       -  ``Command to run:`` ← mettre
-         ``/var/www/seafile.<example.com>/private/seafile/startseafile.sh start``
+         ``/var/lib/seafile/startseafile.sh start``
 
 4. Créer un second job cron dans ISPConfig pour redémarrer Seafile tous
    les jours
@@ -8491,11 +8528,67 @@ script de lancement automatique de Seafile:
       -  ``Days of week:`` ← mettre \*
 
       -  ``Command to run:`` ← mettre
-         ``/var/www/seafile.<example.com>/private/seafile/startseafile.sh reload``
+         ``/var/lib/seafile/startseafile.sh reload``
 
 5. Arretez le serveur précédemment lancé en tant que root. Tapez:
 
 6. Enjoy !
+
+.. __upgrade_de_seafile:
+
+Upgrade de Seafile
+==================
+
+La procédure de mise à jour officielle de Seafile se trouve
+`ici <https://manual.seafile.com/upgrade/upgrade/>`__
+
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Allez sur le site de téléchargement de
+   `Seafile <https://www.seafile.com/en/download/>`__ et copier le lien
+   de téléchargement pour ``Server for generic Linux``
+
+3. Il est préférable d’exécuter les serveurs dans un répertoire privé
+   plutôt que dans le répertoire web pour des questions de sécurité.
+   Tapez:
+
+   .. code:: bash
+
+      cd /var/lib/seafile
+      wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz 
+      tar zxvf seafile-server_7.1.3_x86-64.tar.gz 
+      ./startseafile.sh stop
+      mv seafile-server_* installed
+      cd seafile-server-7.1.3 
+      cd upgrade
+      ./upgrade_7.1.2.sh 
+      ./setup-seafile-mysql.sh
+      cd ../../..
+      chown -R web1:client0 seafile 
+      cd seafile/seafile-server-latest
+      sudo -u web1 ./seafile.sh start 
+      sudo -u web1 ./seahub.sh start 8090 
+
+   -  coller ici l’adresse de téléchargement récupérée sur le site de
+      Seafile.
+
+   -  choisissez le user et le groupe de votre site web. Ces
+      informations sont consultables dans ISPConfig en consultant les
+      informations du Web Domain→onglet ``Options``\ →champs Linux User
+      et Linux Group.
+
+   -  le nom du fichier tar.gz dépend de la version que vous avez
+      téléchargé. De même le nom du répertoire est dépendant de la
+      version.
+
+   -  exécutez tous les scripts d’upgrade dont le numéro de version est
+      supérieur ou égal au numéro de version du seafile installé
+      préalablement.
+
+4. Vérifiez que vous savez accéder à Seafile tant sur le site web
+   qu’avec vos applis PC et smartphone
 
 .. __installation_du_système_de_monitoring_grafana:
 
@@ -8721,9 +8814,11 @@ Pour installer Loki, appliquez la procédure suivante:
 
 1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-2.  Allez sur le site de
-    `loki <https://github.com/grafana/loki/releases>`__ et repérez la
-    dernière version à charger.
+2.  allez sur le site de
+    `Loki <https://github.com/grafana/loki/releases/>`__ et copier
+    l’adresse du lien vers la dernière version de loki-linux-amd64.zip
+    (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip
+    pour raspberry pi 4)
 
 3.  Tapez:
 
@@ -8869,25 +8964,31 @@ Installation et configuration de Promtail
 
 Installez maintenant Promtail:
 
-1.  `Loguez vous comme root sur le serveur <#root_login>`__
+1.  allez sur le site de
+    `Loki <https://github.com/grafana/loki/releases/>`__ et copier
+    l’adresse du lien vers la dernière version de
+    promtail-linux-amd64.zip (ou promtail-linux-arm.zip pour raspberry
+    pi 3 ou promtail-linux-arm64.zip pour raspberry pi 4)
 
-2.  Tapez:
+2.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+3.  Tapez:
 
     .. code:: bash
 
        cd /usr/local/bin
-       curl -fSL -o promtail.gz https://github.com/grafana/loki/releases/download/v1.4.1/promtail-linux-amd64.zip
-       gunzip promtail.gz
+       curl -fSL -o promtail.zip https://github.com/grafana/loki/releases/download/v1.4.1/promtail-linux-amd64.zip
+       gunzip promtail.zip
        chmod a+x promtail
 
-3.  Créez la configuration de Promtail. Tapez:
+4.  Créez la configuration de Promtail. Tapez:
 
     .. code:: bash
 
        mkdir -p /var/log/journal
        vi /etc/config-promtail.yml
 
-4.  Et ajoutez le texte suivant puis sauvez:
+5.  Et ajoutez le texte suivant puis sauvez:
 
     ::
 
@@ -8910,7 +9011,7 @@ Installez maintenant Promtail:
              job: varlogs
              __path__: /var/log/{*.log,*/*.log}
 
-5.  Débloquez le port 9080 dans votre firewall
+6.  Débloquez le port 9080 dans votre firewall
 
     a. Allez sur le site ispconfig https://example.com:8080/
 
@@ -8921,17 +9022,17 @@ Installez maintenant Promtail:
 
     d. Cliquez sur ``save``
 
-6.  testez que Promtail fonctionne. Tapez:
+7.  testez que Promtail fonctionne. Tapez:
 
     .. code:: bash
 
        promtail -config.file /etc/config-promtail.yml
 
-7.  Ouvrez un navigateur et visitez: http://example.com:9080
+8.  Ouvrez un navigateur et visitez: http://example.com:9080
 
-8.  Maintenant arrêtez Promtail en tapant **CTRL-C**.
+9.  Maintenant arrêtez Promtail en tapant **CTRL-C**.
 
-9.  Bloquez par sécurité le port 9080 dans votre firewall
+10. Bloquez par sécurité le port 9080 dans votre firewall
 
     a. Allez sur le site ispconfig https://example.com:8080/
 
@@ -8942,14 +9043,14 @@ Installez maintenant Promtail:
 
     d. Cliquez sur ``save``
 
-10. Configurez un service Promtail afin de le faire tourner en arrière
+11. Configurez un service Promtail afin de le faire tourner en arrière
     plan. Tapez:
 
     .. code:: bash
 
        vi /etc/systemd/system/promtail.service
 
-11. Ajoutez le texte ci dessous et sauvez:
+12. Ajoutez le texte ci dessous et sauvez:
 
     ::
 
@@ -8964,7 +9065,7 @@ Installez maintenant Promtail:
        [Install]
        WantedBy=multi-user.target
 
-12. Maintenant lancez le service et vérifiez que tout est fonctionnel.
+13. Maintenant lancez le service et vérifiez que tout est fonctionnel.
     Tapez:
 
     .. code:: bash
@@ -8972,19 +9073,70 @@ Installez maintenant Promtail:
        sudo service promtail start
        sudo service promtail status
 
-13. Allez sur votre site grafana http://grafana.example.com et ajoutez
+14. Allez sur votre site grafana http://grafana.example.com et ajoutez
     une source de données de type loki
 
-14. Mettez l’URL suivante: http://127.0.0.1:3100 . Laissez tout le reste
+15. Mettez l’URL suivante: http://127.0.0.1:3100 . Laissez tout le reste
     tel quel.
 
-15. vous pouvez maintenant explorer vos logs en utilisant le menu
+16. vous pouvez maintenant explorer vos logs en utilisant le menu
     explore sur la gauche. Dans la zone texte "Log Labels" essayez ces
     examples un à un:
 
     ::
 
        {job="varlogs"}
+
+.. __upgrade_de_grafana:
+
+Upgrade de Grafana
+------------------
+
+Comme grafana est installé à partir de paquets Debian, la mise à jour
+s’effectue automatiquement avec le système.
+
+Il reste cependant Loki et Promtail à mettre à jour.
+
+Appliquez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. allez sur le site de
+   `Loki <https://github.com/grafana/loki/releases/>`__ et copier
+   l’adresse du lien vers la dernière version de loki-linux-amd64.zip
+   (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip
+   pour raspberry pi 4)
+
+3. allez sur le site de
+   `Loki <https://github.com/grafana/loki/releases/>`__ et copier
+   l’adresse du lien vers la dernière version de
+   promtail-linux-amd64.zip (ou promtail-linux-arm.zip pour raspberry pi
+   3 ou promtail-linux-arm64.zip pour raspberry pi 4)
+
+4. Mettez à jour Loki et Promtail à jour. Exécutez:
+
+   .. code:: bash
+
+      cd /usr/local/bin
+      curl -fSL -o loki.gz https://github.com/grafana/loki/releases/download/v2.2.1/loki-linux-amd64.zip
+      gunzip loki.gz
+      chmod a+x loki
+      curl -fSL -o promtail.zip https://github.com/grafana/loki/releases/download/v2.2.1/promtail-linux-amd64.zip
+      gunzip promtail.zip
+      chmod a+x promtail
+
+5. redémarrez les service. Tapez:
+
+   .. code:: bash
+
+      sudo service loki restart
+      sudo service loki status
+      sudo service promtail restart
+      sudo service promtail status
+
+6. Allez sur votre site Grafana http://grafana.example.com
+
+7. Vérifiez que tout fonctionne
 
 .. __installation_du_système_de_backup_borgbackup:
 
@@ -9803,7 +9955,7 @@ Pritunl est un serveur VPN basé sur OpenVPN.
 .. warning::
 
    Printunl ne peut pas être installé sur une plateforme 32 bits et donc
-   sur une distribution Raspbian.
+   sur une distribution Raspbian d’un raspberry pi
 
 .. __création_du_site_web_de_pritunl:
 
@@ -9852,16 +10004,17 @@ Appliquez la procédure suivante:
          ProxyPass /stats !
          ProxyPass /.well-known/acme-challenge !
 
-         # Pritunl httpserver
+         # redirect from server
          #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
          SSLProxyEngine On # Comment this out if no https required
-         RequestHeader set Front-End-Https "On" # Comment this out if no https required
-         ProxyPreserveHost    On # Comment this out if no https required
-         SSLProxyCheckPeerCN Off # Comment this out if no https required
-         SSLProxyCheckPeerName Off # Comment this out if no https required
-         SSLProxyVerify none # Comment this out if no https required
+         ProxyPreserveHost    On
+         SSLProxyVerify none
+         SSLProxyCheckPeerCN off
+         SSLProxyCheckPeerName off
+         SSLProxyCheckPeerExpire off
+
          ProxyPass / https://localhost:8070/
          ProxyPassReverse / https://localhost:8070/
 
@@ -9893,7 +10046,7 @@ debian (pour le Raspberrypi voir le chapitre suivant):
       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
       apt-get update
-      apt-get --assume-yes install pritunl mongodb-org
+      apt-get --assume-yes install pritunl mongodb-org openvpn
 
 .. __installation_de_pritunl_sur_un_raspberrypi:
 
@@ -9914,7 +10067,7 @@ installer sur un Raspberrypi avec Ubuntu 64 bits:
       tee /etc/apt/sources.list.d/mongodb-org.list << EOF
       deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse
       EOF
-      apt install dirmngr
+      apt install dirmngr openvpn python3-pip
       apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
       apt update
       apt install mongodb-org golang
@@ -9943,21 +10096,15 @@ installer sur un Raspberrypi avec Ubuntu 64 bits:
       ln -s /var/lib/pritunl/bin/pritunl-dns /usr/local/bin/pritunl-dns
       ln -s /var/lib/pritunl/bin/pritunl-web /usr/local/bin/pritunl-web
 
-5. Installer le logiciel pour python2. Comme il y a encore des problèmes
-   de dépendances, Tapez:
+5. Installer le logiciel pour python3. Tapez:
 
    .. code:: bash
 
       git clone https://github.com/pritunl/pritunl.git
-      apt install libpython2.7-dev libffi-dev
-      curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
-      python2 get-pip.py
-      rm get-pip.py
       cd pritunl
-      echo "jaraco.functools==2.0" >> requirements.txt
-      python2 setup.py build
-      pip2 install -r requirements.txt
-      python2 setup.py install
+      python3 setup.py build
+      pip3 install -r requirements.txt
+      python3 setup.py install
 
 6. Printunl s’installe dans ``/usr/local/bin``. Il faut changer le
    fichier service. Tapez:
@@ -9975,7 +10122,10 @@ installer sur un Raspberrypi avec Ubuntu 64 bits:
 
       systemctl daemon-reload
 
-   === Configuration de Pritunl
+.. __configuration_de_pritunl:
+
+Configuration de Pritunl
+------------------------
 
 Votre service Pritunl est installé. Vous devez maintenant le configurer
 pour qu’il fonctionne:
@@ -10001,7 +10151,7 @@ pour qu’il fonctionne:
        systemctl enable mongod pritunl
 
 4.  pointez votre navigateur sur le site web de Pritunl:
-    https://example.com
+    https://pritunl.example.com
 
 5.  Accepter le certificat non sécurisé. La page de setup de Pritunl
     s’affiche.
@@ -10014,7 +10164,7 @@ pour qu’il fonctionne:
 
 7.  copier la clé dans la page web. Cliquez sur ``Save``
 
-8.  La page web s’affiche en erreur. Pas d’inquiétude à avoir.
+8.  La page web peut s’affiche en erreur. Pas d’inquiétude à avoir.
 
 9.  Arrêtez le serveur Pritunl. Tapez:
 
@@ -10055,9 +10205,11 @@ pour qu’il fonctionne:
 15. Une boite de dialogue ``initial setup`` s’affiche. Ne changez rien
     mais tapez votre mot de passe.
 
-16. Vous êtes maintenant connecté sur le site web.
+16. Cliquez sur ``Save``
 
-17. Cliquez sur l’onglet ``Users``
+17. Vous êtes maintenant connecté sur le site web.
+
+18. Cliquez sur l’onglet ``Users``
 
     a. Cliquez sur ``Add Organization``
 
@@ -10081,7 +10233,7 @@ pour qu’il fonctionne:
 
     f. Cliquez sur ``Add``
 
-18. Allez sur l’onglet ``Servers``
+19. Allez sur l’onglet ``Servers``
 
     a. Cliquez sur ``Add Server``
 
@@ -10101,7 +10253,7 @@ pour qu’il fonctionne:
 
     f. Cliquez sur ``Attach``
 
-19. Débloquez le port VPN dans votre firewall
+20. Débloquez le port VPN dans votre firewall
 
     a. Allez sur le site ispconfig https://example.com:8080/
 
@@ -10113,12 +10265,12 @@ pour qu’il fonctionne:
 
     d. Cliquez sur ``save``
 
-20. Retourner dans l’interface de Pritunl. retournez sur l’onglet
+21. Retourner dans l’interface de Pritunl. retournez sur l’onglet
     ``Servers``
 
     a. Cliquez sur ``Start server``
 
-21. Votre serveur de VPN est opérationnel.
+22. Votre serveur de VPN est opérationnel.
 
 .. __se_connecter_au_serveur_de_vpn:
 
@@ -10160,6 +10312,77 @@ Vous pouvez re-générer un mot de passe en tapant:
 .. code:: bash
 
    pritunl reset-password
+
+.. __update_de_pritunl:
+
+Update de Pritunl
+-----------------
+
+Pour une installation sur un système Intel, il n’y a rien à faire.
+
+En revanche sur un Raspberry, il est nécessaire de regénérer les
+logiciels avec les dernières versions.
+
+Appliquez la procédure suivante:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Arrêtez le serveur pritunl
+
+    .. code:: bash
+
+       systemctl stop pritunl
+
+3.  Installez les paquets à jour. Tapez:
+
+    .. code:: bash
+
+       cd /var/lib/pritunl
+       export GOPATH=/var/lib/pritunl
+       go get -u github.com/pritunl/pritunl-dns
+       go get -u github.com/pritunl/pritunl-web
+
+4.  Mettez ensuite à jour le système client web. Tapez:
+
+    .. code:: bash
+
+       cd pritunl
+       git pull https://github.com/pritunl/pritunl.git
+       python3 setup.py build
+       pip3 install -r requirements.txt
+       python3 setup.py install
+
+5.  Printunl s’installe dans ``/usr/local/bin``. Il faut changer le
+    fichier service. Tapez:
+
+    .. code:: bash
+
+       vi /etc/systemd/system/pritunl.service
+
+6.  Changer ``ExecStart=/usr/bin/pritunl start`` par
+    ``ExecStart=/usr/local/bin/pritunl start``
+
+7.  Rechargez les configs de systemd. Tapez:
+
+    .. code:: bash
+
+       systemctl daemon-reload
+
+8.  Configurez le serveur pour qu’il n’utilise plus le port 80 et le
+    port 443 (c’est écrasé à la réinstallation) :
+
+    .. code:: bash
+
+       pritunl set app.server_port 8070
+       pritunl set app.redirect_server false
+
+9.  Redémarrez le serveur pritunl
+
+    .. code:: bash
+
+       systemctl stop pritunl
+
+10. Vérifiez que tout est correct
 
 .. __installation_dun_serveur_de_bureau_à_distance_guacamole:
 
@@ -10308,6 +10531,7 @@ Suivez la procédure suivante:
 
     .. code:: bash
 
+       cd /tmp
        curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' 
        tar xfz guacamole-server.tar.gz
        cd guacamole-server-*
@@ -10376,6 +10600,7 @@ Suivez la procédure suivante:
 
     .. code:: bash
 
+       systemctl daemon-reload
        systemctl enable guacd
        systemctl start guacd
 
@@ -10493,7 +10718,7 @@ Suivez la procédure suivante:
 
     -  ou mettre tomcat9 pour Ubuntu
 
-22. Allez sur le site de ``guacamole.example.com``
+22. Allez sur le site de ``guacamole.example.com/guacamole``
 
 23. Loguez vous avec le compte: ``guacadmin`` et password: ``guacadmin``
 
@@ -10563,6 +10788,74 @@ Suivez la procédure suivante:
 31. l’appui simultané sur ``SHIFT`` ``CTRL`` ``ALT`` fait apparaître un
     menu pour effectuer des chargements de fichiers ou contrôler votre
     connexion
+
+.. __upgrade_de_guacamole:
+
+Upgrade de Guacamole
+--------------------
+
+Il est nécessaire de regénérer les logiciels avec les dernières
+versions.
+
+Appliquez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Arrêtez le serveur guacamole
+
+   .. code:: bash
+
+      systemctl stop guacd
+
+3. Téléchargez la dernière version de Guacamole en allant sur le site
+   web et en récupérant le `lien de
+   téléchargement <https://guacamole.apache.org/releases/>`__.
+
+4. tapez:
+
+   .. code:: bash
+
+      cd /tmp
+      curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' 
+      tar xfz guacamole-server.tar.gz
+      cd guacamole-server-*
+
+   -  insérez ici l’adresse du package serveur à charger
+
+5. Lancez la configuration. Tapez:
+
+   .. code:: bash
+
+      ./configure --with-init-dir=/etc/init.d
+
+6. Lancez la compilation et l’installation. Tapez:
+
+   .. code:: bash
+
+      make
+      make install
+      ldconfig
+
+7. Téléchargez le dernier client ``war`` de Guacamole en allant sur le
+   site web et en récupérant le `lien de
+   téléchargement <https://guacamole.apache.org/releases/>`__. Récupérez
+   le lien puis tapez:
+
+   .. code:: bash
+
+      cd /usr/local/share/guacamole
+      curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' 
+      systemctl daemon-reload
+      systemctl restart tomcat8 
+      systemctl start guacd
+
+   -  insérez ici l’adresse du war à charger
+
+   -  ou tomcat9 pour Ubuntu
+
+8. Allez sur le site de ``guacamole.example.com/guacamole``
+
+9. Vérifiez que tout fonctionne
 
 .. __annexe:
 

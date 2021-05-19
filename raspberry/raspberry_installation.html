@@ -523,7 +523,7 @@ pre.pygments .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Int
 <span id="author" class="author">Stéphane Apiou</span><br>
 <span id="email" class="email"><a href="mailto:stephane@apiou.org">stephane@apiou.org</a></span><br>
 <span id="revnumber">version 1.3,</span>
-<span id="revdate">2021-05-15</span>
+<span id="revdate">2021-05-19</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -670,6 +670,7 @@ pre.pygments .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Int
 <li><a href="#_création_du_site_web_de_microweber">20.1. Création du site web de Microweber</a></li>
 <li><a href="#_création_des_bases_de_données_5">20.2. Création des bases de données</a></li>
 <li><a href="#_installation_de_microweber">20.3. Installation de Microweber</a></li>
+<li><a href="#_update_de_microweber">20.4. Update de Microweber</a></li>
 </ul>
 </li>
 <li><a href="#_installation_de_mealie">21. Installation de Mealie</a>
@@ -686,6 +687,7 @@ pre.pygments .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Int
 <li><a href="#_création_du_site_web_de_piwigo">22.1. Création du site web de Piwigo</a></li>
 <li><a href="#_création_des_bases_de_données_6">22.2. Création des bases de données</a></li>
 <li><a href="#_installation_de_piwigo">22.3. Installation de Piwigo</a></li>
+<li><a href="#_update_de_piwigo">22.4. Update de Piwigo</a></li>
 </ul>
 </li>
 <li><a href="#_installation_du_système_collaboratif_nextcloud">23. Installation du système collaboratif Nextcloud</a>
@@ -733,51 +735,56 @@ pre.pygments .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Int
 <li><a href="#_lancement_automatique_de_seafile">27.5. Lancement automatique de Seafile</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_système_de_monitoring_grafana">28. Installation du système de monitoring Grafana</a>
+<li><a href="#_upgrade_de_seafile">28. Upgrade de Seafile</a></li>
+<li><a href="#_installation_du_système_de_monitoring_grafana">29. Installation du système de monitoring Grafana</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_grafana">28.1. Création du site web de Grafana</a></li>
-<li><a href="#_installation_de_grafana">28.2. Installation de Grafana</a></li>
-<li><a href="#_installation_et_configuration_de_loki">28.3. Installation et configuration de Loki</a></li>
-<li><a href="#_installation_et_configuration_de_promtail">28.4. Installation et configuration de Promtail</a></li>
+<li><a href="#_création_du_site_web_de_grafana">29.1. Création du site web de Grafana</a></li>
+<li><a href="#_installation_de_grafana">29.2. Installation de Grafana</a></li>
+<li><a href="#_installation_et_configuration_de_loki">29.3. Installation et configuration de Loki</a></li>
+<li><a href="#_installation_et_configuration_de_promtail">29.4. Installation et configuration de Promtail</a></li>
+<li><a href="#_upgrade_de_grafana">29.5. Upgrade de Grafana</a></li>
 </ul>
 </li>
-<li><a href="#_installation_du_système_de_backup_borgbackup">29. Installation du système de backup BorgBackup</a>
+<li><a href="#_installation_du_système_de_backup_borgbackup">30. Installation du système de backup BorgBackup</a>
 <ul class="sectlevel2">
-<li><a href="#_introduction">29.1. Introduction</a></li>
-<li><a href="#_installation_du_serveur_de_stockage">29.2. Installation du serveur de stockage</a></li>
-<li><a href="#_installation_sur_le_serveur_sauvegardé">29.3. Installation sur le serveur sauvegardé</a></li>
-<li><a href="#_effectuer_un_backup">29.4. Effectuer un backup</a></li>
-<li><a href="#_lister_les_backups">29.5. Lister les backups</a></li>
-<li><a href="#_vérifier_un_backup">29.6. Vérifier un backup</a></li>
-<li><a href="#_restaurer_un_backup">29.7. Restaurer un backup</a></li>
-<li><a href="#_supprimer_vos_vieux_backups">29.8. Supprimer vos vieux backups</a></li>
-<li><a href="#_automatisez_votre_sauvegarde">29.9. Automatisez votre sauvegarde</a></li>
-<li><a href="#_restauration_durgence">29.10. Restauration d&#8217;urgence.</a></li>
-<li><a href="#_installation_de_borgweb">29.11. Installation de Borgweb</a></li>
-<li><a href="#_création_du_site_web_de_borgweb">29.12. Création du site web de Borgweb</a></li>
+<li><a href="#_introduction">30.1. Introduction</a></li>
+<li><a href="#_installation_du_serveur_de_stockage">30.2. Installation du serveur de stockage</a></li>
+<li><a href="#_installation_sur_le_serveur_sauvegardé">30.3. Installation sur le serveur sauvegardé</a></li>
+<li><a href="#_effectuer_un_backup">30.4. Effectuer un backup</a></li>
+<li><a href="#_lister_les_backups">30.5. Lister les backups</a></li>
+<li><a href="#_vérifier_un_backup">30.6. Vérifier un backup</a></li>
+<li><a href="#_restaurer_un_backup">30.7. Restaurer un backup</a></li>
+<li><a href="#_supprimer_vos_vieux_backups">30.8. Supprimer vos vieux backups</a></li>
+<li><a href="#_automatisez_votre_sauvegarde">30.9. Automatisez votre sauvegarde</a></li>
+<li><a href="#_restauration_durgence">30.10. Restauration d&#8217;urgence.</a></li>
+<li><a href="#_installation_de_borgweb">30.11. Installation de Borgweb</a></li>
+<li><a href="#_création_du_site_web_de_borgweb">30.12. Création du site web de Borgweb</a></li>
 </ul>
 </li>
-<li><a href="#_installation_dun_serveur_de_vpn_pritunl">30. Installation d&#8217;un serveur de VPN Pritunl</a>
+<li><a href="#_installation_dun_serveur_de_vpn_pritunl">31. Installation d&#8217;un serveur de VPN Pritunl</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_pritunl">30.1. Création du site web de Pritunl</a></li>
-<li><a href="#_installation_de_pritunl_sur_un_vps">30.2. Installation de Pritunl sur un VPS</a></li>
-<li><a href="#_installation_de_pritunl_sur_un_raspberrypi">30.3. Installation de Pritunl sur un Raspberrypi</a></li>
-<li><a href="#_se_connecter_au_serveur_de_vpn">30.4. Se connecter au serveur de VPN</a></li>
-<li><a href="#_réparer_une_base_pritunl">30.5. Réparer une base Pritunl</a></li>
-<li><a href="#_mot_de_passe_perdu">30.6. Mot de passe perdu</a></li>
+<li><a href="#_création_du_site_web_de_pritunl">31.1. Création du site web de Pritunl</a></li>
+<li><a href="#_installation_de_pritunl_sur_un_vps">31.2. Installation de Pritunl sur un VPS</a></li>
+<li><a href="#_installation_de_pritunl_sur_un_raspberrypi">31.3. Installation de Pritunl sur un Raspberrypi</a></li>
+<li><a href="#_configuration_de_pritunl">31.4. Configuration de Pritunl</a></li>
+<li><a href="#_se_connecter_au_serveur_de_vpn">31.5. Se connecter au serveur de VPN</a></li>
+<li><a href="#_réparer_une_base_pritunl">31.6. Réparer une base Pritunl</a></li>
+<li><a href="#_mot_de_passe_perdu">31.7. Mot de passe perdu</a></li>
+<li><a href="#_update_de_pritunl">31.8. Update de Pritunl</a></li>
 </ul>
 </li>
-<li><a href="#_installation_dun_serveur_de_bureau_à_distance_guacamole">31. Installation d&#8217;un serveur de bureau à distance Guacamole</a>
+<li><a href="#_installation_dun_serveur_de_bureau_à_distance_guacamole">32. Installation d&#8217;un serveur de bureau à distance Guacamole</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_guacamole">31.1. Création du site web de Guacamole</a></li>
-<li><a href="#_création_des_bases_de_données_9">31.2. Création des bases de données</a></li>
-<li><a href="#_installation_du_guacamole">31.3. Installation du Guacamole</a></li>
+<li><a href="#_création_du_site_web_de_guacamole">32.1. Création du site web de Guacamole</a></li>
+<li><a href="#_création_des_bases_de_données_9">32.2. Création des bases de données</a></li>
+<li><a href="#_installation_du_guacamole">32.3. Installation du Guacamole</a></li>
+<li><a href="#_upgrade_de_guacamole">32.4. Upgrade de Guacamole</a></li>
 </ul>
 </li>
-<li><a href="#_annexe">32. Annexe</a>
+<li><a href="#_annexe">33. Annexe</a>
 <ul class="sectlevel2">
-<li><a href="#_installation_de_hestia">32.1. Installation de Hestia</a></li>
-<li><a href="#_configuration_dun_écran_3_5_inch_rpi_lcd_a">32.2. Configuration d&#8217;un écran 3.5 inch RPI LCD (A)</a></li>
+<li><a href="#_installation_de_hestia">33.1. Installation de Hestia</a></li>
+<li><a href="#_configuration_dun_écran_3_5_inch_rpi_lcd_a">33.2. Configuration d&#8217;un écran 3.5 inch RPI LCD (A)</a></li>
 </ul>
 </li>
 </ul>
@@ -5531,7 +5538,8 @@ Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore d
 <p>Pour un site en HTTPS :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span>
+<span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
 <span class="tok-nb">Order</span> deny,allow
 <span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
 <span class="tok-nt">&lt;/Proxy&gt;</span>
@@ -5545,10 +5553,12 @@ Si ce n&#8217;est pas le cas, réessayer dans une heure. S&#8217;il y a encore d
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span> # Comment this out if no https required
-<span class="tok-nb">RequestHeader</span> set Front-End-Https <span class="tok-s2">&quot;On&quot;</span> # Comment this out if no https required
 <span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+<span class="tok-nb">SSLProxyVerify</span> <span class="tok-k">none</span>
+<span class="tok-nb">SSLProxyCheckPeerCN</span> <span class="tok-k">off</span>
+<span class="tok-nb">SSLProxyCheckPeerName</span> <span class="tok-k">off</span>
+<span class="tok-nb">SSLProxyCheckPeerExpire</span> <span class="tok-k">off</span>
 
-<span class="tok-nb">ProxyPassMatch</span> ^/(.+)/websocket ws://localhost[:port_number_if_any]/$1/websocket keepalive=On # If websocket is in use
 <span class="tok-nb">ProxyPass</span> / https://localhost[:port_number_if_any]/[path_if_any]
 <span class="tok-nb">ProxyPassReverse</span> / https://localhost[:port_number_if_any]/[path_if_any]
 
@@ -7597,7 +7607,8 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span>
+<span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
 <span class="tok-nb">Order</span> deny,allow
 <span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
 <span class="tok-nt">&lt;/Proxy&gt;</span>
@@ -7606,15 +7617,17 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 <span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
 <span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
-<span class="tok-c"># roundcube httpserver</span>
+<span class="tok-c"># redirect from server</span>
+<span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span> # Comment this out if no https required
-<span class="tok-nb">RequestHeader</span> set Front-End-Https <span class="tok-s2">&quot;On&quot;</span> # Comment this out if no https required
-<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span> # Comment this out if no https required
-<span class="tok-nb">SSLProxyCheckPeerCN</span> <span class="tok-k">Off</span> # Comment this out if no https required
-<span class="tok-nb">SSLProxyCheckPeerName</span> <span class="tok-k">Off</span> # Comment this out if no https required
-<span class="tok-nb">SSLProxyVerify</span> <span class="tok-k">none</span> # Comment this out if no https required
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+<span class="tok-nb">SSLProxyVerify</span> <span class="tok-k">none</span>
+<span class="tok-nb">SSLProxyCheckPeerCN</span> <span class="tok-k">off</span>
+<span class="tok-nb">SSLProxyCheckPeerName</span> <span class="tok-k">off</span>
+<span class="tok-nb">SSLProxyCheckPeerExpire</span> <span class="tok-k">off</span>
+
 <span class="tok-nb">ProxyPass</span> / https://localhost:8080/webmail/
 <span class="tok-nb">ProxyPassReverse</span> / https://localhost:8080/webmail/
 
@@ -9347,11 +9360,11 @@ Cliquez sur le lien qui vous est présenté dans l&#8217;interface.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp
-wget https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz <i class="conum" data-value="3"></i><b>(3)</b>
-tar -xvzf mediawiki-1.35.2.tar.gz
-mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/ <i class="conum" data-value="2"></i><b>(2)</b>
-rm mediawiki-1.35.2.tar.gz
-rm -rf mediawiki-1.35.2
+wget -O mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz <i class="conum" data-value="3"></i><b>(3)</b>
+tar -xvzf mediawiki.tar.gz <i class="conum" data-value="4"></i><b>(4)</b>
+mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/  <i class="conum" data-value="4"></i><b>(4)</b> <i class="conum" data-value="2"></i><b>(2)</b>
+rm mediawiki.tar.gz
+rm -rf mediawiki-1.35.2 <i class="conum" data-value="4"></i><b>(4)</b>
 chown -R web<span class="tok-o">[</span>x<span class="tok-o">]</span>:client<span class="tok-o">[</span>y<span class="tok-o">]</span> /var/www/mediawiki.example.com/mediawiki  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
@@ -9367,7 +9380,11 @@ chown -R web<span class="tok-o">[</span>x<span class="tok-o">]</span>:client<spa
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>coller ici le lien de téléchargement déjà copié</td>
+<td>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Mediawiki.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</td>
 </tr>
 </table>
 </div>
@@ -10020,42 +10037,54 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 <div class="ulist">
 <ul>
 <li>
-<p><code>Hote</code> &#8592; Laissez <code>localhost</code></p>
+<p><code>Database Engine</code> &#8592; <code>MySQL</code></p>
 </li>
 <li>
-<p><code>Utilisateur</code> &#8592; entrez <code>cxmicroweber</code>. x est le numéro de client; habituellement c&#8217;est 0</p>
+<p><code>Hostname</code> &#8592; Laissez <code>localhost</code></p>
 </li>
 <li>
-<p><code>Mot de passe</code> &#8592; Tapez votre mot de passe</p>
+<p><code>Username</code> &#8592; entrez <code>cxmicroweber</code>. x est le numéro de client; habituellement c&#8217;est 0</p>
 </li>
 <li>
-<p><code>Nom de la Base de données</code> &#8592; entrez <code>cxmicroweber</code>. x est le numéro de client; habituellement c&#8217;est 0</p>
+<p><code>Password</code> &#8592; Tapez votre mot de passe</p>
+</li>
+<li>
+<p><code>Database</code> &#8592; entrez <code>cxmicroweber</code>. x est le numéro de client; habituellement c&#8217;est 0</p>
 </li>
 <li>
 <p><code>Préfix des noms de tables</code> &#8592; Laissez le champ vide</p>
 </li>
 <li>
-<p><code>Nom d&#8217;Utilisateur</code> &#8592; tapez <code>admin</code></p>
+<p><code>Website Default Language</code> &#8592; <code>French</code></p>
 </li>
 <li>
-<p><code>Mot de passe</code> &#8592; Tapez votre mot de passe</p>
+<p><code>Admin username</code> &#8592; tapez <code>admin</code></p>
 </li>
 <li>
-<p><code>Mot de passe [confirmer]</code> &#8592; Tapez votre mot de passe</p>
+<p><code>Admin password</code> &#8592; Tapez votre mot de passe</p>
 </li>
 <li>
-<p><code>Adresse e-mail</code> &#8592; Tapez votre adresse mail d&#8217;administrateur</p>
+<p><code>Repeat password</code> &#8592; Tapez votre mot de passe</p>
+</li>
+<li>
+<p><code>Admin email</code> &#8592; Tapez votre adresse mail d&#8217;administrateur</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Tapez <code>Démarrer l&#8217;installation</code></p>
+<p>Tapez <code>Install</code></p>
 </li>
 <li>
 <p>Vous êtes redirigé sur le site Microweber ou vous pourrez vous loguer et commencer à utiliser l&#8217;outil</p>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_de_microweber">20.4. Update de Microweber</h3>
+<div class="paragraph">
+<p>La mise à jour de Microweber s&#8217;effectue directement dans le site web en allant sur <code>Dashboard</code> et l&#8217;item <code>updates</code>. Il n&#8217;y a rien d&#8217;autre à faire.</p>
 </div>
 </div>
 </div>
@@ -10426,7 +10455,10 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 <p>Un fois téléchargé, faites pointer votre navigateur vers <a href="http://piwigo.example.com/piwigo-netinstall.php" class="bare">http://piwigo.example.com/piwigo-netinstall.php</a></p>
 </li>
 <li>
-<p>Indique <code>.</code> comme répertoire d&#8217;installation et cliquez sur <code>Téléharger et décompresser Piwigo</code></p>
+<p>Choisissez votre <code>Langue</code> à <code>Français</code></p>
+</li>
+<li>
+<p>Indique <code>.</code> comme répertoire d&#8217;installation et cliquez sur <code>Télécharger et décompresser Piwigo</code></p>
 </li>
 <li>
 <p>Une fois le téléchargement terminé cliquez sur <code>Installer Piwigo</code>. Rechargez la page si besoin.</p>
@@ -10435,6 +10467,9 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 <p>Répondez aux questions suivantes:</p>
 <div class="ulist">
 <ul>
+<li>
+<p><code>Langue par défaut de la galerie</code> &#8592; <code>Français</code></p>
+</li>
 <li>
 <p><code>Hote</code> &#8592; Laissez <code>localhost</code></p>
 </li>
@@ -10475,6 +10510,12 @@ wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinsta
 </div></td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_de_piwigo">22.4. Update de Piwigo</h3>
+<div class="paragraph">
+<p>La mise à jour de Piwigo s&#8217;effectue directement dans le site web en allant sur <code>Dashboard Admin</code> et l&#8217;item <code>Mises à jour</code>. Il n&#8217;y a rien d&#8217;autre à faire.</p>
 </div>
 </div>
 </div>
@@ -11866,37 +11907,44 @@ docker run -d -p <span class="tok-m">1281</span>:443 --name<span class="tok-o">=
 <p>Installez quelques paquets Debian complémentaires. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install python3 python3-setuptools python3-pip
-pip3 install --timeout<span class="tok-o">=</span><span class="tok-m">3600</span> Pillow pylibmc captcha jinja2 sqlalchemy psd-tools django-pylibmc django-simple-captcha python3-ldap</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>apt install python3 python3-setuptools python3-pip default-libmysqlclient-dev
+pip3 install --timeout<span class="tok-o">=</span><span class="tok-m">3600</span> Pillow pylibmc captcha jinja2 future mysqlclient <span class="tok-nv">sqlalchemy</span><span class="tok-o">==</span><span class="tok-m">1</span>.4.3 psd-tools django-pylibmc django-simple-captcha python3-ldap</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Je préfère faire tourner mes serveurs dans le répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</p>
+<p>Allez sur le site de téléchargement de <a href="https://www.seafile.com/en/download/">Seafile</a> et copier le lien de téléchargement pour <code>Server for generic Linux</code></p>
+</li>
+<li>
+<p>Il est préférable d&#8217;exécuter les serveurs dans un répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/seafile.example.com/private <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/lib
 mkdir seafile
 <span class="tok-nb">cd</span> seafile
-wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz
-tar zxvf seafile-server_7.1.3_x86-64.tar.gz
+wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <i class="conum" data-value="2"></i><b>(2)</b>
+tar zxvf seafile-server_7.1.3_x86-64.tar.gz <i class="conum" data-value="3"></i><b>(3)</b>
 mkdir installed
 mv seafile-server_* installed
 <span class="tok-nb">cd</span> seafile-server-*
 ./setup-seafile-mysql.sh
 <span class="tok-nb">cd</span> ../..
-chown -R web1:client0 seafile <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+chown -R web1:client0 seafile <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
+<td>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <code>Options</code>&#8594;champs Linux User et Linux Group.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <code>Options</code>&#8594;champs Linux User et Linux Group.</td>
+<td>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Seafile.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</td>
 </tr>
 </table>
 </div>
@@ -11927,17 +11975,9 @@ chown -R web1:client0 seafile <i class="conum" data-value="2"></i><b>(2)</b></co
 <p>allez dans le répertoire contenant les configurations et éditez <code>gunicorn.conf</code>. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/seafile.example.com/private/seafile/conf <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/lib/seafile/conf
 vi gunicorn.conf</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
-</tr>
-</table>
 </div>
 </li>
 <li>
@@ -12017,19 +12057,15 @@ vi gunicorn.conf</code></pre>
 <p>Démarrez Seafile. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/seafile.example.com/private/seafile/seafile-server-latest <i class="conum" data-value="1"></i><b>(1)</b>
-sudo -u web1 ./seafile.sh start <i class="conum" data-value="2"></i><b>(2)</b>
-sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/lib/seafile/seafile-server-latest
+sudo -u web1 ./seafile.sh start <i class="conum" data-value="1"></i><b>(1)</b>
+sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <code>Options</code>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</td>
 </tr>
 </table>
@@ -12074,19 +12110,11 @@ sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" 
 <p>Créer un script de lancement automatique. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/www/seafile.example.com/private/seafile <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/lib/seafile
 touch startseafile.sh
 chmod +x startseafile.sh
 vi startseafile.sh</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
-</tr>
-</table>
 </div>
 </li>
 <li>
@@ -12096,7 +12124,7 @@ vi startseafile.sh</code></pre>
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/bash</span>
 
 <span class="tok-c1"># Change the value of &quot;seafile_dir&quot; to your path of seafile installation</span>
-<span class="tok-nv">seafile_dir</span><span class="tok-o">=</span>/var/www/seafile.example.com/private/seafile <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nv">seafile_dir</span><span class="tok-o">=</span>/var/lib/seafile
 <span class="tok-nv">script_path</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">seafile_dir</span><span class="tok-si">}</span>/seafile-server-latest
 <span class="tok-nv">seafile_init_log</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">seafile_dir</span><span class="tok-si">}</span>/logs/seafile.init.log
 <span class="tok-nv">seahub_init_log</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">seafile_dir</span><span class="tok-si">}</span>/logs/seahub.init.log
@@ -12129,14 +12157,6 @@ stop<span class="tok-o">)</span>
 <span class="tok-k">esac</span></code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer example.com par votre nom de domaine</td>
-</tr>
-</table>
-</div>
 </li>
 <li>
 <p>Créer un job cron dans ISPConfig pour démarrer Seafile au démarrage</p>
@@ -12165,7 +12185,7 @@ stop<span class="tok-o">)</span>
 <p><code>Days of week:</code> &#8592; mettre *</p>
 </li>
 <li>
-<p><code>Command to run:</code> &#8592; mettre <code>/var/www/seafile.&lt;example.com&gt;/private/seafile/startseafile.sh start</code></p>
+<p><code>Command to run:</code> &#8592; mettre <code>/var/lib/seafile/startseafile.sh start</code></p>
 </li>
 </ul>
 </div>
@@ -12200,7 +12220,7 @@ stop<span class="tok-o">)</span>
 <p><code>Days of week:</code> &#8592; mettre *</p>
 </li>
 <li>
-<p><code>Command to run:</code> &#8592; mettre <code>/var/www/seafile.&lt;example.com&gt;/private/seafile/startseafile.sh reload</code></p>
+<p><code>Command to run:</code> &#8592; mettre <code>/var/lib/seafile/startseafile.sh reload</code></p>
 </li>
 </ul>
 </div>
@@ -12220,7 +12240,72 @@ stop<span class="tok-o">)</span>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_système_de_monitoring_grafana">28. Installation du système de monitoring Grafana</h2>
+<h2 id="_upgrade_de_seafile">28. Upgrade de Seafile</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La procédure de mise à jour officielle de Seafile se trouve <a href="https://manual.seafile.com/upgrade/upgrade/">ici</a></p>
+</div>
+<div class="paragraph">
+<p>Suivez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Allez sur le site de téléchargement de <a href="https://www.seafile.com/en/download/">Seafile</a> et copier le lien de téléchargement pour <code>Server for generic Linux</code></p>
+</li>
+<li>
+<p>Il est préférable d&#8217;exécuter les serveurs dans un répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/lib/seafile
+wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <i class="conum" data-value="1"></i><b>(1)</b>
+tar zxvf seafile-server_7.1.3_x86-64.tar.gz <i class="conum" data-value="3"></i><b>(3)</b>
+./startseafile.sh stop
+mv seafile-server_* installed
+<span class="tok-nb">cd</span> seafile-server-7.1.3 <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nb">cd</span> upgrade
+./upgrade_7.1.2.sh <i class="conum" data-value="4"></i><b>(4)</b>
+./setup-seafile-mysql.sh
+<span class="tok-nb">cd</span> ../../..
+chown -R web1:client0 seafile <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nb">cd</span> seafile/seafile-server-latest
+sudo -u web1 ./seafile.sh start <i class="conum" data-value="2"></i><b>(2)</b>
+sudo -u web1 ./seahub.sh start <span class="tok-m">8090</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Seafile.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <code>Options</code>&#8594;champs Linux User et Linux Group.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>exécutez tous les scripts d&#8217;upgrade dont le numéro de version est supérieur ou égal au numéro de version du seafile installé préalablement.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Vérifiez que vous savez accéder à Seafile tant sur le site web qu&#8217;avec vos applis PC et smartphone</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_du_système_de_monitoring_grafana">29. Installation du système de monitoring Grafana</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Grafana est un logiciel de visualisation et d&#8217;analyse à code source ouvert. Il vous permet d&#8217;interroger, de visualiser, d&#8217;alerter et d&#8217;explorer vos mesures, quel que soit l&#8217;endroit où elles sont stockées. En clair, il vous fournit des outils pour transformer vos données de base de données de séries chronologiques (TSDB) en de magnifiques graphiques et visualisations.
@@ -12231,7 +12316,7 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 <p>Cette installation est optionnelle puisque Munin est déjà installé sur votre système.</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_grafana">28.1. Création du site web de Grafana</h3>
+<h3 id="_création_du_site_web_de_grafana">29.1. Création du site web de Grafana</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -12323,7 +12408,7 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_grafana">28.2. Installation de Grafana</h3>
+<h3 id="_installation_de_grafana">29.2. Installation de Grafana</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -12490,7 +12575,7 @@ apt install grafana prometheus prometheus-mysqld-exporter prometheus-apache-expo
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_et_configuration_de_loki">28.3. Installation et configuration de Loki</h3>
+<h3 id="_installation_et_configuration_de_loki">29.3. Installation et configuration de Loki</h3>
 <div class="paragraph">
 <p>Pour installer Loki, appliquez la procédure suivante:</p>
 </div>
@@ -12500,7 +12585,7 @@ apt install grafana prometheus prometheus-mysqld-exporter prometheus-apache-expo
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
-<p>Allez sur le site de <a href="https://github.com/grafana/loki/releases">loki</a> et repérez la dernière version à charger.</p>
+<p>allez sur le site de <a href="https://github.com/grafana/loki/releases/">Loki</a> et copier l&#8217;adresse du lien vers la dernière version de loki-linux-amd64.zip (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip pour raspberry pi 4)</p>
 </li>
 <li>
 <p>Tapez:</p>
@@ -12674,12 +12759,15 @@ sudo service loki status</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_et_configuration_de_promtail">28.4. Installation et configuration de Promtail</h3>
+<h3 id="_installation_et_configuration_de_promtail">29.4. Installation et configuration de Promtail</h3>
 <div class="paragraph">
 <p>Installez maintenant Promtail:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
+<li>
+<p>allez sur le site de <a href="https://github.com/grafana/loki/releases/">Loki</a> et copier l&#8217;adresse du lien vers la dernière version de promtail-linux-amd64.zip (ou promtail-linux-arm.zip pour raspberry pi 3 ou promtail-linux-arm64.zip pour raspberry pi 4)</p>
+</li>
 <li>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
@@ -12688,8 +12776,8 @@ sudo service loki status</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/bin
-curl -fSL -o promtail.gz https://github.com/grafana/loki/releases/download/v1.4.1/promtail-linux-amd64.zip
-gunzip promtail.gz
+curl -fSL -o promtail.zip https://github.com/grafana/loki/releases/download/v1.4.1/promtail-linux-amd64.zip
+gunzip promtail.zip
 chmod a+x promtail</code></pre>
 </div>
 </div>
@@ -12831,10 +12919,66 @@ sudo service promtail status</code></pre>
 </ol>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_upgrade_de_grafana">29.5. Upgrade de Grafana</h3>
+<div class="paragraph">
+<p>Comme grafana est installé à partir de paquets Debian, la mise à jour s&#8217;effectue automatiquement avec le système.</p>
+</div>
+<div class="paragraph">
+<p>Il reste cependant Loki et Promtail à mettre à jour.</p>
+</div>
+<div class="paragraph">
+<p>Appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>allez sur le site de <a href="https://github.com/grafana/loki/releases/">Loki</a> et copier l&#8217;adresse du lien vers la dernière version de loki-linux-amd64.zip (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip pour raspberry pi 4)</p>
+</li>
+<li>
+<p>allez sur le site de <a href="https://github.com/grafana/loki/releases/">Loki</a> et copier l&#8217;adresse du lien vers la dernière version de promtail-linux-amd64.zip (ou promtail-linux-arm.zip pour raspberry pi 3 ou promtail-linux-arm64.zip pour raspberry pi 4)</p>
+</li>
+<li>
+<p>Mettez à jour Loki et Promtail à jour. Exécutez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/bin
+curl -fSL -o loki.gz https://github.com/grafana/loki/releases/download/v2.2.1/loki-linux-amd64.zip
+gunzip loki.gz
+chmod a+x loki
+curl -fSL -o promtail.zip https://github.com/grafana/loki/releases/download/v2.2.1/promtail-linux-amd64.zip
+gunzip promtail.zip
+chmod a+x promtail</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>redémarrez les service. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo service loki restart
+sudo service loki status
+sudo service promtail restart
+sudo service promtail status</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Allez sur votre site Grafana <a href="http://grafana.example.com" class="bare">http://grafana.example.com</a></p>
+</li>
+<li>
+<p>Vérifiez que tout fonctionne</p>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_du_système_de_backup_borgbackup">29. Installation du système de backup BorgBackup</h2>
+<h2 id="_installation_du_système_de_backup_borgbackup">30. Installation du système de backup BorgBackup</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>BorgBackup est un système de backup simple mais offrant des fonctionnalités avancées telles que le backup incrémental, la déduplication de données, la compression, l&#8217;authentification, l&#8217;encryption.</p>
@@ -12846,7 +12990,7 @@ sudo service promtail status</code></pre>
 <p>Pour le moment, BorgBackup n&#8217;utilise pas de mécanisme de type RClone et il n&#8217;est donc pas encore possible de sauvegarder sur google drive ou autres espaces partagés.</p>
 </div>
 <div class="sect2">
-<h3 id="_introduction">29.1. Introduction</h3>
+<h3 id="_introduction">30.1. Introduction</h3>
 <div class="paragraph">
 <p>BorgBackup permet de stocker des backups sur un serveur distant.
 Nous nommerons le serveur sur lequel les sauvegardes seront stockées : serveur de stockage et identifié par &lt;storing_srv&gt;.
@@ -12854,7 +12998,7 @@ Nous nommerons le serveur qu&#8217;il faut sauvegarder: serveur sauvegardé et i
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_du_serveur_de_stockage">29.2. Installation du serveur de stockage</h3>
+<h3 id="_installation_du_serveur_de_stockage">30.2. Installation du serveur de stockage</h3>
 <div class="paragraph">
 <p>Il est préférable pour des questions de sécurité de créer un compte utilisateur spécifique.</p>
 </div>
@@ -12945,7 +13089,7 @@ chmod <span class="tok-m">700</span> borgbackup</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_sur_le_serveur_sauvegardé">29.3. Installation sur le serveur sauvegardé</h3>
+<h3 id="_installation_sur_le_serveur_sauvegardé">30.3. Installation sur le serveur sauvegardé</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -13076,7 +13220,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_effectuer_un_backup">29.4. Effectuer un backup</h3>
+<h3 id="_effectuer_un_backup">30.4. Effectuer un backup</h3>
 <div class="paragraph">
 <p>Nous allons créer tout d&#8217;abord un script de backup pour sauvegarder tout le serveur sauf les répertoires système:</p>
 </div>
@@ -13135,7 +13279,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lister_les_backups">29.5. Lister les backups</h3>
+<h3 id="_lister_les_backups">30.5. Lister les backups</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de listage :</p>
 </div>
@@ -13190,7 +13334,7 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code><
 </div>
 </div>
 <div class="sect2">
-<h3 id="_vérifier_un_backup">29.6. Vérifier un backup</h3>
+<h3 id="_vérifier_un_backup">30.6. Vérifier un backup</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de vérification :</p>
 </div>
@@ -13253,7 +13397,7 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 </div>
 </div>
 <div class="sect2">
-<h3 id="_restaurer_un_backup">29.7. Restaurer un backup</h3>
+<h3 id="_restaurer_un_backup">30.7. Restaurer un backup</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de montage sous forme de système de fichier :</p>
 </div>
@@ -13343,7 +13487,7 @@ rmdir /mnt/borgbackup</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_supprimer_vos_vieux_backups">29.8. Supprimer vos vieux backups</h3>
+<h3 id="_supprimer_vos_vieux_backups">30.8. Supprimer vos vieux backups</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de ménage des backups :</p>
 </div>
@@ -13410,7 +13554,7 @@ borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/bo
 </div>
 </div>
 <div class="sect2">
-<h3 id="_automatisez_votre_sauvegarde">29.9. Automatisez votre sauvegarde</h3>
+<h3 id="_automatisez_votre_sauvegarde">30.9. Automatisez votre sauvegarde</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -13469,7 +13613,7 @@ vi /usr/local/bin/borgcron.sh</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_restauration_durgence">29.10. Restauration d&#8217;urgence.</h3>
+<h3 id="_restauration_durgence">30.10. Restauration d&#8217;urgence.</h3>
 <div class="paragraph">
 <p>En cas de crash du serveur, l’intérêt du backup offsite est de pouvoir remonter la dernière sauvegarde sans souci.
 Pour cela il faut avoir un moyen de booter le serveur dans un mode rescue (boot du VPS en mode rescue, utilisation d&#8217;un clé USB bootable, boot réseau ou autre moyen).</p>
@@ -13587,7 +13731,7 @@ procédure</a>. Attention le fichier de swap doit être installé dans
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_borgweb">29.11. Installation de Borgweb</h3>
+<h3 id="_installation_de_borgweb">30.11. Installation de Borgweb</h3>
 <div class="paragraph">
 <p>Borgweb existe en version officielle. Cette version n&#8217;a pas trop d&#8217;intéret pour nous étant donnée qu&#8217;elle n&#8217;interroge pas le serveur de stockage pour obtenir les informations des backups réalisés. Il existe un clone de repository qui implémente une fonctionnalité qui liste tous les backups effectués sur le serveur de stockage</p>
 </div>
@@ -13756,7 +13900,7 @@ systemctl start borgweb.service</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_borgweb">29.12. Création du site web de Borgweb</h3>
+<h3 id="_création_du_site_web_de_borgweb">30.12. Création du site web de Borgweb</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig de votre serveur de stockage &lt;storing_srv&gt;:</p>
 </div>
@@ -13887,7 +14031,7 @@ systemctl start borgweb.service</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_dun_serveur_de_vpn_pritunl">30. Installation d&#8217;un serveur de VPN Pritunl</h2>
+<h2 id="_installation_dun_serveur_de_vpn_pritunl">31. Installation d&#8217;un serveur de VPN Pritunl</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Pritunl est un serveur VPN basé sur OpenVPN.</p>
@@ -13899,13 +14043,13 @@ systemctl start borgweb.service</code></pre>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une distribution Raspbian.
+Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une distribution Raspbian d&#8217;un raspberry pi
 </td>
 </tr>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_pritunl">30.1. Création du site web de Pritunl</h3>
+<h3 id="_création_du_site_web_de_pritunl">31.1. Création du site web de Pritunl</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -13960,7 +14104,8 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
+<pre class="pygments highlight"><code data-lang="apache"><span></span>
+<span class="tok-nt">&lt;Proxy</span> <span class="tok-s">*</span><span class="tok-nt">&gt;</span>
 <span class="tok-nb">Order</span> deny,allow
 <span class="tok-nb">Allow</span> from <span class="tok-k">all</span>
 <span class="tok-nt">&lt;/Proxy&gt;</span>
@@ -13969,16 +14114,17 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 <span class="tok-nb">ProxyPass</span> <span class="tok-sx">/stats</span> !
 <span class="tok-nb">ProxyPass</span> /.well-known/acme-challenge !
 
-<span class="tok-c"># Pritunl httpserver</span>
+<span class="tok-c"># redirect from server</span>
 <span class="tok-c">#</span>
 
 <span class="tok-nb">SetEnvIf</span> Authorization <span class="tok-s2">&quot;(.*)&quot;</span> HTTP_AUTHORIZATION=$1
 <span class="tok-nb">SSLProxyEngine</span> <span class="tok-k">On</span> # Comment this out if no https required
-<span class="tok-nb">RequestHeader</span> set Front-End-Https <span class="tok-s2">&quot;On&quot;</span> # Comment this out if no https required
-<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span> # Comment this out if no https required
-<span class="tok-nb">SSLProxyCheckPeerCN</span> <span class="tok-k">Off</span> # Comment this out if no https required
-<span class="tok-nb">SSLProxyCheckPeerName</span> <span class="tok-k">Off</span> # Comment this out if no https required
-<span class="tok-nb">SSLProxyVerify</span> <span class="tok-k">none</span> # Comment this out if no https required
+<span class="tok-nb">ProxyPreserveHost</span>    <span class="tok-k">On</span>
+<span class="tok-nb">SSLProxyVerify</span> <span class="tok-k">none</span>
+<span class="tok-nb">SSLProxyCheckPeerCN</span> <span class="tok-k">off</span>
+<span class="tok-nb">SSLProxyCheckPeerName</span> <span class="tok-k">off</span>
+<span class="tok-nb">SSLProxyCheckPeerExpire</span> <span class="tok-k">off</span>
+
 <span class="tok-nb">ProxyPass</span> / https://localhost:8070/
 <span class="tok-nb">ProxyPassReverse</span> / https://localhost:8070/
 
@@ -14001,7 +14147,7 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_pritunl_sur_un_vps">30.2. Installation de Pritunl sur un VPS</h3>
+<h3 id="_installation_de_pritunl_sur_un_vps">31.2. Installation de Pritunl sur un VPS</h3>
 <div class="paragraph">
 <p>Veuillez suivre la procédure suivante si vous installer sur un serveur debian (pour le Raspberrypi voir le chapitre suivant):</p>
 </div>
@@ -14024,7 +14170,7 @@ apt-get install dirmngr
 apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
 apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
 apt-get update
-apt-get --assume-yes install pritunl mongodb-org</code></pre>
+apt-get --assume-yes install pritunl mongodb-org openvpn</code></pre>
 </div>
 </div>
 </li>
@@ -14032,7 +14178,7 @@ apt-get --assume-yes install pritunl mongodb-org</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_pritunl_sur_un_raspberrypi">30.3. Installation de Pritunl sur un Raspberrypi</h3>
+<h3 id="_installation_de_pritunl_sur_un_raspberrypi">31.3. Installation de Pritunl sur un Raspberrypi</h3>
 <div class="paragraph">
 <p>Pritunl n&#8217;est pas installable avec une distribution Raspbian qui est uniquement 32 bits.
 Veuillez suivre la procédure suivante si vous installer sur un Raspberrypi avec Ubuntu 64 bits:</p>
@@ -14049,7 +14195,7 @@ Veuillez suivre la procédure suivante si vous installer sur un Raspberrypi avec
 <pre class="pygments highlight"><code data-lang="bash"><span></span>tee /etc/apt/sources.list.d/mongodb-org.list <span class="tok-s">&lt;&lt; EOF</span>
 <span class="tok-s">deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse</span>
 <span class="tok-s">EOF</span>
-apt install dirmngr
+apt install dirmngr openvpn python3-pip
 apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
 apt update
 apt install mongodb-org golang
@@ -14089,19 +14235,14 @@ ln -s /var/lib/pritunl/bin/pritunl-web /usr/local/bin/pritunl-web</code></pre>
 </div>
 </li>
 <li>
-<p>Installer le logiciel pour python2. Comme il y a encore des problèmes de dépendances, Tapez:</p>
+<p>Installer le logiciel pour python3. Tapez:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>git clone https://github.com/pritunl/pritunl.git
-apt install libpython2.7-dev libffi-dev
-curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
-python2 get-pip.py
-rm get-pip.py
 <span class="tok-nb">cd</span> pritunl
-<span class="tok-nb">echo</span> <span class="tok-s2">&quot;jaraco.functools==2.0&quot;</span> &gt;&gt; requirements.txt
-python2 setup.py build
-pip2 install -r requirements.txt
-python2 setup.py install</code></pre>
+python3 setup.py build
+pip3 install -r requirements.txt
+python3 setup.py install</code></pre>
 </div>
 </div>
 </li>
@@ -14123,12 +14264,12 @@ python2 setup.py install</code></pre>
 <pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl daemon-reload</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>=== Configuration de Pritunl</p>
-</div>
 </li>
 </ol>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_de_pritunl">31.4. Configuration de Pritunl</h3>
 <div class="paragraph">
 <p>Votre service Pritunl est installé. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</p>
 </div>
@@ -14167,7 +14308,7 @@ systemctl <span class="tok-nb">enable</span> mongod pritunl</code></pre>
 </div>
 </li>
 <li>
-<p>pointez votre navigateur sur le site web de Pritunl: <a href="https://example.com" class="bare">https://example.com</a></p>
+<p>pointez votre navigateur sur le site web de Pritunl: <a href="https://pritunl.example.com" class="bare">https://pritunl.example.com</a></p>
 </li>
 <li>
 <p>Accepter le certificat non sécurisé. La page de setup de Pritunl s&#8217;affiche.</p>
@@ -14184,7 +14325,7 @@ systemctl <span class="tok-nb">enable</span> mongod pritunl</code></pre>
 <p>copier la clé dans la page web. Cliquez sur <code>Save</code></p>
 </li>
 <li>
-<p>La page web s&#8217;affiche en erreur. Pas d&#8217;inquiétude à avoir.</p>
+<p>La page web peut s&#8217;affiche en erreur. Pas d&#8217;inquiétude à avoir.</p>
 </li>
 <li>
 <p>Arrêtez le serveur Pritunl. Tapez:</p>
@@ -14229,6 +14370,9 @@ systemctl start pritunl</code></pre>
 </li>
 <li>
 <p>Une boite de dialogue <code>initial setup</code> s&#8217;affiche. Ne changez rien mais tapez votre mot de passe.</p>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
 </li>
 <li>
 <p>Vous êtes maintenant connecté sur le site web.</p>
@@ -14345,7 +14489,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_se_connecter_au_serveur_de_vpn">30.4. Se connecter au serveur de VPN</h3>
+<h3 id="_se_connecter_au_serveur_de_vpn">31.5. Se connecter au serveur de VPN</h3>
 <div class="paragraph">
 <p>Comme Pritunl est compatible OpenVPN n&#8217;importe quel logiciel compatible OpenVPN peut être utilisé.
 Pritunl founit un <a href="https://client.pritunl.com/">client</a> compatible pour Linux, macOS, and Windows.</p>
@@ -14357,7 +14501,7 @@ Une fois fait, une compte apparaît dans le logiciel client. Vous pourrez vous c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_réparer_une_base_pritunl">30.5. Réparer une base Pritunl</h3>
+<h3 id="_réparer_une_base_pritunl">31.6. Réparer une base Pritunl</h3>
 <div class="paragraph">
 <p>Si jamais votre base est corrompue, vous pourrez la réparer en tapant:</p>
 </div>
@@ -14370,7 +14514,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mot_de_passe_perdu">30.6. Mot de passe perdu</h3>
+<h3 id="_mot_de_passe_perdu">31.7. Mot de passe perdu</h3>
 <div class="paragraph">
 <p>Vous pouvez re-générer un mot de passe en tapant:</p>
 </div>
@@ -14380,16 +14524,105 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_update_de_pritunl">31.8. Update de Pritunl</h3>
+<div class="paragraph">
+<p>Pour une installation sur un système Intel, il n&#8217;y a rien à faire.</p>
+</div>
+<div class="paragraph">
+<p>En revanche sur un Raspberry, il est nécessaire de regénérer les logiciels avec les dernières versions.</p>
+</div>
+<div class="paragraph">
+<p>Appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Arrêtez le serveur pritunl</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop pritunl</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Installez les paquets à jour. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /var/lib/pritunl
+<span class="tok-nb">export</span> <span class="tok-nv">GOPATH</span><span class="tok-o">=</span>/var/lib/pritunl
+go get -u github.com/pritunl/pritunl-dns
+go get -u github.com/pritunl/pritunl-web</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Mettez ensuite à jour le système client web. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> pritunl
+git pull https://github.com/pritunl/pritunl.git
+python3 setup.py build
+pip3 install -r requirements.txt
+python3 setup.py install</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Printunl s&#8217;installe dans <code>/usr/local/bin</code>. Il faut changer le fichier service. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>vi /etc/systemd/system/pritunl.service</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Changer <code>ExecStart=/usr/bin/pritunl start</code> par <code>ExecStart=/usr/local/bin/pritunl start</code></p>
+</li>
+<li>
+<p>Rechargez les configs de systemd. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl daemon-reload</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configurez le serveur pour qu&#8217;il n&#8217;utilise plus le port 80 et le port 443 (c&#8217;est écrasé à la réinstallation) :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>pritunl <span class="tok-nb">set</span> app.server_port <span class="tok-m">8070</span>
+pritunl <span class="tok-nb">set</span> app.redirect_server <span class="tok-nb">false</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Redémarrez le serveur pritunl</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop pritunl</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Vérifiez que tout est correct</p>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_dun_serveur_de_bureau_à_distance_guacamole">31. Installation d&#8217;un serveur de bureau à distance Guacamole</h2>
+<h2 id="_installation_dun_serveur_de_bureau_à_distance_guacamole">32. Installation d&#8217;un serveur de bureau à distance Guacamole</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Apache Guacamole est un logiciel opensource et une application web de bureau à distance qui vous permet d&#8217;accéder à vos machines de bureau par le biais d&#8217;un navigateur web. Il s&#8217;agit d&#8217;une appli web html5 qui prend en charge des protocoles standard comme VNC, RDP et SSH. Vous n&#8217;avez pas besoin d&#8217;installer et d&#8217;utiliser des logiciels ou des plugins sur le serveur. Avec Guacamole, vous pouvez facilement passer d&#8217;un bureau d&#8217;une machine à l&#8217;autre avec le même navigateur</p>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_guacamole">31.1. Création du site web de Guacamole</h3>
+<h3 id="_création_du_site_web_de_guacamole">32.1. Création du site web de Guacamole</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig:</p>
 </div>
@@ -14484,7 +14717,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_des_bases_de_données_9">31.2. Création des bases de données</h3>
+<h3 id="_création_des_bases_de_données_9">32.2. Création des bases de données</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes dans ISPConfig :</p>
 </div>
@@ -14555,7 +14788,7 @@ systemctl start pritunl</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_du_guacamole">31.3. Installation du Guacamole</h3>
+<h3 id="_installation_du_guacamole">32.3. Installation du Guacamole</h3>
 <div class="paragraph">
 <p>Suivez la procédure suivante:</p>
 </div>
@@ -14582,7 +14815,8 @@ systemctl start pritunl</code></pre>
 <p>tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>curl -fSL -o guacamole-server.tar.gz <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp
+curl -fSL -o guacamole-server.tar.gz <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
 tar xfz guacamole-server.tar.gz
 <span class="tok-nb">cd</span> guacamole-server-*</code></pre>
 </div>
@@ -14663,7 +14897,8 @@ ldconfig</code></pre>
 <p>Activez le démon de gestion guacd. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl <span class="tok-nb">enable</span> guacd
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl daemon-reload
+systemctl <span class="tok-nb">enable</span> guacd
 systemctl start guacd</code></pre>
 </div>
 </div>
@@ -14832,7 +15067,7 @@ systemctl restart guacd</code></pre>
 </div>
 </li>
 <li>
-<p>Allez sur le site de <code>guacamole.example.com</code></p>
+<p>Allez sur le site de <code>guacamole.example.com/guacamole</code></p>
 </li>
 <li>
 <p>Loguez vous avec le compte: <code>guacadmin</code> et password: <code>guacadmin</code></p>
@@ -14936,13 +15171,107 @@ systemctl restart guacd</code></pre>
 </ol>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_upgrade_de_guacamole">32.4. Upgrade de Guacamole</h3>
+<div class="paragraph">
+<p>Il est nécessaire de regénérer les logiciels avec les dernières versions.</p>
+</div>
+<div class="paragraph">
+<p>Appliquez la procédure suivante:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Arrêtez le serveur guacamole</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>systemctl stop guacd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Téléchargez la dernière version de Guacamole en allant sur le site web et en récupérant le <a href="https://guacamole.apache.org/releases/">lien de téléchargement</a>.</p>
+</li>
+<li>
+<p>tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /tmp
+curl -fSL -o guacamole-server.tar.gz <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+tar xfz guacamole-server.tar.gz
+<span class="tok-nb">cd</span> guacamole-server-*</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>insérez ici l&#8217;adresse du package serveur à charger</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Lancez la configuration. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>./configure --with-init-dir<span class="tok-o">=</span>/etc/init.d</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Lancez la compilation et l&#8217;installation. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>make
+make install
+ldconfig</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Téléchargez le dernier client <code>war</code> de Guacamole en allant sur le site web et en récupérant le <a href="https://guacamole.apache.org/releases/">lien de téléchargement</a>. Récupérez le lien puis tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> /usr/local/share/guacamole
+curl -fSL -o guacamole.war <span class="tok-s1">&#39;http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+systemctl daemon-reload
+systemctl restart tomcat8 <i class="conum" data-value="2"></i><b>(2)</b>
+systemctl start guacd</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>insérez ici l&#8217;adresse du war à charger</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>ou tomcat9 pour Ubuntu</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Allez sur le site de <code>guacamole.example.com/guacamole</code></p>
+</li>
+<li>
+<p>Vérifiez que tout fonctionne</p>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_annexe">32. Annexe</h2>
+<h2 id="_annexe">33. Annexe</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_installation_de_hestia">32.1. Installation de Hestia</h3>
+<h3 id="_installation_de_hestia">33.1. Installation de Hestia</h3>
 <div class="paragraph">
 <p><code>Hestia</code> est basé sur VestaCP. C&#8217;est une alternative opensource et plus moderne de cet outil.
 La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="bare">https://docs.hestiacp.com/</a></p>
@@ -14997,9 +15326,9 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuration_dun_écran_3_5_inch_rpi_lcd_a">32.2. Configuration d&#8217;un écran 3.5 inch RPI LCD (A)</h3>
+<h3 id="_configuration_dun_écran_3_5_inch_rpi_lcd_a">33.2. Configuration d&#8217;un écran 3.5 inch RPI LCD (A)</h3>
 <div class="sect3">
-<h4 id="_pour_commencer">32.2.1. Pour commencer</h4>
+<h4 id="_pour_commencer">33.2.1. Pour commencer</h4>
 <div class="paragraph">
 <p>Le RPi LCD peut être piloté de deux manières :</p>
 </div>
@@ -15064,7 +15393,7 @@ cd LCD-show/</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_basculer_entre_laffichage_lcd_et_hdmi">32.2.2. Basculer entre l&#8217;affichage LCD et HDMI</h4>
+<h4 id="_basculer_entre_laffichage_lcd_et_hdmi">33.2.2. Basculer entre l&#8217;affichage LCD et HDMI</h4>
 <div class="paragraph">
 <p>Une fois que l&#8217;écran LCD est activé, les paramètres par défaut pour HDMI sont modifiés. Si vous souhaitez utiliser un autre moniteur HDMI, veuillez exécuter la commande suivante :</p>
 </div>
@@ -15085,7 +15414,7 @@ cd LCD-show/</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_paramètres_dorientation_de_lécran">32.2.3. Paramètres d&#8217;orientation de l&#8217;écran</h4>
+<h4 id="_paramètres_dorientation_de_lécran">33.2.3. Paramètres d&#8217;orientation de l&#8217;écran</h4>
 <div class="paragraph">
 <p>Une fois le pilote tactile installé, l&#8217;orientation de l&#8217;écran peut être définie par ces commandes :</p>
 </div>
@@ -15143,7 +15472,7 @@ cd LCD-show/</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_calibrage_de_lécran_tactile">32.2.4. Calibrage de l&#8217;écran tactile</h4>
+<h4 id="_calibrage_de_lécran_tactile">33.2.4. Calibrage de l&#8217;écran tactile</h4>
 <div class="paragraph">
 <p>Cet écran LCD peut être calibré à l&#8217;aide d&#8217;un programme appelé <code>xinput_calibrator</code> . Il n&#8217;est pas préinstallé sur le système d&#8217;exploitation Raspbian original. Vous devez donc le télécharger et installer le programme manuellement.</p>
 </div>
@@ -15222,7 +15551,7 @@ EndSection</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_installer_un_clavier_virtuel">32.2.5. Installer un clavier virtuel</h4>
+<h4 id="_installer_un_clavier_virtuel">33.2.5. Installer un clavier virtuel</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -15326,7 +15655,7 @@ X-MB-INPUT-MECHANSIM=True</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ressources">32.2.6. Ressources</h4>
+<h4 id="_ressources">33.2.6. Ressources</h4>
 <div class="sect4">
 <h5 id="_manuel_utilisateur">Manuel utilisateur</h5>
 <div class="ulist">
@@ -15526,7 +15855,7 @@ EndSection</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.3<br>
-Last updated 2021-05-17 23:56:23 +0200
+Last updated 2021-05-19 03:00:58 +0200
 </div>
 </div>
 </body>
