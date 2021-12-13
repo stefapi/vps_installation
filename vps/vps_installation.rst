@@ -88,6 +88,9 @@ Sont installés:
 -  un dashboard pour vos sites web
    `Heimdall <https://heimdall.site/>`__,
 
+-  un site de stockage des bookmarks de vos navigateurs
+   `XBrowserSync <https://www.xbrowsersync.org>`__
+
 -  un serveur et un site de partage de fichiers
    `Seafile <https://www.seafile.com>`__,
 
@@ -7602,6 +7605,405 @@ Sinon, effectuez les opérations suivantes:
       docker stop heimdall
       docker rm heimdall
       docker run -d -p 1281:443 --name=heimdall --restart=always -v heimdall_data:/config:rw -e PGID=1000 -e PUID=1000  linuxserver/heimdall
+
+.. __installation_de_xbrowsersync:
+
+Installation de XbrowserSync
+============================
+
+le logiciel ``XbrowserSync`` est un logiciel comportant des plugins pour
+la plupart des navigateurs et pour smartphone. Il permet la
+synchronisation des bookmarks sur de multiples périphériques.
+
+.. __prérequis_4:
+
+Prérequis
+---------
+
+Il vous faudra tout d’abord installer ``docker`` en vous référant au
+chapitre qui y est consacré.
+
+.. __installation_du_serveur_xbrowsersync:
+
+Installation du serveur XbrowserSync
+------------------------------------
+
+Nous allons installer XbrowserSync à partir de ses différents
+containers.
+
+Ouvrez un terminal et suivez la procédure:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Il est préférable d’exécuter les serveurs dans un répertoire privé
+    plutôt que dans le répertoire web pour des questions de sécurité.
+    Tapez:
+
+    .. code:: bash
+
+       cd /var/lib
+       mkdir xbrowsersync
+       cd xbrowsersync
+
+3.  Nous allons créer plusieurs fichiers. D’abord nous créons le fichier
+    de composition docker. Tapez:
+
+    .. code:: bash
+
+       vi docker-compose.yml
+
+4.  Insérer dans le fichier les données ci-après et sauvegardez puis
+    quittez:
+
+    .. code:: yaml
+
+       version: "3.7"
+
+       services:
+         db:
+           container_name: "xbs-db"
+           environment:
+             - "MONGO_INITDB_DATABASE=$DB_NAME"
+             - "MONGO_INITDB_ROOT_PASSWORD=$DB_PASSWORD"
+             - "MONGO_INITDB_ROOT_USERNAME=$DB_USERNAME"
+             - "XBS_DB_NAME=$DB_NAME"
+             - "XBS_DB_PASSWORD=$DB_PASSWORD"
+             - "XBS_DB_USERNAME=$DB_USERNAME"
+           image: "mongo"
+           restart: "unless-stopped"
+           volumes:
+             - "xbs-db-data:/data/db"
+             - "xbs-db-backups:/data/backups"
+             - "./mongoconfig.js:/docker-entrypoint-initdb.d/mongoconfig.js"
+         api:
+           container_name: "xbs-api"
+           depends_on:
+             - "db"
+           environment:
+             - "XBROWSERSYNC_DB_PWD=$DB_PASSWORD"
+             - "XBROWSERSYNC_DB_USER=$DB_USERNAME"
+           healthcheck:
+             test: [ "CMD", "node", "/usr/src/api/healthcheck.js" ]
+             interval: "1m"
+             timeout: "10s"
+             retries: "5"
+             start_period: "30s"
+           image: "xbrowsersync/api"
+           ports:
+             - 8017:8080
+           restart: "unless-stopped"
+           volumes:
+             - "./settings.json:/usr/src/api/config/settings.json"
+             - "./healthcheck.js:/usr/src/api/healthcheck.js"
+       volumes:
+         xbs-db-backups:
+         xbs-db-data:
+
+5.  Ensuite, nous créons le fichier ``.env``. Tapez:
+
+    .. code:: bash
+
+       vi .env
+
+6.  Insérer dans le fichier les données ci après et sauvegardez puis
+    quittez:
+
+    .. code:: yaml
+
+       API_HOSTNAME=xbrowsersync.example.com 
+       DB_NAME=xbrowsersync
+       DB_PASSWORD=[PASSWORD] 
+       DB_USERNAME=xbsdb
+       COMPOSE_CONVERT_WINDOWS_PATHS=1
+
+    -  remplacer example.com par votre nom de domaine
+
+    -  remplacez [PASSWORD] par `votre mot de passe
+       généré <#pass_gen>`__
+
+7.  Ensuite, nous créons le fichier ``settings.json``. Tapez:
+
+    .. code:: bash
+
+       vi settings.json
+
+8.  Insérer dans le fichier les données ci après et sauvegardez puis
+    quittez:
+
+    .. code:: json
+
+       {
+         "db": {
+           "host": "db"
+         },
+
+         "status": {
+                 "online": true,
+                 "allowNewSyncs": true, 
+                 "message": "Votre superbe message de Bienvenue"
+         },
+         "maxSyncs": 5242, 
+         "maxSyncSize": 512000, 
+         "throttle": {
+           "maxRequests": 1000, 
+           "timeWindow": 300000 
+         }
+       }
+
+    -  pour éviter de laisser votre serveur ouvert à toute personne,
+       vous devez ici mettre cette valeur à false une fois tous les
+       comptes créés
+
+    -  Nombre maximum de syncs unique qui peuvent être stockés
+
+    -  Volume maximum de stockage par sync unique (comme les données
+       sont compressées, le volume de bookmark peut être beaucoup plus
+       grand)
+
+    -  Nombre maximum de requête dans la "timeWindow"
+
+    -  Fenêtre temporelle en millisecondes (5 minutes ici)
+
+9.  Ensuite, nous créons le fichier ``healthcheck.js``. Tapez:
+
+    .. code:: bash
+
+       vi healthcheck.js
+
+10. Insérer dans le fichier les données ci après et sauvegardez puis
+    quittez:
+
+    .. code:: javascript
+
+       const http = require('http');
+
+       const response = http.request(
+         {
+           host: '0.0.0.0',
+           method: 'GET',
+           path: '/info',
+           port: 8080,
+           timeout: 2000,
+         },
+         (res) => {
+           let body = '';
+           res.setEncoding('utf8');
+
+           res.on('data', (chunk) => {
+             body += chunk;
+           });
+
+           res.on('end', () => {
+             if (res.statusCode === 200) {
+               const payload = JSON.parse(body);
+               switch (payload.status) {
+                 case 1:
+                 case 3:
+                   console.log('HEALTHCHECK: online');
+                   process.exit(0);
+                 case 2:
+                 default:
+                   console.log('HEALTHCHECK: offline');
+               }
+             } else {
+               console.log('HEALTHCHECK: offline');
+             }
+             process.exit(1);
+           });
+         }
+       );
+
+       response.on('error', function (err) {
+         console.log('HEALTHCHECK: offline');
+         process.exit(1);
+       });
+
+       response.end();
+
+11. Enfin, nous créons le fichier ``mongoconfig.js``. Tapez:
+
+    .. code:: bash
+
+       vi mongoconfig.js
+
+12. Insérer dans le fichier les données ci après et sauvegardez puis
+    quittez:
+
+    .. code:: javascript
+
+       db.newsynclogs.createIndex( { "expiresAt": 1 }, { expireAfterSeconds: 0 } );
+       db.newsynclogs.createIndex( { "ipAddress": 1 } );
+       db.bookmarks.createIndex( { "lastAccessed": 1 }, { expireAfterSeconds: 21*86400 } );
+
+13. Nous pouvons maintenant démarrer les volumes docker. Tapez
+
+    .. code:: bash
+
+       docker-compose up -d
+
+.. __création_du_site_web_de_xbrowsersync:
+
+Création du site web de XbrowserSync
+------------------------------------
+
+Appliquez la procédure suivante:
+
+1. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+   Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
+
+   a. Cliquez sur ``A`` et saisissez:
+
+      -  ``Hostname:`` ← Tapez ``xbrowsersync``
+
+      -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
+         de votre serveur
+
+   b. Cliquez sur ``Save``
+
+2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
+
+   a. Lui donner le nom ``xbrowsersync``.
+
+   b. Le faire pointer vers le web folder ``xbrowsersync``.
+
+   c. ``Auto-Subdomain`` ← Sélectionnez ``None``
+
+   d. Activer let’s encrypt ssl
+
+   e. Activer ``Fast CGI`` pour PHP
+
+   f. Laisser le reste par défaut.
+
+   g. Dans l’onglet Redirect:
+
+   h. Activer ``Rewrite HTTP to HTTPS``
+
+   i. Dans l’onglet Options:
+
+   j. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+
+      .. code:: apache
+
+         <Proxy *>
+         Order deny,allow
+         Allow from all
+         </Proxy>
+
+         ProxyRequests Off
+         ProxyPass /stats !
+         ProxyPass /.well-known/acme-challenge !
+
+         # redirect from server
+         #
+
+         SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+         ProxyPreserveHost    On
+
+
+         ProxyPass / http://localhost:8017/
+         ProxyPassReverse / http://localhost:8017/
+
+         RedirectMatch ^/$ https://xbrowsersync.example.com 
+
+      -  remplacer ``example.com`` par votre nom de domaine
+
+.. __configuration_de_votre_navigateur_avec_xbrowsersync:
+
+Configuration de votre navigateur avec XbrowserSync
+---------------------------------------------------
+
+Votre site web ``XbrowserSync`` est installé et opérationnel.
+
+Il faut maintenant configurer la synchronisation dans votre navigateur:
+
+1.  Pointez votre navigateur sur votre site web ``XbrowserSync``
+
+2.  la page de présentation de l’API doit s’afficher
+
+3.  Dans votre navigateur installer le plugin XBrowserSync
+
+4.  Cliquez sur l’icone XBrowserSync et sélectionnez ``Switch Service``
+
+5.  Dans la fenètre, Tapez l’URL de votre server:
+    https://xbrowsersync.example.com.
+
+6.  Cliquez sur le bouton ``Update``. Le message de bienvenue de votre
+    serveur apparait.
+
+7.  Cliquez sur ``Create a new Sync``
+
+8.  Tapez un `mot de passe généré <#pass_gen>`__.
+
+9.  Confirmez le en le tapant de nouveau.
+
+10. Cliquez sur ``Sync``
+
+11. Les bookmarks sont synchronisés !
+
+.. __interdire_dautre_créations_de_comptes:
+
+Interdire d’autre créations de comptes.
+---------------------------------------
+
+Appliquez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+      cd /var/lib/xbrowsersync
+      docker-compose down
+
+3. Editez le fichier ``settings.json``. Tapez:
+
+   .. code:: bash
+
+      vi settings.json
+
+4. Sur la ligne contenant le mot ``allowNewSyncs``, remplacez par:
+
+   .. code:: json
+
+                "allowNewSyncs": false,
+
+5. Sauvegardez. Nous pouvons maintenant redémarrer les volumes docker.
+   Tapez
+
+   .. code:: bash
+
+      docker-compose up -d
+
+Si vous voulez réactiver les créations de comptes, réappliquez la
+procédure en mettant cette fois ci la valeur de ``allowNewSyncs`` à
+``true``.
+
+.. __upgrade_de_xbrowsersync:
+
+Upgrade de XbrowserSync
+-----------------------
+
+Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+pouvez aussi appliquer la procédure de mise à jour des containers à
+l’aide de ```Portainer`` <#port_container_updt>`__ ou à l’aide
+```Yacht`` <#yacht_container_updt>`__
+
+Sinon, effectuez les opérations suivantes:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Allez dans le répertoire de root
+
+3. Mettez à jour le docker de XbrowserSync. Tapez:
+
+   .. code:: bash
+
+      docker pull mongo
+      docker pull xbrowsersync/api
+      docker-compose down
+      docker-compose up -d
 
 .. __installation_du_système_de_partage_de_fichiers_seafile:
 

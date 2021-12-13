@@ -105,6 +105,9 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <simpara>un dashboard pour vos sites web <link xl:href="https://heimdall.site/">Heimdall</link>,</simpara>
 </listitem>
 <listitem>
+<simpara>un site de stockage des bookmarks de vos navigateurs <link xl:href="https://www.xbrowsersync.org">XBrowserSync</link></simpara>
+</listitem>
+<listitem>
 <simpara>un serveur et un site  de partage de fichiers <link xl:href="https://www.seafile.com">Seafile</link>,</simpara>
 </listitem>
 <listitem>
@@ -7245,6 +7248,377 @@ docker run -d -p 1281:443 --name=heimdall --restart=always -v heimdall_data:/con
 </orderedlist>
 </section>
 </section>
+<section xml:id="_installation_de_xbrowsersync">
+<title>Installation de XbrowserSync</title>
+<simpara>le logiciel <literal>XbrowserSync</literal> est un logiciel comportant des plugins pour la plupart des navigateurs et pour smartphone. Il permet la synchronisation des bookmarks sur de multiples périphériques.</simpara>
+<section xml:id="_prérequis_4">
+<title>Prérequis</title>
+<simpara>Il vous faudra tout d&#8217;abord installer <literal>docker</literal> en vous référant au chapitre qui y est consacré.</simpara>
+</section>
+<section xml:id="_installation_du_serveur_xbrowsersync">
+<title>Installation du serveur XbrowserSync</title>
+<simpara>Nous allons installer XbrowserSync à partir de ses différents containers.</simpara>
+<simpara>Ouvrez un terminal et suivez la procédure:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Il est préférable d&#8217;exécuter les serveurs dans un répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/lib
+mkdir xbrowsersync
+cd xbrowsersync</programlisting>
+</listitem>
+<listitem>
+<simpara>Nous allons créer plusieurs fichiers. D&#8217;abord nous créons le fichier de composition docker. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi docker-compose.yml</programlisting>
+</listitem>
+<listitem>
+<simpara>Insérer dans le fichier les données ci-après et sauvegardez puis quittez:</simpara>
+<programlisting language="yaml" linenumbering="unnumbered">version: "3.7"
+
+services:
+  db:
+    container_name: "xbs-db"
+    environment:
+      - "MONGO_INITDB_DATABASE=$DB_NAME"
+      - "MONGO_INITDB_ROOT_PASSWORD=$DB_PASSWORD"
+      - "MONGO_INITDB_ROOT_USERNAME=$DB_USERNAME"
+      - "XBS_DB_NAME=$DB_NAME"
+      - "XBS_DB_PASSWORD=$DB_PASSWORD"
+      - "XBS_DB_USERNAME=$DB_USERNAME"
+    image: "mongo"
+    restart: "unless-stopped"
+    volumes:
+      - "xbs-db-data:/data/db"
+      - "xbs-db-backups:/data/backups"
+      - "./mongoconfig.js:/docker-entrypoint-initdb.d/mongoconfig.js"
+  api:
+    container_name: "xbs-api"
+    depends_on:
+      - "db"
+    environment:
+      - "XBROWSERSYNC_DB_PWD=$DB_PASSWORD"
+      - "XBROWSERSYNC_DB_USER=$DB_USERNAME"
+    healthcheck:
+      test: [ "CMD", "node", "/usr/src/api/healthcheck.js" ]
+      interval: "1m"
+      timeout: "10s"
+      retries: "5"
+      start_period: "30s"
+    image: "xbrowsersync/api"
+    ports:
+      - 8017:8080
+    restart: "unless-stopped"
+    volumes:
+      - "./settings.json:/usr/src/api/config/settings.json"
+      - "./healthcheck.js:/usr/src/api/healthcheck.js"
+volumes:
+  xbs-db-backups:
+  xbs-db-data:</programlisting>
+</listitem>
+<listitem>
+<simpara>Ensuite, nous créons le fichier <literal>.env</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi .env</programlisting>
+</listitem>
+<listitem>
+<simpara>Insérer dans le fichier les données ci après et sauvegardez puis quittez:</simpara>
+<programlisting language="yaml" linenumbering="unnumbered">API_HOSTNAME=xbrowsersync.example.com <co xml:id="CO60-1"/>
+DB_NAME=xbrowsersync
+DB_PASSWORD=[PASSWORD] <co xml:id="CO60-2"/>
+DB_USERNAME=xbsdb
+COMPOSE_CONVERT_WINDOWS_PATHS=1</programlisting>
+<calloutlist>
+<callout arearefs="CO60-1">
+<para>remplacer example.com par votre nom de domaine</para>
+</callout>
+<callout arearefs="CO60-2">
+<para>remplacez [PASSWORD] par <link linkend="pass_gen">votre mot de passe généré</link></para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Ensuite, nous créons le fichier <literal>settings.json</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi settings.json</programlisting>
+</listitem>
+<listitem>
+<simpara>Insérer dans le fichier les données ci après et sauvegardez puis quittez:</simpara>
+<programlisting language="json" linenumbering="unnumbered">{
+  "db": {
+    "host": "db"
+  },
+
+  "status": {
+          "online": true,
+          "allowNewSyncs": true, <co xml:id="CO61-1"/>
+          "message": "Votre superbe message de Bienvenue"
+  },
+  "maxSyncs": 5242, <co xml:id="CO61-2"/>
+  "maxSyncSize": 512000, <co xml:id="CO61-3"/>
+  "throttle": {
+    "maxRequests": 1000, <co xml:id="CO61-4"/>
+    "timeWindow": 300000 <co xml:id="CO61-5"/>
+  }
+}</programlisting>
+<calloutlist>
+<callout arearefs="CO61-1">
+<para>pour éviter de laisser votre serveur ouvert à toute personne, vous devez ici mettre cette valeur à false une fois tous les comptes créés</para>
+</callout>
+<callout arearefs="CO61-2">
+<para>Nombre maximum de syncs unique qui peuvent être stockés</para>
+</callout>
+<callout arearefs="CO61-3">
+<para>Volume maximum de stockage par sync unique (comme les données sont compressées, le volume de bookmark peut être beaucoup plus grand)</para>
+</callout>
+<callout arearefs="CO61-4">
+<para>Nombre maximum de requête dans la "timeWindow"</para>
+</callout>
+<callout arearefs="CO61-5">
+<para>Fenêtre temporelle en millisecondes (5 minutes ici)</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Ensuite, nous créons le fichier <literal>healthcheck.js</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi healthcheck.js</programlisting>
+</listitem>
+<listitem>
+<simpara>Insérer dans le fichier les données ci après et sauvegardez puis quittez:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">const http = require('http');
+
+const response = http.request(
+  {
+    host: '0.0.0.0',
+    method: 'GET',
+    path: '/info',
+    port: 8080,
+    timeout: 2000,
+  },
+  (res) =&gt; {
+    let body = '';
+    res.setEncoding('utf8');
+
+    res.on('data', (chunk) =&gt; {
+      body += chunk;
+    });
+
+    res.on('end', () =&gt; {
+      if (res.statusCode === 200) {
+        const payload = JSON.parse(body);
+        switch (payload.status) {
+          case 1:
+          case 3:
+            console.log('HEALTHCHECK: online');
+            process.exit(0);
+          case 2:
+          default:
+            console.log('HEALTHCHECK: offline');
+        }
+      } else {
+        console.log('HEALTHCHECK: offline');
+      }
+      process.exit(1);
+    });
+  }
+);
+
+response.on('error', function (err) {
+  console.log('HEALTHCHECK: offline');
+  process.exit(1);
+});
+
+response.end();</programlisting>
+</listitem>
+<listitem>
+<simpara>Enfin, nous créons le fichier <literal>mongoconfig.js</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi mongoconfig.js</programlisting>
+</listitem>
+<listitem>
+<simpara>Insérer dans le fichier les données ci après et sauvegardez puis quittez:</simpara>
+<programlisting language="javascript" linenumbering="unnumbered">db.newsynclogs.createIndex( { "expiresAt": 1 }, { expireAfterSeconds: 0 } );
+db.newsynclogs.createIndex( { "ipAddress": 1 } );
+db.bookmarks.createIndex( { "lastAccessed": 1 }, { expireAfterSeconds: 21*86400 } );</programlisting>
+</listitem>
+<listitem>
+<simpara>Nous pouvons maintenant démarrer les volumes docker. Tapez</simpara>
+<programlisting language="bash" linenumbering="unnumbered">docker-compose up -d</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_création_du_site_web_de_xbrowsersync">
+<title>Création du site web de XbrowserSync</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Allez dans la rubrique <literal>DNS</literal>, sélectionnez le menu <literal>Zones</literal>, Sélectionnez votre Zone, Allez dans l&#8217;onglet <literal>Records</literal>.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Cliquez sur <literal>A</literal> et saisissez:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><literal>Hostname:</literal> &#8592; Tapez <literal>xbrowsersync</literal></simpara>
+</listitem>
+<listitem>
+<simpara><literal>IP-Address:</literal> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Save</literal></simpara>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<simpara>Créer un <link linkend="subdomain-site">sub-domain (vhost)</link> dans le configurateur de sites.</simpara>
+<orderedlist numeration="loweralpha">
+<listitem>
+<simpara>Lui donner le nom <literal>xbrowsersync</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara>Le faire pointer vers le web folder <literal>xbrowsersync</literal>.</simpara>
+</listitem>
+<listitem>
+<simpara><literal>Auto-Subdomain</literal> &#8592; Sélectionnez <literal>None</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Activer let’s encrypt ssl</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Laisser le reste par défaut.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;onglet Redirect:</simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>Rewrite HTTP to HTTPS</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Dans l’onglet Options:</simpara>
+</listitem>
+<listitem>
+<simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
+<programlisting language="apache" linenumbering="unnumbered">&lt;Proxy *&gt;
+Order deny,allow
+Allow from all
+&lt;/Proxy&gt;
+
+ProxyRequests Off
+ProxyPass /stats !
+ProxyPass /.well-known/acme-challenge !
+
+# redirect from server
+#
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPreserveHost    On
+
+
+ProxyPass / http://localhost:8017/
+ProxyPassReverse / http://localhost:8017/
+
+RedirectMatch ^/$ https://xbrowsersync.example.com <co xml:id="CO62-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO62-1">
+<para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_configuration_de_votre_navigateur_avec_xbrowsersync">
+<title>Configuration de votre navigateur avec XbrowserSync</title>
+<simpara>Votre site web <literal>XbrowserSync</literal> est installé et opérationnel.</simpara>
+<simpara>Il faut maintenant configurer la synchronisation dans votre navigateur:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Pointez votre navigateur sur votre site web <literal>XbrowserSync</literal></simpara>
+</listitem>
+<listitem>
+<simpara>la page de présentation de l&#8217;API doit s&#8217;afficher</simpara>
+</listitem>
+<listitem>
+<simpara>Dans votre navigateur installer le plugin XBrowserSync</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur l&#8217;icone XBrowserSync et sélectionnez <literal>Switch Service</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Dans la fenètre, Tapez l&#8217;URL de votre server: <link xl:href="https://xbrowsersync.example.com">https://xbrowsersync.example.com</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur le bouton <literal>Update</literal>. Le message de bienvenue de votre serveur apparait.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Create a new Sync</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez un <link linkend="pass_gen">mot de passe généré</link>.</simpara>
+</listitem>
+<listitem>
+<simpara>Confirmez le en le tapant de nouveau.</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Sync</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Les bookmarks sont synchronisés !</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_interdire_dautre_créations_de_comptes">
+<title>Interdire d&#8217;autre créations de comptes.</title>
+<simpara>Appliquez la procédure suivante:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/lib/xbrowsersync
+docker-compose down</programlisting>
+</listitem>
+<listitem>
+<simpara>Editez le fichier <literal>settings.json</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi settings.json</programlisting>
+</listitem>
+<listitem>
+<simpara>Sur la ligne contenant le mot <literal>allowNewSyncs</literal>, remplacez par:</simpara>
+<programlisting language="json" linenumbering="unnumbered">          "allowNewSyncs": false,</programlisting>
+</listitem>
+<listitem>
+<simpara>Sauvegardez. Nous pouvons maintenant redémarrer les volumes docker. Tapez</simpara>
+<programlisting language="bash" linenumbering="unnumbered">docker-compose up -d</programlisting>
+</listitem>
+</orderedlist>
+<simpara>Si vous voulez réactiver les créations de comptes, réappliquez la procédure en mettant cette fois ci la valeur de <literal>allowNewSyncs</literal> à <literal>true</literal>.</simpara>
+</section>
+<section xml:id="_upgrade_de_xbrowsersync">
+<title>Upgrade de XbrowserSync</title>
+<simpara>Rien a faire pour la mise à jour si vous utilisez <literal>Ouroboros</literal>
+Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8217;aide de <link linkend="port_container_updt"><literal>Portainer</literal></link> ou à l&#8217;aide <link linkend="yacht_container_updt"><literal>Yacht</literal></link></simpara>
+<simpara>Sinon, effectuez les opérations suivantes:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Allez dans le répertoire de root</simpara>
+</listitem>
+<listitem>
+<simpara>Mettez à jour le docker de XbrowserSync. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">docker pull mongo
+docker pull xbrowsersync/api
+docker-compose down
+docker-compose up -d</programlisting>
+</listitem>
+</orderedlist>
+</section>
+</section>
 <section xml:id="_installation_du_système_de_partage_de_fichiers_seafile">
 <title>Installation du système de partage de fichiers Seafile</title>
 <simpara>Seafile est un système de partage de fichier simple et efficace écrit en Python. Il existe des clients de connexion pour Windows, Linux, Android, IOS.</simpara>
@@ -7418,22 +7792,22 @@ pip3 install --timeout=3600 Pillow pylibmc captcha jinja2 future mysqlclient sql
 <programlisting language="bash" linenumbering="unnumbered">cd /var/lib
 mkdir seafile
 cd seafile
-wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO60-1"/>
-tar zxvf seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO60-2"/>
+wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO63-1"/>
+tar zxvf seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO63-2"/>
 mkdir installed
 mv seafile-server_* installed
 cd seafile-server-*
 ./setup-seafile-mysql.sh
 cd ../..
-chown -R web1:client0 seafile <co xml:id="CO60-3"/></programlisting>
+chown -R web1:client0 seafile <co xml:id="CO63-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO60-3">
+<callout arearefs="CO63-3">
 <para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
-<callout arearefs="CO60-1">
+<callout arearefs="CO63-1">
 <para>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Seafile.</para>
 </callout>
-<callout arearefs="CO60-2">
+<callout arearefs="CO63-2">
 <para>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</para>
 </callout>
 </calloutlist>
@@ -7480,9 +7854,9 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>modifier l&#8217;entrée SERVICE_URL. Le fichier doit contenir ceci:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com <co xml:id="CO61-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com <co xml:id="CO64-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO61-1">
+<callout arearefs="CO64-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -7493,9 +7867,9 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>modifier l&#8217;entrée FILE_SERVER_ROOT. Le fichier doit contenir ceci:</simpara>
-<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp' <co xml:id="CO62-1"/></programlisting>
+<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp' <co xml:id="CO65-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO62-1">
+<callout arearefs="CO65-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -7503,10 +7877,10 @@ port = 8092</programlisting>
 <listitem>
 <simpara>Démarrez Seafile. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /var/lib/seafile/seafile-server-latest
-sudo -u web1 ./seafile.sh start <co xml:id="CO63-1"/>
-sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO63-2"/></programlisting>
+sudo -u web1 ./seafile.sh start <co xml:id="CO66-1"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO66-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO63-1 CO63-2">
+<callout arearefs="CO66-1 CO66-2">
 <para>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <literal>Options</literal>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</para>
 </callout>
 </calloutlist>
@@ -7669,30 +8043,30 @@ esac</programlisting>
 <listitem>
 <simpara>Il est préférable d&#8217;exécuter les serveurs dans un répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /var/lib/seafile
-wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO64-1"/>
-tar zxvf seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO64-2"/>
+wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO67-1"/>
+tar zxvf seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO67-2"/>
 ./startseafile.sh stop
 mv seafile-server_* installed
-cd seafile-server-7.1.3 <co xml:id="CO64-3"/>
+cd seafile-server-7.1.3 <co xml:id="CO67-3"/>
 cd upgrade
-./upgrade_7.1.2.sh <co xml:id="CO64-4"/>
+./upgrade_7.1.2.sh <co xml:id="CO67-4"/>
 ./setup-seafile-mysql.sh
 cd ../../..
-chown -R web1:client0 seafile <co xml:id="CO64-5"/>
+chown -R web1:client0 seafile <co xml:id="CO67-5"/>
 cd seafile/seafile-server-latest
-sudo -u web1 ./seafile.sh start <co xml:id="CO64-6"/>
-sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO64-7"/></programlisting>
+sudo -u web1 ./seafile.sh start <co xml:id="CO67-6"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO67-7"/></programlisting>
 <calloutlist>
-<callout arearefs="CO64-1">
+<callout arearefs="CO67-1">
 <para>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Seafile.</para>
 </callout>
-<callout arearefs="CO64-5 CO64-6 CO64-7">
+<callout arearefs="CO67-5 CO67-6 CO67-7">
 <para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
-<callout arearefs="CO64-2 CO64-3">
+<callout arearefs="CO67-2 CO67-3">
 <para>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</para>
 </callout>
-<callout arearefs="CO64-4">
+<callout arearefs="CO67-4">
 <para>exécutez tous les scripts d&#8217;upgrade dont le numéro de version est supérieur ou égal au numéro de version du seafile installé préalablement.</para>
 </callout>
 </calloutlist>
@@ -7772,9 +8146,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:3100/
 ProxyPassReverse / http://localhost:3100/
 
-RedirectMatch ^/$ https://grafana.example.com <co xml:id="CO65-1"/></programlisting>
+RedirectMatch ^/$ https://grafana.example.com <co xml:id="CO68-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO65-1">
+<callout arearefs="CO68-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -8300,9 +8674,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez en première ligne du fichier :</simpara>
-<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO66-1"/></screen>
+<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO69-1"/></screen>
 <calloutlist>
-<callout arearefs="CO66-1">
+<callout arearefs="CO69-1">
 <para>remplacez SERVERIPADDRESS par l&#8217;adresse IP affichée plus tôt.</para>
 </callout>
 </calloutlist>
@@ -8325,9 +8699,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Puis tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO67-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO70-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO67-1">
+<callout arearefs="CO70-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
 </calloutlist>
@@ -8355,13 +8729,13 @@ chmod 700 borgbackup</programlisting>
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO68-1"/>
-cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO68-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO71-1"/>
+cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO71-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO68-1">
+<callout arearefs="CO71-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
-<callout arearefs="CO68-2">
+<callout arearefs="CO71-2">
 <para>si votre machine est assez puissante, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</para>
 </callout>
 </calloutlist>
@@ -8390,10 +8764,10 @@ cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;st
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO69-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO72-1"/>
 borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO69-1">
+<callout arearefs="CO72-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -8422,10 +8796,10 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</progra
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO70-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO73-1"/>
 borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
 <calloutlist>
-<callout arearefs="CO70-1">
+<callout arearefs="CO73-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -8436,9 +8810,9 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 </listitem>
 <listitem>
 <simpara>vous pouvez maintenant vérifier un de vos backup en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO71-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO74-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO71-1">
+<callout arearefs="CO74-1">
 <para>le nom de sauvegarde est récupéré en utilisant la commande borglist.sh</para>
 </callout>
 </calloutlist>
@@ -8460,10 +8834,10 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 <simpara>Insérez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO72-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO75-1"/>
 borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
 <calloutlist>
-<callout arearefs="CO72-1">
+<callout arearefs="CO75-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -8518,13 +8892,13 @@ rmdir /mnt/borgbackup</programlisting>
 # - une archive par mois pour les 6 derniers mois.
 
 
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO73-1"/>
-borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO73-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO76-1"/>
+borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO76-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO73-1">
+<callout arearefs="CO76-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
-<callout arearefs="CO73-2">
+<callout arearefs="CO76-2">
 <para>Le nettoyage des sauvegardes va conserver 7 sauvegardes journalières, 4 à la semaine et 12 au mois</para>
 </callout>
 </calloutlist>
@@ -8601,10 +8975,10 @@ pip3 install borgbackup</programlisting>
 <listitem>
 <simpara>Munissez vous du mot de passe &lt;mot_passe&gt; des archives borg et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO74-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO77-1"/>
 borg list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO74-1">
+<callout arearefs="CO77-1">
 <para>remplacez mot_passe par votre mot de passe de borg</para>
 </callout>
 </calloutlist>
@@ -8633,13 +9007,13 @@ chroot . bash
 mkdir -p dev proc run sys tmp
 mount -t devtmpfs dev /dev
 mount -t proc proc /proc
-grub_install /dev/sda <co xml:id="CO75-1"/>
+grub_install /dev/sda <co xml:id="CO78-1"/>
 umount /proc
 umount /dev
 sync
 exit</programlisting>
 <calloutlist>
-<callout arearefs="CO75-1">
+<callout arearefs="CO78-1">
 <para>tapez ici le nom de device de votre disque de boot</para>
 </callout>
 </calloutlist>
@@ -8712,7 +9086,7 @@ vi config.py</programlisting>
 
     BACKUP_REPOS = {
         # Repo  name
-        "example.com": { <co xml:id="CO76-1"/>
+        "example.com": { <co xml:id="CO79-1"/>
             # Repo absolute path
             "repo_path": "/home/borgbackup/borgbackup",
 
@@ -8720,7 +9094,7 @@ vi config.py</programlisting>
             "log_path": "/var/log/borg/",
 
             # Repo password
-            "repo_pwd": "your_password", <co xml:id="CO76-2"/>
+            "repo_pwd": "your_password", <co xml:id="CO79-2"/>
 
             # Command/script to run to manually start a backup.
             # If left empty or not specified, the backup won't be
@@ -8732,10 +9106,10 @@ vi config.py</programlisting>
         }
     }</programlisting>
 <calloutlist>
-<callout arearefs="CO76-2">
+<callout arearefs="CO79-2">
 <para>Insérez ici le mot de passe du dépot Borg Backup</para>
 </callout>
-<callout arearefs="CO76-1">
+<callout arearefs="CO79-1">
 <para>Mettez ici le nom de votre domaine sauvegardé</para>
 </callout>
 </calloutlist>
@@ -8853,9 +9227,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:5000/
 ProxyPassReverse / http://localhost:5000/
 
-RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO77-1"/></programlisting>
+RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO80-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO77-1">
+<callout arearefs="CO80-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -8957,9 +9331,9 @@ SSLProxyCheckPeerExpire off
 ProxyPass / https://localhost:8070/
 ProxyPassReverse / https://localhost:8070/
 
-RedirectMatch ^/$ https://pritunl.example.com <co xml:id="CO78-1"/></programlisting>
+RedirectMatch ^/$ https://pritunl.example.com <co xml:id="CO81-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO78-1">
+<callout arearefs="CO81-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -9360,9 +9734,9 @@ ProxyPreserveHost    On
 ProxyPass /guacamole http://localhost:8085/guacamole
 ProxyPassReverse /guacamole http://localhost:8085/guacamole
 
-RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO79-1"/></programlisting>
+RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO82-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO79-1">
+<callout arearefs="CO82-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -9453,11 +9827,11 @@ RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO79-1"/></programli
 <listitem>
 <simpara>tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO80-1"/>
+curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO83-1"/>
 tar xfz guacamole-server.tar.gz
 cd guacamole-server-*</programlisting>
 <calloutlist>
-<callout arearefs="CO80-1">
+<callout arearefs="CO83-1">
 <para>insérez ici l&#8217;adresse du package serveur à charger</para>
 </callout>
 </calloutlist>
@@ -9523,24 +9897,24 @@ systemctl start guacd</programlisting>
 <simpara>Téléchargez le dernier client <literal>war</literal> de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>. Récupérez le lien puis tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /usr/local/share/guacamole
 cd /usr/local/share/guacamole
-curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO81-1"/>
-ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ <co xml:id="CO81-2"/>
-systemctl restart tomcat8 <co xml:id="CO81-3"/>
+curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO84-1"/>
+ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ <co xml:id="CO84-2"/>
+systemctl restart tomcat8 <co xml:id="CO84-3"/>
 systemctl restart guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO81-1">
+<callout arearefs="CO84-1">
 <para>insérez ici l&#8217;adresse du war à charger</para>
 </callout>
-<callout arearefs="CO81-2 CO81-3">
+<callout arearefs="CO84-2 CO84-3">
 <para>ou tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Editez le fichier server.xml. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /etc/tomcat8/server.xml <co xml:id="CO82-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/tomcat8/server.xml <co xml:id="CO85-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO82-1">
+<callout arearefs="CO85-1">
 <para>ou tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
@@ -9559,12 +9933,12 @@ mkdir -p /etc/guacamole/{extensions,lib}</programlisting>
 </listitem>
 <listitem>
 <simpara>Il se peut que ce driver ne soit pas présent: allez sur le site <link xl:href="https://dev.mysql.com/downloads/connector/j/">Mysql</link> et téléchargez la version Platform independant. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o mysql-java.tar.gz 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz' <co xml:id="CO83-1"/>
+<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o mysql-java.tar.gz 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz' <co xml:id="CO86-1"/>
 tar xfz mysql-java.tar.gz
 cd mysql-connector-java-*
 cp mysql-connector-java-*.jar /etc/guacamole/lib/mysql-connector-java.jar</programlisting>
 <calloutlist>
-<callout arearefs="CO83-1">
+<callout arearefs="CO86-1">
 <para>Collez ici le lien récupéré sur le site de Mysql.</para>
 </callout>
 </calloutlist>
@@ -9577,11 +9951,11 @@ cp mysql-connector-java-*.jar /etc/guacamole/lib/mysql-connector-java.jar</progr
 <simpara>Ajoutez dans le fichier:</simpara>
 <screen linenumbering="unnumbered">mysql-hostname: localhost
 mysql-port: 3306
-mysql-database: cxguacamole <co xml:id="CO84-1"/>
-mysql-username: cxguacamole <co xml:id="CO84-2"/>
-mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO84-3"/></screen>
+mysql-database: cxguacamole <co xml:id="CO87-1"/>
+mysql-username: cxguacamole <co xml:id="CO87-2"/>
+mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO87-3"/></screen>
 <calloutlist>
-<callout arearefs="CO84-1 CO84-2 CO84-3">
+<callout arearefs="CO87-1 CO87-2 CO87-3">
 <para>mettez ici le nom de la base de données, le nom de l&#8217;utilisateur de la base et son mot_de_passe tels qu&#8217;ils ont été saisis dans le chapitre de création de la base de données.</para>
 </callout>
 </calloutlist>
@@ -9589,13 +9963,13 @@ mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO84-3"/></screen>
 <listitem>
 <simpara>Vous devez maintenant télécharger les plugins mysql pour Guacamole. Allez sur le site web de guacamole et récupérez le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement de guacamole-auth-jdbc</link>. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz' <co xml:id="CO85-1"/>
+curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz' <co xml:id="CO88-1"/>
 tar xfz guacamole-auth-jdbc.tar.gz
 cd guacamole-auth-jdbc-*/mysql
 cp guacamole-auth-jdbc-mysql-*.jar /usr/local/share/guacamole/
 ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/extensions</programlisting>
 <calloutlist>
-<callout arearefs="CO85-1">
+<callout arearefs="CO88-1">
 <para>insérez ici l&#8217;adresse du fichier guacamole-auth-jdbc à charger</para>
 </callout>
 </calloutlist>
@@ -9603,19 +9977,19 @@ ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/
 <listitem>
 <simpara>Créez les tables de la base:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd schema
-cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO86-1"/></programlisting>
+cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO89-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO86-1">
+<callout arearefs="CO89-1">
 <para>mettez derrière le <literal>-u</literal> le nom d&#8217;utilisateur de la base de données et derrière le <literal>-p</literal> le nom de la base de données. Un mot de passe vous sera demandé.</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Redémarrez tomcat et guacd. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl restart tomcat8 <co xml:id="CO87-1"/>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart tomcat8 <co xml:id="CO90-1"/>
 systemctl restart guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO87-1">
+<callout arearefs="CO90-1">
 <para>ou mettre tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
@@ -9736,11 +10110,11 @@ systemctl restart guacd</programlisting>
 <listitem>
 <simpara>tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO88-1"/>
+curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO91-1"/>
 tar xfz guacamole-server.tar.gz
 cd guacamole-server-*</programlisting>
 <calloutlist>
-<callout arearefs="CO88-1">
+<callout arearefs="CO91-1">
 <para>insérez ici l&#8217;adresse du package serveur à charger</para>
 </callout>
 </calloutlist>
@@ -9758,15 +10132,15 @@ ldconfig</programlisting>
 <listitem>
 <simpara>Téléchargez le dernier client <literal>war</literal> de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>. Récupérez le lien puis tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /usr/local/share/guacamole
-curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO89-1"/>
+curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO92-1"/>
 systemctl daemon-reload
-systemctl restart tomcat8 <co xml:id="CO89-2"/>
+systemctl restart tomcat8 <co xml:id="CO92-2"/>
 systemctl start guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO89-1">
+<callout arearefs="CO92-1">
 <para>insérez ici l&#8217;adresse du war à charger</para>
 </callout>
-<callout arearefs="CO89-2">
+<callout arearefs="CO92-2">
 <para>ou tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
