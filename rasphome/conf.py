@@ -19,8 +19,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Raspberry PI Home Server installation'
-copyright = '2020, Stéphane Apiou'
+project = 'Installation d un Home Serveur Raspberry PI'
+copyright = '2022, Stéphane Apiou'
 author = 'Stéphane Apiou'
 
 # The short X.Y version
@@ -144,7 +144,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'rasphomeinstallation.tex', 'Raspberry Home server installation Documentation',
+    (master_doc, 'rasphomeinstallation.tex', 'Installation d un Home Serveur Raspberry PI Documentation',
      'Stéphane Apiou', 'manual'),
 ]
 
@@ -154,7 +154,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'rasphomeinstallation', 'Raspberry Home server installation Documentation',
+    (master_doc, 'rasphomeinstallation', 'Installation d un Home Serveur Raspberry PI Documentation',
      [author], 1)
 ]
 
@@ -165,8 +165,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'rasphomeinstallation', 'Raspberry Home server installation Documentation',
-     author, 'rasphomeinstallation', 'Install your raspberry pi for your own home server.',
+    (master_doc, 'rasphomeinstallation', 'Installation d un Home Serveur Raspberry PI Documentation',
+     author, 'rasphomeinstallation', 'Installation d un Home Serveur Raspberry PI.',
      'Miscellaneous'),
 ]
 

@@ -5,9 +5,9 @@ Il contient en revanche toute une documentation qui vous explique comment mettre
 
 Vous y trouverez:
 
-* [Une documentation pour installer un serveur VPS complet](vps/vps_installation.rst)
-* [Une documentation pour installer un server Homebrew avec un Raspberry PI](raspberry/raspberry_installation.rst)
-
+* [Une documentation pour installer un serveur VPS Web, Mail, DNS et autres outils](vps/vps_installation.rst)
+* [Une documentation pour installer un server Web, Mail et DNS avec un Raspberry PI](raspfront/raspfront_installation.rst)
+* [Une documentation pour installer un server Interne avec PiHole, Samba avec un Raspberry PI](rasphome/rasphome_installation.rst)
 
 Tous ces documents sont aussi disponible sur mon site web et sur Readthedocs.
 

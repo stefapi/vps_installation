@@ -1,10 +1,13 @@
 #! /bin/bash
 
+# Install first asciidoctor and asciidoctor diagram which are Ruby modules
+# gem install asciidoctor-diagram
+
 set -x
-asciidoctor -a toc -a data-uri -a allow-uri-read -b html rasphome_installation.asc
-asciidoctor-pdf -a toc -a data-uri -a allow-uri-read -d book rasphome_installation.asc
-asciidoctor -a toc -a allow-uri-read -b docbook rasphome_installation.asc
-pandoc -f docbook --toc -t rst rasphome_installation.xml -o rasphome_installation.tmp
+asciidoctor -r asciidoctor-diagram -a toc -a data-uri -a allow-uri-read -a source-highlighter=rouge -b html rasphome_installation.asc
+asciidoctor-pdf -r asciidoctor-diagram -a toc -a data-uri -a allow-uri-read -a source-highlighter=rouge -d book rasphome_installation.asc
+asciidoctor -r asciidoctor-diagram -a toc -a allow-uri-read -a source-highlighter=rouge -b docbook rasphome_installation.asc
+pandoc -f docbook -t rst rasphome_installation.xml -o rasphome_installation.tmp
 echo '
 .. toctree::
    :maxdepth: 2

@@ -19,8 +19,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'VPS installation'
-copyright = '2020, Stéphane Apiou'
+project = 'Serveur Web VPS'
+copyright = '2022, Stéphane Apiou'
 author = 'Stéphane Apiou'
 
 # The short X.Y version

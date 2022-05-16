@@ -10,10 +10,13 @@ Avant propos
 ============
 
 Ce document est disponible sur le site
-`ReadTheDocs <https://vps-installation.readthedocs.io>`__ et sur
-`Github <https://github.com/stefapi/vps_installation>`__. Sur Github
-vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc
-de ce document.
+`ReadTheDocs <https://vps-installation.readthedocs.io>`__
+
+|Diagram|
+
+et sur `Github <https://github.com/stefapi/vps_installation>`__. Sur
+Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et
+Asciidoc de ce document.
 
 Cette documentation décrit la méthode que j’ai utilisé pour installer un
 serveur VPS sur la plate-forme OVH. Elle est le résultat de très
@@ -533,7 +536,7 @@ Mise à jour des sources de paquets Debian
 
    b. Dé-commenter les lignes débutant par ``deb`` et contenant le terme
       ``backports``. Par exemple pour
-      ``#deb http://deb.debian.org/debian buster-backports main contrib non-free``
+      ``#deb http://deb.debian.org/debian bullseye-backports main contrib non-free``
       enlever le # en début de ligne
 
    c. Ajouter sur toutes les lignes les paquets ``contrib`` et
@@ -544,21 +547,21 @@ Mise à jour des sources de paquets Debian
 
       .. code:: ini
 
-         deb http://deb.debian.org/debian buster main contrib non-free
-         deb-src http://deb.debian.org/debian buster main contrib non-free
+         deb http://deb.debian.org/debian bullseye main contrib non-free
+         deb-src http://deb.debian.org/debian bullseye main contrib non-free
 
          ## Major bug fix updates produced after the final release of the
          ## distribution.
-         deb http://security.debian.org/ buster/updates main contrib non-free
-         deb-src http://security.debian.org/ buster/updates main contrib non-free
-         deb http://deb.debian.org/debian buster-updates main contrib non-free
-         deb-src http://deb.debian.org/debian buster-updates main contrib non-free
+         deb http://security.debian.org/debian-security bullseye-security main contrib non-free
+         deb-src http://security.debian.org/debian-security bullseye-security main contrib non-free
+         deb http://deb.debian.org/debian bullseye-updates main contrib non-free
+         deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free
 
          ## N.B. software from this repository may not have been tested as
          ## extensively as that contained in the main release, although it includes
          ## newer versions of some applications which may provide useful features.
-         deb http://deb.debian.org/debian buster-backports main contrib non-free
-         deb-src http://deb.debian.org/debian buster-backports main contrib non-free
+         deb http://deb.debian.org/debian bullseye-backports main contrib non-free
+         deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
 
 3. Effectuer une mise à niveau du système
 
@@ -789,7 +792,7 @@ correctement configuré.
 
       .. note::
 
-         Le FQDN (nom de machine avant le nom de domaine) doit être
+         Le FQDN (nom de machine avec le nom de domaine) doit être
          déclaré avant le hostname simple dans le fichier ``hosts``.
 
    c. Rebootez. Tapez :
@@ -817,6 +820,32 @@ correctement configuré.
          hostname -f
 
       La sortie doit afficher le nom de host avec le nom de domaine.
+
+   c. Reconfigurez les clés SSH server si vous avez changé le Hostname.
+      Tapez:
+
+      .. code:: bash
+
+         rm -v /etc/ssh/ssh_host_*
+         dpkg-reconfigure openssh-server
+
+   d. Les nouvelles clés vont être regénérées.
+
+   e. Déconnectez vous de votre session SSH et reconnectez vous.
+
+   f. Sur votre poste de travail, la clé d’authentification du serveur
+      aura changée. il vous faudra annuler l’ancien puis accepter la
+      nouvelle.
+
+   g. Tapez :
+
+      .. code:: bash
+
+         ssh-keygen -f "$HOME/.ssh/known_hosts" -R hostname 
+
+      -  remplacer hostname par l’adresse IP ou le nom de machine
+
+   h. `Reloguez vous comme root sur le serveur <#root_login>`__
 
 .. __configurer_une_ipv6:
 
@@ -1280,6 +1309,21 @@ Suivez la procédure suivante:
 
       systemctl stop spamassassin
       systemctl disable spamassassin
+
+.. note::
+
+   Notez que si vous créez une adresse mail nommée
+   ``homeserver@example.com``, vous pouvez utilisez toutes les variantes
+   (nommées tag) derrière le caractère "+". Ainsi
+   ``homeserver+nospam@example.com`` sera bien redirigé vers votre boite
+   et l’extension ``+nospam`` vous permettre de trier automatiquement
+   les mails que vous ne voulez pas recevoir.
+
+.. note::
+
+   Il est possible de changer ce caractère spécial en le modifiant dans
+   le fichier ``/etc/postfix/main.cf`` sur la ligne commençant par
+   ``recipient_delimiter``.
 
 .. __configuration_de_mariadb:
 
@@ -2056,6 +2100,109 @@ Suivez la procédure suivante:
 
       apt install python3-certbot-apache
 
+.. _firewall:
+
+Deblocage de port de firewall
+-----------------------------
+
+Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en
+entrée de votre équipement. Cela veut dire qu’il ne sera pas possible de
+connecter une machine externe sur votre équipement sans avoir effecté
+une opération de déblocage du port du firewall.
+
+Il existe deux manière de débloquer un port. Elle dépend de ce que vous
+avez configuré.
+
+.. __déblocage_et_suppression_de_regles_de_firewall_avec_ispconfig:
+
+Déblocage et suppression de regles de Firewall avec ISPconfig
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Appliquez les opérations suivantes pour Débloquez le firewall:
+
+1. Allez sur le site ispconfig https://example.com:8080/
+
+2. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+   ``Firewall``. Cliquez sur votre serveur.
+
+3. dans la rubrique ``Open TCP ports:``, ajoutez le numero de port xxxx
+   que vous souhaitez débloquer
+
+4. Cliquez sur ``save``
+
+Appliquez les opérations suivantes bloquer (en lever une règle de
+déblocage) de firewall:
+
+1. Allez sur le site ispconfig https://example.com:8080/
+
+2. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
+   ``Firewall``. Cliquez sur votre serveur.
+
+3. dans la rubrique ``Open TCP ports:``, Supprimer le port xxxx
+
+4. Cliquez sur ``save``
+
+.. __déblocage_de_firewall_ufw:
+
+Déblocage de Firewall UFW
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. important::
+
+   Si vous avez installé ISPconfig vous ne devez pas utiliser cette
+   méthode !
+
+Tout d’abord, à la première utilisation, il vous faut appliquer la
+procédure suivante:
+
+1. Installez ``ufw``. Tapez:
+
+   .. code:: bash
+
+      apt install ufw
+
+2. Autorisez SSH si vous ne voulez pas perdre votre connexion SSH à
+   l’activation du firewall. Tapez:
+
+   .. code:: bash
+
+      ufw allow 22/tcp
+      ufw allow 80/tcp
+      ufw allow 443/tcp
+
+3. Activez le firewall. tapez:
+
+   .. code:: bash
+
+      ufw enable
+
+4. C’est prêt !
+
+Appliquez les opérations suivantes pour Débloquez le firewall:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+      ufw allow xxxx/tcp 
+
+   -  remplacez xxxx par le numero de port que vous souhaitez débloquer
+
+Appliquez les opérations suivantes bloquer (en lever une règle de
+déblocage) de firewall:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+      ufw delete allow xxxx/tcp 
+
+   -  remplacez xxxx par le numero de port que vous souhaitez débloquer
+
 .. __scan_des_vulnérabilités:
 
 Scan des vulnérabilités
@@ -2110,22 +2257,6 @@ Pour effectuer la mise à jour de Lynis appliquez la procédure suivante:
       cd
       cd lynis
       git pull
-
-.. __installation_et_utilisation_de_nmap_et_autres_outils:
-
-Installation et utilisation de NMAP et autres outils
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Ce paragraphe est à rédiger …​
-
-nmap -A -T4 example.com
-
-whatweb -a 3 example.com
-
-nikto -h example.com
-
-docker run -it -d --name zap -u zap -p 8080:8080 -p 8091:8090 -i
-owasp/zap2docker-stable zap-webswing.sh
 
 .. __installation_dun_panel:
 
@@ -2323,9 +2454,8 @@ précise des fonctionnalités.
 
        .. code:: bash
 
-          curl -fsSL http://www.webmin.com/jcameron-key.asc | sudo apt-key add -
-
-       Le message ``OK`` s’affiche
+          cd /etc/apt/trusted.gpg.d
+          wget http://www.webmin.com/jcameron-key.asc
 
 3.  Mise à jour. Tapez :
 
@@ -2339,30 +2469,44 @@ précise des fonctionnalités.
 
        apt install webmin
 
-    ::
+5.  `Debloquez le port 10000 sur votre firewall <#firewall>`__
 
-       Débloquez le port 10000 dans votre firewall
+6.  Changer le nom du user admin
 
-    a. Allez sur le site ispconfig
-       `https://<example.com>:8080/ <https://<example.com>:8080/>`__
+7.  Editez le fichier ``miniserv.users``. Tapez:
 
-    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-       ``Firewall``. Cliquez sur votre serveur.
+    .. code:: bash
 
-    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 10000
+       vi /etc/webmin/miniserv.users
 
-    d. Cliquez sur ``save``
+8.  Dans le fichier remplacer le texte ``root`` par le nom de votre
+    <sudo_username>.
 
-5.  Connectez vous avec votre navigateur sur l’url
+9.  De la même manière, éditer le fichier ``webmin.acl``. Tapez:
+
+    .. code:: bash
+
+       vi /etc/webmin/webmin.acl
+
+10. Dans le fichier remplacer le texte ``root`` par le nom de votre
+    <sudo_username>.
+
+11. Tapez :
+
+    .. code:: bash
+
+       service webmin restart
+
+12. Connectez vous avec votre navigateur sur l’url
     `https://<example.com>:10000 <https://<example.com>:10000>`__. Un
     message indique un problème de sécurité. Cela vient du certificat
     auto-signé. Cliquez sur 'Avancé' puis 'Accepter le risque et
     poursuivre'.
 
-6.  Loguez-vous ``root``. Tapez le mot de passe de ``root``. Le
-    dashboard s’affiche.
+13. Loguez-vous <sudo_username>. Tapez le mot de passe de
+    ``<sudo_username>``. Le dashboard s’affiche.
 
-7.  Restreignez l’adressage IP
+14. Restreignez l’adressage IP
 
     a. Obtenez votre adresse IP en allant par exemples sur le site
        https://www.showmyip.com/
@@ -2382,7 +2526,7 @@ précise des fonctionnalités.
     g. Vous devriez avoir une brève déconnexion le temps que le serveur
        Webmin redémarre puis une reconnexion.
 
-8.  Si vous n’arrivez pas à vous reconnecter c’est que l’adresse IP
+15. Si vous n’arrivez pas à vous reconnecter c’est que l’adresse IP
     n’est pas la bonne. Le seul moyen de se reconnecter est de:
 
     a. `Loguez vous comme root sur le serveur <#root_login>`__
@@ -2399,19 +2543,20 @@ précise des fonctionnalités.
     d. Connectez vous sur l’url de votre site Webmin. Tout doit
        fonctionner
 
-9.  Compléments de configuration
+16. Compléments de configuration
 
     a. Pour augmenter la sécurité, vous pouvez désactiver le login
-       ``root`` et creer un autre compte admin en allant dans:
+       ``sudo_username`` et créer un autre compte admin en allant dans:
        ``Webmin`` → ``Webmin Users`` → ``Create a new privileged user``.
-       Pour le user ``root``, modifier le ``Password`` en mettant
-       ``No password accepted``
+       Pour le user ``sudo_username``, modifier le ``Password`` en
+       mettant ``No password accepted``
 
     b. Allez dans ``Webmin`` → ``Webmin Configuration`` →
        ``SSL Encryption`` → onglet ``Let’s Encrypt`` →
-       ``Request Certificate``
+       ``Request Certificate``. Attention cette opération ne fonctionne
+       que si le serveur est disponible sur internet.
 
-10. Passez en Français. Pour les personnes non anglophone. Les
+17. Passez en Français. Pour les personnes non anglophone. Les
     traductions française ont des problèmes d’encodage de caractère ce
     n’est donc pas recommandé. La suite de mon tutoriel suppose que vous
     êtes resté en anglais.
@@ -2422,6 +2567,77 @@ précise des fonctionnalités.
     b. Dans l’écran choisir l’icône ``Language and Locale``.
 
     c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
+
+.. __configuration_de_docker_mirror:
+
+Configuration de Docker-mirror
+------------------------------
+
+L’outil Docker-mirror est un système de cache de fichier Dockers.
+
+Si vous avez plusieurs machines utilisant docker sur votre réseau, les
+déploiements et les mises à jour seront considérablement accélérées par
+l’utilisation de ce système de cache.
+
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Obtenez une configuration initiale pour le fichier ``config.yml``.
+   Tapez:
+
+   .. code:: bash
+
+      docker run -it --rm --entrypoint cat registry:2 /etc/docker/registry/config.yml > /etc/docker-mirror.yml
+
+3. Ajoutez ceci dans le fichier ``config.yml``. Tapez:
+
+   .. code:: bash
+
+      vi /etc/docker-mirror.yml
+
+4. Dans ce fichier, ajoutez les lignes suivantes :
+
+   ::
+
+      proxy:
+            remoteurl: https://registry-1.docker.io
+
+5. Démarrez ensuite le service docker. Tapez:
+
+   .. code:: bash
+
+      docker run -d --restart=always -p 5000:5000 --name docker-registry-proxy -v /etc/docker-mirror.yml:/etc/docker/registry/config.yml registry:2
+
+Sur le poste client, soit passez l’option --registry-mirror lorsque vous
+lancez le démon ``dockerd`` ou sinon éditez le fichier
+``/etc/docker/daemon.json`` et ajoutez la clé ``registry-mirrors`` pour
+rendre le changement persistant:
+
+1. `Loguez vous comme root sur le poste client <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+      vi /etc/docker/daemon.json
+
+3. Dans le fichier, ajoutez:
+
+   ::
+
+      {
+        "registry-mirrors": ["http://docker.example.com:5000"] 
+      }
+
+   -  remplacer ``docker.example.com`` par le nom ou l’adresse ip de
+      votre cache docker.
+
+4. Sauvegarder le fichier et redémarrez le démon docker. Tapez:
+
+   .. code:: bash
+
+      systemctl restart docker
 
 .. _domain-config:
 
@@ -3630,16 +3846,7 @@ suivante:
 
        monit status
 
-10. Débloquez le port 2812 dans votre firewall
-
-    a. Allez sur le site ispconfig https://example.com:8080/
-
-    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-       ``Firewall``. Cliquez sur votre serveur.
-
-    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 2812
-
-    d. Cliquez sur ``save``
+10. `Debloquez le port 2812 sur votre firewall <#firewall>`__
 
 11. Maintenant naviguez sur le site https://example.com:2812/
 
@@ -4925,7 +5132,8 @@ Il faut suivre les étapes suivantes:
 
        apt update
        apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-       curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+       cd /etc/apt/trusted.gpg.d
+       wget -O docker.asc https://download.docker.com/linux/debian/gpg
 
 4.  tapez :
 
@@ -5089,6 +5297,37 @@ Par exemple pour les docker de ``Yacht`` et de ``Portainer`` décrits ci
 après, on peut voir que les containers sont multiplateforme et
 conviennent très bien pour de l’Intel ou de l’ARM.
 
+.. __considérations_de_sécurité:
+
+Considérations de sécurité
+--------------------------
+
+A propos de l’export des ports sous docker.
+
+Par défaut lorsque vous lancez un container docker, l’option pour
+exporter un port de votre docker vers votre machine est
+``-p dst_port:src_port``. Si vous indiquez uniquement le port de
+destination comme par exemple dans ``-p 80:8080`` qui exporte le port
+8080 de votre docker vers le port 80 de votre machine réelle, vous
+exporter vers le port 80 de l’adresse IP 0.0.0.0 ce qui en pratique
+indique que vous n’utilisez pas les règles du firewall; le port est
+exporté automatiquement sur toutes les interfaces.
+
+De ce fait, vous exposez tous les ports interne de votre système docker
+à tout internet et le firewall ne bloque rien pour ces ports.
+
+Il est donc indispensable pour une machine directement exposée sur
+internet d’indiquer l’adresse du loopback en indiquant systématiquement
+l’adresse IP soit ``-p 127.0.0.1:80:8080``. Ainsi les règles du firewall
+sont appliquées et vous pourrez par votre configuration d’ISPconfig
+n’exposer que les ports et noms de domaines nécessaires.
+
+.. important::
+
+   Dans tout ce qui suit nous omettrons d’utiliser cette adresse en
+   127.0.0.1 . Pensez bien donc à ajouter cette adresse systématiquement
+   pour un serveur présent sur le web !
+
 .. __mise_à_jour_automatique_des_images:
 
 Mise à jour automatique des images
@@ -5099,28 +5338,68 @@ avez installés à partir du docker hub ou de n’importe quel autre
 repository compatible.
 
 Un outil automatise cette mise à jour c’est
-`ouroboros <https://github.com/pyouroboros/ouroboros>`__.
+`watchtower <https://github.com/containrrr/watchtower>`__.
 
-Pour l’installe, rien de plus simple:
+Pour l’installer, rien de plus simple:
 
 1. Tapez:
 
    .. code:: bash
 
-      docker run -d --name ouroboros -e CLEANUP=true -e LATEST=true -e SELF_UPDATE=true --restart=always -v /var/run/docker.sock:/var/run/docker.sock pyouroboros/ouroboros
+      docker run -d --name watchtower -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --cleanup --interval 86400
 
-2. Les options ``CLEANUP``, ``LATEST`` et ``SELF_UPDATE`` sont
-   respectivement pour effacer les anciennes images docker, coller les
-   containeurs à la version ``latest`` du repository et effectuer une
-   mise à jour automatique de ouroboros.
+2. l’option cleanup effectue le ménage des images inutiles et interval
+   indique en secondes le temps à attendre entre deux vérifications (ici
+   24h)
 
-La documentation de ouroboros est
-`ici <https://github.com/pyouroboros/ouroboros/wiki/Usage>`__.
+3. si vous voulez vous connecter à un repository avec un login et un mot
+   de passe, vous pouvez ajouter au lancement du docker les options
+   suivantes:
 
-.. warning::
+   .. code:: bash
 
-   Ouroboros n’est plus maintenu depuis fin 2019. Une alternative est à
-   trouver.
+      -e REPO_USER=username -e REPO_PASS=password
+
+4. Si vous désirez ne mettre à jour que certains containers, vous pouvez
+   passer l’option ``--label-enable`` et ensuite désigner les container
+   à mettre à jour en leur passant le label
+   ``-l com.centurylinklabs.watchtower.enable=true``
+
+5. Enfin dernière option très utile la possibilité de décider de la
+   période de mise à jour à l’aide d’une expression de type cron. Comme
+   exemple: ``--schedule "0 0 4 * * *"`` mettra à jour à 0h0 tous les 4
+   de chaque mois.
+
+6. Enfin lorsqu’une mise à jour s’effectue vous pouvez être notifié par
+   mail, slack ou d’autres outils tels que shoutrrr. Se référer à la
+   `documentation <https://containrrr.dev/watchtower/notifications/>`__
+
+.. __surveillance_et_redémarrage_de_container:
+
+Surveillance et redémarrage de container
+----------------------------------------
+
+Il peut arriver que certains container s’arrêtent brusquement suite à un
+bug.
+
+Autoheal est unn outil qui redémarre ces container automatiquement en se
+basant sur l’attribut healthcheck des containers.
+
+La documentation est
+`ici <https://github.com/willfarrell/docker-autoheal>`__.
+
+Pour l’installer:
+
+1. tapez:
+
+   .. code:: bash
+
+      docker run -d --name autoheal --restart=always -e AUTOHEAL_CONTAINER_LABEL=all -v /var/run/docker.sock:/var/run/docker.sock willfarrell/autoheal
+
+2. La variable d’environnement AUTOHEAL_CONTAINER_LABEL indique que tous
+   les containers seront vérifiés. Si vous souhaitez uniquement indiquer
+   les container à vérifier, il vous faut ajouter pour les container
+   concernés l’otion ``-l autoheal=true``
 
 .. __outils_web_de_gestion_des_containers:
 
@@ -5242,7 +5521,7 @@ Pour la création du site web, il faut suivre les étapes suivantes:
 Upgrade d’un container dans Yacht
 ---------------------------------
 
-Plutôt que d’effectuer des mises à jour automatiques avec Ouroboros,
+Plutôt que d’effectuer des mises à jour automatiques avec Watchtower,
 vous préférerez mettre à jour manuellement avec Yacht.
 
 Appliquez la procédure suivante:
@@ -5260,7 +5539,7 @@ Appliquez la procédure suivante:
 Upgrade de Yacht
 ----------------
 
-Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+Rien a faire pour la mise à jour si vous utilisez ``Watchtower`` Vous
 pouvez aussi appliquer la procédure de mise à jour des `containers à
 l’aide de ``Portainer`` <#port_container_updt>`__
 
@@ -5355,7 +5634,7 @@ Pour la création du site web, il faut suivre les étapes suivantes:
    .. code:: bash
 
       docker volume create portainer_data
-      docker run -d -p 8060:8000 -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+      docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 
 5. Ouvrez un navigateur et pointez sur http://portainer.example.com
 
@@ -5391,14 +5670,14 @@ ou utiliser un autre repository comme:
 Upgrade d’un container dans Portainer
 -------------------------------------
 
-Plutôt que d’effectuer des mises à jour automatiques avec Ouroboros,
+Plutôt que d’effectuer des mises à jour automatiques avec Watchtower,
 vous préférerez mettre à jour manuellement avec Portainer.
 
 Appliquez la procédure suivante:
 
 1. Ouvrez un navigateur et pointez sur http://portainer.example.com
 
-2. Logguez vous en tant qu'`admin\`
+2. Logguez vous en tant qu' ``admin``
 
 3. Allez dans l’onglet ``Containers``
 
@@ -5414,7 +5693,7 @@ Appliquez la procédure suivante:
 Upgrade de Portainer
 --------------------
 
-Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+Rien a faire pour la mise à jour si vous utilisez ``Watchtower`` Vous
 pouvez aussi appliquer la procédure de mise à jour des containers à
 l’aide de ```Yacht`` <#yacht_container_updt>`__
 
@@ -5431,7 +5710,7 @@ Sinon, effectuez les opérations suivantes:
       docker pull portainer/portainer-ce
       docker stop portainer
       docker rm portainer
-      docker run -d -p 8060:8000 -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+      docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 
 .. __installation_des_cms_joomla:
 
@@ -6549,7 +6828,7 @@ Votre site web ``mealie`` est installé et opérationnel.
 Upgrade de Mealie
 -----------------
 
-Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+Rien a faire pour la mise à jour si vous utilisez ``Watchtower`` Vous
 pouvez aussi appliquer la procédure de mise à jour des containers à
 l’aide de ```Portainer`` <#port_container_updt>`__ ou à l’aide
 ```Yacht`` <#yacht_container_updt>`__
@@ -6673,53 +6952,52 @@ Suivez la procédure suivante:
 
 2. Tapez la commande suivante:
 
-::
+   .. code:: command
 
-   cd /var/www/piwigo.example.com/piwigo 
-   wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinstall.php
+      cd /var/www/piwigo.example.com/piwigo 
+      wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinstall.php
 
--  mettre à la place de ``example.com`` votre nom de domaine
+   -  mettre à la place de ``example.com`` votre nom de domaine
 
-   1. Un fois téléchargé, faites pointer votre navigateur vers
-      http://piwigo.example.com/piwigo-netinstall.php
+3. Un fois téléchargé, faites pointer votre navigateur vers
+   http://piwigo.example.com/piwigo-netinstall.php
 
-   2. Choisissez votre ``Langue`` à ``Français``
+4. Choisissez votre ``Langue`` à ``Français``
 
-   3. Indique ``.`` comme répertoire d’installation et cliquez sur
-      ``Télécharger et décompresser Piwigo``
+5. Indique ``.`` comme répertoire d’installation et cliquez sur
+   ``Télécharger et décompresser Piwigo``
 
-   4. Une fois le téléchargement terminé cliquez sur
-      ``Installer Piwigo``. Rechargez la page si besoin.
+6. Une fois le téléchargement terminé cliquez sur ``Installer Piwigo``.
+   Rechargez la page si besoin.
 
-   5. Répondez aux questions suivantes:
+7. Répondez aux questions suivantes:
 
-      -  ``Langue par défaut de la galerie`` ← ``Français``
+   -  ``Langue par défaut de la galerie`` ← ``Français``
 
-      -  ``Hote`` ← Laissez ``localhost``
+   -  ``Hote`` ← Laissez ``localhost``
 
-      -  ``Utilisateur`` ← entrez ``cxpiwigo``. x est le numero de
-         client; habituellement c’est 0
+   -  ``Utilisateur`` ← entrez ``cxpiwigo``. x est le numero de client;
+      habituellement c’est 0
 
-      -  ``Mot de passe`` ← Tapez votre mot de passe
+   -  ``Mot de passe`` ← Tapez votre mot de passe
 
-      -  ``Nom de la Base de données`` ← entrez ``cxpiwigo``. x est le
-         numero de client; habituellement c’est 0
+   -  ``Nom de la Base de données`` ← entrez ``cxpiwigo``. x est le
+      numero de client; habituellement c’est 0
 
-      -  ``Préfix des noms de tables`` ← Laissez le champ vide
+   -  ``Préfix des noms de tables`` ← Laissez le champ vide
 
-      -  ``Nom d’Utilisateur`` ← tapez ``admin``
+   -  ``Nom d’Utilisateur`` ← tapez ``admin``
 
-      -  ``Mot de passe`` ← Tapez `votre mot de passe
-         généré <#pass_gen>`__
+   -  ``Mot de passe`` ← Tapez `votre mot de passe généré <#pass_gen>`__
 
-      -  ``Mot de passe [confirmer]`` ← Retapez votre mot de passe
+   -  ``Mot de passe [confirmer]`` ← Retapez votre mot de passe
 
-      -  ``Adresse e-mail`` ← Tapez votre adresse mail d’administrateur
+   -  ``Adresse e-mail`` ← Tapez votre adresse mail d’administrateur
 
-   6. Tapez ``Démarrer l’installation``
+8. Tapez ``Démarrer l’installation``
 
-   7. Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer
-      et commencer à utiliser l’outil
+9. Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer et
+   commencer à utiliser l’outil
 
 .. __update_de_piwigo:
 
@@ -7228,16 +7506,7 @@ Gitea:
 
    -  mettez ici le numéro de port que vous souhaitez
 
-4. Débloquez le port 2222 dans votre firewall
-
-   a. Allez sur le site ispconfig https://example.com:8080/
-
-   b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-      ``Firewall``. Cliquez sur votre serveur.
-
-   c. dans la rubrique ``Open TCP ports:``, ajoutez le port 2222
-
-   d. Cliquez sur ``save``
+4. `Debloquez le port 2222 sur votre firewall <#firewall>`__
 
 5. Redémarrez ``gitea``. Tapez:
 
@@ -7293,7 +7562,7 @@ chapitre qui y est consacré.
 Installation du serveur Bitwarden
 ---------------------------------
 
-Nous allons installer Bitwarden_rs qui est la version libre de bitwarden
+Nous allons installer Vaultwarden qui est la version libre de bitwarden
 et compatible avec les APIs. Cette version est plus complète que la
 version officielle, consomme moins de ressources et est plus rapide.
 
@@ -7309,12 +7578,12 @@ Ouvrez un terminal et suivez la procédure:
 
       openssl rand -base64 48
 
-4. Créez le docker de Bitwarden_rs. Tapez:
+4. Créez le docker de Vaultwarden. Tapez:
 
    .. code:: bash
 
-      docker volume create bitwarden_data
-      docker run -d -p 1280:80 --name=bitwarden --restart=always -v bitwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com bitwardenrs/server:latest 
+      docker volume create vaultwarden_data
+      docker run -d -p 1280:80 --name=bitwarden --restart=always -v vaultwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com vaultwarden/server:latest 
 
    -  ici il faut remplacer ``example.com`` par votre nom de domaine. Il
       faut aussi remplacer ``mailname@example.com`` par une boite mail
@@ -7429,7 +7698,7 @@ Tout est prêt!
 Upgrade de Bitwarden
 --------------------
 
-Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+Rien a faire pour la mise à jour si vous utilisez ``Watchtower`` Vous
 pouvez aussi appliquer la procédure de mise à jour des containers à
 l’aide de ```Portainer`` <#port_container_updt>`__ ou à l’aide
 ```Yacht`` <#yacht_container_updt>`__
@@ -7444,10 +7713,10 @@ Sinon, effectuez les opérations suivantes:
 
    .. code:: bash
 
-      docker pull bitwardenrs/server:latest
+      docker pull vaultwarden/server:latest
       docker stop bitwarden
       docker rm bitwarden
-      docker run -d -p 1280:80 --name=bitwarden --restart=always -v bitwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com bitwardenrs/server:latest 
+      docker run -d -p 1280:80 --name=bitwarden --restart=always -v bitwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com vaultwarden/server:latest 
 
    -  ici il faut remplacer ``example.com`` par votre nom de domaine. Il
       faut aussi remplacer ``mailname@example.com`` par une boite mail
@@ -7586,7 +7855,7 @@ Tout est prêt!
 Upgrade de Heimdall
 -------------------
 
-Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+Rien a faire pour la mise à jour si vous utilisez ``Watchtower`` Vous
 pouvez aussi appliquer la procédure de mise à jour des containers à
 l’aide de ```Portainer`` <#port_container_updt>`__ ou à l’aide
 ```Yacht`` <#yacht_container_updt>`__
@@ -7690,7 +7959,7 @@ Ouvrez un terminal et suivez la procédure:
              start_period: "30s"
            image: "xbrowsersync/api"
            ports:
-             - 8017:8080
+             - 127.0.0.1:8017:8080
            restart: "unless-stopped"
            volumes:
              - "./settings.json:/usr/src/api/config/settings.json"
@@ -7965,7 +8234,7 @@ Appliquez la procédure suivante:
 
 4. Sur la ligne contenant le mot ``allowNewSyncs``, remplacez par:
 
-   .. code:: json
+   ::
 
                 "allowNewSyncs": false,
 
@@ -7985,7 +8254,7 @@ procédure en mettant cette fois ci la valeur de ``allowNewSyncs`` à
 Upgrade de XbrowserSync
 -----------------------
 
-Rien a faire pour la mise à jour si vous utilisez ``Ouroboros`` Vous
+Rien a faire pour la mise à jour si vous utilisez ``Watchtower`` Vous
 pouvez aussi appliquer la procédure de mise à jour des containers à
 l’aide de ```Portainer`` <#port_container_updt>`__ ou à l’aide
 ```Yacht`` <#yacht_container_updt>`__
@@ -8273,18 +8542,7 @@ Nous allons effectuer un premier lancement du serveur Seafile:
        user\` du web domain). (Si vous n’avez qu’un site, web1 est le
        bon).
 
-10. Débloquez le port 8090 et 8092 dans votre firewall
-
-    a. Allez sur le site ispconfig
-       `https://<example.com>:8080/ <https://<example.com>:8080/>`__
-
-    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-       ``Firewall``. Cliquez sur votre serveur.
-
-    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 8090 et
-       8092
-
-    d. Cliquez sur ``save``
+10. `Debloquez le port 8090 et 8092 sur votre firewall <#firewall>`__
 
 11. Faites pointer votre navigateur sur https://seafile.example.com
 
@@ -8536,7 +8794,8 @@ Installation de Grafana
     .. code:: bash
 
        echo "deb https://packages.grafana.com/oss/deb stable main" >>/etc/apt/sources.list.d/grafana.list
-       wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+       cd /etc/apt/trusted.gpg.d
+       wget https://packages.grafana.com/gpg.key grafana.asc
 
 3.  Installez les paquets. Tapez:
 
@@ -8752,16 +9011,7 @@ Pour installer Loki, appliquez la procédure suivante:
          retention_deletes_enabled: false
          retention_period: 0
 
-6.  Débloquez le port 3100 dans votre firewall
-
-    a. Allez sur le site ispconfig https://example.com:8080/
-
-    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-       ``Firewall``. Cliquez sur votre serveur.
-
-    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 3100
-
-    d. Cliquez sur ``save``
+6.  `Debloquez le port 3100 sur votre firewall <#firewall>`__
 
 7.  Testez maintenant la configuration de Loki. Tapez:
 
@@ -8773,16 +9023,7 @@ Pour installer Loki, appliquez la procédure suivante:
 
 9.  Maintenant arrêtez Loki en tapant **CTRL-C**.
 
-10. Bloquez par sécurité le port 3100 dans votre firewall
-
-    a. Allez sur le site ispconfig https://example.com:8080/
-
-    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-       ``Firewall``. Cliquez sur votre serveur.
-
-    c. dans la rubrique ``Open TCP ports:``, Supprimer le port 3100
-
-    d. Cliquez sur ``save``
+10. `Bloquez le port 3100 sur votre firewall <#firewall>`__
 
 11. Configurez un service Loki afin de le faire tourner en arrière plan.
     Tapez:
@@ -8868,16 +9109,7 @@ Installez maintenant Promtail:
              job: varlogs
              __path__: /var/log/{*.log,*/*.log}
 
-6.  Débloquez le port 9080 dans votre firewall
-
-    a. Allez sur le site ispconfig https://example.com:8080/
-
-    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-       ``Firewall``. Cliquez sur votre serveur.
-
-    c. dans la rubrique ``Open TCP ports:``, ajoutez le port 9080
-
-    d. Cliquez sur ``save``
+6.  `Debloquez le port 9800 sur votre firewall <#firewall>`__
 
 7.  testez que Promtail fonctionne. Tapez:
 
@@ -8889,16 +9121,7 @@ Installez maintenant Promtail:
 
 9.  Maintenant arrêtez Promtail en tapant **CTRL-C**.
 
-10. Bloquez par sécurité le port 9080 dans votre firewall
-
-    a. Allez sur le site ispconfig https://example.com:8080/
-
-    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-       ``Firewall``. Cliquez sur votre serveur.
-
-    c. dans la rubrique ``Open TCP ports:``, Supprimer le port 9080
-
-    d. Cliquez sur ``save``
+10. `Bloquez le port 9800 sur votre firewall <#firewall>`__
 
 11. Configurez un service Promtail afin de le faire tourner en arrière
     plan. Tapez:
@@ -9498,8 +9721,10 @@ version suffisamment récente.
 
     .. code:: bash
 
-       apt install python3-pip libssl-dev cython3 gcc g++ libpython3-dev libacl1-dev python3-llfuse
-       pip3 install borgbackup
+       apt install python3-pip libssl-dev cython3 gcc g++ libpython3-dev libacl1-dev python3-llfuse libfuse-dev
+       pip3 install -U pip setuptools wheel
+       pip3 install pkgconfig
+       pip3 install borgbackup[llfuse]
 
 4.  Si la compilation échoue, c’est qu’il manque des packages. lisez
     attentivement les logs et installez les packages manquant.
@@ -9900,8 +10125,9 @@ debian (pour le Raspberrypi voir le chapitre suivant):
       deb http://repo.pritunl.com/stable/apt buster main
       EOF
       apt-get install dirmngr
-      apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
-      apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
+      cd /etc/apt/trusted.gpg.d
+      wget -O mongodb.asc https://www.mongodb.org/static/pgp/server-5.0.asc
+      wget https://raw.githubusercontent.com/pritunl/pgp/master/pritunl_repo_pub.asc
       apt-get update
       apt-get --assume-yes install pritunl mongodb-org openvpn
 
@@ -9925,7 +10151,8 @@ installer sur un Raspberrypi avec Ubuntu 64 bits:
       deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse
       EOF
       apt install dirmngr openvpn python3-pip
-      apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+      cd /etc/apt/trusted.gpg.d
+      wget -O mongodb.asc https://www.mongodb.org/static/pgp/server-5.0.asc
       apt update
       apt install mongodb-org golang
       mkdir -p /var/lib/pritunl
@@ -10110,17 +10337,8 @@ pour qu’il fonctionne:
 
     f. Cliquez sur ``Attach``
 
-20. Débloquez le port VPN dans votre firewall
-
-    a. Allez sur le site ispconfig https://example.com:8080/
-
-    b. Loguez-vous et cliquez sur la rubrique ``System`` et le menu
-       ``Firewall``. Cliquez sur votre serveur.
-
-    c. dans la rubrique ``Open UDP ports:``, ajoutez le port UDP du VPN
-       que vous avez noté.
-
-    d. Cliquez sur ``save``
+20. `Débloquez le port VPN que vous avez noté sur votre
+    firewall <#firewall>`__
 
 21. Retourner dans l’interface de Pritunl. retournez sur l’onglet
     ``Servers``
@@ -10766,3 +10984,5 @@ Pour installer:
 3. ``Hestia`` est installé. Il est important de bien noter le mot de
    passe du compte admin de ``Hestia`` ainsi que le numéro de port du
    site web
+
+.. |Diagram| image:: diag-2f25aa1bfe51bea549aae03153e4fdb9.png
