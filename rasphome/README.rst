@@ -1,1 +1,1 @@
-raspberry_installation.rst
+rasphome_installation.rst
