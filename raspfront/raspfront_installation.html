@@ -659,7 +659,7 @@ pre.rouge {
 <div class="details">
 <span id="author" class="author">Stéphane Apiou</span><br>
 <span id="email" class="email"><a href="mailto:stephane@apiou.org">stephane@apiou.org</a></span><br>
-<span id="revnumber">version 1.4,</span>
+<span id="revnumber">version 1.5,</span>
 <span id="revdate">2022-05-17</span>
 </div>
 <div id="toc" class="toc">
@@ -706,7 +706,7 @@ pre.rouge {
 <li><a href="#_installation_et_configuration_de_phpmyadmin">7.8. Installation et configuration de Phpmyadmin</a></li>
 <li><a href="#_installation_du_webmail_roundcube">7.9. Installation du webmail Roundcube</a></li>
 <li><a href="#_installation_de_lets_encrypt">7.10. Installation de Let&#8217;s Encrypt</a></li>
-<li><a href="#firewall">7.11. Deblocage de port de firewall</a></li>
+<li><a href="#firewall">7.11. Déblocage de port de firewall</a></li>
 <li><a href="#_scan_des_vulnérabilités">7.12. Scan des vulnérabilités</a></li>
 </ul>
 </li>
@@ -936,11 +936,11 @@ pre.rouge {
 <h2 id="_avant_propos">1. Avant propos</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ce document est disponible sur le site <a href="https://raspberry-installation.readthedocs.io">ReadTheDocs</a></p>
+<p>Ce document est disponible sur le site <a href="https://raspberry-webfront.readthedocs.io">ReadTheDocs</a></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE4AAABOAQAAAACm0R2wAAABIElEQVR4nLWSsWrDMBCG5ahLQWBBpk6lYMhksLGXgI2y+jEKhayGPkBewWvBkJcIZCrI2JDJWJCpIDCFrgGLaLRQpxZ07Zqbjm/47n6dFvan5gX6rdu1jadyZTzqUn/2zwRZ7lJDVbQUzR+Z1F/RPyPqnkKKpyBknAGq7qTokbdxKbMrhF7t5NJO5XpbdXDao8xMWQDD/eeKjocWpIjwR3J50MCgi4AveSZcOp5QZzYUeNF6H6L2CWym23i8qhoYSMxVunuJQOI9ZrKR4NWxQr2OjmBfssvKdU2AwfR9d0pzYEiueAiHI9is8XRAcgMS+7Mpzq0PshnKKh6nYAeE9PY5uQhIyTt+oyW8sZCknCp4Y5MetAApmE0sGeB/uE37DeGieZDiLwgYAAAAAElFTkSuQmCC" alt="Diagram" width="78" height="78">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE4AAABOAQAAAACm0R2wAAABIElEQVR4nLWRsWqDUBSGj7lCKSgKeYAQEDJdMNTRoA/QxwhkKgh5gC5dA64FoS+RVfCiEDpIhEyCUAqBTgWFgIsXM7Xgb9ac6fBx+c93zp30f9VN6L/u1wpFLC9SMYfU6LwqN/tkSKV5sdxEjMIe2cOtEdVngJTVrcUSD2ijlu+yUPwh9fq2ZayvhzTTbc15oQLMfso5Z3owpK6+OX3tCbY4GJH7XbWQwJuGZqsOtzAopxrNtPnrgkwXcunYVLEVQsJBfDj2cWGDr7e2fbWEXJZH0Ym3Ibzd+utYk5BA4kybN390s2qnGSmYCYVv5YrAzOio2Kca/Lw0M5otHZxG7FemXYiUT5+eddyiLtyQn8GhUSkOsqmNvh5L+tHV79JeAa5tcJBzqtkGAAAAAElFTkSuQmCC" alt="Diagram" width="78" height="78">
 </div>
 </div>
 <div class="paragraph">
@@ -4498,7 +4498,7 @@ wget https://dl.eff.org/certbot-auto
 </div>
 </div>
 <div class="sect2">
-<h3 id="firewall">7.11. Deblocage de port de firewall</h3>
+<h3 id="firewall">7.11. Déblocage de port de firewall</h3>
 <div class="paragraph">
 <p>Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en entrée de votre équipement. Cela veut dire qu&#8217;il ne sera pas possible de connecter une machine externe sur votre équipement sans avoir effecté une opération de déblocage du port du firewall.</p>
 </div>
@@ -7460,8 +7460,8 @@ systemctl disable amavisd-new</code></pre>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="apache"><span class="nc">AddType</span> application/x-httpd-php .php .php3 .php4 .php5 .xml
 
-<span class="nc">CheckSpelling</span> <span class="ss">On</span>
-<span class="nc">CheckCaseOnly</span> <span class="ss">Off</span></code></pre>
+<span class="nc">CheckSpelling</span> <span class="ss">Off</span>
+<span class="nc">CheckCaseOnly</span> <span class="ss">On</span></code></pre>
 </div>
 </div>
 </li>
@@ -7624,33 +7624,11 @@ header('Content-Type: application/xml');
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="apache"><span class="p">&lt;</span><span class="nl">Proxy</span><span class="sr"> *</span><span class="p">&gt;
-</span><span class="nc">Order</span> deny,allow
-<span class="nc">Allow</span> <span class="ss">from</span> <span class="ss">all</span>
-<span class="p">&lt;/</span><span class="nl">Proxy</span><span class="p">&gt;
-</span>
-<span class="nc">ProxyRequests</span> <span class="ss">Off</span>
-<span class="nc">ProxyPass</span> /stats !
-<span class="nc">ProxyPass</span> /.well-known/acme-challenge !
+<pre class="rouge highlight"><code data-lang="apache"><span class="nc">AddType</span> application/x-httpd-php .php .php3 .php4 .php5 .xml .json
 
-<span class="nc">CheckSpelling</span> <span class="ss">On</span>
-<span class="nc">CheckCaseOnly</span> <span class="ss">On</span>
-<span class="nc">RewriteEngine</span> <span class="ss">On</span>
-<span class="nc">SetEnvIf</span> Authorization "(.*)" HTTP_AUTHORIZATION=$1
-<span class="nc">ProxyPreserveHost</span>    <span class="ss">On</span>
-<span class="nc">ProxyPass</span> "/" http://autoconfig.example.com/ <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="ss">ProxyPassReverse</span> "/" http://autoconfig.example.com/ <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="ss">RewriteRule</span> ^/ - [QSA,L]
-<span class="nc">RedirectMatch</span> ^/$ https://autoconfig.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<span class="nc">CheckSpelling</span> <span class="ss">Off</span>
+<span class="nc">CheckCaseOnly</span> <span class="ss">On</span></code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer <code>example.com</code> par votre nom de domaine</td>
-</tr>
-</table>
 </div>
 </li>
 <li>
@@ -7729,6 +7707,8 @@ header('Content-Type: application/xml');
          <span class="nt">&lt;SPA&gt;</span>off<span class="nt">&lt;/SPA&gt;</span>
          <span class="nt">&lt;SSL&gt;</span>on<span class="nt">&lt;/SSL&gt;</span>
          <span class="nt">&lt;AuthRequired&gt;</span>on<span class="nt">&lt;/AuthRequired&gt;</span>
+         <span class="nt">&lt;UsePOPAuth&gt;</span>on<span class="nt">&lt;/UsePOPAuth&gt;</span>
+         <span class="nt">&lt;SMTPLast&gt;</span>off<span class="nt">&lt;/SMTPLast&gt;</span>
          <span class="nt">&lt;LoginName&gt;</span><span class="cp">&lt;?php echo $matches[1]; ?&gt;</span><span class="nt">&lt;/LoginName&gt;</span>
        <span class="nt">&lt;/Protocol&gt;</span>
      <span class="nt">&lt;/Account&gt;</span>
@@ -7771,6 +7751,71 @@ header('Content-Type: application/xml');
 </li>
 <li>
 <p>Le contenu du fichier xml doit s&#8217;afficher</p>
+</li>
+<li>
+<p>Dans le répertoire <code>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</code>, créer un répertoire <code>autodiscover</code>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /var/www/autoconfig.example.com <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="nb">mkdir</span> <span class="nt">-p</span> autoconfig/autodiscover/
+<span class="nb">chmod </span>755 autoconfig/autodiscover/
+<span class="nb">chown </span>web1:client0 autoconfig/autodiscover/ <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>remplacez <code>example.com</code> par votre nom de domaine</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>A l’intérieur de ce répertoire, Editez un fichier <code>autodiscover.json</code>. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">vi autoconfig/autodiscover/autodiscover.json</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Y coller:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="php"><span class="o">&lt;?</span><span class="n">php</span>
+<span class="nb">header</span><span class="p">(</span><span class="s1">'Content-type: application/json'</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s1">'{"Protocol":"AutodiscoverV1","Url":"https://autodiscover.example.com/Autodiscover/Autodiscover.xml"}'</span><span class="p">;</span>
+<span class="cp">?&gt;</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Changez les permissions comme pour le répertoire</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">chmod </span>644 autoconfig/autodiscover/autodiscover.json
+<span class="nb">chown </span>web1:client0 autoconfig/autodiscover/autodiscover.json <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code></td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Pointer votre navigateur sur le site <a href="https://autodiscover.example.com/autodiscover/autodiscover.json" class="bare">https://autodiscover.example.com/autodiscover/autodiscover.json</a></p>
+</li>
+<li>
+<p>Le contenu du fichier json doit s&#8217;afficher</p>
 </li>
 <li>
 <p>Vous pouvez faire aussi un test sur le <a href="https://testconnectivity.microsoft.com">Testeur de connectivité Microsoft</a>.</p>
@@ -16175,8 +16220,8 @@ EndSection</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.4<br>
-Last updated 2022-05-17 00:46:33 +0200
+Version 1.5<br>
+Last updated 2023-01-26 16:40:52 +0100
 </div>
 </div>
 </body>

@@ -15,7 +15,7 @@
 <authorinitials>SA</authorinitials>
 <revhistory>
 <revision>
-<revnumber>1.4</revnumber>
+<revnumber>1.5</revnumber>
 <date>2022-05-17</date>
 <authorinitials>SA</authorinitials>
 </revision>
@@ -23,11 +23,11 @@
 </info>
 <section xml:id="_avant_propos">
 <title>Avant propos</title>
-<simpara>Ce document est disponible sur le site <link xl:href="https://raspberry-installation.readthedocs.io">ReadTheDocs</link></simpara>
+<simpara>Ce document est disponible sur le site <link xl:href="https://raspberry-webfront.readthedocs.io">ReadTheDocs</link></simpara>
 <informalfigure>
 <mediaobject>
 <imageobject>
-<imagedata fileref="diag-b61d02ddbaa610df90fcf284c079d33c.png"/>
+<imagedata fileref="diag-74f02e0ac19ae29b38f9e4a39a6c84d1.png"/>
 </imageobject>
 <textobject><phrase>Diagram</phrase></textobject>
 </mediaobject>
@@ -2326,7 +2326,7 @@ chmod a+x certbot-auto
 </orderedlist>
 </section>
 <section xml:id="firewall">
-<title>Deblocage de port de firewall</title>
+<title>Déblocage de port de firewall</title>
 <simpara>Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en entrée de votre équipement. Cela veut dire qu&#8217;il ne sera pas possible de connecter une machine externe sur votre équipement sans avoir effecté une opération de déblocage du port du firewall.</simpara>
 <simpara>Il existe deux manière de débloquer un port. Elle dépend de ce que vous avez configuré.</simpara>
 <section xml:id="_déblocage_et_suppression_de_regles_de_firewall_avec_ispconfig">
@@ -4472,8 +4472,8 @@ systemctl disable amavisd-new</programlisting>
 <simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
 <programlisting language="apache" linenumbering="unnumbered">AddType application/x-httpd-php .php .php3 .php4 .php5 .xml
 
-CheckSpelling On
-CheckCaseOnly Off</programlisting>
+CheckSpelling Off
+CheckCaseOnly On</programlisting>
 </listitem>
 <listitem>
 <simpara>Sauver.</simpara>
@@ -4596,29 +4596,10 @@ chown web1:client0 autoconfig/mail/config-v1.1.xml <co xml:id="CO41-1"/></progra
 </listitem>
 <listitem>
 <simpara>Dans la boite <literal>Apache Directives:</literal> saisir le texte suivant:</simpara>
-<programlisting language="apache" linenumbering="unnumbered">&lt;Proxy *&gt;
-Order deny,allow
-Allow from all
-&lt;/Proxy&gt;
+<programlisting language="apache" linenumbering="unnumbered">AddType application/x-httpd-php .php .php3 .php4 .php5 .xml .json
 
-ProxyRequests Off
-ProxyPass /stats !
-ProxyPass /.well-known/acme-challenge !
-
-CheckSpelling On
-CheckCaseOnly On
-RewriteEngine On
-SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-ProxyPreserveHost    On
-ProxyPass "/" http://autoconfig.example.com/ <co xml:id="CO42-1"/>
-ProxyPassReverse "/" http://autoconfig.example.com/ <co xml:id="CO42-2"/>
-RewriteRule ^/ - [QSA,L]
-RedirectMatch ^/$ https://autoconfig.example.com <co xml:id="CO42-3"/></programlisting>
-<calloutlist>
-<callout arearefs="CO42-1 CO42-2 CO42-3">
-<para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
-</callout>
-</calloutlist>
+CheckSpelling Off
+CheckCaseOnly On</programlisting>
 </listitem>
 <listitem>
 <simpara>Sauver.</simpara>
@@ -4630,15 +4611,15 @@ RedirectMatch ^/$ https://autoconfig.example.com <co xml:id="CO42-3"/></programl
 </listitem>
 <listitem>
 <simpara>Dans le répertoire <literal>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</literal>, créer un répertoire <literal>Autodiscover</literal>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /var/www/autoconfig.example.com <co xml:id="CO43-1"/>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/autoconfig.example.com <co xml:id="CO42-1"/>
 mkdir -p autoconfig/Autodiscover/
 chmod 755 autoconfig/Autodiscover/
-chown web1:client0 autoconfig/Autodiscover/ <co xml:id="CO43-2"/></programlisting>
+chown web1:client0 autoconfig/Autodiscover/ <co xml:id="CO42-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO43-2">
+<callout arearefs="CO42-2">
 <para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
 </callout>
-<callout arearefs="CO43-1">
+<callout arearefs="CO42-1">
 <para>remplacez <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -4658,14 +4639,14 @@ chown web1:client0 autoconfig/Autodiscover/ <co xml:id="CO43-2"/></programlistin
  &lt;Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006"&gt;
    &lt;Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a"&gt;
      &lt;User&gt;
-       &lt;DisplayName&gt;Example Mail&lt;/DisplayName&gt; <co xml:id="CO44-1"/>
+       &lt;DisplayName&gt;Example Mail&lt;/DisplayName&gt; <co xml:id="CO43-1"/>
      &lt;/User&gt;
      &lt;Account&gt;
        &lt;AccountType&gt;email&lt;/AccountType&gt;
        &lt;Action&gt;settings&lt;/Action&gt;
        &lt;Protocol&gt;
          &lt;Type&gt;IMAP&lt;/Type&gt;
-         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO44-2"/>
+         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO43-2"/>
          &lt;Port&gt;993&lt;/Port&gt;
          &lt;DomainRequired&gt;off&lt;/DomainRequired&gt;
          &lt;SPA&gt;off&lt;/SPA&gt;
@@ -4675,22 +4656,24 @@ chown web1:client0 autoconfig/Autodiscover/ <co xml:id="CO43-2"/></programlistin
        &lt;/Protocol&gt;
        &lt;Protocol&gt;
          &lt;Type&gt;SMTP&lt;/Type&gt;
-         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO44-3"/>
+         &lt;Server&gt;mail.example.com&lt;/Server&gt; <co xml:id="CO43-3"/>
          &lt;Port&gt;465&lt;/Port&gt;
          &lt;DomainRequired&gt;off&lt;/DomainRequired&gt;
          &lt;SPA&gt;off&lt;/SPA&gt;
          &lt;SSL&gt;on&lt;/SSL&gt;
          &lt;AuthRequired&gt;on&lt;/AuthRequired&gt;
+         &lt;UsePOPAuth&gt;on&lt;/UsePOPAuth&gt;
+         &lt;SMTPLast&gt;off&lt;/SMTPLast&gt;
          &lt;LoginName&gt;&lt;?php echo $matches[1]; ?&gt;&lt;/LoginName&gt;
        &lt;/Protocol&gt;
      &lt;/Account&gt;
    &lt;/Response&gt;
  &lt;/Autodiscover&gt;</programlisting>
 <calloutlist>
-<callout arearefs="CO44-2 CO44-3">
+<callout arearefs="CO43-2 CO43-3">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
-<callout arearefs="CO44-1">
+<callout arearefs="CO43-1">
 <para>mettre ici votre libellé long pour votre nom de messagerie</para>
 </callout>
 </calloutlist>
@@ -4698,9 +4681,9 @@ chown web1:client0 autoconfig/Autodiscover/ <co xml:id="CO43-2"/></programlistin
 <listitem>
 <simpara>Changez les permissions comme pour le répertoire</simpara>
 <programlisting language="bash" linenumbering="unnumbered">chmod 644 autoconfig/Autodiscover/Autodiscover.xml
-chown web1:client0 autoconfig/Autodiscover/Autodiscover.xml <co xml:id="CO45-1"/></programlisting>
+chown web1:client0 autoconfig/Autodiscover/Autodiscover.xml <co xml:id="CO44-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO45-1">
+<callout arearefs="CO44-1">
 <para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
 </callout>
 </calloutlist>
@@ -4710,6 +4693,48 @@ chown web1:client0 autoconfig/Autodiscover/Autodiscover.xml <co xml:id="CO45-1"/
 </listitem>
 <listitem>
 <simpara>Le contenu du fichier xml doit s&#8217;afficher</simpara>
+</listitem>
+<listitem>
+<simpara>Dans le répertoire <literal>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</literal>, créer un répertoire <literal>autodiscover</literal>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">cd /var/www/autoconfig.example.com <co xml:id="CO45-1"/>
+mkdir -p autoconfig/autodiscover/
+chmod 755 autoconfig/autodiscover/
+chown web1:client0 autoconfig/autodiscover/ <co xml:id="CO45-2"/></programlisting>
+<calloutlist>
+<callout arearefs="CO45-2">
+<para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
+</callout>
+<callout arearefs="CO45-1">
+<para>remplacez <literal>example.com</literal> par votre nom de domaine</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>A l’intérieur de ce répertoire, Editez un fichier <literal>autodiscover.json</literal>. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi autoconfig/autodiscover/autodiscover.json</programlisting>
+</listitem>
+<listitem>
+<simpara>Y coller:</simpara>
+<programlisting language="php" linenumbering="unnumbered">&lt;?php
+header('Content-type: application/json');
+echo '{"Protocol":"AutodiscoverV1","Url":"https://autodiscover.example.com/Autodiscover/Autodiscover.xml"}';
+?&gt;</programlisting>
+</listitem>
+<listitem>
+<simpara>Changez les permissions comme pour le répertoire</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 644 autoconfig/autodiscover/autodiscover.json
+chown web1:client0 autoconfig/autodiscover/autodiscover.json <co xml:id="CO46-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO46-1">
+<para>remplacer web1:client0 par les permissions du répertoire <literal>/var/www/autoconfig.example.com</literal></para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Pointer votre navigateur sur le site <link xl:href="https://autodiscover.example.com/autodiscover/autodiscover.json">https://autodiscover.example.com/autodiscover/autodiscover.json</link></simpara>
+</listitem>
+<listitem>
+<simpara>Le contenu du fichier json doit s&#8217;afficher</simpara>
 </listitem>
 <listitem>
 <simpara>Vous pouvez faire aussi un test sur le <link xl:href="https://testconnectivity.microsoft.com">Testeur de connectivité Microsoft</link>.</simpara>
@@ -4902,9 +4927,9 @@ SSLProxyCheckPeerExpire off
 ProxyPass / https://localhost:8080/webmail/
 ProxyPassReverse / https://localhost:8080/webmail/
 
-RedirectMatch ^/$ https://mail.example.com <co xml:id="CO46-1"/></programlisting>
+RedirectMatch ^/$ https://mail.example.com <co xml:id="CO47-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO46-1">
+<callout arearefs="CO47-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -4936,15 +4961,15 @@ chmod 755 imapsync</screen>
 </listitem>
 <listitem>
 <simpara>Créez deux fichiers temporaires qui contiennent les mots de passe du 1er et  2eme serveur. Tapez:</simpara>
-<screen>echo "passwdsrc" &gt; secretsrc <co xml:id="CO47-1"/>
-echo "passwddst" &gt; secretdst <co xml:id="CO47-2"/>
+<screen>echo "passwdsrc" &gt; secretsrc <co xml:id="CO48-1"/>
+echo "passwddst" &gt; secretdst <co xml:id="CO48-2"/>
 chmod 600 secretsrc
 chmod 600 secretdst</screen>
 <calloutlist>
-<callout arearefs="CO47-1">
+<callout arearefs="CO48-1">
 <para>passwdsrc est à remplacer par le mot de passe du compte sur le serveur source</para>
 </callout>
-<callout arearefs="CO47-2">
+<callout arearefs="CO48-2">
 <para>passwddst est à remplacer par le mot de passe du compte sur le serveur destination</para>
 </callout>
 </calloutlist>
@@ -5147,9 +5172,9 @@ En clair, <literal>Docker</literal> permet d&#8217;installer et de configurer ra
 </listitem>
 <listitem>
 <simpara>Désinstallez les éventuelles anciennes versions de docker. tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt remove --purge docker docker-engine docker.io containerd runc <co xml:id="CO48-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt remove --purge docker docker-engine docker.io containerd runc <co xml:id="CO49-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO48-1">
+<callout arearefs="CO49-1">
 <para>docker-engine n&#8217;existe pas dans une distribution ubuntu. C&#8217;est à enlever.</para>
 </callout>
 </calloutlist>
@@ -5173,9 +5198,9 @@ wget -O docker.asc https://download.docker.com/linux/debian/gpg</programlisting>
 </listitem>
 <listitem>
 <simpara>Tapez (et remplacer éventuellement la commande $(lsb_release -cs) par le nom de votre distribution stable).  :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" <co xml:id="CO49-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" <co xml:id="CO50-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO49-1">
+<callout arearefs="CO50-1">
 <para>ici il faut remplacer l&#8217;architecture <literal>amd64</literal> par <literal>arm64</literal> pour un raspberry pi 4  ou par <literal>armhf</literal> pour un raspberry pi 3. De la même manière, remplacez debian par ubuntu si vous utilisez une distribution ubuntu/</para>
 </callout>
 </calloutlist>
@@ -5211,9 +5236,9 @@ wget -O docker.asc https://download.docker.com/linux/debian/gpg</programlisting>
 <listitem>
 <simpara>Installez quelques paquets Debian de base. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">apt install libffi-dev libssl-dev
-apt install -y python3 python3-pip <co xml:id="CO50-1"/></programlisting>
+apt install -y python3 python3-pip <co xml:id="CO51-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO50-1">
+<callout arearefs="CO51-1">
 <para>Pour Ubuntu, remplacez ces paquets par <literal>python</literal> et <literal>python-pip</literal></para>
 </callout>
 </calloutlist>
@@ -5385,9 +5410,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:8061/
 ProxyPassReverse / http://localhost:8061/
 
-RedirectMatch ^/$ https://yacht.example.com <co xml:id="CO51-1"/></programlisting>
+RedirectMatch ^/$ https://yacht.example.com <co xml:id="CO52-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO51-1">
+<callout arearefs="CO52-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -5546,9 +5571,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:9050/
 ProxyPassReverse / http://localhost:9050/
 
-RedirectMatch ^/$ https://portainer.example.com <co xml:id="CO52-1"/></programlisting>
+RedirectMatch ^/$ https://portainer.example.com <co xml:id="CO53-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO52-1">
+<callout arearefs="CO53-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -5766,19 +5791,19 @@ docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.
 <listitem>
 <simpara>Installez Joomla. Exécutez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-wget -O joomla.tar.gz https://downloads.joomla.org/cms/joomla3/3-9-26/Joomla_3-9-26-Stable-Full_Package.tar.gz?format=gz <co xml:id="CO53-1"/>
-cd /var/www/joomla.example.com/joomla/ <co xml:id="CO53-2"/>
+wget -O joomla.tar.gz https://downloads.joomla.org/cms/joomla3/3-9-26/Joomla_3-9-26-Stable-Full_Package.tar.gz?format=gz <co xml:id="CO54-1"/>
+cd /var/www/joomla.example.com/joomla/ <co xml:id="CO54-2"/>
 tar -xvzf /tmp/joomla.tar.gz
 rm /tmp/joomla.tar.gz
-chown -R web[x]:client[y] /var/www/joomla.example.com/joomla <co xml:id="CO53-3"/> <co xml:id="CO53-4"/></programlisting>
+chown -R web[x]:client[y] /var/www/joomla.example.com/joomla <co xml:id="CO54-3"/> <co xml:id="CO54-4"/></programlisting>
 <calloutlist>
-<callout arearefs="CO53-3">
+<callout arearefs="CO54-3">
 <para>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
-<callout arearefs="CO53-2 CO53-4">
+<callout arearefs="CO54-2 CO54-4">
 <para>mettre ici votre site web à la place de joomla.example.com et le répertoire d&#8217;installation à la place de joomla</para>
 </callout>
-<callout arearefs="CO53-1">
+<callout arearefs="CO54-1">
 <para>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Joomla.</para>
 </callout>
 </calloutlist>
@@ -5991,19 +6016,19 @@ CLiquez sur le lien qui vous est présenté dans l&#8217;interface.</simpara>
 <listitem>
 <simpara>Installez Concrete5. Exécutez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-unzip concrete5-8.5.5.zip <co xml:id="CO54-1"/>
-mv concrete5-8.5.5/* /var/www/concrete5.example.com/concrete5/ <co xml:id="CO54-2"/> <co xml:id="CO54-3"/>
-rm -rf concrete5-8.5.5 <co xml:id="CO54-4"/>
-rm concrete5-8.5.5.zip <co xml:id="CO54-5"/>
-chown -R web[x]:client[y] /var/www/concrete5.example.com/concrete5 <co xml:id="CO54-6"/> <co xml:id="CO54-7"/></programlisting>
+unzip concrete5-8.5.5.zip <co xml:id="CO55-1"/>
+mv concrete5-8.5.5/* /var/www/concrete5.example.com/concrete5/ <co xml:id="CO55-2"/> <co xml:id="CO55-3"/>
+rm -rf concrete5-8.5.5 <co xml:id="CO55-4"/>
+rm concrete5-8.5.5.zip <co xml:id="CO55-5"/>
+chown -R web[x]:client[y] /var/www/concrete5.example.com/concrete5 <co xml:id="CO55-6"/> <co xml:id="CO55-7"/></programlisting>
 <calloutlist>
-<callout arearefs="CO54-6">
+<callout arearefs="CO55-6">
 <para>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
-<callout arearefs="CO54-3 CO54-7">
+<callout arearefs="CO55-3 CO55-7">
 <para>mettre ici votre site web à la place de concrete5.example.com et le répertoire d&#8217;installation à la place de concrete5</para>
 </callout>
-<callout arearefs="CO54-1 CO54-2 CO54-4 CO54-5">
+<callout arearefs="CO55-1 CO55-2 CO55-4 CO55-5">
 <para>le nom du fichier zip dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</para>
 </callout>
 </calloutlist>
@@ -6186,23 +6211,23 @@ Cliquez sur le lien qui vous est présenté dans l&#8217;interface.</simpara>
 <listitem>
 <simpara>Installez Mediawiki. Exécutez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-wget -O mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz <co xml:id="CO55-1"/>
-tar -xvzf mediawiki.tar.gz <co xml:id="CO55-2"/>
-mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/ <co xml:id="CO55-3"/> <co xml:id="CO55-4"/>
+wget -O mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz <co xml:id="CO56-1"/>
+tar -xvzf mediawiki.tar.gz <co xml:id="CO56-2"/>
+mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/ <co xml:id="CO56-3"/> <co xml:id="CO56-4"/>
 rm mediawiki.tar.gz
-rm -rf mediawiki-1.35.2 <co xml:id="CO55-5"/>
-chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki <co xml:id="CO55-6"/> <co xml:id="CO55-7"/></programlisting>
+rm -rf mediawiki-1.35.2 <co xml:id="CO56-5"/>
+chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki <co xml:id="CO56-6"/> <co xml:id="CO56-7"/></programlisting>
 <calloutlist>
-<callout arearefs="CO55-6">
+<callout arearefs="CO56-6">
 <para>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
-<callout arearefs="CO55-4 CO55-7">
+<callout arearefs="CO56-4 CO56-7">
 <para>mettre ici votre site web à la place de mediawiki.example.com et le répertoire d&#8217;installation à la place de mediawiki</para>
 </callout>
-<callout arearefs="CO55-1">
+<callout arearefs="CO56-1">
 <para>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Mediawiki.</para>
 </callout>
-<callout arearefs="CO55-2 CO55-3 CO55-5">
+<callout arearefs="CO56-2 CO56-3 CO56-5">
 <para>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</para>
 </callout>
 </calloutlist>
@@ -6281,9 +6306,9 @@ chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki <co xml:id="C
 </listitem>
 <listitem>
 <simpara>Créez le fichier LocalSettings.php. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <co xml:id="CO56-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">vi /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <co xml:id="CO57-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO56-1">
+<callout arearefs="CO57-1">
 <para>mettre ici votre site web à la place de mediawiki.example.com et le répertoire d&#8217;installation à la place de mediawiki</para>
 </callout>
 </calloutlist>
@@ -6293,13 +6318,13 @@ chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki <co xml:id="C
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <co xml:id="CO57-1"/> <co xml:id="CO57-2"/>
-chmod 644 /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <co xml:id="CO57-3"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <co xml:id="CO58-1"/> <co xml:id="CO58-2"/>
+chmod 644 /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <co xml:id="CO58-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO57-1">
+<callout arearefs="CO58-1">
 <para>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
-<callout arearefs="CO57-2 CO57-3">
+<callout arearefs="CO58-2 CO58-3">
 <para>mettre ici votre site web à la place de mediawiki.example.com et le répertoire d&#8217;installation à la place de mediawiki</para>
 </callout>
 </calloutlist>
@@ -6326,27 +6351,27 @@ chmod 644 /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <co xml:id=
 <listitem>
 <simpara>Mettez à jour Mediawiki. Exécutez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir /tmp/mediawiki.old
-mv /var/www/mediawiki.example.com/mediawiki/* /tmp/mediawiki.old <co xml:id="CO58-1"/>
+mv /var/www/mediawiki.example.com/mediawiki/* /tmp/mediawiki.old <co xml:id="CO59-1"/>
 cd /tmp
-wget -O mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz <co xml:id="CO58-2"/>
+wget -O mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.2.tar.gz <co xml:id="CO59-2"/>
 tar -xvzf mediawiki.tar.gz
-mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/ <co xml:id="CO58-3"/> <co xml:id="CO58-4"/>
+mv mediawiki-1.35.2/* /var/www/mediawiki.example.com/mediawiki/ <co xml:id="CO59-3"/> <co xml:id="CO59-4"/>
 rm mediawiki.tar.gz
-rm -rf mediawiki-1.35.2 <co xml:id="CO58-5"/>
-cp /tmp/mediawiki.old/LocalSettings.php  /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <co xml:id="CO58-6"/>
-cp -r /tmp/mediawiki.old/images/*  /var/www/mediawiki.example.com/mediawiki/images/ <co xml:id="CO58-7"/>
-chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki <co xml:id="CO58-8"/> <co xml:id="CO58-9"/></programlisting>
+rm -rf mediawiki-1.35.2 <co xml:id="CO59-5"/>
+cp /tmp/mediawiki.old/LocalSettings.php  /var/www/mediawiki.example.com/mediawiki/LocalSettings.php <co xml:id="CO59-6"/>
+cp -r /tmp/mediawiki.old/images/*  /var/www/mediawiki.example.com/mediawiki/images/ <co xml:id="CO59-7"/>
+chown -R web[x]:client[y] /var/www/mediawiki.example.com/mediawiki <co xml:id="CO59-8"/> <co xml:id="CO59-9"/></programlisting>
 <calloutlist>
-<callout arearefs="CO58-8">
+<callout arearefs="CO59-8">
 <para>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
-<callout arearefs="CO58-1 CO58-4 CO58-6 CO58-7 CO58-9">
+<callout arearefs="CO59-1 CO59-4 CO59-6 CO59-7 CO59-9">
 <para>mettre ici votre site web à la place de mediawiki.example.com et le répertoire d&#8217;installation à la place de mediawiki</para>
 </callout>
-<callout arearefs="CO58-2">
+<callout arearefs="CO59-2">
 <para>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Mediawiki.</para>
 </callout>
-<callout arearefs="CO58-3 CO58-5">
+<callout arearefs="CO59-3 CO59-5">
 <para>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</para>
 </callout>
 </calloutlist>
@@ -6508,15 +6533,15 @@ php update.php</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
 wget -O wordpress.tar.gz https://wordpress.org/latest.tar.gz
 tar -xvzf wordpress.tar.gz
-mv wordpress/* /var/www/wordpress.example.com/wordpress/ <co xml:id="CO59-1"/>
+mv wordpress/* /var/www/wordpress.example.com/wordpress/ <co xml:id="CO60-1"/>
 rm wordpress.tar.gz
 rm -rf wordpress
-chown -R web[x]:client[y] /var/www/wordpress.example.com/wordpress <co xml:id="CO59-2"/> <co xml:id="CO59-3"/></programlisting>
+chown -R web[x]:client[y] /var/www/wordpress.example.com/wordpress <co xml:id="CO60-2"/> <co xml:id="CO60-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO59-2">
+<callout arearefs="CO60-2">
 <para>Remplacez [x] et [y] par les numéros de site web et de client. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
-<callout arearefs="CO59-1 CO59-3">
+<callout arearefs="CO60-1 CO60-3">
 <para>mettre ici votre site web à la place de wordpress.example.com et le répertoire d&#8217;installation à la place de wordpress</para>
 </callout>
 </calloutlist>
@@ -6703,10 +6728,10 @@ chown -R web[x]:client[y] /var/www/wordpress.example.com/wordpress <co xml:id="C
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
-<programlisting language="command" linenumbering="unnumbered">cd /var/www/microweber.example.com/microweber <co xml:id="CO60-1"/>
+<programlisting language="command" linenumbering="unnumbered">cd /var/www/microweber.example.com/microweber <co xml:id="CO61-1"/>
 wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinstall.php</programlisting>
 <calloutlist>
-<callout arearefs="CO60-1">
+<callout arearefs="CO61-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -6863,9 +6888,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:1282/
 ProxyPassReverse / http://localhost:1282/
 
-RedirectMatch ^/$ https://mealie.example.com <co xml:id="CO61-1"/></programlisting>
+RedirectMatch ^/$ https://mealie.example.com <co xml:id="CO62-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO61-1">
+<callout arearefs="CO62-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -7040,10 +7065,10 @@ docker run -d -p 1282:80 --name=mealie --restart=always -v mealie_data:'/app/dat
 </listitem>
 <listitem>
 <simpara>Tapez la commande suivante:</simpara>
-<programlisting language="command" linenumbering="unnumbered">cd /var/www/piwigo.example.com/piwigo <co xml:id="CO62-1"/>
+<programlisting language="command" linenumbering="unnumbered">cd /var/www/piwigo.example.com/piwigo <co xml:id="CO63-1"/>
 wget http://piwigo.org/download/dlcounter.php?code=netinstall -O piwigo-netinstall.php</programlisting>
 <calloutlist>
-<callout arearefs="CO62-1">
+<callout arearefs="CO63-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -7270,10 +7295,10 @@ date.timezone = Asia/Kolkata</programlisting>
 <simpara>Tapez la commande suivante:</simpara>
 </listitem>
 </orderedlist>
-<screen>cd /var/www/nextcloud.example.com/nextcloud <co xml:id="CO63-1"/>
+<screen>cd /var/www/nextcloud.example.com/nextcloud <co xml:id="CO64-1"/>
 wget https://download.nextcloud.com/server/installer/setup-nextcloud.php</screen>
 <calloutlist>
-<callout arearefs="CO63-1">
+<callout arearefs="CO64-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 <orderedlist numeration="arabic">
 <listitem>
@@ -7398,9 +7423,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:3000/
 ProxyPassReverse / http://localhost:3000/
 
-RedirectMatch ^/$ https://gitea.example.com <co xml:id="CO64-1"/></programlisting>
+RedirectMatch ^/$ https://gitea.example.com <co xml:id="CO65-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO64-1">
+<callout arearefs="CO65-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -7631,9 +7656,9 @@ chmod 640 /etc/gitea/app.ini</programlisting>
 <listitem>
 <simpara>Trouvez les lignes suivantes et les remplacer dans le fichier. Chercher et remplacez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">START_SSH_SERVER = true
-SSH_PORT = 2222 <co xml:id="CO65-1"/></programlisting>
+SSH_PORT = 2222 <co xml:id="CO66-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO65-1">
+<callout arearefs="CO66-1">
 <para>mettez ici le numéro de port que vous souhaitez</para>
 </callout>
 </calloutlist>
@@ -7694,9 +7719,9 @@ Cette version est plus complète que la version officielle, consomme moins de re
 <listitem>
 <simpara>Créez le docker de Vaultwarden. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">docker volume create vaultwarden_data
-docker run -d -p 1280:80 --name=bitwarden --restart=always -v vaultwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com vaultwarden/server:latest <co xml:id="CO66-1"/></programlisting>
+docker run -d -p 1280:80 --name=bitwarden --restart=always -v vaultwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com vaultwarden/server:latest <co xml:id="CO67-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO66-1">
+<callout arearefs="CO67-1">
 <para>ici il faut remplacer <literal>example.com</literal> par votre nom de domaine. Il faut aussi remplacer <literal>mailname@example.com</literal> par une boite mail valide sur le serveur et <literal>mailpassword</literal> par le mot de passe de cette boite mail valide. <literal>Hashcode</literal> doit être remplacé par le code de hashage généré. Ce code protège l&#8217;accès <literal>admin</literal> de Bitwarden.</para>
 </callout>
 </calloutlist>
@@ -7834,9 +7859,9 @@ Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8
 <programlisting language="bash" linenumbering="unnumbered">docker pull vaultwarden/server:latest
 docker stop bitwarden
 docker rm bitwarden
-docker run -d -p 1280:80 --name=bitwarden --restart=always -v bitwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com vaultwarden/server:latest <co xml:id="CO67-1"/></programlisting>
+docker run -d -p 1280:80 --name=bitwarden --restart=always -v bitwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com vaultwarden/server:latest <co xml:id="CO68-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO67-1">
+<callout arearefs="CO68-1">
 <para>ici il faut remplacer <literal>example.com</literal> par votre nom de domaine. Il faut aussi remplacer <literal>mailname@example.com</literal> par une boite mail valide sur le serveur et <literal>mailpassword</literal> par le mot de passe de cette boite mail valide. <literal>Hashcode</literal> doit être remplacé par le code de hashage généré. Ce code protège l&#8217;accès <literal>admin</literal> de Bitwarden.</para>
 </callout>
 </calloutlist>
@@ -7938,9 +7963,9 @@ SSLProxyCheckPeerExpire off
 ProxyPass / https://localhost:1281/
 ProxyPassReverse / https://localhost:1281/
 
-RedirectMatch ^/$ https://heimdall.example.com <co xml:id="CO68-1"/></programlisting>
+RedirectMatch ^/$ https://heimdall.example.com <co xml:id="CO69-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO68-1">
+<callout arearefs="CO69-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -8169,22 +8194,22 @@ pip3 install --timeout=3600 Pillow pylibmc captcha jinja2 future mysqlclient sql
 <programlisting language="bash" linenumbering="unnumbered">cd /var/lib
 mkdir seafile
 cd seafile
-wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO69-1"/>
-tar zxvf seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO69-2"/>
+wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO70-1"/>
+tar zxvf seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO70-2"/>
 mkdir installed
 mv seafile-server_* installed
 cd seafile-server-*
 ./setup-seafile-mysql.sh
 cd ../..
-chown -R web1:client0 seafile <co xml:id="CO69-3"/></programlisting>
+chown -R web1:client0 seafile <co xml:id="CO70-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO69-3">
+<callout arearefs="CO70-3">
 <para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
-<callout arearefs="CO69-1">
+<callout arearefs="CO70-1">
 <para>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Seafile.</para>
 </callout>
-<callout arearefs="CO69-2">
+<callout arearefs="CO70-2">
 <para>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</para>
 </callout>
 </calloutlist>
@@ -8231,9 +8256,9 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>modifier l&#8217;entrée SERVICE_URL. Le fichier doit contenir ceci:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com <co xml:id="CO70-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">SERVICE_URL = https://seafile.example.com <co xml:id="CO71-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO70-1">
+<callout arearefs="CO71-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -8244,9 +8269,9 @@ port = 8092</programlisting>
 </listitem>
 <listitem>
 <simpara>modifier l&#8217;entrée FILE_SERVER_ROOT. Le fichier doit contenir ceci:</simpara>
-<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp' <co xml:id="CO71-1"/></programlisting>
+<programlisting language="python" linenumbering="unnumbered">FILE_SERVER_ROOT = 'https://seafile.example.com/seafhttp' <co xml:id="CO72-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO71-1">
+<callout arearefs="CO72-1">
 <para>mettre à la place de <literal>example.com</literal> votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -8254,10 +8279,10 @@ port = 8092</programlisting>
 <listitem>
 <simpara>Démarrez Seafile. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /var/lib/seafile/seafile-server-latest
-sudo -u web1 ./seafile.sh start <co xml:id="CO72-1"/>
-sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO72-2"/></programlisting>
+sudo -u web1 ./seafile.sh start <co xml:id="CO73-1"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO73-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO72-1 CO72-2">
+<callout arearefs="CO73-1 CO73-2">
 <para>remplacer le nom de user web1 par celui correspondant à celui du site web installé (indiqué dans le champ <literal>Options</literal>&#8594;`linux user` du web domain). (Si vous n&#8217;avez qu&#8217;un site, web1 est le bon).</para>
 </callout>
 </calloutlist>
@@ -8406,30 +8431,30 @@ esac</programlisting>
 <listitem>
 <simpara>Il est préférable d&#8217;exécuter les serveurs dans un répertoire privé plutôt que dans le répertoire web pour des questions de sécurité. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /var/lib/seafile
-wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO73-1"/>
-tar zxvf seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO73-2"/>
+wget https://s3.eu-central-1.amazonaws.com/download.seadrive.org/seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO74-1"/>
+tar zxvf seafile-server_7.1.3_x86-64.tar.gz <co xml:id="CO74-2"/>
 ./startseafile.sh stop
 mv seafile-server_* installed
-cd seafile-server-7.1.3 <co xml:id="CO73-3"/>
+cd seafile-server-7.1.3 <co xml:id="CO74-3"/>
 cd upgrade
-./upgrade_7.1.2.sh <co xml:id="CO73-4"/>
+./upgrade_7.1.2.sh <co xml:id="CO74-4"/>
 ./setup-seafile-mysql.sh
 cd ../../..
-chown -R web1:client0 seafile <co xml:id="CO73-5"/>
+chown -R web1:client0 seafile <co xml:id="CO74-5"/>
 cd seafile/seafile-server-latest
-sudo -u web1 ./seafile.sh start <co xml:id="CO73-6"/>
-sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO73-7"/></programlisting>
+sudo -u web1 ./seafile.sh start <co xml:id="CO74-6"/>
+sudo -u web1 ./seahub.sh start 8090 <co xml:id="CO74-7"/></programlisting>
 <calloutlist>
-<callout arearefs="CO73-1">
+<callout arearefs="CO74-1">
 <para>coller ici l&#8217;adresse de téléchargement récupérée sur le site de Seafile.</para>
 </callout>
-<callout arearefs="CO73-5 CO73-6 CO73-7">
+<callout arearefs="CO74-5 CO74-6 CO74-7">
 <para>choisissez le user et le groupe de votre site web. Ces informations sont consultables dans ISPConfig en consultant les informations du Web Domain&#8594;onglet <literal>Options</literal>&#8594;champs Linux User et Linux Group.</para>
 </callout>
-<callout arearefs="CO73-2 CO73-3">
+<callout arearefs="CO74-2 CO74-3">
 <para>le nom du fichier tar.gz dépend de la version que vous avez téléchargé. De même le nom du répertoire est dépendant de la version.</para>
 </callout>
-<callout arearefs="CO73-4">
+<callout arearefs="CO74-4">
 <para>exécutez tous les scripts d&#8217;upgrade dont le numéro de version est supérieur ou égal au numéro de version du seafile installé préalablement.</para>
 </callout>
 </calloutlist>
@@ -8509,9 +8534,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:3100/
 ProxyPassReverse / http://localhost:3100/
 
-RedirectMatch ^/$ https://grafana.example.com <co xml:id="CO74-1"/></programlisting>
+RedirectMatch ^/$ https://grafana.example.com <co xml:id="CO75-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO74-1">
+<callout arearefs="CO75-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -8982,9 +9007,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez en première ligne du fichier :</simpara>
-<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO75-1"/></screen>
+<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO76-1"/></screen>
 <calloutlist>
-<callout arearefs="CO75-1">
+<callout arearefs="CO76-1">
 <para>remplacez SERVERIPADDRESS par l&#8217;adresse IP affichée plus tôt.</para>
 </callout>
 </calloutlist>
@@ -9007,9 +9032,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Puis tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO76-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO77-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO76-1">
+<callout arearefs="CO77-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
 </calloutlist>
@@ -9037,13 +9062,13 @@ chmod 700 borgbackup</programlisting>
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO77-1"/>
-cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO77-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO78-1"/>
+cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO78-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO77-1">
+<callout arearefs="CO78-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
-<callout arearefs="CO77-2">
+<callout arearefs="CO78-2">
 <para>si votre machine est assez puissante, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</para>
 </callout>
 </calloutlist>
@@ -9072,10 +9097,10 @@ cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;st
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO78-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO79-1"/>
 borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO78-1">
+<callout arearefs="CO79-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -9104,10 +9129,10 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</progra
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO79-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO80-1"/>
 borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
 <calloutlist>
-<callout arearefs="CO79-1">
+<callout arearefs="CO80-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -9118,9 +9143,9 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 </listitem>
 <listitem>
 <simpara>vous pouvez maintenant vérifier un de vos backup en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO80-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO81-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO80-1">
+<callout arearefs="CO81-1">
 <para>le nom de sauvegarde est récupéré en utilisant la commande borglist.sh</para>
 </callout>
 </calloutlist>
@@ -9142,10 +9167,10 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 <simpara>Insérez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO81-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO82-1"/>
 borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
 <calloutlist>
-<callout arearefs="CO81-1">
+<callout arearefs="CO82-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -9200,13 +9225,13 @@ rmdir /mnt/borgbackup</programlisting>
 # - une archive par mois pour les 6 derniers mois.
 
 
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO82-1"/>
-borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO82-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO83-1"/>
+borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO83-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO82-1">
+<callout arearefs="CO83-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
-<callout arearefs="CO82-2">
+<callout arearefs="CO83-2">
 <para>Le nettoyage des sauvegardes va conserver 7 sauvegardes journalières, 4 à la semaine et 12 au mois</para>
 </callout>
 </calloutlist>
@@ -9285,10 +9310,10 @@ pip3 install borgbackup[llfuse]</programlisting>
 <listitem>
 <simpara>Munissez vous du mot de passe &lt;mot_passe&gt; des archives borg et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO83-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO84-1"/>
 borg list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO83-1">
+<callout arearefs="CO84-1">
 <para>remplacez mot_passe par votre mot de passe de borg</para>
 </callout>
 </calloutlist>
@@ -9317,13 +9342,13 @@ chroot . bash
 mkdir -p dev proc run sys tmp
 mount -t devtmpfs dev /dev
 mount -t proc proc /proc
-grub_install /dev/sda <co xml:id="CO84-1"/>
+grub_install /dev/sda <co xml:id="CO85-1"/>
 umount /proc
 umount /dev
 sync
 exit</programlisting>
 <calloutlist>
-<callout arearefs="CO84-1">
+<callout arearefs="CO85-1">
 <para>tapez ici le nom de device de votre disque de boot</para>
 </callout>
 </calloutlist>
@@ -9396,7 +9421,7 @@ vi config.py</programlisting>
 
     BACKUP_REPOS = {
         # Repo  name
-        "example.com": { <co xml:id="CO85-1"/>
+        "example.com": { <co xml:id="CO86-1"/>
             # Repo absolute path
             "repo_path": "/home/borgbackup/borgbackup",
 
@@ -9404,7 +9429,7 @@ vi config.py</programlisting>
             "log_path": "/var/log/borg/",
 
             # Repo password
-            "repo_pwd": "your_password", <co xml:id="CO85-2"/>
+            "repo_pwd": "your_password", <co xml:id="CO86-2"/>
 
             # Command/script to run to manually start a backup.
             # If left empty or not specified, the backup won't be
@@ -9416,10 +9441,10 @@ vi config.py</programlisting>
         }
     }</programlisting>
 <calloutlist>
-<callout arearefs="CO85-2">
+<callout arearefs="CO86-2">
 <para>Insérez ici le mot de passe du dépot Borg Backup</para>
 </callout>
-<callout arearefs="CO85-1">
+<callout arearefs="CO86-1">
 <para>Mettez ici le nom de votre domaine sauvegardé</para>
 </callout>
 </calloutlist>
@@ -9537,9 +9562,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:5000/
 ProxyPassReverse / http://localhost:5000/
 
-RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO86-1"/></programlisting>
+RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO87-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO86-1">
+<callout arearefs="CO87-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -9641,9 +9666,9 @@ SSLProxyCheckPeerExpire off
 ProxyPass / https://localhost:8070/
 ProxyPassReverse / https://localhost:8070/
 
-RedirectMatch ^/$ https://pritunl.example.com <co xml:id="CO87-1"/></programlisting>
+RedirectMatch ^/$ https://pritunl.example.com <co xml:id="CO88-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO87-1">
+<callout arearefs="CO88-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -10032,9 +10057,9 @@ ProxyPreserveHost    On
 ProxyPass /guacamole http://localhost:8085/guacamole
 ProxyPassReverse /guacamole http://localhost:8085/guacamole
 
-RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO88-1"/></programlisting>
+RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO89-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO88-1">
+<callout arearefs="CO89-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -10125,11 +10150,11 @@ RedirectMatch ^/$ https://guacamole.example.com <co xml:id="CO88-1"/></programli
 <listitem>
 <simpara>tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO89-1"/>
+curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO90-1"/>
 tar xfz guacamole-server.tar.gz
 cd guacamole-server-*</programlisting>
 <calloutlist>
-<callout arearefs="CO89-1">
+<callout arearefs="CO90-1">
 <para>insérez ici l&#8217;adresse du package serveur à charger</para>
 </callout>
 </calloutlist>
@@ -10195,24 +10220,24 @@ systemctl start guacd</programlisting>
 <simpara>Téléchargez le dernier client <literal>war</literal> de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>. Récupérez le lien puis tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /usr/local/share/guacamole
 cd /usr/local/share/guacamole
-curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO90-1"/>
-ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ <co xml:id="CO90-2"/>
-systemctl restart tomcat8 <co xml:id="CO90-3"/>
+curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO91-1"/>
+ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ <co xml:id="CO91-2"/>
+systemctl restart tomcat8 <co xml:id="CO91-3"/>
 systemctl restart guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO90-1">
+<callout arearefs="CO91-1">
 <para>insérez ici l&#8217;adresse du war à charger</para>
 </callout>
-<callout arearefs="CO90-2 CO90-3">
+<callout arearefs="CO91-2 CO91-3">
 <para>ou tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Editez le fichier server.xml. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /etc/tomcat8/server.xml <co xml:id="CO91-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/tomcat8/server.xml <co xml:id="CO92-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO91-1">
+<callout arearefs="CO92-1">
 <para>ou tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
@@ -10231,12 +10256,12 @@ mkdir -p /etc/guacamole/{extensions,lib}</programlisting>
 </listitem>
 <listitem>
 <simpara>Il se peut que ce driver ne soit pas présent: allez sur le site <link xl:href="https://dev.mysql.com/downloads/connector/j/">Mysql</link> et téléchargez la version Platform independant. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o mysql-java.tar.gz 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz' <co xml:id="CO92-1"/>
+<programlisting language="bash" linenumbering="unnumbered">curl -fSL -o mysql-java.tar.gz 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz' <co xml:id="CO93-1"/>
 tar xfz mysql-java.tar.gz
 cd mysql-connector-java-*
 cp mysql-connector-java-*.jar /etc/guacamole/lib/mysql-connector-java.jar</programlisting>
 <calloutlist>
-<callout arearefs="CO92-1">
+<callout arearefs="CO93-1">
 <para>Collez ici le lien récupéré sur le site de Mysql.</para>
 </callout>
 </calloutlist>
@@ -10249,11 +10274,11 @@ cp mysql-connector-java-*.jar /etc/guacamole/lib/mysql-connector-java.jar</progr
 <simpara>Ajoutez dans le fichier:</simpara>
 <screen linenumbering="unnumbered">mysql-hostname: localhost
 mysql-port: 3306
-mysql-database: cxguacamole <co xml:id="CO93-1"/>
-mysql-username: cxguacamole <co xml:id="CO93-2"/>
-mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO93-3"/></screen>
+mysql-database: cxguacamole <co xml:id="CO94-1"/>
+mysql-username: cxguacamole <co xml:id="CO94-2"/>
+mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO94-3"/></screen>
 <calloutlist>
-<callout arearefs="CO93-1 CO93-2 CO93-3">
+<callout arearefs="CO94-1 CO94-2 CO94-3">
 <para>mettez ici le nom de la base de données, le nom de l&#8217;utilisateur de la base et son mot_de_passe tels qu&#8217;ils ont été saisis dans le chapitre de création de la base de données.</para>
 </callout>
 </calloutlist>
@@ -10261,13 +10286,13 @@ mysql-password: &lt;mot_de_passe&gt; <co xml:id="CO93-3"/></screen>
 <listitem>
 <simpara>Vous devez maintenant télécharger les plugins mysql pour Guacamole. Allez sur le site web de guacamole et récupérez le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement de guacamole-auth-jdbc</link>. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz' <co xml:id="CO94-1"/>
+curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz' <co xml:id="CO95-1"/>
 tar xfz guacamole-auth-jdbc.tar.gz
 cd guacamole-auth-jdbc-*/mysql
 cp guacamole-auth-jdbc-mysql-*.jar /usr/local/share/guacamole/
 ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/extensions</programlisting>
 <calloutlist>
-<callout arearefs="CO94-1">
+<callout arearefs="CO95-1">
 <para>insérez ici l&#8217;adresse du fichier guacamole-auth-jdbc à charger</para>
 </callout>
 </calloutlist>
@@ -10275,19 +10300,19 @@ ln -s /usr/local/share/guacamole/guacamole-auth-jdbc-mysql-*.jar /etc/guacamole/
 <listitem>
 <simpara>Créez les tables de la base:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd schema
-cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO95-1"/></programlisting>
+cat *.sql | mysql -u cxguacamole -p cxguacamole <co xml:id="CO96-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO95-1">
+<callout arearefs="CO96-1">
 <para>mettez derrière le <literal>-u</literal> le nom d&#8217;utilisateur de la base de données et derrière le <literal>-p</literal> le nom de la base de données. Un mot de passe vous sera demandé.</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Redémarrez tomcat et guacd. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl restart tomcat8 <co xml:id="CO96-1"/>
+<programlisting language="bash" linenumbering="unnumbered">systemctl restart tomcat8 <co xml:id="CO97-1"/>
 systemctl restart guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO96-1">
+<callout arearefs="CO97-1">
 <para>ou mettre tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>
@@ -10408,11 +10433,11 @@ systemctl restart guacd</programlisting>
 <listitem>
 <simpara>tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /tmp
-curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO97-1"/>
+curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' <co xml:id="CO98-1"/>
 tar xfz guacamole-server.tar.gz
 cd guacamole-server-*</programlisting>
 <calloutlist>
-<callout arearefs="CO97-1">
+<callout arearefs="CO98-1">
 <para>insérez ici l&#8217;adresse du package serveur à charger</para>
 </callout>
 </calloutlist>
@@ -10430,15 +10455,15 @@ ldconfig</programlisting>
 <listitem>
 <simpara>Téléchargez le dernier client <literal>war</literal> de Guacamole en allant sur le site web et en récupérant le <link xl:href="https://guacamole.apache.org/releases/">lien de téléchargement</link>. Récupérez le lien puis tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /usr/local/share/guacamole
-curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO98-1"/>
+curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' <co xml:id="CO99-1"/>
 systemctl daemon-reload
-systemctl restart tomcat8 <co xml:id="CO98-2"/>
+systemctl restart tomcat8 <co xml:id="CO99-2"/>
 systemctl start guacd</programlisting>
 <calloutlist>
-<callout arearefs="CO98-1">
+<callout arearefs="CO99-1">
 <para>insérez ici l&#8217;adresse du war à charger</para>
 </callout>
-<callout arearefs="CO98-2">
+<callout arearefs="CO99-2">
 <para>ou tomcat9 pour Ubuntu</para>
 </callout>
 </calloutlist>

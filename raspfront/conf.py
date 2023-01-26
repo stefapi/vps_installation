@@ -26,7 +26,7 @@ author = 'Stéphane Apiou'
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '1.0'
+release = '1.5'
 
 
 # -- General configuration ---------------------------------------------------
@@ -117,7 +117,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'raspfrontinstallationdoc'
+htmlhelp_basename = 'raspfrontinstallation'
 
 
 # -- Options for LaTeX output ------------------------------------------------
