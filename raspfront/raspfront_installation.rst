@@ -4,15 +4,16 @@
    :caption: Table des matières
 
 
-.. __avant_propos:
+.. _`_avant_propos`:
 
 Avant propos
 ============
 
 Ce document est disponible sur le site
-`ReadTheDocs <https://raspberry-installation.readthedocs.io>`__
+`ReadTheDocs <https://raspberry-webfront.readthedocs.io>`__
 
-|Diagram|
+.. image:: diag-74f02e0ac19ae29b38f9e4a39a6c84d1.png
+   :alt: Diagram
 
 et sur `Github <https://github.com/stefapi/vps_installation>`__. Sur
 Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et
@@ -288,7 +289,7 @@ générer des mots de passe, voici quelques méthodes:
 
          xkcdpass
 
-.. __choix_du_registrar:
+.. _`_choix_du_registrar`:
 
 Choix du registrar
 ==================
@@ -350,7 +351,7 @@ avec l’adresse DNS secondaire.
 
 Le menu restant est associé à DNSSEC; nous y reviendrons plus tard.
 
-.. __installation_du_linux_sur_votre_raspberry_pi:
+.. _`_installation_du_linux_sur_votre_raspberry_pi`:
 
 Installation du linux sur votre Raspberry Pi
 ============================================
@@ -412,7 +413,7 @@ Suivez la procédure ci dessous commune à toutes les plateformes:
 6. Vous devez choisir l’une des méthodes décrites dans les deux
    chapitres suivants.
 
-.. __installation_avec_écran_et_clavier:
+.. _`_installation_avec_écran_et_clavier`:
 
 Installation avec écran et clavier
 ----------------------------------
@@ -478,7 +479,7 @@ Pour ce type d’installation, il vous faut un clavier+souris et un écran.
 17. Vous avez deux options: connexion en mode SSH ou au travers d’une
     connexion VNC
 
-.. __installation_headless_de_raspberry_pi_os_lite_64_bit:
+.. _`_installation_headless_de_raspberry_pi_os_lite_64_bit`:
 
 Installation Headless de Raspberry Pi OS LITE (64-bit)
 ------------------------------------------------------
@@ -664,7 +665,7 @@ utilisant la ligne de commande et putty)
 20. Vous avez deux options: connexion en mode SSH ou au travers d’une
     connection VNC
 
-.. __installation_headless_de_ubuntu_64:
+.. _`_installation_headless_de_ubuntu_64`:
 
 Installation Headless de Ubuntu 64
 ----------------------------------
@@ -813,7 +814,7 @@ utilisant la ligne de commande et putty)
 
 10. Choisissez votre Timezone. Par exemple: ``Europe/Paris``
 
-.. __reconnecter_automatiquement_votre_raspberry_pi_au_wifi:
+.. _`_reconnecter_automatiquement_votre_raspberry_pi_au_wifi`:
 
 Reconnecter automatiquement votre Raspberry Pi au wifi
 ------------------------------------------------------
@@ -883,12 +884,12 @@ Suivez la procédure ci-après:
 
 7. C’est fait !
 
-.. __configuration_basique:
+.. _`_configuration_basique`:
 
 Configuration basique
 =====================
 
-.. __mettre_léditeur_de_votre_choix:
+.. _`_mettre_léditeur_de_votre_choix`:
 
 Mettre l’éditeur de votre choix
 -------------------------------
@@ -905,7 +906,7 @@ Pour les débutants, il est conseillé d’utiliser nano.
 
    update-alternatives  --config editor
 
-.. __installation_dun_repository_pour_etc:
+.. _`_installation_dun_repository_pour_etc`:
 
 Installation d’un repository pour ``/etc``
 ------------------------------------------
@@ -1013,7 +1014,7 @@ Cette installation est optionnelle.
 
 12. C’est fait !
 
-.. __mise_à_jour_des_sources_de_paquets_debian_ou_ubuntu:
+.. _`_mise_à_jour_des_sources_de_paquets_debian_ou_ubuntu`:
 
 Mise à jour des sources de paquets Debian ou Ubuntu
 ---------------------------------------------------
@@ -1091,7 +1092,7 @@ Mise à jour des sources de paquets Debian ou Ubuntu
 
       apt autoremove
 
-.. __installation_des_paquets_de_base:
+.. _`_installation_des_paquets_de_base`:
 
 Installation des paquets de base
 --------------------------------
@@ -1104,7 +1105,7 @@ Installation des paquets de base
 
    apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends man
 
-.. __installer_loutil_debfoster:
+.. _`_installer_loutil_debfoster`:
 
 Installer l’outil Debfoster
 ---------------------------
@@ -1192,7 +1193,7 @@ La même liste pour un Ubuntu pour Raspberry PI:
 | wpasupplicant   |                 |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+
 
-.. __création_dun_fichier_keeper_dans_etc:
+.. _`_création_dun_fichier_keeper_dans_etc`:
 
 Création d’un fichier keeper dans /etc
 --------------------------------------
@@ -1257,7 +1258,7 @@ liste des paquets qui permettent de réinstaller le système:
 
 6. Le fichier keepers est créé et sauvegardé automatiquement.
 
-.. __installation_des_mises_à_jours_automatiques:
+.. _`_installation_des_mises_à_jours_automatiques`:
 
 Installation des mises à jours automatiques
 -------------------------------------------
@@ -1283,7 +1284,7 @@ Suivez la procédure suivante:
 
       apt install unattended-upgrades
 
-.. __vérification_du_nom_de_serveur:
+.. _`_vérification_du_nom_de_serveur`:
 
 Vérification du nom de serveur
 ------------------------------
@@ -1393,7 +1394,7 @@ correctement configuré.
 
    h. `Reloguez vous comme root sur le serveur <#root_login>`__
 
-.. __interdire_le_login_direct_en_root:
+.. _`_interdire_le_login_direct_en_root`:
 
 Interdire le login direct en root
 ---------------------------------
@@ -1487,7 +1488,7 @@ d’autoriser le sudo. Respectez bien les étapes de cette procédure:
 3. Ce ne devrait plus être possible: le serveur vous l’indique par un
    message ``Permission denied, please try again.``
 
-.. __création_dune_clé_de_connexion_ssh_locale:
+.. _`_création_dune_clé_de_connexion_ssh_locale`:
 
 Création d’une clé de connexion ssh locale
 ------------------------------------------
@@ -1586,7 +1587,7 @@ Pour créer une clé et la déployer:
 
    La session doit s’ouvrir sans demander de mot de passe.
 
-.. __sudo_sans_mot_de_passe:
+.. _`_sudo_sans_mot_de_passe`:
 
 Sudo sans mot de passe
 ----------------------
@@ -1634,7 +1635,7 @@ super-compte.
       L’utilisateur nom_d_utilisateur pourra se logger root sans mot de
       passe au travers de la commande ``sudo bash``
 
-.. __installer_loutil_dselect:
+.. _`_installer_loutil_dselect`:
 
 Installer l’outil dselect
 -------------------------
@@ -1711,7 +1712,7 @@ Tapez :
 
 8. Le paramètre sera actif au prochain reboot
 
-.. __installation_initiale_des_outils:
+.. _`_installation_initiale_des_outils`:
 
 Installation initiale des outils
 ================================
@@ -1770,7 +1771,7 @@ Mailman.
    b. ``Nom de courrier``: ← Entrez votre nom de host. Par exemple:
       ``mail.example.com``
 
-.. __configuration_de_postfix:
+.. _`_configuration_de_postfix`:
 
 Configuration de Postfix
 ------------------------
@@ -1830,7 +1831,7 @@ Suivez la procédure suivante:
    le fichier ``/etc/postfix/main.cf`` sur la ligne commençant par
    ``recipient_delimiter``.
 
-.. __configuration_de_mariadb:
+.. _`_configuration_de_mariadb`:
 
 Configuration de MariaDB
 ------------------------
@@ -1953,7 +1954,7 @@ Suivez la procédure suivante:
 12. La sortie doit être du type:
     ``tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld``
 
-.. __configuration_dapache:
+.. _`_configuration_dapache`:
 
 Configuration d’Apache
 ----------------------
@@ -2000,7 +2001,7 @@ Suivez la procédure suivante:
       a2disconf apache2-doc
       systemctl restart apache2
 
-.. __installation_du_gestionnaire_de_mailing_list_mailman:
+.. _`_installation_du_gestionnaire_de_mailing_list_mailman`:
 
 Installation du gestionnaire de mailing list Mailman
 ----------------------------------------------------
@@ -2091,7 +2092,7 @@ Suivez la procédure suivante:
       `http://<server1.example.com>/pipermail/mailman <http://<server1.example.com>/pipermail/mailman>`__
       vous avez accès aux archives.
 
-.. __configuration_d_awstats:
+.. _`_configuration_d_awstats`:
 
 Configuration d' Awstats
 ------------------------
@@ -2115,7 +2116,7 @@ Suivez la procédure suivante:
       # Generate static reports:
       #10 03 * * * www-data [ -x /usr/share/awstats/tools/buildstatic.sh ] && /usr/share/awstats/tools/buildstatic.sh
 
-.. __configuration_de_fail2ban:
+.. _`_configuration_de_fail2ban`:
 
 Configuration de Fail2ban
 -------------------------
@@ -2153,7 +2154,7 @@ Suivez la procédure suivante:
 
       systemctl restart fail2ban
 
-.. __installation_et_configuration_de_pureftpd:
+.. _`_installation_et_configuration_de_pureftpd`:
 
 Installation et configuration de PureFTPd
 -----------------------------------------
@@ -2278,12 +2279,12 @@ Suivez la procédure suivante:
             quotacheck -avugm
             quotaon -avug
 
-.. __installation_et_configuration_de_phpmyadmin:
+.. _`_installation_et_configuration_de_phpmyadmin`:
 
 Installation et configuration de Phpmyadmin
 -------------------------------------------
 
-.. __installation_de_phpmyadmin:
+.. _`_installation_de_phpmyadmin`:
 
 Installation de Phpmyadmin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2487,7 +2488,7 @@ Suivez la procédure suivante:
           mot ``mypassword`` mettez celui choisi. N’oubliez pas de
           dé-commenter les lignes.
 
-.. __upgrade_de_phpmyadmin:
+.. _`_upgrade_de_phpmyadmin`:
 
 Upgrade de Phpmyadmin
 ~~~~~~~~~~~~~~~~~~~~~
@@ -2528,7 +2529,7 @@ Suivez la procédure suivante:
 
       rm -rf /usr/share/phpmyadmin.old
 
-.. __installation_du_webmail_roundcube:
+.. _`_installation_du_webmail_roundcube`:
 
 Installation du webmail Roundcube
 ---------------------------------
@@ -2581,7 +2582,7 @@ Suivez la procédure suivante:
 
       systemctl reload apache2
 
-.. __installation_de_lets_encrypt:
+.. _`_installation_de_lets_encrypt`:
 
 Installation de Let’s Encrypt
 -----------------------------
@@ -2607,7 +2608,7 @@ Suivez la procédure suivante:
 
 .. _firewall:
 
-Deblocage de port de firewall
+Déblocage de port de firewall
 -----------------------------
 
 Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en
@@ -2618,7 +2619,7 @@ une opération de déblocage du port du firewall.
 Il existe deux manière de débloquer un port. Elle dépend de ce que vous
 avez configuré.
 
-.. __déblocage_et_suppression_de_regles_de_firewall_avec_ispconfig:
+.. _`_déblocage_et_suppression_de_regles_de_firewall_avec_ispconfig`:
 
 Déblocage et suppression de regles de Firewall avec ISPconfig
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2647,7 +2648,7 @@ déblocage) de firewall:
 
 4. Cliquez sur ``save``
 
-.. __déblocage_de_firewall_ufw:
+.. _`_déblocage_de_firewall_ufw`:
 
 Déblocage de Firewall UFW
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2708,12 +2709,12 @@ déblocage) de firewall:
 
    -  remplacez xxxx par le numero de port que vous souhaitez débloquer
 
-.. __scan_des_vulnérabilités:
+.. _`_scan_des_vulnérabilités`:
 
 Scan des vulnérabilités
 -----------------------
 
-.. __installation_dun_scanner_de_vulnérabilités_lynis:
+.. _`_installation_dun_scanner_de_vulnérabilités_lynis`:
 
 Installation d’un scanner de vulnérabilités Lynis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2746,7 +2747,7 @@ Suivez la procédure suivante:
 4. L’outil vous listera dans une forme très synthétique la liste des
    vulnérabilités et des améliorations de sécurité à appliquer.
 
-.. __upgrade_de_lynis:
+.. _`_upgrade_de_lynis`:
 
 Upgrade de Lynis
 ~~~~~~~~~~~~~~~~
@@ -2763,7 +2764,7 @@ Pour effectuer la mise à jour de Lynis appliquez la procédure suivante:
       cd lynis
       git pull
 
-.. __installation_dun_panel:
+.. _`_installation_dun_panel`:
 
 Installation d’un Panel
 =======================
@@ -2801,7 +2802,7 @@ suivantes:
 Pour rappel, HestiaCP (tout comme VestaCP) sont incompatibles
 d’ISPConfig et de Webmin. Ils doivent être utilisés seuls
 
-.. __installation_et_configuration_de_ispconfig:
+.. _`_installation_et_configuration_de_ispconfig`:
 
 Installation et configuration de ISPConfig
 ------------------------------------------
@@ -2930,7 +2931,7 @@ ISPConfig 3.2 a été utilisé dans ce tutoriel.
       installation qui sont configurés. Effacer les cookies de ce site
       de votre navigateur.
 
-.. __installation_du_système_dadministration_webmin:
+.. _`_installation_du_système_dadministration_webmin`:
 
 Installation du système d’administration Webmin
 -----------------------------------------------
@@ -3073,7 +3074,7 @@ précise des fonctionnalités.
 
     c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
 
-.. __configuration_de_docker_mirror:
+.. _`_configuration_de_docker_mirror`:
 
 Configuration de Docker-mirror
 ------------------------------
@@ -3155,7 +3156,7 @@ seule fois. Une fois votre premier domaine configuré, vous pourrez vous
 loguer à ISPconfig en utilisant ce domaine à l’adresse:
 https://example.com:8080/ .
 
-.. __login_initial:
+.. _`_login_initial`:
 
 Login initial
 -------------
@@ -3307,7 +3308,7 @@ de l’installation d’ISPConfig
                  MX|{DOMAIN}.|mail.{DOMAIN}.|10|3600
                  TXT|{DOMAIN}.|v=spf1 mx a ~all|0|3600
 
-.. __création_de_la_zone_dns_dun_domaine:
+.. _`_création_de_la_zone_dns_dun_domaine`:
 
 Création de la zone DNS d’un domaine
 ------------------------------------
@@ -3373,7 +3374,7 @@ http://webmail.example.com
 Ils doivent afficher une page web basique (Apache2, ou de parking).Si ce
 n’est pas le cas revérifier la configuration du DNS dans ISPConfig.
 
-.. __activation_de_dnssec:
+.. _`_activation_de_dnssec`:
 
 Activation de DNSSEC
 --------------------
@@ -3476,7 +3477,7 @@ erreur.
    enregistrements. Il faut les supprimer pour que tout redevienne
    fonctionnel.
 
-.. __exemple_de_configuration_de_domaine:
+.. _`_exemple_de_configuration_de_domaine`:
 
 Exemple de configuration de domaine
 -----------------------------------
@@ -3511,7 +3512,7 @@ Let’s encrypt.
    _autodiscover._tcp   3600 SRV   0 0 443  autoconfig.example.com.
    example.com.         3600 TXT            "v=spf1 mx a ~all"
 
-.. __création_dun_sous_domaine:
+.. _`_création_dun_sous_domaine`:
 
 Création d’un sous domaine
 --------------------------
@@ -3846,7 +3847,7 @@ racine auparavant.
    domaine et cliquez sur ``Submit``. Votre site doit au moins être de
    ``Grade A``.
 
-.. __associer_des_certificats_reconnu_à_vos_outils:
+.. _`_associer_des_certificats_reconnu_à_vos_outils`:
 
 Associer des certificats reconnu à vos outils
 =============================================
@@ -3962,12 +3963,12 @@ services de base:
 
       -  Remplacer mail.example.com par votre nom de domaine du mail.
 
-.. __surveillance_du_serveur_avec_munin_et_monit:
+.. _`_surveillance_du_serveur_avec_munin_et_monit`:
 
 Surveillance du serveur avec Munin et Monit
 ===========================================
 
-.. __note_préliminaire:
+.. _`_note_préliminaire`:
 
 Note préliminaire
 -----------------
@@ -3980,7 +3981,7 @@ Munin avec Apache puis activez le module fcgid:
    apt-get install apache2 libcgi-fast-perl libapache2-mod-fcgid
    a2enmod fcgid
 
-.. __installation_et_configuration_de_munin:
+.. _`_installation_et_configuration_de_munin`:
 
 Installation et configuration de Munin
 --------------------------------------
@@ -4152,7 +4153,7 @@ Suivez les étapes ci-après:
     fichiers de sortie. et allez ensuite sur l’URL:
     http://example.com/munin/.
 
-.. __activez_les_plugins_de_munin:
+.. _`_activez_les_plugins_de_munin`:
 
 Activez les plugins de Munin
 ----------------------------
@@ -4189,7 +4190,7 @@ pouvez être tenté de vérifier:
 
       service munin-node restart
 
-.. __installer_et_configurer_monit:
+.. _`_installer_et_configurer_monit`:
 
 Installer et configurer Monit
 -----------------------------
@@ -4358,12 +4359,12 @@ suivante:
 12. Rentrez le login ``admin`` et votre mot de passe ``my_password``.
     Monit affiche alors les informations de monitoring du serveur.
 
-.. __configuration_de_la_messagerie:
+.. _`_configuration_de_la_messagerie`:
 
 Configuration de la messagerie
 ==============================
 
-.. __installation_de_lantispam_rspamd_à_la_place_d_amavis_new:
+.. _`_installation_de_lantispam_rspamd_à_la_place_d_amavis_new`:
 
 Installation de l’antispam rspamd à la place d' Amavis-new
 ----------------------------------------------------------
@@ -4709,7 +4710,7 @@ Suivez la procédure suivante:
        systemctl stop amavisd-new
        systemctl disable amavisd-new
 
-.. __création_du_serveur_de_messagerie:
+.. _`_création_du_serveur_de_messagerie`:
 
 Création du serveur de messagerie
 ---------------------------------
@@ -4744,7 +4745,7 @@ Pour créer un serveur de messagerie:
 11. Votre serveur est créé et protégé Contre les spams (entrants et
     sortants).
 
-.. __finaliser_la_sécurisation_de_votre_serveur_de_mail:
+.. _`_finaliser_la_sécurisation_de_votre_serveur_de_mail`:
 
 Finaliser la sécurisation de votre serveur de mail
 --------------------------------------------------
@@ -4804,7 +4805,7 @@ suivantes:
       configuration du serveur et des informations complémentaires liées
       au contenu du mail. Pour ces dernières ne pas en tenir compte.
 
-.. __surveillance_du_statut_de_spammer:
+.. _`_surveillance_du_statut_de_spammer`:
 
 Surveillance du statut de Spammer
 ---------------------------------
@@ -4884,7 +4885,7 @@ domaine ``example.com`` et cliquez sur le bouton ``Blacklist Check``.
 
 Tous les sites doivent indiquer que votre domaine n’est pas blacklisté.
 
-.. __création_de_lautoconfig_pour_thunderbird_et_android:
+.. _`_création_de_lautoconfig_pour_thunderbird_et_android`:
 
 Création de l’autoconfig pour Thunderbird et Android
 ----------------------------------------------------
@@ -4915,8 +4916,8 @@ Appliquez la procédure suivante:
 
          AddType application/x-httpd-php .php .php3 .php4 .php5 .xml
 
-         CheckSpelling On
-         CheckCaseOnly Off
+         CheckSpelling Off
+         CheckCaseOnly On
 
    h. Sauver.
 
@@ -5007,7 +5008,7 @@ Appliquez la procédure suivante:
    -  remplacer web1:client0 par les permissions du répertoire
       ``/var/www/autoconfig.example.com``
 
-.. __création_dautodiscover_pour_outlook:
+.. _`_création_dautodiscover_pour_outlook`:
 
 Création d’autodiscover pour Outlook
 ------------------------------------
@@ -5017,151 +5018,187 @@ Il est basé sur l’utilisation du nom de sous-domaine ``autodiscover``.
 
 Appliquez la procédure suivante:
 
-1. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
-   configurateur de sites.
+1.  Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+    configurateur de sites.
 
-   a. Lui donner le nom ``autodiscover``.
+    a. Lui donner le nom ``autodiscover``.
 
-   b. Le faire pointer vers le web folder ``autodiscover``.
+    b. Le faire pointer vers le web folder ``autodiscover``.
 
-   c. Activer let’s encrypt ssl
+    c. Activer let’s encrypt ssl
 
-   d. Activer ``php-FPM``
+    d. Activer ``php-FPM``
 
-   e. Laisser le reste par défaut.
+    e. Laisser le reste par défaut.
 
-   f. Dans l’onglet Options:
+    f. Dans l’onglet Options:
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+    g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
-      .. code:: apache
+       .. code:: apache
 
-         <Proxy *>
-         Order deny,allow
-         Allow from all
-         </Proxy>
+          AddType application/x-httpd-php .php .php3 .php4 .php5 .xml .json
 
-         ProxyRequests Off
-         ProxyPass /stats !
-         ProxyPass /.well-known/acme-challenge !
+          CheckSpelling Off
+          CheckCaseOnly On
 
-         CheckSpelling On
-         CheckCaseOnly On
-         RewriteEngine On
-         SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-         ProxyPreserveHost    On
-         ProxyPass "/" http://autoconfig.example.com/ 
-         ProxyPassReverse "/" http://autoconfig.example.com/ 
-         RewriteRule ^/ - [QSA,L]
-         RedirectMatch ^/$ https://autoconfig.example.com 
+    h. Sauver.
 
-      -  remplacer ``example.com`` par votre nom de domaine
+2.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-   h. Sauver.
+3.  Dans le répertoire
+    ``/var/www/autoconfig.<example.com>/autoconfig/``, créer un
+    répertoire ``Autodiscover``. Lui donner les permissions 755 et
+    affecter les mêmes possesseurs que pour autres fichiers du
+    répertoire. Tapez:
 
-2. `Loguez vous comme root sur le serveur <#root_login>`__
+    .. code:: bash
 
-3. Dans le répertoire ``/var/www/autoconfig.<example.com>/autoconfig/``,
-   créer un répertoire ``Autodiscover``. Lui donner les permissions 755
-   et affecter les mêmes possesseurs que pour autres fichiers du
-   répertoire. Tapez:
+       cd /var/www/autoconfig.example.com 
+       mkdir -p autoconfig/Autodiscover/
+       chmod 755 autoconfig/Autodiscover/
+       chown web1:client0 autoconfig/Autodiscover/ 
 
-   .. code:: bash
+    -  remplacer web1:client0 par les permissions du répertoire
+       ``/var/www/autoconfig.example.com``
 
-      cd /var/www/autoconfig.example.com 
-      mkdir -p autoconfig/Autodiscover/
-      chmod 755 autoconfig/Autodiscover/
-      chown web1:client0 autoconfig/Autodiscover/ 
+    -  remplacez ``example.com`` par votre nom de domaine
 
-   -  remplacer web1:client0 par les permissions du répertoire
-      ``/var/www/autoconfig.example.com``
+4.  A l’intérieur de ce répertoire, Editez un fichier
+    ``Autodiscover.xml``. Tapez:
 
-   -  remplacez ``example.com`` par votre nom de domaine
+    .. code:: bash
 
-4. A l’intérieur de ce répertoire, Editez un fichier
-   ``Autodiscover.xml``. Tapez:
+       vi autoconfig/Autodiscover/Autodiscover.xml
 
-   .. code:: bash
+5.  Y coller:
 
-      vi autoconfig/Autodiscover/Autodiscover.xml
+    .. code:: xml
 
-5. Y coller:
+       <?php
+        $raw = file_get_contents('php://input');
+        $matches = array();
+        preg_match('/<EMailAddress>(.*)<\/EMailAddress>/', $raw, $matches);
+        header('Content-Type: application/xml');
+       ?>
+        <Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006">
+          <Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a">
+            <User>
+              <DisplayName>Example Mail</DisplayName> 
+            </User>
+            <Account>
+              <AccountType>email</AccountType>
+              <Action>settings</Action>
+              <Protocol>
+                <Type>IMAP</Type>
+                <Server>mail.example.com</Server> 
+                <Port>993</Port>
+                <DomainRequired>off</DomainRequired>
+                <SPA>off</SPA>
+                <SSL>on</SSL>
+                <AuthRequired>on</AuthRequired>
+                <LoginName><?php echo $matches[1]; ?></LoginName>
+              </Protocol>
+              <Protocol>
+                <Type>SMTP</Type>
+                <Server>mail.example.com</Server> 
+                <Port>465</Port>
+                <DomainRequired>off</DomainRequired>
+                <SPA>off</SPA>
+                <SSL>on</SSL>
+                <AuthRequired>on</AuthRequired>
+                <UsePOPAuth>on</UsePOPAuth>
+                <SMTPLast>off</SMTPLast>
+                <LoginName><?php echo $matches[1]; ?></LoginName>
+              </Protocol>
+            </Account>
+          </Response>
+        </Autodiscover>
 
-   .. code:: xml
+    -  mettre à la place de ``example.com`` votre nom de domaine
 
-      <?php
-       $raw = file_get_contents('php://input');
-       $matches = array();
-       preg_match('/<EMailAddress>(.*)<\/EMailAddress>/', $raw, $matches);
-       header('Content-Type: application/xml');
-      ?>
-       <Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006">
-         <Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a">
-           <User>
-             <DisplayName>Example Mail</DisplayName> 
-           </User>
-           <Account>
-             <AccountType>email</AccountType>
-             <Action>settings</Action>
-             <Protocol>
-               <Type>IMAP</Type>
-               <Server>mail.example.com</Server> 
-               <Port>993</Port>
-               <DomainRequired>off</DomainRequired>
-               <SPA>off</SPA>
-               <SSL>on</SSL>
-               <AuthRequired>on</AuthRequired>
-               <LoginName><?php echo $matches[1]; ?></LoginName>
-             </Protocol>
-             <Protocol>
-               <Type>SMTP</Type>
-               <Server>mail.example.com</Server> 
-               <Port>465</Port>
-               <DomainRequired>off</DomainRequired>
-               <SPA>off</SPA>
-               <SSL>on</SSL>
-               <AuthRequired>on</AuthRequired>
-               <LoginName><?php echo $matches[1]; ?></LoginName>
-             </Protocol>
-           </Account>
-         </Response>
-       </Autodiscover>
+    -  mettre ici votre libellé long pour votre nom de messagerie
 
-   -  mettre à la place de ``example.com`` votre nom de domaine
+6.  Changez les permissions comme pour le répertoire
 
-   -  mettre ici votre libellé long pour votre nom de messagerie
+    .. code:: bash
 
-6. Changez les permissions comme pour le répertoire
+       chmod 644 autoconfig/Autodiscover/Autodiscover.xml
+       chown web1:client0 autoconfig/Autodiscover/Autodiscover.xml 
 
-   .. code:: bash
+    -  remplacer web1:client0 par les permissions du répertoire
+       ``/var/www/autoconfig.example.com``
 
-      chmod 644 autoconfig/Autodiscover/Autodiscover.xml
-      chown web1:client0 autoconfig/Autodiscover/Autodiscover.xml 
+7.  Pointer votre navigateur sur le site
+    https://autodiscover.example.com/Autodiscover/Autodiscover.xml.
 
-   -  remplacer web1:client0 par les permissions du répertoire
-      ``/var/www/autoconfig.example.com``
+8.  Le contenu du fichier xml doit s’afficher
 
-7. Pointer votre navigateur sur le site
-   https://autodiscover.example.com/Autodiscover/Autodiscover.xml.
+9.  Dans le répertoire
+    ``/var/www/autoconfig.<example.com>/autoconfig/``, créer un
+    répertoire ``autodiscover``. Lui donner les permissions 755 et
+    affecter les mêmes possesseurs que pour autres fichiers du
+    répertoire. Tapez:
 
-8. Le contenu du fichier xml doit s’afficher
+    .. code:: bash
 
-9. Vous pouvez faire aussi un test sur le `Testeur de connectivité
-   Microsoft <https://testconnectivity.microsoft.com>`__.
+       cd /var/www/autoconfig.example.com 
+       mkdir -p autoconfig/autodiscover/
+       chmod 755 autoconfig/autodiscover/
+       chown web1:client0 autoconfig/autodiscover/ 
 
-   a. choisissez: ``Découverte automatique Outlook``
+    -  remplacer web1:client0 par les permissions du répertoire
+       ``/var/www/autoconfig.example.com``
 
-   b. cliquez sur ``suivant``
+    -  remplacez ``example.com`` par votre nom de domaine
 
-   c. Entrez votre adresse de courrier: ``user@example.com``, un domain:
-      ``example\user``, un mot de passe tiré au hazard, Cochez les deux
-      cases en dessous.
+10. A l’intérieur de ce répertoire, Editez un fichier
+    ``autodiscover.json``. Tapez:
 
-   d. Cliquez sur ``effectuer un test``
+    .. code:: bash
 
-   e. Le résultat doit être: ``Test de connectivité réussi``
+       vi autoconfig/autodiscover/autodiscover.json
 
-.. __création_dune_boite_mail:
+11. Y coller:
+
+    .. code:: php
+
+       <?php
+       header('Content-type: application/json');
+       echo '{"Protocol":"AutodiscoverV1","Url":"https://autodiscover.example.com/Autodiscover/Autodiscover.xml"}';
+       ?>
+
+12. Changez les permissions comme pour le répertoire
+
+    .. code:: bash
+
+       chmod 644 autoconfig/autodiscover/autodiscover.json
+       chown web1:client0 autoconfig/autodiscover/autodiscover.json 
+
+    -  remplacer web1:client0 par les permissions du répertoire
+       ``/var/www/autoconfig.example.com``
+
+13. Pointer votre navigateur sur le site
+    https://autodiscover.example.com/autodiscover/autodiscover.json
+
+14. Le contenu du fichier json doit s’afficher
+
+15. Vous pouvez faire aussi un test sur le `Testeur de connectivité
+    Microsoft <https://testconnectivity.microsoft.com>`__.
+
+    a. choisissez: ``Découverte automatique Outlook``
+
+    b. cliquez sur ``suivant``
+
+    c. Entrez votre adresse de courrier: ``user@example.com``, un
+       domain: ``example\user``, un mot de passe tiré au hazard, Cochez
+       les deux cases en dessous.
+
+    d. Cliquez sur ``effectuer un test``
+
+    e. Le résultat doit être: ``Test de connectivité réussi``
+
+.. _`_création_dune_boite_mail`:
 
 Création d’une boite mail
 -------------------------
@@ -5214,7 +5251,7 @@ Pour créer une boite de messagerie:
    le fichier ``/etc/postfix/main.cf`` sur la ligne commençant par
    ``recipient_delimiter``.
 
-.. __configuration_de_votre_client_de_messagerie:
+.. _`_configuration_de_votre_client_de_messagerie`:
 
 Configuration de votre client de messagerie.
 --------------------------------------------
@@ -5251,7 +5288,7 @@ informations à saisir:
 | Authentification SMTP             | Normal Password                   |
 +-----------------------------------+-----------------------------------+
 
-.. __mise_en_oeuvre_du_site_web_de_webmail:
+.. _`_mise_en_oeuvre_du_site_web_de_webmail`:
 
 Mise en oeuvre du site web de webmail
 -------------------------------------
@@ -5311,7 +5348,7 @@ Il vous reste à appliquer la procédure suivante:
 2. C’est fait, vous pouvez accéder à Roundcube directement sur
    https://mail.example.com
 
-.. __transfert_de_vos_boites_mails_imap:
+.. _`_transfert_de_vos_boites_mails_imap`:
 
 Transfert de vos boites mails IMAP
 ----------------------------------
@@ -5369,7 +5406,7 @@ Suivez la procédure suivante:
       rm secretsrc
       rm secretdst
 
-.. __remplacer_apache_par_nginx:
+.. _`_remplacer_apache_par_nginx`:
 
 Remplacer apache par nginx
 ==========================
@@ -5582,7 +5619,7 @@ Les étapes sont les suivantes:
        update-rc.d -f apache2 remove
        /etc/init.d/nginx start
 
-.. __installation_de_docker_et_des_outils_associés:
+.. _`_installation_de_docker_et_des_outils_associés`:
 
 Installation de Docker et des outils associés
 =============================================
@@ -5597,7 +5634,7 @@ Il est ainsi possible d’effectuer rapidement des installations, de
 suivre des mises à jours et d’isoler ces environnements du système
 principal.
 
-.. __a_propos_des_raspberry_pi:
+.. _`_a_propos_des_raspberry_pi`:
 
 A propos des Raspberry Pi
 -------------------------
@@ -5611,7 +5648,7 @@ A propos des Raspberry Pi
    ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type
    ARM.
 
-.. __installation_de_docker:
+.. _`_installation_de_docker`:
 
 Installation de Docker
 ----------------------
@@ -5694,7 +5731,7 @@ Il faut suivre les étapes suivantes:
 11. Cette commande exécute un conteneur simple. Si aucune erreur
     n’apparaît c’est que l’installation est réussie.
 
-.. __installation_de_docker_compose:
+.. _`_installation_de_docker_compose`:
 
 Installation de docker-compose
 ------------------------------
@@ -5723,7 +5760,7 @@ Il faut suivre les étapes suivantes:
 
       pip3 install docker-compose
 
-.. __installation_de_docker_swarm:
+.. _`_installation_de_docker_swarm`:
 
 Installation de docker swarm
 ----------------------------
@@ -5764,7 +5801,7 @@ Il faut suivre les étapes suivantes:
 
       docker node ls
 
-.. __choix_des_images_docker:
+.. _`_choix_des_images_docker`:
 
 Choix des images docker
 -----------------------
@@ -5802,7 +5839,7 @@ Par exemple pour les docker de ``Yacht`` et de ``Portainer`` décrits ci
 après, on peut voir que les containers sont multiplateforme et
 conviennent très bien pour de l’Intel ou de l’ARM.
 
-.. __considérations_de_sécurité:
+.. _`_considérations_de_sécurité`:
 
 Considérations de sécurité
 --------------------------
@@ -5833,7 +5870,7 @@ n’exposer que les ports et noms de domaines nécessaires.
    127.0.0.1 . Pensez bien donc à ajouter cette adresse systématiquement
    pour un serveur présent sur le web !
 
-.. __mise_à_jour_automatique_des_images:
+.. _`_mise_à_jour_automatique_des_images`:
 
 Mise à jour automatique des images
 ----------------------------------
@@ -5879,7 +5916,7 @@ Pour l’installer, rien de plus simple:
    mail, slack ou d’autres outils tels que shoutrrr. Se référer à la
    `documentation <https://containrrr.dev/watchtower/notifications/>`__
 
-.. __surveillance_et_redémarrage_de_container:
+.. _`_surveillance_et_redémarrage_de_container`:
 
 Surveillance et redémarrage de container
 ----------------------------------------
@@ -5906,12 +5943,12 @@ Pour l’installer:
    les container à vérifier, il vous faut ajouter pour les container
    concernés l’otion ``-l autoheal=true``
 
-.. __outils_web_de_gestion_des_containers:
+.. _`_outils_web_de_gestion_des_containers`:
 
 Outils web de gestion des containers
 ====================================
 
-.. __installation_de_yacht:
+.. _`_installation_de_yacht`:
 
 Installation de Yacht
 ---------------------
@@ -6039,7 +6076,7 @@ Appliquez la procédure suivante:
 
 4. Cliquez sur le bouton ``Updates``
 
-.. __upgrade_de_yacht:
+.. _`_upgrade_de_yacht`:
 
 Upgrade de Yacht
 ----------------
@@ -6063,7 +6100,7 @@ Sinon, effectuez les opérations suivantes:
       docker rm yacht
       docker run -d -p 8061:8000 --name=yacht -v /var/run/docker.sock:/var/run/docker.sock --restart=always -v yacht_data:/config selfhostedpro/yacht
 
-.. __installation_de_portainer:
+.. _`_installation_de_portainer`:
 
 Installation de Portainer
 -------------------------
@@ -6193,7 +6230,7 @@ Appliquez la procédure suivante:
 
 6. Sélectionnez ``Pull latest image`` et cliquez ``recreate``
 
-.. __upgrade_de_portainer:
+.. _`_upgrade_de_portainer`:
 
 Upgrade de Portainer
 --------------------
@@ -6217,7 +6254,7 @@ Sinon, effectuez les opérations suivantes:
       docker rm portainer
       docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 
-.. __installation_des_cms_joomla:
+.. _`_installation_des_cms_joomla`:
 
 Installation des CMS Joomla
 ===========================
@@ -6225,7 +6262,7 @@ Installation des CMS Joomla
 Joomla est un CMS très connu écrit en PHP. Il est fréquemment mis à jour
 et inclut une foule de plugins
 
-.. __création_du_site_web_de_joomla:
+.. _`_création_du_site_web_de_joomla`:
 
 Création du site web de Joomla
 ------------------------------
@@ -6259,7 +6296,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    f. Laisser le reste par défaut.
 
-.. __création_des_bases_de_données:
+.. _`_création_des_bases_de_données`:
 
 Création des bases de données
 -----------------------------
@@ -6304,7 +6341,7 @@ Appliquez les opérations suivantes dans ISPConfig :
 
    e. Cliquez sur ``save``
 
-.. __création_de_lapplication_joomla:
+.. _`_création_de_lapplication_joomla`:
 
 Création de l’application Joomla
 --------------------------------
@@ -6395,7 +6432,7 @@ Suivez la procédure suivante:
     configurer votre site ou sur ``Site`` pour voir votre installation
     par défaut
 
-.. __update_de_joomla:
+.. _`_update_de_joomla`:
 
 Update de Joomla
 ----------------
@@ -6405,7 +6442,7 @@ d’administration Joomla vous prévient d’un mise à jour du moteur et vous
 propose de le mettre à jour. CLiquez sur le lien qui vous est présenté
 dans l’interface.
 
-.. __installation_des_cms_concrete5:
+.. _`_installation_des_cms_concrete5`:
 
 Installation des CMS Concrete5
 ==============================
@@ -6413,7 +6450,7 @@ Installation des CMS Concrete5
 Concrete5 est un CMS très connu écrit en PHP. Il est fréquemment mis à
 jour et permet une configuration wysiwyg
 
-.. __création_du_site_web_de_concrete5:
+.. _`_création_du_site_web_de_concrete5`:
 
 Création du site web de Concrete5
 ---------------------------------
@@ -6447,7 +6484,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    f. Laisser le reste par défaut.
 
-.. __création_des_bases_de_données_2:
+.. _`_création_des_bases_de_données_2`:
 
 Création des bases de données
 -----------------------------
@@ -6492,7 +6529,7 @@ Appliquez les opérations suivantes dans ISPConfig :
 
    e. Cliquez sur ``save``
 
-.. __création_de_lapplication_concrete5:
+.. _`_création_de_lapplication_concrete5`:
 
 Création de l’application Concrete5
 -----------------------------------
@@ -6570,7 +6607,7 @@ Suivez la procédure suivante:
 19. L’installation s’effectue. Une fois terminée avec succès, Cliquez
     sur ``Modifier votre site``
 
-.. __update_de_concrete5:
+.. _`_update_de_concrete5`:
 
 Update de concrete5
 -------------------
@@ -6580,7 +6617,7 @@ d’administration concrete5 vous prévient d’un mise à jour du moteur et
 vous propose de le mettre à jour. Cliquez sur le lien qui vous est
 présenté dans l’interface.
 
-.. __installation_du_portail_wiki_mediawiki:
+.. _`_installation_du_portail_wiki_mediawiki`:
 
 Installation du portail wiki Mediawiki
 ======================================
@@ -6588,7 +6625,7 @@ Installation du portail wiki Mediawiki
 Mediawiki est le portail wiki mondialement connu et utilisé notamment
 pour le site wikipedia.
 
-.. __création_du_site_web_de_mediawiki:
+.. _`_création_du_site_web_de_mediawiki`:
 
 Création du site web de Mediawiki
 ---------------------------------
@@ -6622,7 +6659,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    f. Laisser le reste par défaut.
 
-.. __création_des_bases_de_données_3:
+.. _`_création_des_bases_de_données_3`:
 
 Création des bases de données
 -----------------------------
@@ -6667,7 +6704,7 @@ Appliquez les opérations suivantes dans ISPConfig :
 
    e. Cliquez sur ``save``
 
-.. __création_de_lapplication_mediawiki:
+.. _`_création_de_lapplication_mediawiki`:
 
 Création de l’application Mediawiki
 -----------------------------------
@@ -6794,7 +6831,7 @@ Suivez la procédure suivante:
 
 18. C’est fait
 
-.. __update_du_serveur_mediawiki:
+.. _`_update_du_serveur_mediawiki`:
 
 Update du serveur Mediawiki
 ---------------------------
@@ -6875,7 +6912,7 @@ Suivez la procédure suivante:
 
        rm -rf /tmp/mediawiki.old
 
-.. __installation_dun_gestionnaire_de_blog_wordpress:
+.. _`_installation_dun_gestionnaire_de_blog_wordpress`:
 
 Installation d’un gestionnaire de Blog Wordpress
 ================================================
@@ -6883,7 +6920,7 @@ Installation d’un gestionnaire de Blog Wordpress
 Wordpress est un CMS très connu écrit en PHP. Il est fréquemment mis à
 jour.
 
-.. __création_du_site_web_de_wordpress:
+.. _`_création_du_site_web_de_wordpress`:
 
 Création du site web de Wordpress
 ---------------------------------
@@ -6917,7 +6954,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    f. Laisser le reste par défaut.
 
-.. __création_des_bases_de_données_4:
+.. _`_création_des_bases_de_données_4`:
 
 Création des bases de données
 -----------------------------
@@ -6962,7 +6999,7 @@ Appliquez les opérations suivantes dans ISPConfig :
 
    e. Cliquez sur ``save``
 
-.. __création_de_lapplication_wordpress:
+.. _`_création_de_lapplication_wordpress`:
 
 Création de l’application Wordpress
 -----------------------------------
@@ -7038,7 +7075,7 @@ Suivez la procédure suivante:
 18. Vous pouvez ensuite cliquer sur ``Se connecter`` pour administrer
     votre site
 
-.. __update_de_wordpress:
+.. _`_update_de_wordpress`:
 
 Update de wordpress
 -------------------
@@ -7047,7 +7084,7 @@ La mise à jour de wordpress s’effectue directement dans le site web en
 allant sur ``Dashboard`` et l’item ``updates``. Il n’y a rien d’autre à
 faire.
 
-.. __installation_du_cms_micro_weber:
+.. _`_installation_du_cms_micro_weber`:
 
 Installation du CMS Micro Weber
 ===============================
@@ -7060,7 +7097,7 @@ programmant et en gérant plusieurs affichages. Il dispose d’une fonction
 d’édition en direct qui permet aux utilisateurs de visualiser leurs
 modifications telles qu’elles apparaîtraient.
 
-.. __création_du_site_web_de_microweber:
+.. _`_création_du_site_web_de_microweber`:
 
 Création du site web de Microweber
 ----------------------------------
@@ -7096,7 +7133,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
 3. `Loguez vous comme root sur le serveur <#root_login>`__
 
-.. __création_des_bases_de_données_5:
+.. _`_création_des_bases_de_données_5`:
 
 Création des bases de données
 -----------------------------
@@ -7141,7 +7178,7 @@ Appliquez les opérations suivantes dans ISPConfig :
 
    e. Cliquez sur ``save``
 
-.. __installation_de_microweber:
+.. _`_installation_de_microweber`:
 
 Installation de Microweber
 --------------------------
@@ -7199,7 +7236,7 @@ Suivez la procédure suivante:
 8. Vous êtes redirigé sur le site Microweber ou vous pourrez vous loguer
    et commencer à utiliser l’outil
 
-.. __update_de_microweber:
+.. _`_update_de_microweber`:
 
 Update de Microweber
 --------------------
@@ -7208,7 +7245,7 @@ La mise à jour de Microweber s’effectue directement dans le site web en
 allant sur ``Dashboard`` et l’item ``updates``. Il n’y a rien d’autre à
 faire.
 
-.. __installation_de_mealie:
+.. _`_installation_de_mealie`:
 
 Installation de Mealie
 ======================
@@ -7218,7 +7255,7 @@ planificateur de repas auto-hébergés avec un backend RestAPI et une
 application frontale responsive construite en Vue pour une expérience
 utilisateur agréable pour toute la famille.
 
-.. __prérequis:
+.. _`_prérequis`:
 
 Prérequis
 ---------
@@ -7226,7 +7263,7 @@ Prérequis
 Il vous faudra tout d’abord installer ``docker`` en vous référant au
 chapitre qui y est consacré.
 
-.. __installation_du_serveur_mealie:
+.. _`_installation_du_serveur_mealie`:
 
 Installation du serveur Mealie
 ------------------------------
@@ -7246,7 +7283,7 @@ Ouvrez un terminal et suivez la procédure:
       docker volume create mealie_data
       docker run -d -p 1282:80 --name=mealie --restart=always -v mealie_data:'/app/data/' -e PGID=1000 -e PUID=1000  hkotel/mealie:latest
 
-.. __création_du_site_web_de_mealie:
+.. _`_création_du_site_web_de_mealie`:
 
 Création du site web de mealie
 ------------------------------
@@ -7308,7 +7345,7 @@ Appliquez la procédure suivante:
 
       -  remplacer ``example.com`` par votre nom de domaine
 
-.. __configuration_du_site_mealie:
+.. _`_configuration_du_site_mealie`:
 
 Configuration du site mealie
 ----------------------------
@@ -7328,7 +7365,7 @@ Votre site web ``mealie`` est installé et opérationnel.
 
 5. C’est prêt !
 
-.. __upgrade_de_mealie:
+.. _`_upgrade_de_mealie`:
 
 Upgrade de Mealie
 -----------------
@@ -7353,7 +7390,7 @@ Sinon, effectuez les opérations suivantes:
       docker rm mealie
       docker run -d -p 1282:80 --name=mealie --restart=always -v mealie_data:'/app/data/' -e PGID=1000 -e PUID=1000  hkotel/mealie:latest
 
-.. __installation_du_gestionnaire_de_photos_piwigo:
+.. _`_installation_du_gestionnaire_de_photos_piwigo`:
 
 Installation du gestionnaire de photos Piwigo
 =============================================
@@ -7365,7 +7402,7 @@ données MySQL.
 
 Piwigo était auparavant connu sous le nom PhpWebGallery.
 
-.. __création_du_site_web_de_piwigo:
+.. _`_création_du_site_web_de_piwigo`:
 
 Création du site web de Piwigo
 ------------------------------
@@ -7401,7 +7438,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
 3. `Loguez vous comme root sur le serveur <#root_login>`__
 
-.. __création_des_bases_de_données_6:
+.. _`_création_des_bases_de_données_6`:
 
 Création des bases de données
 -----------------------------
@@ -7446,7 +7483,7 @@ Appliquez les opérations suivantes dans ISPConfig :
 
    e. Cliquez sur ``save``
 
-.. __installation_de_piwigo:
+.. _`_installation_de_piwigo`:
 
 Installation de Piwigo
 ----------------------
@@ -7504,7 +7541,7 @@ Suivez la procédure suivante:
 9. Vous êtes redirigé sur le site piwigo ou vous pourrez vous loguer et
    commencer à utiliser l’outil
 
-.. __update_de_piwigo:
+.. _`_update_de_piwigo`:
 
 Update de Piwigo
 ----------------
@@ -7513,7 +7550,7 @@ La mise à jour de Piwigo s’effectue directement dans le site web en
 allant sur ``Dashboard Admin`` et l’item ``Mises à jour``. Il n’y a rien
 d’autre à faire.
 
-.. __installation_du_système_collaboratif_nextcloud:
+.. _`_installation_du_système_collaboratif_nextcloud`:
 
 Installation du système collaboratif Nextcloud
 ==============================================
@@ -7533,7 +7570,7 @@ votre serveur Nextcloud. Des clients sont disponibles pour la plupart
 des systèmes d’exploitation, y compris Windows, macOS, FreeBSD, et
 Linux.
 
-.. __installation_initiale:
+.. _`_installation_initiale`:
 
 Installation initiale
 ---------------------
@@ -7574,7 +7611,7 @@ Pour installer, Suivez la procédure suivante:
 
       systemctl restart apache2
 
-.. __création_du_site_web_de_nextcloud:
+.. _`_création_du_site_web_de_nextcloud`:
 
 Création du site web de Nextcloud
 ---------------------------------
@@ -7611,7 +7648,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    g. Cliquez sur ``Save``
 
-.. __création_des_bases_de_données_7:
+.. _`_création_des_bases_de_données_7`:
 
 Création des bases de données
 -----------------------------
@@ -7656,7 +7693,7 @@ Appliquez les opérations suivantes dans ISPConfig :
 
    e. Cliquez sur ``save``
 
-.. __installation_de_nextcloud:
+.. _`_installation_de_nextcloud`:
 
 Installation de Nextcloud
 -------------------------
@@ -7708,7 +7745,7 @@ Suivez la procédure suivante:
    6. Vous êtes redirigé sur le site nextcloud ou vous pourrez vous
       loguer et commencer à utiliser l’outil
 
-.. __upgrade_de_nextcloud:
+.. _`_upgrade_de_nextcloud`:
 
 Upgrade de Nextcloud
 --------------------
@@ -7717,7 +7754,7 @@ La mise à jour de nextcloud se fait directement dans nextcloud avec
 l’outil de mise à jour intégré à l’interface. Il faut se connecter en
 mode Admin
 
-.. __installation_du_gestionnaire_de_projet_gitea:
+.. _`_installation_du_gestionnaire_de_projet_gitea`:
 
 Installation du gestionnaire de projet Gitea
 ============================================
@@ -7726,7 +7763,7 @@ Gitea est un système simple d’hébergement de code basé sur Git. C’est un
 fork de Gogs. Il montre des fonctionnalités similaires à gitlab ou
 github tout en gardant un code plus simple.
 
-.. __création_du_site_web_de_gitea:
+.. _`_création_du_site_web_de_gitea`:
 
 Création du site web de Gitea
 -----------------------------
@@ -7812,7 +7849,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
       chmod -R 750 /var/lib/gitea
       chmod 770 /etc/gitea
 
-.. __création_des_bases_de_données_8:
+.. _`_création_des_bases_de_données_8`:
 
 Création des bases de données
 -----------------------------
@@ -7857,7 +7894,7 @@ Appliquez les opérations suivantes dans ISPConfig :
 
    e. Cliquez sur ``save``
 
-.. __téléchargez_et_installez_gitea:
+.. _`_téléchargez_et_installez_gitea`:
 
 Téléchargez et installez Gitea
 ------------------------------
@@ -7985,7 +8022,7 @@ Appliquez les opérations suivantes:
 
        systemctl restart gitea.service
 
-.. __activer_une_connexion_ssh_dédiée:
+.. _`_activer_une_connexion_ssh_dédiée`:
 
 Activer une connexion SSH dédiée
 --------------------------------
@@ -8021,7 +8058,7 @@ Gitea:
 
 6. Enjoy !
 
-.. __update_de_gitea:
+.. _`_update_de_gitea`:
 
 Update de Gitea
 ---------------
@@ -8041,7 +8078,7 @@ Appliquez les opérations suivantes:
       chmod 755 /usr/local/bin/gitea
       service gitea start
 
-.. __installation_de_bitwarden:
+.. _`_installation_de_bitwarden`:
 
 Installation de Bitwarden
 =========================
@@ -8054,7 +8091,7 @@ Il reste cependant un bémol puisque l’installation s’effectue à l’aide
 de containers dockers qui sont eux générés par l’éditeur de
 ``bitwarden``.
 
-.. __prérequis_2:
+.. _`_prérequis_2`:
 
 Prérequis
 ---------
@@ -8062,7 +8099,7 @@ Prérequis
 Il vous faudra tout d’abord installer ``docker`` en vous référant au
 chapitre qui y est consacré.
 
-.. __installation_du_serveur_bitwarden:
+.. _`_installation_du_serveur_bitwarden`:
 
 Installation du serveur Bitwarden
 ---------------------------------
@@ -8097,7 +8134,7 @@ Ouvrez un terminal et suivez la procédure:
       code de hashage généré. Ce code protège l’accès ``admin`` de
       Bitwarden.
 
-.. __création_du_site_web_de_bitwarden:
+.. _`_création_du_site_web_de_bitwarden`:
 
 Création du site web de Bitwarden
 ---------------------------------
@@ -8155,7 +8192,7 @@ Appliquez la procédure suivante:
 
          RedirectMatch ^/$ https://bitwarden.example.com
 
-.. __configuration_du_site_bitwarden:
+.. _`_configuration_du_site_bitwarden`:
 
 Configuration du site Bitwarden
 -------------------------------
@@ -8198,7 +8235,7 @@ pointer vers votre serveur en y configurant l’URL:
 
 Tout est prêt!
 
-.. __upgrade_de_bitwarden:
+.. _`_upgrade_de_bitwarden`:
 
 Upgrade de Bitwarden
 --------------------
@@ -8230,7 +8267,7 @@ Sinon, effectuez les opérations suivantes:
       code de hashage généré. Ce code protège l’accès ``admin`` de
       Bitwarden.
 
-.. __installation_de_heimdall:
+.. _`_installation_de_heimdall`:
 
 Installation de Heimdall
 ========================
@@ -8238,7 +8275,7 @@ Installation de Heimdall
 le logiciel ``Heimdall`` est un logiciel de portail offrant de
 nombreuses possibilités de configuration.
 
-.. __prérequis_3:
+.. _`_prérequis_3`:
 
 Prérequis
 ---------
@@ -8246,7 +8283,7 @@ Prérequis
 Il vous faudra tout d’abord installer ``docker`` en vous référant au
 chapitre qui y est consacré.
 
-.. __installation_du_serveur_heimdall:
+.. _`_installation_du_serveur_heimdall`:
 
 Installation du serveur Heimdall
 --------------------------------
@@ -8266,7 +8303,7 @@ Ouvrez un terminal et suivez la procédure:
       docker volume create heimdall_data
       docker run -d -p 1281:443 --name=heimdall --restart=always -v heimdall_data:/config:rw -e PGID=1000 -e PUID=1000  linuxserver/heimdall
 
-.. __création_du_site_web_de_heimdall:
+.. _`_création_du_site_web_de_heimdall`:
 
 Création du site web de heimdall
 --------------------------------
@@ -8331,7 +8368,7 @@ Appliquez la procédure suivante:
 
       -  remplacer ``example.com`` par votre nom de domaine
 
-.. __configuration_du_site_heimdall:
+.. _`_configuration_du_site_heimdall`:
 
 Configuration du site heimdall
 ------------------------------
@@ -8355,7 +8392,7 @@ Votre site web ``heimdall`` est installé et opérationnel.
 
 Tout est prêt!
 
-.. __upgrade_de_heimdall:
+.. _`_upgrade_de_heimdall`:
 
 Upgrade de Heimdall
 -------------------
@@ -8380,7 +8417,7 @@ Sinon, effectuez les opérations suivantes:
       docker rm heimdall
       docker run -d -p 1281:443 --name=heimdall --restart=always -v heimdall_data:/config:rw -e PGID=1000 -e PUID=1000  linuxserver/heimdall
 
-.. __installation_du_système_de_partage_de_fichiers_seafile:
+.. _`_installation_du_système_de_partage_de_fichiers_seafile`:
 
 Installation du système de partage de fichiers Seafile
 ======================================================
@@ -8391,7 +8428,7 @@ IOS.
 
 Cette installation est optionnelle.
 
-.. __création_du_site_web_de_seafile:
+.. _`_création_du_site_web_de_seafile`:
 
 Création du site web de Seafile
 -------------------------------
@@ -8462,7 +8499,7 @@ Appliquez la procédure suivante:
          ProxyPass / http://localhost:8090/
          ProxyPassReverse / http://localhost:8090/
 
-.. __création_de_bases_de_données:
+.. _`_création_de_bases_de_données`:
 
 Création de bases de données
 ----------------------------
@@ -8510,7 +8547,7 @@ Création de bases de données
    d. Les trois bases de données doivent apparaître dans la liste des
       bases
 
-.. __téléchargez_et_installez_seafile:
+.. _`_téléchargez_et_installez_seafile`:
 
 Téléchargez et installez Seafile
 --------------------------------
@@ -8571,7 +8608,7 @@ Appliquez la procédure suivante:
 8. Si tout est saisi correctement le programme doit donner une synthèse
    de ce qui a été configuré
 
-.. __lancement_initial:
+.. _`_lancement_initial`:
 
 Lancement initial
 -----------------
@@ -8654,7 +8691,7 @@ Nous allons effectuer un premier lancement du serveur Seafile:
 
 12. La page de login de Seafile doit s’afficher
 
-.. __lancement_automatique_de_seafile:
+.. _`_lancement_automatique_de_seafile`:
 
 Lancement automatique de Seafile
 --------------------------------
@@ -8755,7 +8792,7 @@ script de lancement automatique de Seafile:
 
 6. Enjoy !
 
-.. __upgrade_de_seafile:
+.. _`_upgrade_de_seafile`:
 
 Upgrade de Seafile
 ==================
@@ -8811,7 +8848,7 @@ Suivez la procédure suivante:
 4. Vérifiez que vous savez accéder à Seafile tant sur le site web
    qu’avec vos applis PC et smartphone
 
-.. __installation_du_système_de_monitoring_grafana:
+.. _`_installation_du_système_de_monitoring_grafana`:
 
 Installation du système de monitoring Grafana
 =============================================
@@ -8828,7 +8865,7 @@ analyse précise des fichiers de logs.
 Cette installation est optionnelle puisque Munin est déjà installé sur
 votre système.
 
-.. __création_du_site_web_de_grafana:
+.. _`_création_du_site_web_de_grafana`:
 
 Création du site web de Grafana
 -------------------------------
@@ -8888,7 +8925,7 @@ Appliquez la procédure suivante:
 
       -  remplacer ``example.com`` par votre nom de domaine
 
-.. __installation_de_grafana:
+.. _`_installation_de_grafana`:
 
 Installation de Grafana
 -----------------------
@@ -9027,7 +9064,7 @@ Installation de Grafana
        service prometheus-mysqld-exporter restart
        service prometheus-process-exporter restart
 
-.. __installation_et_configuration_de_loki:
+.. _`_installation_et_configuration_de_loki`:
 
 Installation et configuration de Loki
 -------------------------------------
@@ -9161,7 +9198,7 @@ Pour installer Loki, appliquez la procédure suivante:
        sudo service loki start
        sudo service loki status
 
-.. __installation_et_configuration_de_promtail:
+.. _`_installation_et_configuration_de_promtail`:
 
 Installation et configuration de Promtail
 -----------------------------------------
@@ -9273,7 +9310,7 @@ Installez maintenant Promtail:
 
        {job="varlogs"}
 
-.. __upgrade_de_grafana:
+.. _`_upgrade_de_grafana`:
 
 Upgrade de Grafana
 ------------------
@@ -9324,7 +9361,7 @@ Appliquez la procédure suivante:
 
 7. Vérifiez que tout fonctionne
 
-.. __installation_du_système_de_backup_borgbackup:
+.. _`_installation_du_système_de_backup_borgbackup`:
 
 Installation du système de backup BorgBackup
 ============================================
@@ -9342,7 +9379,7 @@ Pour le moment, BorgBackup n’utilise pas de mécanisme de type RClone et
 il n’est donc pas encore possible de sauvegarder sur google drive ou
 autres espaces partagés.
 
-.. __introduction:
+.. _`_introduction`:
 
 Introduction
 ------------
@@ -9353,7 +9390,7 @@ serveur de stockage et identifié par <storing_srv>. Nous nommerons le
 serveur qu’il faut sauvegarder: serveur sauvegardé et identifié par
 <example.com>
 
-.. __installation_du_serveur_de_stockage:
+.. _`_installation_du_serveur_de_stockage`:
 
 Installation du serveur de stockage
 -----------------------------------
@@ -9423,7 +9460,7 @@ Suivez la procédure suivante:
        mkdir borgbackup
        chmod 700 borgbackup
 
-.. __installation_sur_le_serveur_sauvegardé:
+.. _`_installation_sur_le_serveur_sauvegardé`:
 
 Installation sur le serveur sauvegardé
 --------------------------------------
@@ -9513,7 +9550,7 @@ Suivez la procédure suivante:
 
 16. Tout est maintenant prêt pour faire un backup
 
-.. __effectuer_un_backup:
+.. _`_effectuer_un_backup`:
 
 Effectuer un backup
 -------------------
@@ -9555,7 +9592,7 @@ le serveur sauf les répertoires système:
 
       /usr/local/bin/borgbackup.sh
 
-.. __lister_les_backups:
+.. _`_lister_les_backups`:
 
 Lister les backups
 ------------------
@@ -9592,7 +9629,7 @@ Nous allons créer un script de listage :
 
       /usr/local/bin/borglist.sh
 
-.. __vérifier_un_backup:
+.. _`_vérifier_un_backup`:
 
 Vérifier un backup
 ------------------
@@ -9632,7 +9669,7 @@ Nous allons créer un script de vérification :
    -  le nom de sauvegarde est récupéré en utilisant la commande
       borglist.sh
 
-.. __restaurer_un_backup:
+.. _`_restaurer_un_backup`:
 
 Restaurer un backup
 -------------------
@@ -9698,7 +9735,7 @@ Nous allons créer un script de montage sous forme de système de fichier
 
       /usr/local/bin/borgumount.sh
 
-.. __supprimer_vos_vieux_backups:
+.. _`_supprimer_vos_vieux_backups`:
 
 Supprimer vos vieux backups
 ---------------------------
@@ -9746,7 +9783,7 @@ Nous allons créer un script de ménage des backups :
 
       /usr/local/bin/borgprune.sh
 
-.. __automatisez_votre_sauvegarde:
+.. _`_automatisez_votre_sauvegarde`:
 
 Automatisez votre sauvegarde
 ----------------------------
@@ -9793,7 +9830,7 @@ Automatisez votre sauvegarde
    # Backup via Borg to backup server
    00 01 * * * /usr/local/bin/borgcron.sh
 
-.. __restauration_durgence:
+.. _`_restauration_durgence`:
 
 Restauration d’urgence.
 -----------------------
@@ -9895,7 +9932,7 @@ version suffisamment récente.
 
        borg export-tar --list borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::<votre_archive> restore.tar.xz
 
-.. __installation_de_borgweb:
+.. _`_installation_de_borgweb`:
 
 Installation de Borgweb
 -----------------------
@@ -10039,7 +10076,7 @@ Suivez la procédure suivante sur le serveur de stockage:
        systemctl enable borgweb.service
        systemctl start borgweb.service
 
-.. __création_du_site_web_de_borgweb:
+.. _`_création_du_site_web_de_borgweb`:
 
 Création du site web de Borgweb
 -------------------------------
@@ -10133,7 +10170,7 @@ stockage <storing_srv>:
    passe vous est demandé. Tapez ``admin`` pour le user et le password
    saisi. Vous accédez aux informations de sauvegarde de votre site.
 
-.. __installation_dun_serveur_de_vpn_pritunl:
+.. _`_installation_dun_serveur_de_vpn_pritunl`:
 
 Installation d’un serveur de VPN Pritunl
 ========================================
@@ -10145,7 +10182,7 @@ Pritunl est un serveur VPN basé sur OpenVPN.
    Printunl ne peut pas être installé sur une plateforme 32 bits et donc
    sur une distribution Raspbian d’un raspberry pi
 
-.. __création_du_site_web_de_pritunl:
+.. _`_création_du_site_web_de_pritunl`:
 
 Création du site web de Pritunl
 -------------------------------
@@ -10210,7 +10247,7 @@ Appliquez la procédure suivante:
 
       -  remplacer ``example.com`` par votre nom de domaine
 
-.. __installation_de_pritunl_sur_un_vps:
+.. _`_installation_de_pritunl_sur_un_vps`:
 
 Installation de Pritunl sur un VPS
 ----------------------------------
@@ -10237,7 +10274,7 @@ debian (pour le Raspberrypi voir le chapitre suivant):
       apt-get update
       apt-get --assume-yes install pritunl mongodb-org openvpn
 
-.. __installation_de_pritunl_sur_un_raspberrypi:
+.. _`_installation_de_pritunl_sur_un_raspberrypi`:
 
 Installation de Pritunl sur un Raspberrypi
 ------------------------------------------
@@ -10312,7 +10349,7 @@ installer sur un Raspberrypi avec Ubuntu 64 bits:
 
       systemctl daemon-reload
 
-.. __configuration_de_pritunl:
+.. _`_configuration_de_pritunl`:
 
 Configuration de Pritunl
 ------------------------
@@ -10453,7 +10490,7 @@ pour qu’il fonctionne:
 
 22. Votre serveur de VPN est opérationnel.
 
-.. __se_connecter_au_serveur_de_vpn:
+.. _`_se_connecter_au_serveur_de_vpn`:
 
 Se connecter au serveur de VPN
 ------------------------------
@@ -10470,7 +10507,7 @@ Pritunl. Une fois fait, une compte apparaît dans le logiciel client.
 Vous pourrez vous connecter en cliquant sur le bouton ``Connect`` du
 compte utilisateur.
 
-.. __réparer_une_base_pritunl:
+.. _`_réparer_une_base_pritunl`:
 
 Réparer une base Pritunl
 ------------------------
@@ -10483,7 +10520,7 @@ Si jamais votre base est corrompue, vous pourrez la réparer en tapant:
    pritunl repair-database
    systemctl start pritunl
 
-.. __mot_de_passe_perdu:
+.. _`_mot_de_passe_perdu`:
 
 Mot de passe perdu
 ------------------
@@ -10494,7 +10531,7 @@ Vous pouvez re-générer un mot de passe en tapant:
 
    pritunl reset-password
 
-.. __update_de_pritunl:
+.. _`_update_de_pritunl`:
 
 Update de Pritunl
 -----------------
@@ -10565,7 +10602,7 @@ Appliquez la procédure suivante:
 
 10. Vérifiez que tout est correct
 
-.. __installation_dun_serveur_de_bureau_à_distance_guacamole:
+.. _`_installation_dun_serveur_de_bureau_à_distance_guacamole`:
 
 Installation d’un serveur de bureau à distance Guacamole
 ========================================================
@@ -10578,7 +10615,7 @@ besoin d’installer et d’utiliser des logiciels ou des plugins sur le
 serveur. Avec Guacamole, vous pouvez facilement passer d’un bureau d’une
 machine à l’autre avec le même navigateur
 
-.. __création_du_site_web_de_guacamole:
+.. _`_création_du_site_web_de_guacamole`:
 
 Création du site web de Guacamole
 ---------------------------------
@@ -10640,7 +10677,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    h. Cliquez sur ``Save``
 
-.. __création_des_bases_de_données_9:
+.. _`_création_des_bases_de_données_9`:
 
 Création des bases de données
 -----------------------------
@@ -10685,7 +10722,7 @@ Appliquez les opérations suivantes dans ISPConfig :
 
    e. Cliquez sur ``save``
 
-.. __installation_du_guacamole:
+.. _`_installation_du_guacamole`:
 
 Installation du Guacamole
 -------------------------
@@ -10970,7 +11007,7 @@ Suivez la procédure suivante:
     menu pour effectuer des chargements de fichiers ou contrôler votre
     connexion
 
-.. __upgrade_de_guacamole:
+.. _`_upgrade_de_guacamole`:
 
 Upgrade de Guacamole
 --------------------
@@ -11038,12 +11075,12 @@ Appliquez la procédure suivante:
 
 9. Vérifiez que tout fonctionne
 
-.. __annexe:
+.. _`_annexe`:
 
 Annexe
 ======
 
-.. __installation_de_hestia:
+.. _`_installation_de_hestia`:
 
 Installation de Hestia
 ----------------------
@@ -11091,12 +11128,12 @@ Pour installer:
    passe du compte admin de ``Hestia`` ainsi que le numéro de port du
    site web
 
-.. __configuration_dun_écran_3_5_inch_rpi_lcd_a:
+.. _`_configuration_dun_écran_3_5_inch_rpi_lcd_a`:
 
 Configuration d’un écran 3.5 inch RPI LCD (A)
 ---------------------------------------------
 
-.. __pour_commencer:
+.. _`_pour_commencer`:
 
 Pour commencer
 ~~~~~~~~~~~~~~
@@ -11147,7 +11184,7 @@ Le RPi LCD peut être piloté de deux manières :
 
 8. Après le redémarrage du système, le RPI LCD est prêt à l’emploi.
 
-.. __basculer_entre_laffichage_lcd_et_hdmi:
+.. _`_basculer_entre_laffichage_lcd_et_hdmi`:
 
 Basculer entre l’affichage LCD et HDMI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -11168,7 +11205,7 @@ Cela permet de basculer le mode sur l’affichage LCD :
    chmod +x LCD35-show
    ./LCD35-show
 
-.. __paramètres_dorientation_de_lécran:
+.. _`_paramètres_dorientation_de_lécran`:
 
 Paramètres d’orientation de l’écran
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -11204,7 +11241,7 @@ définie par ces commandes :
    cd LCD-show/
    ./LCD35-show 270
 
-.. __calibrage_de_lécran_tactile:
+.. _`_calibrage_de_lécran_tactile`:
 
 Calibrage de l’écran tactile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -11280,7 +11317,7 @@ commande suivante pour le redémarrage du système :
 **Notices: En cas de toucher imprécis, veuillez procéder à un nouvel
 étalonnage de l’écran et redémarrer le système.**
 
-.. __installer_un_clavier_virtuel:
+.. _`_installer_un_clavier_virtuel`:
 
 Installer un clavier virtuel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -11371,12 +11408,12 @@ Installer un clavier virtuel
 
       sudo reboot
 
-.. __ressources:
+.. _`_ressources`:
 
 Ressources
 ~~~~~~~~~~
 
-.. __manuel_utilisateur:
+.. _`_manuel_utilisateur`:
 
 Manuel utilisateur
 ^^^^^^^^^^^^^^^^^^
@@ -11384,7 +11421,7 @@ Manuel utilisateur
 -  `RPiLCD User
    Manual <https://www.waveshare.com/w/upload/1/1e/RPi_LCD_User_Manual_EN.pdf>`__
 
-.. __images:
+.. _`_images`:
 
 Images
 ^^^^^^
@@ -11394,7 +11431,7 @@ l’image avec le pilote préinstallé.
 
 -  `RPi-35inch-LCD-(A)-Raspbian-180326.7z <https://drive.google.com/open?id=1xsvANujoImwVQvdf0n7IiUjP8BuCe2GK>`__
 
-.. __driver:
+.. _`_driver`:
 
 Driver
 ^^^^^^
@@ -11405,7 +11442,7 @@ Le pilote peut être téléchargé sur github
 
    git clone https://github.com/waveshare/LCD-show.git
 
-.. __fichiers_de_configuration_de_référence:
+.. _`_fichiers_de_configuration_de_référence`:
 
 Fichiers de configuration de référence
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -11550,5 +11587,3 @@ Ajouter:
            Option  "Calibration"   "3936 227 268 3880"
            Option  "SwapAxes"      "1"
    EndSection
-
-.. |Diagram| image:: diag-b61d02ddbaa610df90fcf284c079d33c.png
