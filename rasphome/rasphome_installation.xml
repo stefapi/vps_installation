@@ -4,7 +4,7 @@
 <article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Installation d&#8217;un home serveur Linux sur un Raspberry</title>
-<date>2022-05-17</date>
+<date>2024-02-28</date>
 <author>
 <personname>
 <firstname>Stéphane</firstname>
@@ -15,131 +15,38 @@
 <authorinitials>SA</authorinitials>
 <revhistory>
 <revision>
-<revnumber>1.1</revnumber>
-<date>2022-05-17</date>
+<revnumber>1.2</revnumber>
+<date>2024-02-28</date>
 <authorinitials>SA</authorinitials>
 </revision>
 </revhistory>
 </info>
 <section xml:id="_avant_propos">
 <title>Avant propos</title>
-<simpara>Ce document est disponible sur le site <link xl:href="https://raspberry-homeserver.readthedocs.io">ReadTheDocs</link></simpara>
+<simpara>Ce document est disponible sur le site <link xl:href="https://serveur-home-raspberry-pi.readthedocs.io">ReadTheDocs</link></simpara>
 <informalfigure>
 <mediaobject>
 <imageobject>
-<imagedata fileref="diag-1b5eaef62bc868d69739712a3598f8e7.png"/>
+<imagedata fileref="diag-qrcode-md5-ca9d818d3232226fdda46fca34ff0de9.svg"/>
 </imageobject>
 <textobject><phrase>Diagram</phrase></textobject>
 </mediaobject>
 </informalfigure>
 <simpara>et sur <link xl:href="https://github.com/stefapi/vps_installation">Github</link>. Sur Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et Asciidoc de ce document</simpara>
 <simpara>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer un serveur linux de gestion du reseau Home (site auto hébergé) avec un raspberry PI.</simpara>
-<simpara>Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
-Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentation décrit aussi l&#8217;installation pour une Raspbian.</simpara>
-<simpara>Dans ce document, je montre la configuration de nombreux types de sites web et services dans un domaine en utilisant ISPConfig.</simpara>
-<simpara>Sont installés:</simpara>
-<itemizedlist>
-<listitem>
-<simpara>un panel <link xl:href="https://www.ispconfig.org/">ISPConfig</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un configurateur <link xl:href="http://www.webmin.com/">Webmin</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur apache avec sa configuration let&#8217;s encrypt et les plugins PHP, Python et Ruby,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur de mail avec antispam, sécurisation d&#8217;envoi des mails et autoconfiguration pour Outlook, Thunderbird, Android,</simpara>
-</listitem>
-<listitem>
-<simpara>un webmail <link xl:href="https://roundcube.net">roundcube</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur de mailing list <link xl:href="https://www.list.org">mailman</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur ftp et sftp sécurisé,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur de base de données MariaDB et son interface web d&#8217;administration <link xl:href="https://www.phpmyadmin.net/">phpmyadmin</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>des outils de sécurisation, de mise à jour automatique et d&#8217;audit du serveur,</simpara>
-</listitem>
-<listitem>
-<simpara>un outil de Monitoring <link xl:href="http://munin-monitoring.org/">Munin</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un outil de Monitoring <link xl:href="http://mmonit.com/monit/">Monit</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>l&#8217;installation de <link xl:href="https://hub.docker.com/">Docker</link> et des outils <link xl:href="https://portainer.io">Portainer</link> et <link xl:href="https://yacht.sh">Yacht</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un sous domaine pointant sur un site auto-hébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <link xl:href="https://yunohost.org">Yunohost</link> ) par exemple,</simpara>
-</listitem>
-<listitem>
-<simpara>un site CMS sous <link xl:href="https://www.joomla.fr/">Joomla</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un site CMS sous <link xl:href="https://www.concrete5.org/">Concrete5</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un site WIKI sous <link xl:href="https://www.mediawiki.org">Mediawiki</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un site de blog <link xl:href="https://wordpress.com">Wordpress</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un site <link xl:href="https://microweber.org/">Microweber</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un site Photo sous <link xl:href="https://piwigo.org/">Piwigo</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un site de partage de recettes de cuisine <link xl:href="https://hay-kot.github.io/mealie/">Mealie</link></simpara>
-</listitem>
-<listitem>
-<simpara>un site Collaboratif sous <link xl:href="https://nextcloud.com">Nextcloud</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un site <link xl:href="https://gitea.io">Gitea</link> et son repository GIT,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur de mots de passe <link xl:href="https://bitwarden.com/">Bitwarden</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un dashboard pour vos sites web <link xl:href="https://heimdall.site/">Heimdall</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur et un site  de partage de fichiers <link xl:href="https://www.seafile.com">Seafile</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur <link xl:href="https://grafana.com/">Grafana</link>, <link xl:href="https://prometheus.io/">Prometheus</link>, <link xl:href="https://github.com/grafana/loki">Loki</link>, Promtail pour gérer les statistiques et les logs du serveur,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur de sauvegardes <link xl:href="https://borgbackup.readthedocs.io/">BorgBackup</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur de VPN <link xl:href="https://pritunl.com/">Pritunl</link>,</simpara>
-</listitem>
-<listitem>
-<simpara>un serveur de bureau à distance <link xl:href="https://guacamole.apache.org">Guacamole</link></simpara>
-</listitem>
-</itemizedlist>
-<simpara>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</simpara>
-<simpara>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal, que vous savez vous servir de <literal>ssh</literal> pour Linux ou de <literal>putty</literal> pour Windows, que vous avez des notions élémentaires de Shell Unix et que vous savez vous servir de l&#8217;éditeur <literal>vi</literal>. Si <literal>vi</literal> est trop compliqué pour vous, je vous suggère d&#8217;utiliser l&#8217;éditeur de texte <literal>nano</literal> à la place et de remplacer <literal>vi</literal> par <literal>nano</literal> dans toutes les lignes de commande.</simpara>
-<simpara>Dans le document, on peut trouver des textes entourés de &lt;texte&gt;. Cela signifie que vous devez mettre ici votre propre texte selon vos préférences.</simpara>
+<simpara>Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.</simpara>
 <simpara>Le coût pour mettre en oeuvre ce type de serveur est relativement faible:</simpara>
 <itemizedlist>
 <listitem>
 <simpara>Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y avoir des promos)</simpara>
 </listitem>
 <listitem>
-<simpara>Comptez 26€ pour acheter une carte Raspberry PI 3 A+ (1Go de Ram) et 61€ pour un PI 4 avec 4Go de Ram. A cela il faut ajouter un boitier, une alim et une flash de 64 ou 128 Go (prenez les cartes SD les plus rapide possible en écriture). Vous en aurez donc pour 110€ si vous achetez tout le kit.</simpara>
+<simpara>Comptez 47€ pour acheter une carte Raspberry PI 4 (1Go de Ram) et 67€ pour un PI 4 avec 4Go de Ram ou 94€ pour un PI 5 avec 8Go de Ram. A cela il faut ajouter un boitier, une alim et une flash de 64 ou 128 Go (prenez les cartes SD les plus rapide possible en écriture).</simpara>
 </listitem>
 </itemizedlist>
-<simpara>Par rapport à une solution VPS directement dans le cloud, ce budget correspond à 7-10 mois d&#8217;abonnement. Si vous avez la Fibre chez vous, il est nettement plus rentable d&#8217;utiliser un Raspberry que de prendre un abonne VPS.</simpara>
+<simpara>Vous en aurez donc entre 80€ pour une petite Configuration Raspberry PI 4 1Go, flash de 64 Go et 160€ pour une configuration Raspberry PI 5 8 Go et une flash de 512 Go.</simpara>
+<simpara>Il existe aussi des kits permettant de mettre en oeuvre des cartes NVME avec un gros gain de performance disque.</simpara>
+<simpara>Par rapport à une solution VPS directement dans le cloud, ce budget correspond à 7-16 mois d&#8217;abonnement selon la configuration. Si vous avez la Fibre chez vous, il est nettement plus rentable d&#8217;utiliser un Raspberry que de prendre un abonnement VPS.</simpara>
 </section>
 <section xml:id="root_login">
 <title>Se loguer root sur le serveur</title>
@@ -183,7 +90,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 </section>
 <section xml:id="pass_gen">
 <title>Gestion des mots de passe</title>
-<simpara>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'. Ce dernier exemple a un taux de complexité bien meilleur qu&#8217;un mot de passe classique. Il est aussi plus facile à retenir que 'Az3~1ym_a&amp;'.</simpara>
+<simpara>A propos des mots de passe: il est conseillé de saisir des mots de passe de 12 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'. Ce dernier exemple a un taux de complexité bien meilleur qu&#8217;un mot de passe classique. Il est aussi plus facile à retenir que 'Az3~1ym_a&amp;'.</simpara>
 <simpara>Cependant, si vous êtes en manque d&#8217;inspiration et que vous souhaitez générer des mots de passe, voici quelques méthodes:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -275,10 +182,10 @@ tr -cd A-Za-z0-9 &lt; /dev/urandom | head -c 32;echo <co xml:id="CO4-2"/></progr
 <simpara>Il vous faut bien choisir le type de linux que vous souhaitez installer:</simpara>
 <itemizedlist>
 <listitem>
-<simpara>Debian: C&#8217;est la distribution la plus connue et celle qui offre le plus de possibilités juste après l&#8217;installation (notamment pour faire de la domotique, utiliser le GPIO &#8230;&#8203;) .</simpara>
+<simpara>Debian 64: C&#8217;est la distribution la plus connue et celle qui offre le plus de possibilités juste après l&#8217;installation (notamment pour faire de la domotique, utiliser le GPIO &#8230;&#8203;) .</simpara>
 </listitem>
 <listitem>
-<simpara>Ubuntu 64: Elle est plus proche d&#8217;une Ubuntu standard et propose beaucoup de paquets pour faire fonctionner votre raspberry en serveur web.</simpara>
+<simpara>Ubuntu 64: Elle est plus proche d&#8217;une Ubuntu standard.</simpara>
 </listitem>
 </itemizedlist>
 <simpara>Il vous faudra un lecteur de flash microSD - USB que vous brancherez sur votre PC.</simpara>
@@ -302,30 +209,85 @@ dpkg -i imager_amd64.deb</programlisting>
 <simpara>Suivez la procédure ci dessous commune à toutes les plateformes:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara>Sélectionnez <literal>Choose OS</literal> et dans la liste choisissez <literal>Raspberry Pi OS LITE (64-bit)</literal> ou <literal>Ubuntu 64</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Sélectionnez <literal>CHoose SD CARD</literal> et sélectionnez votre lecteur de carte SD</simpara>
-</listitem>
-<listitem>
-<simpara>Cliquez sur <literal>Write</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Attendez la fin du chargement et de l&#8217;écriture sur la flash.</simpara>
-</listitem>
-<listitem>
 <simpara>Vous avez deux façons d&#8217;installer:</simpara>
 <itemizedlist>
 <listitem>
 <simpara>avec un écran et un clavier qui est la méthode la plus facile</simpara>
 </listitem>
 <listitem>
-<simpara>en mode Headless qui est plus complexe mais ne nécessite pas d&#8217;écran ni de clavier</simpara>
+<simpara>en mode Headless qui est plus complexe mais ne nécessite pas d&#8217;écran ni de clavier. L&#8217;installation s&#8217;effectue automatiquement.</simpara>
 </listitem>
 </itemizedlist>
 </listitem>
 <listitem>
-<simpara>Vous devez choisir l&#8217;une des méthodes décrites dans les deux chapitres suivants.</simpara>
+<simpara>Sélectionnez <literal>Choisir le modèle</literal> et dans la liste choisissez votre type de Raspberry</simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionnez <literal>Choisir l&#8217;OS</literal> et dans la liste choisissez <literal>Raspberry Pi OS (64-bit)</literal> ou <literal>Other general-purpose OS</literal>&#8594;`Ubuntu`&#8594;`Ubuntu Desktop 64`</simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionnez <literal>Choisir le Stockage</literal> et sélectionnez votre lecteur de carte SD</simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Suivant</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Modifier Réglages</literal> si vous souhaitez installer en mode headless le Raspberry sinon cliquez sur <literal>Non</literal> et allez à l&#8217;étape 10</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;onglet <literal>Général</literal></simpara>
+<itemizedlist>
+<listitem>
+<simpara>Donnez le nom de votre Raspberry dans <literal>Nom d&#8217;hôte</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Donnez votre utilisateur sudo dans <literal>nom d&#8217;utilisateur</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Donnez votre mot de passe dans <literal>Mot de passe</literal>. Utilisez un générateur de mot de passe pour en obtenir un suffisamment complexe</simpara>
+</listitem>
+<listitem>
+<simpara>Donnez votre SSID Wifi dans <literal>SSID</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Donner le mot de passe de votre wifi dans <literal>Mot de passe</literal>. Vous pouvez l&#8217;afficher si vous voulez vérifier que la saisie est correcte.</simpara>
+</listitem>
+<listitem>
+<simpara>Dans <literal>Pays Wi-fi</literal> mettez <literal>FR</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Dans <literal>Fuseau horaire</literal> mettez votre pays <literal>Europe/Paris</literal> par exemple</simpara>
+</listitem>
+<listitem>
+<simpara>Dans type de clavier mettez <literal>fr</literal> si vous avez un clavier Azerty</simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;onglet `Services</simpara>
+<itemizedlist>
+<listitem>
+<simpara>Activez <literal>Activer SSH</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Sélectionnez <literal>Utiliser un mot de passe pour l&#8217;authentification</literal></simpara>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Enregistrer</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Cliquez sur <literal>Oui</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Dans la fenêtre suivant intitulée <literal>Attention</literal> cliquez sur <literal>Oui</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Attendez la fin du chargement et de l&#8217;écriture sur la flash.</simpara>
+</listitem>
+<listitem>
+<simpara>En fonction de la méthode choisie, allez au chapitre suivant ou celui encore après.</simpara>
 </listitem>
 </orderedlist>
 <section xml:id="_installation_avec_écran_et_clavier">
@@ -342,28 +304,22 @@ dpkg -i imager_amd64.deb</programlisting>
 <simpara>Branchez votre Raspberry sur votre réseau Ethernet filaire (vous pouvez aussi utiliser le wifi)</simpara>
 </listitem>
 <listitem>
-<simpara>Démarrez votre Raspberry.</simpara>
+<simpara>Démarrez votre raspberry. Attention, les Raspberry PI 5 ont un bouton <literal>On</literal></simpara>
 </listitem>
 <listitem>
-<simpara>Après l&#8217;écran de démarrage arc en ciel, vous devez assez rapidement arriver sur le bureau</simpara>
+<simpara>Attendez environ 2 minutes le temps que le premier boot se termine. Tout pendant la procédure de boot, la petite led d&#8217;accès disque doit clignoter. Vous devez assez rapidement arriver sur le bureau</simpara>
 </listitem>
 <listitem>
-<simpara>Un programme doit se lancer automatiquement.</simpara>
+<simpara>Un écran de configuration doit s&#8217;afficher automatiquement.</simpara>
 </listitem>
 <listitem>
 <simpara>Sélectionnez le clavier et la langue en français</simpara>
 </listitem>
 <listitem>
-<simpara>Tapez votre nouveau mot de passe pour le login <literal>pi</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Choisissez un full screen sans bords</simpara>
+<simpara>Tapez votre nouveau mot de passe et votre compte utilisateur</simpara>
 </listitem>
 <listitem>
 <simpara>Choisissez votre connexion wifi et entrez le mot de passe</simpara>
-</listitem>
-<listitem>
-<simpara>Bien noter votre adresse IP elle vous sera utile ensuite</simpara>
 </listitem>
 <listitem>
 <simpara>Les mises à jours de paquets Debian ainsi que l&#8217;installation des traductions en français vont s&#8217;installer.</simpara>
@@ -409,67 +365,34 @@ dpkg -i imager_amd64.deb</programlisting>
 <simpara>Vous avez deux options: connexion en mode SSH ou au travers d&#8217;une connexion VNC</simpara>
 </listitem>
 </orderedlist>
+<simpara>Allez au chapitre <xref linkend="_connexion_au_travers_du_réseau"/>.</simpara>
 </section>
-<section xml:id="_installation_headless_de_raspberry_pi_os_lite_64_bit">
-<title>Installation Headless de Raspberry Pi OS LITE (64-bit)</title>
+<section xml:id="_installation_headless">
+<title>Installation Headless</title>
 <simpara>Pour ce type d&#8217;installation, pas besoin d&#8217;écran, de clavier et de souris. Tout s&#8217;effectue à distance.</simpara>
-<simpara>Dans la suite, je suppose que vous possèdez un PC fonctionnant avec un Linux (la procédure peut être adaptée pour une machine windows en utilisant la ligne de commande et putty)</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara>Avant d&#8217;enlever votre flash SD du lecteur, appliquez la procédure ci après:</simpara>
-<itemizedlist>
-<listitem>
-<simpara>Sur la flash, 2 partitions ont été crées. Montez la partition boot</simpara>
+<simpara>Enlevez la carte SD de votre lecteur et insérez la dans votre raspberry PI.</simpara>
 </listitem>
 <listitem>
-<simpara>sur cette partition, créez un fichier <literal>wpa_supplicant.conf</literal> et éditez le avec un éditeur de text (Nano ou vi sous linux ou Notepad sous windows).</simpara>
-</listitem>
-<listitem>
-<simpara>Mettez y le texte suivant:</simpara>
-<screen linenumbering="unnumbered">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
-country=US
-network={
-    ssid="YOURSSID" <co xml:id="CO8-1"/>
-    psk="YOURPASSWORD" <co xml:id="CO8-2"/>
-    key_mgmt=WPA-PSK
-    scan_ssid=1
-}</screen>
-<calloutlist>
-<callout arearefs="CO8-1">
-<para>remplacez <literal>YOURSSID</literal> par le nom SSID de votre wifi local</para>
-</callout>
-<callout arearefs="CO8-2">
-<para>remplacez <literal>YOURPASSWORD</literal> par le mot de passe de votre wifi local</para>
-</callout>
-</calloutlist>
-</listitem>
-<listitem>
-<simpara>sauvez le fichier</simpara>
-</listitem>
-<listitem>
-<simpara>Sur la même partition créez un fichier <literal>ssh</literal> (vide et sans extension). Il servira à indiquer au raspberry d&#8217;activer ssh au prochain boot</simpara>
-</listitem>
-<listitem>
-<simpara>démontez la partition</simpara>
-</listitem>
-<listitem>
-<simpara>au boot sur la carte SD, le fichier sera recopié dans votre configuration et le réseau wifi sera ainsi accessible</simpara>
-</listitem>
-</itemizedlist>
-</listitem>
-<listitem>
-<simpara>Enlevez la carte SD de votre lecteur et insérez la dans votre Raspberry PI.</simpara>
-</listitem>
-<listitem>
-<simpara>Démarrez votre raspberry.</simpara>
+<simpara>Démarrez votre raspberry. Attention, les Raspberry PI 5 ont un bouton <literal>On</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Attendez environ 2 minutes le temps que le premier boot se termine. Tout pendant la procédure de boot, la petite led d&#8217;accès disque doit clignoter.</simpara>
 </listitem>
+</orderedlist>
+</section>
+<section xml:id="_connexion_au_travers_du_réseau">
+<title>Connexion au travers du réseau</title>
+<orderedlist numeration="arabic">
 <listitem>
 <simpara>Vous devez maintenant découvrir l&#8217;adresse IP de votre Raspberry, pour cela tapez la commande suivante:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ping raspberrypi.local</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ping raspberrypi.local <co xml:id="CO8-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO8-1">
+<para>Attention remplacez raspberrypi par le nom d&#8217;Hôte que vous avez choisi lors de la configuration</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Si le Raspberry a démarré correctement, cette commande doit montrer l&#8217;adresse IP du raspberry et une réponse correcte au ping</simpara>
@@ -479,11 +402,27 @@ network={
 64 bytes from raspberrypi.local (192.168.3.212): icmp_seq=1 ttl=64 time=1.32 ms</screen>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara>Vous pouvez aussi utiliser la commande suivante:
-+</simpara>
+<simpara>Vous pouvez aussi utiliser la commande suivante:</simpara>
+<programlisting language="bash" linenumbering="unnumbered"> arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)|(e4:5f:01)|(d8:3a:dd)"</programlisting>
+</listitem>
+<listitem>
+<simpara>Elle vous donnera l&#8217;adresse IP de tous les raspberry de votre réseau et présents dans le cache ARP de votre PC.</simpara>
+</listitem>
+<listitem>
+<simpara>Ensuite testez l&#8217;adresse ip trouvée</simpara>
+<programlisting language="bash" linenumbering="unnumbered">ping 192.168.0.100 <co xml:id="CO9-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO9-1">
+<para>mettez ici l&#8217;adresse IP qui a été découverte.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>Si le Raspberry a démarré correctement, cette commande doit montrer l&#8217;adresse IP du raspberry et une réponse correcte au ping</simpara>
 </listitem>
 </orderedlist>
-<screen> arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)"</screen>
+<screen>PING 192.168.0.100 (192.168.0.100) 56(84) bytes of data.
+64 bytes from 192.168.0.100: icmp_seq=1 ttl=64 time=1.49 ms</screen>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Si vous n&#8217;obtenez aucun résultat essayer la commande <literal>nmap</literal> sur le subnet de votre réseau local</simpara>
@@ -500,7 +439,12 @@ network={
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">nmap -sn 192.168.3.0/24</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">nmap -sn 192.168.3.0/24 <co xml:id="CO10-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO10-1">
+<para>En suite à l&#8217;exemple de hostname reçu dans l&#8217;étape précéndente, nous avons remplacé le 10 à la fin de l&#8217;adresse IP par 0.</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>la commande affiche alors les adresses IP et mac de toutes les machines présentes sur le réseau.</simpara>
@@ -512,75 +456,15 @@ network={
 </listitem>
 <listitem>
 <simpara>vous pouvez alors directement vous connecter. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh pi@adresse_ip <co xml:id="CO9-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh username@adresse_ip <co xml:id="CO11-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO9-1">
-<para>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local</para>
+<callout arearefs="CO11-1">
+<para>username est le <literal>nom d&#8217;utilisateur</literal> défini lors de la configuration. adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local ou <literal>nom d&#8217;hôte</literal>.local</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
-<simpara>Se loguer avec le mot de passe <literal>raspberry</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">sudo raspi-config</programlisting>
-</listitem>
-<listitem>
-<simpara>Choisissez <literal>1 Change User Password</literal> &#8594; tapez votre nouveau mot de passe 2 fois</simpara>
-</listitem>
-<listitem>
-<simpara>Sur l&#8217;étape suivante, il ne faut pas se louper ou vous serez obligé d&#8217;éteindre votre raspberry, retirer la flash et la reprogrammer avec le fichier <literal>wpa_supplicant.conf</literal> dans la partition <literal>boot</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Choisissez <literal>2 Network Options</literal> &#8594; <literal>N2 Wi-fi</literal> &#8594; Tapez votre nom de SSID (attention aux majuscules) &#8594; Tapez votre mot de passe</simpara>
-</listitem>
-<listitem>
-<simpara>Choisissez <literal>4 Localisation Options</literal> &#8594; <literal>I1 Change Locale</literal> &#8594; Sélectionnez votre langue: <literal>fr_FR.UTF-8 UTF-8</literal> &#8594; puis la locale par défaut <literal>fr_FR.UTF-8 UTF-8</literal></simpara>
-</listitem>
-<listitem>
-<simpara>Choisissez <literal>4 Localisation Options</literal> &#8594; <literal>I2 Change Timezone</literal> &#8594; Choisissez votre timezone (par exemple: <literal>Europe</literal> &#8594; <literal>Paris</literal>)</simpara>
-</listitem>
-<listitem>
-<simpara>Choisissez <literal>4 Localisation Options</literal> &#8594; <literal>I3 Change Keyboard Layout</literal> &#8594; Choisissez votre mapping clavier</simpara>
-</listitem>
-<listitem>
-<simpara>Choisissez <literal>4 Localisation Options</literal> &#8594; <literal>I4 Change Wi-fi Country</literal> &#8594; choisissez votre pays de norme wifi</simpara>
-</listitem>
-<listitem>
-<simpara>choisissez <literal>5 Interfacing Options</literal> &#8594; <literal>P2 SSH</literal> &#8594; choisissez <literal>yes</literal></simpara>
-</listitem>
-<listitem>
-<simpara>choisissez <literal>7 Advanced Options</literal> &#8594; <literal>A5 Resolution</literal> &#8594; choisissez <literal>DMT Mode 82 1920x1080 60Hz 16:9</literal></simpara>
-</listitem>
-<listitem>
-<simpara>choisissez <literal>8 Update</literal> ; Une mise a jour du système va s&#8217;effectuer</simpara>
-</listitem>
-<listitem>
-<simpara>Tapez ensuite 2 fois sur la touche <literal>TAB</literal> pour sélectionner <literal>Finish</literal>. Tapez <literal>entrée</literal>.</simpara>
-</listitem>
-<listitem>
-<simpara>Rebootez le système en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">sudo reboot</programlisting>
-</listitem>
-<listitem>
-<simpara>Vous allez perdre votre connexion avec le raspberry</simpara>
-</listitem>
-<listitem>
-<simpara>si vous arrivez à vous reloguer en tapant (attendre 30 secondes après le reboot avant d&#8217;essayer):</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh pi@adresse_ip <co xml:id="CO10-1"/></programlisting>
-<calloutlist>
-<callout arearefs="CO10-1">
-<para>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local</para>
-</callout>
-</calloutlist>
-<simpara>C&#8217;est que vous avez terminé avec succès la configuration initiale.</simpara>
-</listitem>
-<listitem>
-<simpara>Vous avez terminé l&#8217;installation initiale de Debian. Vous pouvez maintenant rebooter votre raspberry pour continuer la configuration.</simpara>
-</listitem>
-<listitem>
-<simpara>Vous avez deux options: connexion en mode SSH ou au travers d&#8217;une connection VNC</simpara>
+<simpara>Se loguer avec le mot de passe défini pendant la configuration</simpara>
 </listitem>
 </orderedlist>
 </section>
@@ -610,13 +494,13 @@ wifis:
     dhcp4: true
     optional: true
     access-points:
-      YOURSSID: <co xml:id="CO11-1"/>
-        password: "YOURPASSWORD" <co xml:id="CO11-2"/></screen>
+      YOURSSID: <co xml:id="CO12-1"/>
+        password: "YOURPASSWORD" <co xml:id="CO12-2"/></screen>
 <calloutlist>
-<callout arearefs="CO11-1">
+<callout arearefs="CO12-1">
 <para>remplacez <literal>YOURSSID</literal> par le nom SSID de votre wifi local</para>
 </callout>
-<callout arearefs="CO11-2">
+<callout arearefs="CO12-2">
 <para>remplacez <literal>YOURPASSWORD</literal> par le mot de passe de votre wifi local</para>
 </callout>
 </calloutlist>
@@ -646,13 +530,13 @@ wifis:
 +</simpara>
 </listitem>
 </orderedlist>
-<screen> arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)"</screen>
+<screen> arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)|(e4:5f:01)|(d8:3a:dd)"</screen>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara>Ensuite testez l&#8217;adresse ip trouvée</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ping 192.168.0.100 <co xml:id="CO12-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ping 192.168.0.100 <co xml:id="CO13-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO12-1">
+<callout arearefs="CO13-1">
 <para>mettez ici l&#8217;adresse IP qui a été découverte.</para>
 </callout>
 </calloutlist>
@@ -691,9 +575,9 @@ wifis:
 </listitem>
 <listitem>
 <simpara>vous pouvez alors directement vous connecter. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh ubuntu@adresse_ip <co xml:id="CO13-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh ubuntu@adresse_ip <co xml:id="CO14-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO13-1">
+<callout arearefs="CO14-1">
 <para>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment</para>
 </callout>
 </calloutlist>
@@ -726,60 +610,7 @@ wifis:
 <simpara>Choisissez votre Timezone. Par exemple: <literal>Europe/Paris</literal></simpara>
 </listitem>
 </orderedlist>
-</section>
-<section xml:id="_reconnecter_automatiquement_votre_raspberry_pi_au_wifi">
-<title>Reconnecter automatiquement votre Raspberry Pi au wifi</title>
-<simpara>Si vous connectez votre raspberry pi au réseau au travers du wifi, il arrive que le raspberry perde la connexion au réseau de façon définitive.</simpara>
-<simpara>Pour corriger ce problème, il faut reconnecter Raspberry Pi au réseau wifi de manière forcée.</simpara>
-<simpara>Ce problème apparait surtout avec les Raspberry PI 3 et plus rarement avec les PI 4.</simpara>
-<simpara>Suivez la procédure ci-après:</simpara>
-<orderedlist numeration="arabic">
-<listitem>
-<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
-</listitem>
-<listitem>
-<simpara>Éditez le fichier <literal>wifi_rebooter.sh</literal> :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install iw
-vi /usr/local/bin/wifi_rebooter.sh</programlisting>
-</listitem>
-<listitem>
-<simpara>Collez-y le contenu suivant :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">#!/bin/bash
-
-SERVER=8.8.8.8
-
-# Envoyer seulement 2 pings, et envoyer la sortie vers /dev/null
-ping -c2 ${SERVER} &gt; /dev/null
-
-# Si le code retour du ping ($?) est différent de 0 (qui correspond à une erreur)
-if [ $? != 0 ]
-then
-    # Power save off
-
-    # Relancer l'interface wifi
-    ip link set dev wlan0 down
-    sleep 2
-    ip link set dev wlan0 up
-    sleep 2
-    iw dev wlan0 set power_save off
-fi</programlisting>
-</listitem>
-<listitem>
-<simpara>Rendre le script exécutable:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">chmod +x /usr/local/bin/wifi_rebooter.sh</programlisting>
-</listitem>
-<listitem>
-<simpara>Mettre en place la crontab:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">crontab -e</programlisting>
-</listitem>
-<listitem>
-<simpara>Ajouter à la fin du fichier les lignes suivantes:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">*/5 * * * *   /usr/local/bin/wifi_rebooter.sh</programlisting>
-</listitem>
-<listitem>
-<simpara>C&#8217;est fait !</simpara>
-</listitem>
-</orderedlist>
+<simpara>Unresolved directive in rasphome_installation.asc - include::../common/wifi_reboot.asc[]</simpara>
 </section>
 </section>
 <section xml:id="_configuration_basique">
@@ -787,14 +618,18 @@ fi</programlisting>
 <section xml:id="_mettre_léditeur_de_votre_choix">
 <title>Mettre l&#8217;éditeur de votre choix</title>
 <simpara>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient pour les outils utilisant un éditeur de façon automatique tels que <literal>crontab</literal>.</simpara>
-<simpara>Pour les débutants, il est conseillé d&#8217;utiliser nano.</simpara>
-<simpara><link linkend="root_login">Loguez vous comme root </link> et tapez:</simpara>
+<simpara>Pour les débutants, il est conseillé d&#8217;utiliser <literal>nano</literal> pour les utilisateurs avancés, vous pouvez utiliser <literal>vim</literal></simpara>
+<simpara><link linkend="root_login">Loguez vous comme root </link>.</simpara>
+<simpara>Si vous voulez installer <literal>vim</literal>, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install vim</programlisting>
+<simpara>Pour Sélectionner votre éditeur par défaut, tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">update-alternatives  --config editor</programlisting>
+<simpara>choisissez le chiffre correspondant à Nano ou Vim.basic et quittez.</simpara>
 </section>
 <section xml:id="_installation_dun_repository_pour_etc">
 <title>Installation d&#8217;un repository pour <literal>/etc</literal></title>
 <simpara>Si vous souhaitez gérer en gestion de configuration le contenu de votre répertoire <literal>/etc</literal>, installez <literal>etckeeper</literal>.</simpara>
-<simpara>Cette installation est optionnelle.</simpara>
+<simpara>Cette installation est optionnelle. Elle permet de garder dans un repository GIT toutes les modifications qui sont effectuées dans /etc soit par vous soit au moment de l&#8217;installation de paquets.</simpara>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
@@ -810,9 +645,9 @@ apt install etckeeper</programlisting>
 <listitem>
 <simpara>Ajoutez ce repository distant. Pour <literal>Gitlab</literal> et <literal>Github</literal>, une fois le repository créé, demandez l&#8217;affichage de la commande git pour une communication en ssh. Tapez ensuite sur votre serveur :</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /etc
-git remote add origin git@github.com:username/etc_keeper.git <co xml:id="CO14-1"/></programlisting>
+git remote add origin git@github.com:username/etc_keeper.git <co xml:id="CO15-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO14-1">
+<callout arearefs="CO15-1">
 <para>remplacer l&#8217;url par celle qui correspond au chemin de votre repository</para>
 </callout>
 </calloutlist>
@@ -1264,9 +1099,9 @@ dpkg-reconfigure openssh-server</programlisting>
 </listitem>
 <listitem>
 <simpara>Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh-keygen -f "$HOME/.ssh/known_hosts" -R hostname <co xml:id="CO15-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh-keygen -f "$HOME/.ssh/known_hosts" -R hostname <co xml:id="CO16-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO15-1">
+<callout arearefs="CO16-1">
 <para>remplacer hostname par l&#8217;adresse IP ou le nom de machine</para>
 </callout>
 </calloutlist>
@@ -1292,9 +1127,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">adduser &lt;sudo_username&gt; <co xml:id="CO16-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">adduser &lt;sudo_username&gt; <co xml:id="CO17-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO16-1">
+<callout arearefs="CO17-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login</para>
 </callout>
 </calloutlist>
@@ -1304,18 +1139,18 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Donner les attributs sudo à l&#8217;utilisateur <literal>&lt;sudo_username&gt;</literal>. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">usermod -a -G sudo &lt;sudo_username&gt; <co xml:id="CO17-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">usermod -a -G sudo &lt;sudo_username&gt; <co xml:id="CO18-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO17-1">
+<callout arearefs="CO18-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Dans une autre fenêtre, se connecter sur le serveur avec votre nouveau compte <literal>&lt;sudo_username&gt;</literal>:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO18-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO19-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO18-1">
+<callout arearefs="CO19-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -1349,9 +1184,9 @@ Respectez bien les étapes de cette procédure:</simpara>
 </listitem>
 <listitem>
 <simpara>Faites maintenant l&#8217;essai de vous re-loguer avec le compte root.Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO19-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh root@&lt;example.com&gt; <co xml:id="CO20-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO19-1">
+<callout arearefs="CO20-1">
 <para>Remplacer ici &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -1398,9 +1233,9 @@ chmod 700 ~/.ssh</programlisting>
 <orderedlist numeration="loweralpha">
 <listitem>
 <simpara>Loguez vous sur votre serveur distant. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO20-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO21-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO20-1">
+<callout arearefs="CO21-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -1430,9 +1265,9 @@ chmod 700 ~/.ssh</programlisting>
 </listitem>
 <listitem>
 <simpara>Vérifiez que tout fonctionne en vous connectant. Tapez: :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO21-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ssh &lt;sudo_username&gt;@&lt;example.com&gt; <co xml:id="CO22-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO21-1">
+<callout arearefs="CO22-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -1514,7 +1349,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
     info "Terminal Font" term_font
     info "CPU" cpu
     info "CPU Usage" cpu_usage
-    prin "CPU Temp" "$(vcgencmd measure_temp | awk -F '=' '{print $2}')" <co xml:id="CO22-1"/>
+    prin "CPU Temp" "$(vcgencmd measure_temp | awk -F '=' '{print $2}')" <co xml:id="CO23-1"/>
     prin "Load" "$(cat /proc/loadavg | awk '{print $1, $2, $3}')"
     info "GPU" gpu
     info "GPU Driver" gpu_driver  # Linux/macOS only
@@ -1533,12 +1368,12 @@ memory_percent="on"
 memory_unit="mib"
 package_managers="on"
 image_backend="ascii"
-cpu_temp="on" <co xml:id="CO22-2"/></programlisting>
+cpu_temp="on" <co xml:id="CO23-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO22-1">
+<callout arearefs="CO23-1">
 <para>Cette ligne est à retirer si vous n&#8217;utilisez pas de Raspberry PI 4</para>
 </callout>
-<callout arearefs="CO22-2">
+<callout arearefs="CO23-2">
 <para>Cette ligne est à mettre pour tout système qui n&#8217;utilise pas de Raspberry PI 4</para>
 </callout>
 </calloutlist>
@@ -1803,10 +1638,10 @@ apt autoremove --purge</programlisting>
 <listitem>
 <simpara>Dans le fichier ouvert, chercher <literal>Seat</literal> et tapez:</simpara>
 <screen>[Seat:*]
-autologin-user=[autologin account] <co xml:id="CO23-1"/>
+autologin-user=[autologin account] <co xml:id="CO24-1"/>
 autologin-user-timeout=0</screen>
 <calloutlist>
-<callout arearefs="CO23-1">
+<callout arearefs="CO24-1">
 <para>mettez ici votre nom de compte en autologin</para>
 </callout>
 </calloutlist>
@@ -1823,114 +1658,70 @@ autologin-user-timeout=0</screen>
 <title>Configuration de VNC</title>
 <simpara>VNC permet de prendre le contrôle à distance et en mode graphique du raspberry pi.</simpara>
 <simpara>Il peut être lancé à la demande ou automatiquement au démarrage du raspberry pour un utilisateur standard.</simpara>
-<simpara>Si vous ne souhaitez pas démarrer automatiquement x11vnc, ne créez pas le fichier 'vnc server.desktop' dans le répertoire autostart.</simpara>
-<simpara>Suivez la procédure suivante:</simpara>
+<simpara>L&#8217;installation est simple:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
-<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+<simpara>Sur le bureau du raspberry aller dans le menu &#8594;Préférences&#8594;Configuration du raspberry Pi</simpara>
 </listitem>
 <listitem>
-<simpara>Installez le package VNC. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install x11vnc</programlisting>
+<simpara>Dans la fenêtre qui s&#8217;ouvre allez dans l&#8217;onglet interfaces et cliquez sur VNC.</simpara>
 </listitem>
 <listitem>
-<simpara>reloguez vous avec le user <literal>autologin</literal> définit dans le chapitre sur la <link linkend="xfce">configuration xfce</link></simpara>
+<simpara>Cliquez sur Valider</simpara>
 </listitem>
 <listitem>
-<simpara>Configurez un mot de passe. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">x11vnc -storepasswd [votre_mot_de_passe] ~/.vnc_passwd <co xml:id="CO24-1"/></programlisting>
-<calloutlist>
-<callout arearefs="CO24-1">
-<para>remplacez [votre mot de passe] par <link linkend="pass_gen">un mot de passe généré</link></para>
-</callout>
-</calloutlist>
-</listitem>
-<listitem>
-<simpara>Changez les droits d&#8217;accès du fichiez mot de passe. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">chmod 750 ~/.vnc_passwd</programlisting>
-</listitem>
-<listitem>
-<simpara>Ensuite éditez le fichier de configuration de vnc. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi ~/.x11vncrc</programlisting>
-</listitem>
-<listitem>
-<simpara>Inserez le texte suivant dans ce fichier:</simpara>
-<screen>-bg
--display :0.0
--forever
--shared</screen>
-</listitem>
-<listitem>
-<simpara>Ensuite éditez le fichier de démarrage automatique. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">mkdir -p ~/.config/autostart
-vi ~/.config/autostart/vnc\ server.desktop</programlisting>
-</listitem>
-<listitem>
-<simpara>Insérez le texte suivant dans ce fichier:</simpara>
-<screen>[Desktop Entry]
-Encoding=UTF-8
-Version=0.9.4
-Type=Application
-Name=vnc server
-Comment=
-Exec=/usr/bin/x11vnc
-OnlyShowIn=XFCE;
-RunHook=0
-StartupNotify=false
-Terminal=false
-Hidden=false</screen>
-</listitem>
-<listitem>
-<simpara>Enfin le raspberry PI 4 a des problèmes de lenteurs lorsque vous ne branchez pas d&#8217;écran au moment du boot de votre raspberry. C&#8217;est typiquement le cas pour les configurations Headless. Pour corriger cela il faut forcer une résolution avec une autodétection de l&#8217;écran. Il faut modifier la conf de boot.</simpara>
+<simpara>Le raspberry PI a des problèmes de lenteurs lorsque vous ne branchez pas d&#8217;écran au moment du boot de votre raspberry. C&#8217;est typiquement le cas pour les configurations Headless. Pour corriger cela il faut forcer une résolution avec une autodétection de l&#8217;écran. Il faut modifier la conf de boot.</simpara>
 </listitem>
 <listitem>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
 <simpara>Tapez,</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>pour un Ubuntu:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /boot/firmware/cmdline.txt</programlisting>
-</listitem>
-<listitem>
-<simpara>pour une Debian:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /boot/cmdline.txt</programlisting>
-</listitem>
-</orderedlist>
 </listitem>
 <listitem>
 <simpara>Puis sur la ligne présenté à l&#8217;écran, ajoutez au bout le texte suivant précédé d&#8217;un espace. Vous pouvez changer la résolution (1024x768) comme vous voulez :</simpara>
 <screen>video=HDMI-A-1:1024x768@60D</screen>
 </listitem>
 <listitem>
-<simpara>Le driver graphique définit par défaut n&#8217;est pas le bon pour un Raspberry PI . Tapez</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>pour un Ubuntu :</simpara>
+<simpara>Le driver graphique définit par défaut n&#8217;est pas le bon pour un Raspberry PI 4 ou 5. Tapez</simpara>
 <programlisting language="bash" linenumbering="unnumbered">vi /boot/firmware/config.txt</programlisting>
-</listitem>
-<listitem>
-<simpara>pour une Debian :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /boot/config.txt</programlisting>
-</listitem>
-</orderedlist>
 </listitem>
 <listitem>
 <simpara>Cherchez la ligne <literal>dtoverlay=vc4-kms-v3d</literal> et replacez la avec :</simpara>
 <screen>gpu_mem=128
-dtoverlay=vc4-kms-v3d-pi4
+dtoverlay=vc4-kms-v3d-pi4 <co xml:id="CO25-1"/>
 hdmi_force_hotplug=1</screen>
+<calloutlist>
+<callout arearefs="CO25-1">
+<para>pour un raspberry PI 5 remplacez -pi4 par -pi5.</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
-<simpara>Si la ligne n&#8217;est pas trouvé c&#8217;est que la configuration d&#8217;Ubuntu est plus récente. il faut alors rajouter ces lignes directement dans le fichier vers la fin.</simpara>
+<simpara>Si la ligne n&#8217;est pas trouvé c&#8217;est que la configuration est plus récente. il faut alors rajouter ces lignes directement dans le fichier vers la fin.</simpara>
 </listitem>
 <listitem>
-<simpara>Enfin il peut être utile de changer le mode de démarrage par défaut de <literal>systemd</literal>.</simpara>
+<simpara>Rebootez</simpara>
+</listitem>
+</orderedlist>
+<simpara>Enfin sur votre machine Hôte:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Installez Tigervnc-viewer; c&#8217;est le seul qui est compatible avec les certificats de ce VNC</simpara>
 </listitem>
 <listitem>
-<simpara>Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">systemctl set-default graphical.target</programlisting>
+<simpara>Sélectionnez l&#8217;adresse IP de votre raspberry</simpara>
+</listitem>
+<listitem>
+<simpara>Connectez vous, acceptez les certificats</simpara>
+</listitem>
+<listitem>
+<simpara>Entrez le login et mot de passe de votre compte sudo du raspberry.</simpara>
+</listitem>
+<listitem>
+<simpara>C&#8217;est fait
+Si vous ne souhaitez pas démarrer automatiquement x11vnc, ne créez pas le fichier 'vnc server.desktop' dans le répertoire autostart.</simpara>
 </listitem>
 </orderedlist>
 </section>
@@ -1969,13 +1760,13 @@ hdmi_force_hotplug=1</screen>
 </listitem>
 <listitem>
 <simpara>Allez à la fin du fichier et ajoutez dans le fichier:</simpara>
-<screen>[Adresse IP locale]     [home.example.com] <co xml:id="CO25-1"/> <co xml:id="CO25-2"/>
+<screen>[Adresse IP locale]     [home.example.com] <co xml:id="CO26-1"/> <co xml:id="CO26-2"/>
 [adresse IP locale]     [mail.example.com]</screen>
 <calloutlist>
-<callout arearefs="CO25-1">
+<callout arearefs="CO26-1">
 <para>remplacez [Adresse IP locale] par l&#8217;adresse IP du serveur qui répond au domaine [home.example.com] dans votre réseau local. L&#8217;adresse IP doit être du type 192.x.y.z.</para>
 </callout>
-<callout arearefs="CO25-2">
+<callout arearefs="CO26-2">
 <para>replacez [home.example.com] par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -2088,29 +1879,29 @@ La manière la plus simple lorsqu&#8217;un serveur n&#8217;a pas de nom de domai
 <listitem>
 <simpara>Mettez ensuite dans le fichier la configuration suivante:</simpara>
 <programlisting language="ini" linenumbering="unnumbered"># root is the person who gets all mail for userids &lt; 1000
-root=&lt;mailname&gt;@&lt;servermail&gt; <co xml:id="CO26-1"/> <co xml:id="CO26-2"/>
+root=&lt;mailname&gt;@&lt;servermail&gt; <co xml:id="CO27-1"/> <co xml:id="CO27-2"/>
 
 # The place where the mail goes. The actual machine name is required no
 # MX records are consulted. Commonly mailhosts are named mail.domain.com
-mailhub=mail.&lt;serveurmail&gt;:465 <co xml:id="CO26-3"/>
+mailhub=mail.&lt;serveurmail&gt;:465 <co xml:id="CO27-3"/>
 UseTLS=YES
 UseSTARTTLS=No
-AuthUser=&lt;mailname&gt;@&lt;servermail&gt; <co xml:id="CO26-4"/> <co xml:id="CO26-5"/>
-AuthPass=[mot_de_passe] <co xml:id="CO26-6"/>
+AuthUser=&lt;mailname&gt;@&lt;servermail&gt; <co xml:id="CO27-4"/> <co xml:id="CO27-5"/>
+AuthPass=[mot_de_passe] <co xml:id="CO27-6"/>
 
 # Where will the mail seem to come from?
-rewriteDomain=&lt;servermail&gt; <co xml:id="CO26-7"/>
+rewriteDomain=&lt;servermail&gt; <co xml:id="CO27-7"/>
 
 # The full hostname
-hostname=&lt;serveurname&gt;.local <co xml:id="CO26-8"/></programlisting>
+hostname=&lt;serveurname&gt;.local <co xml:id="CO27-8"/></programlisting>
 <calloutlist>
-<callout arearefs="CO26-1 CO26-4 CO26-8">
+<callout arearefs="CO27-1 CO27-4 CO27-8">
 <para>remplacer &lt;mailname&gt; par le nom de serveur défini au chapitre précédent</para>
 </callout>
-<callout arearefs="CO26-2 CO26-3 CO26-5 CO26-7">
+<callout arearefs="CO27-2 CO27-3 CO27-5 CO27-7">
 <para>remplacer &lt;servermail&gt; par le nom de domaine du relai de mail.</para>
 </callout>
-<callout arearefs="CO26-6">
+<callout arearefs="CO27-6">
 <para>remplacez [mot_de_passe] par le mot de passe généré au chapitre précédent.</para>
 </callout>
 </calloutlist>
@@ -2121,12 +1912,12 @@ hostname=&lt;serveurname&gt;.local <co xml:id="CO26-8"/></programlisting>
 </listitem>
 <listitem>
 <simpara>Mettez ensuite dans le fichier la configuration suivante:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">root:&lt;mailname&gt;@&lt;serveurmail&gt;:mail.&lt;serveurmail&gt;:465 <co xml:id="CO27-1"/> <co xml:id="CO27-2"/></programlisting>
+<programlisting language="ini" linenumbering="unnumbered">root:&lt;mailname&gt;@&lt;serveurmail&gt;:mail.&lt;serveurmail&gt;:465 <co xml:id="CO28-1"/> <co xml:id="CO28-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO27-1">
+<callout arearefs="CO28-1">
 <para>remplacer &lt;mailname&gt; par le nom de serveur défini au chapitre précédent</para>
 </callout>
-<callout arearefs="CO27-2">
+<callout arearefs="CO28-2">
 <para>remplacer &lt;servermail&gt; par le nom de domaine du relai de mail.</para>
 </callout>
 </calloutlist>
@@ -2135,7 +1926,7 @@ hostname=&lt;serveurname&gt;.local <co xml:id="CO26-8"/></programlisting>
 </section>
 </section>
 <section xml:id="firewall">
-<title>Deblocage de port de firewall</title>
+<title>Déblocage de port de firewall</title>
 <simpara>Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en entrée de votre équipement. Cela veut dire qu&#8217;il ne sera pas possible de connecter une machine externe sur votre équipement sans avoir effecté une opération de déblocage du port du firewall.</simpara>
 <simpara>Il existe deux manière de débloquer un port. Elle dépend de ce que vous avez configuré.</simpara>
 <section xml:id="_déblocage_et_suppression_de_regles_de_firewall_avec_ispconfig">
@@ -2203,9 +1994,9 @@ ufw allow 443/tcp</programlisting>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ufw allow xxxx/tcp <co xml:id="CO28-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ufw allow xxxx/tcp <co xml:id="CO29-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO28-1">
+<callout arearefs="CO29-1">
 <para>remplacez xxxx par le numero de port que vous souhaitez débloquer</para>
 </callout>
 </calloutlist>
@@ -2218,9 +2009,9 @@ ufw allow 443/tcp</programlisting>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ufw delete allow xxxx/tcp <co xml:id="CO29-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ufw delete allow xxxx/tcp <co xml:id="CO30-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO29-1">
+<callout arearefs="CO30-1">
 <para>remplacez xxxx par le numero de port que vous souhaitez débloquer</para>
 </callout>
 </calloutlist>
@@ -2303,18 +2094,18 @@ Enfin dernier point, en configurant des DNS qui sont libres de censure et pas ce
 </listitem>
 <listitem>
 <simpara>Ajoutez à la fin du fichier le texte suivant:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">interface wlan0 <co xml:id="CO30-1"/>
-        static ip_address=192.168.3.210/24 <co xml:id="CO30-2"/>
-        static routers=192.168.3.254 <co xml:id="CO30-3"/>
+<programlisting language="ini" linenumbering="unnumbered">interface wlan0 <co xml:id="CO31-1"/>
+        static ip_address=192.168.3.210/24 <co xml:id="CO31-2"/>
+        static routers=192.168.3.254 <co xml:id="CO31-3"/>
         static domain_name_servers= 127.0.0.1</programlisting>
 <calloutlist>
-<callout arearefs="CO30-1">
+<callout arearefs="CO31-1">
 <para>mettez ici l&#8217;interface concernée (eth0 ou wlan0)</para>
 </callout>
-<callout arearefs="CO30-2">
+<callout arearefs="CO31-2">
 <para>Remplacez 192.168.3.210 par l&#8217;adresse IP statique de cette machine</para>
 </callout>
-<callout arearefs="CO30-3">
+<callout arearefs="CO31-3">
 <para>Remplacez 192.168.3.254 par l&#8217;adresse IP de votre routeur internet (Box)</para>
 </callout>
 </calloutlist>
@@ -2468,13 +2259,13 @@ usershare allow guests = yes
    read only = no
    create mode = 0777
    directory mode = 0777
-   force user = public_user <co xml:id="CO31-1"/>
-   force group = public_group <co xml:id="CO31-2"/></programlisting>
+   force user = public_user <co xml:id="CO32-1"/>
+   force group = public_group <co xml:id="CO32-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO31-1">
+<callout arearefs="CO32-1">
 <para>mettez ici le username de votre Linux qui possédera tous les fichiers.</para>
 </callout>
-<callout arearefs="CO31-2">
+<callout arearefs="CO32-2">
 <para>mettez ici le groupname de votre linux qui possédera tous les fichiers.</para>
 </callout>
 </calloutlist>
@@ -2499,9 +2290,9 @@ service nmbd restart</programlisting>
 </listitem>
 <listitem>
 <simpara>Dans le fichier ajoutez sur l&#8217;adresse IP de votre machine, le nom du DC :</simpara>
-<programlisting language="ini" linenumbering="unnumbered">[ip_address] dc1.home.lan dc1 <co xml:id="CO32-1"/></programlisting>
+<programlisting language="ini" linenumbering="unnumbered">[ip_address] dc1.home.lan dc1 <co xml:id="CO33-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO32-1">
+<callout arearefs="CO33-1">
 <para>remplacez <literal>ip_address</literal> par l&#8217;adresse IP de votre machine</para>
 </callout>
 </calloutlist>
@@ -2552,11 +2343,11 @@ mv /etc/samba/smb.conf /etc/samba/smb.conf.orig</programlisting>
 <simpara>Dans ce fichier, Vérifiez que les informations suivantes sont présentes. Ajoutez les sinon :</simpara>
 <programlisting language="bash" linenumbering="unnumbered"># Global parameters
 [global]
-        dns forwarder = [IP_DNS] <co xml:id="CO33-1"/>
+        dns forwarder = [IP_DNS] <co xml:id="CO34-1"/>
         netbios name = DC
-        realm = HOME.LAN <co xml:id="CO33-2"/>
+        realm = HOME.LAN <co xml:id="CO34-2"/>
         server role = active directory domain controller
-        workgroup = HOME <co xml:id="CO33-3"/>
+        workgroup = HOME <co xml:id="CO34-3"/>
         interfaces = wlan0 eth0 lo
         bind interfaces only = yes
         template shell = /bin/bash
@@ -2596,22 +2387,22 @@ mv /etc/samba/smb.conf /etc/samba/smb.conf.orig</programlisting>
    read only = no
    create mode = 0777
    directory mode = 0777
-   force user = public_user <co xml:id="CO33-4"/>
-   force group = public_group <co xml:id="CO33-5"/></programlisting>
+   force user = public_user <co xml:id="CO34-4"/>
+   force group = public_group <co xml:id="CO34-5"/></programlisting>
 <calloutlist>
-<callout arearefs="CO33-1">
+<callout arearefs="CO34-1">
 <para>remplacez <literal>IP_DNS</literal> par 127.0.0.1. Si vous décidez d&#8217;utiliser le DC de samba conjointement avec <literal>dnsmasq</literal>, vous devez mettre 127.0.1.1. voir plus bas pour le reste de la configuration.</para>
 </callout>
-<callout arearefs="CO33-2">
+<callout arearefs="CO34-2">
 <para>ici vous retrouvez le Realm configuré plus haut</para>
 </callout>
-<callout arearefs="CO33-3">
+<callout arearefs="CO34-3">
 <para>et le domaine configuré plus haut.</para>
 </callout>
-<callout arearefs="CO33-4">
+<callout arearefs="CO34-4">
 <para>mettez ici le username de votre Linux qui possédera tous les fichiers.</para>
 </callout>
-<callout arearefs="CO33-5">
+<callout arearefs="CO34-5">
 <para>mettez ici le groupname de votre linux qui possédera tous les fichiers.</para>
 </callout>
 </calloutlist>
@@ -2640,11 +2431,11 @@ group:  files winbind</programlisting>
 </listitem>
 <listitem>
 <simpara>Vérification des résolutions d&#8217;hotes. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">host -t A home.lan <co xml:id="CO34-1"/>
-host -t SRV _kerberos._udp.home.lan <co xml:id="CO34-2"/>
-host -t SRV _ldap._tcp.home.lan <co xml:id="CO34-3"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">host -t A home.lan <co xml:id="CO35-1"/>
+host -t SRV _kerberos._udp.home.lan <co xml:id="CO35-2"/>
+host -t SRV _ldap._tcp.home.lan <co xml:id="CO35-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO34-1 CO34-2 CO34-3">
+<callout arearefs="CO35-1 CO35-2 CO35-3">
 <para>remplacez home.lan par votre nom de realm configuré plus haut.</para>
 </callout>
 </calloutlist>
@@ -2661,24 +2452,24 @@ host -t SRV _ldap._tcp.home.lan <co xml:id="CO34-3"/></programlisting>
 </listitem>
 <listitem>
 <simpara>Créez une zone de recherche inversée. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">samba-tool dns zonecreate DC1 1.27.172.in-addr.arpa --username=administrator <co xml:id="CO35-1"/> <co xml:id="CO35-2"/> <co xml:id="CO35-3"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">samba-tool dns zonecreate DC1 1.27.172.in-addr.arpa --username=administrator <co xml:id="CO36-1"/> <co xml:id="CO36-2"/> <co xml:id="CO36-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO35-1">
+<callout arearefs="CO36-1">
 <para>DC1 : Nom de votre serveur</para>
 </callout>
-<callout arearefs="CO35-2">
+<callout arearefs="CO36-2">
 <para>1.27.172.in-addr.arpa : Adresse du sous réseau inversée. (Le sous réseau était 172.27.1.0. A remplacer par celui de votre réseau réel).</para>
 </callout>
-<callout arearefs="CO35-3">
+<callout arearefs="CO36-3">
 <para>username : Compte ayant l’autorisation de créer la zone. Un mot de passe sera demandé.</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Maintenant vous devez vous authentifier sur Kerberos avec le login <literal>administrator</literal>. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">kinit administrator@HOME.LAN <co xml:id="CO36-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">kinit administrator@HOME.LAN <co xml:id="CO37-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO36-1">
+<callout arearefs="CO37-1">
 <para>remplacez home.lan par votre nom de realm configuré plus haut.</para>
 </callout>
 </calloutlist>
@@ -2692,10 +2483,10 @@ host -t SRV _ldap._tcp.home.lan <co xml:id="CO34-3"/></programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez des utilisateurs. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">samba-tool user create user1 user1_password <co xml:id="CO37-1"/>
-samba-tool user setexpiry user1 --noexpiry <co xml:id="CO37-2"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">samba-tool user create user1 user1_password <co xml:id="CO38-1"/>
+samba-tool user setexpiry user1 --noexpiry <co xml:id="CO38-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO37-1 CO37-2">
+<callout arearefs="CO38-1 CO38-2">
 <para>remplacer <literal>user1</literal> par votre nom de nouvel utilisateur et <literal>user1_password</literal> par son mot de passe.</para>
 </callout>
 </calloutlist>
@@ -2722,13 +2513,13 @@ samba-tool user setexpiry user1 --noexpiry <co xml:id="CO37-2"/></programlisting
 </listitem>
 <listitem>
 <simpara>Dans le fichier, Insérez :</simpara>
-<programlisting language="ini" linenumbering="unnumbered">nameserver [Adresse_ip] <co xml:id="CO38-1"/>
-search home.lan <co xml:id="CO38-2"/></programlisting>
+<programlisting language="ini" linenumbering="unnumbered">nameserver [Adresse_ip] <co xml:id="CO39-1"/>
+search home.lan <co xml:id="CO39-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO38-1">
+<callout arearefs="CO39-1">
 <para>remplacez Adresse_ip par l&#8217;adresse IP de votre DC</para>
 </callout>
-<callout arearefs="CO38-2">
+<callout arearefs="CO39-2">
 <para>indiquer ici le nom de domaine de votre realm (en minuscules)</para>
 </callout>
 </calloutlist>
@@ -2762,8 +2553,8 @@ search home.lan <co xml:id="CO38-2"/></programlisting>
 <programlisting language="ini" linenumbering="unnumbered"># Global parameters
 [global]
         security = ADS
-        realm = HOME.LAN <co xml:id="CO39-1"/>
-        workgroup = HOME <co xml:id="CO39-2"/>
+        realm = HOME.LAN <co xml:id="CO40-1"/>
+        workgroup = HOME <co xml:id="CO40-2"/>
         interfaces = wlan0 eth0 lo
         bind interfaces only = yes
         username map = /etc/samba/user.map
@@ -2785,19 +2576,19 @@ search home.lan <co xml:id="CO38-2"/></programlisting>
    read only = no
    create mode = 0777
    directory mode = 0777
-   force user = public_user <co xml:id="CO39-3"/>
-   force group = public_group <co xml:id="CO39-4"/></programlisting>
+   force user = public_user <co xml:id="CO40-3"/>
+   force group = public_group <co xml:id="CO40-4"/></programlisting>
 <calloutlist>
-<callout arearefs="CO39-1">
+<callout arearefs="CO40-1">
 <para>remplacez HOME.LAN par le Realm configuré plus haut.</para>
 </callout>
-<callout arearefs="CO39-2">
+<callout arearefs="CO40-2">
 <para>et le domaine configuré plus haut.</para>
 </callout>
-<callout arearefs="CO39-3">
+<callout arearefs="CO40-3">
 <para>mettez ici le username de votre Linux qui possédera tous les fichiers.</para>
 </callout>
-<callout arearefs="CO39-4">
+<callout arearefs="CO40-4">
 <para>mettez ici le groupname de votre linux qui possédera tous les fichiers.</para>
 </callout>
 </calloutlist>
@@ -2808,18 +2599,18 @@ search home.lan <co xml:id="CO38-2"/></programlisting>
 </listitem>
 <listitem>
 <simpara>Insérez dans ce fichier ceci:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">!root = HOME\Administrator <co xml:id="CO40-1"/></programlisting>
+<programlisting language="ini" linenumbering="unnumbered">!root = HOME\Administrator <co xml:id="CO41-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO40-1">
+<callout arearefs="CO41-1">
 <para>remplacez HOME par le domaine configuré plus haut</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Joignez le domaine. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">samba-tool domain join home.lan MEMBER -U administrator <co xml:id="CO41-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">samba-tool domain join home.lan MEMBER -U administrator <co xml:id="CO42-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO41-1">
+<callout arearefs="CO42-1">
 <para>remplacez home.lan par le Realm configuré plus haut.</para>
 </callout>
 </calloutlist>
@@ -2873,17 +2664,17 @@ chmod 750 /var/lib/samba/ntp_signd/</programlisting>
 <listitem>
 <simpara>Insérez ou modifier dans les fichiers les lignes pour avoir:</simpara>
 <programlisting language="bash" linenumbering="unnumbered"># bind the chrony service to IP address of the Samba AD
-bindcmdaddress [adresse_ip] <co xml:id="CO42-1"/>
+bindcmdaddress [adresse_ip] <co xml:id="CO43-1"/>
 # allow clients on the network to connect to the Chrony NTP server
-allow [subnet]/24 <co xml:id="CO42-2"/>
+allow [subnet]/24 <co xml:id="CO43-2"/>
 
 # specify the ntpsigndsocket directory for the Samba AD
 ntpsigndsocket /var/lib/samba/ntp_signd</programlisting>
 <calloutlist>
-<callout arearefs="CO42-1">
+<callout arearefs="CO43-1">
 <para>mettez ici l&#8217;adresse IP de l' AD de votre serveur samba</para>
 </callout>
-<callout arearefs="CO42-2">
+<callout arearefs="CO43-2">
 <para>mettez ici l&#8217;adresse du sous réseau.</para>
 </callout>
 </calloutlist>
@@ -2908,9 +2699,9 @@ systemctl status chronyd</programlisting>
 </listitem>
 <listitem>
 <simpara>Dans le fichier ajoutez dans la section <literal>[global]</literal> la ligne suivante:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">        dns forwarder = [IP_DNS] <co xml:id="CO43-1"/></programlisting>
+<programlisting language="ini" linenumbering="unnumbered">        dns forwarder = [IP_DNS] <co xml:id="CO44-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO43-1">
+<callout arearefs="CO44-1">
 <para>remplacez <literal>IP_DNS</literal> par 127.0.1.1.</para>
 </callout>
 </calloutlist>
@@ -2957,16 +2748,16 @@ auto lo:0
 </listitem>
 <listitem>
 <simpara>Dans le fichier, ajoutez les données suivantes:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">dhcp-option=44,[ip_address]     # set netbios-over-TCP/IP nameserver(s) aka WINS server(s) <co xml:id="CO44-1"/>
-dhcp-option=45,[ip_address]      # netbios datagram distribution server <co xml:id="CO44-2"/>
+<programlisting language="ini" linenumbering="unnumbered">dhcp-option=44,[ip_address]     # set netbios-over-TCP/IP nameserver(s) aka WINS server(s) <co xml:id="CO45-1"/>
+dhcp-option=45,[ip_address]      # netbios datagram distribution server <co xml:id="CO45-2"/>
 dhcp-option=46,8           # netbios node type
 dhcp-option=47             # netbios TCP Scope on
-port=5353 <co xml:id="CO44-3"/></programlisting>
+port=5353 <co xml:id="CO45-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO44-1 CO44-2">
+<callout arearefs="CO45-1 CO45-2">
 <para>mettez à la place de <literal>[ip_address]</literal> l&#8217;adresse IP de votre serveur samba.</para>
 </callout>
-<callout arearefs="CO44-3">
+<callout arearefs="CO45-3">
 <para>cette ligne est à mettre si vous avez une configuration DNSMASQ. Elle n&#8217;est pas utile pour un serveur dhcp standard.</para>
 </callout>
 </calloutlist>
@@ -3238,9 +3029,9 @@ ExThreshold: 4</screen>
 </listitem>
 <listitem>
 <simpara>Une autre possibilité est d&#8217;indiquer explicitement l&#8217;adresse du serveur. Dans ce cas, tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">echo 'Acquire::http::Proxy "http://homeserver.local:3142";' &gt; /etc/apt/apt.conf.d/02proxy <co xml:id="CO45-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">echo 'Acquire::http::Proxy "http://homeserver.local:3142";' &gt; /etc/apt/apt.conf.d/02proxy <co xml:id="CO46-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO45-1">
+<callout arearefs="CO46-1">
 <para>remplacez homeserver.local par le nom de votre serveur proxy pour les paquets apt.</para>
 </callout>
 </calloutlist>
@@ -3268,9 +3059,9 @@ En clair, <literal>Docker</literal> permet d&#8217;installer et de configurer ra
 </listitem>
 <listitem>
 <simpara>Désinstallez les éventuelles anciennes versions de docker. tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt remove --purge docker docker-engine docker.io containerd runc <co xml:id="CO46-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt remove --purge docker docker-engine docker.io containerd runc <co xml:id="CO47-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO46-1">
+<callout arearefs="CO47-1">
 <para>docker-engine n&#8217;existe pas dans une distribution ubuntu. C&#8217;est à enlever.</para>
 </callout>
 </calloutlist>
@@ -3294,9 +3085,9 @@ wget -O docker.asc https://download.docker.com/linux/debian/gpg</programlisting>
 </listitem>
 <listitem>
 <simpara>Tapez (et remplacer éventuellement la commande $(lsb_release -cs) par le nom de votre distribution stable).  :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" <co xml:id="CO47-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" <co xml:id="CO48-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO47-1">
+<callout arearefs="CO48-1">
 <para>ici il faut remplacer l&#8217;architecture <literal>amd64</literal> par <literal>arm64</literal> pour un raspberry pi 4  ou par <literal>armhf</literal> pour un raspberry pi 3. De la même manière, remplacez debian par ubuntu si vous utilisez une distribution ubuntu/</para>
 </callout>
 </calloutlist>
@@ -3332,9 +3123,9 @@ wget -O docker.asc https://download.docker.com/linux/debian/gpg</programlisting>
 <listitem>
 <simpara>Installez quelques paquets Debian de base. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">apt install libffi-dev libssl-dev
-apt install -y python3 python3-pip <co xml:id="CO48-1"/></programlisting>
+apt install -y python3 python3-pip <co xml:id="CO49-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO48-1">
+<callout arearefs="CO49-1">
 <para>Pour Ubuntu, remplacez ces paquets par <literal>python</literal> et <literal>python-pip</literal></para>
 </callout>
 </calloutlist>
@@ -3460,9 +3251,9 @@ service apache stop</programlisting>
 </listitem>
 <listitem>
 <simpara>Ensuite installez Traefik. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -p80:80 -p8080:8080 --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG <co xml:id="CO49-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -p80:80 -p8080:8080 --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG <co xml:id="CO50-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO49-1">
+<callout arearefs="CO50-1">
 <para>Si votre serveur Traefik est disponible sur internet, il ne faudra pas exposer le port 8080 et les api insecure. et de ce fait, dans la ligne précédente, supprimez: <literal>-p8080:8080 --api.insecure=true --api.dashboard=true</literal></para>
 </callout>
 </calloutlist>
@@ -3503,7 +3294,7 @@ vi /etc/traefik/traefik.yml</programlisting>
 
 providers:
   docker:
-    defaultRule: "Host(`{{ trimPrefix `/` .Name }}.example.com`)" <co xml:id="CO50-1"/>
+    defaultRule: "Host(`{{ trimPrefix `/` .Name }}.example.com`)" <co xml:id="CO51-1"/>
     watch: true
   file:
     filename: /etc/traefik/dynamic_conf.yml
@@ -3517,7 +3308,7 @@ entryPoints:
   http:
     address: :80</programlisting>
 <calloutlist>
-<callout arearefs="CO50-1">
+<callout arearefs="CO51-1">
 <para>Remplacez example.com par le nom de domaine de votre serveur.</para>
 </callout>
 </calloutlist>
@@ -3534,17 +3325,17 @@ entryPoints:
       entrypoints:
         - http
       service: localserver
-      rule: host("example.com") <co xml:id="CO51-1"/>
+      rule: host("example.com") <co xml:id="CO52-1"/>
   services:
     localserver:
       loadBalancer:
         servers:
-          - url: "http://ip_address:3080" <co xml:id="CO51-2"/></programlisting>
+          - url: "http://ip_address:3080" <co xml:id="CO52-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO51-1">
+<callout arearefs="CO52-1">
 <para>Remplacez example.com par le nom de domaine de votre serveur.</para>
 </callout>
-<callout arearefs="CO51-2">
+<callout arearefs="CO52-2">
 <para>remplacez ip_address par l&#8217;adresse IP de votre serveur.</para>
 </callout>
 </calloutlist>
@@ -3583,9 +3374,9 @@ Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8
 <programlisting language="bash" linenumbering="unnumbered">docker pull traefik
 docker stop traefik
 docker rm traefik
-docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG <co xml:id="CO52-1"/></programlisting>
+docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG <co xml:id="CO53-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO52-1">
+<callout arearefs="CO53-1">
 <para>supprimez <literal>-v /etc/traefik:/etc/traefik</literal> si vous n&#8217;utilisez pas Pi-Hole avec Treafik.</para>
 </callout>
 </calloutlist>
@@ -3661,9 +3452,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:8061/
 ProxyPassReverse / http://localhost:8061/
 
-RedirectMatch ^/$ https://yacht.example.com <co xml:id="CO53-1"/></programlisting>
+RedirectMatch ^/$ https://yacht.example.com <co xml:id="CO54-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO53-1">
+<callout arearefs="CO54-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -3822,9 +3613,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:9050/
 ProxyPassReverse / http://localhost:9050/
 
-RedirectMatch ^/$ https://portainer.example.com <co xml:id="CO54-1"/></programlisting>
+RedirectMatch ^/$ https://portainer.example.com <co xml:id="CO55-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO54-1">
+<callout arearefs="CO55-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -3957,10 +3748,10 @@ docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.
 <listitem>
 <simpara>Dans le fichier, ajoutez:</simpara>
 <screen linenumbering="unnumbered">{
-  "registry-mirrors": ["http://docker.example.com:5000"] <co xml:id="CO55-1"/>
+  "registry-mirrors": ["http://docker.example.com:5000"] <co xml:id="CO56-1"/>
 }</screen>
 <calloutlist>
-<callout arearefs="CO55-1">
+<callout arearefs="CO56-1">
 <para>remplacer <literal>docker.example.com</literal> par le nom ou l&#8217;adresse ip de votre cache docker.</para>
 </callout>
 </calloutlist>
@@ -4065,9 +3856,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:8035/
 ProxyPassReverse / http://localhost:8035/
 
-RedirectMatch ^/$ https://statping.example.com <co xml:id="CO56-1"/></programlisting>
+RedirectMatch ^/$ https://statping.example.com <co xml:id="CO57-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO56-1">
+<callout arearefs="CO57-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -4243,9 +4034,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez en première ligne du fichier :</simpara>
-<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO57-1"/></screen>
+<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO58-1"/></screen>
 <calloutlist>
-<callout arearefs="CO57-1">
+<callout arearefs="CO58-1">
 <para>remplacez SERVERIPADDRESS par l&#8217;adresse IP affichée plus tôt.</para>
 </callout>
 </calloutlist>
@@ -4268,9 +4059,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Puis tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO58-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO59-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO58-1">
+<callout arearefs="CO59-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
 </calloutlist>
@@ -4298,13 +4089,13 @@ chmod 700 borgbackup</programlisting>
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO59-1"/>
-cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO59-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO60-1"/>
+cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO60-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO59-1">
+<callout arearefs="CO60-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
-<callout arearefs="CO59-2">
+<callout arearefs="CO60-2">
 <para>si votre machine est assez puissante, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</para>
 </callout>
 </calloutlist>
@@ -4333,10 +4124,10 @@ cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;st
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO60-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO61-1"/>
 borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO60-1">
+<callout arearefs="CO61-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4365,10 +4156,10 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</progra
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO61-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO62-1"/>
 borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
 <calloutlist>
-<callout arearefs="CO61-1">
+<callout arearefs="CO62-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4379,9 +4170,9 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 </listitem>
 <listitem>
 <simpara>vous pouvez maintenant vérifier un de vos backup en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO62-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO63-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO62-1">
+<callout arearefs="CO63-1">
 <para>le nom de sauvegarde est récupéré en utilisant la commande borglist.sh</para>
 </callout>
 </calloutlist>
@@ -4403,10 +4194,10 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 <simpara>Insérez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO63-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO64-1"/>
 borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
 <calloutlist>
-<callout arearefs="CO63-1">
+<callout arearefs="CO64-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4461,13 +4252,13 @@ rmdir /mnt/borgbackup</programlisting>
 # - une archive par mois pour les 6 derniers mois.
 
 
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO64-1"/>
-borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO64-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO65-1"/>
+borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO65-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO64-1">
+<callout arearefs="CO65-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
-<callout arearefs="CO64-2">
+<callout arearefs="CO65-2">
 <para>Le nettoyage des sauvegardes va conserver 7 sauvegardes journalières, 4 à la semaine et 12 au mois</para>
 </callout>
 </calloutlist>
@@ -4546,10 +4337,10 @@ pip3 install borgbackup[llfuse]</programlisting>
 <listitem>
 <simpara>Munissez vous du mot de passe &lt;mot_passe&gt; des archives borg et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO65-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO66-1"/>
 borg list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO65-1">
+<callout arearefs="CO66-1">
 <para>remplacez mot_passe par votre mot de passe de borg</para>
 </callout>
 </calloutlist>
@@ -4578,13 +4369,13 @@ chroot . bash
 mkdir -p dev proc run sys tmp
 mount -t devtmpfs dev /dev
 mount -t proc proc /proc
-grub_install /dev/sda <co xml:id="CO66-1"/>
+grub_install /dev/sda <co xml:id="CO67-1"/>
 umount /proc
 umount /dev
 sync
 exit</programlisting>
 <calloutlist>
-<callout arearefs="CO66-1">
+<callout arearefs="CO67-1">
 <para>tapez ici le nom de device de votre disque de boot</para>
 </callout>
 </calloutlist>
@@ -4657,7 +4448,7 @@ vi config.py</programlisting>
 
     BACKUP_REPOS = {
         # Repo  name
-        "example.com": { <co xml:id="CO67-1"/>
+        "example.com": { <co xml:id="CO68-1"/>
             # Repo absolute path
             "repo_path": "/home/borgbackup/borgbackup",
 
@@ -4665,7 +4456,7 @@ vi config.py</programlisting>
             "log_path": "/var/log/borg/",
 
             # Repo password
-            "repo_pwd": "your_password", <co xml:id="CO67-2"/>
+            "repo_pwd": "your_password", <co xml:id="CO68-2"/>
 
             # Command/script to run to manually start a backup.
             # If left empty or not specified, the backup won't be
@@ -4677,10 +4468,10 @@ vi config.py</programlisting>
         }
     }</programlisting>
 <calloutlist>
-<callout arearefs="CO67-2">
+<callout arearefs="CO68-2">
 <para>Insérez ici le mot de passe du dépot Borg Backup</para>
 </callout>
-<callout arearefs="CO67-1">
+<callout arearefs="CO68-1">
 <para>Mettez ici le nom de votre domaine sauvegardé</para>
 </callout>
 </calloutlist>
@@ -4798,9 +4589,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:5000/
 ProxyPassReverse / http://localhost:5000/
 
-RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO68-1"/></programlisting>
+RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO69-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO68-1">
+<callout arearefs="CO69-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>

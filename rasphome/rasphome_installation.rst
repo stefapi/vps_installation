@@ -4,15 +4,18 @@
    :caption: Table des matières
 
 
-.. __avant_propos:
+.. _`_avant_propos`:
 
 Avant propos
 ============
 
 Ce document est disponible sur le site
-`ReadTheDocs <https://raspberry-homeserver.readthedocs.io>`__
+`ReadTheDocs <https://serveur-home-raspberry-pi.readthedocs.io>`__
 
-|Diagram|
+.. figure:: diag-qrcode-md5-ca9d818d3232226fdda46fca34ff0de9.svg
+   :alt: Diagram
+
+   Diagram
 
 et sur `Github <https://github.com/stefapi/vps_installation>`__. Sur
 Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et
@@ -23,103 +26,7 @@ serveur linux de gestion du reseau Home (site auto hébergé) avec un
 raspberry PI.
 
 Elle est le résultat de très nombreuses heures de travail pour collecter
-la documentation nécessaire. Sur mon serveur, j’ai installé un Ubuntu
-pour Raspberry. Cette documentation décrit aussi l’installation pour une
-Raspbian.
-
-Dans ce document, je montre la configuration de nombreux types de sites
-web et services dans un domaine en utilisant ISPConfig.
-
-Sont installés:
-
--  un panel `ISPConfig <https://www.ispconfig.org/>`__,
-
--  un configurateur `Webmin <http://www.webmin.com/>`__,
-
--  un serveur apache avec sa configuration let’s encrypt et les plugins
-   PHP, Python et Ruby,
-
--  un serveur de mail avec antispam, sécurisation d’envoi des mails et
-   autoconfiguration pour Outlook, Thunderbird, Android,
-
--  un webmail `roundcube <https://roundcube.net>`__,
-
--  un serveur de mailing list `mailman <https://www.list.org>`__,
-
--  un serveur ftp et sftp sécurisé,
-
--  un serveur de base de données MariaDB et son interface web
-   d’administration `phpmyadmin <https://www.phpmyadmin.net/>`__,
-
--  des outils de sécurisation, de mise à jour automatique et d’audit du
-   serveur,
-
--  un outil de Monitoring `Munin <http://munin-monitoring.org/>`__,
-
--  un outil de Monitoring `Monit <http://mmonit.com/monit/>`__,
-
--  l’installation de `Docker <https://hub.docker.com/>`__ et des outils
-   `Portainer <https://portainer.io>`__ et `Yacht <https://yacht.sh>`__,
-
--  un sous domaine pointant sur un site auto-hébergé (l’installation du
-   site n’est pas décrite ici; Se référer à
-   `Yunohost <https://yunohost.org>`__ ) par exemple,
-
--  un site CMS sous `Joomla <https://www.joomla.fr/>`__,
-
--  un site CMS sous `Concrete5 <https://www.concrete5.org/>`__,
-
--  un site WIKI sous `Mediawiki <https://www.mediawiki.org>`__,
-
--  un site de blog `Wordpress <https://wordpress.com>`__,
-
--  un site `Microweber <https://microweber.org/>`__,
-
--  un site Photo sous `Piwigo <https://piwigo.org/>`__,
-
--  un site de partage de recettes de cuisine
-   `Mealie <https://hay-kot.github.io/mealie/>`__
-
--  un site Collaboratif sous `Nextcloud <https://nextcloud.com>`__,
-
--  un site `Gitea <https://gitea.io>`__ et son repository GIT,
-
--  un serveur de mots de passe `Bitwarden <https://bitwarden.com/>`__,
-
--  un dashboard pour vos sites web
-   `Heimdall <https://heimdall.site/>`__,
-
--  un serveur et un site de partage de fichiers
-   `Seafile <https://www.seafile.com>`__,
-
--  un serveur `Grafana <https://grafana.com/>`__,
-   `Prometheus <https://prometheus.io/>`__,
-   `Loki <https://github.com/grafana/loki>`__, Promtail pour gérer les
-   statistiques et les logs du serveur,
-
--  un serveur de sauvegardes
-   `BorgBackup <https://borgbackup.readthedocs.io/>`__,
-
--  un serveur de VPN `Pritunl <https://pritunl.com/>`__,
-
--  un serveur de bureau à distance
-   `Guacamole <https://guacamole.apache.org>`__
-
-Dans ce document nous configurons un nom de domaine principal. Pour la
-clarté du texte, il sera nommé "example.com". Il est à remplacer
-évidemment par votre nom de domaine principal.
-
-Je suppose dans ce document que vous savez vous connecter à distance sur
-un serveur en mode terminal, que vous savez vous servir de ``ssh`` pour
-Linux ou de ``putty`` pour Windows, que vous avez des notions
-élémentaires de Shell Unix et que vous savez vous servir de l’éditeur
-``vi``. Si ``vi`` est trop compliqué pour vous, je vous suggère
-d’utiliser l’éditeur de texte ``nano`` à la place et de remplacer ``vi``
-par ``nano`` dans toutes les lignes de commande.
-
-Dans le document, on peut trouver des textes entourés de <texte>. Cela
-signifie que vous devez mettre ici votre propre texte selon vos
-préférences.
+la documentation nécessaire.
 
 Le coût pour mettre en oeuvre ce type de serveur est relativement
 faible:
@@ -127,16 +34,22 @@ faible:
 -  Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y
    avoir des promos)
 
--  Comptez 26€ pour acheter une carte Raspberry PI 3 A+ (1Go de Ram) et
-   61€ pour un PI 4 avec 4Go de Ram. A cela il faut ajouter un boitier,
-   une alim et une flash de 64 ou 128 Go (prenez les cartes SD les plus
-   rapide possible en écriture). Vous en aurez donc pour 110€ si vous
-   achetez tout le kit.
+-  Comptez 47€ pour acheter une carte Raspberry PI 4 (1Go de Ram) et 67€
+   pour un PI 4 avec 4Go de Ram ou 94€ pour un PI 5 avec 8Go de Ram. A
+   cela il faut ajouter un boitier, une alim et une flash de 64 ou 128
+   Go (prenez les cartes SD les plus rapide possible en écriture).
+
+Vous en aurez donc entre 80€ pour une petite Configuration Raspberry PI
+4 1Go, flash de 64 Go et 160€ pour une configuration Raspberry PI 5 8 Go
+et une flash de 512 Go.
+
+Il existe aussi des kits permettant de mettre en oeuvre des cartes NVME
+avec un gros gain de performance disque.
 
 Par rapport à une solution VPS directement dans le cloud, ce budget
-correspond à 7-10 mois d’abonnement. Si vous avez la Fibre chez vous, il
-est nettement plus rentable d’utiliser un Raspberry que de prendre un
-abonne VPS.
+correspond à 7-16 mois d’abonnement selon la configuration. Si vous avez
+la Fibre chez vous, il est nettement plus rentable d’utiliser un
+Raspberry que de prendre un abonnement VPS.
 
 .. _root_login:
 
@@ -192,7 +105,7 @@ Gestion des mots de passe
 =========================
 
 A propos des mots de passe: il est conseillé de saisir des mots de passe
-de 10 caractères contenant des majuscules/minuscules/nombres/caractères
+de 12 caractères contenant des majuscules/minuscules/nombres/caractères
 spéciaux. Une autre façon de faire est de saisir de longues phrases. Par
 exemple: 'J’aime manger de la mousse au chocolat parfumée à la menthe'.
 Ce dernier exemple a un taux de complexité bien meilleur qu’un mot de
@@ -289,7 +202,7 @@ générer des mots de passe, voici quelques méthodes:
 
          xkcdpass
 
-.. __installation_du_linux_sur_votre_raspberry_pi:
+.. _`_installation_du_linux_sur_votre_raspberry_pi`:
 
 Installation du linux sur votre Raspberry Pi
 ============================================
@@ -298,13 +211,11 @@ C’est la première étape.
 
 Il vous faut bien choisir le type de linux que vous souhaitez installer:
 
--  Debian: C’est la distribution la plus connue et celle qui offre le
+-  Debian 64: C’est la distribution la plus connue et celle qui offre le
    plus de possibilités juste après l’installation (notamment pour faire
    de la domotique, utiliser le GPIO …​) .
 
--  Ubuntu 64: Elle est plus proche d’une Ubuntu standard et propose
-   beaucoup de paquets pour faire fonctionner votre raspberry en serveur
-   web.
+-  Ubuntu 64: Elle est plus proche d’une Ubuntu standard.
 
 Il vous faudra un lecteur de flash microSD - USB que vous brancherez sur
 votre PC.
@@ -331,27 +242,70 @@ Pour Linux, appliquer la procédure suivante:
 
 Suivez la procédure ci dessous commune à toutes les plateformes:
 
-1. Sélectionnez ``Choose OS`` et dans la liste choisissez
-   ``Raspberry Pi OS LITE (64-bit)`` ou ``Ubuntu 64``
+1.  Vous avez deux façons d’installer:
 
-2. Sélectionnez ``CHoose SD CARD`` et sélectionnez votre lecteur de
-   carte SD
+    -  avec un écran et un clavier qui est la méthode la plus facile
 
-3. Cliquez sur ``Write``
+    -  en mode Headless qui est plus complexe mais ne nécessite pas
+       d’écran ni de clavier. L’installation s’effectue automatiquement.
 
-4. Attendez la fin du chargement et de l’écriture sur la flash.
+2.  Sélectionnez ``Choisir le modèle`` et dans la liste choisissez votre
+    type de Raspberry
 
-5. Vous avez deux façons d’installer:
+3.  Sélectionnez ``Choisir l’OS`` et dans la liste choisissez
+    ``Raspberry Pi OS (64-bit)`` ou
+    ``Other general-purpose OS``\ →`Ubuntu`→`Ubuntu Desktop 64\`
 
-   -  avec un écran et un clavier qui est la méthode la plus facile
+4.  Sélectionnez ``Choisir le Stockage`` et sélectionnez votre lecteur
+    de carte SD
 
-   -  en mode Headless qui est plus complexe mais ne nécessite pas
-      d’écran ni de clavier
+5.  Cliquez sur ``Suivant``
 
-6. Vous devez choisir l’une des méthodes décrites dans les deux
-   chapitres suivants.
+6.  Cliquez sur ``Modifier Réglages`` si vous souhaitez installer en
+    mode headless le Raspberry sinon cliquez sur ``Non`` et allez à
+    l’étape 10
 
-.. __installation_avec_écran_et_clavier:
+7.  Dans l’onglet ``Général``
+
+    -  Donnez le nom de votre Raspberry dans ``Nom d’hôte``
+
+    -  Donnez votre utilisateur sudo dans ``nom d’utilisateur``
+
+    -  Donnez votre mot de passe dans ``Mot de passe``. Utilisez un
+       générateur de mot de passe pour en obtenir un suffisamment
+       complexe
+
+    -  Donnez votre SSID Wifi dans ``SSID``
+
+    -  Donner le mot de passe de votre wifi dans ``Mot de passe``. Vous
+       pouvez l’afficher si vous voulez vérifier que la saisie est
+       correcte.
+
+    -  Dans ``Pays Wi-fi`` mettez ``FR``
+
+    -  Dans ``Fuseau horaire`` mettez votre pays ``Europe/Paris`` par
+       exemple
+
+    -  Dans type de clavier mettez ``fr`` si vous avez un clavier Azerty
+
+8.  Dans l’onglet \`Services
+
+    -  Activez ``Activer SSH``
+
+    -  Sélectionnez ``Utiliser un mot de passe pour l’authentification``
+
+9.  Cliquez sur ``Enregistrer``
+
+10. Cliquez sur ``Oui``
+
+11. Dans la fenêtre suivant intitulée ``Attention`` cliquez sur ``Oui``
+
+12. Attendez la fin du chargement et de l’écriture sur la flash.
+
+13. En fonction de la méthode choisie, allez au chapitre suivant ou
+    celui encore après.
+
+.. _`_installation_avec_écran_et_clavier`:
 
 Installation avec écran et clavier
 ----------------------------------
@@ -367,29 +321,27 @@ Pour ce type d’installation, il vous faut un clavier+souris et un écran.
 3.  Branchez votre Raspberry sur votre réseau Ethernet filaire (vous
     pouvez aussi utiliser le wifi)
 
-4.  Démarrez votre Raspberry.
+4.  Démarrez votre raspberry. Attention, les Raspberry PI 5 ont un
+    bouton ``On``
 
-5.  Après l’écran de démarrage arc en ciel, vous devez assez rapidement
-    arriver sur le bureau
+5.  Attendez environ 2 minutes le temps que le premier boot se termine.
+    Tout pendant la procédure de boot, la petite led d’accès disque doit
+    clignoter. Vous devez assez rapidement arriver sur le bureau
 
-6.  Un programme doit se lancer automatiquement.
+6.  Un écran de configuration doit s’afficher automatiquement.
 
 7.  Sélectionnez le clavier et la langue en français
 
-8.  Tapez votre nouveau mot de passe pour le login ``pi``
+8.  Tapez votre nouveau mot de passe et votre compte utilisateur
 
-9.  Choisissez un full screen sans bords
+9.  Choisissez votre connexion wifi et entrez le mot de passe
 
-10. Choisissez votre connexion wifi et entrez le mot de passe
-
-11. Bien noter votre adresse IP elle vous sera utile ensuite
-
-12. Les mises à jours de paquets Debian ainsi que l’installation des
+10. Les mises à jours de paquets Debian ainsi que l’installation des
     traductions en français vont s’installer.
 
-13. Une fois les installations terminées, le Raspberry va rebooter.
+11. Une fois les installations terminées, le Raspberry va rebooter.
 
-14. Une fois rebooté, sélectionnez dans le menu
+12. Une fois rebooté, sélectionnez dans le menu
     ``Préférences``\ →`Configuration du Raspberry PI\`
 
     -  Dans l’onglet ``Display`` Cliquez sur ``Set Resolution`` et
@@ -399,7 +351,7 @@ Pour ce type d’installation, il vous faut un clavier+souris et un écran.
 
     -  Cliquez sur ``Valider``
 
-15. Cliquez sur l’icône ``VNC`` dans la barre en haut à Droite
+13. Cliquez sur l’icône ``VNC`` dans la barre en haut à Droite
 
     -  Dans la fenêtre cliquez sur le menu burger en haut à Droite.
 
@@ -411,80 +363,49 @@ Pour ce type d’installation, il vous faut un clavier+souris et un écran.
     -  Tapez votre mot de passe dans les deux champs et cliquez
        ``Valider`` puis ``OK``
 
-16. Vous pouvez maintenant rebooter votre Raspberry sans écran et sans
+14. Vous pouvez maintenant rebooter votre Raspberry sans écran et sans
     clavier pour continuer la configuration.
 
-17. Vous avez deux options: connexion en mode SSH ou au travers d’une
+15. Vous avez deux options: connexion en mode SSH ou au travers d’une
     connexion VNC
 
-.. __installation_headless_de_raspberry_pi_os_lite_64_bit:
+Allez au chapitre `Connexion au travers du
+réseau <#_connexion_au_travers_du_réseau>`__.
 
-Installation Headless de Raspberry Pi OS LITE (64-bit)
-------------------------------------------------------
+.. _`_installation_headless`:
+
+Installation Headless
+---------------------
 
 Pour ce type d’installation, pas besoin d’écran, de clavier et de
 souris. Tout s’effectue à distance.
 
-Dans la suite, je suppose que vous possèdez un PC fonctionnant avec un
-Linux (la procédure peut être adaptée pour une machine windows en
-utilisant la ligne de commande et putty)
+1. Enlevez la carte SD de votre lecteur et insérez la dans votre
+   raspberry PI.
 
-1. Avant d’enlever votre flash SD du lecteur, appliquez la procédure ci
-   après:
+2. Démarrez votre raspberry. Attention, les Raspberry PI 5 ont un bouton
+   ``On``
 
-   -  Sur la flash, 2 partitions ont été crées. Montez la partition boot
-
-   -  sur cette partition, créez un fichier ``wpa_supplicant.conf`` et
-      éditez le avec un éditeur de text (Nano ou vi sous linux ou
-      Notepad sous windows).
-
-   -  Mettez y le texte suivant:
-
-      ::
-
-         ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-         update_config=1
-         country=US
-         network={
-             ssid="YOURSSID" 
-             psk="YOURPASSWORD" 
-             key_mgmt=WPA-PSK
-             scan_ssid=1
-         }
-
-      -  remplacez ``YOURSSID`` par le nom SSID de votre wifi local
-
-      -  remplacez ``YOURPASSWORD`` par le mot de passe de votre wifi
-         local
-
-   -  sauvez le fichier
-
-   -  Sur la même partition créez un fichier ``ssh`` (vide et sans
-      extension). Il servira à indiquer au raspberry d’activer ssh au
-      prochain boot
-
-   -  démontez la partition
-
-   -  au boot sur la carte SD, le fichier sera recopié dans votre
-      configuration et le réseau wifi sera ainsi accessible
-
-2. Enlevez la carte SD de votre lecteur et insérez la dans votre
-   Raspberry PI.
-
-3. Démarrez votre raspberry.
-
-4. Attendez environ 2 minutes le temps que le premier boot se termine.
+3. Attendez environ 2 minutes le temps que le premier boot se termine.
    Tout pendant la procédure de boot, la petite led d’accès disque doit
    clignoter.
 
-5. Vous devez maintenant découvrir l’adresse IP de votre Raspberry, pour
+.. _`_connexion_au_travers_du_réseau`:
+
+Connexion au travers du réseau
+------------------------------
+
+1. Vous devez maintenant découvrir l’adresse IP de votre Raspberry, pour
    cela tapez la commande suivante:
 
    .. code:: bash
 
-      ping raspberrypi.local
+      ping raspberrypi.local 
 
-6. Si le Raspberry a démarré correctement, cette commande doit montrer
+   -  Attention remplacez raspberrypi par le nom d’Hôte que vous avez
+      choisi lors de la configuration
+
+2. Si le Raspberry a démarré correctement, cette commande doit montrer
    l’adresse IP du raspberry et une réponse correcte au ping
 
 ::
@@ -492,118 +413,76 @@ utilisant la ligne de commande et putty)
    PING raspberrypi.local (192.168.3.212) 56(84) bytes of data.
    64 bytes from raspberrypi.local (192.168.3.212): icmp_seq=1 ttl=64 time=1.32 ms
 
-1. Vous pouvez aussi utiliser la commande suivante: +
+1. Vous pouvez aussi utiliser la commande suivante:
+
+   .. code:: bash
+
+       arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)|(e4:5f:01)|(d8:3a:dd)"
+
+2. Elle vous donnera l’adresse IP de tous les raspberry de votre réseau
+   et présents dans le cache ARP de votre PC.
+
+3. Ensuite testez l’adresse ip trouvée
+
+   .. code:: bash
+
+      ping 192.168.0.100 
+
+   -  mettez ici l’adresse IP qui a été découverte.
+
+4. Si le Raspberry a démarré correctement, cette commande doit montrer
+   l’adresse IP du raspberry et une réponse correcte au ping
 
 ::
 
-    arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)"
+   PING 192.168.0.100 (192.168.0.100) 56(84) bytes of data.
+   64 bytes from 192.168.0.100: icmp_seq=1 ttl=64 time=1.49 ms
 
-1.  Si vous n’obtenez aucun résultat essayer la commande ``nmap`` sur le
-    subnet de votre réseau local
+1. Si vous n’obtenez aucun résultat essayer la commande ``nmap`` sur le
+   subnet de votre réseau local
 
-    -  On obtient l’adresse local du subnet en tapant:
+   -  On obtient l’adresse local du subnet en tapant:
 
-       .. code:: bash
+      .. code:: bash
 
-          hostname -I
+         hostname -I
 
-    -  l’adresse IP de votre PC est affichée comme premier mot. Par
-       exemple :`192.168.3.10\`
+   -  l’adresse IP de votre PC est affichée comme premier mot. Par
+      exemple :\`192.168.3.10\`
 
-    -  le subnet se déduit de cette adresse en gardant les 3 premiers
-       nombres (cas général de la plupart des utilisateurs).
+   -  le subnet se déduit de cette adresse en gardant les 3 premiers
+      nombres (cas général de la plupart des utilisateurs).
 
-    -  Tapez:
+   -  Tapez:
 
-       .. code:: bash
+      .. code:: bash
 
-          nmap -sn 192.168.3.0/24
+         nmap -sn 192.168.3.0/24 
 
-    -  la commande affiche alors les adresses IP et mac de toutes les
-       machines présentes sur le réseau.
+      -  En suite à l’exemple de hostname reçu dans l’étape précéndente,
+         nous avons remplacé le 10 à la fin de l’adresse IP par 0.
 
-    -  le Raspberry se reconnait par son nom de machine qui contient le
-       terme ``raspberry`` ou par son adresse mac qui est reconnue du
-       type ``Raspberry Pi Foundation``
+   -  la commande affiche alors les adresses IP et mac de toutes les
+      machines présentes sur le réseau.
 
-2.  vous pouvez alors directement vous connecter. Tapez:
+   -  le Raspberry se reconnait par son nom de machine qui contient le
+      terme ``raspberry`` ou par son adresse mac qui est reconnue du
+      type ``Raspberry Pi Foundation``
 
-    .. code:: bash
+2. vous pouvez alors directement vous connecter. Tapez:
 
-       ssh pi@adresse_ip 
+   .. code:: bash
 
-    -  adresse_ip est l’adresse IP du Raspberry pi découverte
-       précédemment ou raspberrypi.local
+      ssh username@adresse_ip 
 
-3.  Se loguer avec le mot de passe ``raspberry``
+   -  username est le ``nom d’utilisateur`` défini lors de la
+      configuration. adresse_ip est l’adresse IP du Raspberry pi
+      découverte précédemment ou raspberrypi.local ou
+      ``nom d’hôte``.local
 
-4.  Tapez :
+3. Se loguer avec le mot de passe défini pendant la configuration
 
-    .. code:: bash
-
-       sudo raspi-config
-
-5.  Choisissez ``1 Change User Password`` → tapez votre nouveau mot de
-    passe 2 fois
-
-6.  Sur l’étape suivante, il ne faut pas se louper ou vous serez obligé
-    d’éteindre votre raspberry, retirer la flash et la reprogrammer avec
-    le fichier ``wpa_supplicant.conf`` dans la partition ``boot``
-
-7.  Choisissez ``2 Network Options`` → ``N2 Wi-fi`` → Tapez votre nom de
-    SSID (attention aux majuscules) → Tapez votre mot de passe
-
-8.  Choisissez ``4 Localisation Options`` → ``I1 Change Locale`` →
-    Sélectionnez votre langue: ``fr_FR.UTF-8 UTF-8`` → puis la locale
-    par défaut ``fr_FR.UTF-8 UTF-8``
-
-9.  Choisissez ``4 Localisation Options`` → ``I2 Change Timezone`` →
-    Choisissez votre timezone (par exemple: ``Europe`` → ``Paris``)
-
-10. Choisissez ``4 Localisation Options`` →
-    ``I3 Change Keyboard Layout`` → Choisissez votre mapping clavier
-
-11. Choisissez ``4 Localisation Options`` → ``I4 Change Wi-fi Country``
-    → choisissez votre pays de norme wifi
-
-12. choisissez ``5 Interfacing Options`` → ``P2 SSH`` → choisissez
-    ``yes``
-
-13. choisissez ``7 Advanced Options`` → ``A5 Resolution`` → choisissez
-    ``DMT Mode 82 1920x1080 60Hz 16:9``
-
-14. choisissez ``8 Update`` ; Une mise a jour du système va s’effectuer
-
-15. Tapez ensuite 2 fois sur la touche ``TAB`` pour sélectionner
-    ``Finish``. Tapez ``entrée``.
-
-16. Rebootez le système en tapant:
-
-    .. code:: bash
-
-       sudo reboot
-
-17. Vous allez perdre votre connexion avec le raspberry
-
-18. si vous arrivez à vous reloguer en tapant (attendre 30 secondes
-    après le reboot avant d’essayer):
-
-    .. code:: bash
-
-       ssh pi@adresse_ip 
-
-    -  adresse_ip est l’adresse IP du Raspberry pi découverte
-       précédemment ou raspberrypi.local
-
-    C’est que vous avez terminé avec succès la configuration initiale.
-
-19. Vous avez terminé l’installation initiale de Debian. Vous pouvez
-    maintenant rebooter votre raspberry pour continuer la configuration.
-
-20. Vous avez deux options: connexion en mode SSH ou au travers d’une
-    connection VNC
-
-.. __installation_headless_de_ubuntu_64:
+.. _`_installation_headless_de_ubuntu_64`:
 
 Installation Headless de Ubuntu 64
 ----------------------------------
@@ -668,7 +547,7 @@ utilisant la ligne de commande et putty)
 
 ::
 
-    arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)"
+    arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)|(e4:5f:01)|(d8:3a:dd)"
 
 1. Ensuite testez l’adresse ip trouvée
 
@@ -696,7 +575,7 @@ utilisant la ligne de commande et putty)
           hostname -I
 
     -  l’adresse IP de votre PC est affichée comme premier mot. Par
-       exemple :`192.168.3.10\`
+       exemple :\`192.168.3.10\`
 
     -  le subnet se déduit de cette adresse en gardant les 3 premiers
        nombres (cas général de la plupart des utilisateurs).
@@ -752,82 +631,15 @@ utilisant la ligne de commande et putty)
 
 10. Choisissez votre Timezone. Par exemple: ``Europe/Paris``
 
-.. __reconnecter_automatiquement_votre_raspberry_pi_au_wifi:
+Unresolved directive in rasphome_installation.asc -
+include::../common/wifi_reboot.asc[]
 
-Reconnecter automatiquement votre Raspberry Pi au wifi
-------------------------------------------------------
-
-Si vous connectez votre raspberry pi au réseau au travers du wifi, il
-arrive que le raspberry perde la connexion au réseau de façon
-définitive.
-
-Pour corriger ce problème, il faut reconnecter Raspberry Pi au réseau
-wifi de manière forcée.
-
-Ce problème apparait surtout avec les Raspberry PI 3 et plus rarement
-avec les PI 4.
-
-Suivez la procédure ci-après:
-
-1. `Loguez vous comme root sur le serveur <#root_login>`__
-
-2. Éditez le fichier ``wifi_rebooter.sh`` :
-
-   .. code:: bash
-
-      apt install iw
-      vi /usr/local/bin/wifi_rebooter.sh
-
-3. Collez-y le contenu suivant :
-
-   .. code:: bash
-
-      #!/bin/bash
-
-      SERVER=8.8.8.8
-
-      # Envoyer seulement 2 pings, et envoyer la sortie vers /dev/null
-      ping -c2 ${SERVER} > /dev/null
-
-      # Si le code retour du ping ($?) est différent de 0 (qui correspond à une erreur)
-      if [ $? != 0 ]
-      then
-          # Power save off
-
-          # Relancer l'interface wifi
-          ip link set dev wlan0 down
-          sleep 2
-          ip link set dev wlan0 up
-          sleep 2
-          iw dev wlan0 set power_save off
-      fi
-
-4. Rendre le script exécutable:
-
-   .. code:: bash
-
-      chmod +x /usr/local/bin/wifi_rebooter.sh
-
-5. Mettre en place la crontab:
-
-   .. code:: bash
-
-      crontab -e
-
-6. Ajouter à la fin du fichier les lignes suivantes:
-
-   .. code:: bash
-
-      */5 * * * *   /usr/local/bin/wifi_rebooter.sh
-
-7. C’est fait !
-
-.. __configuration_basique:
+.. _`_configuration_basique`:
 
 Configuration basique
 =====================
 
-.. __mettre_léditeur_de_votre_choix:
+.. _`_mettre_léditeur_de_votre_choix`:
 
 Mettre l’éditeur de votre choix
 -------------------------------
@@ -836,15 +648,26 @@ En fonction de vos préférences en terme d’éditeur, choisissez celui qui
 vous convient pour les outils utilisant un éditeur de façon automatique
 tels que ``crontab``.
 
-Pour les débutants, il est conseillé d’utiliser nano.
+Pour les débutants, il est conseillé d’utiliser ``nano`` pour les
+utilisateurs avancés, vous pouvez utiliser ``vim``
 
-`Loguez vous comme root <#root_login>`__ et tapez:
+`Loguez vous comme root <#root_login>`__ .
+
+Si vous voulez installer ``vim``, tapez:
+
+.. code:: bash
+
+   apt install vim
+
+Pour Sélectionner votre éditeur par défaut, tapez:
 
 .. code:: bash
 
    update-alternatives  --config editor
 
-.. __installation_dun_repository_pour_etc:
+choisissez le chiffre correspondant à Nano ou Vim.basic et quittez.
+
+.. _`_installation_dun_repository_pour_etc`:
 
 Installation d’un repository pour ``/etc``
 ------------------------------------------
@@ -852,7 +675,9 @@ Installation d’un repository pour ``/etc``
 Si vous souhaitez gérer en gestion de configuration le contenu de votre
 répertoire ``/etc``, installez ``etckeeper``.
 
-Cette installation est optionnelle.
+Cette installation est optionnelle. Elle permet de garder dans un
+repository GIT toutes les modifications qui sont effectuées dans /etc
+soit par vous soit au moment de l’installation de paquets.
 
 1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
@@ -952,7 +777,7 @@ Cette installation est optionnelle.
 
 12. C’est fait !
 
-.. __mise_à_jour_des_sources_de_paquets_debian_ou_ubuntu:
+.. _`_mise_à_jour_des_sources_de_paquets_debian_ou_ubuntu`:
 
 Mise à jour des sources de paquets Debian ou Ubuntu
 ---------------------------------------------------
@@ -1030,7 +855,7 @@ Mise à jour des sources de paquets Debian ou Ubuntu
 
       apt autoremove
 
-.. __installation_des_paquets_de_base:
+.. _`_installation_des_paquets_de_base`:
 
 Installation des paquets de base
 --------------------------------
@@ -1043,7 +868,7 @@ Installation des paquets de base
 
    apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends man
 
-.. __installer_loutil_debfoster:
+.. _`_installer_loutil_debfoster`:
 
 Installer l’outil Debfoster
 ---------------------------
@@ -1131,7 +956,7 @@ La même liste pour un Ubuntu pour Raspberry PI:
 | wpasupplicant   |                 |                 |                 |
 +-----------------+-----------------+-----------------+-----------------+
 
-.. __création_dun_fichier_keeper_dans_etc:
+.. _`_création_dun_fichier_keeper_dans_etc`:
 
 Création d’un fichier keeper dans /etc
 --------------------------------------
@@ -1196,7 +1021,7 @@ liste des paquets qui permettent de réinstaller le système:
 
 6. Le fichier keepers est créé et sauvegardé automatiquement.
 
-.. __installation_des_mises_à_jours_automatiques:
+.. _`_installation_des_mises_à_jours_automatiques`:
 
 Installation des mises à jours automatiques
 -------------------------------------------
@@ -1222,7 +1047,7 @@ Suivez la procédure suivante:
 
       apt install unattended-upgrades
 
-.. __vérification_du_nom_de_serveur:
+.. _`_vérification_du_nom_de_serveur`:
 
 Vérification du nom de serveur
 ------------------------------
@@ -1332,7 +1157,7 @@ correctement configuré.
 
    h. `Reloguez vous comme root sur le serveur <#root_login>`__
 
-.. __interdire_le_login_direct_en_root:
+.. _`_interdire_le_login_direct_en_root`:
 
 Interdire le login direct en root
 ---------------------------------
@@ -1426,7 +1251,7 @@ d’autoriser le sudo. Respectez bien les étapes de cette procédure:
 3. Ce ne devrait plus être possible: le serveur vous l’indique par un
    message ``Permission denied, please try again.``
 
-.. __création_dune_clé_de_connexion_ssh_locale:
+.. _`_création_dune_clé_de_connexion_ssh_locale`:
 
 Création d’une clé de connexion ssh locale
 ------------------------------------------
@@ -1525,7 +1350,7 @@ Pour créer une clé et la déployer:
 
    La session doit s’ouvrir sans demander de mot de passe.
 
-.. __sudo_sans_mot_de_passe:
+.. _`_sudo_sans_mot_de_passe`:
 
 Sudo sans mot de passe
 ----------------------
@@ -1573,7 +1398,7 @@ super-compte.
       L’utilisateur nom_d_utilisateur pourra se logger root sans mot de
       passe au travers de la commande ``sudo bash``
 
-.. __configuration_du_motd:
+.. _`_configuration_du_motd`:
 
 Configuration du Motd
 ---------------------
@@ -1581,7 +1406,7 @@ Configuration du Motd
 Le motd est affiché au moment ou l’utilisateur se loggue en ssh. Nous
 allons configurer l’affichage de plusieurs informations importantes.
 
-.. __installation_de_neofetch:
+.. _`_installation_de_neofetch`:
 
 Installation de Neofetch
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1655,7 +1480,7 @@ Nous allons créer une configuration système:
    -  Cette ligne est à mettre pour tout système qui n’utilise pas de
       Raspberry PI 4
 
-.. __configuration_du_motd_avec_neofetch:
+.. _`_configuration_du_motd_avec_neofetch`:
 
 Configuration du MOTD avec Neofetch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1687,7 +1512,7 @@ modifier le fichier Motd:
 5. A notez que vous pouvez utiliser Neofetch pour votre fichier
    ``.bash_profile``
 
-.. __mise_à_jour_de_packages:
+.. _`_mise_à_jour_de_packages`:
 
 Mise à jour de packages
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1812,7 +1637,7 @@ Vous pouvez ajouter la liste des mises à jours dans le fichier MOTD:
 
       chmod 755 /etc/update-motd.d/30-updates
 
-.. __installer_loutil_dselect:
+.. _`_installer_loutil_dselect`:
 
 Installer l’outil dselect
 -------------------------
@@ -1889,14 +1714,14 @@ Tapez :
 
 8. Le paramètre sera actif au prochain reboot
 
-.. __installation_initiale_des_outils:
+.. _`_installation_initiale_des_outils`:
 
 Installation initiale des outils
 ================================
 
 Les chapitres ci après décrivent l’installation des outils de base.
 
-.. __supprimer_le_sleep_mode:
+.. _`_supprimer_le_sleep_mode`:
 
 Supprimer le sleep mode
 -----------------------
@@ -1977,7 +1802,7 @@ Il vous faut suivre la procédure suivante:
 
 5. le Window manager doit s’ouvrir loggué automatiquement
 
-.. __configuration_de_vnc:
+.. _`_configuration_de_vnc`:
 
 Configuration de VNC
 --------------------
@@ -1988,99 +1813,31 @@ raspberry pi.
 Il peut être lancé à la demande ou automatiquement au démarrage du
 raspberry pour un utilisateur standard.
 
-Si vous ne souhaitez pas démarrer automatiquement x11vnc, ne créez pas
-le fichier 'vnc server.desktop' dans le répertoire autostart.
+L’installation est simple:
 
-Suivez la procédure suivante:
+1.  Sur le bureau du raspberry aller dans le menu
+    →Préférences→Configuration du raspberry Pi
 
-1.  `Loguez vous comme root sur le serveur <#root_login>`__
+2.  Dans la fenêtre qui s’ouvre allez dans l’onglet interfaces et
+    cliquez sur VNC.
 
-2.  Installez le package VNC. Tapez :
+3.  Cliquez sur Valider
 
-    .. code:: bash
+4.  Le raspberry PI a des problèmes de lenteurs lorsque vous ne branchez
+    pas d’écran au moment du boot de votre raspberry. C’est typiquement
+    le cas pour les configurations Headless. Pour corriger cela il faut
+    forcer une résolution avec une autodétection de l’écran. Il faut
+    modifier la conf de boot.
 
-       apt install x11vnc
+5.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-3.  reloguez vous avec le user ``autologin`` définit dans le chapitre
-    sur la `configuration xfce <#xfce>`__
-
-4.  Configurez un mot de passe. Tapez :
-
-    .. code:: bash
-
-       x11vnc -storepasswd [votre_mot_de_passe] ~/.vnc_passwd 
-
-    -  remplacez [votre mot de passe] par `un mot de passe
-       généré <#pass_gen>`__
-
-5.  Changez les droits d’accès du fichiez mot de passe. Tapez :
+6.  Tapez,
 
     .. code:: bash
 
-       chmod 750 ~/.vnc_passwd
+       vi /boot/firmware/cmdline.txt
 
-6.  Ensuite éditez le fichier de configuration de vnc. Tapez:
-
-    .. code:: bash
-
-       vi ~/.x11vncrc
-
-7.  Inserez le texte suivant dans ce fichier:
-
-    ::
-
-       -bg
-       -display :0.0
-       -forever
-       -shared
-
-8.  Ensuite éditez le fichier de démarrage automatique. Tapez:
-
-    .. code:: bash
-
-       mkdir -p ~/.config/autostart
-       vi ~/.config/autostart/vnc\ server.desktop
-
-9.  Insérez le texte suivant dans ce fichier:
-
-    ::
-
-       [Desktop Entry]
-       Encoding=UTF-8
-       Version=0.9.4
-       Type=Application
-       Name=vnc server
-       Comment=
-       Exec=/usr/bin/x11vnc
-       OnlyShowIn=XFCE;
-       RunHook=0
-       StartupNotify=false
-       Terminal=false
-       Hidden=false
-
-10. Enfin le raspberry PI 4 a des problèmes de lenteurs lorsque vous ne
-    branchez pas d’écran au moment du boot de votre raspberry. C’est
-    typiquement le cas pour les configurations Headless. Pour corriger
-    cela il faut forcer une résolution avec une autodétection de
-    l’écran. Il faut modifier la conf de boot.
-
-11. `Loguez vous comme root sur le serveur <#root_login>`__
-
-12. Tapez,
-
-    a. pour un Ubuntu:
-
-       .. code:: bash
-
-          vi /boot/firmware/cmdline.txt
-
-    b. pour une Debian:
-
-       .. code:: bash
-
-          vi /boot/cmdline.txt
-
-13. Puis sur la ligne présenté à l’écran, ajoutez au bout le texte
+7.  Puis sur la ligne présenté à l’écran, ajoutez au bout le texte
     suivant précédé d’un espace. Vous pouvez changer la résolution
     (1024x768) comme vous voulez :
 
@@ -2088,41 +1845,43 @@ Suivez la procédure suivante:
 
        video=HDMI-A-1:1024x768@60D
 
-14. Le driver graphique définit par défaut n’est pas le bon pour un
-    Raspberry PI . Tapez
+8.  Le driver graphique définit par défaut n’est pas le bon pour un
+    Raspberry PI 4 ou 5. Tapez
 
-    a. pour un Ubuntu :
+    .. code:: bash
 
-       .. code:: bash
+       vi /boot/firmware/config.txt
 
-          vi /boot/firmware/config.txt
-
-    b. pour une Debian :
-
-       .. code:: bash
-
-          vi /boot/config.txt
-
-15. Cherchez la ligne ``dtoverlay=vc4-kms-v3d`` et replacez la avec :
+9.  Cherchez la ligne ``dtoverlay=vc4-kms-v3d`` et replacez la avec :
 
     ::
 
        gpu_mem=128
-       dtoverlay=vc4-kms-v3d-pi4
+       dtoverlay=vc4-kms-v3d-pi4 
        hdmi_force_hotplug=1
 
-16. Si la ligne n’est pas trouvé c’est que la configuration d’Ubuntu est
-    plus récente. il faut alors rajouter ces lignes directement dans le
+    -  pour un raspberry PI 5 remplacez -pi4 par -pi5.
+
+10. Si la ligne n’est pas trouvé c’est que la configuration est plus
+    récente. il faut alors rajouter ces lignes directement dans le
     fichier vers la fin.
 
-17. Enfin il peut être utile de changer le mode de démarrage par défaut
-    de ``systemd``.
+11. Rebootez
 
-18. Tapez:
+Enfin sur votre machine Hôte:
 
-    .. code:: bash
+1. Installez Tigervnc-viewer; c’est le seul qui est compatible avec les
+   certificats de ce VNC
 
-       systemctl set-default graphical.target
+2. Sélectionnez l’adresse IP de votre raspberry
+
+3. Connectez vous, acceptez les certificats
+
+4. Entrez le login et mot de passe de votre compte sudo du raspberry.
+
+5. C’est fait Si vous ne souhaitez pas démarrer automatiquement x11vnc,
+   ne créez pas le fichier 'vnc server.desktop' dans le répertoire
+   autostart.
 
 .. _hairpinning:
 
@@ -2138,7 +1897,10 @@ appelée ``NAT loopback`` ou ``Hairpinning``.
 Le schéma ci dessous montre bien la problématique rencontrée sur un
 réseau local lorsque l’on utilise l’adresse DNS:
 
-|essai|
+.. figure:: essai.png
+   :alt: essai
+
+   essai
 
 Si vous avez configuré votre box pour que la machine 192.168.12.10 (sur
 votre réseau local) réponde aux requêtes venant d’internet au travers de
@@ -2171,7 +1933,7 @@ De ce fait, il est impossible de contacter les services de
    une recherche ``ADSL Hairpinning`` sur google pour voir si votre box
    n’est pas soumise à ce problème.
 
-.. __contournement_par_le_fichier_hosts:
+.. _`_contournement_par_le_fichier_hosts`:
 
 Contournement par le fichier Hosts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2203,7 +1965,7 @@ Appliquez la procédure suivante:
 
    -  replacez [home.example.com] par votre nom de domaine
 
-.. __contournement_par_la_mise_en_place_dun_dns_interne:
+.. _`_contournement_par_la_mise_en_place_dun_dns_interne`:
 
 Contournement par la mise en place d’un DNS interne
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2230,7 +1992,7 @@ Le nom de domaine est maintenant correctement résolu sur le réseau local
 pour toute les machines qui récupèrent leurs paramètres avec le DHCP
 local.
 
-.. __configuration_de_ssmtp:
+.. _`_configuration_de_ssmtp`:
 
 Configuration de ssmtp
 ----------------------
@@ -2241,7 +2003,7 @@ manière la plus simple lorsqu’un serveur n’a pas de nom de domaine
 internet est de faire suivre ces comptes mails vers une adresse mail
 externe.
 
-.. __création_dun_mail_dédié:
+.. _`_création_dun_mail_dédié`:
 
 Création d’un mail dédié
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2299,7 +2061,7 @@ Pour créer une boite de messagerie dédiée à votre serveur:
    Il est possible de changer ce caractère spécial en le modifiant dans
    le fichier ``/etc/postfix/main.cf`` sur la machine <serveurmail>.
 
-.. __configuration_de_ssmtp_2:
+.. _`_configuration_de_ssmtp_2`:
 
 Configuration de ssmtp
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -2368,7 +2130,7 @@ Suivez la procédure suivante:
 
 .. _firewall:
 
-Deblocage de port de firewall
+Déblocage de port de firewall
 -----------------------------
 
 Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en
@@ -2379,7 +2141,7 @@ une opération de déblocage du port du firewall.
 Il existe deux manière de débloquer un port. Elle dépend de ce que vous
 avez configuré.
 
-.. __déblocage_et_suppression_de_regles_de_firewall_avec_ispconfig:
+.. _`_déblocage_et_suppression_de_regles_de_firewall_avec_ispconfig`:
 
 Déblocage et suppression de regles de Firewall avec ISPconfig
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2408,7 +2170,7 @@ déblocage) de firewall:
 
 4. Cliquez sur ``save``
 
-.. __déblocage_de_firewall_ufw:
+.. _`_déblocage_de_firewall_ufw`:
 
 Déblocage de Firewall UFW
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2469,7 +2231,7 @@ déblocage) de firewall:
 
    -  remplacez xxxx par le numero de port que vous souhaitez débloquer
 
-.. __configuration_de_avahi:
+.. _`_configuration_de_avahi`:
 
 Configuration de Avahi
 ----------------------
@@ -2576,7 +2338,7 @@ libres de censure et pas ceux de votre ISP, il vous sera possible
 d’accéder à des sites webs bloqués dans votre pays par décision
 politique.
 
-.. __mettre_une_ip_statique:
+.. _`_mettre_une_ip_statique`:
 
 Mettre une IP statique
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -2607,7 +2369,7 @@ l’installation est très simple, suivez la procédure suivante:
    -  Remplacez 192.168.3.254 par l’adresse IP de votre routeur internet
       (Box)
 
-.. __installation_de_pi_hole:
+.. _`_installation_de_pi_hole`:
 
 Installation de Pi-Hole
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -2669,7 +2431,7 @@ l’installation est très simple, suivez la procédure suivante:
     domaine avec une adresse IP en 0.0.0.0 ou ajouter un élément dans
     l’onglet blacklist
 
-.. __installation_dun_serveur_de_fichier_windows:
+.. _`_installation_dun_serveur_de_fichier_windows`:
 
 Installation d’un serveur de fichier Windows
 --------------------------------------------
@@ -2697,7 +2459,7 @@ Tout d’abord, il vous faudra installer Samba:
 3. Une première configuration de base sera installée. Elle sera à
    modifier en fonction de vos besoins.
 
-.. __installation_dun_partage_de_fichier_basique:
+.. _`_installation_dun_partage_de_fichier_basique`:
 
 Installation d’un partage de fichier basique
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2775,7 +2537,7 @@ répertoire de partage public sur le réseau local en lecture écriture :
       service smbd restart
       service nmbd restart
 
-.. __installation_dun_serveur_active_directory_domain_controller:
+.. _`_installation_dun_serveur_active_directory_domain_controller`:
 
 Installation d’un serveur Active Directory Domain Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3017,7 +2779,7 @@ domaine:
 
        samba-tool user list
 
-.. __mise_en_place_dun_serveur_membre_du_domaine:
+.. _`_mise_en_place_dun_serveur_membre_du_domaine`:
 
 Mise en place d’un serveur membre du domaine
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3173,7 +2935,7 @@ Cette procédure explique comme ajouter un serveur membre du domaine.
 
        wbinfo --ping-dc
 
-.. __mise_en_place_dune_synchronisation_temporelle_du_serveur:
+.. _`_mise_en_place_dune_synchronisation_temporelle_du_serveur`:
 
 Mise en place d’une synchronisation temporelle du serveur
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3228,7 +2990,7 @@ Cette procédure est à appliquer sur le DC et sur le membre du domaine :
       systemctl restart chronyd
       systemctl status chronyd
 
-.. __configuration_avec_dnsmasq_ou_pi_hole:
+.. _`_configuration_avec_dnsmasq_ou_pi_hole`:
 
 Configuration avec DNSMASQ ou PI-HOLE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3339,12 +3101,12 @@ Pour cela:
 
 4. Editez la clé ``AllowInsecureGuestAuth`` et mettez la valeur 1.
 
-.. __scan_des_vulnérabilités:
+.. _`_scan_des_vulnérabilités`:
 
 Scan des vulnérabilités
 -----------------------
 
-.. __installation_dun_scanner_de_vulnérabilités_lynis:
+.. _`_installation_dun_scanner_de_vulnérabilités_lynis`:
 
 Installation d’un scanner de vulnérabilités Lynis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3377,7 +3139,7 @@ Suivez la procédure suivante:
 4. L’outil vous listera dans une forme très synthétique la liste des
    vulnérabilités et des améliorations de sécurité à appliquer.
 
-.. __upgrade_de_lynis:
+.. _`_upgrade_de_lynis`:
 
 Upgrade de Lynis
 ~~~~~~~~~~~~~~~~
@@ -3394,7 +3156,7 @@ Pour effectuer la mise à jour de Lynis appliquez la procédure suivante:
       cd lynis
       git pull
 
-.. __installation_du_système_dadministration_webmin:
+.. _`_installation_du_système_dadministration_webmin`:
 
 Installation du système d’administration Webmin
 ===============================================
@@ -3537,7 +3299,7 @@ précise des fonctionnalités.
 
     c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
 
-.. __configuration_de_apt_cacher:
+.. _`_configuration_de_apt_cacher`:
 
 Configuration de Apt-cacher
 ===========================
@@ -3621,7 +3383,7 @@ Sur les postes clients linux:
    -  remplacez homeserver.local par le nom de votre serveur proxy pour
       les paquets apt.
 
-.. __installation_de_docker_et_des_outils_associés:
+.. _`_installation_de_docker_et_des_outils_associés`:
 
 Installation de Docker et des outils associés
 =============================================
@@ -3636,7 +3398,7 @@ Il est ainsi possible d’effectuer rapidement des installations, de
 suivre des mises à jours et d’isoler ces environnements du système
 principal.
 
-.. __a_propos_des_raspberry_pi:
+.. _`_a_propos_des_raspberry_pi`:
 
 A propos des Raspberry Pi
 -------------------------
@@ -3650,7 +3412,7 @@ A propos des Raspberry Pi
    ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type
    ARM.
 
-.. __installation_de_docker:
+.. _`_installation_de_docker`:
 
 Installation de Docker
 ----------------------
@@ -3733,7 +3495,7 @@ Il faut suivre les étapes suivantes:
 11. Cette commande exécute un conteneur simple. Si aucune erreur
     n’apparaît c’est que l’installation est réussie.
 
-.. __installation_de_docker_compose:
+.. _`_installation_de_docker_compose`:
 
 Installation de docker-compose
 ------------------------------
@@ -3762,7 +3524,7 @@ Il faut suivre les étapes suivantes:
 
       pip3 install docker-compose
 
-.. __installation_de_docker_swarm:
+.. _`_installation_de_docker_swarm`:
 
 Installation de docker swarm
 ----------------------------
@@ -3803,7 +3565,7 @@ Il faut suivre les étapes suivantes:
 
       docker node ls
 
-.. __choix_des_images_docker:
+.. _`_choix_des_images_docker`:
 
 Choix des images docker
 -----------------------
@@ -3841,7 +3603,7 @@ Par exemple pour les docker de ``Yacht`` et de ``Portainer`` décrits ci
 après, on peut voir que les containers sont multiplateforme et
 conviennent très bien pour de l’Intel ou de l’ARM.
 
-.. __considérations_de_sécurité:
+.. _`_considérations_de_sécurité`:
 
 Considérations de sécurité
 --------------------------
@@ -3872,7 +3634,7 @@ n’exposer que les ports et noms de domaines nécessaires.
    127.0.0.1 . Pensez bien donc à ajouter cette adresse systématiquement
    pour un serveur présent sur le web !
 
-.. __mise_à_jour_automatique_des_images:
+.. _`_mise_à_jour_automatique_des_images`:
 
 Mise à jour automatique des images
 ----------------------------------
@@ -3918,7 +3680,7 @@ Pour l’installer, rien de plus simple:
    mail, slack ou d’autres outils tels que shoutrrr. Se référer à la
    `documentation <https://containrrr.dev/watchtower/notifications/>`__
 
-.. __surveillance_et_redémarrage_de_container:
+.. _`_surveillance_et_redémarrage_de_container`:
 
 Surveillance et redémarrage de container
 ----------------------------------------
@@ -3945,7 +3707,7 @@ Pour l’installer:
    les container à vérifier, il vous faut ajouter pour les container
    concernés l’otion ``-l autoheal=true``
 
-.. __installation_de_traefik:
+.. _`_installation_de_traefik`:
 
 Installation de Traefik
 =======================
@@ -3962,7 +3724,7 @@ offre également d’autres fonctionnalités comme le support de Let’s
 Encrypt, des middlewares et la possibilité de monitorer facilement des
 services.
 
-.. __installation_de_traefik_2:
+.. _`_installation_de_traefik_2`:
 
 Installation de Traefik
 -----------------------
@@ -3997,7 +3759,7 @@ Il faut suivre les étapes suivantes:
       la ligne précédente, supprimez:
       ``-p8080:8080 --api.insecure=true --api.dashboard=true``
 
-.. __configuration_de_traefik_pour_une_utilisation_avec_pi_hole:
+.. _`_configuration_de_traefik_pour_une_utilisation_avec_pi_hole`:
 
 Configuration de Traefik pour une utilisation avec Pi-Hole
 ----------------------------------------------------------
@@ -4114,7 +3876,7 @@ Appliquer la procédure suivante:
     en cours. (example.com est à remplacer pour le nom de votre
     machine).
 
-.. __upgrade_de_traefik:
+.. _`_upgrade_de_traefik`:
 
 Upgrade de Traefik
 ------------------
@@ -4142,12 +3904,12 @@ Sinon, effectuez les opérations suivantes:
    -  supprimez ``-v /etc/traefik:/etc/traefik`` si vous n’utilisez pas
       Pi-Hole avec Treafik.
 
-.. __outils_web_de_gestion_des_containers:
+.. _`_outils_web_de_gestion_des_containers`:
 
 Outils web de gestion des containers
 ====================================
 
-.. __installation_de_yacht:
+.. _`_installation_de_yacht`:
 
 Installation de Yacht
 ---------------------
@@ -4269,13 +4031,13 @@ Appliquez la procédure suivante:
 
 1. Ouvrez un navigateur et pointez sur http://yacht.example.com
 
-2. Logguez vous en tant qu'`admin\`
+2. Logguez vous en tant qu'\`admin\`
 
 3. Allez dans l’onglet ``Applications``
 
 4. Cliquez sur le bouton ``Updates``
 
-.. __upgrade_de_yacht:
+.. _`_upgrade_de_yacht`:
 
 Upgrade de Yacht
 ----------------
@@ -4299,7 +4061,7 @@ Sinon, effectuez les opérations suivantes:
       docker rm yacht
       docker run -d -p 8061:8000 --name=yacht -v /var/run/docker.sock:/var/run/docker.sock --restart=always -v yacht_data:/config selfhostedpro/yacht
 
-.. __installation_de_portainer:
+.. _`_installation_de_portainer`:
 
 Installation de Portainer
 -------------------------
@@ -4429,7 +4191,7 @@ Appliquez la procédure suivante:
 
 6. Sélectionnez ``Pull latest image`` et cliquez ``recreate``
 
-.. __upgrade_de_portainer:
+.. _`_upgrade_de_portainer`:
 
 Upgrade de Portainer
 --------------------
@@ -4453,7 +4215,7 @@ Sinon, effectuez les opérations suivantes:
       docker rm portainer
       docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 
-.. __configuration_de_docker_mirror:
+.. _`_configuration_de_docker_mirror`:
 
 Configuration de Docker-mirror
 ==============================
@@ -4524,7 +4286,7 @@ rendre le changement persistant:
 
       systemctl restart docker
 
-.. __installation_de_statping:
+.. _`_installation_de_statping`:
 
 Installation de Statping
 ========================
@@ -4537,7 +4299,7 @@ les statuts de votre site
 
 Des alertes peuvent être envoyées par mail sms ou autre.
 
-.. __prérequis:
+.. _`_prérequis`:
 
 Prérequis
 ---------
@@ -4545,7 +4307,7 @@ Prérequis
 Il vous faudra tout d’abord installer ``docker`` en vous référant au
 chapitre qui y est consacré.
 
-.. __installation_du_serveur_statping:
+.. _`_installation_du_serveur_statping`:
 
 Installation du serveur Statping
 --------------------------------
@@ -4565,7 +4327,7 @@ Ouvrez un terminal et suivez la procédure:
       docker volume create statping_data
       docker run -d --name=statping -p 8035:8080 -v statping_data:/app --restart always statping/statping
 
-.. __création_du_site_web_de_statping:
+.. _`_création_du_site_web_de_statping`:
 
 Création du site web de statping
 --------------------------------
@@ -4627,7 +4389,7 @@ Appliquez la procédure suivante:
 
       -  remplacer ``example.com`` par votre nom de domaine
 
-.. __configuration_du_site_statping:
+.. _`_configuration_du_site_statping`:
 
 Configuration du site statping
 ------------------------------
@@ -4664,7 +4426,7 @@ Votre site web ``statping`` est installé et opérationnel.
 4. Vous pouvez alors configurer statping. Pour la documentation allez
    https://github.com/statping/statping/wiki
 
-.. __upgrade_de_statping:
+.. _`_upgrade_de_statping`:
 
 Upgrade de Statping
 -------------------
@@ -4689,7 +4451,7 @@ Sinon, effectuez les opérations suivantes:
       docker rm statping
       docker run -d --name=statping -p 8035:8080 -v statping_data:/app --restart always statping/statping
 
-.. __installation_du_système_de_backup_borgbackup:
+.. _`_installation_du_système_de_backup_borgbackup`:
 
 Installation du système de backup BorgBackup
 ============================================
@@ -4707,7 +4469,7 @@ Pour le moment, BorgBackup n’utilise pas de mécanisme de type RClone et
 il n’est donc pas encore possible de sauvegarder sur google drive ou
 autres espaces partagés.
 
-.. __introduction:
+.. _`_introduction`:
 
 Introduction
 ------------
@@ -4718,7 +4480,7 @@ serveur de stockage et identifié par <storing_srv>. Nous nommerons le
 serveur qu’il faut sauvegarder: serveur sauvegardé et identifié par
 <example.com>
 
-.. __installation_du_serveur_de_stockage:
+.. _`_installation_du_serveur_de_stockage`:
 
 Installation du serveur de stockage
 -----------------------------------
@@ -4788,7 +4550,7 @@ Suivez la procédure suivante:
        mkdir borgbackup
        chmod 700 borgbackup
 
-.. __installation_sur_le_serveur_sauvegardé:
+.. _`_installation_sur_le_serveur_sauvegardé`:
 
 Installation sur le serveur sauvegardé
 --------------------------------------
@@ -4878,7 +4640,7 @@ Suivez la procédure suivante:
 
 16. Tout est maintenant prêt pour faire un backup
 
-.. __effectuer_un_backup:
+.. _`_effectuer_un_backup`:
 
 Effectuer un backup
 -------------------
@@ -4920,7 +4682,7 @@ le serveur sauf les répertoires système:
 
       /usr/local/bin/borgbackup.sh
 
-.. __lister_les_backups:
+.. _`_lister_les_backups`:
 
 Lister les backups
 ------------------
@@ -4957,7 +4719,7 @@ Nous allons créer un script de listage :
 
       /usr/local/bin/borglist.sh
 
-.. __vérifier_un_backup:
+.. _`_vérifier_un_backup`:
 
 Vérifier un backup
 ------------------
@@ -4997,7 +4759,7 @@ Nous allons créer un script de vérification :
    -  le nom de sauvegarde est récupéré en utilisant la commande
       borglist.sh
 
-.. __restaurer_un_backup:
+.. _`_restaurer_un_backup`:
 
 Restaurer un backup
 -------------------
@@ -5063,7 +4825,7 @@ Nous allons créer un script de montage sous forme de système de fichier
 
       /usr/local/bin/borgumount.sh
 
-.. __supprimer_vos_vieux_backups:
+.. _`_supprimer_vos_vieux_backups`:
 
 Supprimer vos vieux backups
 ---------------------------
@@ -5111,7 +4873,7 @@ Nous allons créer un script de ménage des backups :
 
       /usr/local/bin/borgprune.sh
 
-.. __automatisez_votre_sauvegarde:
+.. _`_automatisez_votre_sauvegarde`:
 
 Automatisez votre sauvegarde
 ----------------------------
@@ -5158,7 +4920,7 @@ Automatisez votre sauvegarde
    # Backup via Borg to backup server
    00 01 * * * /usr/local/bin/borgcron.sh
 
-.. __restauration_durgence:
+.. _`_restauration_durgence`:
 
 Restauration d’urgence.
 -----------------------
@@ -5260,7 +5022,7 @@ version suffisamment récente.
 
        borg export-tar --list borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::<votre_archive> restore.tar.xz
 
-.. __installation_de_borgweb:
+.. _`_installation_de_borgweb`:
 
 Installation de Borgweb
 -----------------------
@@ -5404,7 +5166,7 @@ Suivez la procédure suivante sur le serveur de stockage:
        systemctl enable borgweb.service
        systemctl start borgweb.service
 
-.. __création_du_site_web_de_borgweb:
+.. _`_création_du_site_web_de_borgweb`:
 
 Création du site web de Borgweb
 -------------------------------
@@ -5498,17 +5260,17 @@ stockage <storing_srv>:
    passe vous est demandé. Tapez ``admin`` pour le user et le password
    saisi. Vous accédez aux informations de sauvegarde de votre site.
 
-.. __annexe:
+.. _`_annexe`:
 
 Annexe
 ======
 
-.. __configuration_dun_écran_3_5_inch_rpi_lcd_a:
+.. _`_configuration_dun_écran_3_5_inch_rpi_lcd_a`:
 
 Configuration d’un écran 3.5 inch RPI LCD (A)
 ---------------------------------------------
 
-.. __pour_commencer:
+.. _`_pour_commencer`:
 
 Pour commencer
 ~~~~~~~~~~~~~~
@@ -5559,7 +5321,7 @@ Le RPi LCD peut être piloté de deux manières :
 
 8. Après le redémarrage du système, le RPI LCD est prêt à l’emploi.
 
-.. __basculer_entre_laffichage_lcd_et_hdmi:
+.. _`_basculer_entre_laffichage_lcd_et_hdmi`:
 
 Basculer entre l’affichage LCD et HDMI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5580,7 +5342,7 @@ Cela permet de basculer le mode sur l’affichage LCD :
    chmod +x LCD35-show
    ./LCD35-show
 
-.. __paramètres_dorientation_de_lécran:
+.. _`_paramètres_dorientation_de_lécran`:
 
 Paramètres d’orientation de l’écran
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5616,7 +5378,7 @@ définie par ces commandes :
    cd LCD-show/
    ./LCD35-show 270
 
-.. __calibrage_de_lécran_tactile:
+.. _`_calibrage_de_lécran_tactile`:
 
 Calibrage de l’écran tactile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5692,7 +5454,7 @@ commande suivante pour le redémarrage du système :
 **Notices: En cas de toucher imprécis, veuillez procéder à un nouvel
 étalonnage de l’écran et redémarrer le système.**
 
-.. __installer_un_clavier_virtuel:
+.. _`_installer_un_clavier_virtuel`:
 
 Installer un clavier virtuel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5783,12 +5545,12 @@ Installer un clavier virtuel
 
       sudo reboot
 
-.. __ressources:
+.. _`_ressources`:
 
 Ressources
 ~~~~~~~~~~
 
-.. __manuel_utilisateur:
+.. _`_manuel_utilisateur`:
 
 Manuel utilisateur
 ^^^^^^^^^^^^^^^^^^
@@ -5796,7 +5558,7 @@ Manuel utilisateur
 -  `RPiLCD User
    Manual <https://www.waveshare.com/w/upload/1/1e/RPi_LCD_User_Manual_EN.pdf>`__
 
-.. __images:
+.. _`_images`:
 
 Images
 ^^^^^^
@@ -5806,7 +5568,7 @@ l’image avec le pilote préinstallé.
 
 -  `RPi-35inch-LCD-(A)-Raspbian-180326.7z <https://drive.google.com/open?id=1xsvANujoImwVQvdf0n7IiUjP8BuCe2GK>`__
 
-.. __driver:
+.. _`_driver`:
 
 Driver
 ^^^^^^
@@ -5817,7 +5579,7 @@ Le pilote peut être téléchargé sur github
 
    git clone https://github.com/waveshare/LCD-show.git
 
-.. __fichiers_de_configuration_de_référence:
+.. _`_fichiers_de_configuration_de_référence`:
 
 Fichiers de configuration de référence
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -5962,6 +5724,3 @@ Ajouter:
            Option  "Calibration"   "3936 227 268 3880"
            Option  "SwapAxes"      "1"
    EndSection
-
-.. |Diagram| image:: diag-1b5eaef62bc868d69739712a3598f8e7.png
-.. |essai| image:: essai.png

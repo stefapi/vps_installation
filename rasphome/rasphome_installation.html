@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.17">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Stéphane Apiou">
 <title>Installation d&#8217;un home serveur Linux sur un Raspberry</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -85,10 +85,10 @@ code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;
 ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
 ul,ol{margin-left:1.5em}
 ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
-ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
-ul.square{list-style-type:square}
 ul.circle{list-style-type:circle}
 ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
 ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
 dl dt{margin-bottom:.3125em;font-weight:bold}
 dl dd{margin-bottom:1.25em}
@@ -209,13 +209,10 @@ table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
 .admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
 .exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
-.exampleblock>.content>:first-child{margin-top:0}
-.exampleblock>.content>:last-child{margin-bottom:0}
 .sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
-.sidebarblock>:first-child{margin-top:0}
-.sidebarblock>:last-child{margin-bottom:0}
 .sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
-.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
 .literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
@@ -394,7 +391,7 @@ b.conum *{color:inherit!important}
 dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
 h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
 p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
 .exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
@@ -440,216 +437,115 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <style>
 pre.rouge table td { padding: 5px; }
 pre.rouge table pre { margin: 0; }
-pre.rouge .cm {
-  color: #999988;
-  font-style: italic;
+pre.rouge, pre.rouge .w {
+  color: #24292f;
+  background-color: #f6f8fa;
 }
-pre.rouge .cp {
-  color: #999999;
-  font-weight: bold;
-}
-pre.rouge .c1 {
-  color: #999988;
-  font-style: italic;
-}
-pre.rouge .cs {
-  color: #999999;
-  font-weight: bold;
-  font-style: italic;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cpf {
-  color: #999988;
-  font-style: italic;
-}
-pre.rouge .err {
-  color: #a61717;
-  background-color: #e3d2d2;
-}
-pre.rouge .gd {
-  color: #000000;
-  background-color: #ffdddd;
-}
-pre.rouge .ge {
-  color: #000000;
-  font-style: italic;
+pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
+  color: #cf222e;
 }
 pre.rouge .gr {
-  color: #aa0000;
+  color: #f6f8fa;
 }
-pre.rouge .gh {
-  color: #999999;
+pre.rouge .gd {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+pre.rouge .nb {
+  color: #953800;
+}
+pre.rouge .nc {
+  color: #953800;
+}
+pre.rouge .no {
+  color: #953800;
+}
+pre.rouge .nn {
+  color: #953800;
+}
+pre.rouge .sr {
+  color: #116329;
+}
+pre.rouge .na {
+  color: #116329;
+}
+pre.rouge .nt {
+  color: #116329;
 }
 pre.rouge .gi {
-  color: #000000;
-  background-color: #ddffdd;
+  color: #116329;
+  background-color: #dafbe1;
 }
-pre.rouge .go {
-  color: #888888;
+pre.rouge .kc {
+  color: #0550ae;
 }
-pre.rouge .gp {
-  color: #555555;
+pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
+  color: #0550ae;
 }
-pre.rouge .gs {
+pre.rouge .sb {
+  color: #0550ae;
+}
+pre.rouge .bp {
+  color: #0550ae;
+}
+pre.rouge .ne {
+  color: #0550ae;
+}
+pre.rouge .nl {
+  color: #0550ae;
+}
+pre.rouge .py {
+  color: #0550ae;
+}
+pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
+  color: #0550ae;
+}
+pre.rouge .o, pre.rouge .ow {
+  color: #0550ae;
+}
+pre.rouge .gh {
+  color: #0550ae;
   font-weight: bold;
 }
 pre.rouge .gu {
-  color: #aaaaaa;
-}
-pre.rouge .gt {
-  color: #aa0000;
-}
-pre.rouge .kc {
-  color: #000000;
+  color: #0550ae;
   font-weight: bold;
 }
-pre.rouge .kd {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kn {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kp {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kr {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kt {
-  color: #445588;
-  font-weight: bold;
-}
-pre.rouge .k, pre.rouge .kv {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .mf {
-  color: #009999;
-}
-pre.rouge .mh {
-  color: #009999;
-}
-pre.rouge .il {
-  color: #009999;
-}
-pre.rouge .mi {
-  color: #009999;
-}
-pre.rouge .mo {
-  color: #009999;
-}
-pre.rouge .m, pre.rouge .mb, pre.rouge .mx {
-  color: #009999;
-}
-pre.rouge .sa {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .sb {
-  color: #d14;
-}
-pre.rouge .sc {
-  color: #d14;
-}
-pre.rouge .sd {
-  color: #d14;
-}
-pre.rouge .s2 {
-  color: #d14;
-}
-pre.rouge .se {
-  color: #d14;
-}
-pre.rouge .sh {
-  color: #d14;
-}
-pre.rouge .si {
-  color: #d14;
-}
-pre.rouge .sx {
-  color: #d14;
-}
-pre.rouge .sr {
-  color: #009926;
-}
-pre.rouge .s1 {
-  color: #d14;
-}
-pre.rouge .ss {
-  color: #990073;
-}
-pre.rouge .s, pre.rouge .dl {
-  color: #d14;
-}
-pre.rouge .na {
-  color: #008080;
-}
-pre.rouge .bp {
-  color: #999999;
-}
-pre.rouge .nb {
-  color: #0086B3;
-}
-pre.rouge .nc {
-  color: #445588;
-  font-weight: bold;
-}
-pre.rouge .no {
-  color: #008080;
+pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
+  color: #0a3069;
 }
 pre.rouge .nd {
-  color: #3c5d5d;
-  font-weight: bold;
-}
-pre.rouge .ni {
-  color: #800080;
-}
-pre.rouge .ne {
-  color: #990000;
-  font-weight: bold;
+  color: #8250df;
 }
 pre.rouge .nf, pre.rouge .fm {
-  color: #990000;
+  color: #8250df;
+}
+pre.rouge .err {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
+  color: #6e7781;
+}
+pre.rouge .gl {
+  color: #6e7781;
+}
+pre.rouge .gt {
+  color: #6e7781;
+}
+pre.rouge .ni {
+  color: #24292f;
+}
+pre.rouge .si {
+  color: #24292f;
+}
+pre.rouge .ge {
+  color: #24292f;
+  font-style: italic;
+}
+pre.rouge .gs {
+  color: #24292f;
   font-weight: bold;
-}
-pre.rouge .nl {
-  color: #990000;
-  font-weight: bold;
-}
-pre.rouge .nn {
-  color: #555555;
-}
-pre.rouge .nt {
-  color: #000080;
-}
-pre.rouge .vc {
-  color: #008080;
-}
-pre.rouge .vg {
-  color: #008080;
-}
-pre.rouge .vi {
-  color: #008080;
-}
-pre.rouge .nv, pre.rouge .vm {
-  color: #008080;
-}
-pre.rouge .ow {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .o {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .w {
-  color: #bbbbbb;
-}
-pre.rouge {
-  background-color: #f8f8f8;
 }
 </style>
 </head>
@@ -659,8 +555,8 @@ pre.rouge {
 <div class="details">
 <span id="author" class="author">Stéphane Apiou</span><br>
 <span id="email" class="email"><a href="mailto:stephane@apiou.org">stephane@apiou.org</a></span><br>
-<span id="revnumber">version 1.1,</span>
-<span id="revdate">2022-05-17</span>
+<span id="revnumber">version 1.2,</span>
+<span id="revdate">2024-02-28</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -671,9 +567,9 @@ pre.rouge {
 <li><a href="#_installation_du_linux_sur_votre_raspberry_pi">4. Installation du linux sur votre Raspberry Pi</a>
 <ul class="sectlevel2">
 <li><a href="#_installation_avec_écran_et_clavier">4.1. Installation avec écran et clavier</a></li>
-<li><a href="#_installation_headless_de_raspberry_pi_os_lite_64_bit">4.2. Installation Headless de Raspberry Pi OS LITE (64-bit)</a></li>
-<li><a href="#_installation_headless_de_ubuntu_64">4.3. Installation Headless de Ubuntu 64</a></li>
-<li><a href="#_reconnecter_automatiquement_votre_raspberry_pi_au_wifi">4.4. Reconnecter automatiquement votre Raspberry Pi au wifi</a></li>
+<li><a href="#_installation_headless">4.2. Installation Headless</a></li>
+<li><a href="#_connexion_au_travers_du_réseau">4.3. Connexion au travers du réseau</a></li>
+<li><a href="#_installation_headless_de_ubuntu_64">4.4. Installation Headless de Ubuntu 64</a></li>
 </ul>
 </li>
 <li><a href="#_configuration_basique">5. Configuration basique</a>
@@ -701,7 +597,7 @@ pre.rouge {
 <li><a href="#_configuration_de_vnc">6.3. Configuration de VNC</a></li>
 <li><a href="#hairpinning">6.4. Procédure spécifique pour les serveurs du réseau local</a></li>
 <li><a href="#_configuration_de_ssmtp">6.5. Configuration de ssmtp</a></li>
-<li><a href="#firewall">6.6. Deblocage de port de firewall</a></li>
+<li><a href="#firewall">6.6. Déblocage de port de firewall</a></li>
 <li><a href="#_configuration_de_avahi">6.7. Configuration de Avahi</a></li>
 <li><a href="#pihole">6.8. Configuration de Pi-Hole</a></li>
 <li><a href="#_installation_dun_serveur_de_fichier_windows">6.9. Installation d&#8217;un serveur de fichier Windows</a></li>
@@ -778,11 +674,11 @@ pre.rouge {
 <h2 id="_avant_propos">1. Avant propos</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ce document est disponible sur le site <a href="https://raspberry-homeserver.readthedocs.io">ReadTheDocs</a></p>
+<p>Ce document est disponible sur le site <a href="https://serveur-home-raspberry-pi.readthedocs.io">ReadTheDocs</a></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE4AAABOAQAAAACm0R2wAAABI0lEQVR4nLWSQWfEQBTHJztLhdTMVyghpyVrQpWNCT2F0i9Reiqhp556KXvNteRjlD0tGcmlbCTktMyx15LRYS0Z6allXnvdd3p+xu/9nzez6afGGfqt07XCUUttHGpTMhLZdFNpU0MVu0Xij0zqt/9G5G4CKR78BSs5oGouZYOcxKZ8ChDD02DTWsVaZzUwGCxXNygFBpIeztRLBbZA6+NVkWpg0E9R9ViuOpsuetR0CQVevK0C/+sCJPPujXwXBTCYRurL57vQpn0VhXshKczAZBBuQF53vc12hQcM+KFXURQDQ9ia3Gs3IJlwCBexARuTETW7igCDof51sozANITcD80+c0jxOXulGbxxzffZAN6quekOugNePvFhbOF/OE37DQUPepCaGG7wAAAAAElFTkSuQmCC" alt="Diagram" width="78" height="78">
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4KPHN2ZyBoZWlnaHQ9Jzc4cHgnIHByZXNlcnZlQXNwZWN0UmF0aW89J25vbmUnIHZlcnNpb249JzEuMScgdmlld0JveD0nMCAwIDc4IDc4JyB3aWR0aD0nNzhweCcgeG1sbnM6eGxpbms9J2h0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+Cjx0aXRsZT5odHRwczovL3NlcnZldXItaG9tZS1yYXNwYmVycnktcGkucmVhZHRoZWRvY3MuaW88L3RpdGxlPgo8ZyBpZD0nY2FudmFzJz4KPHJlY3QgZmlsbD0nI2ZmZicgaGVpZ2h0PSc3OHB4JyB3aWR0aD0nNzhweCcgeD0nMCcgeT0nMCcvPgo8ZyBmaWxsPScjMDAwJyBpZD0nYmFyY29kZSc+CjxwYXRoIGQ9J00xMSAxMFYgMTJNMTMgMTBWIDEyTTE1IDEwViAxMk0xNyAxMFYgMTJNMTkgMTBWIDEyTTIxIDEwViAxMk0yMyAxMFYgMTJNMjkgMTBWIDEyTTM1IDEwViAxMk0zOSAxMFYgMTJNNDEgMTBWIDEyTTQ3IDEwViAxMk00OSAxMFYgMTJNNTUgMTBWIDEyTTU3IDEwViAxMk01OSAxMFYgMTJNNjEgMTBWIDEyTTYzIDEwViAxMk02NSAxMFYgMTJNNjcgMTBWIDEyTTExIDEyViAxNE0yMyAxMlYgMTRNMjcgMTJWIDE0TTMzIDEyViAxNE0zNSAxMlYgMTRNNDEgMTJWIDE0TTQ1IDEyViAxNE01NSAxMlYgMTRNNjcgMTJWIDE0TTExIDE0ViAxNk0xNSAxNFYgMTZNMTcgMTRWIDE2TTE5IDE0ViAxNk0yMyAxNFYgMTZNMjcgMTRWIDE2TTI5IDE0ViAxNk0zMSAxNFYgMTZNMzMgMTRWIDE2TTM1IDE0ViAxNk0zOSAxNFYgMTZNNDUgMTRWIDE2TTQ5IDE0ViAxNk01NSAxNFYgMTZNNTkgMTRWIDE2TTYxIDE0ViAxNk02MyAxNFYgMTZNNjcgMTRWIDE2TTExIDE2ViAxOE0xNSAxNlYgMThNMTcgMTZWIDE4TTE5IDE2ViAxOE0yMyAxNlYgMThNMjkgMTZWIDE4TTMxIDE2ViAxOE0zMyAxNlYgMThNMzkgMTZWIDE4TTQxIDE2ViAxOE00NyAxNlYgMThNNDkgMTZWIDE4TTUxIDE2ViAxOE01NSAxNlYgMThNNTkgMTZWIDE4TTYxIDE2ViAxOE02MyAxNlYgMThNNjcgMTZWIDE4TTExIDE4ViAyME0xNSAxOFYgMjBNMTcgMThWIDIwTTE5IDE4ViAyME0yMyAxOFYgMjBNMjcgMThWIDIwTTM3IDE4ViAyME0zOSAxOFYgMjBNNDEgMThWIDIwTTQzIDE4ViAyME01NSAxOFYgMjBNNTkgMThWIDIwTTYxIDE4ViAyME02MyAxOFYgMjBNNjcgMThWIDIwTTExIDIwViAyMk0yMyAyMFYgMjJNMjcgMjBWIDIyTTI5IDIwViAyMk0zMyAyMFYgMjJNMzcgMjBWIDIyTTQxIDIwViAyMk00NSAyMFYgMjJNNDkgMjBWIDIyTTU1IDIwViAyMk02NyAyMFYgMjJNMTEgMjJWIDI0TTEzIDIyViAyNE0xNSAyMlYgMjRNMTcgMjJWIDI0TTE5IDIyViAyNE0yMSAyMlYgMjRNMjMgMjJWIDI0TTI3IDIyViAyNE0zMSAyMlYgMjRNMzUgMjJWIDI0TTM5IDIyViAyNE00MyAyMlYgMjRNNDcgMjJWIDI0TTUxIDIyViAyNE01NSAyMlYgMjRNNTcgMjJWIDI0TTU5IDIyViAyNE02MSAyMlYgMjRNNjMgMjJWIDI0TTY1IDIyViAyNE02NyAyMlYgMjRNMjcgMjRWIDI2TTI5IDI0ViAyNk0zNSAyNFYgMjZNNDMgMjRWIDI2TTQ1IDI0ViAyNk00NyAyNFYgMjZNNTEgMjRWIDI2TTExIDI2ViAyOE0xMyAyNlYgMjhNMTcgMjZWIDI4TTIzIDI2ViAyOE0yNSAyNlYgMjhNMzEgMjZWIDI4TTM1IDI2ViAyOE0zNyAyNlYgMjhNMzkgMjZWIDI4TTQ5IDI2ViAyOE01NSAyNlYgMjhNNTcgMjZWIDI4TTU5IDI2ViAyOE02MyAyNlYgMjhNNjUgMjZWIDI4TTExIDI4ViAzME0xNyAyOFYgMzBNMTkgMjhWIDMwTTI1IDI4ViAzME0zMSAyOFYgMzBNMzMgMjhWIDMwTTM3IDI4ViAzME0zOSAyOFYgMzBNNDMgMjhWIDMwTTQ1IDI4ViAzME00NyAyOFYgMzBNNTMgMjhWIDMwTTU1IDI4ViAzME02MSAyOFYgMzBNNjcgMjhWIDMwTTExIDMwViAzMk0xNSAzMFYgMzJNMjEgMzBWIDMyTTIzIDMwViAzMk0yOSAzMFYgMzJNMzEgMzBWIDMyTTM3IDMwViAzMk00NyAzMFYgMzJNNDkgMzBWIDMyTTUzIDMwViAzMk02MSAzMFYgMzJNNjMgMzBWIDMyTTY1IDMwViAzMk0xNyAzMlYgMzRNMjUgMzJWIDM0TTMzIDMyViAzNE0zNSAzMlYgMzRNMzcgMzJWIDM0TTM5IDMyViAzNE00MyAzMlYgMzRNNDkgMzJWIDM0TTU3IDMyViAzNE02MyAzMlYgMzRNNjUgMzJWIDM0TTExIDM0ViAzNk0xOSAzNFYgMzZNMjEgMzRWIDM2TTIzIDM0ViAzNk0yNSAzNFYgMzZNMzMgMzRWIDM2TTM1IDM0ViAzNk0zNyAzNFYgMzZNNDEgMzRWIDM2TTQzIDM0ViAzNk00NSAzNFYgMzZNNTEgMzRWIDM2TTUzIDM0ViAzNk01NSAzNFYgMzZNNTcgMzRWIDM2TTYxIDM0ViAzNk02NSAzNFYgMzZNNjcgMzRWIDM2TTExIDM2ViAzOE0xNSAzNlYgMzhNMTcgMzZWIDM4TTE5IDM2ViAzOE0yNSAzNlYgMzhNMjcgMzZWIDM4TTMxIDM2ViAzOE0zNSAzNlYgMzhNMzcgMzZWIDM4TTQzIDM2ViAzOE00NSAzNlYgMzhNNDkgMzZWIDM4TTUxIDM2ViAzOE0xMSAzOFYgNDBNMTUgMzhWIDQwTTE3IDM4ViA0ME0xOSAzOFYgNDBNMjMgMzhWIDQwTTI5IDM4ViA0ME0zMSAzOFYgNDBNMzMgMzhWIDQwTTQ3IDM4ViA0ME01MSAzOFYgNDBNNTMgMzhWIDQwTTU1IDM4ViA0ME01NyAzOFYgNDBNNjEgMzhWIDQwTTYzIDM4ViA0ME02NSAzOFYgNDBNNjcgMzhWIDQwTTEzIDQwViA0Mk0yMSA0MFYgNDJNMjkgNDBWIDQyTTMxIDQwViA0Mk0zMyA0MFYgNDJNMzcgNDBWIDQyTTQxIDQwViA0Mk00NSA0MFYgNDJNNDkgNDBWIDQyTTUxIDQwViA0Mk01NyA0MFYgNDJNNjEgNDBWIDQyTTY1IDQwViA0Mk0xMyA0MlYgNDRNMTUgNDJWIDQ0TTE3IDQyViA0NE0yMSA0MlYgNDRNMjMgNDJWIDQ0TTI1IDQyViA0NE0yNyA0MlYgNDRNMzMgNDJWIDQ0TTM1IDQyViA0NE00MSA0MlYgNDRNNDUgNDJWIDQ0TTUxIDQyViA0NE01MyA0MlYgNDRNNTcgNDJWIDQ0TTY1IDQyViA0NE0xMyA0NFYgNDZNMTUgNDRWIDQ2TTE3IDQ0ViA0Nk0xOSA0NFYgNDZNMjEgNDRWIDQ2TTI1IDQ0ViA0Nk0zMyA0NFYgNDZNMzUgNDRWIDQ2TTM3IDQ0ViA0Nk0zOSA0NFYgNDZNNDMgNDRWIDQ2TTU1IDQ0ViA0Nk01NyA0NFYgNDZNNjEgNDRWIDQ2TTY3IDQ0ViA0Nk0xMSA0NlYgNDhNMTUgNDZWIDQ4TTE3IDQ2ViA0OE0yMyA0NlYgNDhNMjcgNDZWIDQ4TTM1IDQ2ViA0OE00MyA0NlYgNDhNNTUgNDZWIDQ4TTU3IDQ2ViA0OE01OSA0NlYgNDhNNjUgNDZWIDQ4TTY3IDQ2ViA0OE0xNSA0OFYgNTBNMjEgNDhWIDUwTTI3IDQ4ViA1ME0yOSA0OFYgNTBNMzEgNDhWIDUwTTM1IDQ4ViA1ME0zOSA0OFYgNTBNNDEgNDhWIDUwTTQzIDQ4ViA1ME00NSA0OFYgNTBNNDcgNDhWIDUwTTQ5IDQ4ViA1ME01MSA0OFYgNTBNNTMgNDhWIDUwTTY1IDQ4ViA1ME02NyA0OFYgNTBNMTEgNTBWIDUyTTE1IDUwViA1Mk0xOSA1MFYgNTJNMjEgNTBWIDUyTTIzIDUwViA1Mk0yNyA1MFYgNTJNMzUgNTBWIDUyTTM3IDUwViA1Mk0zOSA1MFYgNTJNNDkgNTBWIDUyTTUxIDUwViA1Mk01MyA1MFYgNTJNNTUgNTBWIDUyTTU3IDUwViA1Mk01OSA1MFYgNTJNNjMgNTBWIDUyTTI3IDUyViA1NE0yOSA1MlYgNTRNMzEgNTJWIDU0TTM3IDUyViA1NE00MyA1MlYgNTRNNDUgNTJWIDU0TTQ3IDUyViA1NE00OSA1MlYgNTRNNTEgNTJWIDU0TTU5IDUyViA1NE02MyA1MlYgNTRNNjUgNTJWIDU0TTY3IDUyViA1NE0xMSA1NFYgNTZNMTMgNTRWIDU2TTE1IDU0ViA1Nk0xNyA1NFYgNTZNMTkgNTRWIDU2TTIxIDU0ViA1Nk0yMyA1NFYgNTZNMjcgNTRWIDU2TTI5IDU0ViA1Nk0zMSA1NFYgNTZNMzcgNTRWIDU2TTQzIDU0ViA1Nk00NSA1NFYgNTZNNDcgNTRWIDU2TTUxIDU0ViA1Nk01NSA1NFYgNTZNNTkgNTRWIDU2TTY1IDU0ViA1Nk0xMSA1NlYgNThNMjMgNTZWIDU4TTI5IDU2ViA1OE0zMyA1NlYgNThNMzcgNTZWIDU4TTM5IDU2ViA1OE00MSA1NlYgNThNNDMgNTZWIDU4TTUxIDU2ViA1OE01OSA1NlYgNThNNjEgNTZWIDU4TTYzIDU2ViA1OE02NSA1NlYgNThNMTEgNThWIDYwTTE1IDU4ViA2ME0xNyA1OFYgNjBNMTkgNThWIDYwTTIzIDU4ViA2ME0yOSA1OFYgNjBNMzcgNThWIDYwTTQxIDU4ViA2ME00MyA1OFYgNjBNNDUgNThWIDYwTTUxIDU4ViA2ME01MyA1OFYgNjBNNTUgNThWIDYwTTU3IDU4ViA2ME01OSA1OFYgNjBNNjcgNThWIDYwTTExIDYwViA2Mk0xNSA2MFYgNjJNMTcgNjBWIDYyTTE5IDYwViA2Mk0yMyA2MFYgNjJNMjcgNjBWIDYyTTI5IDYwViA2Mk0zNSA2MFYgNjJNMzcgNjBWIDYyTTQzIDYwViA2Mk00NSA2MFYgNjJNNDcgNjBWIDYyTTUzIDYwViA2Mk01NSA2MFYgNjJNNTcgNjBWIDYyTTU5IDYwViA2Mk02MSA2MFYgNjJNNjMgNjBWIDYyTTExIDYyViA2NE0xNSA2MlYgNjRNMTcgNjJWIDY0TTE5IDYyViA2NE0yMyA2MlYgNjRNMzMgNjJWIDY0TTM3IDYyViA2NE0zOSA2MlYgNjRNNDcgNjJWIDY0TTUxIDYyViA2NE01OSA2MlYgNjRNNjEgNjJWIDY0TTYzIDYyViA2NE02NyA2MlYgNjRNMTEgNjRWIDY2TTIzIDY0ViA2Nk0yNyA2NFYgNjZNMjkgNjRWIDY2TTMxIDY0ViA2Nk0zNyA2NFYgNjZNMzkgNjRWIDY2TTQxIDY0ViA2Nk00NSA2NFYgNjZNNDkgNjRWIDY2TTUxIDY0ViA2Nk01NSA2NFYgNjZNNTkgNjRWIDY2TTY1IDY0ViA2Nk0xMSA2NlYgNjhNMTMgNjZWIDY4TTE1IDY2ViA2OE0xNyA2NlYgNjhNMTkgNjZWIDY4TTIxIDY2ViA2OE0yMyA2NlYgNjhNMjcgNjZWIDY4TTI5IDY2ViA2OE0zMSA2NlYgNjhNMzUgNjZWIDY4TTQxIDY2ViA2OE00MyA2NlYgNjhNNDUgNjZWIDY4TTUxIDY2ViA2OE01MyA2NlYgNjhNNTkgNjZWIDY4TTY1IDY2ViA2OCcgc3Ryb2tlPScjMDAwJyBzdHJva2Utd2lkdGg9JzInLz4KPC9nPjwvZz4KPC9zdmc+Cg==" alt="Diagram" width="78" height="78">
 </div>
 </div>
 <div class="paragraph">
@@ -792,114 +688,7 @@ pre.rouge {
 <p>Cette documentation décrit la méthode que j&#8217;ai utilisé pour installer un serveur linux de gestion du reseau Home (site auto hébergé) avec un raspberry PI.</p>
 </div>
 <div class="paragraph">
-<p>Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.
-Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentation décrit aussi l&#8217;installation pour une Raspbian.</p>
-</div>
-<div class="paragraph">
-<p>Dans ce document, je montre la configuration de nombreux types de sites web et services dans un domaine en utilisant ISPConfig.</p>
-</div>
-<div class="paragraph">
-<p>Sont installés:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>un panel <a href="https://www.ispconfig.org/">ISPConfig</a>,</p>
-</li>
-<li>
-<p>un configurateur <a href="http://www.webmin.com/">Webmin</a>,</p>
-</li>
-<li>
-<p>un serveur apache avec sa configuration let&#8217;s encrypt et les plugins PHP, Python et Ruby,</p>
-</li>
-<li>
-<p>un serveur de mail avec antispam, sécurisation d&#8217;envoi des mails et autoconfiguration pour Outlook, Thunderbird, Android,</p>
-</li>
-<li>
-<p>un webmail <a href="https://roundcube.net">roundcube</a>,</p>
-</li>
-<li>
-<p>un serveur de mailing list <a href="https://www.list.org">mailman</a>,</p>
-</li>
-<li>
-<p>un serveur ftp et sftp sécurisé,</p>
-</li>
-<li>
-<p>un serveur de base de données MariaDB et son interface web d&#8217;administration <a href="https://www.phpmyadmin.net/">phpmyadmin</a>,</p>
-</li>
-<li>
-<p>des outils de sécurisation, de mise à jour automatique et d&#8217;audit du serveur,</p>
-</li>
-<li>
-<p>un outil de Monitoring <a href="http://munin-monitoring.org/">Munin</a>,</p>
-</li>
-<li>
-<p>un outil de Monitoring <a href="http://mmonit.com/monit/">Monit</a>,</p>
-</li>
-<li>
-<p>l&#8217;installation de <a href="https://hub.docker.com/">Docker</a> et des outils <a href="https://portainer.io">Portainer</a> et <a href="https://yacht.sh">Yacht</a>,</p>
-</li>
-<li>
-<p>un sous domaine pointant sur un site auto-hébergé (l’installation du site n&#8217;est pas décrite ici; Se référer à <a href="https://yunohost.org">Yunohost</a> ) par exemple,</p>
-</li>
-<li>
-<p>un site CMS sous <a href="https://www.joomla.fr/">Joomla</a>,</p>
-</li>
-<li>
-<p>un site CMS sous <a href="https://www.concrete5.org/">Concrete5</a>,</p>
-</li>
-<li>
-<p>un site WIKI sous <a href="https://www.mediawiki.org">Mediawiki</a>,</p>
-</li>
-<li>
-<p>un site de blog <a href="https://wordpress.com">Wordpress</a>,</p>
-</li>
-<li>
-<p>un site <a href="https://microweber.org/">Microweber</a>,</p>
-</li>
-<li>
-<p>un site Photo sous <a href="https://piwigo.org/">Piwigo</a>,</p>
-</li>
-<li>
-<p>un site de partage de recettes de cuisine <a href="https://hay-kot.github.io/mealie/">Mealie</a></p>
-</li>
-<li>
-<p>un site Collaboratif sous <a href="https://nextcloud.com">Nextcloud</a>,</p>
-</li>
-<li>
-<p>un site <a href="https://gitea.io">Gitea</a> et son repository GIT,</p>
-</li>
-<li>
-<p>un serveur de mots de passe <a href="https://bitwarden.com/">Bitwarden</a>,</p>
-</li>
-<li>
-<p>un dashboard pour vos sites web <a href="https://heimdall.site/">Heimdall</a>,</p>
-</li>
-<li>
-<p>un serveur et un site  de partage de fichiers <a href="https://www.seafile.com">Seafile</a>,</p>
-</li>
-<li>
-<p>un serveur <a href="https://grafana.com/">Grafana</a>, <a href="https://prometheus.io/">Prometheus</a>, <a href="https://github.com/grafana/loki">Loki</a>, Promtail pour gérer les statistiques et les logs du serveur,</p>
-</li>
-<li>
-<p>un serveur de sauvegardes <a href="https://borgbackup.readthedocs.io/">BorgBackup</a>,</p>
-</li>
-<li>
-<p>un serveur de VPN <a href="https://pritunl.com/">Pritunl</a>,</p>
-</li>
-<li>
-<p>un serveur de bureau à distance <a href="https://guacamole.apache.org">Guacamole</a></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Dans ce document nous configurons un nom de domaine principal. Pour la clarté du texte, il sera nommé "example.com". Il est à remplacer évidemment par votre nom de domaine principal.</p>
-</div>
-<div class="paragraph">
-<p>Je suppose dans ce document que vous savez vous connecter à distance sur un serveur en mode terminal, que vous savez vous servir de <code>ssh</code> pour Linux ou de <code>putty</code> pour Windows, que vous avez des notions élémentaires de Shell Unix et que vous savez vous servir de l&#8217;éditeur <code>vi</code>. Si <code>vi</code> est trop compliqué pour vous, je vous suggère d&#8217;utiliser l&#8217;éditeur de texte <code>nano</code> à la place et de remplacer <code>vi</code> par <code>nano</code> dans toutes les lignes de commande.</p>
-</div>
-<div class="paragraph">
-<p>Dans le document, on peut trouver des textes entourés de &lt;texte&gt;. Cela signifie que vous devez mettre ici votre propre texte selon vos préférences.</p>
+<p>Elle est le résultat de très nombreuses heures de travail pour collecter la documentation nécessaire.</p>
 </div>
 <div class="paragraph">
 <p>Le coût pour mettre en oeuvre ce type de serveur est relativement faible:</p>
@@ -910,12 +699,18 @@ Sur mon serveur, j&#8217;ai installé un Ubuntu pour Raspberry. Cette documentat
 <p>Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y avoir des promos)</p>
 </li>
 <li>
-<p>Comptez 26€ pour acheter une carte Raspberry PI 3 A+ (1Go de Ram) et 61€ pour un PI 4 avec 4Go de Ram. A cela il faut ajouter un boitier, une alim et une flash de 64 ou 128 Go (prenez les cartes SD les plus rapide possible en écriture). Vous en aurez donc pour 110€ si vous achetez tout le kit.</p>
+<p>Comptez 47€ pour acheter une carte Raspberry PI 4 (1Go de Ram) et 67€ pour un PI 4 avec 4Go de Ram ou 94€ pour un PI 5 avec 8Go de Ram. A cela il faut ajouter un boitier, une alim et une flash de 64 ou 128 Go (prenez les cartes SD les plus rapide possible en écriture).</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Par rapport à une solution VPS directement dans le cloud, ce budget correspond à 7-10 mois d&#8217;abonnement. Si vous avez la Fibre chez vous, il est nettement plus rentable d&#8217;utiliser un Raspberry que de prendre un abonne VPS.</p>
+<p>Vous en aurez donc entre 80€ pour une petite Configuration Raspberry PI 4 1Go, flash de 64 Go et 160€ pour une configuration Raspberry PI 5 8 Go et une flash de 512 Go.</p>
+</div>
+<div class="paragraph">
+<p>Il existe aussi des kits permettant de mettre en oeuvre des cartes NVME avec un gros gain de performance disque.</p>
+</div>
+<div class="paragraph">
+<p>Par rapport à une solution VPS directement dans le cloud, ce budget correspond à 7-16 mois d&#8217;abonnement selon la configuration. Si vous avez la Fibre chez vous, il est nettement plus rentable d&#8217;utiliser un Raspberry que de prendre un abonnement VPS.</p>
 </div>
 </div>
 </div>
@@ -995,7 +790,7 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <h2 id="pass_gen">3. Gestion des mots de passe</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A propos des mots de passe: il est conseillé de saisir des mots de passe de 10 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'. Ce dernier exemple a un taux de complexité bien meilleur qu&#8217;un mot de passe classique. Il est aussi plus facile à retenir que 'Az3~1ym_a&amp;'.</p>
+<p>A propos des mots de passe: il est conseillé de saisir des mots de passe de 12 caractères contenant des majuscules/minuscules/nombres/caractères spéciaux. Une autre façon de faire est de saisir de longues phrases. Par exemple: 'J&#8217;aime manger de la mousse au chocolat parfumée à la menthe'. Ce dernier exemple a un taux de complexité bien meilleur qu&#8217;un mot de passe classique. Il est aussi plus facile à retenir que 'Az3~1ym_a&amp;'.</p>
 </div>
 <div class="paragraph">
 <p>Cependant, si vous êtes en manque d&#8217;inspiration et que vous souhaitez générer des mots de passe, voici quelques méthodes:</p>
@@ -1160,10 +955,10 @@ tr</span> <span class="nt">-cd</span> A-Za-z0-9 &lt; /dev/urandom | <span class=
 <div class="ulist">
 <ul>
 <li>
-<p>Debian: C&#8217;est la distribution la plus connue et celle qui offre le plus de possibilités juste après l&#8217;installation (notamment pour faire de la domotique, utiliser le GPIO &#8230;&#8203;) .</p>
+<p>Debian 64: C&#8217;est la distribution la plus connue et celle qui offre le plus de possibilités juste après l&#8217;installation (notamment pour faire de la domotique, utiliser le GPIO &#8230;&#8203;) .</p>
 </li>
 <li>
-<p>Ubuntu 64: Elle est plus proche d&#8217;une Ubuntu standard et propose beaucoup de paquets pour faire fonctionner votre raspberry en serveur web.</p>
+<p>Ubuntu 64: Elle est plus proche d&#8217;une Ubuntu standard.</p>
 </li>
 </ul>
 </div>
@@ -1203,18 +998,6 @@ dpkg <span class="nt">-i</span> imager_amd64.deb</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Sélectionnez <code>Choose OS</code> et dans la liste choisissez <code>Raspberry Pi OS LITE (64-bit)</code> ou <code>Ubuntu 64</code></p>
-</li>
-<li>
-<p>Sélectionnez <code>CHoose SD CARD</code> et sélectionnez votre lecteur de carte SD</p>
-</li>
-<li>
-<p>Cliquez sur <code>Write</code></p>
-</li>
-<li>
-<p>Attendez la fin du chargement et de l&#8217;écriture sur la flash.</p>
-</li>
-<li>
 <p>Vous avez deux façons d&#8217;installer:</p>
 <div class="ulist">
 <ul>
@@ -1222,13 +1005,84 @@ dpkg <span class="nt">-i</span> imager_amd64.deb</code></pre>
 <p>avec un écran et un clavier qui est la méthode la plus facile</p>
 </li>
 <li>
-<p>en mode Headless qui est plus complexe mais ne nécessite pas d&#8217;écran ni de clavier</p>
+<p>en mode Headless qui est plus complexe mais ne nécessite pas d&#8217;écran ni de clavier. L&#8217;installation s&#8217;effectue automatiquement.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Vous devez choisir l&#8217;une des méthodes décrites dans les deux chapitres suivants.</p>
+<p>Sélectionnez <code>Choisir le modèle</code> et dans la liste choisissez votre type de Raspberry</p>
+</li>
+<li>
+<p>Sélectionnez <code>Choisir l&#8217;OS</code> et dans la liste choisissez <code>Raspberry Pi OS (64-bit)</code> ou <code>Other general-purpose OS</code>&#8594;`Ubuntu`&#8594;`Ubuntu Desktop 64`</p>
+</li>
+<li>
+<p>Sélectionnez <code>Choisir le Stockage</code> et sélectionnez votre lecteur de carte SD</p>
+</li>
+<li>
+<p>Cliquez sur <code>Suivant</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Modifier Réglages</code> si vous souhaitez installer en mode headless le Raspberry sinon cliquez sur <code>Non</code> et allez à l&#8217;étape 10</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet <code>Général</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Donnez le nom de votre Raspberry dans <code>Nom d&#8217;hôte</code></p>
+</li>
+<li>
+<p>Donnez votre utilisateur sudo dans <code>nom d&#8217;utilisateur</code></p>
+</li>
+<li>
+<p>Donnez votre mot de passe dans <code>Mot de passe</code>. Utilisez un générateur de mot de passe pour en obtenir un suffisamment complexe</p>
+</li>
+<li>
+<p>Donnez votre SSID Wifi dans <code>SSID</code></p>
+</li>
+<li>
+<p>Donner le mot de passe de votre wifi dans <code>Mot de passe</code>. Vous pouvez l&#8217;afficher si vous voulez vérifier que la saisie est correcte.</p>
+</li>
+<li>
+<p>Dans <code>Pays Wi-fi</code> mettez <code>FR</code></p>
+</li>
+<li>
+<p>Dans <code>Fuseau horaire</code> mettez votre pays <code>Europe/Paris</code> par exemple</p>
+</li>
+<li>
+<p>Dans type de clavier mettez <code>fr</code> si vous avez un clavier Azerty</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dans l&#8217;onglet `Services</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Activez <code>Activer SSH</code></p>
+</li>
+<li>
+<p>Sélectionnez <code>Utiliser un mot de passe pour l&#8217;authentification</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cliquez sur <code>Enregistrer</code></p>
+</li>
+<li>
+<p>Cliquez sur <code>Oui</code></p>
+</li>
+<li>
+<p>Dans la fenêtre suivant intitulée <code>Attention</code> cliquez sur <code>Oui</code></p>
+</li>
+<li>
+<p>Attendez la fin du chargement et de l&#8217;écriture sur la flash.</p>
+</li>
+<li>
+<p>En fonction de la méthode choisie, allez au chapitre suivant ou celui encore après.</p>
 </li>
 </ol>
 </div>
@@ -1249,28 +1103,22 @@ dpkg <span class="nt">-i</span> imager_amd64.deb</code></pre>
 <p>Branchez votre Raspberry sur votre réseau Ethernet filaire (vous pouvez aussi utiliser le wifi)</p>
 </li>
 <li>
-<p>Démarrez votre Raspberry.</p>
+<p>Démarrez votre raspberry. Attention, les Raspberry PI 5 ont un bouton <code>On</code></p>
 </li>
 <li>
-<p>Après l&#8217;écran de démarrage arc en ciel, vous devez assez rapidement arriver sur le bureau</p>
+<p>Attendez environ 2 minutes le temps que le premier boot se termine. Tout pendant la procédure de boot, la petite led d&#8217;accès disque doit clignoter. Vous devez assez rapidement arriver sur le bureau</p>
 </li>
 <li>
-<p>Un programme doit se lancer automatiquement.</p>
+<p>Un écran de configuration doit s&#8217;afficher automatiquement.</p>
 </li>
 <li>
 <p>Sélectionnez le clavier et la langue en français</p>
 </li>
 <li>
-<p>Tapez votre nouveau mot de passe pour le login <code>pi</code></p>
-</li>
-<li>
-<p>Choisissez un full screen sans bords</p>
+<p>Tapez votre nouveau mot de passe et votre compte utilisateur</p>
 </li>
 <li>
 <p>Choisissez votre connexion wifi et entrez le mot de passe</p>
-</li>
-<li>
-<p>Bien noter votre adresse IP elle vous sera utile ensuite</p>
 </li>
 <li>
 <p>Les mises à jours de paquets Debian ainsi que l&#8217;installation des traductions en français vont s&#8217;installer.</p>
@@ -1321,85 +1169,47 @@ dpkg <span class="nt">-i</span> imager_amd64.deb</code></pre>
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>Allez au chapitre <a href="#_connexion_au_travers_du_réseau">Connexion au travers du réseau</a>.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_installation_headless_de_raspberry_pi_os_lite_64_bit">4.2. Installation Headless de Raspberry Pi OS LITE (64-bit)</h3>
+<h3 id="_installation_headless">4.2. Installation Headless</h3>
 <div class="paragraph">
 <p>Pour ce type d&#8217;installation, pas besoin d&#8217;écran, de clavier et de souris. Tout s&#8217;effectue à distance.</p>
-</div>
-<div class="paragraph">
-<p>Dans la suite, je suppose que vous possèdez un PC fonctionnant avec un Linux (la procédure peut être adaptée pour une machine windows en utilisant la ligne de commande et putty)</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Avant d&#8217;enlever votre flash SD du lecteur, appliquez la procédure ci après:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Sur la flash, 2 partitions ont été crées. Montez la partition boot</p>
+<p>Enlevez la carte SD de votre lecteur et insérez la dans votre raspberry PI.</p>
 </li>
 <li>
-<p>sur cette partition, créez un fichier <code>wpa_supplicant.conf</code> et éditez le avec un éditeur de text (Nano ou vi sous linux ou Notepad sous windows).</p>
+<p>Démarrez votre raspberry. Attention, les Raspberry PI 5 ont un bouton <code>On</code></p>
 </li>
 <li>
-<p>Mettez y le texte suivant:</p>
+<p>Attendez environ 2 minutes le temps que le premier boot se termine. Tout pendant la procédure de boot, la petite led d&#8217;accès disque doit clignoter.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_connexion_au_travers_du_réseau">4.3. Connexion au travers du réseau</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Vous devez maintenant découvrir l&#8217;adresse IP de votre Raspberry, pour cela tapez la commande suivante:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
-country=US
-network={
-    ssid="YOURSSID" <i class="conum" data-value="1"></i><b>(1)</b>
-    psk="YOURPASSWORD" <i class="conum" data-value="2"></i><b>(2)</b>
-    key_mgmt=WPA-PSK
-    scan_ssid=1
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">ping raspberrypi.local <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacez <code>YOURSSID</code> par le nom SSID de votre wifi local</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>remplacez <code>YOURPASSWORD</code> par le mot de passe de votre wifi local</td>
+<td>Attention remplacez raspberrypi par le nom d&#8217;Hôte que vous avez choisi lors de la configuration</td>
 </tr>
 </table>
-</div>
-</li>
-<li>
-<p>sauvez le fichier</p>
-</li>
-<li>
-<p>Sur la même partition créez un fichier <code>ssh</code> (vide et sans extension). Il servira à indiquer au raspberry d&#8217;activer ssh au prochain boot</p>
-</li>
-<li>
-<p>démontez la partition</p>
-</li>
-<li>
-<p>au boot sur la carte SD, le fichier sera recopié dans votre configuration et le réseau wifi sera ainsi accessible</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Enlevez la carte SD de votre lecteur et insérez la dans votre Raspberry PI.</p>
-</li>
-<li>
-<p>Démarrez votre raspberry.</p>
-</li>
-<li>
-<p>Attendez environ 2 minutes le temps que le premier boot se termine. Tout pendant la procédure de boot, la petite led d&#8217;accès disque doit clignoter.</p>
-</li>
-<li>
-<p>Vous devez maintenant découvrir l&#8217;adresse IP de votre Raspberry, pour cela tapez la commande suivante:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">ping raspberrypi.local</code></pre>
-</div>
 </div>
 </li>
 <li>
@@ -1416,14 +1226,41 @@ network={
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Vous pouvez aussi utiliser la commande suivante:
-+</p>
+<p>Vous pouvez aussi utiliser la commande suivante:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"> arp <span class="nt">-na</span> | <span class="nb">grep</span> <span class="nt">-Pi</span> <span class="s2">"(b8:27:eb)|(dc:a6:32)|(e4:5f:01)|(d8:3a:dd)"</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Elle vous donnera l&#8217;adresse IP de tous les raspberry de votre réseau et présents dans le cache ARP de votre PC.</p>
+</li>
+<li>
+<p>Ensuite testez l&#8217;adresse ip trouvée</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">ping 192.168.0.100 <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettez ici l&#8217;adresse IP qui a été découverte.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Si le Raspberry a démarré correctement, cette commande doit montrer l&#8217;adresse IP du raspberry et une réponse correcte au ping</p>
 </li>
 </ol>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre> arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)"</pre>
+<pre>PING 192.168.0.100 (192.168.0.100) 56(84) bytes of data.
+64 bytes from 192.168.0.100: icmp_seq=1 ttl=64 time=1.49 ms</pre>
 </div>
 </div>
 <div class="olist arabic">
@@ -1450,8 +1287,16 @@ network={
 <p>Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">nmap <span class="nt">-sn</span> 192.168.3.0/24</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">nmap <span class="nt">-sn</span> 192.168.3.0/24 <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>En suite à l&#8217;exemple de hostname reçu dans l&#8217;étape précéndente, nous avons remplacé le 10 à la fin de l&#8217;adresse IP par 0.</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -1467,103 +1312,26 @@ network={
 <p>vous pouvez alors directement vous connecter. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">ssh pi@adresse_ip <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="rouge highlight"><code data-lang="bash">ssh username@adresse_ip <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local</td>
+<td>username est le <code>nom d&#8217;utilisateur</code> défini lors de la configuration. adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local ou <code>nom d&#8217;hôte</code>.local</td>
 </tr>
 </table>
 </div>
 </li>
 <li>
-<p>Se loguer avec le mot de passe <code>raspberry</code></p>
-</li>
-<li>
-<p>Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">sudo </span>raspi-config</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Choisissez <code>1 Change User Password</code> &#8594; tapez votre nouveau mot de passe 2 fois</p>
-</li>
-<li>
-<p>Sur l&#8217;étape suivante, il ne faut pas se louper ou vous serez obligé d&#8217;éteindre votre raspberry, retirer la flash et la reprogrammer avec le fichier <code>wpa_supplicant.conf</code> dans la partition <code>boot</code></p>
-</li>
-<li>
-<p>Choisissez <code>2 Network Options</code> &#8594; <code>N2 Wi-fi</code> &#8594; Tapez votre nom de SSID (attention aux majuscules) &#8594; Tapez votre mot de passe</p>
-</li>
-<li>
-<p>Choisissez <code>4 Localisation Options</code> &#8594; <code>I1 Change Locale</code> &#8594; Sélectionnez votre langue: <code>fr_FR.UTF-8 UTF-8</code> &#8594; puis la locale par défaut <code>fr_FR.UTF-8 UTF-8</code></p>
-</li>
-<li>
-<p>Choisissez <code>4 Localisation Options</code> &#8594; <code>I2 Change Timezone</code> &#8594; Choisissez votre timezone (par exemple: <code>Europe</code> &#8594; <code>Paris</code>)</p>
-</li>
-<li>
-<p>Choisissez <code>4 Localisation Options</code> &#8594; <code>I3 Change Keyboard Layout</code> &#8594; Choisissez votre mapping clavier</p>
-</li>
-<li>
-<p>Choisissez <code>4 Localisation Options</code> &#8594; <code>I4 Change Wi-fi Country</code> &#8594; choisissez votre pays de norme wifi</p>
-</li>
-<li>
-<p>choisissez <code>5 Interfacing Options</code> &#8594; <code>P2 SSH</code> &#8594; choisissez <code>yes</code></p>
-</li>
-<li>
-<p>choisissez <code>7 Advanced Options</code> &#8594; <code>A5 Resolution</code> &#8594; choisissez <code>DMT Mode 82 1920x1080 60Hz 16:9</code></p>
-</li>
-<li>
-<p>choisissez <code>8 Update</code> ; Une mise a jour du système va s&#8217;effectuer</p>
-</li>
-<li>
-<p>Tapez ensuite 2 fois sur la touche <code>TAB</code> pour sélectionner <code>Finish</code>. Tapez <code>entrée</code>.</p>
-</li>
-<li>
-<p>Rebootez le système en tapant:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">sudo </span>reboot</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Vous allez perdre votre connexion avec le raspberry</p>
-</li>
-<li>
-<p>si vous arrivez à vous reloguer en tapant (attendre 30 secondes après le reboot avant d&#8217;essayer):</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">ssh pi@adresse_ip <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>adresse_ip est l&#8217;adresse IP du Raspberry pi découverte précédemment ou raspberrypi.local</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>C&#8217;est que vous avez terminé avec succès la configuration initiale.</p>
-</div>
-</li>
-<li>
-<p>Vous avez terminé l&#8217;installation initiale de Debian. Vous pouvez maintenant rebooter votre raspberry pour continuer la configuration.</p>
-</li>
-<li>
-<p>Vous avez deux options: connexion en mode SSH ou au travers d&#8217;une connection VNC</p>
+<p>Se loguer avec le mot de passe défini pendant la configuration</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_headless_de_ubuntu_64">4.3. Installation Headless de Ubuntu 64</h3>
+<h3 id="_installation_headless_de_ubuntu_64">4.4. Installation Headless de Ubuntu 64</h3>
 <div class="paragraph">
 <p>Pour ce type d&#8217;installation, pas besoin d&#8217;écran, de clavier et de souris. Tout s&#8217;effectue à distance.</p>
 </div>
@@ -1642,7 +1410,7 @@ wifis:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre> arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)"</pre>
+<pre> arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)|(e4:5f:01)|(d8:3a:dd)"</pre>
 </div>
 </div>
 <div class="olist arabic">
@@ -1768,89 +1536,8 @@ wifis:
 </li>
 </ol>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_reconnecter_automatiquement_votre_raspberry_pi_au_wifi">4.4. Reconnecter automatiquement votre Raspberry Pi au wifi</h3>
 <div class="paragraph">
-<p>Si vous connectez votre raspberry pi au réseau au travers du wifi, il arrive que le raspberry perde la connexion au réseau de façon définitive.</p>
-</div>
-<div class="paragraph">
-<p>Pour corriger ce problème, il faut reconnecter Raspberry Pi au réseau wifi de manière forcée.</p>
-</div>
-<div class="paragraph">
-<p>Ce problème apparait surtout avec les Raspberry PI 3 et plus rarement avec les PI 4.</p>
-</div>
-<div class="paragraph">
-<p>Suivez la procédure ci-après:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
-</li>
-<li>
-<p>Éditez le fichier <code>wifi_rebooter.sh</code> :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>iw
-vi /usr/local/bin/wifi_rebooter.sh</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Collez-y le contenu suivant :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/bash</span>
-
-<span class="nv">SERVER</span><span class="o">=</span>8.8.8.8
-
-<span class="c"># Envoyer seulement 2 pings, et envoyer la sortie vers /dev/null</span>
-ping <span class="nt">-c2</span> <span class="k">${</span><span class="nv">SERVER</span><span class="k">}</span> <span class="o">&gt;</span> /dev/null
-
-<span class="c"># Si le code retour du ping ($?) est différent de 0 (qui correspond à une erreur)</span>
-<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="o">!=</span> 0 <span class="o">]</span>
-<span class="k">then</span>
-    <span class="c"># Power save off</span>
-
-    <span class="c"># Relancer l'interface wifi</span>
-    ip <span class="nb">link set </span>dev wlan0 down
-    <span class="nb">sleep </span>2
-    ip <span class="nb">link set </span>dev wlan0 up
-    <span class="nb">sleep </span>2
-    iw dev wlan0 <span class="nb">set </span>power_save off
-<span class="k">fi</span></code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Rendre le script exécutable:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">chmod</span> +x /usr/local/bin/wifi_rebooter.sh</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Mettre en place la crontab:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">crontab <span class="nt">-e</span></code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Ajouter à la fin du fichier les lignes suivantes:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="k">*</span>/5 <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span>   /usr/local/bin/wifi_rebooter.sh</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>C&#8217;est fait !</p>
-</li>
-</ol>
+<p>Unresolved directive in rasphome_installation.asc - include::../common/wifi_reboot.asc[]</p>
 </div>
 </div>
 </div>
@@ -1864,15 +1551,29 @@ ping <span class="nt">-c2</span> <span class="k">${</span><span class="nv">SERVE
 <p>En fonction de vos préférences en terme d&#8217;éditeur, choisissez celui qui vous convient pour les outils utilisant un éditeur de façon automatique tels que <code>crontab</code>.</p>
 </div>
 <div class="paragraph">
-<p>Pour les débutants, il est conseillé d&#8217;utiliser nano.</p>
+<p>Pour les débutants, il est conseillé d&#8217;utiliser <code>nano</code> pour les utilisateurs avancés, vous pouvez utiliser <code>vim</code></p>
 </div>
 <div class="paragraph">
-<p><a href="#root_login">Loguez vous comme root </a> et tapez:</p>
+<p><a href="#root_login">Loguez vous comme root </a>.</p>
+</div>
+<div class="paragraph">
+<p>Si vous voulez installer <code>vim</code>, tapez:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>vim</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pour Sélectionner votre éditeur par défaut, tapez:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">update-alternatives  <span class="nt">--config</span> editor</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>choisissez le chiffre correspondant à Nano ou Vim.basic et quittez.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1881,7 +1582,7 @@ ping <span class="nt">-c2</span> <span class="k">${</span><span class="nv">SERVE
 <p>Si vous souhaitez gérer en gestion de configuration le contenu de votre répertoire <code>/etc</code>, installez <code>etckeeper</code>.</p>
 </div>
 <div class="paragraph">
-<p>Cette installation est optionnelle.</p>
+<p>Cette installation est optionnelle. Elle permet de garder dans un repository GIT toutes les modifications qui sont effectuées dans /etc soit par vous soit au moment de l&#8217;installation de paquets.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -3101,100 +2802,100 @@ neofetch <span class="nt">--config</span> /etc/neofetch.conf</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="c1">#!/usr/bin/python
-</span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">apt_pkg</span>
+</span><span class="kn">import</span> <span class="n">sys</span>
+<span class="kn">import</span> <span class="n">subprocess</span>
+<span class="kn">import</span> <span class="n">apt_pkg</span>
 
-<span class="n">DISTRO</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">"lsb_release"</span><span class="p">,</span> <span class="s">"-c"</span><span class="p">,</span> <span class="s">"-s"</span><span class="p">],</span>
-                          <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">).</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="n">strip</span><span class="p">()</span>
+<span class="n">DISTRO</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="nc">Popen</span><span class="p">([</span><span class="sh">"</span><span class="s">lsb_release</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">-c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">-s</span><span class="sh">"</span><span class="p">],</span>
+                          <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">).</span><span class="nf">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nf">strip</span><span class="p">()</span>
 
 <span class="k">class</span> <span class="nc">OpNullProgress</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">'''apt progress handler which supresses any output.'''</span>
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sh">'''</span><span class="s">apt progress handler which supresses any output.</span><span class="sh">'''</span>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
         <span class="k">pass</span>
-    <span class="k">def</span> <span class="nf">done</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">done</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
 <span class="k">def</span> <span class="nf">is_security_upgrade</span><span class="p">(</span><span class="n">pkg</span><span class="p">):</span>
-    <span class="s">'''
+    <span class="sh">'''</span><span class="s">
     Checks to see if a package comes from a DISTRO-security source.
-    '''</span>
-    <span class="n">security_package_sources</span> <span class="o">=</span> <span class="p">[(</span><span class="s">"Ubuntu"</span><span class="p">,</span> <span class="s">"%s-security"</span> <span class="o">%</span> <span class="n">DISTRO</span><span class="p">),</span>
-                               <span class="p">(</span><span class="s">"Debian"</span><span class="p">,</span> <span class="s">"%s-security"</span> <span class="o">%</span> <span class="n">DISTRO</span><span class="p">)]</span>
+    </span><span class="sh">'''</span>
+    <span class="n">security_package_sources</span> <span class="o">=</span> <span class="p">[(</span><span class="sh">"</span><span class="s">Ubuntu</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">%s-security</span><span class="sh">"</span> <span class="o">%</span> <span class="n">DISTRO</span><span class="p">),</span>
+                               <span class="p">(</span><span class="sh">"</span><span class="s">Debian</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">%s-security</span><span class="sh">"</span> <span class="o">%</span> <span class="n">DISTRO</span><span class="p">)]</span>
 
-    <span class="k">for</span> <span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pkg</span><span class="p">.</span><span class="n">file_list</span><span class="p">:</span>
+    <span class="nf">for </span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pkg</span><span class="p">.</span><span class="n">file_list</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">origin</span><span class="p">,</span> <span class="n">archive</span> <span class="ow">in</span> <span class="n">security_package_sources</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nb">file</span><span class="p">.</span><span class="n">archive</span> <span class="o">==</span> <span class="n">archive</span> <span class="ow">and</span> <span class="nb">file</span><span class="p">.</span><span class="n">origin</span> <span class="o">==</span> <span class="n">origin</span><span class="p">):</span>
+            <span class="nf">if </span><span class="p">(</span><span class="nb">file</span><span class="p">.</span><span class="n">archive</span> <span class="o">==</span> <span class="n">archive</span> <span class="ow">and</span> <span class="nb">file</span><span class="p">.</span><span class="n">origin</span> <span class="o">==</span> <span class="n">origin</span><span class="p">):</span>
                 <span class="k">return</span> <span class="bp">True</span>
     <span class="k">return</span> <span class="bp">False</span>
 
 <span class="c1"># init apt and config
-</span><span class="n">apt_pkg</span><span class="p">.</span><span class="n">init</span><span class="p">()</span>
+</span><span class="n">apt_pkg</span><span class="p">.</span><span class="nf">init</span><span class="p">()</span>
 
 <span class="c1"># open the apt cache
 </span><span class="k">try</span><span class="p">:</span>
-    <span class="n">cache</span> <span class="o">=</span> <span class="n">apt_pkg</span><span class="p">.</span><span class="n">Cache</span><span class="p">(</span><span class="n">OpNullProgress</span><span class="p">())</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="n">apt_pkg</span><span class="p">.</span><span class="nc">Cache</span><span class="p">(</span><span class="nc">OpNullProgress</span><span class="p">())</span>
 <span class="k">except</span> <span class="nb">SystemError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"Error: Opening the cache (%s)"</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
-    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">Error: Opening the cache (%s)</span><span class="sh">"</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="nf">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># setup a DepCache instance to interact with the repo
-</span><span class="n">depcache</span> <span class="o">=</span> <span class="n">apt_pkg</span><span class="p">.</span><span class="n">DepCache</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span>
+</span><span class="n">depcache</span> <span class="o">=</span> <span class="n">apt_pkg</span><span class="p">.</span><span class="nc">DepCache</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span>
 
 <span class="c1"># take into account apt policies
-</span><span class="n">depcache</span><span class="p">.</span><span class="n">read_pinfile</span><span class="p">()</span>
+</span><span class="n">depcache</span><span class="p">.</span><span class="nf">read_pinfile</span><span class="p">()</span>
 
 <span class="c1"># initialise it
-</span><span class="n">depcache</span><span class="p">.</span><span class="n">init</span><span class="p">()</span>
+</span><span class="n">depcache</span><span class="p">.</span><span class="nf">init</span><span class="p">()</span>
 
 <span class="c1"># give up if packages are broken
 </span><span class="k">if</span> <span class="n">depcache</span><span class="p">.</span><span class="n">broken_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"Error: Broken packages exist."</span><span class="p">)</span>
-    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">Error: Broken packages exist.</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="nf">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># mark possible packages
 </span><span class="k">try</span><span class="p">:</span>
     <span class="c1"># run distro-upgrade
-</span>    <span class="n">depcache</span><span class="p">.</span><span class="n">upgrade</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</span>    <span class="n">depcache</span><span class="p">.</span><span class="nf">upgrade</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
     <span class="c1"># reset if packages get marked as deleted -&gt; we don't want to break anything
 </span>    <span class="k">if</span> <span class="n">depcache</span><span class="p">.</span><span class="n">del_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">depcache</span><span class="p">.</span><span class="n">init</span><span class="p">()</span>
+        <span class="n">depcache</span><span class="p">.</span><span class="nf">init</span><span class="p">()</span>
 
     <span class="c1"># then a standard upgrade
-</span>    <span class="n">depcache</span><span class="p">.</span><span class="n">upgrade</span><span class="p">()</span>
+</span>    <span class="n">depcache</span><span class="p">.</span><span class="nf">upgrade</span><span class="p">()</span>
 <span class="k">except</span> <span class="nb">SystemError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"Error: Couldn't mark the upgrade (%s)"</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
-    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">Error: Couldn</span><span class="sh">'</span><span class="s">t mark the upgrade (%s)</span><span class="sh">"</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="nf">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># run around the packages
 </span><span class="n">upgrades</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">security_upgrades</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">.</span><span class="n">packages</span><span class="p">:</span>
-    <span class="n">candidate</span> <span class="o">=</span> <span class="n">depcache</span><span class="p">.</span><span class="n">get_candidate_ver</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span>
+    <span class="n">candidate</span> <span class="o">=</span> <span class="n">depcache</span><span class="p">.</span><span class="nf">get_candidate_ver</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span>
     <span class="n">current</span> <span class="o">=</span> <span class="n">pkg</span><span class="p">.</span><span class="n">current_ver</span>
 
     <span class="c1"># skip packages not marked as upgraded/installed
-</span>    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">depcache</span><span class="p">.</span><span class="n">marked_install</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span> <span class="ow">or</span> <span class="n">depcache</span><span class="p">.</span><span class="n">marked_upgrade</span><span class="p">(</span><span class="n">pkg</span><span class="p">)):</span>
+</span>    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">depcache</span><span class="p">.</span><span class="nf">marked_install</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span> <span class="ow">or</span> <span class="n">depcache</span><span class="p">.</span><span class="nf">marked_upgrade</span><span class="p">(</span><span class="n">pkg</span><span class="p">)):</span>
         <span class="k">continue</span>
 
     <span class="c1"># increment the upgrade counter
 </span>    <span class="n">upgrades</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="c1"># keep another count for security upgrades
-</span>    <span class="k">if</span> <span class="n">is_security_upgrade</span><span class="p">(</span><span class="n">candidate</span><span class="p">):</span>
+</span>    <span class="k">if</span> <span class="nf">is_security_upgrade</span><span class="p">(</span><span class="n">candidate</span><span class="p">):</span>
         <span class="n">security_upgrades</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="c1"># double check for security upgrades masked by another package
 </span>    <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">pkg</span><span class="p">.</span><span class="n">version_list</span><span class="p">:</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">current</span> <span class="ow">and</span> <span class="n">apt_pkg</span><span class="p">.</span><span class="n">version_compare</span><span class="p">(</span><span class="n">version</span><span class="p">.</span><span class="n">ver_str</span><span class="p">,</span> <span class="n">current</span><span class="p">.</span><span class="n">ver_str</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="nf">if </span><span class="p">(</span><span class="n">current</span> <span class="ow">and</span> <span class="n">apt_pkg</span><span class="p">.</span><span class="nf">version_compare</span><span class="p">(</span><span class="n">version</span><span class="p">.</span><span class="n">ver_str</span><span class="p">,</span> <span class="n">current</span><span class="p">.</span><span class="n">ver_str</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
             <span class="k">continue</span>
-        <span class="k">if</span> <span class="n">is_security_upgrade</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nf">is_security_upgrade</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
             <span class="n">security_upgrades</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">break</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">"%d updates to install."</span> <span class="o">%</span> <span class="n">upgrades</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"%d are security updates."</span> <span class="o">%</span> <span class="n">security_upgrades</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">)</span>  <span class="c1"># leave a trailing blank line</span></code></pre>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">%d updates to install.</span><span class="sh">"</span> <span class="o">%</span> <span class="n">upgrades</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">%d are security updates.</span><span class="sh">"</span> <span class="o">%</span> <span class="n">security_upgrades</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">""</span><span class="p">)</span>  <span class="c1"># leave a trailing blank line</span></code></pre>
 </div>
 </div>
 </li>
@@ -3438,125 +3139,31 @@ autologin-user-timeout=0</pre>
 <p>Il peut être lancé à la demande ou automatiquement au démarrage du raspberry pour un utilisateur standard.</p>
 </div>
 <div class="paragraph">
-<p>Si vous ne souhaitez pas démarrer automatiquement x11vnc, ne créez pas le fichier 'vnc server.desktop' dans le répertoire autostart.</p>
-</div>
-<div class="paragraph">
-<p>Suivez la procédure suivante:</p>
+<p>L&#8217;installation est simple:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+<p>Sur le bureau du raspberry aller dans le menu &#8594;Préférences&#8594;Configuration du raspberry Pi</p>
 </li>
 <li>
-<p>Installez le package VNC. Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>x11vnc</code></pre>
-</div>
-</div>
+<p>Dans la fenêtre qui s&#8217;ouvre allez dans l&#8217;onglet interfaces et cliquez sur VNC.</p>
 </li>
 <li>
-<p>reloguez vous avec le user <code>autologin</code> définit dans le chapitre sur la <a href="#xfce">configuration xfce</a></p>
+<p>Cliquez sur Valider</p>
 </li>
 <li>
-<p>Configurez un mot de passe. Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">x11vnc <span class="nt">-storepasswd</span> <span class="o">[</span>votre_mot_de_passe] ~/.vnc_passwd <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacez [votre mot de passe] par <a href="#pass_gen">un mot de passe généré</a></td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Changez les droits d&#8217;accès du fichiez mot de passe. Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">chmod </span>750 ~/.vnc_passwd</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Ensuite éditez le fichier de configuration de vnc. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi ~/.x11vncrc</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Inserez le texte suivant dans ce fichier:</p>
-<div class="listingblock">
-<div class="content">
-<pre>-bg
--display :0.0
--forever
--shared</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Ensuite éditez le fichier de démarrage automatique. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">mkdir</span> <span class="nt">-p</span> ~/.config/autostart
-vi ~/.config/autostart/vnc<span class="se">\ </span>server.desktop</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Insérez le texte suivant dans ce fichier:</p>
-<div class="listingblock">
-<div class="content">
-<pre>[Desktop Entry]
-Encoding=UTF-8
-Version=0.9.4
-Type=Application
-Name=vnc server
-Comment=
-Exec=/usr/bin/x11vnc
-OnlyShowIn=XFCE;
-RunHook=0
-StartupNotify=false
-Terminal=false
-Hidden=false</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Enfin le raspberry PI 4 a des problèmes de lenteurs lorsque vous ne branchez pas d&#8217;écran au moment du boot de votre raspberry. C&#8217;est typiquement le cas pour les configurations Headless. Pour corriger cela il faut forcer une résolution avec une autodétection de l&#8217;écran. Il faut modifier la conf de boot.</p>
+<p>Le raspberry PI a des problèmes de lenteurs lorsque vous ne branchez pas d&#8217;écran au moment du boot de votre raspberry. C&#8217;est typiquement le cas pour les configurations Headless. Pour corriger cela il faut forcer une résolution avec une autodétection de l&#8217;écran. Il faut modifier la conf de boot.</p>
 </li>
 <li>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
 <p>Tapez,</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>pour un Ubuntu:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">vi /boot/firmware/cmdline.txt</code></pre>
 </div>
-</div>
-</li>
-<li>
-<p>pour une Debian:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi /boot/cmdline.txt</code></pre>
-</div>
-</div>
-</li>
-</ol>
 </div>
 </li>
 <li>
@@ -3568,11 +3175,7 @@ Hidden=false</pre>
 </div>
 </li>
 <li>
-<p>Le driver graphique définit par défaut n&#8217;est pas le bon pour un Raspberry PI . Tapez</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>pour un Ubuntu :</p>
+<p>Le driver graphique définit par défaut n&#8217;est pas le bon pour un Raspberry PI 4 ou 5. Tapez</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">vi /boot/firmware/config.txt</code></pre>
@@ -3580,39 +3183,51 @@ Hidden=false</pre>
 </div>
 </li>
 <li>
-<p>pour une Debian :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi /boot/config.txt</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</li>
-<li>
 <p>Cherchez la ligne <code>dtoverlay=vc4-kms-v3d</code> et replacez la avec :</p>
 <div class="listingblock">
 <div class="content">
 <pre>gpu_mem=128
-dtoverlay=vc4-kms-v3d-pi4
+dtoverlay=vc4-kms-v3d-pi4 <i class="conum" data-value="1"></i><b>(1)</b>
 hdmi_force_hotplug=1</pre>
 </div>
 </div>
-</li>
-<li>
-<p>Si la ligne n&#8217;est pas trouvé c&#8217;est que la configuration d&#8217;Ubuntu est plus récente. il faut alors rajouter ces lignes directement dans le fichier vers la fin.</p>
-</li>
-<li>
-<p>Enfin il peut être utile de changer le mode de démarrage par défaut de <code>systemd</code>.</p>
-</li>
-<li>
-<p>Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">systemctl set-default graphical.target</code></pre>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>pour un raspberry PI 5 remplacez -pi4 par -pi5.</td>
+</tr>
+</table>
 </div>
+</li>
+<li>
+<p>Si la ligne n&#8217;est pas trouvé c&#8217;est que la configuration est plus récente. il faut alors rajouter ces lignes directement dans le fichier vers la fin.</p>
+</li>
+<li>
+<p>Rebootez</p>
+</li>
+</ol>
 </div>
+<div class="paragraph">
+<p>Enfin sur votre machine Hôte:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Installez Tigervnc-viewer; c&#8217;est le seul qui est compatible avec les certificats de ce VNC</p>
+</li>
+<li>
+<p>Sélectionnez l&#8217;adresse IP de votre raspberry</p>
+</li>
+<li>
+<p>Connectez vous, acceptez les certificats</p>
+</li>
+<li>
+<p>Entrez le login et mot de passe de votre compte sudo du raspberry.</p>
+</li>
+<li>
+<p>C&#8217;est fait
+Si vous ne souhaitez pas démarrer automatiquement x11vnc, ne créez pas le fichier 'vnc server.desktop' dans le répertoire autostart.</p>
 </li>
 </ol>
 </div>
@@ -3630,7 +3245,7 @@ hdmi_force_hotplug=1</pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="data:image/png;base64,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" alt="essai" width="1070" height="252">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABC4AAAD8CAIAAAA39HLGAABVRElEQVR4Xu3dCXzUZN4H8PSc3vdBC20pUEqhhVJLC5SrgltYYN9FblhYKocIW2AVQVehuB54gLhYXNByKHjgqy6oIIIoYDkLCsurnAotR8vRUo629Brf/+SxISSTdFqmzKTz+37y4fPMkydPMsmk8/yYZIb7DQAAAAAA4L7jpBUAAAAAAACND1EEAAAAAAAs4E4U0QMAAAAAADQyRBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAAAAAALAARBEAMJuioqLMzMznnnvuxo0b0nkA0Ah++OEHOunefPNN6QwAAC1AFAEwp7S0NI7j9uzZI51h3cy12VOmTLGzs1u+fLl0RmOqrKyMioqKiYmprq6WzgPzHVzr5ODg4O7uLq0V1Tf5lwc9wYcffpgO8caNG6XzAACsHqIIgDlpdNhnls3etm2bo6PjypUrpTMaWU1NTUZGxqxZs6QzZC5dupSZmXn58mXpjCbNLAe3AaZPn87VGjt2LNV06NCBPfTw8OjcufP69euly9RfnVHE9JeHdlVUVIwZMyYkJKS4uFg6zxjhQNAuio+PX7RoEeUZydwWLVqUlZWxmlWrVlHNW2+9xR7m5ub26dPH09MzKCjoj3/8465du4RlAQDqC1EEwJwGDBjAWWLYd480utn1tXjxYnqaP//8s3RGk2apg5uTkxMXF0erbtu2LcVUfe0Yt2fPnklJSXa8e98qihwUbKS1yhEF9KID0a1bNzc3NypToqDMJp5LXn75ZVYjjiLXr18PDAykh8nJye3bt6fCpk2bhJ4BAOoLUQTAVBs3buzdu7ePj09AQMCYMWOKiopYPQ2n6C3Z1dV1/PjxQ4YMEYZ9NBiaOnVqdnY2vXNPnz6dagoKCoYNG+bp6RkaGpqRkVFaWsp6yMzMDAsL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" alt="essai" width="1070" height="252">
 </div>
 </div>
 <div class="paragraph">
@@ -3929,7 +3544,7 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 </div>
 </div>
 <div class="sect2">
-<h3 id="firewall">6.6. Deblocage de port de firewall</h3>
+<h3 id="firewall">6.6. Déblocage de port de firewall</h3>
 <div class="paragraph">
 <p>Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en entrée de votre équipement. Cela veut dire qu&#8217;il ne sera pas possible de connecter une machine externe sur votre équipement sans avoir effecté une opération de déblocage du port du firewall.</p>
 </div>
@@ -6061,10 +5676,10 @@ vi /etc/traefik/traefik.yml</code></pre>
 <span class="na">providers</span><span class="pi">:</span>
   <span class="na">docker</span><span class="pi">:</span>
     <span class="na">defaultRule</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Host(`{{</span><span class="nv"> </span><span class="s">trimPrefix</span><span class="nv"> </span><span class="s">`/`</span><span class="nv"> </span><span class="s">.Name</span><span class="nv"> </span><span class="s">}}.example.com`)"</span> <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="na">watch</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">watch</span><span class="pi">:</span> <span class="kc">true</span>
   <span class="na">file</span><span class="pi">:</span>
     <span class="na">filename</span><span class="pi">:</span> <span class="s">/etc/traefik/dynamic_conf.yml</span>
-    <span class="na">watch</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">watch</span><span class="pi">:</span> <span class="kc">true</span>
 
 <span class="na">defaultEntryPoints</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="s">https</span>
@@ -7745,40 +7360,40 @@ vi config.py</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""This is the basic configuration class for BorgWeb."""</span>
+    <span class="sh">"""</span><span class="s">This is the basic configuration class for BorgWeb.</span><span class="sh">"""</span>
 
     <span class="c1">#: builtin web server configuration
-</span>    <span class="n">HOST</span> <span class="o">=</span> <span class="s">'127.0.0.1'</span>  <span class="c1"># use 0.0.0.0 to bind to all interfaces
+</span>    <span class="n">HOST</span> <span class="o">=</span> <span class="sh">'</span><span class="s">127.0.0.1</span><span class="sh">'</span>  <span class="c1"># use 0.0.0.0 to bind to all interfaces
 </span>    <span class="n">PORT</span> <span class="o">=</span> <span class="mi">5000</span>  <span class="c1"># ports &lt; 1024 need root
 </span>    <span class="n">DEBUG</span><span class="o">=</span><span class="bp">False</span>
 
     <span class="c1">#: borg / borgweb configuration
-</span>    <span class="n">LOG_DIR</span> <span class="o">=</span> <span class="s">'/var/log/borg'</span>
-    <span class="n">BORG_PATH</span><span class="o">=</span><span class="s">"/usr/bin/borg"</span>
+</span>    <span class="n">LOG_DIR</span> <span class="o">=</span> <span class="sh">'</span><span class="s">/var/log/borg</span><span class="sh">'</span>
+    <span class="n">BORG_PATH</span><span class="o">=</span><span class="sh">"</span><span class="s">/usr/bin/borg</span><span class="sh">"</span>
 
     <span class="c1"># Repo status cache configuration. TTL in secs
 </span>    <span class="n">STATUS_CACHE_TTL</span><span class="o">=</span><span class="mi">43200</span>
-    <span class="n">STATUS_CACHE_PATH</span><span class="o">=</span><span class="s">"/tmp/borgweb.cache"</span>
+    <span class="n">STATUS_CACHE_PATH</span><span class="o">=</span><span class="sh">"</span><span class="s">/tmp/borgweb.cache</span><span class="sh">"</span>
 
     <span class="n">BACKUP_REPOS</span> <span class="o">=</span> <span class="p">{</span>
         <span class="c1"># Repo  name
-</span>        <span class="s">"example.com"</span><span class="p">:</span> <span class="p">{</span> <i class="conum" data-value="2"></i><b>(2)</b>
+</span>        <span class="sh">"</span><span class="s">example.com</span><span class="sh">"</span><span class="p">:</span> <span class="p">{</span> <i class="conum" data-value="2"></i><b>(2)</b>
             <span class="c1"># Repo absolute path
-</span>            <span class="s">"repo_path"</span><span class="p">:</span> <span class="s">"/home/borgbackup/borgbackup"</span><span class="p">,</span>
+</span>            <span class="sh">"</span><span class="s">repo_path</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">/home/borgbackup/borgbackup</span><span class="sh">"</span><span class="p">,</span>
 
             <span class="c1"># Repo logs absolute path, or relative to the main LOG_DIR
-</span>            <span class="s">"log_path"</span><span class="p">:</span> <span class="s">"/var/log/borg/"</span><span class="p">,</span>
+</span>            <span class="sh">"</span><span class="s">log_path</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">/var/log/borg/</span><span class="sh">"</span><span class="p">,</span>
 
             <span class="c1"># Repo password
-</span>            <span class="s">"repo_pwd"</span><span class="p">:</span> <span class="s">"your_password"</span><span class="p">,</span> <i class="conum" data-value="1"></i><b>(1)</b>
+</span>            <span class="sh">"</span><span class="s">repo_pwd</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">your_password</span><span class="sh">"</span><span class="p">,</span> <i class="conum" data-value="1"></i><b>(1)</b>
 
             <span class="c1"># Command/script to run to manually start a backup.
 </span>            <span class="c1"># If left empty or not specified, the backup won't be
 </span>            <span class="c1"># manually runnable
-</span>            <span class="s">"script"</span><span class="p">:</span> <span class="s">"script"</span><span class="p">,</span>
+</span>            <span class="sh">"</span><span class="s">script</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">script</span><span class="sh">"</span><span class="p">,</span>
 
             <span class="c1"># Filled with discovered backups in the repo
-</span>            <span class="s">"backups"</span><span class="p">:</span> <span class="p">[]</span>
+</span>            <span class="sh">"</span><span class="s">backups</span><span class="sh">"</span><span class="p">:</span> <span class="p">[]</span>
         <span class="p">}</span>
     <span class="p">}</span></code></pre>
 </div>
@@ -8513,8 +8128,8 @@ EndSection</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.1<br>
-Last updated 2022-05-17 00:50:40 +0200
+Version 1.2<br>
+Last updated 2024-02-11 22:46:02 +0100
 </div>
 </div>
 </body>

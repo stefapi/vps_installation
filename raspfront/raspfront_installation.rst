@@ -10,10 +10,12 @@ Avant propos
 ============
 
 Ce document est disponible sur le site
-`ReadTheDocs <https://raspberry-webfront.readthedocs.io>`__
+`ReadTheDocs <https://raspberry-installation.readthedocs.io>`__
 
-.. image:: diag-74f02e0ac19ae29b38f9e4a39a6c84d1.png
+.. figure:: diag-qrcode-md5-b61d02ddbaa610df90fcf284c079d33c.svg
    :alt: Diagram
+
+   Diagram
 
 et sur `Github <https://github.com/stefapi/vps_installation>`__. Sur
 Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et
@@ -127,16 +129,22 @@ faible:
 -  Compter 15-18€TTC/an pour un nom de domaine classique (mais il peut y
    avoir des promos)
 
--  Comptez 26€ pour acheter une carte Raspberry PI 3 A+ (1Go de Ram) et
-   61€ pour un PI 4 avec 4Go de Ram. A cela il faut ajouter un boitier,
-   une alim et une flash de 64 ou 128 Go (prenez les cartes SD les plus
-   rapide possible en écriture). Vous en aurez donc pour 110€ si vous
-   achetez tout le kit.
+-  Comptez 47€ pour acheter une carte Raspberry PI 4 (1Go de Ram) et 67€
+   pour un PI 4 avec 4Go de Ram ou 94€ pour un PI 5 avec 8Go de Ram. A
+   cela il faut ajouter un boitier, une alim et une flash de 64 ou 128
+   Go (prenez les cartes SD les plus rapide possible en écriture).
+
+Vous en aurez donc entre 80€ pour une petite Configuration Raspberry PI
+4 1Go, flash de 64 Go et 160€ pour une configuration Raspberry PI 5 8 Go
+et une flash de 512 Go.
+
+Il existe aussi des kits permettant de mettre en oeuvre des cartes NVME
+avec un gros gain de performance disque.
 
 Par rapport à une solution VPS directement dans le cloud, ce budget
-correspond à 7-10 mois d’abonnement. Si vous avez la Fibre chez vous, il
-est nettement plus rentable d’utiliser un Raspberry que de prendre un
-abonne VPS.
+correspond à 7-16 mois d’abonnement selon la configuration. Si vous avez
+la Fibre chez vous, il est nettement plus rentable d’utiliser un
+Raspberry que de prendre un abonnement VPS.
 
 .. _root_login:
 
@@ -192,7 +200,7 @@ Gestion des mots de passe
 =========================
 
 A propos des mots de passe: il est conseillé de saisir des mots de passe
-de 10 caractères contenant des majuscules/minuscules/nombres/caractères
+de 12 caractères contenant des majuscules/minuscules/nombres/caractères
 spéciaux. Une autre façon de faire est de saisir de longues phrases. Par
 exemple: 'J’aime manger de la mousse au chocolat parfumée à la menthe'.
 Ce dernier exemple a un taux de complexité bien meilleur qu’un mot de
@@ -360,13 +368,11 @@ C’est la première étape.
 
 Il vous faut bien choisir le type de linux que vous souhaitez installer:
 
--  Debian: C’est la distribution la plus connue et celle qui offre le
+-  Debian 64: C’est la distribution la plus connue et celle qui offre le
    plus de possibilités juste après l’installation (notamment pour faire
    de la domotique, utiliser le GPIO …​) .
 
--  Ubuntu 64: Elle est plus proche d’une Ubuntu standard et propose
-   beaucoup de paquets pour faire fonctionner votre raspberry en serveur
-   web.
+-  Ubuntu 64: Elle est plus proche d’une Ubuntu standard.
 
 Il vous faudra un lecteur de flash microSD - USB que vous brancherez sur
 votre PC.
@@ -393,25 +399,68 @@ Pour Linux, appliquer la procédure suivante:
 
 Suivez la procédure ci dessous commune à toutes les plateformes:
 
-1. Sélectionnez ``Choose OS`` et dans la liste choisissez
-   ``Raspberry Pi OS LITE (64-bit)`` ou ``Ubuntu 64``
+1.  Vous avez deux façons d’installer:
 
-2. Sélectionnez ``CHoose SD CARD`` et sélectionnez votre lecteur de
-   carte SD
+    -  avec un écran et un clavier qui est la méthode la plus facile
 
-3. Cliquez sur ``Write``
+    -  en mode Headless qui est plus complexe mais ne nécessite pas
+       d’écran ni de clavier. L’installation s’effectue automatiquement.
 
-4. Attendez la fin du chargement et de l’écriture sur la flash.
+2.  Sélectionnez ``Choisir le modèle`` et dans la liste choisissez votre
+    type de Raspberry
 
-5. Vous avez deux façons d’installer:
+3.  Sélectionnez ``Choisir l’OS`` et dans la liste choisissez
+    ``Raspberry Pi OS (64-bit)`` ou
+    ``Other general-purpose OS``\ →`Ubuntu`→`Ubuntu Desktop 64\`
 
-   -  avec un écran et un clavier qui est la méthode la plus facile
+4.  Sélectionnez ``Choisir le Stockage`` et sélectionnez votre lecteur
+    de carte SD
 
-   -  en mode Headless qui est plus complexe mais ne nécessite pas
-      d’écran ni de clavier
+5.  Cliquez sur ``Suivant``
 
-6. Vous devez choisir l’une des méthodes décrites dans les deux
-   chapitres suivants.
+6.  Cliquez sur ``Modifier Réglages`` si vous souhaitez installer en
+    mode headless le Raspberry sinon cliquez sur ``Non`` et allez à
+    l’étape 10
+
+7.  Dans l’onglet ``Général``
+
+    -  Donnez le nom de votre Raspberry dans ``Nom d’hôte``
+
+    -  Donnez votre utilisateur sudo dans ``nom d’utilisateur``
+
+    -  Donnez votre mot de passe dans ``Mot de passe``. Utilisez un
+       générateur de mot de passe pour en obtenir un suffisamment
+       complexe
+
+    -  Donnez votre SSID Wifi dans ``SSID``
+
+    -  Donner le mot de passe de votre wifi dans ``Mot de passe``. Vous
+       pouvez l’afficher si vous voulez vérifier que la saisie est
+       correcte.
+
+    -  Dans ``Pays Wi-fi`` mettez ``FR``
+
+    -  Dans ``Fuseau horaire`` mettez votre pays ``Europe/Paris`` par
+       exemple
+
+    -  Dans type de clavier mettez ``fr`` si vous avez un clavier Azerty
+
+8.  Dans l’onglet \`Services
+
+    -  Activez ``Activer SSH``
+
+    -  Sélectionnez ``Utiliser un mot de passe pour l’authentification``
+
+9.  Cliquez sur ``Enregistrer``
+
+10. Cliquez sur ``Oui``
+
+11. Dans la fenêtre suivant intitulée ``Attention`` cliquez sur ``Oui``
+
+12. Attendez la fin du chargement et de l’écriture sur la flash.
+
+13. En fonction de la méthode choisie, allez au chapitre suivant ou
+    celui encore après.
 
 .. _`_installation_avec_écran_et_clavier`:
 
@@ -429,29 +478,27 @@ Pour ce type d’installation, il vous faut un clavier+souris et un écran.
 3.  Branchez votre Raspberry sur votre réseau Ethernet filaire (vous
     pouvez aussi utiliser le wifi)
 
-4.  Démarrez votre Raspberry.
+4.  Démarrez votre raspberry. Attention, les Raspberry PI 5 ont un
+    bouton ``On``
 
-5.  Après l’écran de démarrage arc en ciel, vous devez assez rapidement
-    arriver sur le bureau
+5.  Attendez environ 2 minutes le temps que le premier boot se termine.
+    Tout pendant la procédure de boot, la petite led d’accès disque doit
+    clignoter. Vous devez assez rapidement arriver sur le bureau
 
-6.  Un programme doit se lancer automatiquement.
+6.  Un écran de configuration doit s’afficher automatiquement.
 
 7.  Sélectionnez le clavier et la langue en français
 
-8.  Tapez votre nouveau mot de passe pour le login ``pi``
+8.  Tapez votre nouveau mot de passe et votre compte utilisateur
 
-9.  Choisissez un full screen sans bords
+9.  Choisissez votre connexion wifi et entrez le mot de passe
 
-10. Choisissez votre connexion wifi et entrez le mot de passe
-
-11. Bien noter votre adresse IP elle vous sera utile ensuite
-
-12. Les mises à jours de paquets Debian ainsi que l’installation des
+10. Les mises à jours de paquets Debian ainsi que l’installation des
     traductions en français vont s’installer.
 
-13. Une fois les installations terminées, le Raspberry va rebooter.
+11. Une fois les installations terminées, le Raspberry va rebooter.
 
-14. Une fois rebooté, sélectionnez dans le menu
+12. Une fois rebooté, sélectionnez dans le menu
     ``Préférences``\ →`Configuration du Raspberry PI\`
 
     -  Dans l’onglet ``Display`` Cliquez sur ``Set Resolution`` et
@@ -461,7 +508,7 @@ Pour ce type d’installation, il vous faut un clavier+souris et un écran.
 
     -  Cliquez sur ``Valider``
 
-15. Cliquez sur l’icône ``VNC`` dans la barre en haut à Droite
+13. Cliquez sur l’icône ``VNC`` dans la barre en haut à Droite
 
     -  Dans la fenêtre cliquez sur le menu burger en haut à Droite.
 
@@ -473,80 +520,49 @@ Pour ce type d’installation, il vous faut un clavier+souris et un écran.
     -  Tapez votre mot de passe dans les deux champs et cliquez
        ``Valider`` puis ``OK``
 
-16. Vous pouvez maintenant rebooter votre Raspberry sans écran et sans
+14. Vous pouvez maintenant rebooter votre Raspberry sans écran et sans
     clavier pour continuer la configuration.
 
-17. Vous avez deux options: connexion en mode SSH ou au travers d’une
+15. Vous avez deux options: connexion en mode SSH ou au travers d’une
     connexion VNC
 
-.. _`_installation_headless_de_raspberry_pi_os_lite_64_bit`:
+Allez au chapitre `Connexion au travers du
+réseau <#_connexion_au_travers_du_réseau>`__.
 
-Installation Headless de Raspberry Pi OS LITE (64-bit)
-------------------------------------------------------
+.. _`_installation_headless`:
+
+Installation Headless
+---------------------
 
 Pour ce type d’installation, pas besoin d’écran, de clavier et de
 souris. Tout s’effectue à distance.
 
-Dans la suite, je suppose que vous possèdez un PC fonctionnant avec un
-Linux (la procédure peut être adaptée pour une machine windows en
-utilisant la ligne de commande et putty)
+1. Enlevez la carte SD de votre lecteur et insérez la dans votre
+   raspberry PI.
 
-1. Avant d’enlever votre flash SD du lecteur, appliquez la procédure ci
-   après:
+2. Démarrez votre raspberry. Attention, les Raspberry PI 5 ont un bouton
+   ``On``
 
-   -  Sur la flash, 2 partitions ont été crées. Montez la partition boot
-
-   -  sur cette partition, créez un fichier ``wpa_supplicant.conf`` et
-      éditez le avec un éditeur de text (Nano ou vi sous linux ou
-      Notepad sous windows).
-
-   -  Mettez y le texte suivant:
-
-      ::
-
-         ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-         update_config=1
-         country=US
-         network={
-             ssid="YOURSSID" 
-             psk="YOURPASSWORD" 
-             key_mgmt=WPA-PSK
-             scan_ssid=1
-         }
-
-      -  remplacez ``YOURSSID`` par le nom SSID de votre wifi local
-
-      -  remplacez ``YOURPASSWORD`` par le mot de passe de votre wifi
-         local
-
-   -  sauvez le fichier
-
-   -  Sur la même partition créez un fichier ``ssh`` (vide et sans
-      extension). Il servira à indiquer au raspberry d’activer ssh au
-      prochain boot
-
-   -  démontez la partition
-
-   -  au boot sur la carte SD, le fichier sera recopié dans votre
-      configuration et le réseau wifi sera ainsi accessible
-
-2. Enlevez la carte SD de votre lecteur et insérez la dans votre
-   Raspberry PI.
-
-3. Démarrez votre raspberry.
-
-4. Attendez environ 2 minutes le temps que le premier boot se termine.
+3. Attendez environ 2 minutes le temps que le premier boot se termine.
    Tout pendant la procédure de boot, la petite led d’accès disque doit
    clignoter.
 
-5. Vous devez maintenant découvrir l’adresse IP de votre Raspberry, pour
+.. _`_connexion_au_travers_du_réseau`:
+
+Connexion au travers du réseau
+------------------------------
+
+1. Vous devez maintenant découvrir l’adresse IP de votre Raspberry, pour
    cela tapez la commande suivante:
 
    .. code:: bash
 
-      ping raspberrypi.local
+      ping raspberrypi.local 
 
-6. Si le Raspberry a démarré correctement, cette commande doit montrer
+   -  Attention remplacez raspberrypi par le nom d’Hôte que vous avez
+      choisi lors de la configuration
+
+2. Si le Raspberry a démarré correctement, cette commande doit montrer
    l’adresse IP du raspberry et une réponse correcte au ping
 
 ::
@@ -554,116 +570,74 @@ utilisant la ligne de commande et putty)
    PING raspberrypi.local (192.168.3.212) 56(84) bytes of data.
    64 bytes from raspberrypi.local (192.168.3.212): icmp_seq=1 ttl=64 time=1.32 ms
 
-1. Vous pouvez aussi utiliser la commande suivante: +
+1. Vous pouvez aussi utiliser la commande suivante:
+
+   .. code:: bash
+
+       arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)|(e4:5f:01)|(d8:3a:dd)"
+
+2. Elle vous donnera l’adresse IP de tous les raspberry de votre réseau
+   et présents dans le cache ARP de votre PC.
+
+3. Ensuite testez l’adresse ip trouvée
+
+   .. code:: bash
+
+      ping 192.168.0.100 
+
+   -  mettez ici l’adresse IP qui a été découverte.
+
+4. Si le Raspberry a démarré correctement, cette commande doit montrer
+   l’adresse IP du raspberry et une réponse correcte au ping
 
 ::
 
-    arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)"
+   PING 192.168.0.100 (192.168.0.100) 56(84) bytes of data.
+   64 bytes from 192.168.0.100: icmp_seq=1 ttl=64 time=1.49 ms
 
-1.  Si vous n’obtenez aucun résultat essayer la commande ``nmap`` sur le
-    subnet de votre réseau local
+1. Si vous n’obtenez aucun résultat essayer la commande ``nmap`` sur le
+   subnet de votre réseau local
 
-    -  On obtient l’adresse local du subnet en tapant:
+   -  On obtient l’adresse local du subnet en tapant:
 
-       .. code:: bash
+      .. code:: bash
 
-          hostname -I
+         hostname -I
 
-    -  l’adresse IP de votre PC est affichée comme premier mot. Par
-       exemple :`192.168.3.10\`
+   -  l’adresse IP de votre PC est affichée comme premier mot. Par
+      exemple :\`192.168.3.10\`
 
-    -  le subnet se déduit de cette adresse en gardant les 3 premiers
-       nombres (cas général de la plupart des utilisateurs).
+   -  le subnet se déduit de cette adresse en gardant les 3 premiers
+      nombres (cas général de la plupart des utilisateurs).
 
-    -  Tapez:
+   -  Tapez:
 
-       .. code:: bash
+      .. code:: bash
 
-          nmap -sn 192.168.3.0/24
+         nmap -sn 192.168.3.0/24 
 
-    -  la commande affiche alors les adresses IP et mac de toutes les
-       machines présentes sur le réseau.
+      -  En suite à l’exemple de hostname reçu dans l’étape précéndente,
+         nous avons remplacé le 10 à la fin de l’adresse IP par 0.
 
-    -  le Raspberry se reconnait par son nom de machine qui contient le
-       terme ``raspberry`` ou par son adresse mac qui est reconnue du
-       type ``Raspberry Pi Foundation``
+   -  la commande affiche alors les adresses IP et mac de toutes les
+      machines présentes sur le réseau.
 
-2.  vous pouvez alors directement vous connecter. Tapez:
+   -  le Raspberry se reconnait par son nom de machine qui contient le
+      terme ``raspberry`` ou par son adresse mac qui est reconnue du
+      type ``Raspberry Pi Foundation``
 
-    .. code:: bash
+2. vous pouvez alors directement vous connecter. Tapez:
 
-       ssh pi@adresse_ip 
+   .. code:: bash
 
-    -  adresse_ip est l’adresse IP du Raspberry pi découverte
-       précédemment ou raspberrypi.local
+      ssh username@adresse_ip 
 
-3.  Se loguer avec le mot de passe ``raspberry``
+   -  username est le ``nom d’utilisateur`` défini lors de la
+      configuration. adresse_ip est l’adresse IP du Raspberry pi
+      découverte précédemment ou raspberrypi.local ou
+      ``nom d’hôte``.local
 
-4.  Tapez :
-
-    .. code:: bash
-
-       sudo raspi-config
-
-5.  Choisissez ``1 Change User Password`` → tapez votre nouveau mot de
-    passe 2 fois
-
-6.  Sur l’étape suivante, il ne faut pas se louper ou vous serez obligé
-    d’éteindre votre raspberry, retirer la flash et la reprogrammer avec
-    le fichier ``wpa_supplicant.conf`` dans la partition ``boot``
-
-7.  Choisissez ``2 Network Options`` → ``N2 Wi-fi`` → Tapez votre nom de
-    SSID (attention aux majuscules) → Tapez votre mot de passe
-
-8.  Choisissez ``4 Localisation Options`` → ``I1 Change Locale`` →
-    Sélectionnez votre langue: ``fr_FR.UTF-8 UTF-8`` → puis la locale
-    par défaut ``fr_FR.UTF-8 UTF-8``
-
-9.  Choisissez ``4 Localisation Options`` → ``I2 Change Timezone`` →
-    Choisissez votre timezone (par exemple: ``Europe`` → ``Paris``)
-
-10. Choisissez ``4 Localisation Options`` →
-    ``I3 Change Keyboard Layout`` → Choisissez votre mapping clavier
-
-11. Choisissez ``4 Localisation Options`` → ``I4 Change Wi-fi Country``
-    → choisissez votre pays de norme wifi
-
-12. choisissez ``5 Interfacing Options`` → ``P2 SSH`` → choisissez
-    ``yes``
-
-13. choisissez ``7 Advanced Options`` → ``A5 Resolution`` → choisissez
-    ``DMT Mode 82 1920x1080 60Hz 16:9``
-
-14. choisissez ``8 Update`` ; Une mise a jour du système va s’effectuer
-
-15. Tapez ensuite 2 fois sur la touche ``TAB`` pour sélectionner
-    ``Finish``. Tapez ``entrée``.
-
-16. Rebootez le système en tapant:
-
-    .. code:: bash
-
-       sudo reboot
-
-17. Vous allez perdre votre connexion avec le raspberry
-
-18. si vous arrivez à vous reloguer en tapant (attendre 30 secondes
-    après le reboot avant d’essayer):
-
-    .. code:: bash
-
-       ssh pi@adresse_ip 
-
-    -  adresse_ip est l’adresse IP du Raspberry pi découverte
-       précédemment ou raspberrypi.local
-
-    C’est que vous avez terminé avec succès la configuration initiale.
-
-19. Vous avez terminé l’installation initiale de Debian. Vous pouvez
-    maintenant rebooter votre raspberry pour continuer la configuration.
-
-20. Vous avez deux options: connexion en mode SSH ou au travers d’une
-    connection VNC
+3. Se loguer avec le mot de passe défini pendant la configuration
 
 .. _`_installation_headless_de_ubuntu_64`:
 
@@ -730,7 +704,7 @@ utilisant la ligne de commande et putty)
 
 ::
 
-    arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)"
+    arp -na | grep -Pi "(b8:27:eb)|(dc:a6:32)|(e4:5f:01)|(d8:3a:dd)"
 
 1. Ensuite testez l’adresse ip trouvée
 
@@ -758,7 +732,7 @@ utilisant la ligne de commande et putty)
           hostname -I
 
     -  l’adresse IP de votre PC est affichée comme premier mot. Par
-       exemple :`192.168.3.10\`
+       exemple :\`192.168.3.10\`
 
     -  le subnet se déduit de cette adresse en gardant les 3 premiers
        nombres (cas général de la plupart des utilisateurs).
@@ -814,80 +788,204 @@ utilisant la ligne de commande et putty)
 
 10. Choisissez votre Timezone. Par exemple: ``Europe/Paris``
 
-.. _`_reconnecter_automatiquement_votre_raspberry_pi_au_wifi`:
+.. _`_configuration_de_vnc`:
 
-Reconnecter automatiquement votre Raspberry Pi au wifi
-------------------------------------------------------
+Configuration de VNC
+====================
 
-Si vous connectez votre raspberry pi au réseau au travers du wifi, il
-arrive que le raspberry perde la connexion au réseau de façon
-définitive.
+VNC permet de prendre le contrôle à distance et en mode graphique du
+raspberry pi.
 
-Pour corriger ce problème, il faut reconnecter Raspberry Pi au réseau
-wifi de manière forcée.
+Il peut être lancé à la demande ou automatiquement au démarrage du
+raspberry pour un utilisateur standard.
 
-Ce problème apparait surtout avec les Raspberry PI 3 et plus rarement
-avec les PI 4.
+L’installation est simple:
 
-Suivez la procédure ci-après:
+1.  Sur le bureau du raspberry aller dans le menu
+    →Préférences→Configuration du raspberry Pi
 
-1. `Loguez vous comme root sur le serveur <#root_login>`__
+2.  Dans la fenêtre qui s’ouvre allez dans l’onglet interfaces et
+    cliquez sur VNC.
 
-2. Éditez le fichier ``wifi_rebooter.sh`` :
+3.  Cliquez sur Valider
 
-   .. code:: bash
+4.  Le raspberry PI a des problèmes de lenteurs lorsque vous ne branchez
+    pas d’écran au moment du boot de votre raspberry. C’est typiquement
+    le cas pour les configurations Headless. Pour corriger cela il faut
+    forcer une résolution avec une autodétection de l’écran. Il faut
+    modifier la conf de boot.
 
-      apt install iw
-      vi /usr/local/bin/wifi_rebooter.sh
+5.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-3. Collez-y le contenu suivant :
+6.  Tapez,
 
-   .. code:: bash
+    .. code:: bash
 
-      #!/bin/bash
+       vi /boot/firmware/cmdline.txt
 
-      SERVER=8.8.8.8
+7.  Puis sur la ligne présenté à l’écran, ajoutez au bout le texte
+    suivant précédé d’un espace. Vous pouvez changer la résolution
+    (1024x768) comme vous voulez :
 
-      # Envoyer seulement 2 pings, et envoyer la sortie vers /dev/null
-      ping -c2 ${SERVER} > /dev/null
+    ::
 
-      # Si le code retour du ping ($?) est différent de 0 (qui correspond à une erreur)
-      if [ $? != 0 ]
-      then
-          # Power save off
+       video=HDMI-A-1:1024x768@60D
 
-          # Relancer l'interface wifi
-          ip link set dev wlan0 down
-          sleep 2
-          ip link set dev wlan0 up
-          sleep 2
-          iw dev wlan0 set power_save off
-      fi
+8.  Le driver graphique définit par défaut n’est pas le bon pour un
+    Raspberry PI 4 ou 5. Tapez
 
-4. Rendre le script exécutable:
+    .. code:: bash
 
-   .. code:: bash
+       vi /boot/firmware/config.txt
 
-      chmod +x /usr/local/bin/wifi_rebooter.sh
+9.  Cherchez la ligne ``dtoverlay=vc4-kms-v3d`` et replacez la avec :
 
-5. Mettre en place la crontab:
+    ::
 
-   .. code:: bash
+       gpu_mem=128
+       dtoverlay=vc4-kms-v3d-pi4 
+       hdmi_force_hotplug=1
 
-      crontab -e
+    -  pour un raspberry PI 5 remplacez -pi4 par -pi5.
 
-6. Ajouter à la fin du fichier les lignes suivantes:
+10. Si la ligne n’est pas trouvé c’est que la configuration est plus
+    récente. il faut alors rajouter ces lignes directement dans le
+    fichier vers la fin.
 
-   .. code:: bash
+11. Rebootez
 
-      */5 * * * *   /usr/local/bin/wifi_rebooter.sh
+Enfin sur votre machine Hôte:
 
-7. C’est fait !
+1. Installez Tigervnc-viewer; c’est le seul qui est compatible avec les
+   certificats de ce VNC
+
+2. Sélectionnez l’adresse IP de votre raspberry
+
+3. Connectez vous, acceptez les certificats
+
+4. Entrez le login et mot de passe de votre compte sudo du raspberry.
+
+5. C’est fait Si vous ne souhaitez pas démarrer automatiquement x11vnc,
+   ne créez pas le fichier 'vnc server.desktop' dans le répertoire
+   autostart.
 
 .. _`_configuration_basique`:
 
 Configuration basique
 =====================
+
+.. _domain_config:
+
+Vérification du nom de serveur
+------------------------------
+
+Cette partie consiste à vérifier que le serveur a un hostname
+correctement configuré.
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. vérifier que le hostname est bien celui attendu (c’est à dire
+   configuré par votre hébergeur). Tapez :
+
+   .. code:: bash
+
+      cat /etc/hostname
+
+   Le nom du hostname (sans le domaine) doit s’afficher.
+
+   a. Si ce n’est pas le cas, changer ce nom en éditant le fichier.
+      Tapez :
+
+      .. code:: shell
+
+         vi /etc/hostname
+
+      Changez la valeur, sauvegardez et rebootez. Tapez :
+
+      .. code:: bash
+
+         reboot
+
+   b. `Loguez vous comme root sur le serveur <#root_login>`__
+
+3. Vérifier le fichier ``hosts``. Tapez :
+
+   .. code:: bash
+
+      cat /etc/hosts
+
+   Si le fichier contient plusieurs lignes avec la même adresse de
+   loopback en ``127.x.y.z``, en gardez une seule et celle avec le
+   hostname et le nom de domaine complet.
+
+   a. si ce n’est pas le cas, changer les lignes en éditant le fichier.
+      Tapez:
+
+      .. code:: bash
+
+         vi /etc/hosts
+
+   b. Changez la ou les lignes, sauvegardez.
+
+      .. note::
+
+         Le FQDN (nom de machine avec le nom de domaine) doit être
+         déclaré avant le hostname simple dans le fichier ``hosts``.
+         Pour que la configuration de votre serveur de mail soit
+         correcte vous devez installer un FQDN contenant l’adresse de
+         mail comme ``mail.example.com``
+
+   c. Rebootez. Tapez :
+
+      .. code:: bash
+
+         reboot
+
+   d. `Loguez vous comme root sur le serveur <#root_login>`__
+
+4. Vérifiez que tout est correctement configuré.
+
+   a. Tapez :
+
+      .. code:: bash
+
+         hostname
+
+      La sortie doit afficher le nom de host.
+
+   b. Tapez ensuite :
+
+      .. code:: bash
+
+         hostname -f
+
+      La sortie doit afficher le nom de host avec le nom de domaine.
+
+   c. Reconfigurez les clés SSH server si vous avez changé le Hostname.
+      Tapez:
+
+      .. code:: bash
+
+         rm -v /etc/ssh/ssh_host_*
+         dpkg-reconfigure openssh-server
+
+   d. Les nouvelles clés vont être regénérées.
+
+   e. Déconnectez vous de votre session SSH et reconnectez vous.
+
+   f. Sur votre poste de travail, la clé d’authentification du serveur
+      aura changée. il vous faudra annuler l’ancien puis accepter la
+      nouvelle.
+
+   g. Tapez :
+
+      .. code:: bash
+
+         ssh-keygen -f "$HOME/.ssh/known_hosts" -R hostname 
+
+      -  remplacer hostname par l’adresse IP ou le nom de machine
+
+   h. `Reloguez vous comme root sur le serveur <#root_login>`__
 
 .. _`_mettre_léditeur_de_votre_choix`:
 
@@ -898,13 +996,24 @@ En fonction de vos préférences en terme d’éditeur, choisissez celui qui
 vous convient pour les outils utilisant un éditeur de façon automatique
 tels que ``crontab``.
 
-Pour les débutants, il est conseillé d’utiliser nano.
+Pour les débutants, il est conseillé d’utiliser ``nano`` pour les
+utilisateurs avancés, vous pouvez utiliser ``vim``
 
-`Loguez vous comme root <#root_login>`__ et tapez:
+`Loguez vous comme root <#root_login>`__ .
+
+Si vous voulez installer ``vim``, tapez:
+
+.. code:: bash
+
+   apt install vim
+
+Pour Sélectionner votre éditeur par défaut, tapez:
 
 .. code:: bash
 
    update-alternatives  --config editor
+
+choisissez le chiffre correspondant à Nano ou Vim.basic et quittez.
 
 .. _`_installation_dun_repository_pour_etc`:
 
@@ -914,7 +1023,9 @@ Installation d’un repository pour ``/etc``
 Si vous souhaitez gérer en gestion de configuration le contenu de votre
 répertoire ``/etc``, installez ``etckeeper``.
 
-Cette installation est optionnelle.
+Cette installation est optionnelle. Elle permet de garder dans un
+repository GIT toutes les modifications qui sont effectuées dans /etc
+soit par vous soit au moment de l’installation de paquets.
 
 1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
@@ -1045,21 +1156,17 @@ Mise à jour des sources de paquets Debian ou Ubuntu
 
       .. code:: ini
 
-         deb http://deb.debian.org/debian bullseye main contrib non-free
-         deb-src http://deb.debian.org/debian bullseye main contrib non-free
+         deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
 
          ## Major bug fix updates produced after the final release of the
          ## distribution.
-         deb http://security.debian.org/debian-security bullseye-security main contrib non-free
-         deb-src http://security.debian.org/debian-security bullseye-security main contrib non-free
-         deb http://deb.debian.org/debian bullseye-updates main contrib non-free
-         deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free
+         deb http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+         deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
 
          ## N.B. software from this repository may not have been tested as
          ## extensively as that contained in the main release, although it includes
          ## newer versions of some applications which may provide useful features.
-         deb http://deb.debian.org/debian bullseye-backports main contrib non-free
-         deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
+         deb http://deb.debian.org/debian bookworm-backports main contrib non-free non-free-firmware
 
 4. Modifier la liste standard de paquets Ubuntu
 
@@ -1284,125 +1391,35 @@ Suivez la procédure suivante:
 
       apt install unattended-upgrades
 
-.. _`_vérification_du_nom_de_serveur`:
-
-Vérification du nom de serveur
-------------------------------
-
-Cette partie consiste à vérifier que le serveur a un hostname
-correctement configuré.
-
-1. `Loguez vous comme root sur le serveur <#root_login>`__
-
-2. vérifier que le hostname est bien celui attendu (c’est à dire
-   configuré par votre hébergeur). Tapez :
-
-   .. code:: bash
-
-      cat /etc/hostname
-
-   Le nom du hostname (sans le domaine) doit s’afficher.
-
-   a. Si ce n’est pas le cas, changer ce nom en éditant le fichier.
-      Tapez :
-
-      .. code:: shell
-
-         vi /etc/hostname
-
-      Changez la valeur, sauvegardez et rebootez. Tapez :
-
-      .. code:: bash
-
-         reboot
-
-   b. `Loguez vous comme root sur le serveur <#root_login>`__
-
-3. Vérifier le fichier ``hosts``. Tapez :
-
-   .. code:: bash
-
-      cat /etc/hosts
-
-   Si le fichier contient plusieurs lignes avec la même adresse de
-   loopback en ``127.x.y.z``, en gardez une seule et celle avec le
-   hostname et le nom de domaine complet.
-
-   a. si ce n’est pas le cas, changer les lignes en éditant le fichier.
-      Tapez:
-
-      .. code:: bash
-
-         vi /etc/hosts
-
-   b. Changez la ou les lignes, sauvegardez.
-
-      .. note::
-
-         Le FQDN (nom de machine avec le nom de domaine) doit être
-         déclaré avant le hostname simple dans le fichier ``hosts``.
-
-   c. Rebootez. Tapez :
-
-      .. code:: bash
-
-         reboot
-
-   d. `Loguez vous comme root sur le serveur <#root_login>`__
-
-4. Vérifiez que tout est correctement configuré.
-
-   a. Tapez :
-
-      .. code:: bash
-
-         hostname
-
-      La sortie doit afficher le nom de host.
-
-   b. Tapez ensuite :
-
-      .. code:: bash
-
-         hostname -f
-
-      La sortie doit afficher le nom de host avec le nom de domaine.
-
-   c. Reconfigurez les clés SSH server si vous avez changé le Hostname.
-      Tapez:
-
-      .. code:: bash
-
-         rm -v /etc/ssh/ssh_host_*
-         dpkg-reconfigure openssh-server
-
-   d. Les nouvelles clés vont être regénérées.
-
-   e. Déconnectez vous de votre session SSH et reconnectez vous.
-
-   f. Sur votre poste de travail, la clé d’authentification du serveur
-      aura changée. il vous faudra annuler l’ancien puis accepter la
-      nouvelle.
-
-   g. Tapez :
-
-      .. code:: bash
-
-         ssh-keygen -f "$HOME/.ssh/known_hosts" -R hostname 
-
-      -  remplacer hostname par l’adresse IP ou le nom de machine
-
-   h. `Reloguez vous comme root sur le serveur <#root_login>`__
-
 .. _`_interdire_le_login_direct_en_root`:
 
 Interdire le login direct en root
 ---------------------------------
 
 Il est toujours vivement déconseillé d’autoriser la possibilité de se
-connecter directement en SSH en tant que root. De ce fait, notre
-première action sera de désactiver le login direct en root et
-d’autoriser le sudo. Respectez bien les étapes de cette procédure:
+connecter directement en SSH en tant que root.
+
+Avec les versions récentes de Debian Bookworm pour raspberry pi, il
+n’est plus nécessaire de créer le compte sudo qui est créé par défaut
+lors de la procédure d’installation standard. Cette procédure est
+cependant indispensable pour l’installation d’une distribution debian
+standard.
+
+Une remarque tout de même pour le raspberry pi: le compte sudo permet de
+se logger root sans aucun mot de passe. C’est considéré comme une faille
+de sécurité. Pour corriger cela, logguez vous comme root et tapez:
+
+.. code:: bash
+
+   rm -f /etc/sudoers.d/010_pi-nopasswd
+
+La procédure suivante s’applique pour la création du compte sudo sur une
+debian standard.
+
+Notre première action sera de désactiver le login direct en root et
+d’autoriser le sudo.
+
+Respectez bien les étapes de cette procédure:
 
 1. `Loguez vous comme root sur le serveur <#root_login>`__
 
@@ -1624,7 +1641,7 @@ super-compte.
 
       .. code:: bash
 
-         vi /etc/sudoers
+         vi /etc/sudoers.d/010_sudonp
 
    d. Ajouter dans le fichier la ligne suivante:
 
@@ -1634,6 +1651,243 @@ super-compte.
 
       L’utilisateur nom_d_utilisateur pourra se logger root sans mot de
       passe au travers de la commande ``sudo bash``
+
+.. _`_configuration_du_motd`:
+
+Configuration du Motd
+---------------------
+
+Le motd est affiché au moment ou l’utilisateur se loggue en ssh. Nous
+allons configurer l’affichage de plusieurs informations importantes.
+
+.. _`_installation_de_neofetch`:
+
+Installation de Neofetch
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Neofetch affiche au démarrage de votre système des informations sur le
+fonctionnement de celui-ci.
+
+Nous allons créer une configuration système:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Installez le package neofetch. Tapez :
+
+   .. code:: bash
+
+      apt install neofetch
+
+3. Editez ensuite le fichier ``/etc/neofetch.conf``. Tapez:
+
+   .. code:: bash
+
+      vi /etc/neofetch.conf
+
+4. Mettez ensuite dans le fichier la configuration suivante:
+
+   .. code:: bash
+
+      print_info() {
+          info title
+          info underline
+
+          info "OS" distro
+          info "Host" model
+          info "Kernel" kernel
+          info "Uptime" uptime
+          info "Packages" packages
+          info "Shell" shell
+          info "Resolution" resolution
+          info "DE" de
+          info "WM" wm
+          info "WM Theme" wm_theme
+          info "Theme" theme
+          info "Icons" icons
+          info "Terminal" term
+          info "Terminal Font" term_font
+          info "CPU" cpu
+          info "CPU Usage" cpu_usage
+          prin "CPU Temp" "$(vcgencmd measure_temp | awk -F '=' '{print $2}')" 
+          prin "Load" "$(cat /proc/loadavg | awk '{print $1, $2, $3}')"
+          info "GPU" gpu
+          info "GPU Driver" gpu_driver  # Linux/macOS only
+          info "Memory" memory
+          info "Disk" disk
+          info "Local IP" local_ip
+          info "Public IP" public_ip
+          info "Users" users
+          info "Locale" locale  # This only works on glibc systems.
+
+          info cols
+      }
+
+      title_fqdn="on"
+      memory_percent="on"
+      memory_unit="mib"
+      package_managers="on"
+      image_backend="ascii"
+      cpu_temp="on"
+
+   -  Cette ligne est à retirer si vous n’utilisez pas de Raspberry PI 4
+      ou 5
+
+.. _`_configuration_du_motd_avec_neofetch`:
+
+Configuration du MOTD avec Neofetch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pour afficher les informations au moment du login ssh, vous devez
+modifier le fichier Motd:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Editez le fichier Neofetch du MOTD
+
+   .. code:: bash
+
+      vi /etc/update-motd.d/20-neofetch
+
+3. Mettez ensuite dans le fichier la configuration suivante:
+
+   .. code:: bash
+
+      #!/bin/sh
+      neofetch --config /etc/neofetch.conf
+
+4. Changez les permissions du fichier ``20-neofetch``. Tapez:
+
+   .. code:: bash
+
+      chmod 755 /etc/update-motd.d/20-neofetch
+
+5. A notez que vous pouvez utiliser Neofetch pour votre fichier
+   ``.bash_profile``
+
+.. _`_mise_à_jour_de_packages`:
+
+Mise à jour de packages
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Vous pouvez ajouter la liste des mises à jours dans le fichier MOTD:
+
+1. Installez le package python de gestion APT. Tapez :
+
+   .. code:: bash
+
+      apt install python3-apt
+
+2. Editez le fichier MOTD
+
+   .. code:: bash
+
+      vi /etc/update-motd.d/30-updates
+
+3. Dans le fichier mettez le contenu suivant:
+
+   .. code:: python
+
+      #!/usr/bin/python
+      import sys
+      import subprocess
+      import apt_pkg
+
+      DISTRO = subprocess.Popen(["lsb_release", "-c", "-s"],
+                                stdout=subprocess.PIPE).communicate()[0].strip()
+
+      class OpNullProgress(object):
+          '''apt progress handler which supresses any output.'''
+          def update(self):
+              pass
+          def done(self):
+              pass
+
+      def is_security_upgrade(pkg):
+          '''
+          Checks to see if a package comes from a DISTRO-security source.
+          '''
+          security_package_sources = [("Ubuntu", "%s-security" % DISTRO),
+                                     ("Debian", "%s-security" % DISTRO)]
+
+          for (file, index) in pkg.file_list:
+              for origin, archive in security_package_sources:
+                  if (file.archive == archive and file.origin == origin):
+                      return True
+          return False
+
+      # init apt and config
+      apt_pkg.init()
+
+      # open the apt cache
+      try:
+          cache = apt_pkg.Cache(OpNullProgress())
+      except SystemError as e:
+          sys.stderr.write("Error: Opening the cache (%s)" % e)
+          sys.exit(-1)
+
+      # setup a DepCache instance to interact with the repo
+      depcache = apt_pkg.DepCache(cache)
+
+      # take into account apt policies
+      depcache.read_pinfile()
+
+      # initialise it
+      depcache.init()
+
+      # give up if packages are broken
+      if depcache.broken_count > 0:
+          sys.stderr.write("Error: Broken packages exist.")
+          sys.exit(-1)
+
+      # mark possible packages
+      try:
+          # run distro-upgrade
+          depcache.upgrade(True)
+          # reset if packages get marked as deleted -> we don't want to break anything
+          if depcache.del_count > 0:
+              depcache.init()
+
+          # then a standard upgrade
+          depcache.upgrade()
+      except SystemError as e:
+          sys.stderr.write("Error: Couldn't mark the upgrade (%s)" % e)
+          sys.exit(-1)
+
+      # run around the packages
+      upgrades = 0
+      security_upgrades = 0
+      for pkg in cache.packages:
+          candidate = depcache.get_candidate_ver(pkg)
+          current = pkg.current_ver
+
+          # skip packages not marked as upgraded/installed
+          if not (depcache.marked_install(pkg) or depcache.marked_upgrade(pkg)):
+              continue
+
+          # increment the upgrade counter
+          upgrades += 1
+
+          # keep another count for security upgrades
+          if is_security_upgrade(candidate):
+              security_upgrades += 1
+
+          # double check for security upgrades masked by another package
+          for version in pkg.version_list:
+              if (current and apt_pkg.version_compare(version.ver_str, current.ver_str) <= 0):
+                  continue
+              if is_security_upgrade(version):
+                  security_upgrades += 1
+                  break
+
+      print("%d updates to install." % upgrades)
+      print("%d are security updates." % security_upgrades)
+      print("")  # leave a trailing blank line
+
+4. Changez les permissions du fichier ``30-updates``. Tapez:
+
+   .. code:: bash
+
+      chmod 755 /etc/update-motd.d/30-updates
 
 .. _`_installer_loutil_dselect`:
 
@@ -1722,59 +1976,181 @@ fonctionnalités suivantes: Postfix, Dovecot, MariaDB, rkHunter, Apache,
 PHP, Let’s Encrypt, PureFTPd, Bind, Webalizer, AWStats, fail2Ban, UFW
 Firewall, PHPMyadmin, RoundCube.
 
-Pour les systèmes ayant 2 Go de RAM ou plus, il est fortement conseillé
-d’installer les outils ci après : Amavisd, SpamAssassin, ClamAV,
-Mailman.
+L’installation est simplifiée grâce à l’utilisation de l’autoinstalleur
+d’ISPConfig.
+
+cet installeur fonction pour les version de Debian 10, 11 et 12 et
+Ubuntu 20.04 à 24.04
 
 1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-2. Changez le Shell par défaut. Tapez :
+.. _`_installation_et_configuration_de_ispconfig`:
 
-   .. code:: bash
+Installation et configuration de ISPConfig
+------------------------------------------
 
-      dpkg-reconfigure dash
+ISPConfig est un système de configuration de sites web totalement
+compatible avec Webmin.
 
-   A la question ``utilisez dash comme shell par défaut`` répondez
-   ``non``. C’est bash qui doit être utilisé.
+Pour installer ISPConfig, vous devez suivre la procédure ci-dessous.
+ISPConfig 3 a été utilisé dans ce tutoriel.
 
-3. Installation de quelques paquets debian. ;-)
+1.  Tapez:
 
-   a. Tapez :
+    .. code:: bash
 
-      .. code:: bash
+       hostname -f
 
-         apt install patch ntp postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full lrzip libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey apache2 apache2-doc apache2-utils libapache2-mod-php php php-common php-gd php-mysql php-imap php-cli php-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php-curl php-intl php-pspell  php-sqlite3 php-tidy php-xmlrpc memcached php-memcache php-imagick php-zip php-mbstring libapache2-mod-passenger php-soap php-fpm php-apcu bind9 dnsutils haveged webalizer awstats geoip-database libclass-dbi-mysql-perl libtimedate-perl fail2ban ufw anacron goaccess php-gettext php-recode php-opcache php-xsl xz-utils lzip unrar jailkit libapache2-mod-perl2 libapache2-reload-perl libbsd-resource-perl libdevel-symdump-perl php7.3-xsl
+2.  La sortie doit être du type:
 
-      .. note::
+    .. code:: bash
 
-         ``jailkit`` et ``unrar`` ne sont pas disponible sur Raspbian.
-         Il faut donc les supprimer de cette liste. Les paquets
-         ``php-ocache`` et ``php-xsl`` doivent être remplacés par la
-         version la plus récente sur Raspbian.
+       mail.example.com
 
-      .. note::
+3.  Si ce n’est pas le cas corrigez le FQDN en vous référant au chapitre
+    `Vérification du nom de serveur <#domain_config>`__.
 
-         pour Ubuntu 20, php-gettext et php-recode n’existent pas. Il
-         faut donc les supprimer de la liste.
+4.  Nous allons maintenant installer
+    `ISPConfig <https://www.ispconfig.org/ispconfig/download/>`__ avec
+    l’autoinstalleur.
 
-   b. Pour les systèmes avec plus de mémoire tapez :
+5.  Mettez à jour le système. tapez:
 
-      .. code:: bash
+    .. code:: bash
 
-         apt install amavisd-new spamassassin clamav clamav-daemon
+       apt update && apt dist-upgrade
 
-4. Aux questions posées répondez:
+6.  Exécutez l’autoinstalleur en tapant:
 
-   a. ``Type principal de configuration de mail``: ← Sélectionnez
-      ``Site Internet``
+    .. code:: bash
 
-   b. ``Nom de courrier``: ← Entrez votre nom de host. Par exemple:
-      ``mail.example.com``
+       wget -O - https://get.ispconfig.org | sh -s -- --use-ftp-ports=40110-40210 --unattended-upgrades 
 
-.. _`_configuration_de_postfix`:
+    -  vous pouvez remplacer l’éventail de ports FTP par d’autres si
+       vous voulez.
 
-Configuration de Postfix
-------------------------
+7.  Au bout d’un moment vous verrez s’afficher:
+
+    .. code:: bash
+
+       WARNING! This script will reconfigure your complete server!
+       It should be run on a freshly installed server and all current configuration that you have done will most likely be lost!
+       Type 'yes' if you really want to continue
+
+8.  Répondez 'yes'. L’installation démarre.
+
+9.  Lorsque l’installation se termine vous verrez:
+
+    .. code:: bash
+
+       [INFO] Your ISPConfig admin password is: 5GvfSSSYsdfdYC
+       [INFO] Your MySQL root password is: kkAkft82d!kafMwqxdtYs
+
+10. Notez ces informations, elles vous serviront pour vous connecter au
+    panel ISPConfig ou à votre base mysql (PhpMyAdmin).
+
+11. L’installation est terminée. Vous accédez au serveur à l’adresse:
+    https://example.com:8080/ .
+
+    .. note::
+
+       Lors de votre première connexion, votre domaine n’est pas encore
+       configuré. Il faudra alors utiliser le nom DNS donné par votre
+       hébergeur pour votre machine. Pour OVH, elle s’écrit
+       ``VPSxxxxxx.ovh.net``.
+
+12. . Loguez vous avec le login ``admin`` et le mot de passe que vous
+    avez récupéré plus haut.
+
+    .. note::
+
+       Si le message "Possible attack detected. This action has been
+       logged.". Cela signifie que vous avez des cookies d’une
+       précédente installation qui sont configurés. Effacer les cookies
+       de ce site de votre navigateur.
+
+Vous pouvez passer maintenant à la suite de la configuration.
+
+.. _`_configuration_manuelle_des_outils`:
+
+Configuration Manuelle des outils
+=================================
+
+Ce chapitre décrit comment configurer manuellement Postfix, Mariadb,
+Apache, Awstats, Fail2ban, Pureftp, Phpmyadmin, Roundcube, Letsencrypt
+manuellement.
+
+Ce chapitre est à sauter si vous avez installé ISPConfig. Vous devez
+poursuivre vers `Suite de l’installation <#After_manual_install>`__
+
+Commencez l’installation:
+
+1.  `Loguez vous comme root sur le serveur <#root_login>`__
+
+2.  Installez quelques outils de base. Tapez :
+
+    .. code:: bash
+
+       apt install packages ssh, openssh-server, nano, vim-nox, lsb-release, apt-transport-https, ca-certificates, wget, git, gnupg, software-properties-common, curl, cron, ntp
+
+3.  Installez ensuite:
+
+    .. code:: bash
+
+       apt install dbconfig-common, postfix, postfix-mysql, mariadb-client, mariadb-server, openssl, rkhunter, binutils, sudo, getmail6, rsyslog dovecot-imapd, dovecot-pop3d, dovecot-mysql, dovecot-sieve, dovecot-managesieved, dovecot-lmtpd
+
+4.  Puis installez:
+
+    .. code:: bash
+
+       apt install software-properties-common update-inetd dnsutils resolvconf clamav clamav-daemon zip unzip bzip2 xz-utils lzip borgbackup arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl libnet-dns-perl libdbd-mysql-perl bind9 rspamd redis-server postgrey p7zip p7zip-full unrar-free lrzip
+
+5.  Installez:
+
+    .. code:: bash
+
+       apt install apache2 apache2-utils libapache2-mod-fcgid apache2-suexec-pristine libapache2-mod-python libapache2-mod-passenger
+
+6.  Installez:
+
+    .. code:: bash
+
+       apt install php php-pear php-memcache php-imagick mcrypt imagemagick libruby memcached php-apcu jailkit
+
+7.  Déterminer votre version de php. Tapez:
+
+    .. code:: bash
+
+       LC_ALL='C' apt list -a 'php*' | grep -E 'php[0-9]+.[0-9]+/' | grep '\[installed\]' | sed 's/\(.*\)\/.*/\1/'
+
+8.  En fonction de la version affichée Installez les packages PHP :
+
+    .. code:: bash
+
+       for i in php#-gd php#-mysql php#-imap php#-cli php#-curl php#-intl php#-pspell php#-sqlite3 php#-tidy php#-xsl php#-zip php#-mbstring php#-soap php#-opcache php#-cgi php#-fpm php#-xmlrpc
+       do
+       echo $i | sed 's/#/version/' 
+       done | xargs apt install -y
+
+    -  remplacer ici version par la version affichée plus haut. Par
+       exemple 8.3
+
+9.  Installez:
+
+    .. code:: bash
+
+       apt install haveged geoip-database libclass-dbi-mysql-perl libtimedate-perl build-essential autoconf automake libtool flex bison debhelper binutils quota quotatool
+
+10. Installez:
+
+    .. code:: bash
+
+       apt install pure-ftpd-common pure-ftpd-mysql awstats goaccess awffull
+
+.. _`_configuration_manuelle_de_postfix`:
+
+Configuration manuelle de Postfix
+---------------------------------
 
 Suivez la procédure suivante:
 
@@ -1784,31 +2160,44 @@ Suivez la procédure suivante:
 
    .. code:: bash
 
-      vi /etc/postfix/master.cf
+      vi /etc/postfix/main.cf
 
-3. Ajoutez dans le fichier:
+3. Ajoutez ou modifiez dans le fichier:
 
    ::
 
-      submission inet n - - - - smtpd
+      append_dot_mydomain = yes
+      mydestination = mail.example.com, localhost, localhost.localdomain 
+
+4. Editez le master.cf file de postfix. Tapez :
+
+   .. code:: bash
+
+      vi /etc/postfix/master.cf
+
+5. Ajoutez dans le fichier:
+
+   ::
+
+      submission inet n       -       y       -       -       smtpd
        -o syslog_name=postfix/submission
        -o smtpd_tls_security_level=encrypt
        -o smtpd_sasl_auth_enable=yes
        -o smtpd_client_restrictions=permit_sasl_authenticated,reject
 
-      smtps inet n - - - - smtpd
-       -o syslog_name=postfix/smtps
+      submissions     inet  n       -       y       -       -       smtpd
+       -o syslog_name=postfix/submissions
        -o smtpd_tls_wrappermode=yes
        -o smtpd_sasl_auth_enable=yes
        -o smtpd_client_restrictions=permit_sasl_authenticated,reject
 
-4. Sauvegardez et relancez Postfix:
+6. Sauvegardez et relancez Postfix:
 
    .. code:: bash
 
       systemctl restart postfix
 
-5. Si vous avez installé ``SpamAssassin``, désactiver ``SpamAssassin``
+7. Si vous avez installé ``SpamAssassin``, désactiver ``SpamAssassin``
    puisque ``amavisd`` utilise celui ci en sous jacent. Tapez :
 
    .. code:: bash
@@ -1831,10 +2220,10 @@ Suivez la procédure suivante:
    le fichier ``/etc/postfix/main.cf`` sur la ligne commençant par
    ``recipient_delimiter``.
 
-.. _`_configuration_de_mariadb`:
+.. _`_configuration_manuelle_de_mariadb`:
 
-Configuration de MariaDB
-------------------------
+Configuration manuelle de MariaDB
+---------------------------------
 
 Suivez la procédure suivante:
 
@@ -1902,6 +2291,11 @@ Suivez la procédure suivante:
 
           password = votre_mot_de_passe
 
+       .. note::
+
+          Dans les versions récentes de Debian et Ubuntu, le mot clé
+          password n’est pas présent. Il n’y a rien à faire.
+
 8.  Pour éviter l’erreur ``Error in accept: Too many open files``,
     augmenter la limite du nombre de fichiers ouverts.
 
@@ -1952,12 +2346,16 @@ Suivez la procédure suivante:
        netstat -tap | grep mysql
 
 12. La sortie doit être du type:
-    ``tcp6 0 0 [::]:mysql [::]:* LISTEN 13708/mysqld``
 
-.. _`_configuration_dapache`:
+::
 
-Configuration d’Apache
-----------------------
+   tcp        0      0 0.0.0.0:mysql  0.0.0.0:*  LISTEN  1146/mariadbd
+   tcp6       0      0    [::]:mysql     [::]:*  LISTEN  1146/mariadbd
+
+.. _`_configuration_manuelle_dapache`:
+
+Configuration manuelle d’Apache
+-------------------------------
 
 Suivez la procédure suivante:
 
@@ -2001,101 +2399,10 @@ Suivez la procédure suivante:
       a2disconf apache2-doc
       systemctl restart apache2
 
-.. _`_installation_du_gestionnaire_de_mailing_list_mailman`:
+.. _`_configuration_manuelle_d_awstats`:
 
-Installation du gestionnaire de mailing list Mailman
-----------------------------------------------------
-
-Suivez la procédure suivante:
-
-1. `Loguez vous comme root sur le serveur <#root_login>`__
-
-2. Tapez :
-
-   .. code:: bash
-
-      apt-get install mailman
-
-3. Sélectionnez un langage:
-
-   a. ``Languages to support:`` ← Tapez ``en (English)``
-
-   b. ``Missing site list :`` ← Tapez ``Ok``
-
-4. Créez une mailing list. Tapez:
-
-   .. code:: bash
-
-      newlist mailman
-
-5. ensuite éditez le fichier aliases: :
-
-   .. code:: bash
-
-      vi /etc/aliases
-
-   et ajoutez les lignes affichées à l’écran:
-
-   ::
-
-      ## mailman mailing list
-      mailman:              "|/var/lib/mailman/mail/mailman post mailman"
-      mailman-admin:        "|/var/lib/mailman/mail/mailman admin mailman"
-      mailman-bounces:      "|/var/lib/mailman/mail/mailman bounces mailman"
-      mailman-confirm:      "|/var/lib/mailman/mail/mailman confirm mailman"
-      mailman-join:         "|/var/lib/mailman/mail/mailman join mailman"
-      mailman-leave:        "|/var/lib/mailman/mail/mailman leave mailman"
-      mailman-owner:        "|/var/lib/mailman/mail/mailman owner mailman"
-      mailman-request:      "|/var/lib/mailman/mail/mailman request mailman"
-      mailman-subscribe:    "|/var/lib/mailman/mail/mailman subscribe mailman"
-      mailman-unsubscribe:  "|/var/lib/mailman/mail/mailman unsubscribe mailman"
-
-6. Exécutez :
-
-   .. code:: bash
-
-      newaliases
-
-   et redémarrez postfix: :
-
-   .. code:: bash
-
-      systemctl restart postfix
-
-7. Activez la page web de mailman dans apache: :
-
-   .. code:: bash
-
-      ln -s /etc/mailman/apache.conf /etc/apache2/conf-enabled/mailman.conf
-
-8. Redémarrez apache :
-
-   .. code:: bash
-
-      systemctl restart apache2
-
-   puis redémarrez le demon mailman :
-
-   .. code:: bash
-
-      systemctl restart mailman
-
-9. Le site web de mailman est accessible
-
-   a. Vous pouvez accéder à la page admin Mailman à
-      `http://<server1.example.com>/cgi-bin/mailman/admin/ <http://<server1.example.com>/cgi-bin/mailman/admin/>`__
-
-   b. La page web utilisateur de la mailing list est accessible ici
-      `http://<server1.example.com/cgi-bin>/mailman/listinfo/ <http://<server1.example.com/cgi-bin>/mailman/listinfo/>`__
-
-   c. Sous
-      `http://<server1.example.com>/pipermail/mailman <http://<server1.example.com>/pipermail/mailman>`__
-      vous avez accès aux archives.
-
-.. _`_configuration_d_awstats`:
-
-Configuration d' Awstats
-------------------------
+Configuration manuelle d' Awstats
+---------------------------------
 
 Suivez la procédure suivante:
 
@@ -2116,10 +2423,10 @@ Suivez la procédure suivante:
       # Generate static reports:
       #10 03 * * * www-data [ -x /usr/share/awstats/tools/buildstatic.sh ] && /usr/share/awstats/tools/buildstatic.sh
 
-.. _`_configuration_de_fail2ban`:
+.. _`_configuration_manuelle_de_fail2ban`:
 
-Configuration de Fail2ban
--------------------------
+Configuration manuelle de Fail2ban
+----------------------------------
 
 Suivez la procédure suivante:
 
@@ -2134,6 +2441,14 @@ Suivez la procédure suivante:
    Ajoutez les lignes suivantes:
 
    .. code:: ini
+
+      [pure-ftpd]
+      enabled = true
+      port = ftp
+      filter = pure-ftpd
+      logpath = /var/log/syslog
+      maxretry = 3
+
 
       [dovecot]
       enabled = true
@@ -2154,10 +2469,10 @@ Suivez la procédure suivante:
 
       systemctl restart fail2ban
 
-.. _`_installation_et_configuration_de_pureftpd`:
+.. _`_installation_et_configuration_manuelle_de_pureftpd`:
 
-Installation et configuration de PureFTPd
------------------------------------------
+Installation et configuration manuelle de PureFTPd
+--------------------------------------------------
 
 Suivez la procédure suivante:
 
@@ -2250,6 +2565,19 @@ Suivez la procédure suivante:
             vi /etc/fstab
 
       -  Inserez le texte ci dessous pour chaque directive de montage
+         autre que ``/proc`` ou ``/swapfile`` :
+
+         ::
+
+            usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0
+
+      -  Par exemple pour une ligne de la table contenant:
+
+         ::
+
+            UUID=45576b38-39e8-4994-b8c1-ea4870e2e614 / ext4 errors=remount-ro  0 1
+
+      -  Vous obtiendrez:
 
          ::
 
@@ -2279,10 +2607,10 @@ Suivez la procédure suivante:
             quotacheck -avugm
             quotaon -avug
 
-.. _`_installation_et_configuration_de_phpmyadmin`:
+.. _`_installation_et_configuration_manuelle_de_phpmyadmin`:
 
-Installation et configuration de Phpmyadmin
--------------------------------------------
+Installation et configuration manuelle de Phpmyadmin
+----------------------------------------------------
 
 .. _`_installation_de_phpmyadmin`:
 
@@ -2307,11 +2635,12 @@ Suivez la procédure suivante:
        chown -R www-data:www-data /var/lib/phpmyadmin
        touch /etc/phpmyadmin/htpasswd.setup
        cd /tmp
-       wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.tar.gz
-       tar xfz phpMyAdmin-5.0.2-all-languages.tar.gz
-       mv phpMyAdmin-5.0.2-all-languages/* /usr/share/phpmyadmin/
-       rm phpMyAdmin-5.0.2-all-languages.tar.gz
-       rm -rf phpMyAdmin-5.0.2-all-languages
+       version=`wget -O - https://www.phpmyadmin.net/home_page/version.txt 2> /dev/null | head -n 1`
+       echo https://files.phpmyadmin.net/phpMyAdmin/#/phpMyAdmin-#-all-languages.tar.gz | sed 's/#/'$version'/g' | xargs wget -O phpmyadmin.tar.gz
+       tar xfz phpmyadmin.tar.gz
+       mv phpMyAdmin-$version-all-languages/* /usr/share/phpmyadmin/
+       rm phpMyAdmin-$version-all-languages.tar.gz
+       rm -rf phpMyAdmin-$version-all-languages
        cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php
 
 4.  Créez votre chaîne aléatoire en base64. Tapez:
@@ -2346,38 +2675,44 @@ Suivez la procédure suivante:
           Alias /phpmyadmin /usr/share/phpmyadmin
 
           <Directory /usr/share/phpmyadmin>
-           Options FollowSymLinks
-           DirectoryIndex index.php
+                  Options SymLinksIfOwnerMatch
+                  DirectoryIndex index.php
 
-           <IfModule mod_php7.c>
-           AddType application/x-httpd-php .php
+                  # limit libapache2-mod-php to files and directories necessary by pma
+                  <IfModule mod_php7.c>
+                          php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
+                          php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/:/usr/share/javascript/
+                  </IfModule>
 
-           php_flag magic_quotes_gpc Off
-           php_flag track_vars On
-           php_flag register_globals Off
-           php_value include_path .
-           </IfModule>
+                  # PHP 8+
+                  <IfModule mod_php.c>
+                          php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
+                          php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/:/usr/share/javascript/
+                  </IfModule>
 
           </Directory>
 
           # Authorize for setup
           <Directory /usr/share/phpmyadmin/setup>
-           <IfModule mod_authn_file.c>
-           AuthType Basic
-           AuthName "phpMyAdmin Setup"
-           AuthUserFile /etc/phpmyadmin/htpasswd.setup
-           </IfModule>
-           Require valid-user
+                  <IfModule mod_authz_core.c>
+                          <IfModule mod_authn_file.c>
+                                  AuthType Basic
+                                  AuthName "phpMyAdmin Setup"
+                                  AuthUserFile /etc/phpmyadmin/htpasswd.setup
+                          </IfModule>
+                          Require valid-user
+                  </IfModule>
           </Directory>
 
           # Disallow web access to directories that don't need it
+          <Directory /usr/share/phpmyadmin/templates>
+                  Require all denied
+          </Directory>
           <Directory /usr/share/phpmyadmin/libraries>
-           Order Deny,Allow
-           Deny from All
+                  Require all denied
           </Directory>
           <Directory /usr/share/phpmyadmin/setup/lib>
-           Order Deny,Allow
-           Deny from All
+                  Require all denied
           </Directory>
 
 7.  Activez le module et redémarrez apache. Tapez :
@@ -2448,7 +2783,7 @@ Suivez la procédure suivante:
 
           vi /usr/share/phpmyadmin/config.inc.php
 
-    b. Rechercher le texte contenant ``controlhost`` . Ci-dessous, un
+    b. Rechercher le texte contenant ``controlpass`` . Ci-dessous, un
        exemple:
 
        .. code:: php
@@ -2458,31 +2793,6 @@ Suivez la procédure suivante:
           $cfg['Servers'][$i]['controlport'] = '';
           $cfg['Servers'][$i]['controluser'] = 'pma';
           $cfg['Servers'][$i]['controlpass'] = 'mypassword'; 
-
-
-          /* Storage database and tables */
-          $cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
-          $cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
-          $cfg['Servers'][$i]['relation'] = 'pma__relation';
-          $cfg['Servers'][$i]['table_info'] = 'pma__table_info';
-          $cfg['Servers'][$i]['table_coords'] = 'pma__table_coords';
-          $cfg['Servers'][$i]['pdf_pages'] = 'pma__pdf_pages';
-          $cfg['Servers'][$i]['column_info'] = 'pma__column_info';
-          $cfg['Servers'][$i]['history'] = 'pma__history';
-          $cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
-          $cfg['Servers'][$i]['tracking'] = 'pma__tracking';
-          $cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
-          $cfg['Servers'][$i]['recent'] = 'pma__recent';
-          $cfg['Servers'][$i]['favorite'] = 'pma__favorite';
-          $cfg['Servers'][$i]['users'] = 'pma__users';
-          $cfg['Servers'][$i]['usergroups'] = 'pma__usergroups';
-          $cfg['Servers'][$i]['navigationhiding'] = 'pma__navigationhiding';
-          $cfg['Servers'][$i]['savedsearches'] = 'pma__savedsearches';
-          $cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
-          $cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
-          $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';o
-
-          $cfg['TempDir'] = '/var/lib/phpmyadmin/tmp';
 
        -  A tous les endroit ou vous voyez dans le texte ci dessus le
           mot ``mypassword`` mettez celui choisi. N’oubliez pas de
@@ -2508,11 +2818,12 @@ Suivez la procédure suivante:
       mv /usr/share/phpmyadmin /usr/share/phpmyadmin.old
       mkdir /usr/share/phpmyadmin
       cd /tmp
-      wget https://files.phpmyadmin.net/phpMyAdmin/5.1.0/phpMyAdmin-5.1.0-all-languages.tar.gz
-      tar xfz phpMyAdmin-5.1.0-all-languages.tar.gz
-      mv phpMyAdmin-5.1.0-all-languages/* /usr/share/phpmyadmin/
-      rm phpMyAdmin-5.1.0-all-languages.tar.gz
-      rm -rf phpMyAdmin-5.1.0-all-languages
+      version=`wget -O - https://www.phpmyadmin.net/home_page/version.txt 2> /dev/null | head -n 1`
+      echo https://files.phpmyadmin.net/phpMyAdmin/#/phpMyAdmin-#-all-languages.tar.gz | sed 's/#/'$version'/g' | xargs wget -O phpmyadmin.tar.gz
+      tar xfz phpmyadmin.tar.gz
+      mv phpMyAdmin-$version-all-languages/* /usr/share/phpmyadmin/
+      rm phpMyAdmin-$version-all-languages.tar.gz
+      rm -rf phpMyAdmin-$version-all-languages
       cp /usr/share/phpmyadmin.old/config.inc.php  /usr/share/phpmyadmin/config.inc.php
 
 4. Redémarrez apache. Tapez :
@@ -2529,10 +2840,10 @@ Suivez la procédure suivante:
 
       rm -rf /usr/share/phpmyadmin.old
 
-.. _`_installation_du_webmail_roundcube`:
+.. _`_installation_manuelle_du_webmail_roundcube`:
 
-Installation du webmail Roundcube
----------------------------------
+Installation manuelle du webmail Roundcube
+------------------------------------------
 
 Suivez la procédure suivante:
 
@@ -2550,20 +2861,23 @@ Suivez la procédure suivante:
 
    -  ``Mot de passe Mysql pour db Roundcube`` ← Tapez un mot de passe
 
-4. Éditez le fichier php de roundcube: :
+4. Éditez le fichier php de roundcube :
 
    .. code:: bash
 
       vi /etc/roundcube/config.inc.php
 
-   et définissez les hosts par défaut comme localhost
+5. Et chercher les éléments de $config si dessous, et s’ils sont
+   trouvés, remplacez les par les valeurs indiquées :
 
    .. code:: php
 
       $config['default_host'] = 'localhost';
       $config['smtp_server'] = 'localhost';
+      $config['imap_host'] = ["localhost:143"];
+      $config['smtp_host'] = 'localhost:25';
 
-5. Éditez la configuration apache pour roundcube: :
+6. Éditez la configuration apache pour roundcube: :
 
    .. code:: bash
 
@@ -2573,19 +2887,19 @@ Suivez la procédure suivante:
 
    .. code:: apache
 
-      Alias /roundcube /var/lib/roundcube
-      Alias /webmail /var/lib/roundcube
+      Alias /roundcube /var/lib/roundcube/public_html
+      Alias /webmail /var/lib/roundcube/public_html
 
-6. Redémarrez Apache:
+7. Redémarrez Apache:
 
    .. code:: bash
 
       systemctl reload apache2
 
-.. _`_installation_de_lets_encrypt`:
+.. _`_installation_manuelle_de_lets_encrypt`:
 
-Installation de Let’s Encrypt
------------------------------
+Installation manuelle de Let’s Encrypt
+--------------------------------------
 
 Suivez la procédure suivante:
 
@@ -2595,16 +2909,21 @@ Suivez la procédure suivante:
 
    .. code:: bash
 
-      cd /usr/local/bin
-      wget https://dl.eff.org/certbot-auto
-      chmod a+x certbot-auto
-      ./certbot-auto --install-only
+      cd /tmp ; wget -O -  https://get.acme.sh 2>/dev/null | sh 2>/dev/null
 
 3. Une façon alternative de l’installer est:
 
    .. code:: bash
 
-      apt install python3-certbot-apache
+      apt install certbot
+
+.. _After_manual_install:
+
+Suite de l’installation
+=======================
+
+Les chapitres suivants doivent être suivis que ISPConfig soit installé
+ou pas.
 
 .. _firewall:
 
@@ -2613,15 +2932,15 @@ Déblocage de port de firewall
 
 Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en
 entrée de votre équipement. Cela veut dire qu’il ne sera pas possible de
-connecter une machine externe sur votre équipement sans avoir effecté
+connecter une machine externe sur votre équipement sans avoir effectué
 une opération de déblocage du port du firewall.
 
 Il existe deux manière de débloquer un port. Elle dépend de ce que vous
 avez configuré.
 
-.. _`_déblocage_et_suppression_de_regles_de_firewall_avec_ispconfig`:
+.. _`_déblocage_et_suppression_de_règles_de_firewall_avec_ispconfig`:
 
-Déblocage et suppression de regles de Firewall avec ISPconfig
+Déblocage et suppression de règles de Firewall avec ISPconfig
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes pour Débloquez le firewall:
@@ -2647,6 +2966,10 @@ déblocage) de firewall:
 3. dans la rubrique ``Open TCP ports:``, Supprimer le port xxxx
 
 4. Cliquez sur ``save``
+
+Remarque: si vous utilisez VNC, il faut débloquer le port dans le
+firewall de ISPConfig. Appliquez la méthode de déblocage pour le port
+5900.
 
 .. _`_déblocage_de_firewall_ufw`:
 
@@ -2675,6 +2998,11 @@ procédure suivante:
       ufw allow 22/tcp
       ufw allow 80/tcp
       ufw allow 443/tcp
+      ufw allow 5900/tcp 
+
+   -  Cette ligne autorise VNC et est utile si vous utilisez ce
+      protocole sur votre Système. Il est fortement déconseillé pour un
+      serveur visible sur internet d’autoriser ce protocole.
 
 3. Activez le firewall. tapez:
 
@@ -2763,173 +3091,6 @@ Pour effectuer la mise à jour de Lynis appliquez la procédure suivante:
       cd
       cd lynis
       git pull
-
-.. _`_installation_dun_panel`:
-
-Installation d’un Panel
-=======================
-
-Il existe plusieurs type de panel de contrôle pour les VPS. La plupart
-sont payant.
-
-Pour citer les plus connus:
-
--  payant: cPanel (leader du type), Plesk
-
--  gratuit: Yunohost ( un excellent système d’autohébergement packagé) ,
-   Ajenti, Froxlor, Centos web panel, Webmin et Usermin, ISPConfig,
-   HestiaCP, VestaCP ,
-
-Ci après nous allons en présenter 3 différents (ISPConfig, Webmin et
-HestiaCP). Ils sont incompatibles entre eux.
-
-On peut faire cohabiter ISPConfig et Webmin en prenant les précautions
-suivantes:
-
--  ISPConfig est le maitre de la configuration: toute modification sur
-   les sites webs, mailboxes et DNS doit impérativement être effectuées
-   du coté d’ISPConfig
-
--  Les modifications réalisées au niveau de webmin pour ces sites webs,
-   mailboxes et DNS seront au mieux écrasées par ISPConfig au pire elles
-   risquent de conduire à des incompatibilités qui engendreront des
-   dysfonctionnement d’ISPConfig (impossibilité de mettre à jour les
-   configurations)
-
--  Le reste des modifications peuvent être configurées au niveau de
-   webmin sans trop de contraintes.
-
-Pour rappel, HestiaCP (tout comme VestaCP) sont incompatibles
-d’ISPConfig et de Webmin. Ils doivent être utilisés seuls
-
-.. _`_installation_et_configuration_de_ispconfig`:
-
-Installation et configuration de ISPConfig
-------------------------------------------
-
-ISPConfig est un système de configuration de sites web totalement
-compatible avec Webmin.
-
-Pour installer ISPConfig, vous devez suivre la procédure ci-dessous.
-ISPConfig 3.2 a été utilisé dans ce tutoriel.
-
-1. `Loguez vous comme root sur le serveur <#root_login>`__
-
-2. Tapez:
-
-   .. code:: bash
-
-      cd /tmp
-
-3. Cherchez la dernière version d’ISPConfig sur le site
-   `ISPConfig <https://www.ispconfig.org/ispconfig/download/>`__
-
-4. Installez cette version en tapant: :
-
-   .. code:: bash
-
-      wget <la_version_a_telecharger>.tar.gz
-
-5. Décompressez la version en tapant: :
-
-   .. code:: bash
-
-      tar xfz <la_version>.tar.gz
-
-6. Enfin allez dans le répertoire d’installation: :
-
-   .. code:: bash
-
-      cd ispconfig3_install/install/
-
-7. Lancez l’installation: :
-
-   .. code:: bash
-
-      php -q install.php
-
-   et répondez aux questions:
-
-   a. ``Select language (en,de) [en]:`` ← Tapez entrée
-
-   b. ``Installation mode (standard,expert) [standard]:`` ← Tapez entrée
-
-   c. ``Full qualified hostname (FQDN) of the server, eg server1.domain.tld [server1.example.com]:``
-      ← Tapez entrée
-
-   d. ``MySQL server hostname [localhost]:`` ← Tapez entrée
-
-   e. ``MySQL server port [3306]:`` ← Tapez entrée
-
-   f. ``MySQL root username [root]:`` ← Tapez entrée
-
-   g. ``MySQL root password []:`` ← Enter your MySQL root password
-
-   h. ``MySQL database to create [dbispconfig]:`` ← Tapez entrée
-
-   i. ``MySQL charset [utf8]:`` ← Tapez entrée
-
-   j. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
-      lettres
-
-   k. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
-      nom d’état
-
-   l. ``Locality Name (eg, city) []:`` ← Entrer votre ville
-
-   m. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
-      Entrez votre entreprise ou tapez entrée
-
-   n. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
-
-   o. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le nom
-      d’hôte de votre serveur. Dans notre cas: ``server1.example.com``
-
-   p. ``Email Address []:`` ← Tapez entrée
-
-   q. ``ISPConfig Port [8080]:`` ← Tapez entrée
-
-   r. ``Admin password [admin]:`` ← Tapez entrée
-
-   s. ``Do you want a secure (SSL) connection to the ISPConfig web interface (y,n) [y]:``
-      ←- Tapez entrée
-
-   t. ``Country Name (2 letter code) [AU]:`` ← Entrez le code pays à 2
-      lettres
-
-   u. ``State or Province Name (full name) [Some-State]:`` ← Entrer le
-      nom d’état
-
-   v. ``Locality Name (eg, city) []:`` ← Entrer votre ville
-
-   w. ``Organization Name (eg, company) [Internet Widgits Pty Ltd]:`` ←
-      Entrez votre entreprise ou tapez entrée
-
-   x. ``Organizational Unit Name (eg, section) []:`` ← Tapez entrée
-
-   y. ``Common Name (e.g. server FQDN or YOUR name) []:`` ← Enter le nom
-      d’hôte de votre serveur. Dans notre cas: ``server1.example.com``
-
-   z. ``Email Address []:`` ← Tapez entrée
-
-8. L’installation est terminée. Vous accédez au serveur à l’adresse:
-   https://example.com:8080/ .
-
-   .. note::
-
-      Lors de votre première connexion, votre domaine n’est pas encore
-      configuré. Il faudra alors utiliser le nom DNS donné par votre
-      hébergeur. Pour OVH, elle s’écrit ``VPSxxxxxx.ovh.net``.
-
-9. Loguez vous comme admin et avec le mot de passe que vous avez choisi.
-   Vous pouvez décider de le changer au premier login
-
-   .. note::
-
-      Si le message "Possible attack detected. This action has been
-      logged.". Cela signifie que vous avez des cookies d’une précédente
-      installation qui sont configurés. Effacer les cookies de ce site
-      de votre navigateur.
 
 .. _`_installation_du_système_dadministration_webmin`:
 
@@ -3074,77 +3235,6 @@ précise des fonctionnalités.
 
     c. Choisir ``Display Language`` à ``French (FR.UTF-8)``
 
-.. _`_configuration_de_docker_mirror`:
-
-Configuration de Docker-mirror
-------------------------------
-
-L’outil Docker-mirror est un système de cache de fichier Dockers.
-
-Si vous avez plusieurs machines utilisant docker sur votre réseau, les
-déploiements et les mises à jour seront considérablement accélérées par
-l’utilisation de ce système de cache.
-
-Suivez la procédure suivante:
-
-1. `Loguez vous comme root sur le serveur <#root_login>`__
-
-2. Obtenez une configuration initiale pour le fichier ``config.yml``.
-   Tapez:
-
-   .. code:: bash
-
-      docker run -it --rm --entrypoint cat registry:2 /etc/docker/registry/config.yml > /etc/docker-mirror.yml
-
-3. Ajoutez ceci dans le fichier ``config.yml``. Tapez:
-
-   .. code:: bash
-
-      vi /etc/docker-mirror.yml
-
-4. Dans ce fichier, ajoutez les lignes suivantes :
-
-   ::
-
-      proxy:
-            remoteurl: https://registry-1.docker.io
-
-5. Démarrez ensuite le service docker. Tapez:
-
-   .. code:: bash
-
-      docker run -d --restart=always -p 5000:5000 --name docker-registry-proxy -v /etc/docker-mirror.yml:/etc/docker/registry/config.yml registry:2
-
-Sur le poste client, soit passez l’option --registry-mirror lorsque vous
-lancez le démon ``dockerd`` ou sinon éditez le fichier
-``/etc/docker/daemon.json`` et ajoutez la clé ``registry-mirrors`` pour
-rendre le changement persistant:
-
-1. `Loguez vous comme root sur le poste client <#root_login>`__
-
-2. Tapez:
-
-   .. code:: bash
-
-      vi /etc/docker/daemon.json
-
-3. Dans le fichier, ajoutez:
-
-   ::
-
-      {
-        "registry-mirrors": ["http://docker.example.com:5000"] 
-      }
-
-   -  remplacer ``docker.example.com`` par le nom ou l’adresse ip de
-      votre cache docker.
-
-4. Sauvegarder le fichier et redémarrez le démon docker. Tapez:
-
-   .. code:: bash
-
-      systemctl restart docker
-
 .. _domain-config:
 
 Configuration d’un domaine
@@ -3207,7 +3297,7 @@ de l’installation d’ISPConfig
 
 2. Aller dans la rubrique ``DNS``
 
-   a. Dans le menu ``Template``
+   a. Dans le menu ``Templates``
 
       i.   Cliquez sur ``Add new record``
 
@@ -3231,6 +3321,10 @@ de l’installation d’ISPConfig
                  expire=604800
                  minimum=3600
                  ttl=3600
+                 xfer=
+                 also_notify=
+                 dnssec_wanted=N
+                 dnssec_algo=ECDSAP256SHA256
 
                  [DNS_RECORDS]
                  A|{DOMAIN}.|{IP}|0|3600
@@ -3278,6 +3372,10 @@ de l’installation d’ISPConfig
                  expire=604800
                  minimum=3600
                  ttl=3600
+                 xfer=
+                 also_notify=
+                 dnssec_wanted=N
+                 dnssec_algo=ECDSAP256SHA256
 
                  [DNS_RECORDS]
                  A|{DOMAIN}.|{IP}|0|3600
@@ -3388,8 +3486,8 @@ résolution de nom de domaine:
 
    b. choisissez la zone correspondant à votre domaine
 
-   c. dans l’onglet ``DNS Zone`` allez tout en bas et activer la coche
-      ``Sign Zone (DNSSEC)``
+   c. dans l’onglet ``Zones settings`` allez tout en bas et activer la
+      coche ``Sign Zone (DNSSEC)``
 
    d. cliquez sur ``Save``
 
@@ -3416,28 +3514,28 @@ Si vous êtes chez `Gandi <https://admin.gandi.net/>`__, il vous faut:
 5. puis cliquez sur ``Ajouter une clé externe``
 
    a. Sélectionnez d’abord le flag ``257 (KSK)``. puis l’algorithme
-      ``7 (RSASHA1-NSEC3-SHA1)``
+      ``13 (ECDSAP256SHA256)``
 
    b. Collez ensuite la clé de votre site ISPConfig. Elle doit
       ressembler à cela:
 
       ::
 
-         example.com. IN DNSKEY 257 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn
+         example.com. IN DNSKEY 257 3 13 CGI4g4NzPkOXeuRzA1ZdBT7N5/WJ2su5Q6teGDjVeYq2kwnxbFsYJhjq QVcqDqm7gzFqPl6QC/zK1eC0zrPE9g==
 
    c. Cliquez sur ``Ajouter``
 
    d. Entrez la deuxième clé. Cliquez sur ``Ajouter une clé externe``
 
    e. Sélectionnez d’abord le flag ``256 (ZSK)``. puis l’algorithme
-      ``7 (RSASHA1-NSEC3-SHA1)``
+      ``13 (ECDSAP256SHA256)``
 
    f. Collez ensuite la clé de votre site ISPConfig. Elle doit
       ressembler à cela:
 
       ::
 
-         example.com. IN DNSKEY 256 3 7 AwEAAcs+xTC5GlyC8CSufM9U7z5uazLNmNP3vG2txzNIGM1VJHWCpRYQVZjsBZqx5vZuOFBwp0F6cpF8YdW9QibZc82UAeIYAstgRSwnCLYsIV+3Zq0NpCcnGTkPLknxxZuN3MD5tARkxBM5c5fME0NgMU+kcx4xaTVm2Go6bEeFuhgNfRogzXKqLV6h2bMCajudfJbbTbJlehym2YegLI+yYCpYr6b+jWHorRoUVDJ41OPXLtz2s8wtycyINpZsdmLNJhNNaeGqOok3+c5uazLNmNP3vG2txzNIGLM1VJHWCpRYQVZjsBZkqx5vZuOFBgwp0F6cpF8YdW9QbZc82UAeIYAstKgRSwnCLYsIV+3Zq0NpCcnGTkPLkn
+         example.com. IN DNSKEY 256 3 13 YFzB4DJmq0I7K6J17ynU4A+dracTW7qkrMnK5ZIbEO/DtjgJyDPaZn9f uvJ/KriFY/sdf89XHb4u8q+MQCm/cg==
 
    g. Cliquez sur ``Ajouter``
 
@@ -3679,7 +3777,7 @@ Vous devez avoir avant tout défini le "record" DNS associé au site.
                  ProxyPass /stats !
                  ProxyPass /.well-known/acme-challenge !
 
-                 # yacht httpserver
+                 # Original httpserver
                  #
 
                  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
@@ -4031,7 +4129,7 @@ Suivez les étapes ci-après:
 
        vi /etc/munin/munin.conf
 
-6.  Décommentez les lignes débutant par: ``bdir``, ``htmldir``,
+6.  Décommentez les lignes débutant par: ``dbdir``, ``htmldir``,
     ``logdir``, ``rundir``, and ``tmpldir``. Les valeurs par défaut sont
     correctes.
 
@@ -4174,7 +4272,7 @@ pouvez être tenté de vérifier:
    ``/usr/share/munin/plugins`` dans ``/etc/munin/plugins`` pour
    l’activer.
 
-3. Par exemple pour activer les modules apache_*:
+3. Par exemple pour activer les modules apache\_\*:
 
    .. code:: bash
 
@@ -4209,20 +4307,13 @@ suivante:
     exemples sur le web et vous pourrez trouver de nombreuses
     configuration sur http://mmonit.com/monit/documentation/.
 
-3.  Editez le fichier monitrc. Tapez:
+3.  Changez la configuration de Monit. Tapez:
 
     .. code:: bash
 
-       cp /etc/monit/monitrc /etc/monit/monitrc_orig
-       vi /etc/monit/monitrc
+       vi /etc/monit/conf.d/monitrc.local
 
-4.  Le fichier contient déjà de nombreux exemples. Nous configurer une
-    surveillance de sshd, apache, mysql, proftpd, postfix, memcached,
-    named, ntpd, mailman, amavisd, dovecot. Monit sera activé sur le
-    port 2812 et nous allons donner à l’utilisateur admin un mot de
-    passe. Le certificat HTTPS sera celui généré avec let’s encrypt pour
-    le site ISPConfig. Collez le contenu ci dessous dans le fichier
-    monitrc:
+4.  Ajoutez dans le fichier cette configuration :
 
     ::
 
@@ -4236,34 +4327,60 @@ suivante:
         PEMFILE /usr/local/ispconfig/interface/ssl/ispserver.pem
         allow admin:"my_password" 
 
-       check process sshd with pidfile /var/run/sshd.pid
-        start program "/usr/sbin/service ssh start"
-        stop program "/usr/sbin/service ssh stop"
-        if failed port 22 protocol ssh then restart
-        if 5 restarts within 5 cycles then timeout
+    -  remplacez my_password par `votre mot de passe
+       généré <#pass_gen>`__
 
-       check process apache with pidfile /var/run/apache2/apache2.pid
-        group www
-        start program = "/usr/sbin/service apache2 start"
-        stop program = "/usr/sbin/service apache2 stop"
-        if failed host localhost port 80 protocol http
-        and request "/monit/token" then restart
-        if cpu is greater than 60% for 2 cycles then alert
-        if cpu > 80% for 5 cycles then restart
-        if totalmem > 500 MB for 5 cycles then restart
-        if children > 250 then restart
-        if loadavg(5min) greater than 10 for 8 cycles then stop
-        if 3 restarts within 5 cycles then timeout
+    -  remplacer example.com par votre domaine et nom@example.com par
+       votre email
 
-       # ---------------------------------------------------------------------------------------------
-       # NOTE: Replace example.pid with the pid name of your server, the name depends on the hostname
-       # ---------------------------------------------------------------------------------------------
-       check process mysql with pidfile /var/run/mysqld/mysqld.pid
-        group database
-        start program = "/usr/sbin/service mysql start"
-        stop program = "/usr/sbin/service mysql stop"
-        if failed host 127.0.0.1 port 3306 then restart
-        if 5 restarts within 5 cycles then timeout
+5.  Activez les modules standards :
+
+    ::
+
+       cd /etc/monit/conf-enabled
+       ln -s ../conf-available/apache2 .
+       ln -s ../conf-available/openssh-server .
+       ln -s ../conf-available/postfix .
+       ln -s ../conf-available/memcached .
+
+6.  Créez ensuite un fichier pour Mariadb. Tapez:
+
+    .. code:: bash
+
+       vi /etc/monit/conf-enabled/mariadb
+
+7.  Ajoutez dans le fichier cette configuration :
+
+    ::
+
+        check process mysqld with pidfile /var/run/mysqld/mysqld.pid
+          group database
+          group mysql
+          start program = "/etc/init.d/mariadb start"
+          stop  program = "/etc/init.d/mariadb stop"
+          if failed host localhost port 3306 protocol mysql with timeout 15 seconds for 3 times within 4 cycles then restart
+          if failed unixsocket /var/run/mysqld/mysqld.sock protocol mysql for 3 times within 4 cycles then restart
+          if 5 restarts with 5 cycles then timeout
+          depend mysql_bin
+          depend mysql_rc
+
+        check file mysql_bin with path /usr/sbin/mysqld
+          group mysql
+          include /etc/monit/templates/rootbin
+
+        check file mysql_rc with path /etc/init.d/mariadb
+          group mysql
+          include /etc/monit/templates/rootbin
+
+8.  Créez ensuite un fichier pour Pureftpd. Tapez:
+
+    .. code:: bash
+
+       vi /etc/monit/conf-enabled/pureftpd
+
+9.  Ajoutez dans le fichier cette configuration :
+
+    ::
 
        check process pureftpd with pidfile /var/run/pure-ftpd/pure-ftpd.pid
         start program = "/usr/sbin/service pure-ftpd-mysql start"
@@ -4271,17 +4388,15 @@ suivante:
         if failed port 21 protocol ftp then restart
         if 5 restarts within 5 cycles then timeout
 
-       check process postfix with pidfile /var/spool/postfix/pid/master.pid
-        group mail
-        start program = "/usr/sbin/service postfix start"
-        stop program = "/usr/sbin/service postfix stop"
-        if failed port 25 protocol smtp then restart
-        if 5 restarts within 5 cycles then timeout
+10. Créez ensuite un fichier pour named. Tapez:
 
-       check process memcached with pidfile /var/run/memcached/memcached.pid
-        start program = "/usr/sbin/service memcached start"
-        stop program = "/usr/sbin/service memcached stop"
-        if failed host 127.0.0.1 port 11211 then restart
+    .. code:: bash
+
+       vi /etc/monit/conf-enabled/named
+
+11. Ajoutez dans le fichier cette configuration :
+
+    ::
 
        check process named with pidfile /var/run/named/named.pid
         start program = "/usr/sbin/service bind9 start"
@@ -4290,23 +4405,31 @@ suivante:
         if failed host 127.0.0.1 port 53 type udp protocol dns then restart
         if 5 restarts within 5 cycles then timeout
 
+12. Créez ensuite un fichier pour ntpd. Tapez:
+
+    .. code:: bash
+
+       vi /etc/monit/conf-enabled/ntpd
+
+13. Ajoutez dans le fichier cette configuration :
+
+    ::
+
        check process ntpd with pidfile /var/run/ntpd.pid
         start program = "/usr/sbin/service ntp start"
         stop program = "/usr/sbin/service ntp stop"
         if failed host 127.0.0.1 port 123 type udp then restart
         if 5 restarts within 5 cycles then timeout
 
-       check process mailman with pidfile /var/run/mailman/mailman.pid
-        group mail
-        start program = "/usr/sbin/service mailman start"
-        stop program = "/usr/sbin/service mailman stop"
+14. Créez ensuite un fichier pour dovecot. Tapez:
 
-       check process amavisd with pidfile /var/run/amavis/amavisd.pid
-        group mail
-        start program = "/usr/sbin/service amavis start"
-        stop program = "/usr/sbin/service amavis stop"
-        if failed port 10024 protocol smtp then restart
-        if 5 restarts within 5 cycles then timeout
+    .. code:: bash
+
+       vi /etc/monit/conf-enabled/dovecot
+
+15. Ajoutez dans le fichier cette configuration :
+
+    ::
 
        check process dovecot with pidfile /var/run/dovecot/master.pid
         group mail
@@ -4315,23 +4438,17 @@ suivante:
         if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
         if 5 restarts within 5 cycles then timeout
 
-    -  remplacez my_password par `votre mot de passe
-       généré <#pass_gen>`__
-
-    -  remplacer example.com par votre domaine et nom@example.com par
-       votre email
-
-5.  La configuration est assez claire à lire. pour obtenir des
+16. La configuration est assez claire à lire. pour obtenir des
     précisions, référez vous à la documentation de monit
     http://mmonit.com/monit/documentation/monit.html.
 
-6.  Redémarrez apache. Tapez:
+17. Redémarrez apache. Tapez:
 
     .. code:: bash
 
        service apache2 restart
 
-7.  Dans la configuration pour apache, la configuration indique que
+18. Dans la configuration pour apache, la configuration indique que
     monit doit allez chercher sur le port 80 un fichier dans
     ``/monit/token``. Nous devons donc créer ce fichier. Tapez:
 
@@ -4340,23 +4457,23 @@ suivante:
        mkdir /var/www/html/monit
        echo "hello" > /var/www/html/monit/token
 
-8.  Tapez :
+19. Tapez :
 
     .. code:: bash
 
        service monit restart
 
-9.  Pour monitorer le statut des process en ligne de commande, tapez:
+20. Pour monitorer le statut des process en ligne de commande, tapez:
 
     .. code:: bash
 
        monit status
 
-10. `Debloquez le port 2812 sur votre firewall <#firewall>`__
+21. `Debloquez le port 2812 sur votre firewall <#firewall>`__
 
-11. Maintenant naviguez sur le site https://example.com:2812/
+22. Maintenant naviguez sur le site https://example.com:2812/
 
-12. Rentrez le login ``admin`` et votre mot de passe ``my_password``.
+23. Rentrez le login ``admin`` et votre mot de passe ``my_password``.
     Monit affiche alors les informations de monitoring du serveur.
 
 .. _`_configuration_de_la_messagerie`:
@@ -4364,10 +4481,10 @@ suivante:
 Configuration de la messagerie
 ==============================
 
-.. _`_installation_de_lantispam_rspamd_à_la_place_d_amavis_new`:
+.. _`_configuration_de_lantispam_rspamd`:
 
-Installation de l’antispam rspamd à la place d' Amavis-new
-----------------------------------------------------------
+Configuration de l’antispam rspamd
+----------------------------------
 
 ``rspamd`` est réputé de meilleure qualité que ``Amavis`` dans la chasse
 aux spams. Vous pouvez décider de l’installer à la place d’Amavis. Cette
@@ -4402,23 +4519,38 @@ Suivez la procédure suivante:
     f. Vous pouvez voir le mot de passe de connexion au serveur web
        Rspamd.
 
-5.  Activez l’apprentissage automatique
+5.  Activez l’apprentissage automatique. Tapez:
 
     .. code:: bash
 
-       echo "autolearn = true;" > /etc/rspamd/local.d/classifier-bayes.conf
-       echo 'backend = "redis";' >> /etc/rspamd/local.d/classifier-bayes.conf
-       echo "new_schema = true;" >> /etc/rspamd/local.d/classifier-bayes.conf
-       echo "expire = 8640000;" >> /etc/rspamd/local.d/classifier-bayes.conf
+       vi /etc/rspamd/local.d/classifier-bayes.conf
 
-6.  Activez Redis dans la configuration de Rspamd. Tapez:
+6.  insérez le texte suivant:
+
+    ::
+
+       backend = "redis";
+       servers = "127.0.0.1";
+       expire = 8640000;
+       autolearn {
+         spam_threshold = 6.0; # When to learn spam (score >= threshold and action is reject)
+         junk_threshold = 4.0; # When to learn spam (score >= threshold and action is rewrite subject or add header, and has two or more positive results)
+         ham_threshold = -0.5; # When to learn ham (score <= threshold and action is no action, and score is negative or has three or more negative results)
+         check_balance = true; # Check spam and ham balance
+         min_balance = 0.9; # Keep diff for spam/ham learns for at least this value
+       }
+
+       per_user = false;
+       per_language = true;
+
+7.  Activez Redis dans la configuration de Rspamd. Tapez:
 
     .. code:: bash
 
-       echo 'servers = "127.0.0.1";' > /etc/rspamd/local.d/redis.conf
-       echo 'enabled = true;' >> /etc/rspamd/local.d/redis.conf
+       echo 'write_servers = "127.0.0.1";' > /etc/rspamd/local.d/redis.conf
+       echo 'read_servers = "127.0.0.1";' >> /etc/rspamd/local.d/redis.conf
 
-7.  Fixer des métriques assez élevées pour analyser les spams
+8.  Fixer des métriques assez élevées pour analyser les spams
 
     .. code:: bash
 
@@ -4428,34 +4560,120 @@ Suivez la procédure suivante:
        echo "reject = 50;" >> /etc/rspamd/local.d/metrics.conf
        echo "}" >> /etc/rspamd/local.d/metrics.conf
 
-8.  Augmentez la taille de l’historique de Rspamd, activez la
+9.  Augmentez la taille de l’historique de Rspamd, activez la
     compression.
 
     .. code:: bash
 
        echo "nrows = 2500;" > /etc/rspamd/local.d/history_redis.conf
        echo "compress = true;" >> /etc/rspamd/local.d/history_redis.conf
-       echo "subject_privacy = false;" >> /etc/rspamd/local.d/history_redis.conf
+       echo "subject_privacy = false;" >> /etc/rspamd/local.d/history_redis.conf 
 
-9.  Assignez un calcul automatique de réputation aux URLs
+    -  à basculer à ``true`` si vous avez des utilisateurs de votre
+       serveur de mail souhaitant une compatibilité RGPD.
+
+10. Assignez un calcul automatique de réputation aux URLs
 
     .. code:: bash
 
        echo 'enabled = true;' > /etc/rspamd/local.d/url_reputation.conf
 
-10. Mettez à jour automatiquement les règles de filtre:
+11. Vérifiez si l’émetteur est bien un serveur de mail. Tapez :
 
-::
+    .. code:: bash
 
-   echo 'enabled = true;' > /etc/rspamd/local.d/rspamd_update.conf
+       vi /etc/rspamd/local.d/mx_check.conf
 
-1.  Enrichissez les headers des mails spams. Tapez:
+12. Insérez le texte suivant:
+
+    ::
+
+       enabled = true;
+       key_prefix = "rmx";
+       symbol_bad_mx = "MX_INVALID";
+       symbol_no_mx = "MX_MISSING";
+       symbol_good_mx = "MX_GOOD";
+       expire = 86400;
+       expire_novalid = 7200;
+       greylist_invalid = false;
+
+13. Activez l’analyse par réseau de neurone. Tapez:
+
+    .. code:: bash
+
+       vi /etc/rspamd/local.d/neural.conf
+
+14. Insérez le texte suivant:
+
+    ::
+
+       enabled = true;
+
+       rules {
+         "LONG" {
+           train {
+             max_trains = 5000;
+             max_usages = 200;
+             max_iterations = 25;
+             learning_rate = 0.01,
+             spam_score = 10;
+             ham_score = -2;
+           }
+           symbol_spam = "NEURAL_SPAM_LONG";
+           symbol_ham = "NEURAL_HAM_LONG";
+           ann_expire = 100d;
+         }
+         "SHORT" {
+           train {
+             max_trains = 100;
+             max_usages = 2;
+             max_iterations = 25;
+             learning_rate = 0.01,
+             spam_score = 10;
+             ham_score = -2;
+           }
+           symbol_spam = "NEURAL_SPAM_SHORT";
+           symbol_ham = "NEURAL_HAM_SHORT";
+           ann_expire = 1d;
+         }
+       }
+
+15. Créez les groupes associés. Tapez:
+
+    .. code:: bash
+
+       vi /etc/rspamd/local.d/neural_group.conf
+
+16. Insérez le texte suivant:
+
+    ::
+
+       symbols = {
+         "NEURAL_SPAM_LONG" {
+           weight = 1.0; # sample weight
+           description = "Neural network spam (long)";
+         }
+         "NEURAL_HAM_LONG" {
+           weight = -2.0; # sample weight
+           description = "Neural network ham (long)";
+         }
+         "NEURAL_SPAM_SHORT" {
+           weight = 0.5; # sample weight
+           description = "Neural network spam (short)";
+         }
+         "NEURAL_HAM_SHORT" {
+           weight = -1.0; # sample weight
+           description = "Neural network ham (short)";
+         }
+       }
+
+17. Enrichissez les headers des mails spams. Tapez:
 
     .. code:: bash
 
        vi /etc/rspamd/local.d/milter_headers.conf
 
-2.  inserez le texte suivant:
+18. Insérez le texte suivant:
 
     ::
 
@@ -4467,7 +4685,7 @@ Suivez la procédure suivante:
        extended_spam_headers = true;
 
        # List of headers to be enabled for authenticated users (default empty)
-       # authenticated_headers = ["authentication-results"];
+       authenticated_headers = ["authentication-results"];
 
        # List of headers to be enabled for local IPs (default empty)
        local_headers = ["x-spamd-bar"];
@@ -4479,14 +4697,18 @@ Suivez la procédure suivante:
        # skip_authenticated = true;
 
        # Routines to use- this is the only required setting (may be omitted if using extended_spam_headers)
-       use = ["x-spamd-bar", "x-spam-level", "authentication-results"];
+       use = ["x-spamd-bar", "x-spam-level", "x-spam-status", "authentication-results", "remove-headers"];
 
        # this is where we may configure our selected routines
        routines {
-         # settings for x-spamd-bar routine
-         x-spamd-bar {
-           # effectively disables negative spambar
-           negative = "";
+         remove-headers {
+           headers {
+             "X-Spam" = 0;
+             "X-Spamd-Bar" = 0;
+             "X-Spam-Level" = 0;
+             "X-Spam-Status" = 0;
+             "X-Spam-Flag" = 0;
+           }
          }
          # other routines...
        }
@@ -4494,45 +4716,158 @@ Suivez la procédure suivante:
          # user-defined routines: more on these later
        }
 
-3.  Créez un mot de passe. Tapez:
+19. Créez une configuration pour le protocole arc. Tapez:
+
+    .. code:: bash
+
+       vi /etc/rspamd/local.d/arc.conf
+
+20. Insérez le texte suivant:
+
+    ::
+
+       sign_authenticated = false;
+       sign_inbound = true;
+       sign_local = false;
+       use_domain = "header";
+       try_fallback = false;
+       use_esld = false;
+       path_map = "/etc/rspamd/local.d/dkim_domains.map";
+       selector_map = "/etc/rspamd/local.d/dkim_selectors.map";
+
+21. Créez un mot de passe. Tapez:
 
     .. code:: bash
 
        rspamadm pw
 
-4.  Entrez `votre mot de passe généré <#pass_gen>`__. Une hashphrase est
-    générée.
+22. Entrez `votre mot de passe généré <#pass_gen>`__. Une hash phrase
+    est générée.
 
-5.  Copiez la.
+23. Copiez la.
 
-6.  Remplacez celle déjà présente dans
+24. Remplacez celle déjà présente dans
     ``/etc/rspamd/local.d/worker-controller.inc``
 
     .. code:: bash
 
        vi /etc/rspamd/local.d/worker-controller.inc
 
-7.  Remplacez le texte entre guillemets sur la ligne
+25. Remplacez le texte entre guillemets sur la ligne
     ``password = "$2$g95yw…​…​dq3c5byy";`` par le texte copié.
 
-8.  Sauvez
+26. Si vous avez installé l’antivirus Clamav, Créez un fichier pour la
+    configuration:
 
-9.  Redémarrez Rspamd
+    .. code:: bash
+
+       vi /etc/rspamd/local.d/antivirus.conf
+
+27. Insérez le texte suivant :
+
+    ::
+
+       clamav {
+           # If set force this action if any virus is found (default unset: no action is forced)
+           #action = "reject";
+           # Scan mime_parts separately - otherwise the complete mail will be transferred to AV Scanner
+           scan_mime_parts = true;
+           # Scanning Text is suitable for some av scanner databases (e.g. Sanesecurity)
+           scan_text_mime = true;
+           scan_image_mime = true;
+           # If `max_size` is set, messages > n bytes in size are not scanned
+           #max_size = 20000000;
+           # symbol to add (add it to metric if you want non-zero weight)
+           symbol = "CLAM_VIRUS";
+           # type of scanner: "clamav", "fprot", "sophos" or "savapi"
+           type = "clamav";
+           # For "savapi" you must also specify the following variable
+           #product_id = 12345;
+           # You can enable logging for clean messages
+           #log_clean = true;
+           # servers to query (if port is unspecified, scanner-specific default is used)
+           # can be specified multiple times to pool servers
+           # can be set to a path to a unix socket
+           # Enable this in local.d/antivirus.conf
+           #servers = "127.0.0.1:3310";
+           servers = "/var/run/clamav/clamd.ctl";
+           # if `patterns` is specified virus name will be matched against provided regexes and the related
+           # symbol will be yielded if a match is found. If no match is found, default symbol is yielded.
+           patterns {
+             # symbol_name = "pattern";
+             JUST_EICAR = "^Eicar-Test-Signature$";
+           }
+           patterns_fail {
+             # symbol_name = "pattern";
+             CLAM_PROTOCOL_ERROR = '^unhandled response';
+           }
+           # `whitelist` points to a map of IP addresses. Mail from these addresses is not scanned.
+           whitelist = "/etc/rspamd/antivirus.wl";
+       }
+
+28. Définissez des groupes:
+
+    .. code:: bash
+
+       vi /etc/rspamd/local.d/groups.conf
+
+29. Insérez le texte suivant :
+
+    ::
+
+       group "antivirus" {
+           .include(try=true; priority=1; duplicate=merge) "$LOCAL_CONFDIR/local.d/antivirus_group.conf"
+           .include(try=true; priority=10) "$LOCAL_CONFDIR/override.d/antivirus_group.conf"
+       }
+
+30. Définissez les détections de virus :
+
+    .. code:: bash
+
+       vi /etc/rspamd/local.d/antivirus_group.conf
+
+31. Insérez le texte suivant :
+
+    ::
+
+       subject = "***SPAM*** %s";
+       symbols = {
+               "CLAM_VIRUS" {
+                       weight = 50;
+                       description = "Clamav has found a virus.";
+               }
+               "JUST_EICAR" {
+                       weight = 50;
+                       description = "Clamav has found a virus.";
+               }
+               "R_DUMMY" {
+                       weight = 0.0;
+                       description = "Dummy symbol";
+               }
+       }
+
+32. Ajuster les permissions. Tapez:
+
+    .. code:: bash
+
+       chmod 755 /etc/rspamd/local.d/maps.d
+
+33. Redémarrez Rspamd
 
     .. code:: bash
 
        systemctl restart rspamd
 
-10. Rendre le site rspamd accessible dans un host
+34. Rendre le site rspamd accessible dans un host
 
-11. Activez le module proxy dans apache
+35. Activez le module proxy dans apache
 
     .. code:: bash
 
        a2enmod proxy
        systemctl restart apache2
 
-12. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
+36. Allez dans la rubrique ``DNS``, sélectionnez le menu ``Zones``,
     Sélectionnez votre Zone, Allez dans l’onglet ``Records``.
 
     a. Cliquez sur ``A`` et saisissez:
@@ -4544,7 +4879,7 @@ Suivez la procédure suivante:
 
     b. Cliquez sur ``Save``
 
-13. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+37. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
     configurateur de ``sites``.
 
     a. Lui donner le nom ``rspamd``.
@@ -4584,11 +4919,11 @@ Suivez la procédure suivante:
 
        -  remplacer ``example.com`` par votre nom de domaine
 
-14. en pointant sur le site ``rspampd.example.com`` , et en utilisant le
+38. en pointant sur le site ``rspampd.example.com`` , et en utilisant le
     mot de passe saisi plus haut vous pouvez accéder aux fonctions de
     l’outil.
 
-15. Activer l’apprentissage par déplacement
+39. Activer l’apprentissage par déplacement
 
     a. Couplé avec Dovecot, Rspamd nous propose de pouvoir apprendre
        également en fonction des actions des utilisateurs. Si un mail
@@ -4692,18 +5027,73 @@ Suivez la procédure suivante:
           chmod +x /etc/dovecot/sieve/train-*
           chown -R vmail:vmail /etc/dovecot/sieve
 
-    j. Redémarrez dovecot. Tapez:
+    j. On en profite pour ajouter un petit script qui informe
+       l’utilisateur de l’atteinte de son quota. On édite le fichier
+       ``90-quota.conf`` :
+
+       .. code:: bash
+
+          vi /etc/dovecot/conf.d/90-quota.conf
+
+    k. Insérez le texte suivant:
+
+       ::
+
+          plugin {
+            quota = maildir:User quota
+            quota_warning = storage=90%% quota-warning 90 %u
+          }
+
+          service quota-warning {
+            executable = script /usr/local/bin/quota-warning.sh
+            user = vmail
+            unix_listener quota-warning {
+              user = vmail
+            }
+          }
+
+    l. Créer le fichier de script :
+
+       .. code:: bash
+
+          vi /usr/local/bin/quota-warning.sh
+
+    m. Insérez le texte suivant:
+
+       .. code:: bash
+
+          #!/usr/bin/env bash
+
+          PERCENT=${1}
+          USER=${2}
+
+          cat << EOF | /usr/sbin/sendmail $USER -O "plugin/quota=maildir:User quota:noenforcing"
+          From: postmaster@example.com 
+
+          Votre Boite est plein à plus de ${PERCENT}. Faut faire du ménage mon ami !
+          EOF
+
+       -  remplacer example.com par votre nom de domaine.
+
+    n. Changez les permissions :
+
+       .. code:: bash
+
+          chmod +x /usr/local/bin/quota-warning.sh
+          chown vmail /usr/local/bin/quota-warning.sh
+
+    o. Redémarrez dovecot. Tapez:
 
        .. code:: bash
 
           service dovecot restart
 
-    k. Lorsque vous déplacer un mail du répertoire Inbox vers le
+    p. Lorsque vous déplacer un mail du répertoire Inbox vers le
        répertoire Junk ou vice-versa, les fichiers ``/var/log/mail.log``
        et ``/var/log/rspamd/rspamd.log`` doivent montrer les actions de
        recalcul des spams.
 
-16. Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:
+40. Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:
 
     .. code:: bash
 
@@ -4775,7 +5165,75 @@ suivantes:
 
       service postfix restart
 
-5. Vous pouvez le tester en allant sur le site
+5. Vous pouvez ajouter une signature DKIM. Si vous utilisez ISPConfig,
+   cette opération est effectuée automatiquement:
+
+   -  DKIM est une méthode d’authentification du courrier électronique
+      conçue pour détecter l’usurpation d’adresse électronique. Elle
+      permet au serveur de réception de vérifier l’origine d’un courrier
+      électronique en y apposant une signature numérique. La
+      vérification de la signature est effectuée à l’aide de la clé
+      publique du signataire publiée dans le DNS. Elle peut être
+      utilisée pour détecter les courriels frauduleux.
+
+   -  Créez un nouveau répertoire pour stocker la clé DKIM et générez
+      une nouvelle paire de clés DKIM à l’aide de l’utilitaire
+      ``rspamadm``. Dans l’exemple suivant, nous utilisons mail comme
+      sélecteur DKIM. Il générera une paire de clés qui pourra être
+      utilisée pour tous les domaines gérés par le serveur de
+      messagerie:
+
+      .. code:: bash
+
+         mkdir /var/lib/rspamd/dkim/
+         rspamadm dkim_keygen -d example.com -s default -k toto -b 2048 /var/lib/rspamd/dkim/example.com.dkim.key > /var/lib/rspamd/dkim/example.com.dkim.key.pub 
+
+      -  remplacez ``example.com`` par votre nom de domaine.
+
+   -  Vous trouverez deux fichiers dans le répertoire :
+
+      -  ``mail.key`` - Le fichier de clé privée
+
+      -  ``mail.pub`` - Le fichier de clé publique
+
+   -  Editez le fichier dkim_domains.map et ajoutez:
+
+      ::
+
+         example.com /var/lib/rspamd/dkim/example.com.dkim.key 
+
+      -  remplacez ``example.com`` par votre nom de domaine.
+
+   -  Editez le fichier ``dkim_selectors.map`` et ajoutez:
+
+      ::
+
+         example.com default 
+
+      -  remplacez ``example.com`` par votre nom de domaine.
+
+   -  Ajoutez une entrée DNS avec le texte suivant:
+
+      ::
+
+         default._domainkey.example.com. 3600  IN  TXT   "v=DKIM1; t=s; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtBdWvMUlDmlAzZWTMhyheOmcewA4DFx+nMHI+3baOuJWt3/v7CdrX+egisWD5jwRzi/wN18kWR4kG/5rQKpIQLjurQrzqPO9i1Bub9O+VZWw0ldCAVNjKtkoFfgEErePMnKX/9Qjje+rqrH9oHSC+RK0z2Dvj3+WQIDAQAB" 
+
+      -  remplacez ``example.com`` par votre nom de domaine et remplacez
+         le contenu derrière p= par le contenu derrière p= présent dans
+         le fichier /var/lib/rspamd/dkim/exaple.com.dkim.key.pub
+
+   -  Ajouter si ce n’est pas le cas une entrée DNS pour le SPF:
+
+      ::
+
+         v=spf1 mx a a:mail.example.com a:mail.other.example.com  include:mail.toto.com +all 
+
+      -  remplacez example.com par votre nom de domaine. Vous pouvez
+         rajouter autant d’entrée ``a:`` ou ``include:`` que nécessaires
+         si vous avez des serveur de mail secondaires qui peuvent
+         relayer des mails pour ce domaine.
+
+6. Vous pouvez le tester en allant sur le site
    `MxToolbox <https://mxtoolbox.com/diagnostic.aspx>`__.
 
    -  Entrez le nom de host de votre serveur de mail:
@@ -4786,7 +5244,7 @@ suivantes:
    -  Tout doit être correct sauf éventuellement le reverse DNS qui doit
       être configuré pour pointer vers ``mail.example.com`` .
 
-6. Testez votre email sur le site `Phishing
+7. Testez votre email sur le site `Phishing
    Scoreboard <https://www.phishingscorecard.com/>`__
 
    -  Entrez votre adresse mail: ``admin@example.com``
@@ -4795,7 +5253,7 @@ suivantes:
 
    -  Entrez votre clé dkim: ``default``
 
-7. Enfin, vous pouvez tester votre statut de spammer potentiel en
+8. Enfin, vous pouvez tester votre statut de spammer potentiel en
    envoyant allant sur le site `Newsletter Spam
    test <https://www.mail-tester.com/>`__
 
@@ -4843,7 +5301,9 @@ Ensuite, vous devez modifier votre configuration DMARC:
     \_dmarc
 
 4.  modifiez le champ ``Text`` avec :
-    ``v=DMARC1;p=reject;sp=quarantine;pct=100;rua=mailto:abuse@example.com;ruf=mailto:forensic@example.com``
+    ``v=DMARC1;p=reject;sp=quarantine;pct=100;rua=mailto:abuse@example.com;ruf=mailto:forensic@example.com``.
+    On remplacera bien le domaine ``example.com`` par son propre
+    domaine.
 
 5.  Allez ensuite dans ``Email``
 
@@ -5015,6 +5475,7 @@ Création d’autodiscover pour Outlook
 
 Outlook utilise un autre mécanisme pour se configurer automatiquement.
 Il est basé sur l’utilisation du nom de sous-domaine ``autodiscover``.
+Cette methode ne fonctionne pas avec les versions récentes de Outlook.
 
 Appliquez la procédure suivante:
 
@@ -5076,48 +5537,59 @@ Appliquez la procédure suivante:
     .. code:: xml
 
        <?php
-        $raw = file_get_contents('php://input');
-        $matches = array();
-        preg_match('/<EMailAddress>(.*)<\/EMailAddress>/', $raw, $matches);
-        header('Content-Type: application/xml');
+       $postData = file_get_contents('php://input'); //Autodiscover requests are HTTP posts with XML content
+       $xml = simplexml_load_string($postData);
+       $user = $xml->Request->EMailAddress; //copy the email address from the request into a variable
+
+       //set Content-Type
+       header("Content-Type: application/xml");
        ?>
-        <Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006">
-          <Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a">
-            <User>
-              <DisplayName>Example Mail</DisplayName> 
-            </User>
-            <Account>
-              <AccountType>email</AccountType>
-              <Action>settings</Action>
-              <Protocol>
-                <Type>IMAP</Type>
-                <Server>mail.example.com</Server> 
-                <Port>993</Port>
-                <DomainRequired>off</DomainRequired>
-                <SPA>off</SPA>
-                <SSL>on</SSL>
-                <AuthRequired>on</AuthRequired>
-                <LoginName><?php echo $matches[1]; ?></LoginName>
-              </Protocol>
-              <Protocol>
-                <Type>SMTP</Type>
-                <Server>mail.example.com</Server> 
-                <Port>465</Port>
-                <DomainRequired>off</DomainRequired>
-                <SPA>off</SPA>
-                <SSL>on</SSL>
-                <AuthRequired>on</AuthRequired>
-                <UsePOPAuth>on</UsePOPAuth>
-                <SMTPLast>off</SMTPLast>
-                <LoginName><?php echo $matches[1]; ?></LoginName>
-              </Protocol>
-            </Account>
-          </Response>
-        </Autodiscover>
+       <?php echo '<?xml version="1.0" encoding="utf-8" ?>'; ?>
+       <Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006">
+           <Response xmlns="http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a">
+               <Account>
+                   <AccountType>email</AccountType>
+                   <Action>settings</Action>
+                   <Protocol>
+                       <Type>POP3</Type>
+                       <Server>mail.example.com</Server> 
+                       <Port>995</Port>
+                       <LoginName><?php echo $user; ?></LoginName>
+                       <DomainRequired>off</DomainRequired>
+                       <SPA>off</SPA>
+                       <SSL>on</SSL>
+                       <AuthRequired>on</AuthRequired>
+                       <DomainRequired>on</DomainRequired>
+                   </Protocol>
+                   <Protocol>
+                       <Type>IMAP</Type>
+                       <Server>mail.example.com</Server> 
+                       <Port>993</Port>
+                       <DomainRequired>on</DomainRequired>
+                       <LoginName><?php echo $user; ?></LoginName>
+                       <SPA>off</SPA>
+                       <SSL>on</SSL>
+                       <Encryption>Auto</Encryption>
+                       <AuthRequired>on</AuthRequired>
+                   </Protocol>
+                   <Protocol>
+                       <Type>SMTP</Type>
+                       <Server>mail.example.com</Server> 
+                       <Port>465</Port>
+                       <DomainRequired>on</DomainRequired>
+                       <LoginName><?php echo $user; ?></LoginName>
+                       <SPA>off</SPA>
+                       <Encryption>Auto</Encryption>
+                       <!-- if your server requires encryption other than SSL -->
+                       <AuthRequired>on</AuthRequired>
+                       <UsePOPAuth>on</UsePOPAuth>
+                       <SMTPLast>off</SMTPLast>
+                   </Protocol>
+               </Account>
+           </Response>
+       </Autodiscover>
 
     -  mettre à la place de ``example.com`` votre nom de domaine
-
-    -  mettre ici votre libellé long pour votre nom de messagerie
 
 6.  Changez les permissions comme pour le répertoire
 
@@ -5129,12 +5601,23 @@ Appliquez la procédure suivante:
     -  remplacer web1:client0 par les permissions du répertoire
        ``/var/www/autoconfig.example.com``
 
-7.  Pointer votre navigateur sur le site
+7.  Dans ce même répertoire créez un fichier ``.htaccess`` et Ajoutez y:
+
+    ::
+
+       RewriteEngine On
+       RewriteCond %{REQUEST_FILENAME} -s [OR]
+       RewriteCond %{REQUEST_FILENAME} -l [OR]
+       RewriteCond %{REQUEST_FILENAME} -d
+       RewriteRule ^.*$ - [NC,L]
+       RewriteRule ^.*$ autodiscover.php [NC,L]
+
+8.  Pointer votre navigateur sur le site
     https://autodiscover.example.com/Autodiscover/Autodiscover.xml.
 
-8.  Le contenu du fichier xml doit s’afficher
+9.  Le contenu du fichier xml doit s’afficher
 
-9.  Dans le répertoire
+10. Dans le répertoire
     ``/var/www/autoconfig.<example.com>/autoconfig/``, créer un
     répertoire ``autodiscover``. Lui donner les permissions 755 et
     affecter les mêmes possesseurs que pour autres fichiers du
@@ -5152,14 +5635,14 @@ Appliquez la procédure suivante:
 
     -  remplacez ``example.com`` par votre nom de domaine
 
-10. A l’intérieur de ce répertoire, Editez un fichier
+11. A l’intérieur de ce répertoire, Editez un fichier
     ``autodiscover.json``. Tapez:
 
     .. code:: bash
 
        vi autoconfig/autodiscover/autodiscover.json
 
-11. Y coller:
+12. Y coller:
 
     .. code:: php
 
@@ -5168,7 +5651,7 @@ Appliquez la procédure suivante:
        echo '{"Protocol":"AutodiscoverV1","Url":"https://autodiscover.example.com/Autodiscover/Autodiscover.xml"}';
        ?>
 
-12. Changez les permissions comme pour le répertoire
+13. Changez les permissions comme pour le répertoire
 
     .. code:: bash
 
@@ -5178,12 +5661,12 @@ Appliquez la procédure suivante:
     -  remplacer web1:client0 par les permissions du répertoire
        ``/var/www/autoconfig.example.com``
 
-13. Pointer votre navigateur sur le site
+14. Pointer votre navigateur sur le site
     https://autodiscover.example.com/autodiscover/autodiscover.json
 
-14. Le contenu du fichier json doit s’afficher
+15. Le contenu du fichier json doit s’afficher
 
-15. Vous pouvez faire aussi un test sur le `Testeur de connectivité
+16. Vous pouvez faire aussi un test sur le `Testeur de connectivité
     Microsoft <https://testconnectivity.microsoft.com>`__.
 
     a. choisissez: ``Découverte automatique Outlook``
@@ -5405,219 +5888,6 @@ Suivez la procédure suivante:
 
       rm secretsrc
       rm secretdst
-
-.. _`_remplacer_apache_par_nginx`:
-
-Remplacer apache par nginx
-==========================
-
-Nous allons voir comment remplacer apache par nginx. Il y a quelques
-différences entre apache et nginx, il se peut donc que vous deviez
-ajuster certains paramètres pour vos sites web.
-
-Par exemple:
-
--  nginx ne prend pas en charge les fichiers .htaccess.
-
--  nginx n’utilise pas les différents modules d’Apache comme
-   mod_rewrite.
-
-Vous pouvez utiliser différents convertisseurs en ligne comme
-`winginx.com <https://winginx.com/en/htaccess>`__ pour réécrire les
-configurations d’apache à nginx. Mais gardez à l’esprit, qu’il n’est pas
-garanti que le convertisseur fonctionne sans aucune erreur. C’est le cas
-notamment pour les commandes ``Proxypass``
-
-Si vous changez le serveur web dans ISPConfig d’apache à nginx, vous ne
-pouvez pas voir vos directives apache supplémentaires dans l’interface
-(mais elles sont toujours dans la base de données). Vous pouvez
-parcourir tous vos sites web et écrire les directives ou les récupérer
-de la base de données en utilisant **phpmyadmin** ou **mysql** avec
-cette commande sql :
-
-.. code:: sql
-
-   SELECT domaine, apache_directives FROM web_domain WHERE apache_directives != '';
-
-Pour trouver tous les fichiers ``.htaccess`` à convertir, vous pouvez
-exécuter la commande suivante :
-
-.. code:: bash
-
-   find /var/www/clients/ -name .htaccess -not -path "*/stats/*"
-
-Les étapes sont les suivantes:
-
-1.  installez nginx
-
-    .. code:: bash
-
-       apt-get install nginx
-
-2.  installez php-fpm
-
-    .. code:: bash
-
-       apt-get install php-fpm
-
-3.  Assurez vous que /etc/php7/fpm/php.ini contient:
-
-    .. code:: php
-
-       cgi.fix_pathinfo=0
-       date.timezone=”Europe/Berlin”
-
-4.  Redémarrez php-fpm en tapant:
-
-    .. code:: bash
-
-       /etc/init.d/php5-fpm reload
-
-5.  Maintenant nginx est installé mais apache est toujours votre serveur
-    web actif.
-
-6.  Activez le mode Maintenance:
-
-    -  Activez le mode maintenance dans ISPConfig sous Système /
-       Mainconfig dans l’onglet Misc pour empêcher les changements
-       pendant la migration.
-
-7.  passer à nginx dans ISPConfig:
-
-    -  Connectez-vous en tant que root dans phpmyadmin, ouvrez la base
-       de données dbispconfig, sélectionnez la table server et éditez le
-       serveur.
-
-    -  Faites défiler jusqu’à ``config`` et trouvez la ligne
-       ``[global]`` finden. Dans la ligne suivante, remplacez:
-
-       ::
-
-          webserver=apache
-
-       par
-
-       ::
-
-          webserver=nginx
-
-    -  Descendez encore plus bas jusqu’à la ligne ``[web]`` et changez
-       la ligne suivante de :
-
-       ::
-
-          server_type=apache
-
-       à
-
-       ::
-
-          server_type=nginx
-
-8.  Créez ``ispconfig.vhost`` dans ``/etc/nginx/sites-available``.
-    Tapez:
-
-    .. code:: bash
-
-       vi /etc/nginx/sites-avalaible/ispconfig.vhost
-
-9.  Et ajoutez le contenu suivant :
-
-    -  avec du SSL:
-
-       ::
-
-          server {
-              listen 8080;
-                  ssl on;
-                  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-                  ssl_certificate /usr/local/ispconfig/interface/ssl/ispserver.crt;
-                  ssl_certificate_key /usr/local/ispconfig/interface/ssl/ispserver.key;
-              server_name _;
-              root /usr/local/ispconfig/interface/web/;
-              client_max_body_size 20M;
-              location / {
-                  index index.php index.html;
-              }
-
-          # serve static files directly
-              location ~* ^.+.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt)$ {
-                  access_log off;
-              }
-              location ~ \.php$ {
-                  try_files $uri =404;
-                  include /etc/nginx/fastcgi_params;
-                  fastcgi_pass unix:/var/lib/php5-fpm/ispconfig.sock;
-                  fastcgi_index index.php;
-                  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-                  #fastcgi_param PATH_INFO $fastcgi_script_name;
-                  fastcgi_buffer_size 128k;
-                  fastcgi_buffers 256 4k;
-                  fastcgi_busy_buffers_size 256k;
-                  fastcgi_temp_file_write_size 256k;
-              }
-
-              location ~ /\. {
-                  deny all;
-              }
-          }
-
-    -  Sans du SSL:
-
-       ::
-
-          server {
-              listen 8080;
-                  ssl off;
-              server_name _;
-              root /usr/local/ispconfig/interface/web/;
-              client_max_body_size 20M;
-              location / {
-                  index index.php index.html;
-              }
-
-          # serve static files directly
-              location ~* ^.+.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt)$ {
-                  access_log off;
-              }
-              location ~ \.php$ {
-                  try_files $uri =404;
-                  include /etc/nginx/fastcgi_params;
-                  fastcgi_pass unix:/var/lib/php5-fpm/ispconfig.sock;
-                  fastcgi_index index.php;
-                  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-                  #fastcgi_param PATH_INFO $fastcgi_script_name;
-                  fastcgi_buffer_size 128k;
-                  fastcgi_buffers 256 4k;
-                  fastcgi_busy_buffers_size 256k;
-                  fastcgi_temp_file_write_size 256k;
-              }
-              location ~ /\. {
-                  deny all;
-              }
-          }
-
-10. Créez le lien symbolique en tapant:
-
-    .. code:: bash
-
-       ln -s /etc/nginx/sites-available/ispconfig.vhost /etc/nginx/sites-enabled/000-ispconfig.vhost
-
-11. Ajustez les sites web. Désactivez le mode Maintenance et
-    convertissez les ``htaccess-file`` et ``apache-directives``
-    existants. Insérez les nouvelles valeurs dans l’interface web de
-    chaque site web.
-
-12. Si vous n’avez pas modifié tous les sites web, exécutez l’outil
-    ``resyn-tool`` pour les sites web.
-
-13. Désactivez apache et démarrez nginx. Tapez:
-
-    .. code:: bash
-
-       /etc/init.d/apache2 stop
-       update-rc.d -f apache2 remove
-       /etc/init.d/nginx start
 
 .. _`_installation_de_docker_et_des_outils_associés`:
 
@@ -5943,6 +6213,77 @@ Pour l’installer:
    les container à vérifier, il vous faut ajouter pour les container
    concernés l’otion ``-l autoheal=true``
 
+.. _`_configuration_de_docker_mirror`:
+
+Configuration de Docker-mirror
+==============================
+
+L’outil Docker-mirror est un système de cache de fichier Dockers.
+
+Si vous avez plusieurs machines utilisant docker sur votre réseau, les
+déploiements et les mises à jour seront considérablement accélérées par
+l’utilisation de ce système de cache.
+
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Obtenez une configuration initiale pour le fichier ``config.yml``.
+   Tapez:
+
+   .. code:: bash
+
+      docker run -it --rm --entrypoint cat registry:2 /etc/docker/registry/config.yml > /etc/docker-mirror.yml
+
+3. Ajoutez ceci dans le fichier ``config.yml``. Tapez:
+
+   .. code:: bash
+
+      vi /etc/docker-mirror.yml
+
+4. Dans ce fichier, ajoutez les lignes suivantes :
+
+   ::
+
+      proxy:
+            remoteurl: https://registry-1.docker.io
+
+5. Démarrez ensuite le service docker. Tapez:
+
+   .. code:: bash
+
+      docker run -d --restart=always -p 5000:5000 --name docker-registry-proxy -v /etc/docker-mirror.yml:/etc/docker/registry/config.yml registry:2
+
+Sur le poste client, soit passez l’option --registry-mirror lorsque vous
+lancez le démon ``dockerd`` ou sinon éditez le fichier
+``/etc/docker/daemon.json`` et ajoutez la clé ``registry-mirrors`` pour
+rendre le changement persistant:
+
+1. `Loguez vous comme root sur le poste client <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+      vi /etc/docker/daemon.json
+
+3. Dans le fichier, ajoutez:
+
+   ::
+
+      {
+        "registry-mirrors": ["http://docker.example.com:5000"] 
+      }
+
+   -  remplacer ``docker.example.com`` par le nom ou l’adresse ip de
+      votre cache docker.
+
+4. Sauvegarder le fichier et redémarrez le démon docker. Tapez:
+
+   .. code:: bash
+
+      systemctl restart docker
+
 .. _`_outils_web_de_gestion_des_containers`:
 
 Outils web de gestion des containers
@@ -6070,7 +6411,7 @@ Appliquez la procédure suivante:
 
 1. Ouvrez un navigateur et pointez sur http://yacht.example.com
 
-2. Logguez vous en tant qu'`admin\`
+2. Logguez vous en tant qu'\`admin\`
 
 3. Allez dans l’onglet ``Applications``
 
