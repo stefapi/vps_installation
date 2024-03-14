@@ -24,3 +24,5 @@ echo '
 ' > vps_installation.rst
 cat vps_installation.tmp >> vps_installation.rst
 rm vps_installation.tmp
+
+pip-compile --output-file=- > requirements.txt
