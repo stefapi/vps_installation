@@ -19,14 +19,14 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Serveur Web VPS'
-copyright = '2022, Stéphane Apiou'
+project = 'Installation d un Serveur Web VPS'
+copyright = '2024, Stéphane Apiou'
 author = 'Stéphane Apiou'
 
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '1.0'
+release = '1.6'
 
 
 # -- General configuration ---------------------------------------------------
@@ -144,7 +144,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'VPSinstallation.tex', 'VPS installation Documentation',
+    (master_doc, 'VPSinstallation.tex', 'Installation d un VPS',
      'Stéphane Apiou', 'manual'),
 ]
 
@@ -154,7 +154,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'vpsinstallation', 'VPS installation Documentation',
+    (master_doc, 'vpsinstallation', 'Installation d un VPS',
      [author], 1)
 ]
 
@@ -165,8 +165,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'VPSinstallation', 'VPS installation Documentation',
-     author, 'VPSinstallation', 'One line description of project.',
+    (master_doc, 'VPSinstallation', 'Installation d un VPS',
+     author, 'VPSinstallation', 'Installation d un serveur VPS',
      'Miscellaneous'),
 ]
 
