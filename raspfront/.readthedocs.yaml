@@ -14,11 +14,11 @@ build:
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
-  configuration: conf.py
+  configuration: raspfront/conf.py
 
 python:
   install:
-    - requirements: requirements.txt
+    - requirements: raspfront/requirements.txt
 
 # Build documentation with MkDocs
 #mkdocs:
