@@ -631,9 +631,6 @@ utilisant la ligne de commande et putty)
 
 10. Choisissez votre Timezone. Par exemple: ``Europe/Paris``
 
-Unresolved directive in rasphome_installation.asc -
-include::../common/wifi_reboot.asc[]
-
 .. _`_configuration_basique`:
 
 Configuration basique
@@ -808,21 +805,17 @@ Mise à jour des sources de paquets Debian ou Ubuntu
 
       .. code:: ini
 
-         deb http://deb.debian.org/debian bullseye main contrib non-free
-         deb-src http://deb.debian.org/debian bullseye main contrib non-free
+         deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
 
          ## Major bug fix updates produced after the final release of the
          ## distribution.
-         deb http://security.debian.org/debian-security bullseye-security main contrib non-free
-         deb-src http://security.debian.org/debian-security bullseye-security main contrib non-free
-         deb http://deb.debian.org/debian bullseye-updates main contrib non-free
-         deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free
+         deb http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+         deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
 
          ## N.B. software from this repository may not have been tested as
          ## extensively as that contained in the main release, although it includes
          ## newer versions of some applications which may provide useful features.
-         deb http://deb.debian.org/debian bullseye-backports main contrib non-free
-         deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
+         deb http://deb.debian.org/debian bookworm-backports main contrib non-free non-free-firmware
 
 4. Modifier la liste standard de paquets Ubuntu
 
@@ -1047,7 +1040,7 @@ Suivez la procédure suivante:
 
       apt install unattended-upgrades
 
-.. _`_vérification_du_nom_de_serveur`:
+.. _domain_config:
 
 Vérification du nom de serveur
 ------------------------------
@@ -1104,6 +1097,9 @@ correctement configuré.
 
          Le FQDN (nom de machine avec le nom de domaine) doit être
          déclaré avant le hostname simple dans le fichier ``hosts``.
+         Pour que la configuration de votre serveur de mail soit
+         correcte vous devez installer un FQDN contenant l’adresse de
+         mail comme ``mail.example.com``
 
    c. Rebootez. Tapez :
 
@@ -1163,13 +1159,40 @@ Interdire le login direct en root
 ---------------------------------
 
 Il est toujours vivement déconseillé d’autoriser la possibilité de se
-connecter directement en SSH en tant que root. De ce fait, notre
-première action sera de désactiver le login direct en root et
-d’autoriser le sudo. Respectez bien les étapes de cette procédure:
+connecter directement en SSH en tant que root.
+
+Avec les versions récentes de Debian Bookworm pour raspberry pi, il
+n’est plus nécessaire de créer le compte sudo qui est créé par défaut
+lors de la procédure d’installation standard. Cette procédure est
+cependant indispensable pour l’installation d’une distribution debian
+standard.
+
+Une remarque tout de même pour le raspberry pi: le compte sudo permet de
+se logger root sans aucun mot de passe. C’est considéré comme une faille
+de sécurité. Pour corriger cela, `Loguez vous comme root sur le
+serveur <#root_login>`__ et tapez:
+
+.. code:: bash
+
+   rm -f /etc/sudoers.d/010_pi-nopasswd
+
+La procédure suivante s’applique pour la création du compte sudo sur une
+debian standard.
+
+Notre première action sera de désactiver le login direct en root et
+d’autoriser le sudo.
+
+Respectez bien les étapes de cette procédure:
 
 1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-2. Ajoutez un utilisateur standard qui sera nommé par la suite en tant
+2. Installez l’outil ``sudo`` s’il n’est pas déjà présent. Tapez:
+
+   .. code:: bash
+
+      apt install sudo
+
+3. Ajoutez un utilisateur standard qui sera nommé par la suite en tant
    que <sudo_username>
 
    a. Tapez :
@@ -1387,7 +1410,7 @@ super-compte.
 
       .. code:: bash
 
-         vi /etc/sudoers
+         vi /etc/sudoers.d/010_sudonp
 
    d. Ajouter dans le fichier la ligne suivante:
 
@@ -1473,12 +1496,10 @@ Nous allons créer une configuration système:
       memory_unit="mib"
       package_managers="on"
       image_backend="ascii"
-      cpu_temp="on" 
+      cpu_temp="on"
 
    -  Cette ligne est à retirer si vous n’utilisez pas de Raspberry PI 4
-
-   -  Cette ligne est à mettre pour tout système qui n’utilise pas de
-      Raspberry PI 4
+      ou 5
 
 .. _`_configuration_du_motd_avec_neofetch`:
 
@@ -1535,7 +1556,7 @@ Vous pouvez ajouter la liste des mises à jours dans le fichier MOTD:
 
    .. code:: python
 
-      #!/usr/bin/python
+      #!/usr/bin/python3
       import sys
       import subprocess
       import apt_pkg
@@ -1677,12 +1698,12 @@ Tapez :
 
       dphys-swapfile uninstall
 
-3. Pour installer un swap de 2Go, tapez:
+3. Pour installer un swap de 4Go, tapez:
 
    .. code:: bash
 
       cd /
-      fallocate -l 2G /swapfile
+      fallocate -l 4G /swapfile
       chmod 600 /swapfile
       mkswap /swapfile
       swapon /swapfile
@@ -2135,15 +2156,15 @@ Déblocage de port de firewall
 
 Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en
 entrée de votre équipement. Cela veut dire qu’il ne sera pas possible de
-connecter une machine externe sur votre équipement sans avoir effecté
+connecter une machine externe sur votre équipement sans avoir effectué
 une opération de déblocage du port du firewall.
 
 Il existe deux manière de débloquer un port. Elle dépend de ce que vous
 avez configuré.
 
-.. _`_déblocage_et_suppression_de_regles_de_firewall_avec_ispconfig`:
+.. _`_déblocage_et_suppression_de_règles_de_firewall_avec_ispconfig`:
 
-Déblocage et suppression de regles de Firewall avec ISPconfig
+Déblocage et suppression de règles de Firewall avec ISPconfig
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Appliquez les opérations suivantes pour Débloquez le firewall:
@@ -2169,6 +2190,10 @@ déblocage) de firewall:
 3. dans la rubrique ``Open TCP ports:``, Supprimer le port xxxx
 
 4. Cliquez sur ``save``
+
+Remarque: si vous utilisez VNC, il faut débloquer le port dans le
+firewall de ISPConfig. Appliquez la méthode de déblocage pour le port
+5900.
 
 .. _`_déblocage_de_firewall_ufw`:
 
@@ -2197,6 +2222,11 @@ procédure suivante:
       ufw allow 22/tcp
       ufw allow 80/tcp
       ufw allow 443/tcp
+      ufw allow 5900/tcp 
+
+   -  Cette ligne autorise VNC et est utile si vous utilisez ce
+      protocole sur votre Système. Il est fortement déconseillé pour un
+      serveur visible sur internet d’autoriser ce protocole.
 
 3. Activez le firewall. tapez:
 
@@ -3408,7 +3438,7 @@ A propos des Raspberry Pi
    Les raspberry utilisent une architecture ARM, tous les containeurs ne
    seront pas forcément compatibles "out of the box" ( Exemple pour
    MySQL). Sur le `Docker Hub <https://hub.docker.com/>`__, il faut
-   choisir par un Raspberry Pi 4 en Ubuntu une architecture de type
+   choisir par un Raspberry Pi 4 ou 5 en Ubuntu une architecture de type
    ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type
    ARM.
 
@@ -3421,108 +3451,59 @@ L’installation de Docker est relativement simple.
 
 Il faut suivre les étapes suivantes:
 
-1.  `Loguez vous comme root sur le serveur <#root_login>`__
-
-2.  Désinstallez les éventuelles anciennes versions de docker. tapez:
-
-    .. code:: bash
-
-       apt remove --purge docker docker-engine docker.io containerd runc 
-
-    -  docker-engine n’existe pas dans une distribution ubuntu. C’est à
-       enlever.
-
-3.  Tapez:
-
-    .. code:: bash
-
-       apt update
-       apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-       cd /etc/apt/trusted.gpg.d
-       wget -O docker.asc https://download.docker.com/linux/debian/gpg
-
-4.  tapez :
-
-    .. code:: bash
-
-       lsb_release -cs
-
-5.  Ici la version de votre distribution doit s’afficher.
-
-    .. warning::
-
-       pour des installations hybride d’une distribution debian, la
-       version qui est proposée peut être la future SID ou la Testing
-       pour lesquelles il n’existe pas obligatoirement de version
-       installable de docker. Dans ce cas vous devrez sélectionner vous
-       même la version de la distribution stable.
-
-6.  Tapez (et remplacer éventuellement la commande $(lsb_release -cs)
-    par le nom de votre distribution stable). :
-
-    .. code:: bash
-
-       add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" 
-
-    -  ici il faut remplacer l’architecture ``amd64`` par ``arm64`` pour
-       un raspberry pi 4 ou par ``armhf`` pour un raspberry pi 3. De la
-       même manière, remplacez debian par ubuntu si vous utilisez une
-       distribution ubuntu/
-
-7.  Une fois installé avec succès, tapez:
-
-    .. code:: bash
-
-       apt update
-
-8.  Si vous obtenez une erreur c’est que vous avez ajouté un repository
-    qui n’est pas suppporté par Docker. Vérifiez les fichier
-    ``/etc/apt/sources.list``.
-
-9.  Une fois mis à jour avec succès, tapez:
-
-    .. code:: bash
-
-       apt install docker-ce docker-ce-cli containerd.io
-
-10. vérifiez que votre installation de ``Docker`` est fonctionnelle.
-    Tapez:
-
-    .. code:: bash
-
-       docker run hello-world
-
-11. Cette commande exécute un conteneur simple. Si aucune erreur
-    n’apparaît c’est que l’installation est réussie.
-
-.. _`_installation_de_docker_compose`:
-
-Installation de docker-compose
-------------------------------
-
-Docker-compose est un outil qui aide à l’installation de plusieurs
-container de façon simultané. Il permet surtout de vérifier que
-l’échosystème installé interagit bien.
-
-Il faut suivre les étapes suivantes:
-
 1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-2. Installez quelques paquets Debian de base. Tapez:
+2. Désinstallez les éventuelles anciennes versions de docker. tapez:
 
    .. code:: bash
 
-      apt install libffi-dev libssl-dev
-      apt install -y python3 python3-pip 
+      apt remove --purge docker docker.io containerd runc docker-doc docker-compose podman-docker 
 
-   -  Pour Ubuntu, remplacez ces paquets par ``python`` et
-      ``python-pip``
+   -  docker-engine n’existe pas dans une distribution ubuntu. C’est à
+      enlever.
 
-3. Installez docker-compose :
+3. Tapez:
 
    .. code:: bash
 
-      pip3 install docker-compose
+      # Add Docker's official GPG key:
+      apt-get update
+      apt-get install ca-certificates curl
+      install -m 0755 -d /etc/apt/keyrings
+      curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+      chmod a+r /etc/apt/keyrings/docker.asc
+
+      # Add the repository to Apt sources:
+      echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+        $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+        tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+4. Une fois installé avec succès, tapez:
+
+   .. code:: bash
+
+      apt update
+
+5. Si vous obtenez une erreur c’est que vous avez ajouté un repository
+   qui n’est pas suppporté par Docker. Vérifiez les fichier
+   ``/etc/apt/sources.list``.
+
+6. Une fois mis à jour avec succès, tapez:
+
+   .. code:: bash
+
+      apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+7. vérifiez que votre installation de ``Docker`` est fonctionnelle.
+   Tapez:
+
+   .. code:: bash
+
+      docker run hello-world
+
+8. Cette commande exécute un conteneur simple. Si aucune erreur
+   n’apparaît c’est que l’installation est réussie.
 
 .. _`_installation_de_docker_swarm`:
 
@@ -3595,7 +3576,7 @@ l’image docker que vous chargez est compatible de votre plateforme. Sur
 Docker Hub, vous devez allez sur l’onglet Tag de votre package et
 vérifier que le champ OS/ARCH contient bien votre plateforme.
 
-Pour un Raspberry Pi 4 ce doit être: ``Linux/arm64``
+Pour un Raspberry Pi 4 ou 5 ce doit être: ``Linux/arm64``
 
 Pour un Raspberry Pi 3 ce doit être: ``Linux/arm``
 

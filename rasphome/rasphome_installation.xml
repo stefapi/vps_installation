@@ -610,7 +610,6 @@ wifis:
 <simpara>Choisissez votre Timezone. Par exemple: <literal>Europe/Paris</literal></simpara>
 </listitem>
 </orderedlist>
-<simpara>Unresolved directive in rasphome_installation.asc - include::../common/wifi_reboot.asc[]</simpara>
 </section>
 </section>
 <section xml:id="_configuration_basique">
@@ -729,21 +728,17 @@ git push -u origin master</programlisting>
 </listitem>
 <listitem>
 <simpara>Le fichier doit ressembler à ceci:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">deb http://deb.debian.org/debian bullseye main contrib non-free
-deb-src http://deb.debian.org/debian bullseye main contrib non-free
+<programlisting language="ini" linenumbering="unnumbered">deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
 
 ## Major bug fix updates produced after the final release of the
 ## distribution.
-deb http://security.debian.org/debian-security bullseye-security main contrib non-free
-deb-src http://security.debian.org/debian-security bullseye-security main contrib non-free
-deb http://deb.debian.org/debian bullseye-updates main contrib non-free
-deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free
+deb http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
 
 ## N.B. software from this repository may not have been tested as
 ## extensively as that contained in the main release, although it includes
 ## newer versions of some applications which may provide useful features.
-deb http://deb.debian.org/debian bullseye-backports main contrib non-free
-deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free</programlisting>
+deb http://deb.debian.org/debian bookworm-backports main contrib non-free non-free-firmware</programlisting>
 </listitem>
 </orderedlist>
 </listitem>
@@ -1023,7 +1018,7 @@ regarder périodiquement les logs d&#8217;installation.</simpara>
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="_vérification_du_nom_de_serveur">
+<section xml:id="domain_config">
 <title>Vérification du nom de serveur</title>
 <simpara>Cette partie consiste à vérifier que le serveur a un hostname correctement configuré.</simpara>
 <orderedlist numeration="arabic">
@@ -1058,7 +1053,7 @@ regarder périodiquement les logs d&#8217;installation.</simpara>
 <listitem>
 <simpara>Changez la ou les lignes, sauvegardez.</simpara>
 <note>
-<simpara>Le FQDN (nom de machine avec le nom de domaine) doit être déclaré avant le hostname simple dans le fichier <literal>hosts</literal>.</simpara>
+<simpara>Le FQDN (nom de machine avec le nom de domaine) doit être déclaré avant le hostname simple dans le fichier <literal>hosts</literal>.  Pour que la configuration de votre serveur de mail soit correcte vous devez installer un FQDN contenant l&#8217;adresse de mail comme <literal>mail.example.com</literal></simpara>
 </note>
 </listitem>
 <listitem>
@@ -1115,12 +1110,20 @@ dpkg-reconfigure openssh-server</programlisting>
 </section>
 <section xml:id="_interdire_le_login_direct_en_root">
 <title>Interdire le login direct en root</title>
-<simpara>Il est toujours vivement déconseillé d&#8217;autoriser la possibilité de se connecter directement en SSH en tant que root.
-De ce fait, notre première action sera de désactiver le login direct en root  et d&#8217;autoriser le sudo.
-Respectez bien les étapes de cette procédure:</simpara>
+<simpara>Il est toujours vivement déconseillé d&#8217;autoriser la possibilité de se connecter directement en SSH en tant que root.</simpara>
+<simpara>Avec les versions récentes de Debian Bookworm pour raspberry pi, il n&#8217;est plus nécessaire de créer le compte sudo qui est créé par défaut lors de la procédure d&#8217;installation standard. Cette procédure est cependant  indispensable pour l&#8217;installation d&#8217;une distribution debian standard.</simpara>
+<simpara>Une remarque tout de même pour le raspberry pi: le compte sudo permet de se logger root sans aucun mot de passe. C&#8217;est considéré comme une faille de sécurité. Pour corriger cela, <link linkend="root_login">Loguez vous comme root sur le serveur</link> et tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">rm -f /etc/sudoers.d/010_pi-nopasswd</programlisting>
+<simpara>La procédure suivante s&#8217;applique pour la création du compte sudo sur une debian standard.</simpara>
+<simpara>Notre première action sera de désactiver le login direct en root  et d&#8217;autoriser le sudo.</simpara>
+<simpara>Respectez bien les étapes de cette procédure:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Installez l&#8217;outil <literal>sudo</literal> s&#8217;il n&#8217;est pas déjà présent. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install sudo</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez un utilisateur standard qui sera nommé par la suite en tant que &lt;sudo_username&gt;</simpara>
@@ -1297,7 +1300,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 </listitem>
 <listitem>
 <simpara>Éditez le fichier sudoers. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /etc/sudoers</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/sudoers.d/010_sudonp</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajouter dans le fichier la ligne suivante:</simpara>
@@ -1368,13 +1371,10 @@ memory_percent="on"
 memory_unit="mib"
 package_managers="on"
 image_backend="ascii"
-cpu_temp="on" <co xml:id="CO23-2"/></programlisting>
+cpu_temp="on"</programlisting>
 <calloutlist>
 <callout arearefs="CO23-1">
-<para>Cette ligne est à retirer si vous n&#8217;utilisez pas de Raspberry PI 4</para>
-</callout>
-<callout arearefs="CO23-2">
-<para>Cette ligne est à mettre pour tout système qui n&#8217;utilise pas de Raspberry PI 4</para>
+<para>Cette ligne est à retirer si vous n&#8217;utilisez pas de Raspberry PI 4 ou 5</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -1419,7 +1419,7 @@ neofetch --config /etc/neofetch.conf</programlisting>
 </listitem>
 <listitem>
 <simpara>Dans le fichier mettez le contenu suivant:</simpara>
-<programlisting language="python" linenumbering="unnumbered">#!/usr/bin/python
+<programlisting language="python" linenumbering="unnumbered">#!/usr/bin/python3
 import sys
 import subprocess
 import apt_pkg
@@ -1550,9 +1550,9 @@ Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être n
 <programlisting language="bash" linenumbering="unnumbered">dphys-swapfile uninstall</programlisting>
 </listitem>
 <listitem>
-<simpara>Pour installer un swap de 2Go, tapez:</simpara>
+<simpara>Pour installer un swap de 4Go, tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">cd /
-fallocate -l 2G /swapfile
+fallocate -l 4G /swapfile
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile</programlisting>
@@ -1927,10 +1927,10 @@ hostname=&lt;serveurname&gt;.local <co xml:id="CO27-8"/></programlisting>
 </section>
 <section xml:id="firewall">
 <title>Déblocage de port de firewall</title>
-<simpara>Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en entrée de votre équipement. Cela veut dire qu&#8217;il ne sera pas possible de connecter une machine externe sur votre équipement sans avoir effecté une opération de déblocage du port du firewall.</simpara>
+<simpara>Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en entrée de votre équipement. Cela veut dire qu&#8217;il ne sera pas possible de connecter une machine externe sur votre équipement sans avoir effectué une opération de déblocage du port du firewall.</simpara>
 <simpara>Il existe deux manière de débloquer un port. Elle dépend de ce que vous avez configuré.</simpara>
-<section xml:id="_déblocage_et_suppression_de_regles_de_firewall_avec_ispconfig">
-<title>Déblocage et suppression de regles de Firewall avec ISPconfig</title>
+<section xml:id="_déblocage_et_suppression_de_règles_de_firewall_avec_ispconfig">
+<title>Déblocage et suppression de règles de Firewall avec ISPconfig</title>
 <simpara>Appliquez les opérations suivantes pour Débloquez le firewall:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -1961,6 +1961,7 @@ hostname=&lt;serveurname&gt;.local <co xml:id="CO27-8"/></programlisting>
 <simpara>Cliquez sur <literal>save</literal></simpara>
 </listitem>
 </orderedlist>
+<simpara>Remarque: si vous utilisez VNC, il faut débloquer le port dans le firewall de ISPConfig. Appliquez la méthode de déblocage pour le port 5900.</simpara>
 </section>
 <section xml:id="_déblocage_de_firewall_ufw">
 <title>Déblocage de Firewall UFW</title>
@@ -1977,7 +1978,13 @@ hostname=&lt;serveurname&gt;.local <co xml:id="CO27-8"/></programlisting>
 <simpara>Autorisez SSH si vous ne voulez pas perdre votre connexion SSH à l&#8217;activation du  firewall. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">ufw allow 22/tcp
 ufw allow 80/tcp
-ufw allow 443/tcp</programlisting>
+ufw allow 443/tcp
+ufw allow 5900/tcp <co xml:id="CO29-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO29-1">
+<para>Cette ligne autorise VNC et est utile si vous utilisez ce protocole sur votre Système. Il est fortement déconseillé pour un serveur visible sur internet d&#8217;autoriser ce protocole.</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Activez le firewall. tapez:</simpara>
@@ -1994,9 +2001,9 @@ ufw allow 443/tcp</programlisting>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ufw allow xxxx/tcp <co xml:id="CO29-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ufw allow xxxx/tcp <co xml:id="CO30-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO29-1">
+<callout arearefs="CO30-1">
 <para>remplacez xxxx par le numero de port que vous souhaitez débloquer</para>
 </callout>
 </calloutlist>
@@ -2009,9 +2016,9 @@ ufw allow 443/tcp</programlisting>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">ufw delete allow xxxx/tcp <co xml:id="CO30-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">ufw delete allow xxxx/tcp <co xml:id="CO31-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO30-1">
+<callout arearefs="CO31-1">
 <para>remplacez xxxx par le numero de port que vous souhaitez débloquer</para>
 </callout>
 </calloutlist>
@@ -2094,18 +2101,18 @@ Enfin dernier point, en configurant des DNS qui sont libres de censure et pas ce
 </listitem>
 <listitem>
 <simpara>Ajoutez à la fin du fichier le texte suivant:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">interface wlan0 <co xml:id="CO31-1"/>
-        static ip_address=192.168.3.210/24 <co xml:id="CO31-2"/>
-        static routers=192.168.3.254 <co xml:id="CO31-3"/>
+<programlisting language="ini" linenumbering="unnumbered">interface wlan0 <co xml:id="CO32-1"/>
+        static ip_address=192.168.3.210/24 <co xml:id="CO32-2"/>
+        static routers=192.168.3.254 <co xml:id="CO32-3"/>
         static domain_name_servers= 127.0.0.1</programlisting>
 <calloutlist>
-<callout arearefs="CO31-1">
+<callout arearefs="CO32-1">
 <para>mettez ici l&#8217;interface concernée (eth0 ou wlan0)</para>
 </callout>
-<callout arearefs="CO31-2">
+<callout arearefs="CO32-2">
 <para>Remplacez 192.168.3.210 par l&#8217;adresse IP statique de cette machine</para>
 </callout>
-<callout arearefs="CO31-3">
+<callout arearefs="CO32-3">
 <para>Remplacez 192.168.3.254 par l&#8217;adresse IP de votre routeur internet (Box)</para>
 </callout>
 </calloutlist>
@@ -2259,13 +2266,13 @@ usershare allow guests = yes
    read only = no
    create mode = 0777
    directory mode = 0777
-   force user = public_user <co xml:id="CO32-1"/>
-   force group = public_group <co xml:id="CO32-2"/></programlisting>
+   force user = public_user <co xml:id="CO33-1"/>
+   force group = public_group <co xml:id="CO33-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO32-1">
+<callout arearefs="CO33-1">
 <para>mettez ici le username de votre Linux qui possédera tous les fichiers.</para>
 </callout>
-<callout arearefs="CO32-2">
+<callout arearefs="CO33-2">
 <para>mettez ici le groupname de votre linux qui possédera tous les fichiers.</para>
 </callout>
 </calloutlist>
@@ -2290,9 +2297,9 @@ service nmbd restart</programlisting>
 </listitem>
 <listitem>
 <simpara>Dans le fichier ajoutez sur l&#8217;adresse IP de votre machine, le nom du DC :</simpara>
-<programlisting language="ini" linenumbering="unnumbered">[ip_address] dc1.home.lan dc1 <co xml:id="CO33-1"/></programlisting>
+<programlisting language="ini" linenumbering="unnumbered">[ip_address] dc1.home.lan dc1 <co xml:id="CO34-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO33-1">
+<callout arearefs="CO34-1">
 <para>remplacez <literal>ip_address</literal> par l&#8217;adresse IP de votre machine</para>
 </callout>
 </calloutlist>
@@ -2343,11 +2350,11 @@ mv /etc/samba/smb.conf /etc/samba/smb.conf.orig</programlisting>
 <simpara>Dans ce fichier, Vérifiez que les informations suivantes sont présentes. Ajoutez les sinon :</simpara>
 <programlisting language="bash" linenumbering="unnumbered"># Global parameters
 [global]
-        dns forwarder = [IP_DNS] <co xml:id="CO34-1"/>
+        dns forwarder = [IP_DNS] <co xml:id="CO35-1"/>
         netbios name = DC
-        realm = HOME.LAN <co xml:id="CO34-2"/>
+        realm = HOME.LAN <co xml:id="CO35-2"/>
         server role = active directory domain controller
-        workgroup = HOME <co xml:id="CO34-3"/>
+        workgroup = HOME <co xml:id="CO35-3"/>
         interfaces = wlan0 eth0 lo
         bind interfaces only = yes
         template shell = /bin/bash
@@ -2387,22 +2394,22 @@ mv /etc/samba/smb.conf /etc/samba/smb.conf.orig</programlisting>
    read only = no
    create mode = 0777
    directory mode = 0777
-   force user = public_user <co xml:id="CO34-4"/>
-   force group = public_group <co xml:id="CO34-5"/></programlisting>
+   force user = public_user <co xml:id="CO35-4"/>
+   force group = public_group <co xml:id="CO35-5"/></programlisting>
 <calloutlist>
-<callout arearefs="CO34-1">
+<callout arearefs="CO35-1">
 <para>remplacez <literal>IP_DNS</literal> par 127.0.0.1. Si vous décidez d&#8217;utiliser le DC de samba conjointement avec <literal>dnsmasq</literal>, vous devez mettre 127.0.1.1. voir plus bas pour le reste de la configuration.</para>
 </callout>
-<callout arearefs="CO34-2">
+<callout arearefs="CO35-2">
 <para>ici vous retrouvez le Realm configuré plus haut</para>
 </callout>
-<callout arearefs="CO34-3">
+<callout arearefs="CO35-3">
 <para>et le domaine configuré plus haut.</para>
 </callout>
-<callout arearefs="CO34-4">
+<callout arearefs="CO35-4">
 <para>mettez ici le username de votre Linux qui possédera tous les fichiers.</para>
 </callout>
-<callout arearefs="CO34-5">
+<callout arearefs="CO35-5">
 <para>mettez ici le groupname de votre linux qui possédera tous les fichiers.</para>
 </callout>
 </calloutlist>
@@ -2431,11 +2438,11 @@ group:  files winbind</programlisting>
 </listitem>
 <listitem>
 <simpara>Vérification des résolutions d&#8217;hotes. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">host -t A home.lan <co xml:id="CO35-1"/>
-host -t SRV _kerberos._udp.home.lan <co xml:id="CO35-2"/>
-host -t SRV _ldap._tcp.home.lan <co xml:id="CO35-3"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">host -t A home.lan <co xml:id="CO36-1"/>
+host -t SRV _kerberos._udp.home.lan <co xml:id="CO36-2"/>
+host -t SRV _ldap._tcp.home.lan <co xml:id="CO36-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO35-1 CO35-2 CO35-3">
+<callout arearefs="CO36-1 CO36-2 CO36-3">
 <para>remplacez home.lan par votre nom de realm configuré plus haut.</para>
 </callout>
 </calloutlist>
@@ -2452,24 +2459,24 @@ host -t SRV _ldap._tcp.home.lan <co xml:id="CO35-3"/></programlisting>
 </listitem>
 <listitem>
 <simpara>Créez une zone de recherche inversée. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">samba-tool dns zonecreate DC1 1.27.172.in-addr.arpa --username=administrator <co xml:id="CO36-1"/> <co xml:id="CO36-2"/> <co xml:id="CO36-3"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">samba-tool dns zonecreate DC1 1.27.172.in-addr.arpa --username=administrator <co xml:id="CO37-1"/> <co xml:id="CO37-2"/> <co xml:id="CO37-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO36-1">
+<callout arearefs="CO37-1">
 <para>DC1 : Nom de votre serveur</para>
 </callout>
-<callout arearefs="CO36-2">
+<callout arearefs="CO37-2">
 <para>1.27.172.in-addr.arpa : Adresse du sous réseau inversée. (Le sous réseau était 172.27.1.0. A remplacer par celui de votre réseau réel).</para>
 </callout>
-<callout arearefs="CO36-3">
+<callout arearefs="CO37-3">
 <para>username : Compte ayant l’autorisation de créer la zone. Un mot de passe sera demandé.</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Maintenant vous devez vous authentifier sur Kerberos avec le login <literal>administrator</literal>. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">kinit administrator@HOME.LAN <co xml:id="CO37-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">kinit administrator@HOME.LAN <co xml:id="CO38-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO37-1">
+<callout arearefs="CO38-1">
 <para>remplacez home.lan par votre nom de realm configuré plus haut.</para>
 </callout>
 </calloutlist>
@@ -2483,10 +2490,10 @@ host -t SRV _ldap._tcp.home.lan <co xml:id="CO35-3"/></programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez des utilisateurs. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">samba-tool user create user1 user1_password <co xml:id="CO38-1"/>
-samba-tool user setexpiry user1 --noexpiry <co xml:id="CO38-2"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">samba-tool user create user1 user1_password <co xml:id="CO39-1"/>
+samba-tool user setexpiry user1 --noexpiry <co xml:id="CO39-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO38-1 CO38-2">
+<callout arearefs="CO39-1 CO39-2">
 <para>remplacer <literal>user1</literal> par votre nom de nouvel utilisateur et <literal>user1_password</literal> par son mot de passe.</para>
 </callout>
 </calloutlist>
@@ -2513,13 +2520,13 @@ samba-tool user setexpiry user1 --noexpiry <co xml:id="CO38-2"/></programlisting
 </listitem>
 <listitem>
 <simpara>Dans le fichier, Insérez :</simpara>
-<programlisting language="ini" linenumbering="unnumbered">nameserver [Adresse_ip] <co xml:id="CO39-1"/>
-search home.lan <co xml:id="CO39-2"/></programlisting>
+<programlisting language="ini" linenumbering="unnumbered">nameserver [Adresse_ip] <co xml:id="CO40-1"/>
+search home.lan <co xml:id="CO40-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO39-1">
+<callout arearefs="CO40-1">
 <para>remplacez Adresse_ip par l&#8217;adresse IP de votre DC</para>
 </callout>
-<callout arearefs="CO39-2">
+<callout arearefs="CO40-2">
 <para>indiquer ici le nom de domaine de votre realm (en minuscules)</para>
 </callout>
 </calloutlist>
@@ -2553,8 +2560,8 @@ search home.lan <co xml:id="CO39-2"/></programlisting>
 <programlisting language="ini" linenumbering="unnumbered"># Global parameters
 [global]
         security = ADS
-        realm = HOME.LAN <co xml:id="CO40-1"/>
-        workgroup = HOME <co xml:id="CO40-2"/>
+        realm = HOME.LAN <co xml:id="CO41-1"/>
+        workgroup = HOME <co xml:id="CO41-2"/>
         interfaces = wlan0 eth0 lo
         bind interfaces only = yes
         username map = /etc/samba/user.map
@@ -2576,19 +2583,19 @@ search home.lan <co xml:id="CO39-2"/></programlisting>
    read only = no
    create mode = 0777
    directory mode = 0777
-   force user = public_user <co xml:id="CO40-3"/>
-   force group = public_group <co xml:id="CO40-4"/></programlisting>
+   force user = public_user <co xml:id="CO41-3"/>
+   force group = public_group <co xml:id="CO41-4"/></programlisting>
 <calloutlist>
-<callout arearefs="CO40-1">
+<callout arearefs="CO41-1">
 <para>remplacez HOME.LAN par le Realm configuré plus haut.</para>
 </callout>
-<callout arearefs="CO40-2">
+<callout arearefs="CO41-2">
 <para>et le domaine configuré plus haut.</para>
 </callout>
-<callout arearefs="CO40-3">
+<callout arearefs="CO41-3">
 <para>mettez ici le username de votre Linux qui possédera tous les fichiers.</para>
 </callout>
-<callout arearefs="CO40-4">
+<callout arearefs="CO41-4">
 <para>mettez ici le groupname de votre linux qui possédera tous les fichiers.</para>
 </callout>
 </calloutlist>
@@ -2599,18 +2606,18 @@ search home.lan <co xml:id="CO39-2"/></programlisting>
 </listitem>
 <listitem>
 <simpara>Insérez dans ce fichier ceci:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">!root = HOME\Administrator <co xml:id="CO41-1"/></programlisting>
+<programlisting language="ini" linenumbering="unnumbered">!root = HOME\Administrator <co xml:id="CO42-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO41-1">
+<callout arearefs="CO42-1">
 <para>remplacez HOME par le domaine configuré plus haut</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Joignez le domaine. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">samba-tool domain join home.lan MEMBER -U administrator <co xml:id="CO42-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">samba-tool domain join home.lan MEMBER -U administrator <co xml:id="CO43-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO42-1">
+<callout arearefs="CO43-1">
 <para>remplacez home.lan par le Realm configuré plus haut.</para>
 </callout>
 </calloutlist>
@@ -2664,17 +2671,17 @@ chmod 750 /var/lib/samba/ntp_signd/</programlisting>
 <listitem>
 <simpara>Insérez ou modifier dans les fichiers les lignes pour avoir:</simpara>
 <programlisting language="bash" linenumbering="unnumbered"># bind the chrony service to IP address of the Samba AD
-bindcmdaddress [adresse_ip] <co xml:id="CO43-1"/>
+bindcmdaddress [adresse_ip] <co xml:id="CO44-1"/>
 # allow clients on the network to connect to the Chrony NTP server
-allow [subnet]/24 <co xml:id="CO43-2"/>
+allow [subnet]/24 <co xml:id="CO44-2"/>
 
 # specify the ntpsigndsocket directory for the Samba AD
 ntpsigndsocket /var/lib/samba/ntp_signd</programlisting>
 <calloutlist>
-<callout arearefs="CO43-1">
+<callout arearefs="CO44-1">
 <para>mettez ici l&#8217;adresse IP de l' AD de votre serveur samba</para>
 </callout>
-<callout arearefs="CO43-2">
+<callout arearefs="CO44-2">
 <para>mettez ici l&#8217;adresse du sous réseau.</para>
 </callout>
 </calloutlist>
@@ -2699,9 +2706,9 @@ systemctl status chronyd</programlisting>
 </listitem>
 <listitem>
 <simpara>Dans le fichier ajoutez dans la section <literal>[global]</literal> la ligne suivante:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">        dns forwarder = [IP_DNS] <co xml:id="CO44-1"/></programlisting>
+<programlisting language="ini" linenumbering="unnumbered">        dns forwarder = [IP_DNS] <co xml:id="CO45-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO44-1">
+<callout arearefs="CO45-1">
 <para>remplacez <literal>IP_DNS</literal> par 127.0.1.1.</para>
 </callout>
 </calloutlist>
@@ -2748,16 +2755,16 @@ auto lo:0
 </listitem>
 <listitem>
 <simpara>Dans le fichier, ajoutez les données suivantes:</simpara>
-<programlisting language="ini" linenumbering="unnumbered">dhcp-option=44,[ip_address]     # set netbios-over-TCP/IP nameserver(s) aka WINS server(s) <co xml:id="CO45-1"/>
-dhcp-option=45,[ip_address]      # netbios datagram distribution server <co xml:id="CO45-2"/>
+<programlisting language="ini" linenumbering="unnumbered">dhcp-option=44,[ip_address]     # set netbios-over-TCP/IP nameserver(s) aka WINS server(s) <co xml:id="CO46-1"/>
+dhcp-option=45,[ip_address]      # netbios datagram distribution server <co xml:id="CO46-2"/>
 dhcp-option=46,8           # netbios node type
 dhcp-option=47             # netbios TCP Scope on
-port=5353 <co xml:id="CO45-3"/></programlisting>
+port=5353 <co xml:id="CO46-3"/></programlisting>
 <calloutlist>
-<callout arearefs="CO45-1 CO45-2">
+<callout arearefs="CO46-1 CO46-2">
 <para>mettez à la place de <literal>[ip_address]</literal> l&#8217;adresse IP de votre serveur samba.</para>
 </callout>
-<callout arearefs="CO45-3">
+<callout arearefs="CO46-3">
 <para>cette ligne est à mettre si vous avez une configuration DNSMASQ. Elle n&#8217;est pas utile pour un serveur dhcp standard.</para>
 </callout>
 </calloutlist>
@@ -3029,9 +3036,9 @@ ExThreshold: 4</screen>
 </listitem>
 <listitem>
 <simpara>Une autre possibilité est d&#8217;indiquer explicitement l&#8217;adresse du serveur. Dans ce cas, tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">echo 'Acquire::http::Proxy "http://homeserver.local:3142";' &gt; /etc/apt/apt.conf.d/02proxy <co xml:id="CO46-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">echo 'Acquire::http::Proxy "http://homeserver.local:3142";' &gt; /etc/apt/apt.conf.d/02proxy <co xml:id="CO47-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO46-1">
+<callout arearefs="CO47-1">
 <para>remplacez homeserver.local par le nom de votre serveur proxy pour les paquets apt.</para>
 </callout>
 </calloutlist>
@@ -3046,7 +3053,7 @@ En clair, <literal>Docker</literal> permet d&#8217;installer et de configurer ra
 <section xml:id="_a_propos_des_raspberry_pi">
 <title>A propos des Raspberry Pi</title>
 <warning>
-<simpara>Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas forcément compatibles "out of the box" ( Exemple pour MySQL). Sur le <link xl:href="https://hub.docker.com/">Docker Hub</link>, il faut choisir par un Raspberry Pi 4 en Ubuntu une architecture de type ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type ARM.</simpara>
+<simpara>Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas forcément compatibles "out of the box" ( Exemple pour MySQL). Sur le <link xl:href="https://hub.docker.com/">Docker Hub</link>, il faut choisir par un Raspberry Pi 4 ou 5 en Ubuntu une architecture de type ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type ARM.</simpara>
 </warning>
 </section>
 <section xml:id="_installation_de_docker">
@@ -3059,38 +3066,27 @@ En clair, <literal>Docker</literal> permet d&#8217;installer et de configurer ra
 </listitem>
 <listitem>
 <simpara>Désinstallez les éventuelles anciennes versions de docker. tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt remove --purge docker docker-engine docker.io containerd runc <co xml:id="CO47-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt remove --purge docker docker.io containerd runc docker-doc docker-compose podman-docker <co xml:id="CO48-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO47-1">
+<callout arearefs="CO48-1">
 <para>docker-engine n&#8217;existe pas dans une distribution ubuntu. C&#8217;est à enlever.</para>
 </callout>
 </calloutlist>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt update
-apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-cd /etc/apt/trusted.gpg.d
-wget -O docker.asc https://download.docker.com/linux/debian/gpg</programlisting>
-</listitem>
-<listitem>
-<simpara>tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">lsb_release -cs</programlisting>
-</listitem>
-<listitem>
-<simpara>Ici la version de votre distribution doit s&#8217;afficher.</simpara>
-<warning>
-<simpara>pour des installations hybride d&#8217;une distribution debian, la version qui est proposée peut être la future SID ou la Testing pour lesquelles il n&#8217;existe pas obligatoirement de version installable de docker. Dans ce cas vous devrez sélectionner vous même la version de la distribution stable.</simpara>
-</warning>
-</listitem>
-<listitem>
-<simpara>Tapez (et remplacer éventuellement la commande $(lsb_release -cs) par le nom de votre distribution stable).  :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" <co xml:id="CO48-1"/></programlisting>
-<calloutlist>
-<callout arearefs="CO48-1">
-<para>ici il faut remplacer l&#8217;architecture <literal>amd64</literal> par <literal>arm64</literal> pour un raspberry pi 4  ou par <literal>armhf</literal> pour un raspberry pi 3. De la même manière, remplacez debian par ubuntu si vous utilisez une distribution ubuntu/</para>
-</callout>
-</calloutlist>
+<programlisting language="bash" linenumbering="unnumbered"># Add Docker's official GPG key:
+apt-get update
+apt-get install ca-certificates curl
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release &amp;&amp; echo "$VERSION_CODENAME") stable" | \
+  tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</programlisting>
 </listitem>
 <listitem>
 <simpara>Une fois installé avec succès, tapez:</simpara>
@@ -3101,7 +3097,7 @@ wget -O docker.asc https://download.docker.com/linux/debian/gpg</programlisting>
 </listitem>
 <listitem>
 <simpara>Une fois mis à jour avec succès, tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install docker-ce docker-ce-cli containerd.io</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</programlisting>
 </listitem>
 <listitem>
 <simpara>vérifiez que votre installation de <literal>Docker</literal> est fonctionnelle. Tapez:</simpara>
@@ -3109,30 +3105,6 @@ wget -O docker.asc https://download.docker.com/linux/debian/gpg</programlisting>
 </listitem>
 <listitem>
 <simpara>Cette commande exécute un conteneur simple. Si aucune erreur n’apparaît c&#8217;est que l&#8217;installation est réussie.</simpara>
-</listitem>
-</orderedlist>
-</section>
-<section xml:id="_installation_de_docker_compose">
-<title>Installation de docker-compose</title>
-<simpara>Docker-compose est un outil qui aide à l&#8217;installation de plusieurs container de façon simultané. Il permet surtout de vérifier que l&#8217;échosystème installé interagit bien.</simpara>
-<simpara>Il faut suivre les étapes suivantes:</simpara>
-<orderedlist numeration="arabic">
-<listitem>
-<simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
-</listitem>
-<listitem>
-<simpara>Installez quelques paquets Debian de base. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">apt install libffi-dev libssl-dev
-apt install -y python3 python3-pip <co xml:id="CO49-1"/></programlisting>
-<calloutlist>
-<callout arearefs="CO49-1">
-<para>Pour Ubuntu, remplacez ces paquets par <literal>python</literal> et <literal>python-pip</literal></para>
-</callout>
-</calloutlist>
-</listitem>
-<listitem>
-<simpara>Installez docker-compose :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">pip3 install docker-compose</programlisting>
 </listitem>
 </orderedlist>
 </section>
@@ -3169,7 +3141,7 @@ Cette installation est optionnelle puisque l&#8217;on peut faire fonctionner Doc
 <simpara>Pour mémoire: <emphasis role="strong">Le nombre de chargement d&#8217;une image n&#8217;est pas un gage de qualité !</emphasis></simpara>
 <simpara>Si vous n&#8217;utilisez pas une image du type mentionné ci dessus, l&#8217;accès facile au fichier Dockerfile est un gage de qualité et de transparence. En tout cas, il vous sera facilement possible de regarder comment l&#8217;image est construite et quels sont les package dockers de base et si ces packages dockers de base sont récents et certifiés.</simpara>
 <simpara>Pour les plateformes de type Raspberry, il faut bien vérifier que l&#8217;image docker que vous chargez est compatible de votre plateforme. Sur Docker Hub, vous devez allez sur l&#8217;onglet Tag de votre package et vérifier que le champ OS/ARCH contient bien votre plateforme.</simpara>
-<simpara>Pour un Raspberry Pi 4 ce doit être: <literal>Linux/arm64</literal></simpara>
+<simpara>Pour un Raspberry Pi 4 ou 5 ce doit être: <literal>Linux/arm64</literal></simpara>
 <simpara>Pour un Raspberry Pi 3 ce doit être: <literal>Linux/arm</literal></simpara>
 <simpara>Par exemple pour les docker de <literal>Yacht</literal> et de <literal>Portainer</literal> décrits ci après, on peut voir que les containers sont multiplateforme et conviennent très bien pour de l&#8217;Intel ou de l&#8217;ARM.</simpara>
 </section>
@@ -3251,9 +3223,9 @@ service apache stop</programlisting>
 </listitem>
 <listitem>
 <simpara>Ensuite installez Traefik. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -p80:80 -p8080:8080 --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG <co xml:id="CO50-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -p80:80 -p8080:8080 --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG <co xml:id="CO49-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO50-1">
+<callout arearefs="CO49-1">
 <para>Si votre serveur Traefik est disponible sur internet, il ne faudra pas exposer le port 8080 et les api insecure. et de ce fait, dans la ligne précédente, supprimez: <literal>-p8080:8080 --api.insecure=true --api.dashboard=true</literal></para>
 </callout>
 </calloutlist>
@@ -3294,7 +3266,7 @@ vi /etc/traefik/traefik.yml</programlisting>
 
 providers:
   docker:
-    defaultRule: "Host(`{{ trimPrefix `/` .Name }}.example.com`)" <co xml:id="CO51-1"/>
+    defaultRule: "Host(`{{ trimPrefix `/` .Name }}.example.com`)" <co xml:id="CO50-1"/>
     watch: true
   file:
     filename: /etc/traefik/dynamic_conf.yml
@@ -3308,7 +3280,7 @@ entryPoints:
   http:
     address: :80</programlisting>
 <calloutlist>
-<callout arearefs="CO51-1">
+<callout arearefs="CO50-1">
 <para>Remplacez example.com par le nom de domaine de votre serveur.</para>
 </callout>
 </calloutlist>
@@ -3325,17 +3297,17 @@ entryPoints:
       entrypoints:
         - http
       service: localserver
-      rule: host("example.com") <co xml:id="CO52-1"/>
+      rule: host("example.com") <co xml:id="CO51-1"/>
   services:
     localserver:
       loadBalancer:
         servers:
-          - url: "http://ip_address:3080" <co xml:id="CO52-2"/></programlisting>
+          - url: "http://ip_address:3080" <co xml:id="CO51-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO52-1">
+<callout arearefs="CO51-1">
 <para>Remplacez example.com par le nom de domaine de votre serveur.</para>
 </callout>
-<callout arearefs="CO52-2">
+<callout arearefs="CO51-2">
 <para>remplacez ip_address par l&#8217;adresse IP de votre serveur.</para>
 </callout>
 </calloutlist>
@@ -3374,9 +3346,9 @@ Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8
 <programlisting language="bash" linenumbering="unnumbered">docker pull traefik
 docker stop traefik
 docker rm traefik
-docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG <co xml:id="CO53-1"/></programlisting>
+docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG <co xml:id="CO52-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO53-1">
+<callout arearefs="CO52-1">
 <para>supprimez <literal>-v /etc/traefik:/etc/traefik</literal> si vous n&#8217;utilisez pas Pi-Hole avec Treafik.</para>
 </callout>
 </calloutlist>
@@ -3452,9 +3424,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:8061/
 ProxyPassReverse / http://localhost:8061/
 
-RedirectMatch ^/$ https://yacht.example.com <co xml:id="CO54-1"/></programlisting>
+RedirectMatch ^/$ https://yacht.example.com <co xml:id="CO53-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO54-1">
+<callout arearefs="CO53-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -3613,9 +3585,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:9050/
 ProxyPassReverse / http://localhost:9050/
 
-RedirectMatch ^/$ https://portainer.example.com <co xml:id="CO55-1"/></programlisting>
+RedirectMatch ^/$ https://portainer.example.com <co xml:id="CO54-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO55-1">
+<callout arearefs="CO54-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -3748,10 +3720,10 @@ docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.
 <listitem>
 <simpara>Dans le fichier, ajoutez:</simpara>
 <screen linenumbering="unnumbered">{
-  "registry-mirrors": ["http://docker.example.com:5000"] <co xml:id="CO56-1"/>
+  "registry-mirrors": ["http://docker.example.com:5000"] <co xml:id="CO55-1"/>
 }</screen>
 <calloutlist>
-<callout arearefs="CO56-1">
+<callout arearefs="CO55-1">
 <para>remplacer <literal>docker.example.com</literal> par le nom ou l&#8217;adresse ip de votre cache docker.</para>
 </callout>
 </calloutlist>
@@ -3856,9 +3828,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:8035/
 ProxyPassReverse / http://localhost:8035/
 
-RedirectMatch ^/$ https://statping.example.com <co xml:id="CO57-1"/></programlisting>
+RedirectMatch ^/$ https://statping.example.com <co xml:id="CO56-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO57-1">
+<callout arearefs="CO56-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -4034,9 +4006,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez en première ligne du fichier :</simpara>
-<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO58-1"/></screen>
+<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO57-1"/></screen>
 <calloutlist>
-<callout arearefs="CO58-1">
+<callout arearefs="CO57-1">
 <para>remplacez SERVERIPADDRESS par l&#8217;adresse IP affichée plus tôt.</para>
 </callout>
 </calloutlist>
@@ -4059,9 +4031,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Puis tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO59-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO58-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO59-1">
+<callout arearefs="CO58-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
 </calloutlist>
@@ -4089,13 +4061,13 @@ chmod 700 borgbackup</programlisting>
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO60-1"/>
-cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO60-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO59-1"/>
+cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO59-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO60-1">
+<callout arearefs="CO59-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
-<callout arearefs="CO60-2">
+<callout arearefs="CO59-2">
 <para>si votre machine est assez puissante, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</para>
 </callout>
 </calloutlist>
@@ -4124,10 +4096,10 @@ cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;st
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO61-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO60-1"/>
 borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO61-1">
+<callout arearefs="CO60-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4156,10 +4128,10 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</progra
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO62-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO61-1"/>
 borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
 <calloutlist>
-<callout arearefs="CO62-1">
+<callout arearefs="CO61-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4170,9 +4142,9 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 </listitem>
 <listitem>
 <simpara>vous pouvez maintenant vérifier un de vos backup en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO63-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO62-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO63-1">
+<callout arearefs="CO62-1">
 <para>le nom de sauvegarde est récupéré en utilisant la commande borglist.sh</para>
 </callout>
 </calloutlist>
@@ -4194,10 +4166,10 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 <simpara>Insérez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO64-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO63-1"/>
 borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
 <calloutlist>
-<callout arearefs="CO64-1">
+<callout arearefs="CO63-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4252,13 +4224,13 @@ rmdir /mnt/borgbackup</programlisting>
 # - une archive par mois pour les 6 derniers mois.
 
 
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO65-1"/>
-borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO65-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO64-1"/>
+borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO64-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO65-1">
+<callout arearefs="CO64-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
-<callout arearefs="CO65-2">
+<callout arearefs="CO64-2">
 <para>Le nettoyage des sauvegardes va conserver 7 sauvegardes journalières, 4 à la semaine et 12 au mois</para>
 </callout>
 </calloutlist>
@@ -4337,10 +4309,10 @@ pip3 install borgbackup[llfuse]</programlisting>
 <listitem>
 <simpara>Munissez vous du mot de passe &lt;mot_passe&gt; des archives borg et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO66-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO65-1"/>
 borg list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO66-1">
+<callout arearefs="CO65-1">
 <para>remplacez mot_passe par votre mot de passe de borg</para>
 </callout>
 </calloutlist>
@@ -4369,13 +4341,13 @@ chroot . bash
 mkdir -p dev proc run sys tmp
 mount -t devtmpfs dev /dev
 mount -t proc proc /proc
-grub_install /dev/sda <co xml:id="CO67-1"/>
+grub_install /dev/sda <co xml:id="CO66-1"/>
 umount /proc
 umount /dev
 sync
 exit</programlisting>
 <calloutlist>
-<callout arearefs="CO67-1">
+<callout arearefs="CO66-1">
 <para>tapez ici le nom de device de votre disque de boot</para>
 </callout>
 </calloutlist>
@@ -4448,7 +4420,7 @@ vi config.py</programlisting>
 
     BACKUP_REPOS = {
         # Repo  name
-        "example.com": { <co xml:id="CO68-1"/>
+        "example.com": { <co xml:id="CO67-1"/>
             # Repo absolute path
             "repo_path": "/home/borgbackup/borgbackup",
 
@@ -4456,7 +4428,7 @@ vi config.py</programlisting>
             "log_path": "/var/log/borg/",
 
             # Repo password
-            "repo_pwd": "your_password", <co xml:id="CO68-2"/>
+            "repo_pwd": "your_password", <co xml:id="CO67-2"/>
 
             # Command/script to run to manually start a backup.
             # If left empty or not specified, the backup won't be
@@ -4468,10 +4440,10 @@ vi config.py</programlisting>
         }
     }</programlisting>
 <calloutlist>
-<callout arearefs="CO68-2">
+<callout arearefs="CO67-2">
 <para>Insérez ici le mot de passe du dépot Borg Backup</para>
 </callout>
-<callout arearefs="CO68-1">
+<callout arearefs="CO67-1">
 <para>Mettez ici le nom de votre domaine sauvegardé</para>
 </callout>
 </calloutlist>
@@ -4589,9 +4561,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:5000/
 ProxyPassReverse / http://localhost:5000/
 
-RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO69-1"/></programlisting>
+RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO68-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO69-1">
+<callout arearefs="CO68-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>

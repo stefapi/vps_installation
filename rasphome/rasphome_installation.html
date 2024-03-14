@@ -581,7 +581,7 @@ pre.rouge .gs {
 <li><a href="#_installer_loutil_debfoster">5.5. Installer l&#8217;outil Debfoster</a></li>
 <li><a href="#_création_dun_fichier_keeper_dans_etc">5.6. Création d&#8217;un fichier keeper dans /etc</a></li>
 <li><a href="#_installation_des_mises_à_jours_automatiques">5.7. Installation des mises à jours automatiques</a></li>
-<li><a href="#_vérification_du_nom_de_serveur">5.8. Vérification du nom de serveur</a></li>
+<li><a href="#domain_config">5.8. Vérification du nom de serveur</a></li>
 <li><a href="#_interdire_le_login_direct_en_root">5.9. Interdire le login direct en root</a></li>
 <li><a href="#_création_dune_clé_de_connexion_ssh_locale">5.10. Création d&#8217;une clé de connexion ssh locale</a></li>
 <li><a href="#_sudo_sans_mot_de_passe">5.11. Sudo sans mot de passe</a></li>
@@ -610,12 +610,11 @@ pre.rouge .gs {
 <ul class="sectlevel2">
 <li><a href="#_a_propos_des_raspberry_pi">9.1. A propos des Raspberry Pi</a></li>
 <li><a href="#_installation_de_docker">9.2. Installation de Docker</a></li>
-<li><a href="#_installation_de_docker_compose">9.3. Installation de docker-compose</a></li>
-<li><a href="#_installation_de_docker_swarm">9.4. Installation de docker swarm</a></li>
-<li><a href="#_choix_des_images_docker">9.5. Choix des images docker</a></li>
-<li><a href="#_considérations_de_sécurité">9.6. Considérations de sécurité</a></li>
-<li><a href="#_mise_à_jour_automatique_des_images">9.7. Mise à jour automatique des images</a></li>
-<li><a href="#_surveillance_et_redémarrage_de_container">9.8. Surveillance et redémarrage de container</a></li>
+<li><a href="#_installation_de_docker_swarm">9.3. Installation de docker swarm</a></li>
+<li><a href="#_choix_des_images_docker">9.4. Choix des images docker</a></li>
+<li><a href="#_considérations_de_sécurité">9.5. Considérations de sécurité</a></li>
+<li><a href="#_mise_à_jour_automatique_des_images">9.6. Mise à jour automatique des images</a></li>
+<li><a href="#_surveillance_et_redémarrage_de_container">9.7. Surveillance et redémarrage de container</a></li>
 </ul>
 </li>
 <li><a href="#_installation_de_traefik">10. Installation de Traefik</a>
@@ -1536,9 +1535,6 @@ wifis:
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in rasphome_installation.asc - include::../common/wifi_reboot.asc[]</p>
-</div>
 </div>
 </div>
 </div>
@@ -1738,21 +1734,17 @@ git push <span class="nt">-u</span> origin master</code></pre>
 <p>Le fichier doit ressembler à ceci:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ini"><span class="err">deb</span> <span class="err">http://deb.debian.org/debian</span> <span class="err">bullseye</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span>
-<span class="err">deb-src</span> <span class="err">http://deb.debian.org/debian</span> <span class="err">bullseye</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span>
+<pre class="rouge highlight"><code data-lang="ini"><span class="err">deb</span> <span class="err">http://deb.debian.org/debian</span> <span class="err">bookworm</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span> <span class="err">non-free-firmware</span>
 
 <span class="c">## Major bug fix updates produced after the final release of the
 ## distribution.
-</span><span class="err">deb</span> <span class="err">http://security.debian.org/debian-security</span> <span class="err">bullseye-security</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span>
-<span class="err">deb-src</span> <span class="err">http://security.debian.org/debian-security</span> <span class="err">bullseye-security</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span>
-<span class="err">deb</span> <span class="err">http://deb.debian.org/debian</span> <span class="err">bullseye-updates</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span>
-<span class="err">deb-src</span> <span class="err">http://deb.debian.org/debian</span> <span class="err">bullseye-updates</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span>
+</span><span class="err">deb</span> <span class="err">http://security.debian.org/debian-security</span> <span class="err">bookworm-security</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span> <span class="err">non-free-firmware</span>
+<span class="err">deb</span> <span class="err">http://deb.debian.org/debian</span> <span class="err">bookworm-updates</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span> <span class="err">non-free-firmware</span>
 
 <span class="c">## N.B. software from this repository may not have been tested as
 ## extensively as that contained in the main release, although it includes
 ## newer versions of some applications which may provide useful features.
-</span><span class="err">deb</span> <span class="err">http://deb.debian.org/debian</span> <span class="err">bullseye-backports</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span>
-<span class="err">deb-src</span> <span class="err">http://deb.debian.org/debian</span> <span class="err">bullseye-backports</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span></code></pre>
+</span><span class="err">deb</span> <span class="err">http://deb.debian.org/debian</span> <span class="err">bookworm-backports</span> <span class="err">main</span> <span class="err">contrib</span> <span class="err">non-free</span> <span class="err">non-free-firmware</span></code></pre>
 </div>
 </div>
 </li>
@@ -2126,7 +2118,7 @@ regarder périodiquement les logs d&#8217;installation.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_vérification_du_nom_de_serveur">5.8. Vérification du nom de serveur</h3>
+<h3 id="domain_config">5.8. Vérification du nom de serveur</h3>
 <div class="paragraph">
 <p>Cette partie consiste à vérifier que le serveur a un hostname correctement configuré.</p>
 </div>
@@ -2198,7 +2190,7 @@ regarder périodiquement les logs d&#8217;installation.
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Le FQDN (nom de machine avec le nom de domaine) doit être déclaré avant le hostname simple dans le fichier <code>hosts</code>.
+Le FQDN (nom de machine avec le nom de domaine) doit être déclaré avant le hostname simple dans le fichier <code>hosts</code>.  Pour que la configuration de votre serveur de mail soit correcte vous devez installer un FQDN contenant l&#8217;adresse de mail comme <code>mail.example.com</code>
 </td>
 </tr>
 </table>
@@ -2290,14 +2282,40 @@ dpkg-reconfigure openssh-server</code></pre>
 <div class="sect2">
 <h3 id="_interdire_le_login_direct_en_root">5.9. Interdire le login direct en root</h3>
 <div class="paragraph">
-<p>Il est toujours vivement déconseillé d&#8217;autoriser la possibilité de se connecter directement en SSH en tant que root.
-De ce fait, notre première action sera de désactiver le login direct en root  et d&#8217;autoriser le sudo.
-Respectez bien les étapes de cette procédure:</p>
+<p>Il est toujours vivement déconseillé d&#8217;autoriser la possibilité de se connecter directement en SSH en tant que root.</p>
+</div>
+<div class="paragraph">
+<p>Avec les versions récentes de Debian Bookworm pour raspberry pi, il n&#8217;est plus nécessaire de créer le compte sudo qui est créé par défaut lors de la procédure d&#8217;installation standard. Cette procédure est cependant  indispensable pour l&#8217;installation d&#8217;une distribution debian standard.</p>
+</div>
+<div class="paragraph">
+<p>Une remarque tout de même pour le raspberry pi: le compte sudo permet de se logger root sans aucun mot de passe. C&#8217;est considéré comme une faille de sécurité. Pour corriger cela, <a href="#root_login">Loguez vous comme root sur le serveur</a> et tapez:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">rm</span> <span class="nt">-f</span> /etc/sudoers.d/010_pi-nopasswd</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La procédure suivante s&#8217;applique pour la création du compte sudo sur une debian standard.</p>
+</div>
+<div class="paragraph">
+<p>Notre première action sera de désactiver le login direct en root  et d&#8217;autoriser le sudo.</p>
+</div>
+<div class="paragraph">
+<p>Respectez bien les étapes de cette procédure:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Installez l&#8217;outil <code>sudo</code> s&#8217;il n&#8217;est pas déjà présent. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install sudo</span></code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Ajoutez un utilisateur standard qui sera nommé par la suite en tant que &lt;sudo_username&gt;</p>
@@ -2616,7 +2634,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 <p>Éditez le fichier sudoers. Tapez :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi /etc/sudoers</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">vi /etc/sudoers.d/010_sudonp</code></pre>
 </div>
 </div>
 </li>
@@ -2714,18 +2732,14 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 <span class="nv">memory_unit</span><span class="o">=</span><span class="s2">"mib"</span>
 <span class="nv">package_managers</span><span class="o">=</span><span class="s2">"on"</span>
 <span class="nv">image_backend</span><span class="o">=</span><span class="s2">"ascii"</span>
-<span class="nv">cpu_temp</span><span class="o">=</span><span class="s2">"on"</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<span class="nv">cpu_temp</span><span class="o">=</span><span class="s2">"on"</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Cette ligne est à retirer si vous n&#8217;utilisez pas de Raspberry PI 4</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Cette ligne est à mettre pour tout système qui n&#8217;utilise pas de Raspberry PI 4</td>
+<td>Cette ligne est à retirer si vous n&#8217;utilisez pas de Raspberry PI 4 ou 5</td>
 </tr>
 </table>
 </div>
@@ -2801,7 +2815,7 @@ neofetch <span class="nt">--config</span> /etc/neofetch.conf</code></pre>
 <p>Dans le fichier mettez le contenu suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="c1">#!/usr/bin/python
+<pre class="rouge highlight"><code data-lang="python"><span class="c1">#!/usr/bin/python3
 </span><span class="kn">import</span> <span class="n">sys</span>
 <span class="kn">import</span> <span class="n">subprocess</span>
 <span class="kn">import</span> <span class="n">apt_pkg</span>
@@ -2958,11 +2972,11 @@ Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être n
 </div>
 </li>
 <li>
-<p>Pour installer un swap de 2Go, tapez:</p>
+<p>Pour installer un swap de 4Go, tapez:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /
-fallocate <span class="nt">-l</span> 2G /swapfile
+fallocate <span class="nt">-l</span> 4G /swapfile
 <span class="nb">chmod </span>600 /swapfile
 mkswap /swapfile
 swapon /swapfile</code></pre>
@@ -3546,13 +3560,13 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 <div class="sect2">
 <h3 id="firewall">6.6. Déblocage de port de firewall</h3>
 <div class="paragraph">
-<p>Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en entrée de votre équipement. Cela veut dire qu&#8217;il ne sera pas possible de connecter une machine externe sur votre équipement sans avoir effecté une opération de déblocage du port du firewall.</p>
+<p>Par défaut, une fois le firewall activé, TOUS les ports sont bloqués en entrée de votre équipement. Cela veut dire qu&#8217;il ne sera pas possible de connecter une machine externe sur votre équipement sans avoir effectué une opération de déblocage du port du firewall.</p>
 </div>
 <div class="paragraph">
 <p>Il existe deux manière de débloquer un port. Elle dépend de ce que vous avez configuré.</p>
 </div>
 <div class="sect3">
-<h4 id="_déblocage_et_suppression_de_regles_de_firewall_avec_ispconfig">6.6.1. Déblocage et suppression de regles de Firewall avec ISPconfig</h4>
+<h4 id="_déblocage_et_suppression_de_règles_de_firewall_avec_ispconfig">6.6.1. Déblocage et suppression de règles de Firewall avec ISPconfig</h4>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes pour Débloquez le firewall:</p>
 </div>
@@ -3591,6 +3605,9 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>Remarque: si vous utilisez VNC, il faut débloquer le port dans le firewall de ISPConfig. Appliquez la méthode de déblocage pour le port 5900.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_déblocage_de_firewall_ufw">6.6.2. Déblocage de Firewall UFW</h4>
@@ -3625,8 +3642,17 @@ Si vous avez installé ISPconfig vous ne devez pas utiliser cette méthode !
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">ufw allow 22/tcp
 ufw allow 80/tcp
-ufw allow 443/tcp</code></pre>
+ufw allow 443/tcp
+ufw allow 5900/tcp <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Cette ligne autorise VNC et est utile si vous utilisez ce protocole sur votre Système. Il est fortement déconseillé pour un serveur visible sur internet d&#8217;autoriser ce protocole.</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -5227,7 +5253,7 @@ En clair, <code>Docker</code> permet d&#8217;installer et de configurer rapideme
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas forcément compatibles "out of the box" ( Exemple pour MySQL). Sur le <a href="https://hub.docker.com/">Docker Hub</a>, il faut choisir par un Raspberry Pi 4 en Ubuntu une architecture de type ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type ARM.
+Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas forcément compatibles "out of the box" ( Exemple pour MySQL). Sur le <a href="https://hub.docker.com/">Docker Hub</a>, il faut choisir par un Raspberry Pi 4 ou 5 en Ubuntu une architecture de type ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type ARM.
 </td>
 </tr>
 </table>
@@ -5250,7 +5276,7 @@ Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas
 <p>Désinstallez les éventuelles anciennes versions de docker. tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt remove <span class="nt">--purge</span> docker docker-engine docker.io containerd runc <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="rouge highlight"><code data-lang="bash">apt remove <span class="nt">--purge</span> docker docker.io containerd runc docker-doc docker-compose podman-docker <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -5266,50 +5292,19 @@ Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas
 <p>Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt update
-apt <span class="nb">install </span>apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-<span class="nb">cd</span> /etc/apt/trusted.gpg.d
-wget <span class="nt">-O</span> docker.asc https://download.docker.com/linux/debian/gpg</code></pre>
+<pre class="rouge highlight"><code data-lang="bash"><span class="c"># Add Docker's official GPG key:</span>
+apt-get update
+apt-get <span class="nb">install </span>ca-certificates curl
+<span class="nb">install</span> <span class="nt">-m</span> 0755 <span class="nt">-d</span> /etc/apt/keyrings
+curl <span class="nt">-fsSL</span> https://download.docker.com/linux/debian/gpg <span class="nt">-o</span> /etc/apt/keyrings/docker.asc
+<span class="nb">chmod </span>a+r /etc/apt/keyrings/docker.asc
+
+<span class="c"># Add the repository to Apt sources:</span>
+<span class="nb">echo</span> <span class="se">\</span>
+  <span class="s2">"deb [arch=</span><span class="si">$(</span>dpkg <span class="nt">--print-architecture</span><span class="si">)</span><span class="s2"> signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian </span><span class="se">\</span><span class="s2">
+  </span><span class="si">$(</span><span class="nb">.</span> /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$VERSION_CODENAME</span><span class="s2">"</span><span class="si">)</span><span class="s2"> stable"</span> | <span class="se">\</span>
+  <span class="nb">tee</span> /etc/apt/sources.list.d/docker.list <span class="o">&gt;</span> /dev/null</code></pre>
 </div>
-</div>
-</li>
-<li>
-<p>tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">lsb_release <span class="nt">-cs</span></code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Ici la version de votre distribution doit s&#8217;afficher.</p>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-pour des installations hybride d&#8217;une distribution debian, la version qui est proposée peut être la future SID ou la Testing pour lesquelles il n&#8217;existe pas obligatoirement de version installable de docker. Dans ce cas vous devrez sélectionner vous même la version de la distribution stable.
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Tapez (et remplacer éventuellement la commande $(lsb_release -cs) par le nom de votre distribution stable).  :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">add-apt-repository <span class="s2">"deb [arch=amd64] https://download.docker.com/linux/debian </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> stable"</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>ici il faut remplacer l&#8217;architecture <code>amd64</code> par <code>arm64</code> pour un raspberry pi 4  ou par <code>armhf</code> pour un raspberry pi 3. De la même manière, remplacez debian par ubuntu si vous utilisez une distribution ubuntu/</td>
-</tr>
-</table>
 </div>
 </li>
 <li>
@@ -5327,7 +5322,7 @@ pour des installations hybride d&#8217;une distribution debian, la version qui e
 <p>Une fois mis à jour avec succès, tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>docker-ce docker-ce-cli containerd.io</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">apt-get <span class="nb">install </span>docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</code></pre>
 </div>
 </div>
 </li>
@@ -5346,48 +5341,7 @@ pour des installations hybride d&#8217;une distribution debian, la version qui e
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_docker_compose">9.3. Installation de docker-compose</h3>
-<div class="paragraph">
-<p>Docker-compose est un outil qui aide à l&#8217;installation de plusieurs container de façon simultané. Il permet surtout de vérifier que l&#8217;échosystème installé interagit bien.</p>
-</div>
-<div class="paragraph">
-<p>Il faut suivre les étapes suivantes:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
-</li>
-<li>
-<p>Installez quelques paquets Debian de base. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>libffi-dev libssl-dev
-apt <span class="nb">install</span> <span class="nt">-y</span> python3 python3-pip <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Pour Ubuntu, remplacez ces paquets par <code>python</code> et <code>python-pip</code></td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Installez docker-compose :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">pip3 <span class="nb">install </span>docker-compose</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_installation_de_docker_swarm">9.4. Installation de docker swarm</h3>
+<h3 id="_installation_de_docker_swarm">9.3. Installation de docker swarm</h3>
 <div class="paragraph">
 <p>Docker contient nativement le mode Swarm afin de gérer un ensemble de Docker Engines.
 Cette installation est optionnelle puisque l&#8217;on peut faire fonctionner Docker sans cette Option.</p>
@@ -5432,7 +5386,7 @@ Cette installation est optionnelle puisque l&#8217;on peut faire fonctionner Doc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_choix_des_images_docker">9.5. Choix des images docker</h3>
+<h3 id="_choix_des_images_docker">9.4. Choix des images docker</h3>
 <div class="paragraph">
 <p>Les images docker sont accessibles sur le <a href="https://hub.docker.com/">Docker Hub</a>.</p>
 </div>
@@ -5452,7 +5406,7 @@ Cette installation est optionnelle puisque l&#8217;on peut faire fonctionner Doc
 <p>Pour les plateformes de type Raspberry, il faut bien vérifier que l&#8217;image docker que vous chargez est compatible de votre plateforme. Sur Docker Hub, vous devez allez sur l&#8217;onglet Tag de votre package et vérifier que le champ OS/ARCH contient bien votre plateforme.</p>
 </div>
 <div class="paragraph">
-<p>Pour un Raspberry Pi 4 ce doit être: <code>Linux/arm64</code></p>
+<p>Pour un Raspberry Pi 4 ou 5 ce doit être: <code>Linux/arm64</code></p>
 </div>
 <div class="paragraph">
 <p>Pour un Raspberry Pi 3 ce doit être: <code>Linux/arm</code></p>
@@ -5462,7 +5416,7 @@ Cette installation est optionnelle puisque l&#8217;on peut faire fonctionner Doc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_considérations_de_sécurité">9.6. Considérations de sécurité</h3>
+<h3 id="_considérations_de_sécurité">9.5. Considérations de sécurité</h3>
 <div class="paragraph">
 <p>A propos de l&#8217;export des ports sous docker.</p>
 </div>
@@ -5490,7 +5444,7 @@ Dans tout ce qui suit nous omettrons d&#8217;utiliser cette adresse en 127.0.0.1
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mise_à_jour_automatique_des_images">9.7. Mise à jour automatique des images</h3>
+<h3 id="_mise_à_jour_automatique_des_images">9.6. Mise à jour automatique des images</h3>
 <div class="paragraph">
 <p>Vos images docker peuvent être mise à jour automatiquement si vous les avez installés à partir du docker hub ou de n&#8217;importe quel autre repository compatible.</p>
 </div>
@@ -5534,7 +5488,7 @@ Dans tout ce qui suit nous omettrons d&#8217;utiliser cette adresse en 127.0.0.1
 </div>
 </div>
 <div class="sect2">
-<h3 id="_surveillance_et_redémarrage_de_container">9.8. Surveillance et redémarrage de container</h3>
+<h3 id="_surveillance_et_redémarrage_de_container">9.7. Surveillance et redémarrage de container</h3>
 <div class="paragraph">
 <p>Il peut arriver que certains container s&#8217;arrêtent brusquement suite à un bug.</p>
 </div>
@@ -8129,7 +8083,7 @@ EndSection</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.2<br>
-Last updated 2024-02-11 22:46:02 +0100
+Last updated 2024-03-14 20:33:52 +0100
 </div>
 </div>
 </body>
