@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Installation d un Home Serveur Raspberry PI'
-copyright = '2024', Stéphane Apiou'
+copyright = '2024', 'Stéphane Apiou'
 author = 'Stéphane Apiou'
 
 # The short X.Y version
