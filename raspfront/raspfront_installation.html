@@ -581,15 +581,16 @@ pre.rouge .gs {
 <li><a href="#_installation_dun_repository_pour_etc">7.3. Installation d&#8217;un repository pour <code>/etc</code></a></li>
 <li><a href="#_mise_à_jour_des_sources_de_paquets_debian_ou_ubuntu">7.4. Mise à jour des sources de paquets Debian ou Ubuntu</a></li>
 <li><a href="#_installation_des_paquets_de_base">7.5. Installation des paquets de base</a></li>
-<li><a href="#_installer_loutil_debfoster">7.6. Installer l&#8217;outil Debfoster</a></li>
-<li><a href="#_création_dun_fichier_keeper_dans_etc">7.7. Création d&#8217;un fichier keeper dans /etc</a></li>
-<li><a href="#_installation_des_mises_à_jours_automatiques">7.8. Installation des mises à jours automatiques</a></li>
-<li><a href="#_interdire_le_login_direct_en_root">7.9. Interdire le login direct en root</a></li>
-<li><a href="#_création_dune_clé_de_connexion_ssh_locale">7.10. Création d&#8217;une clé de connexion ssh locale</a></li>
-<li><a href="#_sudo_sans_mot_de_passe">7.11. Sudo sans mot de passe</a></li>
-<li><a href="#_configuration_du_motd">7.12. Configuration du Motd</a></li>
-<li><a href="#_installer_loutil_dselect">7.13. Installer l&#8217;outil dselect</a></li>
-<li><a href="#swap_create">7.14. Ajouter un fichier de swap</a></li>
+<li><a href="#_passage_de_la_locale_en_fr">7.6. Passage de la locale en FR</a></li>
+<li><a href="#_installer_loutil_debfoster">7.7. Installer l&#8217;outil Debfoster</a></li>
+<li><a href="#_création_dun_fichier_keeper_dans_etc">7.8. Création d&#8217;un fichier keeper dans /etc</a></li>
+<li><a href="#_installation_des_mises_à_jours_automatiques">7.9. Installation des mises à jours automatiques</a></li>
+<li><a href="#_interdire_le_login_direct_en_root">7.10. Interdire le login direct en root</a></li>
+<li><a href="#_création_dune_clé_de_connexion_ssh_locale">7.11. Création d&#8217;une clé de connexion ssh locale</a></li>
+<li><a href="#_sudo_sans_mot_de_passe">7.12. Sudo sans mot de passe</a></li>
+<li><a href="#_configuration_du_motd">7.13. Configuration du Motd</a></li>
+<li><a href="#_installer_loutil_dselect">7.14. Installer l&#8217;outil dselect</a></li>
+<li><a href="#swap_create">7.15. Ajouter un fichier de swap</a></li>
 </ul>
 </li>
 <li><a href="#_installation_initiale_des_outils">8. Installation initiale des outils</a>
@@ -655,12 +656,11 @@ pre.rouge .gs {
 <ul class="sectlevel2">
 <li><a href="#_a_propos_des_raspberry_pi">15.1. A propos des Raspberry Pi</a></li>
 <li><a href="#_installation_de_docker">15.2. Installation de Docker</a></li>
-<li><a href="#_installation_de_docker_compose">15.3. Installation de docker-compose</a></li>
-<li><a href="#_installation_de_docker_swarm">15.4. Installation de docker swarm</a></li>
-<li><a href="#_choix_des_images_docker">15.5. Choix des images docker</a></li>
-<li><a href="#_considérations_de_sécurité">15.6. Considérations de sécurité</a></li>
-<li><a href="#_mise_à_jour_automatique_des_images">15.7. Mise à jour automatique des images</a></li>
-<li><a href="#_surveillance_et_redémarrage_de_container">15.8. Surveillance et redémarrage de container</a></li>
+<li><a href="#_installation_de_docker_swarm">15.3. Installation de docker swarm</a></li>
+<li><a href="#_choix_des_images_docker">15.4. Choix des images docker</a></li>
+<li><a href="#_considérations_de_sécurité">15.5. Considérations de sécurité</a></li>
+<li><a href="#_mise_à_jour_automatique_des_images">15.6. Mise à jour automatique des images</a></li>
+<li><a href="#_surveillance_et_redémarrage_de_container">15.7. Surveillance et redémarrage de container</a></li>
 </ul>
 </li>
 <li><a href="#_configuration_de_docker_mirror">16. Configuration de Docker-mirror</a></li>
@@ -1237,13 +1237,28 @@ La vue générale vous montre les services actifs. Il faut une fois la configura
 <p>Emails: Inactif</p>
 </li>
 <li>
-<p>DNSSEC: Actif (cela sera activé dans une seconde étape de ce guide)</p>
+<p>DNSSEC: Inactif (cela sera activé dans une seconde étape de ce guide)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Vous ne devez avoir aucune boite mail active sur ce domaine. A regardez dans le menu "Boites &amp; redirections Mails".
-Vous devez reconfigurer les 'Enregistrements DNS' en mode externes.
+<p>Vous ne devez avoir aucune boite mail active sur ce domaine. A regardez dans le menu "Boites &amp; redirections Mails".</p>
+</div>
+<div class="paragraph">
+<p>Ajoutez des Glue records:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>un pour ns1.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur</p>
+</li>
+<li>
+<p>un pour ns2.&lt;example.com&gt; lié à l&#8217;adresse &lt;IP&gt; du serveur</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Vous devez reconfigurer les 'Enregistrements DNS' en mode externes.
 Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms externe. Mettre 3 DNS:</p>
 </div>
 <div class="ulist">
@@ -1251,10 +1266,13 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 <li>
 <p>les deux DNS de votre domaine: ns1.&lt;example.com&gt; et ns2.&lt;example.com&gt;</p>
 </li>
+<li>
+<p>puis enfin le nom de votre machine définie par votre hébergeur de VPS: <code>vmixxxxxx.contaboserver.net</code></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Pour que tout cela fonctionne bien, ajoutez des Glue records:</p>
+<p>Ajoutez des Glue records:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1273,13 +1291,10 @@ Dans le menu "serveurs de noms", vous devez configurer les serveurs de noms exte
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Cette configuration du lien chez votre registrar des deux DNS de votre serveur n&#8217;est à faire qu&#8217;après avoir défini le premier domaine de votre serveur
+Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Dans ce cas, enregistrez votre nom de domaine sur le serveur de dns secondaire de votre hébergeur. Notez ensuite le nom de domaine de ce DNS secondaire et ajoutez une entrée supplémentaire sur le serveur de votre registrar avec l&#8217;adresse DNS secondaire.
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>Il y a la possibilité chez OVH d&#8217;utiliser un DNS secondaire. Dans ce cas, enregistrez votre nom de domaine sur le serveur de dns secondaire de votre hébergeur. Notez ensuite le nom de domaine de ce DNS secondaire et ajoutez une entrée supplémentaire sur le serveur de votre registrar avec l&#8217;adresse DNS secondaire.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2444,7 +2459,68 @@ git push <span class="nt">-u</span> origin master</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installer_loutil_debfoster">7.6. Installer l&#8217;outil Debfoster</h3>
+<h3 id="_passage_de_la_locale_en_fr">7.6. Passage de la locale en FR</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Tapez:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>locales</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez ensuite:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre> dpkg-reconfigure locales</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Dans l&#8217;écran qui apparait, sélectionnez: <code>fr_FR.UTF_8</code></p>
+</li>
+<li>
+<p>Tapez ensuite sur la ligne de commande: <code>locale</code></p>
+</li>
+<li>
+<p>Le texte suivant apparait:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>LANG=fr_FR.UTF-8
+LC_CTYPE="fr_FR.UTF-8"
+LC_NUMERIC="fr_FR.UTF-8"
+LC_TIME="fr_FR.UTF-8"
+LC_COLLATE="fr_FR.UTF-8"
+LC_MONETARY="fr_FR.UTF-8"
+LC_MESSAGES="fr_FR.UTF-8"
+LC_PAPER="fr_FR.UTF-8"
+LC_NAME="fr_FR.UTF-8"
+LC_ADDRESS="fr_FR.UTF-8"
+LC_TELEPHONE="fr_FR.UTF-8"
+LC_MEASUREMENT="fr_FR.UTF-8"
+LC_IDENTIFICATION="fr_FR.UTF-8"
+LC_ALL=</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installer_loutil_debfoster">7.7. Installer l&#8217;outil Debfoster</h3>
 <div class="paragraph">
 <p>L&#8217;outil <code>debfoster</code> permet de ne conserver que les paquets essentiels.</p>
 </div>
@@ -2623,7 +2699,7 @@ Tous les autres paquets seront supprimés.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_création_dun_fichier_keeper_dans_etc">7.7. Création d&#8217;un fichier keeper dans /etc</h3>
+<h3 id="_création_dun_fichier_keeper_dans_etc">7.8. Création d&#8217;un fichier keeper dans /etc</h3>
 <div class="paragraph">
 <p>Vous pourriez être intéressé après l&#8217;installation de <code>debfoster</code> et de <code>etckeeper</code> de construire automatiquement un fichier qui contient la liste des paquets qui permettent de réinstaller le système:</p>
 </div>
@@ -2699,7 +2775,7 @@ shellquote<span class="o">()</span> <span class="o">{</span>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_des_mises_à_jours_automatiques">7.8. Installation des mises à jours automatiques</h3>
+<h3 id="_installation_des_mises_à_jours_automatiques">7.9. Installation des mises à jours automatiques</h3>
 <div class="paragraph">
 <p>Si vous souhaitez installer automatiquement les paquets Debian de correction de bugs de sécurité, cette installation est pour vous.</p>
 </div>
@@ -2740,7 +2816,7 @@ regarder périodiquement les logs d&#8217;installation.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_interdire_le_login_direct_en_root">7.9. Interdire le login direct en root</h3>
+<h3 id="_interdire_le_login_direct_en_root">7.10. Interdire le login direct en root</h3>
 <div class="paragraph">
 <p>Il est toujours vivement déconseillé d&#8217;autoriser la possibilité de se connecter directement en SSH en tant que root.</p>
 </div>
@@ -2748,7 +2824,7 @@ regarder périodiquement les logs d&#8217;installation.
 <p>Avec les versions récentes de Debian Bookworm pour raspberry pi, il n&#8217;est plus nécessaire de créer le compte sudo qui est créé par défaut lors de la procédure d&#8217;installation standard. Cette procédure est cependant  indispensable pour l&#8217;installation d&#8217;une distribution debian standard.</p>
 </div>
 <div class="paragraph">
-<p>Une remarque tout de même pour le raspberry pi: le compte sudo permet de se logger root sans aucun mot de passe. C&#8217;est considéré comme une faille de sécurité. Pour corriger cela, logguez vous comme root et tapez:</p>
+<p>Une remarque tout de même pour le raspberry pi: le compte sudo permet de se logger root sans aucun mot de passe. C&#8217;est considéré comme une faille de sécurité. Pour corriger cela, <a href="#root_login">Loguez vous comme root sur le serveur</a> et tapez:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2768,6 +2844,14 @@ regarder périodiquement les logs d&#8217;installation.
 <ol class="arabic">
 <li>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Installez l&#8217;outil <code>sudo</code> s&#8217;il n&#8217;est pas déjà présent. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install sudo</span></code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Ajoutez un utilisateur standard qui sera nommé par la suite en tant que &lt;sudo_username&gt;</p>
@@ -2908,7 +2992,7 @@ Tout pendant que ces premières étapes ne donnent pas satisfaction ne passez pa
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_dune_clé_de_connexion_ssh_locale">7.10. Création d&#8217;une clé de connexion ssh locale</h3>
+<h3 id="_création_dune_clé_de_connexion_ssh_locale">7.11. Création d&#8217;une clé de connexion ssh locale</h3>
 <div class="paragraph">
 <p>Pour créer une clé et la déployer:</p>
 </div>
@@ -3047,7 +3131,7 @@ Tout pendant que ces premières étapes ne donnent pas satisfaction ne passez pa
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sudo_sans_mot_de_passe">7.11. Sudo sans mot de passe</h3>
+<h3 id="_sudo_sans_mot_de_passe">7.12. Sudo sans mot de passe</h3>
 <div class="paragraph">
 <p>Avant tout, il faut bien se rendre compte que cela constitue potentiellement une faille de sécurité et qu&#8217;en conséquence, le compte possédant cette propriété devra être autant sécurisé qu&#8217;un compte root.
 L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en gardant la facilité de se loguer root sur le système au travers d&#8217;un super-compte.</p>
@@ -3108,12 +3192,12 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuration_du_motd">7.12. Configuration du Motd</h3>
+<h3 id="_configuration_du_motd">7.13. Configuration du Motd</h3>
 <div class="paragraph">
 <p>Le motd est affiché au moment ou l&#8217;utilisateur se loggue en ssh. Nous allons configurer l&#8217;affichage de plusieurs informations importantes.</p>
 </div>
 <div class="sect3">
-<h4 id="_installation_de_neofetch">7.12.1. Installation de Neofetch</h4>
+<h4 id="_installation_de_neofetch">7.13.1. Installation de Neofetch</h4>
 <div class="paragraph">
 <p>Neofetch affiche au démarrage de votre système des informations sur le fonctionnement de celui-ci.</p>
 </div>
@@ -3200,7 +3284,7 @@ L’intérêt étant d&#8217;interdire le compte root en connexion ssh tout en g
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration_du_motd_avec_neofetch">7.12.2. Configuration du MOTD avec Neofetch</h4>
+<h4 id="_configuration_du_motd_avec_neofetch">7.13.2. Configuration du MOTD avec Neofetch</h4>
 <div class="paragraph">
 <p>Pour afficher les informations au moment du login ssh, vous devez modifier le fichier Motd:</p>
 </div>
@@ -3241,7 +3325,7 @@ neofetch <span class="nt">--config</span> /etc/neofetch.conf</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_mise_à_jour_de_packages">7.12.3. Mise à jour de packages</h4>
+<h4 id="_mise_à_jour_de_packages">7.13.3. Mise à jour de packages</h4>
 <div class="paragraph">
 <p>Vous pouvez ajouter la liste des mises à jours dans le fichier MOTD:</p>
 </div>
@@ -3267,7 +3351,7 @@ neofetch <span class="nt">--config</span> /etc/neofetch.conf</code></pre>
 <p>Dans le fichier mettez le contenu suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="c1">#!/usr/bin/python
+<pre class="rouge highlight"><code data-lang="python"><span class="c1">#!/usr/bin/python3
 </span><span class="kn">import</span> <span class="n">sys</span>
 <span class="kn">import</span> <span class="n">subprocess</span>
 <span class="kn">import</span> <span class="n">apt_pkg</span>
@@ -3378,7 +3462,7 @@ neofetch <span class="nt">--config</span> /etc/neofetch.conf</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installer_loutil_dselect">7.13. Installer l&#8217;outil dselect</h3>
+<h3 id="_installer_loutil_dselect">7.14. Installer l&#8217;outil dselect</h3>
 <div class="paragraph">
 <p>L&#8217;outil <code>dselect</code> permet de choisir de façon interactive les paquets que l&#8217;on souhaite installer.</p>
 </div>
@@ -3399,7 +3483,7 @@ neofetch <span class="nt">--config</span> /etc/neofetch.conf</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="swap_create">7.14. Ajouter un fichier de swap</h3>
+<h3 id="swap_create">7.15. Ajouter un fichier de swap</h3>
 <div class="paragraph">
 <p>Pour un serveur VPS ou Raspberry Pi de 2 Go de RAM, la taille du fichier de swap sera de 2 Go.
 Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être nécessaire d&#8217;avoir 4 Go de RAM au total + 2 Go de swap.</p>
@@ -3424,11 +3508,11 @@ Si vous avez beaucoup d&#8217;outils et de serveurs à installer il peut être n
 </div>
 </li>
 <li>
-<p>Pour installer un swap de 2Go, tapez:</p>
+<p>Pour installer un swap de 4Go, tapez:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /
-fallocate <span class="nt">-l</span> 2G /swapfile
+fallocate <span class="nt">-l</span> 4G /swapfile
 <span class="nb">chmod </span>600 /swapfile
 mkswap /swapfile
 swapon /swapfile</code></pre>
@@ -3584,7 +3668,7 @@ Type <span class="s1">'yes'</span> <span class="k">if </span>you really want to 
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur pour votre machine. Pour OVH, elle s&#8217;écrit <code>VPSxxxxxx.ovh.net</code>.
+Lors de votre première connexion, votre domaine n&#8217;est pas encore configuré. Il faudra alors utiliser le nom DNS donné par votre hébergeur pour votre machine. Pour Contabo, elle s&#8217;écrit <code>vmixxxxx.contaboserver.net</code>.
 </td>
 </tr>
 </table>
@@ -5220,7 +5304,7 @@ Cette procédure n&#8217;est à appliquer que lorsqu&#8217;aucun domaine n&#8217
 </div>
 <div class="paragraph">
 <p>Vous devrez tout d&#8217;abord vous loguer sur le serveur ISPConfig.
-Comme vous n&#8217;avez pas encore configuré de nom de de domaine, vous devrez vous loguer de prime abord sur le site <a href="http://vpsxxxxxx.ovh.net:8080/" class="bare">http://vpsxxxxxx.ovh.net:8080/</a> pour un vps chez ovh par exemple ou sur <a href="http://raspberrypi.local:8080/" class="bare">http://raspberrypi.local:8080/</a> pour un Raspberry.</p>
+Comme vous n&#8217;avez pas encore configuré de nom de de domaine, vous devrez vous loguer de prime abord sur le site <a href="http://vmixxxxx.contaboserver.net:8080/" class="bare">http://vmixxxxx.contaboserver.net:8080/</a> pour un vps chez contabo par exemple ou sur <a href="http://raspberrypi.local:8080/" class="bare">http://raspberrypi.local:8080/</a> pour un Raspberry.</p>
 </div>
 <div class="paragraph">
 <p>Utiliser le login: Admin et le mot de passe que vous avez configuré lors de l&#8217;installation d&#8217;ISPConfig</p>
@@ -5260,6 +5344,9 @@ Comme vous n&#8217;avez pas encore configuré de nom de de domaine, vous devrez 
 </li>
 </ol>
 </div>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
 </li>
 </ol>
 </div>
@@ -6153,8 +6240,8 @@ Vous ne pouvez définir un sous-domaine que si vous avez défini le site web rac
 <pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /usr/local/ispconfig/interface/ssl/
 <span class="nb">mv </span>ispserver.crt ispserver.crt-<span class="si">$(</span><span class="nb">date</span> +<span class="s2">"%y%m%d%H%M%S"</span><span class="si">)</span>.bak
 <span class="nb">mv </span>ispserver.key ispserver.key-<span class="si">$(</span><span class="nb">date</span> +<span class="s2">"%y%m%d%H%M%S"</span><span class="si">)</span>.bak
-<span class="nb">ln</span> <span class="nt">-s</span> /etc/letsencrypt/live/example.com/fullchain.pem ispserver.crt <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="nb">ln</span> <span class="nt">-s</span> /etc/letsencrypt/live/example.com/privkey.pem ispserver.key <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="nb">ln</span> <span class="nt">-s</span> /var/www/clients/&lt;clientx&gt;/&lt;webx&gt;/ssl/&lt;example.com&gt;-le.crt ispserver.crt <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="nb">ln</span> <span class="nt">-s</span> /var/www/clients/&lt;clientx&gt;/&lt;webx&gt;/ssl/&lt;example.com&gt;-le.key ispserver.key <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="nb">cat </span>ispserver.<span class="o">{</span>key,crt<span class="o">}</span> <span class="o">&gt;</span> ispserver.pem
 <span class="nb">chmod </span>600 ispserver.pem
 systemctl restart apache2</code></pre>
@@ -6164,7 +6251,7 @@ systemctl restart apache2</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer &lt;example.com&gt; par votre nom de domaine</td>
+<td>remplacer &lt;example.com&gt; par votre nom de domaine, &lt;clientx&gt; par votre numéro de client, &lt;webx&gt; par votre numéro de serveur web. L&#8217;information est facilement retrouvé en cliquant sur l&#8217;interface d&#8217;ISPconfig dans <code>Sites</code>&#8594;`Website`&#8594;`&lt;example.com&gt;`. Le champ <code>Document Root</code> donne le début du chemin <code>/var/www/clients/&lt;clientx&gt;/&lt;webx&gt;/</code></td>
 </tr>
 </table>
 </div>
@@ -6183,8 +6270,8 @@ systemctl restart apache2</code></pre>
 <pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /etc/postfix/
 <span class="nb">mv </span>smtpd.cert smtpd.cert-<span class="si">$(</span><span class="nb">date</span> +<span class="s2">"%y%m%d%H%M%S"</span><span class="si">)</span>.bak
 <span class="nb">mv </span>smtpd.key smtpd.key-<span class="si">$(</span><span class="nb">date</span> +<span class="s2">"%y%m%d%H%M%S"</span><span class="si">)</span>.bak
-<span class="nb">ln</span> <span class="nt">-s</span> /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="nb">ln</span> <span class="nt">-s</span> /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="nb">ln</span> <span class="nt">-s</span> /var/www/clients/client0/web1/ssl/mail.example.com-le.crt smtpd.cert <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="nb">ln</span> <span class="nt">-s</span> /var/www/clients/client0/web1/ssl/mail.example.com-le.key smtpd.key <i class="conum" data-value="1"></i><b>(1)</b>
 service postfix restart
 service dovecot restart</code></pre>
 </div>
@@ -6212,6 +6299,7 @@ service dovecot restart</code></pre>
 <pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /etc/ssl/private/
 <span class="nb">mv </span>pure-ftpd.pem pure-ftpd.pem-<span class="si">$(</span><span class="nb">date</span> +<span class="s2">"%y%m%d%H%M%S"</span><span class="si">)</span>.bak
 <span class="nb">ln</span> <span class="nt">-s</span> /usr/local/ispconfig/interface/ssl/ispserver.pem pure-ftpd.pem
+<span class="nb">ln</span> <span class="nt">-s</span> /usr/local/ispconfig/interface/ssl/dhparam4096.pem pure-ftpd-dhparams.pem
 <span class="nb">chmod </span>600 pure-ftpd.pem
 service pure-ftpd-mysql restart</code></pre>
 </div>
@@ -6282,7 +6370,7 @@ incrontab <span class="nt">-e</span></code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">/etc/letsencrypt/archive/mail.example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="rouge highlight"><code data-lang="bash">/usr/local/ispconfig/interface/ssl/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6504,6 +6592,9 @@ includedir /etc/munin/munin-conf.d
 </div>
 </li>
 <li>
+<p>Vérifiez bien que IPV6 est activé. Si ce n&#8217;est pas le cas, le redémarrage de Munin peut survenir.</p>
+</li>
+<li>
 <p>Redémarrez Munin. Tapez:</p>
 <div class="listingblock">
 <div class="content">
@@ -6544,6 +6635,15 @@ includedir /etc/munin/munin-conf.d
 <span class="nb">ln</span> <span class="nt">-s</span> /usr/share/munin/plugins/apache_processes
 <span class="nb">ln</span> <span class="nt">-s</span> /usr/share/munin/plugins/apache_volume
 <span class="nb">rm</span> /usr/share/munin/plugins/mysql_</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Une autre manière simple de configurer munin est de taper:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /etc/munin/plugins
+munin-node-configure <span class="nt">--shell</span> <span class="nt">--families</span><span class="o">=</span>contrib,auto | sh <span class="nt">-x</span></code></pre>
 </div>
 </div>
 </li>
@@ -6616,11 +6716,7 @@ set httpd port 2812 and
 <p>Activez les modules standards :</p>
 <div class="listingblock">
 <div class="content">
-<pre>cd /etc/monit/conf-enabled
-ln -s ../conf-available/apache2 .
-ln -s ../conf-available/openssh-server .
-ln -s ../conf-available/postfix .
-ln -s ../conf-available/memcached .</pre>
+<pre>cd /etc/monit/conf-enabled</pre>
 </div>
 </div>
 </li>
@@ -6699,6 +6795,68 @@ ln -s ../conf-available/memcached .</pre>
 </div>
 </li>
 <li>
+<p>Créez ensuite un fichier pour sshd. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">vi /etc/monit/conf-enabled/sshd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez dans le fichier cette configuration :</p>
+<div class="listingblock">
+<div class="content">
+<pre> check process sshd with pidfile /var/run/sshd.pid
+  start program = "/etc/init.d/ssh start"
+  stop program = "/etc/init.d/ssh stop"
+  if failed host localhost port 22 with proto ssh then restart
+  if 5 restarts within 5 cycles then timeout</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez ensuite un fichier pour apache. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">vi /etc/monit/conf-enabled/apache2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez dans le fichier cette configuration :</p>
+<div class="listingblock">
+<div class="content">
+<pre> check process apache with pidfile /var/run/apache2/apache2.pid
+   start program = "/etc/init.d/apache2 start"
+   stop program  = "/etc/init.d/apache2 stop"
+   if 4 restarts within 20 cycles then timeout
+   if failed host localhost port 80 with protocol http and request "/server-status" with timeout 25 seconds for 4 times within 5 cycles then restart</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez ensuite un fichier pour memcached. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">vi /etc/monit/conf-enabled/memcached</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez dans le fichier cette configuration :</p>
+<div class="listingblock">
+<div class="content">
+<pre> check process memcached with pidfile /var/run/memcached/memcached.pid
+   start program = "/etc/init.d/memcached start"
+   stop program  = "/etc/init.d/memcached stop"
+   if failed host 127.0.0.1 port 11211 and protocol memcache then restart
+   if cpu &gt; 60% for 2 cycles then alert
+   if cpu &gt; 98% for 5 cycles then restart
+   if 5 restarts within 20 cycles then timeout</pre>
+</div>
+</div>
+</li>
+<li>
 <p>Créez ensuite un fichier pour ntpd. Tapez:</p>
 <div class="listingblock">
 <div class="content">
@@ -6736,6 +6894,49 @@ ln -s ../conf-available/memcached .</pre>
  stop program = "/usr/sbin/service dovecot stop"
  if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
  if 5 restarts within 5 cycles then timeout</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez ensuite un fichier pour postfix. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">vi /etc/monit/conf-enabled/postfix</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez dans le fichier cette configuration :</p>
+<div class="listingblock">
+<div class="content">
+<pre> check process postfix with pidfile /var/spool/postfix/pid/master.pid
+   start program = "/etc/init.d/postfix start"
+   stop  program = "/etc/init.d/postfix stop"
+   if failed host localhost port 25 with protocol smtp for 2 times within 3 cycles then restart
+   if 5 restarts with 5 cycles then timeout</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez ensuite un fichier pour redis. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">vi /etc/monit/conf-enabled/redis</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez dans le fichier cette configuration :</p>
+<div class="listingblock">
+<div class="content">
+<pre>check process redis with pidfile /var/run/redis/redis-server.pid
+  start program = "/usr/sbin/service redis-server start" with timeout 60 seconds
+  stop program  = "/usr/sbin/service redis-server stop" with timeout 60 seconds
+  if failed host 127.0.0.1 port 6379 then restart
+  if totalmem &gt; 500 Mb then alert
+  if cpu &gt; 60% for 2 cycles then alert
+  if cpu &gt; 98% for 5 cycles then restart
+  if 2 restarts within 2 cycles then alert</pre>
 </div>
 </div>
 </li>
@@ -7342,12 +7543,12 @@ systemctl restart apache2</code></pre>
 <p>Editez le fichier Dovecot.conf (remarques ISPConfig n&#8217;utilise pas aujourd&#8217;hui le contenu du répertoire conf.d). Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi /etc/dovecot/dovecot.conf</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">vi /etc/dovecot/conf.d/99-ispconfig-custom-config.conf</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Insérez dans le groupe plugin et le protocol imap déjà existants dans le fichier :</p>
+<p>Ajoutez le texte suivant :</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code>plugin {
@@ -7531,7 +7732,7 @@ EOF</span></code></pre>
 </div>
 </li>
 <li>
-<p>Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:</p>
+<p>Enfin, vous pouvez désactiver amavisd si vous le souhaitez et s&#8217;il est installé sur votre système. tapez:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">systemctl stop amavisd-new
@@ -7560,6 +7761,12 @@ systemctl disable amavisd-new</code></pre>
 </li>
 <li>
 <p>Saisissez le nom de domaine.</p>
+</li>
+<li>
+<p>Cliquez sur <code>Save</code></p>
+</li>
+<li>
+<p>Attendez quelques secondes la fin de configuration puis rouvrez la configuration de votre serveur de mail et</p>
 </li>
 <li>
 <p>Cliquez sur <code>DomainKeys Indentified Mail (DKIM)</code></p>
@@ -7628,7 +7835,7 @@ systemctl disable amavisd-new</code></pre>
 </div>
 </li>
 <li>
-<p>Vous pouvez ajouter une signature DKIM. Si vous utilisez ISPConfig, cette opération est effectuée automatiquement:</p>
+<p>Vous pouvez ajouter une signature DKIM. Si vous utilisez ISPConfig, cette opération est effectuée automatiquement et cette étape est à sauter :</p>
 <div class="ulist">
 <ul>
 <li>
@@ -7892,10 +8099,13 @@ rspamadm dkim_keygen <span class="nt">-d</span> example.com <span class="nt">-s<
 <p>Le faire pointer vers le web folder <code>autoconfig</code>.</p>
 </li>
 <li>
+<p>Mettre dans <code>Auto-SubDomain</code> la valeur <code>None</code></p>
+</li>
+<li>
 <p>Activer let’s encrypt ssl</p>
 </li>
 <li>
-<p>Activer <code>php-FPM</code></p>
+<p>Activer <code>php-CGI</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -7907,11 +8117,29 @@ rspamadm dkim_keygen <span class="nt">-d</span> example.com <span class="nt">-s<
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="apache"><span class="nc">AddType</span> application/x-httpd-php .php .php3 .php4 .php5 .xml
+<pre class="rouge highlight"><code data-lang="apache"><span class="p">&lt;</span><span class="nl">FilesMatch</span><span class="sr"> "^.+\.xml$"</span><span class="p">&gt;
+</span>        <span class="nc">SetHandler</span> "proxy:unix:/run/php/php8.2-fpm.sock|fcgi://localhost" <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/FilesMatch&gt;
 
-<span class="nc">CheckSpelling</span> <span class="ss">Off</span>
-<span class="nc">CheckCaseOnly</span> <span class="ss">On</span></code></pre>
+<span class="p">&lt;</span><span class="nl">FilesMatch</span><span class="sr"> "^.+\.json$"</span><span class="p">&gt;
+</span>        <span class="nc">SetHandler</span> "proxy:unix:/run/php/php8.2-fpm.sock|fcgi://localhost" <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/FilesMatch&gt;
+
+<span class="nc">AddHandler</span> application/x-httpd-php .php .xml .json
+
+<span class="p">&lt;</span><span class="nl">IfModule</span><span class="sr"> mod_speling.c</span><span class="p">&gt;
+</span>    <span class="nc">CheckCaseOnly</span> <span class="ss">on</span>
+    <span class="nc">CheckSpelling</span> <span class="ss">on</span>
+<span class="p">&lt;/</span><span class="nl">IfModule</span><span class="p">&gt;</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Mettez bien ici la version de PHP que vous avez choisi. Dans l&#8217;exemple c&#8217;est la 8.2</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -7923,6 +8151,21 @@ rspamadm dkim_keygen <span class="nt">-d</span> example.com <span class="nt">-s<
 <li>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
+<li>
+<p>Editez le fichier le fichier <code>/etc/php/8.2/fpm/pool.d/www.conf</code> (mettez votre version choisie à la place de 8.2).</p>
+</li>
+<li>
+<p>Dans le fichier, recherchez <code>security.limit_extension</code> et ajoutez:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>security.limit_extensions = .php .php3 .php4 .php5 .php7 .xml .json</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Dans le répertoire <code>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</code> créer un répertoire mail. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
 <div class="listingblock">
@@ -8055,13 +8298,16 @@ header('Content-Type: application/xml');
 <p>Lui donner le nom <code>autodiscover</code>.</p>
 </li>
 <li>
-<p>Le faire pointer vers le web folder <code>autodiscover</code>.</p>
+<p>Le faire pointer vers le web folder <code>autoconfig</code>.</p>
+</li>
+<li>
+<p>Mettre dans <code>Auto-SubDomain</code> la valeur <code>None</code></p>
 </li>
 <li>
 <p>Activer let’s encrypt ssl</p>
 </li>
 <li>
-<p>Activer <code>php-FPM</code></p>
+<p>Activer <code>php-CGI</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -8073,11 +8319,29 @@ header('Content-Type: application/xml');
 <p>Dans la boite <code>Apache Directives:</code> saisir le texte suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="apache"><span class="nc">AddType</span> application/x-httpd-php .php .php3 .php4 .php5 .xml .json
+<pre class="rouge highlight"><code data-lang="apache"><span class="p">&lt;</span><span class="nl">FilesMatch</span><span class="sr"> "^.+\.xml$"</span><span class="p">&gt;
+</span>        <span class="nc">SetHandler</span> "proxy:unix:/run/php/php8.2-fpm.sock|fcgi://localhost" <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/FilesMatch&gt;
 
-<span class="nc">CheckSpelling</span> <span class="ss">Off</span>
-<span class="nc">CheckCaseOnly</span> <span class="ss">On</span></code></pre>
+<span class="p">&lt;</span><span class="nl">FilesMatch</span><span class="sr"> "^.+\.json$"</span><span class="p">&gt;
+</span>        <span class="nc">SetHandler</span> "proxy:unix:/run/php/php8.2-fpm.sock|fcgi://localhost" <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/FilesMatch&gt;
+
+<span class="nc">AddHandler</span> application/x-httpd-php .php .xml .json
+
+<span class="p">&lt;</span><span class="nl">IfModule</span><span class="sr"> mod_speling.c</span><span class="p">&gt;
+</span>    <span class="nc">CheckCaseOnly</span> <span class="ss">on</span>
+    <span class="nc">CheckSpelling</span> <span class="ss">on</span>
+<span class="p">&lt;/</span><span class="nl">IfModule</span><span class="p">&gt;</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Mettez bien ici la version de PHP que vous avez choisi. Dans l&#8217;exemple c&#8217;est la 8.2</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -8089,6 +8353,21 @@ header('Content-Type: application/xml');
 <li>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
+<li>
+<p>Editez le fichier le fichier <code>/etc/php/8.2/fpm/pool.d/www.conf</code> (mettez votre version choisie à la place de 8.2).</p>
+</li>
+<li>
+<p>Dans le fichier, recherchez <code>security.limit_extension</code> et ajoutez:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>security.limit_extensions = .php .php3 .php4 .php5 .php7 .xml .json</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Dans le répertoire <code>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</code>, créer un répertoire <code>Autodiscover</code>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
 <div class="listingblock">
@@ -8205,52 +8484,17 @@ header("Content-Type: application/xml");
 </div>
 </li>
 <li>
-<p>Dans ce même répertoire créez un fichier <code>.htaccess</code> et Ajoutez y:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code>RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} -s [OR]
-RewriteCond %{REQUEST_FILENAME} -l [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^.*$ - [NC,L]
-RewriteRule ^.*$ autodiscover.php [NC,L]</code></pre>
-</div>
-</div>
-</li>
-<li>
 <p>Pointer votre navigateur sur le site <a href="https://autodiscover.example.com/Autodiscover/Autodiscover.xml" class="bare">https://autodiscover.example.com/Autodiscover/Autodiscover.xml</a>.</p>
 </li>
 <li>
 <p>Le contenu du fichier xml doit s&#8217;afficher</p>
 </li>
 <li>
-<p>Dans le répertoire <code>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</code>, créer un répertoire <code>autodiscover</code>. Lui donner les permissions 755 et affecter les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:</p>
+<p>Dans le répertoire <code>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</code>, Editez un fichier <code>autodiscover.json</code>. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /var/www/autoconfig.example.com <i class="conum" data-value="2"></i><b>(2)</b>
-<span class="nb">mkdir</span> <span class="nt">-p</span> autoconfig/autodiscover/
-<span class="nb">chmod </span>755 autoconfig/autodiscover/
-<span class="nb">chown </span>web1:client0 autoconfig/autodiscover/ <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer web1:client0 par les permissions du répertoire <code>/var/www/autoconfig.example.com</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>remplacez <code>example.com</code> par votre nom de domaine</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>A l’intérieur de ce répertoire, Editez un fichier <code>autodiscover.json</code>. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi autoconfig/autodiscover/autodiscover.json</code></pre>
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">ln</span> <span class="nt">-s</span>
+vi autoconfig/Autodiscover/autodiscover.json</code></pre>
 </div>
 </div>
 </li>
@@ -8269,8 +8513,9 @@ RewriteRule ^.*$ autodiscover.php [NC,L]</code></pre>
 <p>Changez les permissions comme pour le répertoire</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">chmod </span>644 autoconfig/autodiscover/autodiscover.json
-<span class="nb">chown </span>web1:client0 autoconfig/autodiscover/autodiscover.json <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">chmod </span>644 autoconfig/Autodiscover/autodiscover.json
+<span class="nb">chown </span>web1:client0 autoconfig/Autodiscover/autodiscover.json <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="nb">cp</span> <span class="nt">-pr</span> autoconfig/Autodiscover autoconfig/autodiscover</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -8517,6 +8762,7 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 <span class="nc">SSLProxyCheckPeerName</span> <span class="ss">off</span>
 <span class="nc">SSLProxyCheckPeerExpire</span> <span class="ss">off</span>
 
+<span class="nc">ProxyPass</span> /webmail https://localhost:8080/webmail/
 <span class="nc">ProxyPass</span> / https://localhost:8080/webmail/
 <span class="nc">ProxyPassReverse</span> / https://localhost:8080/webmail/
 
@@ -8638,7 +8884,7 @@ En clair, <code>Docker</code> permet d&#8217;installer et de configurer rapideme
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas forcément compatibles "out of the box" ( Exemple pour MySQL). Sur le <a href="https://hub.docker.com/">Docker Hub</a>, il faut choisir par un Raspberry Pi 4 en Ubuntu une architecture de type ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type ARM.
+Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas forcément compatibles "out of the box" ( Exemple pour MySQL). Sur le <a href="https://hub.docker.com/">Docker Hub</a>, il faut choisir par un Raspberry Pi 4 ou 5 en Ubuntu une architecture de type ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type ARM.
 </td>
 </tr>
 </table>
@@ -8661,7 +8907,7 @@ Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas
 <p>Désinstallez les éventuelles anciennes versions de docker. tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt remove <span class="nt">--purge</span> docker docker-engine docker.io containerd runc <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="rouge highlight"><code data-lang="bash">apt remove <span class="nt">--purge</span> docker docker.io containerd runc docker-doc docker-compose podman-docker <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -8677,50 +8923,19 @@ Les raspberry utilisent une architecture ARM, tous les containeurs ne seront pas
 <p>Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt update
-apt <span class="nb">install </span>apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-<span class="nb">cd</span> /etc/apt/trusted.gpg.d
-wget <span class="nt">-O</span> docker.asc https://download.docker.com/linux/debian/gpg</code></pre>
+<pre class="rouge highlight"><code data-lang="bash"><span class="c"># Add Docker's official GPG key:</span>
+apt-get update
+apt-get <span class="nb">install </span>ca-certificates curl
+<span class="nb">install</span> <span class="nt">-m</span> 0755 <span class="nt">-d</span> /etc/apt/keyrings
+curl <span class="nt">-fsSL</span> https://download.docker.com/linux/debian/gpg <span class="nt">-o</span> /etc/apt/keyrings/docker.asc
+<span class="nb">chmod </span>a+r /etc/apt/keyrings/docker.asc
+
+<span class="c"># Add the repository to Apt sources:</span>
+<span class="nb">echo</span> <span class="se">\</span>
+  <span class="s2">"deb [arch=</span><span class="si">$(</span>dpkg <span class="nt">--print-architecture</span><span class="si">)</span><span class="s2"> signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian </span><span class="se">\</span><span class="s2">
+  </span><span class="si">$(</span><span class="nb">.</span> /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$VERSION_CODENAME</span><span class="s2">"</span><span class="si">)</span><span class="s2"> stable"</span> | <span class="se">\</span>
+  <span class="nb">tee</span> /etc/apt/sources.list.d/docker.list <span class="o">&gt;</span> /dev/null</code></pre>
 </div>
-</div>
-</li>
-<li>
-<p>tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">lsb_release <span class="nt">-cs</span></code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Ici la version de votre distribution doit s&#8217;afficher.</p>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-pour des installations hybride d&#8217;une distribution debian, la version qui est proposée peut être la future SID ou la Testing pour lesquelles il n&#8217;existe pas obligatoirement de version installable de docker. Dans ce cas vous devrez sélectionner vous même la version de la distribution stable.
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Tapez (et remplacer éventuellement la commande $(lsb_release -cs) par le nom de votre distribution stable).  :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">add-apt-repository <span class="s2">"deb [arch=amd64] https://download.docker.com/linux/debian </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> stable"</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>ici il faut remplacer l&#8217;architecture <code>amd64</code> par <code>arm64</code> pour un raspberry pi 4  ou par <code>armhf</code> pour un raspberry pi 3. De la même manière, remplacez debian par ubuntu si vous utilisez une distribution ubuntu/</td>
-</tr>
-</table>
 </div>
 </li>
 <li>
@@ -8738,7 +8953,7 @@ pour des installations hybride d&#8217;une distribution debian, la version qui e
 <p>Une fois mis à jour avec succès, tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>docker-ce docker-ce-cli containerd.io</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">apt-get <span class="nb">install </span>docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</code></pre>
 </div>
 </div>
 </li>
@@ -8757,48 +8972,7 @@ pour des installations hybride d&#8217;une distribution debian, la version qui e
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_docker_compose">15.3. Installation de docker-compose</h3>
-<div class="paragraph">
-<p>Docker-compose est un outil qui aide à l&#8217;installation de plusieurs container de façon simultané. Il permet surtout de vérifier que l&#8217;échosystème installé interagit bien.</p>
-</div>
-<div class="paragraph">
-<p>Il faut suivre les étapes suivantes:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
-</li>
-<li>
-<p>Installez quelques paquets Debian de base. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>libffi-dev libssl-dev
-apt <span class="nb">install</span> <span class="nt">-y</span> python3 python3-pip <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Pour Ubuntu, remplacez ces paquets par <code>python</code> et <code>python-pip</code></td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Installez docker-compose :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">pip3 <span class="nb">install </span>docker-compose</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_installation_de_docker_swarm">15.4. Installation de docker swarm</h3>
+<h3 id="_installation_de_docker_swarm">15.3. Installation de docker swarm</h3>
 <div class="paragraph">
 <p>Docker contient nativement le mode Swarm afin de gérer un ensemble de Docker Engines.
 Cette installation est optionnelle puisque l&#8217;on peut faire fonctionner Docker sans cette Option.</p>
@@ -8843,7 +9017,7 @@ Cette installation est optionnelle puisque l&#8217;on peut faire fonctionner Doc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_choix_des_images_docker">15.5. Choix des images docker</h3>
+<h3 id="_choix_des_images_docker">15.4. Choix des images docker</h3>
 <div class="paragraph">
 <p>Les images docker sont accessibles sur le <a href="https://hub.docker.com/">Docker Hub</a>.</p>
 </div>
@@ -8863,7 +9037,7 @@ Cette installation est optionnelle puisque l&#8217;on peut faire fonctionner Doc
 <p>Pour les plateformes de type Raspberry, il faut bien vérifier que l&#8217;image docker que vous chargez est compatible de votre plateforme. Sur Docker Hub, vous devez allez sur l&#8217;onglet Tag de votre package et vérifier que le champ OS/ARCH contient bien votre plateforme.</p>
 </div>
 <div class="paragraph">
-<p>Pour un Raspberry Pi 4 ce doit être: <code>Linux/arm64</code></p>
+<p>Pour un Raspberry Pi 4 ou 5 ce doit être: <code>Linux/arm64</code></p>
 </div>
 <div class="paragraph">
 <p>Pour un Raspberry Pi 3 ce doit être: <code>Linux/arm</code></p>
@@ -8873,7 +9047,7 @@ Cette installation est optionnelle puisque l&#8217;on peut faire fonctionner Doc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_considérations_de_sécurité">15.6. Considérations de sécurité</h3>
+<h3 id="_considérations_de_sécurité">15.5. Considérations de sécurité</h3>
 <div class="paragraph">
 <p>A propos de l&#8217;export des ports sous docker.</p>
 </div>
@@ -8901,7 +9075,7 @@ Dans tout ce qui suit nous omettrons d&#8217;utiliser cette adresse en 127.0.0.1
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mise_à_jour_automatique_des_images">15.7. Mise à jour automatique des images</h3>
+<h3 id="_mise_à_jour_automatique_des_images">15.6. Mise à jour automatique des images</h3>
 <div class="paragraph">
 <p>Vos images docker peuvent être mise à jour automatiquement si vous les avez installés à partir du docker hub ou de n&#8217;importe quel autre repository compatible.</p>
 </div>
@@ -8945,7 +9119,7 @@ Dans tout ce qui suit nous omettrons d&#8217;utiliser cette adresse en 127.0.0.1
 </div>
 </div>
 <div class="sect2">
-<h3 id="_surveillance_et_redémarrage_de_container">15.8. Surveillance et redémarrage de container</h3>
+<h3 id="_surveillance_et_redémarrage_de_container">15.7. Surveillance et redémarrage de container</h3>
 <div class="paragraph">
 <p>Il peut arriver que certains container s&#8217;arrêtent brusquement suite à un bug.</p>
 </div>
@@ -13344,7 +13518,7 @@ service prometheus-process-exporter restart</code></pre>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
-<p>allez sur le site de <a href="https://github.com/grafana/loki/releases/">Loki</a> et copier l&#8217;adresse du lien vers la dernière version de loki-linux-amd64.zip (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip pour raspberry pi 4)</p>
+<p>allez sur le site de <a href="https://github.com/grafana/loki/releases/">Loki</a> et copier l&#8217;adresse du lien vers la dernière version de loki-linux-amd64.zip (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip pour raspberry pi 4 ou 5)</p>
 </li>
 <li>
 <p>Tapez:</p>
@@ -13493,7 +13667,7 @@ Now start and check the service is running.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>allez sur le site de <a href="https://github.com/grafana/loki/releases/">Loki</a> et copier l&#8217;adresse du lien vers la dernière version de promtail-linux-amd64.zip (ou promtail-linux-arm.zip pour raspberry pi 3 ou promtail-linux-arm64.zip pour raspberry pi 4)</p>
+<p>allez sur le site de <a href="https://github.com/grafana/loki/releases/">Loki</a> et copier l&#8217;adresse du lien vers la dernière version de promtail-linux-amd64.zip (ou promtail-linux-arm.zip pour raspberry pi 3 ou promtail-linux-arm64.zip pour raspberry pi 4 ou 5)</p>
 </li>
 <li>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
@@ -13631,7 +13805,7 @@ WantedBy=multi-user.target</code></pre>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
-<p>allez sur le site de <a href="https://github.com/grafana/loki/releases/">Loki</a> et copier l&#8217;adresse du lien vers la dernière version de loki-linux-amd64.zip (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip pour raspberry pi 4)</p>
+<p>allez sur le site de <a href="https://github.com/grafana/loki/releases/">Loki</a> et copier l&#8217;adresse du lien vers la dernière version de loki-linux-amd64.zip (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip pour raspberry pi 4 ou 5)</p>
 </li>
 <li>
 <p>allez sur le site de <a href="https://github.com/grafana/loki/releases/">Loki</a> et copier l&#8217;adresse du lien vers la dernière version de promtail-linux-amd64.zip (ou promtail-linux-arm.zip pour raspberry pi 3 ou promtail-linux-arm64.zip pour raspberry pi 4)</p>
@@ -16537,7 +16711,7 @@ EndSection</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.6<br>
-Last updated 2024-02-17 00:35:56 +0100
+Last updated 2024-02-29 23:25:45 +0100
 </div>
 </div>
 </body>

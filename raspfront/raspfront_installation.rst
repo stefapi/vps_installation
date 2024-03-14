@@ -325,16 +325,27 @@ suivant:
 
 -  Emails: Inactif
 
--  DNSSEC: Actif (cela sera activé dans une seconde étape de ce guide)
+-  DNSSEC: Inactif (cela sera activé dans une seconde étape de ce guide)
 
 Vous ne devez avoir aucune boite mail active sur ce domaine. A regardez
-dans le menu "Boites & redirections Mails". Vous devez reconfigurer les
-'Enregistrements DNS' en mode externes. Dans le menu "serveurs de noms",
-vous devez configurer les serveurs de noms externe. Mettre 3 DNS:
+dans le menu "Boites & redirections Mails".
+
+Ajoutez des Glue records:
+
+-  un pour ns1.<example.com> lié à l’adresse <IP> du serveur
+
+-  un pour ns2.<example.com> lié à l’adresse <IP> du serveur
+
+Vous devez reconfigurer les 'Enregistrements DNS' en mode externes. Dans
+le menu "serveurs de noms", vous devez configurer les serveurs de noms
+externe. Mettre 3 DNS:
 
 -  les deux DNS de votre domaine: ns1.<example.com> et ns2.<example.com>
 
-Pour que tout cela fonctionne bien, ajoutez des Glue records:
+-  puis enfin le nom de votre machine définie par votre hébergeur de
+   VPS: ``vmixxxxxx.contaboserver.net``
+
+Ajoutez des Glue records:
 
 -  un pour ns1.<example.com> lié à l’adresse <IP> du serveur
 
@@ -342,15 +353,11 @@ Pour que tout cela fonctionne bien, ajoutez des Glue records:
 
 .. note::
 
-   Cette configuration du lien chez votre registrar des deux DNS de
-   votre serveur n’est à faire qu’après avoir défini le premier domaine
-   de votre serveur
-
-Il y a la possibilité chez OVH d’utiliser un DNS secondaire. Dans ce
-cas, enregistrez votre nom de domaine sur le serveur de dns secondaire
-de votre hébergeur. Notez ensuite le nom de domaine de ce DNS secondaire
-et ajoutez une entrée supplémentaire sur le serveur de votre registrar
-avec l’adresse DNS secondaire.
+   Il y a la possibilité chez OVH d’utiliser un DNS secondaire. Dans ce
+   cas, enregistrez votre nom de domaine sur le serveur de dns
+   secondaire de votre hébergeur. Notez ensuite le nom de domaine de ce
+   DNS secondaire et ajoutez une entrée supplémentaire sur le serveur de
+   votre registrar avec l’adresse DNS secondaire.
 
 .. note::
 
@@ -1212,6 +1219,48 @@ Installation des paquets de base
 
    apt install curl wget ntpdate apt-transport-https apt-listchanges apt-file apt-rdepends man
 
+.. _`_passage_de_la_locale_en_fr`:
+
+Passage de la locale en FR
+--------------------------
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Tapez:
+
+.. code:: bash
+
+   apt install locales
+
+1. Tapez ensuite:
+
+::
+
+    dpkg-reconfigure locales
+
+1. Dans l’écran qui apparait, sélectionnez: ``fr_FR.UTF_8``
+
+2. Tapez ensuite sur la ligne de commande: ``locale``
+
+3. Le texte suivant apparait:
+
+::
+
+   LANG=fr_FR.UTF-8
+   LC_CTYPE="fr_FR.UTF-8"
+   LC_NUMERIC="fr_FR.UTF-8"
+   LC_TIME="fr_FR.UTF-8"
+   LC_COLLATE="fr_FR.UTF-8"
+   LC_MONETARY="fr_FR.UTF-8"
+   LC_MESSAGES="fr_FR.UTF-8"
+   LC_PAPER="fr_FR.UTF-8"
+   LC_NAME="fr_FR.UTF-8"
+   LC_ADDRESS="fr_FR.UTF-8"
+   LC_TELEPHONE="fr_FR.UTF-8"
+   LC_MEASUREMENT="fr_FR.UTF-8"
+   LC_IDENTIFICATION="fr_FR.UTF-8"
+   LC_ALL=
+
 .. _`_installer_loutil_debfoster`:
 
 Installer l’outil Debfoster
@@ -1407,7 +1456,8 @@ standard.
 
 Une remarque tout de même pour le raspberry pi: le compte sudo permet de
 se logger root sans aucun mot de passe. C’est considéré comme une faille
-de sécurité. Pour corriger cela, logguez vous comme root et tapez:
+de sécurité. Pour corriger cela, `Loguez vous comme root sur le
+serveur <#root_login>`__ et tapez:
 
 .. code:: bash
 
@@ -1423,7 +1473,13 @@ Respectez bien les étapes de cette procédure:
 
 1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-2. Ajoutez un utilisateur standard qui sera nommé par la suite en tant
+2. Installez l’outil ``sudo`` s’il n’est pas déjà présent. Tapez:
+
+   .. code:: bash
+
+      apt install sudo
+
+3. Ajoutez un utilisateur standard qui sera nommé par la suite en tant
    que <sudo_username>
 
    a. Tapez :
@@ -1787,7 +1843,7 @@ Vous pouvez ajouter la liste des mises à jours dans le fichier MOTD:
 
    .. code:: python
 
-      #!/usr/bin/python
+      #!/usr/bin/python3
       import sys
       import subprocess
       import apt_pkg
@@ -1929,12 +1985,12 @@ Tapez :
 
       dphys-swapfile uninstall
 
-3. Pour installer un swap de 2Go, tapez:
+3. Pour installer un swap de 4Go, tapez:
 
    .. code:: bash
 
       cd /
-      fallocate -l 2G /swapfile
+      fallocate -l 4G /swapfile
       chmod 600 /swapfile
       mkswap /swapfile
       swapon /swapfile
@@ -2056,8 +2112,8 @@ ISPConfig 3 a été utilisé dans ce tutoriel.
 
        Lors de votre première connexion, votre domaine n’est pas encore
        configuré. Il faudra alors utiliser le nom DNS donné par votre
-       hébergeur pour votre machine. Pour OVH, elle s’écrit
-       ``VPSxxxxxx.ovh.net``.
+       hébergeur pour votre machine. Pour Contabo, elle s’écrit
+       ``vmixxxxx.contaboserver.net``.
 
 12. . Loguez vous avec le login ``admin`` et le mot de passe que vous
     avez récupéré plus haut.
@@ -3258,9 +3314,9 @@ Login initial
 
 Vous devrez tout d’abord vous loguer sur le serveur ISPConfig. Comme
 vous n’avez pas encore configuré de nom de de domaine, vous devrez vous
-loguer de prime abord sur le site http://vpsxxxxxx.ovh.net:8080/ pour un
-vps chez ovh par exemple ou sur http://raspberrypi.local:8080/ pour un
-Raspberry.
+loguer de prime abord sur le site
+http://vmixxxxx.contaboserver.net:8080/ pour un vps chez contabo par
+exemple ou sur http://raspberrypi.local:8080/ pour un Raspberry.
 
 Utiliser le login: Admin et le mot de passe que vous avez configuré lors
 de l’installation d’ISPConfig
@@ -3269,18 +3325,20 @@ de l’installation d’ISPConfig
 
    a. Dans le menu ``Main config``
 
-      i.  Dans l’onglet ``Sites``, configurer:
+      i.   Dans l’onglet ``Sites``, configurer:
 
-          A. ``Create subdomains as web site:`` ← Yes
+           A. ``Create subdomains as web site:`` ← Yes
 
-          B. ``Create aliasdomains as web site:`` ← Yes
+           B. ``Create aliasdomains as web site:`` ← Yes
 
-      ii. Dans l’onglet ``Mail`` :
+      ii.  Dans l’onglet ``Mail`` :
 
-          A. ``Administrator’s e-mail :`` ← adresse mail de
-             l’administrateur. par exemple admin@example.com
+           A. ``Administrator’s e-mail :`` ← adresse mail de
+              l’administrateur. par exemple admin@example.com
 
-          B. ``Administrator’s name :`` ← nom de l’administrateur
+           B. ``Administrator’s name :`` ← nom de l’administrateur
+
+      iii. Cliquez sur ``Save``
 
    b. Dans le menu ``Firewall``
 
@@ -3969,13 +4027,19 @@ services de base:
          cd /usr/local/ispconfig/interface/ssl/
          mv ispserver.crt ispserver.crt-$(date +"%y%m%d%H%M%S").bak
          mv ispserver.key ispserver.key-$(date +"%y%m%d%H%M%S").bak
-         ln -s /etc/letsencrypt/live/example.com/fullchain.pem ispserver.crt 
-         ln -s /etc/letsencrypt/live/example.com/privkey.pem ispserver.key 
+         ln -s /var/www/clients/<clientx>/<webx>/ssl/<example.com>-le.crt ispserver.crt 
+         ln -s /var/www/clients/<clientx>/<webx>/ssl/<example.com>-le.key ispserver.key 
          cat ispserver.{key,crt} > ispserver.pem
          chmod 600 ispserver.pem
          systemctl restart apache2
 
-      -  remplacer <example.com> par votre nom de domaine
+      -  remplacer <example.com> par votre nom de domaine, <clientx> par
+         votre numéro de client, <webx> par votre numéro de serveur web.
+         L’information est facilement retrouvé en cliquant sur
+         l’interface d’ISPconfig dans
+         ``Sites``\ →`Website`→`<example.com>\`. Le champ
+         ``Document Root`` donne le début du chemin
+         ``/var/www/clients/<clientx>/<webx>/``
 
 4. Liez le certificat Postfix et Dovecot avec celui de let’s encrypt
 
@@ -3986,8 +4050,8 @@ services de base:
          cd /etc/postfix/
          mv smtpd.cert smtpd.cert-$(date +"%y%m%d%H%M%S").bak
          mv smtpd.key smtpd.key-$(date +"%y%m%d%H%M%S").bak
-         ln -s /etc/letsencrypt/live/mail.example.com/fullchain.pem smtpd.cert 
-         ln -s /etc/letsencrypt/live/mail.example.com/privkey.pem smtpd.key 
+         ln -s /var/www/clients/client0/web1/ssl/mail.example.com-le.crt smtpd.cert 
+         ln -s /var/www/clients/client0/web1/ssl/mail.example.com-le.key smtpd.key 
          service postfix restart
          service dovecot restart
 
@@ -4002,6 +4066,7 @@ services de base:
          cd /etc/ssl/private/
          mv pure-ftpd.pem pure-ftpd.pem-$(date +"%y%m%d%H%M%S").bak
          ln -s /usr/local/ispconfig/interface/ssl/ispserver.pem pure-ftpd.pem
+         ln -s /usr/local/ispconfig/interface/ssl/dhparam4096.pem pure-ftpd-dhparams.pem
          chmod 600 pure-ftpd.pem
          service pure-ftpd-mysql restart
 
@@ -4057,7 +4122,7 @@ services de base:
 
       .. code:: bash
 
-         /etc/letsencrypt/archive/mail.example.com/ IN_MODIFY /etc/init.d/le_ispc_pem.sh 
+         /usr/local/ispconfig/interface/ssl/ IN_MODIFY /etc/init.d/le_ispc_pem.sh 
 
       -  Remplacer mail.example.com par votre nom de domaine du mail.
 
@@ -4241,13 +4306,16 @@ Suivez les étapes ci-après:
 
        service apache2 restart
 
-16. Redémarrez Munin. Tapez:
+16. Vérifiez bien que IPV6 est activé. Si ce n’est pas le cas, le
+    redémarrage de Munin peut survenir.
+
+17. Redémarrez Munin. Tapez:
 
     .. code:: bash
 
        service munin-node restart
 
-17. Attendez quelques minutes afin que Munin produise ses premiers
+18. Attendez quelques minutes afin que Munin produise ses premiers
     fichiers de sortie. et allez ensuite sur l’URL:
     http://example.com/munin/.
 
@@ -4282,7 +4350,14 @@ pouvez être tenté de vérifier:
       ln -s /usr/share/munin/plugins/apache_volume
       rm /usr/share/munin/plugins/mysql_
 
-4. Redémarrez ensuite le service Munin. Tapez:
+4. Une autre manière simple de configurer munin est de taper:
+
+   .. code:: bash
+
+      cd /etc/munin/plugins
+      munin-node-configure --shell --families=contrib,auto | sh -x
+
+5. Redémarrez ensuite le service Munin. Tapez:
 
    .. code:: bash
 
@@ -4338,10 +4413,6 @@ suivante:
     ::
 
        cd /etc/monit/conf-enabled
-       ln -s ../conf-available/apache2 .
-       ln -s ../conf-available/openssh-server .
-       ln -s ../conf-available/postfix .
-       ln -s ../conf-available/memcached .
 
 6.  Créez ensuite un fichier pour Mariadb. Tapez:
 
@@ -4405,13 +4476,63 @@ suivante:
         if failed host 127.0.0.1 port 53 type udp protocol dns then restart
         if 5 restarts within 5 cycles then timeout
 
-12. Créez ensuite un fichier pour ntpd. Tapez:
+12. Créez ensuite un fichier pour sshd. Tapez:
+
+    .. code:: bash
+
+       vi /etc/monit/conf-enabled/sshd
+
+13. Ajoutez dans le fichier cette configuration :
+
+    ::
+
+        check process sshd with pidfile /var/run/sshd.pid
+         start program = "/etc/init.d/ssh start"
+         stop program = "/etc/init.d/ssh stop"
+         if failed host localhost port 22 with proto ssh then restart
+         if 5 restarts within 5 cycles then timeout
+
+14. Créez ensuite un fichier pour apache. Tapez:
+
+    .. code:: bash
+
+       vi /etc/monit/conf-enabled/apache2
+
+15. Ajoutez dans le fichier cette configuration :
+
+    ::
+
+        check process apache with pidfile /var/run/apache2/apache2.pid
+          start program = "/etc/init.d/apache2 start"
+          stop program  = "/etc/init.d/apache2 stop"
+          if 4 restarts within 20 cycles then timeout
+          if failed host localhost port 80 with protocol http and request "/server-status" with timeout 25 seconds for 4 times within 5 cycles then restart
+
+16. Créez ensuite un fichier pour memcached. Tapez:
+
+    .. code:: bash
+
+       vi /etc/monit/conf-enabled/memcached
+
+17. Ajoutez dans le fichier cette configuration :
+
+    ::
+
+        check process memcached with pidfile /var/run/memcached/memcached.pid
+          start program = "/etc/init.d/memcached start"
+          stop program  = "/etc/init.d/memcached stop"
+          if failed host 127.0.0.1 port 11211 and protocol memcache then restart
+          if cpu > 60% for 2 cycles then alert
+          if cpu > 98% for 5 cycles then restart
+          if 5 restarts within 20 cycles then timeout
+
+18. Créez ensuite un fichier pour ntpd. Tapez:
 
     .. code:: bash
 
        vi /etc/monit/conf-enabled/ntpd
 
-13. Ajoutez dans le fichier cette configuration :
+19. Ajoutez dans le fichier cette configuration :
 
     ::
 
@@ -4421,13 +4542,13 @@ suivante:
         if failed host 127.0.0.1 port 123 type udp then restart
         if 5 restarts within 5 cycles then timeout
 
-14. Créez ensuite un fichier pour dovecot. Tapez:
+20. Créez ensuite un fichier pour dovecot. Tapez:
 
     .. code:: bash
 
        vi /etc/monit/conf-enabled/dovecot
 
-15. Ajoutez dans le fichier cette configuration :
+21. Ajoutez dans le fichier cette configuration :
 
     ::
 
@@ -4438,17 +4559,52 @@ suivante:
         if failed host localhost port 993 type tcpssl sslauto protocol imap then restart
         if 5 restarts within 5 cycles then timeout
 
-16. La configuration est assez claire à lire. pour obtenir des
+22. Créez ensuite un fichier pour postfix. Tapez:
+
+    .. code:: bash
+
+       vi /etc/monit/conf-enabled/postfix
+
+23. Ajoutez dans le fichier cette configuration :
+
+    ::
+
+        check process postfix with pidfile /var/spool/postfix/pid/master.pid
+          start program = "/etc/init.d/postfix start"
+          stop  program = "/etc/init.d/postfix stop"
+          if failed host localhost port 25 with protocol smtp for 2 times within 3 cycles then restart
+          if 5 restarts with 5 cycles then timeout
+
+24. Créez ensuite un fichier pour redis. Tapez:
+
+    .. code:: bash
+
+       vi /etc/monit/conf-enabled/redis
+
+25. Ajoutez dans le fichier cette configuration :
+
+    ::
+
+       check process redis with pidfile /var/run/redis/redis-server.pid
+         start program = "/usr/sbin/service redis-server start" with timeout 60 seconds
+         stop program  = "/usr/sbin/service redis-server stop" with timeout 60 seconds
+         if failed host 127.0.0.1 port 6379 then restart
+         if totalmem > 500 Mb then alert
+         if cpu > 60% for 2 cycles then alert
+         if cpu > 98% for 5 cycles then restart
+         if 2 restarts within 2 cycles then alert
+
+26. La configuration est assez claire à lire. pour obtenir des
     précisions, référez vous à la documentation de monit
     http://mmonit.com/monit/documentation/monit.html.
 
-17. Redémarrez apache. Tapez:
+27. Redémarrez apache. Tapez:
 
     .. code:: bash
 
        service apache2 restart
 
-18. Dans la configuration pour apache, la configuration indique que
+28. Dans la configuration pour apache, la configuration indique que
     monit doit allez chercher sur le port 80 un fichier dans
     ``/monit/token``. Nous devons donc créer ce fichier. Tapez:
 
@@ -4457,23 +4613,23 @@ suivante:
        mkdir /var/www/html/monit
        echo "hello" > /var/www/html/monit/token
 
-19. Tapez :
+29. Tapez :
 
     .. code:: bash
 
        service monit restart
 
-20. Pour monitorer le statut des process en ligne de commande, tapez:
+30. Pour monitorer le statut des process en ligne de commande, tapez:
 
     .. code:: bash
 
        monit status
 
-21. `Debloquez le port 2812 sur votre firewall <#firewall>`__
+31. `Debloquez le port 2812 sur votre firewall <#firewall>`__
 
-22. Maintenant naviguez sur le site https://example.com:2812/
+32. Maintenant naviguez sur le site https://example.com:2812/
 
-23. Rentrez le login ``admin`` et votre mot de passe ``my_password``.
+33. Rentrez le login ``admin`` et votre mot de passe ``my_password``.
     Monit affiche alors les informations de monitoring du serveur.
 
 .. _`_configuration_de_la_messagerie`:
@@ -4936,10 +5092,9 @@ Suivez la procédure suivante:
 
        .. code:: bash
 
-          vi /etc/dovecot/dovecot.conf
+          vi /etc/dovecot/conf.d/99-ispconfig-custom-config.conf
 
-    c. Insérez dans le groupe plugin et le protocol imap déjà existants
-       dans le fichier :
+    c. Ajoutez le texte suivant :
 
        ::
 
@@ -5093,7 +5248,8 @@ Suivez la procédure suivante:
        et ``/var/log/rspamd/rspamd.log`` doivent montrer les actions de
        recalcul des spams.
 
-40. Enfin, vous pouvez désactiver amavisd si vous le souhaitez. tapez:
+40. Enfin, vous pouvez désactiver amavisd si vous le souhaitez et s’il
+    est installé sur votre système. tapez:
 
     .. code:: bash
 
@@ -5118,21 +5274,26 @@ Pour créer un serveur de messagerie:
 
 4.  Saisissez le nom de domaine.
 
-5.  Cliquez sur ``DomainKeys Indentified Mail (DKIM)``
+5.  Cliquez sur ``Save``
 
-6.  Cliquez sur ``enable DKIM``
+6.  Attendez quelques secondes la fin de configuration puis rouvrez la
+    configuration de votre serveur de mail et
 
-7.  Cliquez sur ``Generate DKIM Private-key``
+7.  Cliquez sur ``DomainKeys Indentified Mail (DKIM)``
 
-8.  Une fois cela fait, retourner dans la gestion des ``Records`` de
+8.  Cliquez sur ``enable DKIM``
+
+9.  Cliquez sur ``Generate DKIM Private-key``
+
+10. Une fois cela fait, retourner dans la gestion des ``Records`` de
     domaine et activer le type DMARC
 
-9.  Garder le paramétrage par défaut et sauvegardez.
+11. Garder le paramétrage par défaut et sauvegardez.
 
-10. Faites de même pour les enregistrements SPF mais sélectionnez le
+12. Faites de même pour les enregistrements SPF mais sélectionnez le
     mécanisme softfail.
 
-11. Votre serveur est créé et protégé Contre les spams (entrants et
+13. Votre serveur est créé et protégé Contre les spams (entrants et
     sortants).
 
 .. _`_finaliser_la_sécurisation_de_votre_serveur_de_mail`:
@@ -5166,7 +5327,8 @@ suivantes:
       service postfix restart
 
 5. Vous pouvez ajouter une signature DKIM. Si vous utilisez ISPConfig,
-   cette opération est effectuée automatiquement:
+   cette opération est effectuée automatiquement et cette étape est à
+   sauter :
 
    -  DKIM est une méthode d’authentification du courrier électronique
       conçue pour détecter l’usurpation d’adresse électronique. Elle
@@ -5362,28 +5524,52 @@ Appliquez la procédure suivante:
 
    b. Le faire pointer vers le web folder ``autoconfig``.
 
-   c. Activer let’s encrypt ssl
+   c. Mettre dans ``Auto-SubDomain`` la valeur ``None``
 
-   d. Activer ``php-FPM``
+   d. Activer let’s encrypt ssl
 
-   e. Laisser le reste par défaut.
+   e. Activer ``php-CGI``
 
-   f. Dans l’onglet Options:
+   f. Laisser le reste par défaut.
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Dans l’onglet Options:
+
+   h. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
-         AddType application/x-httpd-php .php .php3 .php4 .php5 .xml
+         <FilesMatch "^.+\.xml$">
+                 SetHandler "proxy:unix:/run/php/php8.2-fpm.sock|fcgi://localhost" 
+         </FilesMatch>
 
-         CheckSpelling Off
-         CheckCaseOnly On
+         <FilesMatch "^.+\.json$">
+                 SetHandler "proxy:unix:/run/php/php8.2-fpm.sock|fcgi://localhost" 
+         </FilesMatch>
 
-   h. Sauver.
+         AddHandler application/x-httpd-php .php .xml .json
+
+         <IfModule mod_speling.c>
+             CheckCaseOnly on
+             CheckSpelling on
+         </IfModule>
+
+      -  Mettez bien ici la version de PHP que vous avez choisi. Dans
+         l’exemple c’est la 8.2
+
+   i. Sauver.
 
 2. `Loguez vous comme root sur le serveur <#root_login>`__
 
-3. Dans le répertoire ``/var/www/autoconfig.<example.com>/autoconfig/``
+3. Editez le fichier le fichier ``/etc/php/8.2/fpm/pool.d/www.conf``
+   (mettez votre version choisie à la place de 8.2).
+
+4. Dans le fichier, recherchez ``security.limit_extension`` et ajoutez:
+
+::
+
+   security.limit_extensions = .php .php3 .php4 .php5 .php7 .xml .json
+
+1. Dans le répertoire ``/var/www/autoconfig.<example.com>/autoconfig/``
    créer un répertoire mail. Lui donner les permissions 755 et affecter
    les mêmes possesseurs que pour autres fichiers du répertoire. Tapez:
 
@@ -5399,14 +5585,14 @@ Appliquez la procédure suivante:
 
    -  remplacez ``example.com`` par votre nom de domaine
 
-4. A l’intérieur de ce répertoire, Editez un fichier
+2. A l’intérieur de ce répertoire, Editez un fichier
    ``config-v1.1.xml``. Tapez:
 
    .. code:: bash
 
       vi autoconfig/mail/config-v1.1.xml
 
-5. Y coller:
+3. Y coller:
 
    .. code:: xml
 
@@ -5457,7 +5643,7 @@ Appliquez la procédure suivante:
 
    -  mettre ici un libellé court pour votre nom de messagerie
 
-6. Donner la permission en lecture seule et affecter les groupes
+4. Donner la permission en lecture seule et affecter les groupes
    d’appartenance. Tapez:
 
    .. code:: bash
@@ -5479,35 +5665,59 @@ Cette methode ne fonctionne pas avec les versions récentes de Outlook.
 
 Appliquez la procédure suivante:
 
-1.  Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
-    configurateur de sites.
+1. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
+   configurateur de sites.
 
-    a. Lui donner le nom ``autodiscover``.
+   a. Lui donner le nom ``autodiscover``.
 
-    b. Le faire pointer vers le web folder ``autodiscover``.
+   b. Le faire pointer vers le web folder ``autoconfig``.
 
-    c. Activer let’s encrypt ssl
+   c. Mettre dans ``Auto-SubDomain`` la valeur ``None``
 
-    d. Activer ``php-FPM``
+   d. Activer let’s encrypt ssl
 
-    e. Laisser le reste par défaut.
+   e. Activer ``php-CGI``
 
-    f. Dans l’onglet Options:
+   f. Laisser le reste par défaut.
 
-    g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Dans l’onglet Options:
 
-       .. code:: apache
+   h. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
-          AddType application/x-httpd-php .php .php3 .php4 .php5 .xml .json
+      .. code:: apache
 
-          CheckSpelling Off
-          CheckCaseOnly On
+         <FilesMatch "^.+\.xml$">
+                 SetHandler "proxy:unix:/run/php/php8.2-fpm.sock|fcgi://localhost" 
+         </FilesMatch>
 
-    h. Sauver.
+         <FilesMatch "^.+\.json$">
+                 SetHandler "proxy:unix:/run/php/php8.2-fpm.sock|fcgi://localhost" 
+         </FilesMatch>
 
-2.  `Loguez vous comme root sur le serveur <#root_login>`__
+         AddHandler application/x-httpd-php .php .xml .json
 
-3.  Dans le répertoire
+         <IfModule mod_speling.c>
+             CheckCaseOnly on
+             CheckSpelling on
+         </IfModule>
+
+      -  Mettez bien ici la version de PHP que vous avez choisi. Dans
+         l’exemple c’est la 8.2
+
+   i. Sauver.
+
+2. `Loguez vous comme root sur le serveur <#root_login>`__
+
+3. Editez le fichier le fichier ``/etc/php/8.2/fpm/pool.d/www.conf``
+   (mettez votre version choisie à la place de 8.2).
+
+4. Dans le fichier, recherchez ``security.limit_extension`` et ajoutez:
+
+::
+
+   security.limit_extensions = .php .php3 .php4 .php5 .php7 .xml .json
+
+1.  Dans le répertoire
     ``/var/www/autoconfig.<example.com>/autoconfig/``, créer un
     répertoire ``Autodiscover``. Lui donner les permissions 755 et
     affecter les mêmes possesseurs que pour autres fichiers du
@@ -5525,14 +5735,14 @@ Appliquez la procédure suivante:
 
     -  remplacez ``example.com`` par votre nom de domaine
 
-4.  A l’intérieur de ce répertoire, Editez un fichier
+2.  A l’intérieur de ce répertoire, Editez un fichier
     ``Autodiscover.xml``. Tapez:
 
     .. code:: bash
 
        vi autoconfig/Autodiscover/Autodiscover.xml
 
-5.  Y coller:
+3.  Y coller:
 
     .. code:: xml
 
@@ -5591,7 +5801,7 @@ Appliquez la procédure suivante:
 
     -  mettre à la place de ``example.com`` votre nom de domaine
 
-6.  Changez les permissions comme pour le répertoire
+4.  Changez les permissions comme pour le répertoire
 
     .. code:: bash
 
@@ -5601,48 +5811,21 @@ Appliquez la procédure suivante:
     -  remplacer web1:client0 par les permissions du répertoire
        ``/var/www/autoconfig.example.com``
 
-7.  Dans ce même répertoire créez un fichier ``.htaccess`` et Ajoutez y:
-
-    ::
-
-       RewriteEngine On
-       RewriteCond %{REQUEST_FILENAME} -s [OR]
-       RewriteCond %{REQUEST_FILENAME} -l [OR]
-       RewriteCond %{REQUEST_FILENAME} -d
-       RewriteRule ^.*$ - [NC,L]
-       RewriteRule ^.*$ autodiscover.php [NC,L]
-
-8.  Pointer votre navigateur sur le site
+5.  Pointer votre navigateur sur le site
     https://autodiscover.example.com/Autodiscover/Autodiscover.xml.
 
-9.  Le contenu du fichier xml doit s’afficher
+6.  Le contenu du fichier xml doit s’afficher
 
-10. Dans le répertoire
-    ``/var/www/autoconfig.<example.com>/autoconfig/``, créer un
-    répertoire ``autodiscover``. Lui donner les permissions 755 et
-    affecter les mêmes possesseurs que pour autres fichiers du
-    répertoire. Tapez:
-
-    .. code:: bash
-
-       cd /var/www/autoconfig.example.com 
-       mkdir -p autoconfig/autodiscover/
-       chmod 755 autoconfig/autodiscover/
-       chown web1:client0 autoconfig/autodiscover/ 
-
-    -  remplacer web1:client0 par les permissions du répertoire
-       ``/var/www/autoconfig.example.com``
-
-    -  remplacez ``example.com`` par votre nom de domaine
-
-11. A l’intérieur de ce répertoire, Editez un fichier
+7.  Dans le répertoire
+    ``/var/www/autoconfig.<example.com>/autoconfig/``, Editez un fichier
     ``autodiscover.json``. Tapez:
 
     .. code:: bash
 
-       vi autoconfig/autodiscover/autodiscover.json
+       ln -s
+       vi autoconfig/Autodiscover/autodiscover.json
 
-12. Y coller:
+8.  Y coller:
 
     .. code:: php
 
@@ -5651,22 +5834,23 @@ Appliquez la procédure suivante:
        echo '{"Protocol":"AutodiscoverV1","Url":"https://autodiscover.example.com/Autodiscover/Autodiscover.xml"}';
        ?>
 
-13. Changez les permissions comme pour le répertoire
+9.  Changez les permissions comme pour le répertoire
 
     .. code:: bash
 
-       chmod 644 autoconfig/autodiscover/autodiscover.json
-       chown web1:client0 autoconfig/autodiscover/autodiscover.json 
+       chmod 644 autoconfig/Autodiscover/autodiscover.json
+       chown web1:client0 autoconfig/Autodiscover/autodiscover.json 
+       cp -pr autoconfig/Autodiscover autoconfig/autodiscover
 
     -  remplacer web1:client0 par les permissions du répertoire
        ``/var/www/autoconfig.example.com``
 
-14. Pointer votre navigateur sur le site
+10. Pointer votre navigateur sur le site
     https://autodiscover.example.com/autodiscover/autodiscover.json
 
-15. Le contenu du fichier json doit s’afficher
+11. Le contenu du fichier json doit s’afficher
 
-16. Vous pouvez faire aussi un test sur le `Testeur de connectivité
+12. Vous pouvez faire aussi un test sur le `Testeur de connectivité
     Microsoft <https://testconnectivity.microsoft.com>`__.
 
     a. choisissez: ``Découverte automatique Outlook``
@@ -5821,6 +6005,7 @@ Il vous reste à appliquer la procédure suivante:
          SSLProxyCheckPeerName off
          SSLProxyCheckPeerExpire off
 
+         ProxyPass /webmail https://localhost:8080/webmail/
          ProxyPass / https://localhost:8080/webmail/
          ProxyPassReverse / https://localhost:8080/webmail/
 
@@ -5914,7 +6099,7 @@ A propos des Raspberry Pi
    Les raspberry utilisent une architecture ARM, tous les containeurs ne
    seront pas forcément compatibles "out of the box" ( Exemple pour
    MySQL). Sur le `Docker Hub <https://hub.docker.com/>`__, il faut
-   choisir par un Raspberry Pi 4 en Ubuntu une architecture de type
+   choisir par un Raspberry Pi 4 ou 5 en Ubuntu une architecture de type
    ARM64 et pour un Raspberry Pi 3 en Raspbian une architecture de type
    ARM.
 
@@ -5927,108 +6112,59 @@ L’installation de Docker est relativement simple.
 
 Il faut suivre les étapes suivantes:
 
-1.  `Loguez vous comme root sur le serveur <#root_login>`__
-
-2.  Désinstallez les éventuelles anciennes versions de docker. tapez:
-
-    .. code:: bash
-
-       apt remove --purge docker docker-engine docker.io containerd runc 
-
-    -  docker-engine n’existe pas dans une distribution ubuntu. C’est à
-       enlever.
-
-3.  Tapez:
-
-    .. code:: bash
-
-       apt update
-       apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-       cd /etc/apt/trusted.gpg.d
-       wget -O docker.asc https://download.docker.com/linux/debian/gpg
-
-4.  tapez :
-
-    .. code:: bash
-
-       lsb_release -cs
-
-5.  Ici la version de votre distribution doit s’afficher.
-
-    .. warning::
-
-       pour des installations hybride d’une distribution debian, la
-       version qui est proposée peut être la future SID ou la Testing
-       pour lesquelles il n’existe pas obligatoirement de version
-       installable de docker. Dans ce cas vous devrez sélectionner vous
-       même la version de la distribution stable.
-
-6.  Tapez (et remplacer éventuellement la commande $(lsb_release -cs)
-    par le nom de votre distribution stable). :
-
-    .. code:: bash
-
-       add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" 
-
-    -  ici il faut remplacer l’architecture ``amd64`` par ``arm64`` pour
-       un raspberry pi 4 ou par ``armhf`` pour un raspberry pi 3. De la
-       même manière, remplacez debian par ubuntu si vous utilisez une
-       distribution ubuntu/
-
-7.  Une fois installé avec succès, tapez:
-
-    .. code:: bash
-
-       apt update
-
-8.  Si vous obtenez une erreur c’est que vous avez ajouté un repository
-    qui n’est pas suppporté par Docker. Vérifiez les fichier
-    ``/etc/apt/sources.list``.
-
-9.  Une fois mis à jour avec succès, tapez:
-
-    .. code:: bash
-
-       apt install docker-ce docker-ce-cli containerd.io
-
-10. vérifiez que votre installation de ``Docker`` est fonctionnelle.
-    Tapez:
-
-    .. code:: bash
-
-       docker run hello-world
-
-11. Cette commande exécute un conteneur simple. Si aucune erreur
-    n’apparaît c’est que l’installation est réussie.
-
-.. _`_installation_de_docker_compose`:
-
-Installation de docker-compose
-------------------------------
-
-Docker-compose est un outil qui aide à l’installation de plusieurs
-container de façon simultané. Il permet surtout de vérifier que
-l’échosystème installé interagit bien.
-
-Il faut suivre les étapes suivantes:
-
 1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-2. Installez quelques paquets Debian de base. Tapez:
+2. Désinstallez les éventuelles anciennes versions de docker. tapez:
 
    .. code:: bash
 
-      apt install libffi-dev libssl-dev
-      apt install -y python3 python3-pip 
+      apt remove --purge docker docker.io containerd runc docker-doc docker-compose podman-docker 
 
-   -  Pour Ubuntu, remplacez ces paquets par ``python`` et
-      ``python-pip``
+   -  docker-engine n’existe pas dans une distribution ubuntu. C’est à
+      enlever.
 
-3. Installez docker-compose :
+3. Tapez:
 
    .. code:: bash
 
-      pip3 install docker-compose
+      # Add Docker's official GPG key:
+      apt-get update
+      apt-get install ca-certificates curl
+      install -m 0755 -d /etc/apt/keyrings
+      curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+      chmod a+r /etc/apt/keyrings/docker.asc
+
+      # Add the repository to Apt sources:
+      echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+        $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+        tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+4. Une fois installé avec succès, tapez:
+
+   .. code:: bash
+
+      apt update
+
+5. Si vous obtenez une erreur c’est que vous avez ajouté un repository
+   qui n’est pas suppporté par Docker. Vérifiez les fichier
+   ``/etc/apt/sources.list``.
+
+6. Une fois mis à jour avec succès, tapez:
+
+   .. code:: bash
+
+      apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+7. vérifiez que votre installation de ``Docker`` est fonctionnelle.
+   Tapez:
+
+   .. code:: bash
+
+      docker run hello-world
+
+8. Cette commande exécute un conteneur simple. Si aucune erreur
+   n’apparaît c’est que l’installation est réussie.
 
 .. _`_installation_de_docker_swarm`:
 
@@ -6101,7 +6237,7 @@ l’image docker que vous chargez est compatible de votre plateforme. Sur
 Docker Hub, vous devez allez sur l’onglet Tag de votre package et
 vérifier que le champ OS/ARCH contient bien votre plateforme.
 
-Pour un Raspberry Pi 4 ce doit être: ``Linux/arm64``
+Pour un Raspberry Pi 4 ou 5 ce doit être: ``Linux/arm64``
 
 Pour un Raspberry Pi 3 ce doit être: ``Linux/arm``
 
@@ -9418,7 +9554,7 @@ Pour installer Loki, appliquez la procédure suivante:
     `Loki <https://github.com/grafana/loki/releases/>`__ et copier
     l’adresse du lien vers la dernière version de loki-linux-amd64.zip
     (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip
-    pour raspberry pi 4)
+    pour raspberry pi 4 ou 5)
 
 3.  Tapez:
 
@@ -9550,7 +9686,7 @@ Installez maintenant Promtail:
     `Loki <https://github.com/grafana/loki/releases/>`__ et copier
     l’adresse du lien vers la dernière version de
     promtail-linux-amd64.zip (ou promtail-linux-arm.zip pour raspberry
-    pi 3 ou promtail-linux-arm64.zip pour raspberry pi 4)
+    pi 3 ou promtail-linux-arm64.zip pour raspberry pi 4 ou 5)
 
 2.  `Loguez vous comme root sur le serveur <#root_login>`__
 
@@ -9669,7 +9805,7 @@ Appliquez la procédure suivante:
    `Loki <https://github.com/grafana/loki/releases/>`__ et copier
    l’adresse du lien vers la dernière version de loki-linux-amd64.zip
    (ou loki-linux-arm.zip pour raspberry pi 3 ou loki-linux-arm64.zip
-   pour raspberry pi 4)
+   pour raspberry pi 4 ou 5)
 
 3. allez sur le site de
    `Loki <https://github.com/grafana/loki/releases/>`__ et copier

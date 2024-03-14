@@ -24,3 +24,5 @@ echo '
 ' > raspfront_installation.rst
 cat raspfront_installation.tmp >> raspfront_installation.rst
 rm raspfront_installation.tmp
+
+pip-compile --output-file=- > requirements.txt
