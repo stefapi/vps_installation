@@ -1152,7 +1152,7 @@ Mise à jour des sources de paquets Debian ou Ubuntu
 
    b. Dé-commenter les lignes débutant par ``deb`` et contenant le terme
       ``backports``. Par exemple pour
-      ``#deb http://deb.debian.org/debian bullseye-backports main contrib non-free``
+      ``#deb http://deb.debian.org/debian bookworm-backports main contrib non-free``
       enlever le # en début de ligne
 
    c. Ajouter sur toutes les lignes les paquets ``contrib`` et
@@ -1260,6 +1260,13 @@ Passage de la locale en FR
    LC_MEASUREMENT="fr_FR.UTF-8"
    LC_IDENTIFICATION="fr_FR.UTF-8"
    LC_ALL=
+
+1. Tapez ensuite la ligne suivante pour installer l’environnement en
+   français:
+
+.. code:: bash
+
+   apt install task-french
 
 .. _`_installer_loutil_debfoster`:
 
@@ -2012,7 +2019,7 @@ Tapez :
 
    .. code:: bash
 
-      vi /etc/systctl.conf
+      vi /etc/sysctl.conf
 
 7. Ajoutez ou modifiez la ligne:
 
@@ -3159,26 +3166,12 @@ précise des fonctionnalités.
 
 1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-2.  Ajoutez le repository Webmin
+2.  Lancez le script de configuration de webmin:
 
-    a. allez dans le répertoire des repositories. Tapez :
+    .. code:: bash
 
-       .. code:: bash
-
-          cd /etc/apt/sources.list.d
-
-    b. Tapez: :
-
-       .. code:: bash
-
-          echo "deb http://download.webmin.com/download/repository sarge contrib" >> webmin.list
-
-    c. Ajoutez la clé. Tapez :
-
-       .. code:: bash
-
-          cd /etc/apt/trusted.gpg.d
-          wget http://www.webmin.com/jcameron-key.asc
+       curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
+       sh setup-repos.sh
 
 3.  Mise à jour. Tapez :
 
@@ -3708,25 +3701,21 @@ Vous aurez des actions complémentaires à effectuer sur votre domaine:
       ``sub.example.com.`` et un ``nameserver Hostname`` ←
       ``ns2.sub.example.com.``
 
-   -  un enregistrement de type ``NS`` avec une ``Zone`` ←
-      ``sub.example.com.`` et un ``nameserver Hostname`` ←
-      ``ns3.example.com.`` .
+   -  un enregistrement de type ``A`` avec une ``IP_Address`` ←
+      ``IPV4_NS1`` et un ``Hostname`` ← ``ns1.sub.example.com.``
 
-      Ce dernier type d’enregistrement se nomme un Glue record pour
-      faire le lien vers le serveur secondaire.
+   -  un enregistrement de type ``A`` avec une ``IP_Address`` ←
+      ``IPV4_NS2`` et un ``Hostname`` ← ``ns2.sub.example.com.``
 
-   -  un enregistrement de type ``A`` avec un ``Hostname`` ← ns3 et une
-      ``IP-address`` ← Adresse IP de votre routeur ADSL ou est connecté
-      le Raspberry.
+      Ces deux derniers types d’enregistrement se nomment un Glue record
+      pour faire le lien vers le serveur secondaire.
 
-   -  Si vous ne la connaissez pas, tapez dans un terminal texte:
+   -  Si vous connaissez pas l’adresse IPV4, tapez dans un terminal
+      texte de votre serveur 'sub.example.com\`:
 
       .. code:: bash
 
          wget -qO- http://ipecho.net/plain; echo
-
-      Ce dernier enregistrement en complétant le Glue record fait le
-      lien avec l’adresse IP de ``sub.example.com``
 
 4. Si vous avez activé DNSSEC sur votre serveur DNS de
    ``sub.example.com`` vous devrez récupérer les entrées DS du champ
@@ -4122,9 +4111,7 @@ services de base:
 
       .. code:: bash
 
-         /usr/local/ispconfig/interface/ssl/ IN_MODIFY /etc/init.d/le_ispc_pem.sh 
-
-      -  Remplacer mail.example.com par votre nom de domaine du mail.
+         /usr/local/ispconfig/interface/ssl/ IN_MODIFY /etc/init.d/le_ispc_pem.sh
 
 .. _`_surveillance_du_serveur_avec_munin_et_monit`:
 
@@ -5042,15 +5029,19 @@ Suivez la procédure suivante:
 
     b. Le faire pointer vers le web folder ``rspamd``.
 
-    c. Activer let’s encrypt ssl
+    c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-    d. Activer ``Fast CGI`` pour PHP
+    d. Activer ``let’s encrypt SSL``
 
-    e. Laisser le reste par défaut.
+    e. Activer ``PHP-FPM`` pour PHP
 
-    f. Dans l’onglet Options:
+    f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-    g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+    g. Laisser le reste par défaut.
+
+    h. Dans l’onglet Options:
+
+    i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
        .. code:: apache
 
@@ -5063,13 +5054,20 @@ Suivez la procédure suivante:
           ProxyPass /stats !
           ProxyPass /.well-known/acme-challenge !
 
-          # rspamd httpserver
+          # redirect from server
           #
 
           SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+          SSLProxyEngine On # Comment this out if no https required
           ProxyPreserveHost    On
-          ProxyPass / http://localhost:11334/
-          ProxyPassReverse / http://localhost:11334/
+          SSLProxyVerify none
+          SSLProxyCheckPeerCN off
+          SSLProxyCheckPeerName off
+          SSLProxyCheckPeerExpire off
+
+          ProxyPass /rspamd https://example.com:8081/rspamd/ 
+          ProxyPass / https://example.com:8081/rspamd/ 
+          ProxyPassReverse / https://example.com:8081/rspamd/ 
 
           RedirectMatch ^/$ https://rspamd.example.com 
 
@@ -5526,15 +5524,19 @@ Appliquez la procédure suivante:
 
    c. Mettre dans ``Auto-SubDomain`` la valeur ``None``
 
-   d. Activer let’s encrypt ssl
+   d. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   e. Activer ``php-CGI``
+   e. Activer ``let’s encrypt SSL``
 
-   f. Laisser le reste par défaut.
+   f. Activer ``PHP-FPM`` pour PHP
 
-   g. Dans l’onglet Options:
+   g. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   h. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   h. Laisser le reste par défaut.
+
+   i. Dans l’onglet Options:
+
+   j. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -5556,7 +5558,7 @@ Appliquez la procédure suivante:
       -  Mettez bien ici la version de PHP que vous avez choisi. Dans
          l’exemple c’est la 8.2
 
-   i. Sauver.
+   k. Sauver.
 
 2. `Loguez vous comme root sur le serveur <#root_login>`__
 
@@ -5674,15 +5676,19 @@ Appliquez la procédure suivante:
 
    c. Mettre dans ``Auto-SubDomain`` la valeur ``None``
 
-   d. Activer let’s encrypt ssl
+   d. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   e. Activer ``php-CGI``
+   e. Activer ``let’s encrypt SSL``
 
-   f. Laisser le reste par défaut.
+   f. Activer ``PHP-FPM`` pour PHP
 
-   g. Dans l’onglet Options:
+   g. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   h. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   h. Laisser le reste par défaut.
+
+   i. Dans l’onglet Options:
+
+   j. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -5704,7 +5710,7 @@ Appliquez la procédure suivante:
       -  Mettez bien ici la version de PHP que vous avez choisi. Dans
          l’exemple c’est la 8.2
 
-   i. Sauver.
+   k. Sauver.
 
 2. `Loguez vous comme root sur le serveur <#root_login>`__
 
@@ -5822,7 +5828,6 @@ Appliquez la procédure suivante:
 
     .. code:: bash
 
-       ln -s
        vi autoconfig/Autodiscover/autodiscover.json
 
 8.  Y coller:
@@ -5831,8 +5836,10 @@ Appliquez la procédure suivante:
 
        <?php
        header('Content-type: application/json');
-       echo '{"Protocol":"AutodiscoverV1","Url":"https://autodiscover.example.com/Autodiscover/Autodiscover.xml"}';
+       echo '{"Protocol":"AutodiscoverV1","Url":"https://autodiscover.example.com/Autodiscover/Autodiscover.xml"}'; 
        ?>
+
+    -  mettre à la place de ``example.com`` votre nom de domaine
 
 9.  Changez les permissions comme pour le répertoire
 
@@ -5973,15 +5980,19 @@ Il vous reste à appliquer la procédure suivante:
 
    b. Le faire pointer vers le web folder ``mail``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Laisser le reste par défaut.
+
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -6064,7 +6075,7 @@ Suivez la procédure suivante:
 
    ::
 
-      ./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 secretdst
+      ./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 secretdst --addheader
 
 6. Un fois la synchronisation effectuée, vous pouvez supprimer le
    fichier des mots de passe. tapez:
@@ -6460,15 +6471,19 @@ Pour la création du site web, il faut suivre les étapes suivantes:
 
     b. Le faire pointer vers le web folder ``yacht``.
 
-    c. Activer let’s encrypt ssl
+    c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-    d. Activer ``Fast CGI`` pour PHP
+    d. Activer ``let’s encrypt SSL``
 
-    e. Laisser le reste par défaut.
+    e. Activer ``PHP-FPM`` pour PHP
 
-    f. Dans l’onglet Options:
+    f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-    g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+    g. Laisser le reste par défaut.
+
+    h. Dans l’onglet Options:
+
+    i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
        .. code:: apache
 
@@ -6611,15 +6626,19 @@ Pour la création du site web, il faut suivre les étapes suivantes:
 
    b. Le faire pointer vers le web folder ``portainer``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Laisser le reste par défaut.
+
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -7758,7 +7777,7 @@ Ouvrez un terminal et suivez la procédure:
    .. code:: bash
 
       docker volume create mealie_data
-      docker run -d -p 1282:80 --name=mealie --restart=always -v mealie_data:'/app/data/' -e PGID=1000 -e PUID=1000  hkotel/mealie:latest
+      docker run -d -p 1282:9000 --name=mealie --restart=always -v mealie_data:'/app/data/' -e PGID=1000 -e PUID=1000  ghcr.io/mealie-recipes/mealie:latest
 
 .. _`_création_du_site_web_de_mealie`:
 
@@ -7786,17 +7805,19 @@ Appliquez la procédure suivante:
 
    b. Le faire pointer vers le web folder ``mealie``.
 
-   c. Dans auto-Subdomain ← Sélectionnez ``None``
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer let’s encrypt ssl
+   d. Activer ``let’s encrypt SSL``
 
-   e. Activer ``Fast CGI`` pour PHP
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Laisser le reste par défaut.
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans l’onglet Options:
+   g. Laisser le reste par défaut.
 
-   h. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -7865,7 +7886,7 @@ Sinon, effectuez les opérations suivantes:
       docker pull hkotel/mealie:latest
       docker stop mealie
       docker rm mealie
-      docker run -d -p 1282:80 --name=mealie --restart=always -v mealie_data:'/app/data/' -e PGID=1000 -e PUID=1000  hkotel/mealie:latest
+      docker run -d -p 1282:9000 --name=mealie --restart=always -v mealie_data:'/app/data/' -e PGID=1000 -e PUID=1000  ghcr.io/mealie-recipes/mealie:latest
 
 .. _`_installation_du_gestionnaire_de_photos_piwigo`:
 
@@ -8070,23 +8091,24 @@ Pour installer, Suivez la procédure suivante:
 
 ::
 
-   vi /etc/php/7.3/apache2/php.ini
+   vi /etc/php/8.2/fpm/php.ini 
 
-1. Cherchez les champs ci dessous et changez les valeurs comme suit:
+-  remplacer 8.2 par votre version de php
 
-   .. code:: ini
+   1. Cherchez les champs ci dessous et changez les valeurs comme suit:
 
-      memory_limit = 512M
-      upload_max_filesize = 500M
-      post_max_size = 500M
-      max_execution_time = 300
-      date.timezone = Asia/Kolkata
+      .. code:: ini
 
-2. Sauvez et redémarrez apache. Tapez:
+         memory_limit = 512M
+         upload_max_filesize = 500M
+         post_max_size = 500M
+         max_execution_time = 300
 
-   .. code:: command
+   2. Sauvez et redémarrez apache. Tapez:
 
-      systemctl restart apache2
+      .. code:: command
+
+         systemctl restart apache2
 
 .. _`_création_du_site_web_de_nextcloud`:
 
@@ -8114,16 +8136,20 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    b. Le faire pointer vers le web folder ``nextcloud``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``PHP-FPM`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Aller dans l’onglet ``Statistics`` pour ``Webstatistics program``
+   e. Activer ``PHP-FPM`` pour PHP
+
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
+
+   g. Aller dans l’onglet ``Statistics`` pour ``Webstatistics program``
       sélectionnez ``None``
 
-   f. Laisser le reste par défaut.
+   h. Laisser le reste par défaut.
 
-   g. Cliquez sur ``Save``
+   i. Cliquez sur ``Save``
 
 .. _`_création_des_bases_de_données_7`:
 
@@ -8266,15 +8292,19 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    b. Le faire pointer vers le web folder ``gitea``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Laisser le reste par défaut.
+
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -8300,7 +8330,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
       -  remplacer ``example.com`` par votre nom de domaine
 
-   h. Cliquez sur ``Save``
+   j. Cliquez sur ``Save``
 
 3. `Loguez vous comme root sur le serveur <#root_login>`__
 
@@ -8555,18 +8585,18 @@ Appliquez les opérations suivantes:
       chmod 755 /usr/local/bin/gitea
       service gitea start
 
-.. _`_installation_de_bitwarden`:
+.. _`_installation_de_vaultwarden`:
 
-Installation de Bitwarden
-=========================
+Installation de vaultwarden
+===========================
 
-le logiciel ``Bitwarden`` est un gestionnaire de mots de passe
+le logiciel ``vaultwarden`` est un gestionnaire de mots de passe
 relativement complet et gratuit. Il peut être installé sur votre serveur
-VPS de manière indépendante de l’éditeur Bitwarden.
+VPS de manière indépendante de l’éditeur vaultwarden.
 
 Il reste cependant un bémol puisque l’installation s’effectue à l’aide
 de containers dockers qui sont eux générés par l’éditeur de
-``bitwarden``.
+``vaultwarden``.
 
 .. _`_prérequis_2`:
 
@@ -8576,14 +8606,15 @@ Prérequis
 Il vous faudra tout d’abord installer ``docker`` en vous référant au
 chapitre qui y est consacré.
 
-.. _`_installation_du_serveur_bitwarden`:
+.. _`_installation_du_serveur_vaultwarden`:
 
-Installation du serveur Bitwarden
----------------------------------
+Installation du serveur vaultwarden
+-----------------------------------
 
-Nous allons installer Vaultwarden qui est la version libre de bitwarden
-et compatible avec les APIs. Cette version est plus complète que la
-version officielle, consomme moins de ressources et est plus rapide.
+Nous allons installer Vaultwarden qui est la version libre de
+vaultwarden et compatible avec les APIs. Cette version est plus complète
+que la version officielle, consomme moins de ressources et est plus
+rapide.
 
 Ouvrez un terminal et suivez la procédure:
 
@@ -8591,30 +8622,39 @@ Ouvrez un terminal et suivez la procédure:
 
 2. Allez dans le répertoire de root
 
-3. Créez un code de hashage valide et notez le. tapez:
+3. Installez ``argon2``
 
    .. code:: bash
 
-      openssl rand -base64 48
+      apt install argon2
 
-4. Créez le docker de Vaultwarden. Tapez:
+4. Créez un `mot de passe <#pass_gen>`__
+
+5. Créez un code de hashage valide à partir de celui ci et notez le.
+   tapez:
+
+   .. code:: bash
+
+      echo -n "MySecretPassword" | argon2 "$(openssl rand -base64 32)" -e -id -k 19456 -t 2 -p 1
+
+6. Créez le docker de Vaultwarden. Tapez:
 
    .. code:: bash
 
       docker volume create vaultwarden_data
-      docker run -d -p 1280:80 --name=bitwarden --restart=always -v vaultwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com vaultwarden/server:latest 
+      docker run -d -p 1280:80 --name=vaultwarden --restart=always -v vaultwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://vaultwarden.example.com vaultwarden/server:latest 
 
    -  ici il faut remplacer ``example.com`` par votre nom de domaine. Il
       faut aussi remplacer ``mailname@example.com`` par une boite mail
       valide sur le serveur et ``mailpassword`` par le mot de passe de
       cette boite mail valide. ``Hashcode`` doit être remplacé par le
       code de hashage généré. Ce code protège l’accès ``admin`` de
-      Bitwarden.
+      vaultwarden.
 
-.. _`_création_du_site_web_de_bitwarden`:
+.. _`_création_du_site_web_de_vaultwarden`:
 
-Création du site web de Bitwarden
----------------------------------
+Création du site web de vaultwarden
+-----------------------------------
 
 Appliquez la procédure suivante:
 
@@ -8623,7 +8663,7 @@ Appliquez la procédure suivante:
 
    a. Cliquez sur ``A`` et saisissez:
 
-      -  ``Hostname:`` ← Tapez ``bitwarden``
+      -  ``Hostname:`` ← Tapez ``vaultwarden``
 
       -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
          de votre serveur
@@ -8633,19 +8673,21 @@ Appliquez la procédure suivante:
 2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
    configurateur de sites.
 
-   a. Lui donner le nom ``bitwarden``.
+   a. Lui donner le nom ``vaultwarden``.
 
-   b. Le faire pointer vers le web folder ``bitwarden``.
+   b. Le faire pointer vers le web folder ``vaultwarden``.
 
-   c. Activer let’s encrypt ssl
+   c. Mettre ``None`` dans ``Auto-Subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer let’s encrypt ssl
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-PFM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Laisser le reste par défaut.
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Dans l’onglet Options:
+
+   h. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -8658,7 +8700,7 @@ Appliquez la procédure suivante:
          ProxyPass /stats !
          ProxyPass /.well-known/acme-challenge !
 
-         # bitwarden httpserver
+         # vaultwarden httpserver
          #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
@@ -8667,16 +8709,16 @@ Appliquez la procédure suivante:
          ProxyPass / http://localhost:1280/
          ProxyPassReverse / http://localhost:1280/
 
-         RedirectMatch ^/$ https://bitwarden.example.com
+         RedirectMatch ^/$ https://vaultwarden.example.com
 
-.. _`_configuration_du_site_bitwarden`:
+.. _`_configuration_du_site_vaultwarden`:
 
-Configuration du site Bitwarden
--------------------------------
+Configuration du site vaultwarden
+---------------------------------
 
-Votre site web ``Bitwarden`` est installé et opérationnel.
+Votre site web ``vaultwarden`` est installé et opérationnel.
 
-1. Pointez votre navigateur sur votre site web ``bitwarden``
+1. Pointez votre navigateur sur votre site web ``vaultwarden``
 
 2. Créez un compte avec votre login et choisissez un mot de passe.
 
@@ -8685,12 +8727,12 @@ Votre site web ``Bitwarden`` est installé et opérationnel.
    ``1password``.
 
 4. Vous pouvez aussi vous connecter en tant qu’admin en allant sur l’url
-   https://bitwarden.example.com/admin
+   https://vaultwarden.example.com/admin
 
 5. Une fenetre apparait vous demandant le code de hachage que vous avez
    configuré à l’installation. Saisissez le.
 
-6. vous pouvez maintenant configurer des options dans bitwarden.
+6. vous pouvez maintenant configurer des options dans vaultwarden.
 
 7. une option qu’il est important de configurer est la désactivation de
    la création de compte. Pour cela:
@@ -8706,16 +8748,16 @@ Votre site web ``Bitwarden`` est installé et opérationnel.
 9. Une autre façon de faire est de démarrer le container docker avec
    l’option ``-e SIGNUPS_ALLOWED=false``
 
-Sur votre smartphone on dans votre navigateur, configurez Bitwarden pour
-pointer vers votre serveur en y configurant l’URL:
-``https://bitwarden.example.com`` Logguez vous.
+Sur votre smartphone on dans votre navigateur, configurez vaultwarden
+pour pointer vers votre serveur en y configurant l’URL:
+``https://vaultwarden.example.com`` Logguez vous.
 
 Tout est prêt!
 
-.. _`_upgrade_de_bitwarden`:
+.. _`_upgrade_de_vaultwarden`:
 
-Upgrade de Bitwarden
---------------------
+Upgrade de vaultwarden
+----------------------
 
 Rien a faire pour la mise à jour si vous utilisez ``Watchtower`` Vous
 pouvez aussi appliquer la procédure de mise à jour des containers à
@@ -8733,16 +8775,16 @@ Sinon, effectuez les opérations suivantes:
    .. code:: bash
 
       docker pull vaultwarden/server:latest
-      docker stop bitwarden
-      docker rm bitwarden
-      docker run -d -p 1280:80 --name=bitwarden --restart=always -v bitwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://bitwarden.example.com vaultwarden/server:latest 
+      docker stop vaultwarden
+      docker rm vaultwarden
+      docker run -d -p 1280:80 --name=vaultwarden --restart=always -v vaultwarden_data:/data:rw -e ROCKET_ENV=staging -e ROCKET_PORT=80 -e ROCKET_WORKERS=10 -e SMTP_HOST=mail.example.com -e SMTP_FROM=mailname@example.com -e SMTP_PORT=587 -e SMTP_SSL=true -e SMTP_USERNAME=mailname@example.com -e SMTP_PASSWORD=mailpassword -e WEBSOCKET_ENABLED=true -e ADMIN_TOKEN=Hashcode -e SIGNUPS_ALLOWED=false -e DOMAIN=https://vaultwarden.example.com vaultwarden/server:latest 
 
    -  ici il faut remplacer ``example.com`` par votre nom de domaine. Il
       faut aussi remplacer ``mailname@example.com`` par une boite mail
       valide sur le serveur et ``mailpassword`` par le mot de passe de
       cette boite mail valide. ``Hashcode`` doit être remplacé par le
       code de hashage généré. Ce code protège l’accès ``admin`` de
-      Bitwarden.
+      vaultwarden.
 
 .. _`_installation_de_heimdall`:
 
@@ -8806,15 +8848,19 @@ Appliquez la procédure suivante:
 
    b. Le faire pointer vers le web folder ``heimdall``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Laisser le reste par défaut.
+
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -8931,15 +8977,19 @@ Appliquez la procédure suivante:
 
    b. Le faire pointer vers le web folder ``seafile``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Laisser le reste par défaut.
+
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -9368,15 +9418,19 @@ Appliquez la procédure suivante:
 
    b. Le faire pointer vers le web folder ``grafana``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Laisser le reste par défaut.
+
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -10027,10 +10081,16 @@ Suivez la procédure suivante:
 
 16. Tout est maintenant prêt pour faire un backup
 
-.. _`_effectuer_un_backup`:
+17. avec le mode ``repokey``, une clé de cryptage est stockée dans le
+    repository de backup. Il est conseillé de la sauvegarder. Pour cela,
+    tapez:
 
-Effectuer un backup
--------------------
+    .. code:: bash
+
+       borg key export borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
+
+18. Notez bien la clé qui sert à décrypter le repository dans un endroit
+    sécurisé === Effectuer un backup
 
 Nous allons créer tout d’abord un script de backup pour sauvegarder tout
 le serveur sauf les répertoires système:
@@ -10049,13 +10109,13 @@ le serveur sauf les répertoires système:
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      cd / && borg create --stats --progress --compress zstd borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp && cd 
+      cd / && /usr/local/bin/borg create --stats --progress --compress zstd borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp && cd 
 
    -  mot_passe doit être remplacé par celui généré plus haut
 
-   -  si votre machine est assez puissante, vous pouvez remplacer
-      l’algorithme de compression zstd par un algorithme lz4 (rapide) ou
-      lzma (très lent mais performant en taille).
+   -  en fonction de la puissance de votre machine, vous pouvez
+      remplacer l’algorithme de compression zstd par un algorithme lz4
+      (rapide) ou lzma (très lent mais performant en taille).
 
 4. changez les permissions du script. Tapez:
 
@@ -10090,7 +10150,7 @@ Nous allons créer un script de listage :
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      borg list -v borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
+      /usr/local/bin/borg list -v borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -10105,6 +10165,43 @@ Nous allons créer un script de listage :
    .. code:: bash
 
       /usr/local/bin/borglist.sh
+
+.. _`_obtenir_les_infos_sur_un_backup`:
+
+Obtenir les infos sur un backup
+-------------------------------
+
+Nous allons créer un script de listage :
+
+1. `Loguez vous comme root sur <example.com>. <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+      vi /usr/local/bin/borginfo.sh
+
+3. Insèrez dans le fichier le texte suivant:
+
+   .. code:: bash
+
+      #!/bin/sh
+      export BORG_PASSPHRASE='mot_passe' 
+      /usr/local/bin/borg info --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
+
+   -  mot_passe doit être remplacé par celui généré plus haut.
+
+4. changez les permissions du script. Tapez:
+
+   .. code:: bash
+
+      chmod 700 /usr/local/bin/borginfo.sh
+
+5. vous pouvez maintenant lister vos backup en tapant:
+
+   .. code:: bash
+
+      /usr/local/bin/borginfo.sh
 
 .. _`_vérifier_un_backup`:
 
@@ -10127,7 +10224,7 @@ Nous allons créer un script de vérification :
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      borg check --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
+      /usr/local/bin/borg check --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -10169,7 +10266,7 @@ Nous allons créer un script de montage sous forme de système de fichier
       #!/bin/sh
       mkdir -p /mnt/borgbackup
       export BORG_PASSPHRASE='mot_passe' 
-      borg mount borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ /mnt/borgbackup
+      /usr/local/bin/borg mount borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ /mnt/borgbackup
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -10219,88 +10316,116 @@ Supprimer vos vieux backups
 
 Nous allons créer un script de ménage des backups :
 
-1. `Loguez vous comme root sur <example.com>. <#root_login>`__
+1.  `Loguez vous comme root sur <example.com>. <#root_login>`__
 
-2. Tapez:
+2.  Tapez:
 
-   .. code:: bash
+    .. code:: bash
 
-      vi /usr/local/bin/borgprune.sh
+       vi /usr/local/bin/borgprune.sh
 
-3. Insèrez dans le fichier le texte suivant:
+3.  Insèrez dans le fichier le texte suivant:
 
-   .. code:: bash
+    .. code:: bash
 
-      #!/bin/sh
+       #!/bin/sh
 
-      # Nettoyage des anciens backups
-      # On conserve
-      # - une archive par jour les 7 derniers jours,
-      # - une archive par semaine pour les 4 dernières semaines,
-      # - une archive par mois pour les 6 derniers mois.
+       # Nettoyage des anciens backups
+       # On conserve
+       # - une archive par jour les 7 derniers jours,
+       # - une archive par semaine pour les 4 dernières semaines,
+       # - une archive par mois pour les 6 derniers mois.
 
 
-      export BORG_PASSPHRASE='mot_passe' 
-      borg prune --stats --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 
+       export BORG_PASSPHRASE='mot_passe' 
+       /usr/local/bin/borg prune --stats --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 
 
-   -  mot_passe doit être remplacé par celui généré plus haut.
+    -  mot_passe doit être remplacé par celui généré plus haut.
 
-   -  Le nettoyage des sauvegardes va conserver 7 sauvegardes
-      journalières, 4 à la semaine et 12 au mois
+    -  Le nettoyage des sauvegardes va conserver 7 sauvegardes
+       journalières, 4 à la semaine et 12 au mois
 
-4. changez les permissions du script. Tapez:
+4.  changez les permissions du script. Tapez:
 
-   .. code:: bash
+    .. code:: bash
 
-      chmod 700 /usr/local/bin/borgprune.sh
+       chmod 700 /usr/local/bin/borgprune.sh
 
-5. vous pouvez maintenant effectuer du ménage:
+5.  vous pouvez maintenant effectuer du ménage:
 
-   .. code:: bash
+    .. code:: bash
 
-      /usr/local/bin/borgprune.sh
+       /usr/local/bin/borgprune.sh
 
-.. _`_automatisez_votre_sauvegarde`:
+6.  Pour récupèrer l’espace libéré par la suppression des sauvegardes
+    inutiles, créez le script suivant:
 
-Automatisez votre sauvegarde
-----------------------------
+    .. code:: bash
 
-1. Pour créer un script automatisé de backup. Tapez:
+       vi /usr/local/bin/borgcompact.sh
 
-   .. code:: bash
+7.  Insèrez dans le fichier le texte suivant:
 
-      mkdir -p /var/log/borg
-      vi /usr/local/bin/borgcron.sh
+    .. code:: bash
 
-2. Insérez dans le fichier le texte suivant:
+       #!/bin/sh
 
-   .. code:: bash
+       export BORG_PASSPHRASE='mot_passe' 
+       /usr/local/bin/borg compact --progress  borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
 
-      #!/bin/sh
-      #
-      # Script de sauvegarde.
-      #
+    -  mot_passe doit être remplacé par celui généré plus haut.
 
-      set -e
+8.  changez les permissions du script. Tapez:
 
-      LOG_PATH=/var/log/borg/cron.log
+    .. code:: bash
 
-      /usr/local/bin/borgbackup.sh >> ${LOG_PATH} 2>&1
-      /usr/local/bin/borgprune.sh >> ${LOG_PATH} 2>&1
+       chmod 700 /usr/local/bin/borgcompact.sh
 
-3. changez les permissions du script. Tapez:
+9.  vous pouvez maintenant effectuer du ménage:
 
-   .. code:: bash
+    .. code:: bash
 
-      chmod 700 /usr/local/bin/borgcron.sh
+       /usr/local/bin/borgcompact.sh
 
-4. vous pouvez ensuite planifier votre backup à 1h du matin. Tapez:
+    === Automatisez votre sauvegarde
 
-   .. code:: bash
+10. Pour créer un script automatisé de backup. Tapez:
 
-      crontab -e
+    .. code:: bash
 
-5. Inserez ensuite le texte suivant:
+       mkdir -p /var/log/borg
+       vi /usr/local/bin/borgcron.sh
+
+11. Insérez dans le fichier le texte suivant:
+
+    .. code:: bash
+
+       #!/bin/sh
+       #
+       # Script de sauvegarde.
+       #
+
+       set -e
+
+       LOG_PATH=/var/log/borg/cron.log
+
+       /usr/local/bin/borgbackup.sh >> ${LOG_PATH} 2>&1
+       /usr/local/bin/borgprune.sh >> ${LOG_PATH} 2>&1
+       /usr/local/bin/borgcompact.sh >> ${LOG_PATH} 2>&1
+
+12. changez les permissions du script. Tapez:
+
+    .. code:: bash
+
+       chmod 700 /usr/local/bin/borgcron.sh
+
+13. vous pouvez ensuite planifier votre backup à 1h du matin. Tapez:
+
+    .. code:: bash
+
+       crontab -e
+
+14. Inserez ensuite le texte suivant:
 
 ::
 
@@ -10580,15 +10705,19 @@ stockage <storing_srv>:
 
    b. Le faire pointer vers le web folder ``borgweb``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Laisser le reste par défaut.
+
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -10685,15 +10814,19 @@ Appliquez la procédure suivante:
 
    b. Le faire pointer vers le web folder ``pritunl``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Laisser le reste par défaut.
+
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -11118,15 +11251,19 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
    b. Le faire pointer vers le web folder ``guacamole``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Laisser le reste par défaut.
+
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -11152,7 +11289,7 @@ Appliquez les opérations suivantes Dans ISPConfig:
 
       -  remplacer ``example.com`` par votre nom de domaine
 
-   h. Cliquez sur ``Save``
+   j. Cliquez sur ``Save``
 
 .. _`_création_des_bases_de_données_9`:
 

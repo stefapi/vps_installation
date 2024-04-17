@@ -794,7 +794,7 @@ Mise à jour des sources de paquets Debian ou Ubuntu
 
    b. Dé-commenter les lignes débutant par ``deb`` et contenant le terme
       ``backports``. Par exemple pour
-      ``#deb http://deb.debian.org/debian bullseye-backports main contrib non-free``
+      ``#deb http://deb.debian.org/debian bookworm-backports main contrib non-free``
       enlever le # en début de ligne
 
    c. Ajouter sur toutes les lignes les paquets ``contrib`` et
@@ -1725,7 +1725,7 @@ Tapez :
 
    .. code:: bash
 
-      vi /etc/systctl.conf
+      vi /etc/sysctl.conf
 
 7. Ajoutez ou modifiez la ligne:
 
@@ -3197,26 +3197,12 @@ précise des fonctionnalités.
 
 1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-2.  Ajoutez le repository Webmin
+2.  Lancez le script de configuration de webmin:
 
-    a. allez dans le répertoire des repositories. Tapez :
+    .. code:: bash
 
-       .. code:: bash
-
-          cd /etc/apt/sources.list.d
-
-    b. Tapez: :
-
-       .. code:: bash
-
-          echo "deb http://download.webmin.com/download/repository sarge contrib" >> webmin.list
-
-    c. Ajoutez la clé. Tapez :
-
-       .. code:: bash
-
-          cd /etc/apt/trusted.gpg.d
-          wget http://www.webmin.com/jcameron-key.asc
+       curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
+       sh setup-repos.sh
 
 3.  Mise à jour. Tapez :
 
@@ -3925,15 +3911,19 @@ Pour la création du site web, il faut suivre les étapes suivantes:
 
     b. Le faire pointer vers le web folder ``yacht``.
 
-    c. Activer let’s encrypt ssl
+    c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-    d. Activer ``Fast CGI`` pour PHP
+    d. Activer ``let’s encrypt SSL``
 
-    e. Laisser le reste par défaut.
+    e. Activer ``PHP-FPM`` pour PHP
 
-    f. Dans l’onglet Options:
+    f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-    g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+    g. Laisser le reste par défaut.
+
+    h. Dans l’onglet Options:
+
+    i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
        .. code:: apache
 
@@ -4076,15 +4066,19 @@ Pour la création du site web, il faut suivre les étapes suivantes:
 
    b. Le faire pointer vers le web folder ``portainer``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Laisser le reste par défaut.
+
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -4336,15 +4330,19 @@ Appliquez la procédure suivante:
 
    c. Dans auto-Subdomain ← Sélectionnez ``None``
 
-   d. Activer let’s encrypt ssl
+   d. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   e. Activer ``Fast CGI`` pour PHP
+   e. Activer ``let’s encrypt SSL``
 
-   f. Laisser le reste par défaut.
+   f. Activer ``PHP-FPM`` pour PHP
 
-   g. Dans l’onglet Options:
+   g. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   h. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   h. Laisser le reste par défaut.
+
+   i. Dans l’onglet Options:
+
+   j. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 
@@ -4621,10 +4619,16 @@ Suivez la procédure suivante:
 
 16. Tout est maintenant prêt pour faire un backup
 
-.. _`_effectuer_un_backup`:
+17. avec le mode ``repokey``, une clé de cryptage est stockée dans le
+    repository de backup. Il est conseillé de la sauvegarder. Pour cela,
+    tapez:
 
-Effectuer un backup
--------------------
+    .. code:: bash
+
+       borg key export borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
+
+18. Notez bien la clé qui sert à décrypter le repository dans un endroit
+    sécurisé === Effectuer un backup
 
 Nous allons créer tout d’abord un script de backup pour sauvegarder tout
 le serveur sauf les répertoires système:
@@ -4643,13 +4647,13 @@ le serveur sauf les répertoires système:
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      cd / && borg create --stats --progress --compress zstd borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp && cd 
+      cd / && /usr/local/bin/borg create --stats --progress --compress zstd borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp && cd 
 
    -  mot_passe doit être remplacé par celui généré plus haut
 
-   -  si votre machine est assez puissante, vous pouvez remplacer
-      l’algorithme de compression zstd par un algorithme lz4 (rapide) ou
-      lzma (très lent mais performant en taille).
+   -  en fonction de la puissance de votre machine, vous pouvez
+      remplacer l’algorithme de compression zstd par un algorithme lz4
+      (rapide) ou lzma (très lent mais performant en taille).
 
 4. changez les permissions du script. Tapez:
 
@@ -4684,7 +4688,7 @@ Nous allons créer un script de listage :
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      borg list -v borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
+      /usr/local/bin/borg list -v borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -4699,6 +4703,43 @@ Nous allons créer un script de listage :
    .. code:: bash
 
       /usr/local/bin/borglist.sh
+
+.. _`_obtenir_les_infos_sur_un_backup`:
+
+Obtenir les infos sur un backup
+-------------------------------
+
+Nous allons créer un script de listage :
+
+1. `Loguez vous comme root sur <example.com>. <#root_login>`__
+
+2. Tapez:
+
+   .. code:: bash
+
+      vi /usr/local/bin/borginfo.sh
+
+3. Insèrez dans le fichier le texte suivant:
+
+   .. code:: bash
+
+      #!/bin/sh
+      export BORG_PASSPHRASE='mot_passe' 
+      /usr/local/bin/borg info --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
+
+   -  mot_passe doit être remplacé par celui généré plus haut.
+
+4. changez les permissions du script. Tapez:
+
+   .. code:: bash
+
+      chmod 700 /usr/local/bin/borginfo.sh
+
+5. vous pouvez maintenant lister vos backup en tapant:
+
+   .. code:: bash
+
+      /usr/local/bin/borginfo.sh
 
 .. _`_vérifier_un_backup`:
 
@@ -4721,7 +4762,7 @@ Nous allons créer un script de vérification :
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      borg check --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
+      /usr/local/bin/borg check --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -4763,7 +4804,7 @@ Nous allons créer un script de montage sous forme de système de fichier
       #!/bin/sh
       mkdir -p /mnt/borgbackup
       export BORG_PASSPHRASE='mot_passe' 
-      borg mount borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ /mnt/borgbackup
+      /usr/local/bin/borg mount borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ /mnt/borgbackup
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -4813,88 +4854,116 @@ Supprimer vos vieux backups
 
 Nous allons créer un script de ménage des backups :
 
-1. `Loguez vous comme root sur <example.com>. <#root_login>`__
+1.  `Loguez vous comme root sur <example.com>. <#root_login>`__
 
-2. Tapez:
+2.  Tapez:
 
-   .. code:: bash
+    .. code:: bash
 
-      vi /usr/local/bin/borgprune.sh
+       vi /usr/local/bin/borgprune.sh
 
-3. Insèrez dans le fichier le texte suivant:
+3.  Insèrez dans le fichier le texte suivant:
 
-   .. code:: bash
+    .. code:: bash
 
-      #!/bin/sh
+       #!/bin/sh
 
-      # Nettoyage des anciens backups
-      # On conserve
-      # - une archive par jour les 7 derniers jours,
-      # - une archive par semaine pour les 4 dernières semaines,
-      # - une archive par mois pour les 6 derniers mois.
+       # Nettoyage des anciens backups
+       # On conserve
+       # - une archive par jour les 7 derniers jours,
+       # - une archive par semaine pour les 4 dernières semaines,
+       # - une archive par mois pour les 6 derniers mois.
 
 
-      export BORG_PASSPHRASE='mot_passe' 
-      borg prune --stats --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 
+       export BORG_PASSPHRASE='mot_passe' 
+       /usr/local/bin/borg prune --stats --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 
 
-   -  mot_passe doit être remplacé par celui généré plus haut.
+    -  mot_passe doit être remplacé par celui généré plus haut.
 
-   -  Le nettoyage des sauvegardes va conserver 7 sauvegardes
-      journalières, 4 à la semaine et 12 au mois
+    -  Le nettoyage des sauvegardes va conserver 7 sauvegardes
+       journalières, 4 à la semaine et 12 au mois
 
-4. changez les permissions du script. Tapez:
+4.  changez les permissions du script. Tapez:
 
-   .. code:: bash
+    .. code:: bash
 
-      chmod 700 /usr/local/bin/borgprune.sh
+       chmod 700 /usr/local/bin/borgprune.sh
 
-5. vous pouvez maintenant effectuer du ménage:
+5.  vous pouvez maintenant effectuer du ménage:
 
-   .. code:: bash
+    .. code:: bash
 
-      /usr/local/bin/borgprune.sh
+       /usr/local/bin/borgprune.sh
 
-.. _`_automatisez_votre_sauvegarde`:
+6.  Pour récupèrer l’espace libéré par la suppression des sauvegardes
+    inutiles, créez le script suivant:
 
-Automatisez votre sauvegarde
-----------------------------
+    .. code:: bash
 
-1. Pour créer un script automatisé de backup. Tapez:
+       vi /usr/local/bin/borgcompact.sh
 
-   .. code:: bash
+7.  Insèrez dans le fichier le texte suivant:
 
-      mkdir -p /var/log/borg
-      vi /usr/local/bin/borgcron.sh
+    .. code:: bash
 
-2. Insérez dans le fichier le texte suivant:
+       #!/bin/sh
 
-   .. code:: bash
+       export BORG_PASSPHRASE='mot_passe' 
+       /usr/local/bin/borg compact --progress  borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
 
-      #!/bin/sh
-      #
-      # Script de sauvegarde.
-      #
+    -  mot_passe doit être remplacé par celui généré plus haut.
 
-      set -e
+8.  changez les permissions du script. Tapez:
 
-      LOG_PATH=/var/log/borg/cron.log
+    .. code:: bash
 
-      /usr/local/bin/borgbackup.sh >> ${LOG_PATH} 2>&1
-      /usr/local/bin/borgprune.sh >> ${LOG_PATH} 2>&1
+       chmod 700 /usr/local/bin/borgcompact.sh
 
-3. changez les permissions du script. Tapez:
+9.  vous pouvez maintenant effectuer du ménage:
 
-   .. code:: bash
+    .. code:: bash
 
-      chmod 700 /usr/local/bin/borgcron.sh
+       /usr/local/bin/borgcompact.sh
 
-4. vous pouvez ensuite planifier votre backup à 1h du matin. Tapez:
+    === Automatisez votre sauvegarde
 
-   .. code:: bash
+10. Pour créer un script automatisé de backup. Tapez:
 
-      crontab -e
+    .. code:: bash
 
-5. Inserez ensuite le texte suivant:
+       mkdir -p /var/log/borg
+       vi /usr/local/bin/borgcron.sh
+
+11. Insérez dans le fichier le texte suivant:
+
+    .. code:: bash
+
+       #!/bin/sh
+       #
+       # Script de sauvegarde.
+       #
+
+       set -e
+
+       LOG_PATH=/var/log/borg/cron.log
+
+       /usr/local/bin/borgbackup.sh >> ${LOG_PATH} 2>&1
+       /usr/local/bin/borgprune.sh >> ${LOG_PATH} 2>&1
+       /usr/local/bin/borgcompact.sh >> ${LOG_PATH} 2>&1
+
+12. changez les permissions du script. Tapez:
+
+    .. code:: bash
+
+       chmod 700 /usr/local/bin/borgcron.sh
+
+13. vous pouvez ensuite planifier votre backup à 1h du matin. Tapez:
+
+    .. code:: bash
+
+       crontab -e
+
+14. Inserez ensuite le texte suivant:
 
 ::
 
@@ -5174,15 +5243,19 @@ stockage <storing_srv>:
 
    b. Le faire pointer vers le web folder ``borgweb``.
 
-   c. Activer let’s encrypt ssl
+   c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
-   d. Activer ``Fast CGI`` pour PHP
+   d. Activer ``let’s encrypt SSL``
 
-   e. Laisser le reste par défaut.
+   e. Activer ``PHP-FPM`` pour PHP
 
-   f. Dans l’onglet Options:
+   f. Dans l’onglet Redirect Cochez la case ``Rewrite HTTP to HTTPS``
 
-   g. Dans la boite ``Apache Directives:`` saisir le texte suivant:
+   g. Laisser le reste par défaut.
+
+   h. Dans l’onglet Options:
+
+   i. Dans la boite ``Apache Directives:`` saisir le texte suivant:
 
       .. code:: apache
 

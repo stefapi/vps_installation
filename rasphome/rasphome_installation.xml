@@ -4,7 +4,7 @@
 <article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Installation d&#8217;un home serveur Linux sur un Raspberry</title>
-<date>2024-02-28</date>
+<date>2024-04-17</date>
 <author>
 <personname>
 <firstname>Stéphane</firstname>
@@ -15,8 +15,8 @@
 <authorinitials>SA</authorinitials>
 <revhistory>
 <revision>
-<revnumber>1.2</revnumber>
-<date>2024-02-28</date>
+<revnumber>1.3</revnumber>
+<date>2024-04-17</date>
 <authorinitials>SA</authorinitials>
 </revision>
 </revhistory>
@@ -721,7 +721,7 @@ git push -u origin master</programlisting>
 <programlisting language="bash" linenumbering="unnumbered">vi /etc/apt/sources.list</programlisting>
 </listitem>
 <listitem>
-<simpara>Dé-commenter les lignes débutant par <literal>deb</literal> et contenant le terme <literal>backports</literal>. Par exemple pour <literal>#deb <link xl:href="http://deb.debian.org/debian">http://deb.debian.org/debian</link> bullseye-backports main contrib non-free</literal> enlever le # en début de ligne</simpara>
+<simpara>Dé-commenter les lignes débutant par <literal>deb</literal> et contenant le terme <literal>backports</literal>. Par exemple pour <literal>#deb <link xl:href="http://deb.debian.org/debian">http://deb.debian.org/debian</link> bookworm-backports main contrib non-free</literal> enlever le # en début de ligne</simpara>
 </listitem>
 <listitem>
 <simpara>Ajouter sur toutes les lignes les paquets <literal>contrib</literal> et <literal>non-free</literal> . en ajoutant ces textes après chaque mot <literal>main</literal> du fichier <literal>source.list</literal></simpara>
@@ -1567,7 +1567,7 @@ swapon /swapfile</programlisting>
 </listitem>
 <listitem>
 <simpara>Enfin vous pouvez être tenté de limiter le swap (surtout utile sur les systèmes avec peu de RAM et du SSD. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /etc/systctl.conf</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/sysctl.conf</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez ou modifiez la ligne:</simpara>
@@ -2848,22 +2848,9 @@ git pull</programlisting>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
 </listitem>
 <listitem>
-<simpara>Ajoutez le repository Webmin</simpara>
-<orderedlist numeration="loweralpha">
-<listitem>
-<simpara>allez dans le répertoire des repositories. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /etc/apt/sources.list.d</programlisting>
-</listitem>
-<listitem>
-<simpara>Tapez: :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">echo "deb http://download.webmin.com/download/repository sarge contrib" &gt;&gt; webmin.list</programlisting>
-</listitem>
-<listitem>
-<simpara>Ajoutez la clé. Tapez :</simpara>
-<programlisting language="bash" linenumbering="unnumbered">cd /etc/apt/trusted.gpg.d
-wget http://www.webmin.com/jcameron-key.asc</programlisting>
-</listitem>
-</orderedlist>
+<simpara>Lancez le script de configuration de webmin:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
+sh setup-repos.sh</programlisting>
 </listitem>
 <listitem>
 <simpara>Mise à jour. Tapez :</simpara>
@@ -3393,10 +3380,16 @@ docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/d
 <simpara>Le faire pointer vers le web folder <literal>yacht</literal>.</simpara>
 </listitem>
 <listitem>
-<simpara>Activer let’s encrypt ssl</simpara>
+<simpara>Sélectionnez <literal>None</literal> dans <literal>Auto-subdomain</literal></simpara>
 </listitem>
 <listitem>
-<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+<simpara>Activer <literal>let’s encrypt SSL</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;onglet Redirect Cochez la case <literal>Rewrite HTTP to HTTPS</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Laisser le reste par défaut.</simpara>
@@ -3554,10 +3547,16 @@ docker run -d -p 8061:8000 --name=yacht -v /var/run/docker.sock:/var/run/docker.
 <simpara>Le faire pointer vers le web folder <literal>portainer</literal>.</simpara>
 </listitem>
 <listitem>
-<simpara>Activer let’s encrypt ssl</simpara>
+<simpara>Sélectionnez <literal>None</literal> dans <literal>Auto-subdomain</literal></simpara>
 </listitem>
 <listitem>
-<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+<simpara>Activer <literal>let’s encrypt SSL</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;onglet Redirect Cochez la case <literal>Rewrite HTTP to HTTPS</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Laisser le reste par défaut.</simpara>
@@ -3797,10 +3796,16 @@ docker run -d --name=statping -p 8035:8080 -v statping_data:/app --restart alway
 <simpara>Dans auto-Subdomain &#8592; Sélectionnez <literal>None</literal></simpara>
 </listitem>
 <listitem>
-<simpara>Activer let’s encrypt ssl</simpara>
+<simpara>Sélectionnez <literal>None</literal> dans <literal>Auto-subdomain</literal></simpara>
 </listitem>
 <listitem>
-<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+<simpara>Activer <literal>let’s encrypt SSL</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;onglet Redirect Cochez la case <literal>Rewrite HTTP to HTTPS</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Laisser le reste par défaut.</simpara>
@@ -4045,10 +4050,15 @@ chmod 700 borgbackup</programlisting>
 <listitem>
 <simpara>Tout est maintenant prêt pour faire un backup</simpara>
 </listitem>
+<listitem>
+<simpara>avec le mode <literal>repokey</literal>, une clé de cryptage est stockée dans le repository de backup. Il est conseillé de la sauvegarder. Pour cela, tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">borg key export borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
+</listitem>
+<listitem>
+<simpara>Notez bien la clé qui sert à décrypter le repository dans un endroit sécurisé
+=== Effectuer un backup</simpara>
+</listitem>
 </orderedlist>
-</section>
-<section xml:id="_effectuer_un_backup">
-<title>Effectuer un backup</title>
 <simpara>Nous allons créer tout d&#8217;abord un script de backup pour sauvegarder tout le serveur sauf les répertoires système:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -4062,13 +4072,13 @@ chmod 700 borgbackup</programlisting>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 export BORG_PASSPHRASE='mot_passe' <co xml:id="CO59-1"/>
-cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO59-2"/></programlisting>
+cd / &amp;&amp; /usr/local/bin/borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO59-2"/></programlisting>
 <calloutlist>
 <callout arearefs="CO59-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
 <callout arearefs="CO59-2">
-<para>si votre machine est assez puissante, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</para>
+<para>en fonction de la puissance de votre machine, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -4097,7 +4107,7 @@ cd / &amp;&amp; borg create --stats --progress --compress zstd borgbackup@&lt;st
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 export BORG_PASSPHRASE='mot_passe' <co xml:id="CO60-1"/>
-borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
+/usr/local/bin/borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
 <callout arearefs="CO60-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
@@ -4111,6 +4121,38 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</progra
 <listitem>
 <simpara>vous pouvez maintenant lister vos backup en tapant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borglist.sh</programlisting>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_obtenir_les_infos_sur_un_backup">
+<title>Obtenir les infos sur un backup</title>
+<simpara>Nous allons créer un script de listage :</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link linkend="root_login">Loguez vous comme root sur &lt;example.com&gt;. </link></simpara>
+</listitem>
+<listitem>
+<simpara>Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/local/bin/borginfo.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Insèrez dans le fichier le texte suivant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO61-1"/>
+/usr/local/bin/borg info --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
+<calloutlist>
+<callout arearefs="CO61-1">
+<para>mot_passe doit être remplacé par celui généré plus haut.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>changez les permissions du script. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 700 /usr/local/bin/borginfo.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>vous pouvez maintenant lister vos backup en tapant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borginfo.sh</programlisting>
 </listitem>
 </orderedlist>
 </section>
@@ -4128,10 +4170,10 @@ borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</progra
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO61-1"/>
-borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO62-1"/>
+/usr/local/bin/borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
 <calloutlist>
-<callout arearefs="CO61-1">
+<callout arearefs="CO62-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4142,9 +4184,9 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 </listitem>
 <listitem>
 <simpara>vous pouvez maintenant vérifier un de vos backup en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO62-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO63-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO62-1">
+<callout arearefs="CO63-1">
 <para>le nom de sauvegarde est récupéré en utilisant la commande borglist.sh</para>
 </callout>
 </calloutlist>
@@ -4166,10 +4208,10 @@ borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup
 <simpara>Insérez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO63-1"/>
-borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO64-1"/>
+/usr/local/bin/borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
 <calloutlist>
-<callout arearefs="CO63-1">
+<callout arearefs="CO64-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4224,13 +4266,13 @@ rmdir /mnt/borgbackup</programlisting>
 # - une archive par mois pour les 6 derniers mois.
 
 
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO64-1"/>
-borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO64-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO65-1"/>
+/usr/local/bin/borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO65-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO64-1">
+<callout arearefs="CO65-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
-<callout arearefs="CO64-2">
+<callout arearefs="CO65-2">
 <para>Le nettoyage des sauvegardes va conserver 7 sauvegardes journalières, 4 à la semaine et 12 au mois</para>
 </callout>
 </calloutlist>
@@ -4243,11 +4285,31 @@ borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/bo
 <simpara>vous pouvez maintenant effectuer du ménage:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgprune.sh</programlisting>
 </listitem>
-</orderedlist>
-</section>
-<section xml:id="_automatisez_votre_sauvegarde">
-<title>Automatisez votre sauvegarde</title>
-<orderedlist numeration="arabic">
+<listitem>
+<simpara>Pour récupèrer l&#8217;espace libéré par la suppression des sauvegardes inutiles, créez le script suivant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">vi /usr/local/bin/borgcompact.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>Insèrez dans le fichier le texte suivant:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
+
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO66-1"/>
+/usr/local/bin/borg compact --progress  borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
+<calloutlist>
+<callout arearefs="CO66-1">
+<para>mot_passe doit être remplacé par celui généré plus haut.</para>
+</callout>
+</calloutlist>
+</listitem>
+<listitem>
+<simpara>changez les permissions du script. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">chmod 700 /usr/local/bin/borgcompact.sh</programlisting>
+</listitem>
+<listitem>
+<simpara>vous pouvez maintenant effectuer du ménage:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcompact.sh</programlisting>
+<simpara>=== Automatisez votre sauvegarde</simpara>
+</listitem>
 <listitem>
 <simpara>Pour créer un script automatisé de backup. Tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /var/log/borg
@@ -4265,7 +4327,8 @@ set -e
 LOG_PATH=/var/log/borg/cron.log
 
 /usr/local/bin/borgbackup.sh &gt;&gt; ${LOG_PATH} 2&gt;&amp;1
-/usr/local/bin/borgprune.sh &gt;&gt; ${LOG_PATH} 2&gt;&amp;1</programlisting>
+/usr/local/bin/borgprune.sh &gt;&gt; ${LOG_PATH} 2&gt;&amp;1
+/usr/local/bin/borgcompact.sh &gt;&gt; ${LOG_PATH} 2&gt;&amp;1</programlisting>
 </listitem>
 <listitem>
 <simpara>changez les permissions du script. Tapez:</simpara>
@@ -4309,10 +4372,10 @@ pip3 install borgbackup[llfuse]</programlisting>
 <listitem>
 <simpara>Munissez vous du mot de passe &lt;mot_passe&gt; des archives borg et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO65-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO67-1"/>
 borg list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO65-1">
+<callout arearefs="CO67-1">
 <para>remplacez mot_passe par votre mot de passe de borg</para>
 </callout>
 </calloutlist>
@@ -4341,13 +4404,13 @@ chroot . bash
 mkdir -p dev proc run sys tmp
 mount -t devtmpfs dev /dev
 mount -t proc proc /proc
-grub_install /dev/sda <co xml:id="CO66-1"/>
+grub_install /dev/sda <co xml:id="CO68-1"/>
 umount /proc
 umount /dev
 sync
 exit</programlisting>
 <calloutlist>
-<callout arearefs="CO66-1">
+<callout arearefs="CO68-1">
 <para>tapez ici le nom de device de votre disque de boot</para>
 </callout>
 </calloutlist>
@@ -4420,7 +4483,7 @@ vi config.py</programlisting>
 
     BACKUP_REPOS = {
         # Repo  name
-        "example.com": { <co xml:id="CO67-1"/>
+        "example.com": { <co xml:id="CO69-1"/>
             # Repo absolute path
             "repo_path": "/home/borgbackup/borgbackup",
 
@@ -4428,7 +4491,7 @@ vi config.py</programlisting>
             "log_path": "/var/log/borg/",
 
             # Repo password
-            "repo_pwd": "your_password", <co xml:id="CO67-2"/>
+            "repo_pwd": "your_password", <co xml:id="CO69-2"/>
 
             # Command/script to run to manually start a backup.
             # If left empty or not specified, the backup won't be
@@ -4440,10 +4503,10 @@ vi config.py</programlisting>
         }
     }</programlisting>
 <calloutlist>
-<callout arearefs="CO67-2">
+<callout arearefs="CO69-2">
 <para>Insérez ici le mot de passe du dépot Borg Backup</para>
 </callout>
-<callout arearefs="CO67-1">
+<callout arearefs="CO69-1">
 <para>Mettez ici le nom de votre domaine sauvegardé</para>
 </callout>
 </calloutlist>
@@ -4518,10 +4581,16 @@ systemctl start borgweb.service</programlisting>
 <simpara>Le faire pointer vers le web folder <literal>borgweb</literal>.</simpara>
 </listitem>
 <listitem>
-<simpara>Activer let’s encrypt ssl</simpara>
+<simpara>Sélectionnez <literal>None</literal> dans <literal>Auto-subdomain</literal></simpara>
 </listitem>
 <listitem>
-<simpara>Activer <literal>Fast CGI</literal> pour PHP</simpara>
+<simpara>Activer <literal>let’s encrypt SSL</literal></simpara>
+</listitem>
+<listitem>
+<simpara>Activer <literal>PHP-FPM</literal> pour PHP</simpara>
+</listitem>
+<listitem>
+<simpara>Dans l&#8217;onglet Redirect Cochez la case <literal>Rewrite HTTP to HTTPS</literal></simpara>
 </listitem>
 <listitem>
 <simpara>Laisser le reste par défaut.</simpara>
@@ -4561,9 +4630,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:5000/
 ProxyPassReverse / http://localhost:5000/
 
-RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO68-1"/></programlisting>
+RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO70-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO68-1">
+<callout arearefs="CO70-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>

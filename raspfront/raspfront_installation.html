@@ -555,8 +555,8 @@ pre.rouge .gs {
 <div class="details">
 <span id="author" class="author">Stéphane Apiou</span><br>
 <span id="email" class="email"><a href="mailto:stephane@apiou.org">stephane@apiou.org</a></span><br>
-<span id="revnumber">version 1.6,</span>
-<span id="revdate">2024-02-29</span>
+<span id="revnumber">version 1.7,</span>
+<span id="revdate">2024-04-17</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -749,13 +749,13 @@ pre.rouge .gs {
 <li><a href="#_update_de_gitea">26.5. Update de Gitea</a></li>
 </ul>
 </li>
-<li><a href="#_installation_de_bitwarden">27. Installation de Bitwarden</a>
+<li><a href="#_installation_de_vaultwarden">27. Installation de vaultwarden</a>
 <ul class="sectlevel2">
 <li><a href="#_prérequis_2">27.1. Prérequis</a></li>
-<li><a href="#_installation_du_serveur_bitwarden">27.2. Installation du serveur Bitwarden</a></li>
-<li><a href="#_création_du_site_web_de_bitwarden">27.3. Création du site web de Bitwarden</a></li>
-<li><a href="#_configuration_du_site_bitwarden">27.4. Configuration du site Bitwarden</a></li>
-<li><a href="#_upgrade_de_bitwarden">27.5. Upgrade de Bitwarden</a></li>
+<li><a href="#_installation_du_serveur_vaultwarden">27.2. Installation du serveur vaultwarden</a></li>
+<li><a href="#_création_du_site_web_de_vaultwarden">27.3. Création du site web de vaultwarden</a></li>
+<li><a href="#_configuration_du_site_vaultwarden">27.4. Configuration du site vaultwarden</a></li>
+<li><a href="#_upgrade_de_vaultwarden">27.5. Upgrade de vaultwarden</a></li>
 </ul>
 </li>
 <li><a href="#_installation_de_heimdall">28. Installation de Heimdall</a>
@@ -791,15 +791,14 @@ pre.rouge .gs {
 <li><a href="#_introduction">32.1. Introduction</a></li>
 <li><a href="#_installation_du_serveur_de_stockage">32.2. Installation du serveur de stockage</a></li>
 <li><a href="#_installation_sur_le_serveur_sauvegardé">32.3. Installation sur le serveur sauvegardé</a></li>
-<li><a href="#_effectuer_un_backup">32.4. Effectuer un backup</a></li>
-<li><a href="#_lister_les_backups">32.5. Lister les backups</a></li>
+<li><a href="#_lister_les_backups">32.4. Lister les backups</a></li>
+<li><a href="#_obtenir_les_infos_sur_un_backup">32.5. Obtenir les infos sur un backup</a></li>
 <li><a href="#_vérifier_un_backup">32.6. Vérifier un backup</a></li>
 <li><a href="#_restaurer_un_backup">32.7. Restaurer un backup</a></li>
 <li><a href="#_supprimer_vos_vieux_backups">32.8. Supprimer vos vieux backups</a></li>
-<li><a href="#_automatisez_votre_sauvegarde">32.9. Automatisez votre sauvegarde</a></li>
-<li><a href="#_restauration_durgence">32.10. Restauration d&#8217;urgence.</a></li>
-<li><a href="#_installation_de_borgweb">32.11. Installation de Borgweb</a></li>
-<li><a href="#_création_du_site_web_de_borgweb">32.12. Création du site web de Borgweb</a></li>
+<li><a href="#_restauration_durgence">32.9. Restauration d&#8217;urgence.</a></li>
+<li><a href="#_installation_de_borgweb">32.10. Installation de Borgweb</a></li>
+<li><a href="#_création_du_site_web_de_borgweb">32.11. Création du site web de Borgweb</a></li>
 </ul>
 </li>
 <li><a href="#_installation_dun_serveur_de_vpn_pritunl">33. Installation d&#8217;un serveur de VPN Pritunl</a>
@@ -2362,7 +2361,7 @@ git push <span class="nt">-u</span> origin master</code></pre>
 </div>
 </li>
 <li>
-<p>Dé-commenter les lignes débutant par <code>deb</code> et contenant le terme <code>backports</code>. Par exemple pour <code>#deb <a href="http://deb.debian.org/debian" class="bare">http://deb.debian.org/debian</a> bullseye-backports main contrib non-free</code> enlever le # en début de ligne</p>
+<p>Dé-commenter les lignes débutant par <code>deb</code> et contenant le terme <code>backports</code>. Par exemple pour <code>#deb <a href="http://deb.debian.org/debian" class="bare">http://deb.debian.org/debian</a> bookworm-backports main contrib non-free</code> enlever le # en début de ligne</p>
 </li>
 <li>
 <p>Ajouter sur toutes les lignes les paquets <code>contrib</code> et <code>non-free</code> . en ajoutant ces textes après chaque mot <code>main</code> du fichier <code>source.list</code></p>
@@ -2516,6 +2515,18 @@ LC_TELEPHONE="fr_FR.UTF-8"
 LC_MEASUREMENT="fr_FR.UTF-8"
 LC_IDENTIFICATION="fr_FR.UTF-8"
 LC_ALL=</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tapez ensuite la ligne suivante pour installer l&#8217;environnement en français:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>task-french</code></pre>
 </div>
 </div>
 </div>
@@ -3539,7 +3550,7 @@ swapon /swapfile</code></pre>
 <p>Enfin vous pouvez être tenté de limiter le swap (surtout utile sur les systèmes avec peu de RAM et du SSD. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi /etc/systctl.conf</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">vi /etc/sysctl.conf</code></pre>
 </div>
 </div>
 </li>
@@ -5106,35 +5117,12 @@ git pull</code></pre>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
-<p>Ajoutez le repository Webmin</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>allez dans le répertoire des repositories. Tapez :</p>
+<p>Lancez le script de configuration de webmin:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /etc/apt/sources.list.d</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">curl <span class="nt">-o</span> setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
+sh setup-repos.sh</code></pre>
 </div>
-</div>
-</li>
-<li>
-<p>Tapez: :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">echo</span> <span class="s2">"deb http://download.webmin.com/download/repository sarge contrib"</span> <span class="o">&gt;&gt;</span> webmin.list</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Ajoutez la clé. Tapez :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /etc/apt/trusted.gpg.d
-wget http://www.webmin.com/jcameron-key.asc</code></pre>
-</div>
-</div>
-</li>
-</ol>
 </div>
 </li>
 <li>
@@ -5816,23 +5804,20 @@ Dans ce sous domaines vous allez créer un ensemble de site web par exemple <cod
 <p>un enregistrement de type <code>NS</code> avec une <code>Zone</code> &#8592; <code>sub.example.com.</code> et un <code>nameserver Hostname</code> &#8592; <code>ns2.sub.example.com.</code></p>
 </li>
 <li>
-<p>un enregistrement de type <code>NS</code> avec une <code>Zone</code> &#8592; <code>sub.example.com.</code> et un <code>nameserver Hostname</code> &#8592; <code>ns3.example.com.</code> .</p>
+<p>un enregistrement de type <code>A</code> avec une <code>IP_Address</code> &#8592; <code>IPV4_NS1</code> et un <code>Hostname</code> &#8592; <code>ns1.sub.example.com.</code></p>
+</li>
+<li>
+<p>un enregistrement de type <code>A</code> avec une <code>IP_Address</code> &#8592; <code>IPV4_NS2</code> et un <code>Hostname</code> &#8592; <code>ns2.sub.example.com.</code></p>
 <div class="paragraph">
-<p>Ce dernier type d&#8217;enregistrement se nomme un Glue record pour faire le lien vers le serveur secondaire.</p>
+<p>Ces deux derniers types d&#8217;enregistrement se nomment un Glue record pour faire le lien vers le serveur secondaire.</p>
 </div>
 </li>
 <li>
-<p>un enregistrement de type <code>A</code> avec un <code>Hostname</code> &#8592; ns3 et une <code>IP-address</code> &#8592; Adresse IP de votre routeur ADSL ou est connecté le Raspberry.</p>
-</li>
-<li>
-<p>Si vous ne la connaissez pas, tapez dans un terminal texte:</p>
+<p>Si vous connaissez pas l&#8217;adresse IPV4, tapez dans un terminal texte de votre serveur 'sub.example.com`:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">wget <span class="nt">-qO-</span> http://ipecho.net/plain<span class="p">;</span> <span class="nb">echo</span></code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Ce dernier enregistrement en complétant le Glue record fait le lien avec l&#8217;adresse IP de <code>sub.example.com</code></p>
 </div>
 </li>
 </ul>
@@ -6370,16 +6355,8 @@ incrontab <span class="nt">-e</span></code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">/usr/local/ispconfig/interface/ssl/ IN_MODIFY /etc/init.d/le_ispc_pem.sh <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="rouge highlight"><code data-lang="bash">/usr/local/ispconfig/interface/ssl/ IN_MODIFY /etc/init.d/le_ispc_pem.sh</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Remplacer mail.example.com par votre nom de domaine du mail.</td>
-</tr>
-</table>
 </div>
 </li>
 </ol>
@@ -7482,10 +7459,16 @@ systemctl restart apache2</code></pre>
 <p>Le faire pointer vers le web folder <code>rspamd</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -7506,15 +7489,22 @@ systemctl restart apache2</code></pre>
 <span class="nc">ProxyPass</span> /stats !
 <span class="nc">ProxyPass</span> /.well-known/acme-challenge !
 
-<span class="c"># rspamd httpserver</span>
+<span class="c"># redirect from server</span>
 <span class="c">#</span>
 
 <span class="nc">SetEnvIf</span> Authorization "(.*)" HTTP_AUTHORIZATION=$1
+<span class="nc">SSLProxyEngine</span> <span class="ss">On</span> <span class="c"># Comment this out if no https required</span>
 <span class="nc">ProxyPreserveHost</span>    <span class="ss">On</span>
-<span class="nc">ProxyPass</span> / http://localhost:11334/
-<span class="nc">ProxyPassReverse</span> / http://localhost:11334/
+<span class="nc">SSLProxyVerify</span> <span class="ss">none</span>
+<span class="nc">SSLProxyCheckPeerCN</span> <span class="ss">off</span>
+<span class="nc">SSLProxyCheckPeerName</span> <span class="ss">off</span>
+<span class="nc">SSLProxyCheckPeerExpire</span> <span class="ss">off</span>
 
-<span class="nc">RedirectMatch</span> ^/$ https://rspamd.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<span class="nc">ProxyPass</span> /rspamd https://example.com:8081/rspamd/ <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="ss">ProxyPass</span> / https://example.com:8081/rspamd/ <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="ss">ProxyPassReverse</span> / https://example.com:8081/rspamd/ <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="ss">RedirectMatch</span> ^/$ https://rspamd.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -8102,10 +8092,16 @@ rspamadm dkim_keygen <span class="nt">-d</span> example.com <span class="nt">-s<
 <p>Mettre dans <code>Auto-SubDomain</code> la valeur <code>None</code></p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>php-CGI</code></p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -8304,10 +8300,16 @@ header('Content-Type: application/xml');
 <p>Mettre dans <code>Auto-SubDomain</code> la valeur <code>None</code></p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>php-CGI</code></p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -8493,8 +8495,7 @@ header("Content-Type: application/xml");
 <p>Dans le répertoire <code>/var/www/autoconfig.&lt;example.com&gt;/autoconfig/</code>, Editez un fichier <code>autodiscover.json</code>. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">ln</span> <span class="nt">-s</span>
-vi autoconfig/Autodiscover/autodiscover.json</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">vi autoconfig/Autodiscover/autodiscover.json</code></pre>
 </div>
 </div>
 </li>
@@ -8504,9 +8505,17 @@ vi autoconfig/Autodiscover/autodiscover.json</code></pre>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="php"><span class="o">&lt;?</span><span class="n">php</span>
 <span class="nb">header</span><span class="p">(</span><span class="s1">'Content-type: application/json'</span><span class="p">);</span>
-<span class="k">echo</span> <span class="s1">'{"Protocol":"AutodiscoverV1","Url":"https://autodiscover.example.com/Autodiscover/Autodiscover.xml"}'</span><span class="p">;</span>
+<span class="k">echo</span> <span class="s1">'{"Protocol":"AutodiscoverV1","Url":"https://autodiscover.example.com/Autodiscover/Autodiscover.xml"}'</span><span class="p">;</span> <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="cp">?&gt;</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mettre à la place de <code>example.com</code> votre nom de domaine</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -8727,10 +8736,16 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 <p>Le faire pointer vers le web folder <code>mail</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -8847,7 +8862,7 @@ chmod 600 secretdst</pre>
 <p>Nous pouvons maintenant lancer la commande. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre>./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 secretdst</pre>
+<pre>./imapsync --host1 imap.examplesrc.com --user1 usersrc@examplesrc.com --passfile1 secretsrc --host2 imap.exampledst.com --user2 userdst@exampledst.com --passfile2 secretdst --addheader</pre>
 </div>
 </div>
 </li>
@@ -9298,10 +9313,16 @@ Dans tout ce qui suit nous omettrons d&#8217;utiliser cette adresse en 127.0.0.1
 <p>Le faire pointer vers le web folder <code>yacht</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -9500,10 +9521,16 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 8061:8000 <span
 <p>Le faire pointer vers le web folder <code>portainer</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -11091,7 +11118,7 @@ wget https://raw.githubusercontent.com/microweber-dev/webinstall/master/webinsta
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">docker volume create mealie_data
-docker run <span class="nt">-d</span> <span class="nt">-p</span> 1282:80 <span class="nt">--name</span><span class="o">=</span>mealie <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> mealie_data:<span class="s1">'/app/data/'</span> <span class="nt">-e</span> <span class="nv">PGID</span><span class="o">=</span>1000 <span class="nt">-e</span> <span class="nv">PUID</span><span class="o">=</span>1000  hkotel/mealie:latest</code></pre>
+docker run <span class="nt">-d</span> <span class="nt">-p</span> 1282:9000 <span class="nt">--name</span><span class="o">=</span>mealie <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> mealie_data:<span class="s1">'/app/data/'</span> <span class="nt">-e</span> <span class="nv">PGID</span><span class="o">=</span>1000 <span class="nt">-e</span> <span class="nv">PUID</span><span class="o">=</span>1000  ghcr.io/mealie-recipes/mealie:latest</code></pre>
 </div>
 </div>
 </li>
@@ -11139,13 +11166,16 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 1282:80 <span c
 <p>Le faire pointer vers le web folder <code>mealie</code>.</p>
 </li>
 <li>
-<p>Dans auto-Subdomain &#8592; Sélectionnez <code>None</code></p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -11242,7 +11272,7 @@ Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8
 <pre class="rouge highlight"><code data-lang="bash">docker pull hkotel/mealie:latest
 docker stop mealie
 docker <span class="nb">rm </span>mealie
-docker run <span class="nt">-d</span> <span class="nt">-p</span> 1282:80 <span class="nt">--name</span><span class="o">=</span>mealie <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> mealie_data:<span class="s1">'/app/data/'</span> <span class="nt">-e</span> <span class="nv">PGID</span><span class="o">=</span>1000 <span class="nt">-e</span> <span class="nv">PUID</span><span class="o">=</span>1000  hkotel/mealie:latest</code></pre>
+docker run <span class="nt">-d</span> <span class="nt">-p</span> 1282:9000 <span class="nt">--name</span><span class="o">=</span>mealie <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> mealie_data:<span class="s1">'/app/data/'</span> <span class="nt">-e</span> <span class="nv">PGID</span><span class="o">=</span>1000 <span class="nt">-e</span> <span class="nv">PUID</span><span class="o">=</span>1000  ghcr.io/mealie-recipes/mealie:latest</code></pre>
 </div>
 </div>
 </li>
@@ -11525,9 +11555,14 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>vi /etc/php/7.3/apache2/php.ini</pre>
+<pre>vi /etc/php/8.2/fpm/php.ini <i class="conum" data-value="1"></i><b>(1)</b></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>remplacer 8.2 par votre version de php
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -11537,8 +11572,7 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 <pre class="rouge highlight"><code data-lang="ini"><span class="py">memory_limit</span> <span class="p">=</span> <span class="s">512M</span>
 <span class="py">upload_max_filesize</span> <span class="p">=</span> <span class="s">500M</span>
 <span class="py">post_max_size</span> <span class="p">=</span> <span class="s">500M</span>
-<span class="py">max_execution_time</span> <span class="p">=</span> <span class="s">300</span>
-<span class="py">date.timezone</span> <span class="p">=</span> <span class="s">Asia/Kolkata</span></code></pre>
+<span class="py">max_execution_time</span> <span class="p">=</span> <span class="s">300</span></code></pre>
 </div>
 </div>
 </li>
@@ -11551,6 +11585,9 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 </div>
 </li>
 </ol>
+</div></td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -11594,10 +11631,16 @@ Des clients sont disponibles pour la plupart des systèmes d&#8217;exploitation,
 <p>Le faire pointer vers le web folder <code>nextcloud</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
+</li>
+<li>
+<p>Activer <code>let’s encrypt SSL</code></p>
 </li>
 <li>
 <p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Aller dans l&#8217;onglet <code>Statistics</code> pour <code>Webstatistics program</code> sélectionnez <code>None</code></p>
@@ -11822,10 +11865,16 @@ Il montre des fonctionnalités similaires à gitlab ou github tout en gardant un
 <p>Le faire pointer vers le web folder <code>gitea</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -12218,13 +12267,13 @@ service gitea start</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_de_bitwarden">27. Installation de Bitwarden</h2>
+<h2 id="_installation_de_vaultwarden">27. Installation de vaultwarden</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>le logiciel <code>Bitwarden</code> est un gestionnaire de mots de passe relativement complet et gratuit. Il peut être installé sur votre serveur VPS de manière indépendante de l&#8217;éditeur Bitwarden.</p>
+<p>le logiciel <code>vaultwarden</code> est un gestionnaire de mots de passe relativement complet et gratuit. Il peut être installé sur votre serveur VPS de manière indépendante de l&#8217;éditeur vaultwarden.</p>
 </div>
 <div class="paragraph">
-<p>Il reste cependant un bémol puisque l&#8217;installation s&#8217;effectue à l&#8217;aide de containers dockers qui sont eux générés par l&#8217;éditeur de <code>bitwarden</code>.</p>
+<p>Il reste cependant un bémol puisque l&#8217;installation s&#8217;effectue à l&#8217;aide de containers dockers qui sont eux générés par l&#8217;éditeur de <code>vaultwarden</code>.</p>
 </div>
 <div class="sect2">
 <h3 id="_prérequis_2">27.1. Prérequis</h3>
@@ -12233,9 +12282,9 @@ service gitea start</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_du_serveur_bitwarden">27.2. Installation du serveur Bitwarden</h3>
+<h3 id="_installation_du_serveur_vaultwarden">27.2. Installation du serveur vaultwarden</h3>
 <div class="paragraph">
-<p>Nous allons installer Vaultwarden qui est la version libre de bitwarden et compatible avec les APIs.
+<p>Nous allons installer Vaultwarden qui est la version libre de vaultwarden et compatible avec les APIs.
 Cette version est plus complète que la version officielle, consomme moins de ressources et est plus rapide.</p>
 </div>
 <div class="paragraph">
@@ -12250,10 +12299,21 @@ Cette version est plus complète que la version officielle, consomme moins de re
 <p>Allez dans le répertoire de root</p>
 </li>
 <li>
-<p>Créez un code de hashage valide et notez le. tapez:</p>
+<p>Installez <code>argon2</code></p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">openssl rand <span class="nt">-base64</span> 48</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>argon2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Créez un <a href="#pass_gen">mot de passe</a></p>
+</li>
+<li>
+<p>Créez un code de hashage valide à partir de celui ci et notez le. tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"MySecretPassword"</span> | argon2 <span class="s2">"</span><span class="si">$(</span>openssl rand <span class="nt">-base64</span> 32<span class="si">)</span><span class="s2">"</span> <span class="nt">-e</span> <span class="nt">-id</span> <span class="nt">-k</span> 19456 <span class="nt">-t</span> 2 <span class="nt">-p</span> 1</code></pre>
 </div>
 </div>
 </li>
@@ -12262,14 +12322,14 @@ Cette version est plus complète que la version officielle, consomme moins de re
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">docker volume create vaultwarden_data
-docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span class="nt">--name</span><span class="o">=</span>bitwarden <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> vaultwarden_data:/data:rw <span class="nt">-e</span> <span class="nv">ROCKET_ENV</span><span class="o">=</span>staging <span class="nt">-e</span> <span class="nv">ROCKET_PORT</span><span class="o">=</span>80 <span class="nt">-e</span> <span class="nv">ROCKET_WORKERS</span><span class="o">=</span>10 <span class="nt">-e</span> <span class="nv">SMTP_HOST</span><span class="o">=</span>mail.example.com <span class="nt">-e</span> <span class="nv">SMTP_FROM</span><span class="o">=</span>mailname@example.com <span class="nt">-e</span> <span class="nv">SMTP_PORT</span><span class="o">=</span>587 <span class="nt">-e</span> <span class="nv">SMTP_SSL</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-e</span> <span class="nv">SMTP_USERNAME</span><span class="o">=</span>mailname@example.com <span class="nt">-e</span> <span class="nv">SMTP_PASSWORD</span><span class="o">=</span>mailpassword <span class="nt">-e</span> <span class="nv">WEBSOCKET_ENABLED</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-e</span> <span class="nv">ADMIN_TOKEN</span><span class="o">=</span>Hashcode <span class="nt">-e</span> <span class="nv">SIGNUPS_ALLOWED</span><span class="o">=</span><span class="nb">false</span> <span class="nt">-e</span> <span class="nv">DOMAIN</span><span class="o">=</span>https://bitwarden.example.com vaultwarden/server:latest <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span class="nt">--name</span><span class="o">=</span>vaultwarden <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> vaultwarden_data:/data:rw <span class="nt">-e</span> <span class="nv">ROCKET_ENV</span><span class="o">=</span>staging <span class="nt">-e</span> <span class="nv">ROCKET_PORT</span><span class="o">=</span>80 <span class="nt">-e</span> <span class="nv">ROCKET_WORKERS</span><span class="o">=</span>10 <span class="nt">-e</span> <span class="nv">SMTP_HOST</span><span class="o">=</span>mail.example.com <span class="nt">-e</span> <span class="nv">SMTP_FROM</span><span class="o">=</span>mailname@example.com <span class="nt">-e</span> <span class="nv">SMTP_PORT</span><span class="o">=</span>587 <span class="nt">-e</span> <span class="nv">SMTP_SSL</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-e</span> <span class="nv">SMTP_USERNAME</span><span class="o">=</span>mailname@example.com <span class="nt">-e</span> <span class="nv">SMTP_PASSWORD</span><span class="o">=</span>mailpassword <span class="nt">-e</span> <span class="nv">WEBSOCKET_ENABLED</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-e</span> <span class="nv">ADMIN_TOKEN</span><span class="o">=</span>Hashcode <span class="nt">-e</span> <span class="nv">SIGNUPS_ALLOWED</span><span class="o">=</span><span class="nb">false</span> <span class="nt">-e</span> <span class="nv">DOMAIN</span><span class="o">=</span>https://vaultwarden.example.com vaultwarden/server:latest <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>ici il faut remplacer <code>example.com</code> par votre nom de domaine. Il faut aussi remplacer <code>mailname@example.com</code> par une boite mail valide sur le serveur et <code>mailpassword</code> par le mot de passe de cette boite mail valide. <code>Hashcode</code> doit être remplacé par le code de hashage généré. Ce code protège l&#8217;accès <code>admin</code> de Bitwarden.</td>
+<td>ici il faut remplacer <code>example.com</code> par votre nom de domaine. Il faut aussi remplacer <code>mailname@example.com</code> par une boite mail valide sur le serveur et <code>mailpassword</code> par le mot de passe de cette boite mail valide. <code>Hashcode</code> doit être remplacé par le code de hashage généré. Ce code protège l&#8217;accès <code>admin</code> de vaultwarden.</td>
 </tr>
 </table>
 </div>
@@ -12278,7 +12338,7 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_bitwarden">27.3. Création du site web de Bitwarden</h3>
+<h3 id="_création_du_site_web_de_vaultwarden">27.3. Création du site web de vaultwarden</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -12293,7 +12353,7 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span c
 <div class="ulist">
 <ul>
 <li>
-<p><code>Hostname:</code> &#8592; Tapez <code>bitwarden</code></p>
+<p><code>Hostname:</code> &#8592; Tapez <code>vaultwarden</code></p>
 </li>
 <li>
 <p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
@@ -12312,16 +12372,19 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span c
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Lui donner le nom <code>bitwarden</code>.</p>
+<p>Lui donner le nom <code>vaultwarden</code>.</p>
 </li>
 <li>
-<p>Le faire pointer vers le web folder <code>bitwarden</code>.</p>
+<p>Le faire pointer vers le web folder <code>vaultwarden</code>.</p>
+</li>
+<li>
+<p>Mettre <code>None</code> dans <code>Auto-Subdomain</code></p>
 </li>
 <li>
 <p>Activer let’s encrypt ssl</p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>PHP-PFM</code> pour PHP</p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -12342,7 +12405,7 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span c
 <span class="nc">ProxyPass</span> /stats !
 <span class="nc">ProxyPass</span> /.well-known/acme-challenge !
 
-<span class="c"># bitwarden httpserver</span>
+<span class="c"># vaultwarden httpserver</span>
 <span class="c">#</span>
 
 <span class="nc">SetEnvIf</span> Authorization "(.*)" HTTP_AUTHORIZATION=$1
@@ -12351,7 +12414,7 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span c
 <span class="nc">ProxyPass</span> / http://localhost:1280/
 <span class="nc">ProxyPassReverse</span> / http://localhost:1280/
 
-<span class="nc">RedirectMatch</span> ^/$ https://bitwarden.example.com</code></pre>
+<span class="nc">RedirectMatch</span> ^/$ https://vaultwarden.example.com</code></pre>
 </div>
 </div>
 </li>
@@ -12362,14 +12425,14 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuration_du_site_bitwarden">27.4. Configuration du site Bitwarden</h3>
+<h3 id="_configuration_du_site_vaultwarden">27.4. Configuration du site vaultwarden</h3>
 <div class="paragraph">
-<p>Votre site web <code>Bitwarden</code> est installé et opérationnel.</p>
+<p>Votre site web <code>vaultwarden</code> est installé et opérationnel.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Pointez votre navigateur sur votre site web <code>bitwarden</code></p>
+<p>Pointez votre navigateur sur votre site web <code>vaultwarden</code></p>
 </li>
 <li>
 <p>Créez un compte avec votre login et choisissez un mot de passe.</p>
@@ -12378,13 +12441,13 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span c
 <p>Loggez vous sur le site vous pouvez maintenant créer des droits d&#8217;accès ou importer ceux d&#8217;un autre outil tel que <code>lastpass</code> ou <code>1password</code>.</p>
 </li>
 <li>
-<p>Vous pouvez aussi vous connecter en tant qu&#8217;admin en allant sur l&#8217;url <a href="https://bitwarden.example.com/admin" class="bare">https://bitwarden.example.com/admin</a></p>
+<p>Vous pouvez aussi vous connecter en tant qu&#8217;admin en allant sur l&#8217;url <a href="https://vaultwarden.example.com/admin" class="bare">https://vaultwarden.example.com/admin</a></p>
 </li>
 <li>
 <p>Une fenetre apparait vous demandant le code de hachage que vous avez configuré à l&#8217;installation. Saisissez le.</p>
 </li>
 <li>
-<p>vous pouvez maintenant configurer des options dans bitwarden.</p>
+<p>vous pouvez maintenant configurer des options dans vaultwarden.</p>
 </li>
 <li>
 <p>une option qu&#8217;il est important de configurer est la désactivation de la création de compte. Pour cela:</p>
@@ -12408,7 +12471,7 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span c
 </ol>
 </div>
 <div class="paragraph">
-<p>Sur votre smartphone on dans votre navigateur, configurez Bitwarden pour pointer vers votre serveur en y configurant l&#8217;URL: <code><a href="https://bitwarden.example.com" class="bare">https://bitwarden.example.com</a></code>
+<p>Sur votre smartphone on dans votre navigateur, configurez vaultwarden pour pointer vers votre serveur en y configurant l&#8217;URL: <code><a href="https://vaultwarden.example.com" class="bare">https://vaultwarden.example.com</a></code>
 Logguez vous.</p>
 </div>
 <div class="paragraph">
@@ -12416,7 +12479,7 @@ Logguez vous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_upgrade_de_bitwarden">27.5. Upgrade de Bitwarden</h3>
+<h3 id="_upgrade_de_vaultwarden">27.5. Upgrade de vaultwarden</h3>
 <div class="paragraph">
 <p>Rien a faire pour la mise à jour si vous utilisez <code>Watchtower</code>
 Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8217;aide de <a href="#port_container_updt"><code>Portainer</code></a> ou à l&#8217;aide <a href="#yacht_container_updt"><code>Yacht</code></a></p>
@@ -12437,16 +12500,16 @@ Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">docker pull vaultwarden/server:latest
-docker stop bitwarden
-docker <span class="nb">rm </span>bitwarden
-docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span class="nt">--name</span><span class="o">=</span>bitwarden <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> bitwarden_data:/data:rw <span class="nt">-e</span> <span class="nv">ROCKET_ENV</span><span class="o">=</span>staging <span class="nt">-e</span> <span class="nv">ROCKET_PORT</span><span class="o">=</span>80 <span class="nt">-e</span> <span class="nv">ROCKET_WORKERS</span><span class="o">=</span>10 <span class="nt">-e</span> <span class="nv">SMTP_HOST</span><span class="o">=</span>mail.example.com <span class="nt">-e</span> <span class="nv">SMTP_FROM</span><span class="o">=</span>mailname@example.com <span class="nt">-e</span> <span class="nv">SMTP_PORT</span><span class="o">=</span>587 <span class="nt">-e</span> <span class="nv">SMTP_SSL</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-e</span> <span class="nv">SMTP_USERNAME</span><span class="o">=</span>mailname@example.com <span class="nt">-e</span> <span class="nv">SMTP_PASSWORD</span><span class="o">=</span>mailpassword <span class="nt">-e</span> <span class="nv">WEBSOCKET_ENABLED</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-e</span> <span class="nv">ADMIN_TOKEN</span><span class="o">=</span>Hashcode <span class="nt">-e</span> <span class="nv">SIGNUPS_ALLOWED</span><span class="o">=</span><span class="nb">false</span> <span class="nt">-e</span> <span class="nv">DOMAIN</span><span class="o">=</span>https://bitwarden.example.com vaultwarden/server:latest <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+docker stop vaultwarden
+docker <span class="nb">rm </span>vaultwarden
+docker run <span class="nt">-d</span> <span class="nt">-p</span> 1280:80 <span class="nt">--name</span><span class="o">=</span>vaultwarden <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> vaultwarden_data:/data:rw <span class="nt">-e</span> <span class="nv">ROCKET_ENV</span><span class="o">=</span>staging <span class="nt">-e</span> <span class="nv">ROCKET_PORT</span><span class="o">=</span>80 <span class="nt">-e</span> <span class="nv">ROCKET_WORKERS</span><span class="o">=</span>10 <span class="nt">-e</span> <span class="nv">SMTP_HOST</span><span class="o">=</span>mail.example.com <span class="nt">-e</span> <span class="nv">SMTP_FROM</span><span class="o">=</span>mailname@example.com <span class="nt">-e</span> <span class="nv">SMTP_PORT</span><span class="o">=</span>587 <span class="nt">-e</span> <span class="nv">SMTP_SSL</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-e</span> <span class="nv">SMTP_USERNAME</span><span class="o">=</span>mailname@example.com <span class="nt">-e</span> <span class="nv">SMTP_PASSWORD</span><span class="o">=</span>mailpassword <span class="nt">-e</span> <span class="nv">WEBSOCKET_ENABLED</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-e</span> <span class="nv">ADMIN_TOKEN</span><span class="o">=</span>Hashcode <span class="nt">-e</span> <span class="nv">SIGNUPS_ALLOWED</span><span class="o">=</span><span class="nb">false</span> <span class="nt">-e</span> <span class="nv">DOMAIN</span><span class="o">=</span>https://vaultwarden.example.com vaultwarden/server:latest <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>ici il faut remplacer <code>example.com</code> par votre nom de domaine. Il faut aussi remplacer <code>mailname@example.com</code> par une boite mail valide sur le serveur et <code>mailpassword</code> par le mot de passe de cette boite mail valide. <code>Hashcode</code> doit être remplacé par le code de hashage généré. Ce code protège l&#8217;accès <code>admin</code> de Bitwarden.</td>
+<td>ici il faut remplacer <code>example.com</code> par votre nom de domaine. Il faut aussi remplacer <code>mailname@example.com</code> par une boite mail valide sur le serveur et <code>mailpassword</code> par le mot de passe de cette boite mail valide. <code>Hashcode</code> doit être remplacé par le code de hashage généré. Ce code protège l&#8217;accès <code>admin</code> de vaultwarden.</td>
 </tr>
 </table>
 </div>
@@ -12537,10 +12600,16 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 1281:443 <span 
 <p>Le faire pointer vers le web folder <code>heimdall</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -12707,10 +12776,16 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 1281:443 <span 
 <p>Le faire pointer vers le web folder <code>seafile</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -13288,10 +13363,16 @@ Loki est aussi installé pour réaliser une analyse précise des fichiers de log
 <p>Le faire pointer vers le web folder <code>grafana</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -14085,11 +14166,20 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <li>
 <p>Tout est maintenant prêt pour faire un backup</p>
 </li>
+<li>
+<p>avec le mode <code>repokey</code>, une clé de cryptage est stockée dans le repository de backup. Il est conseillé de la sauvegarder. Pour cela, tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">borg key <span class="nb">export </span>borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Notez bien la clé qui sert à décrypter le repository dans un endroit sécurisé
+=== Effectuer un backup</p>
+</li>
 </ol>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_effectuer_un_backup">32.4. Effectuer un backup</h3>
 <div class="paragraph">
 <p>Nous allons créer tout d&#8217;abord un script de backup pour sauvegarder tout le serveur sauf les répertoires système:</p>
 </div>
@@ -14112,7 +14202,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="nb">cd</span> / <span class="o">&amp;&amp;</span> borg create <span class="nt">--stats</span> <span class="nt">--progress</span> <span class="nt">--compress</span> zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">date</span> +%Y-%m-%d-%H-%M-%S<span class="sb">`</span> ./ <span class="nt">--exclude</span><span class="o">=</span>dev <span class="nt">--exclude</span><span class="o">=</span>proc <span class="nt">--exclude</span><span class="o">=</span>run <span class="nt">--exclude</span><span class="o">=</span>root/.cache/ <span class="nt">--exclude</span><span class="o">=</span>mnt/borgmount <span class="nt">--exclude</span><span class="o">=</span>sys <span class="nt">--exclude</span><span class="o">=</span>swapfile <span class="nt">--exclude</span><span class="o">=</span>tmp <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<span class="nb">cd</span> / <span class="o">&amp;&amp;</span> /usr/local/bin/borg create <span class="nt">--stats</span> <span class="nt">--progress</span> <span class="nt">--compress</span> zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">date</span> +%Y-%m-%d-%H-%M-%S<span class="sb">`</span> ./ <span class="nt">--exclude</span><span class="o">=</span>dev <span class="nt">--exclude</span><span class="o">=</span>proc <span class="nt">--exclude</span><span class="o">=</span>run <span class="nt">--exclude</span><span class="o">=</span>root/.cache/ <span class="nt">--exclude</span><span class="o">=</span>mnt/borgmount <span class="nt">--exclude</span><span class="o">=</span>sys <span class="nt">--exclude</span><span class="o">=</span>swapfile <span class="nt">--exclude</span><span class="o">=</span>tmp <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -14123,7 +14213,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>si votre machine est assez puissante, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</td>
+<td>en fonction de la puissance de votre machine, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</td>
 </tr>
 </table>
 </div>
@@ -14148,7 +14238,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lister_les_backups">32.5. Lister les backups</h3>
+<h3 id="_lister_les_backups">32.4. Lister les backups</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de listage :</p>
 </div>
@@ -14171,7 +14261,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-borg list <span class="nt">-v</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
+/usr/local/bin/borg list <span class="nt">-v</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -14203,6 +14293,61 @@ borg list <span class="nt">-v</span> borgbackup@&lt;storing_srv&gt;:/home/borgba
 </div>
 </div>
 <div class="sect2">
+<h3 id="_obtenir_les_infos_sur_un_backup">32.5. Obtenir les infos sur un backup</h3>
+<div class="paragraph">
+<p>Nous allons créer un script de listage :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#root_login">Loguez vous comme root sur &lt;example.com&gt;. </a></p>
+</li>
+<li>
+<p>Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">vi /usr/local/bin/borginfo.sh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Insèrez dans le fichier le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
+<span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
+/usr/local/bin/borg info <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="nv">$1</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mot_passe doit être remplacé par celui généré plus haut.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>changez les permissions du script. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">chmod </span>700 /usr/local/bin/borginfo.sh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>vous pouvez maintenant lister vos backup en tapant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">/usr/local/bin/borginfo.sh</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_vérifier_un_backup">32.6. Vérifier un backup</h3>
 <div class="paragraph">
 <p>Nous allons créer un script de vérification :</p>
@@ -14226,7 +14371,7 @@ borg list <span class="nt">-v</span> borgbackup@&lt;storing_srv&gt;:/home/borgba
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-borg check <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="nv">$1</span></code></pre>
+/usr/local/bin/borg check <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="nv">$1</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -14290,7 +14435,7 @@ borg check <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/ho
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">mkdir</span> <span class="nt">-p</span> /mnt/borgbackup
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</code></pre>
+/usr/local/bin/borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -14387,7 +14532,7 @@ umount /mnt/borgbackup
 
 
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-borg prune <span class="nt">--stats</span> <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ <span class="nt">--prefix</span> <span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>- <span class="nt">--keep-daily</span><span class="o">=</span>7 <span class="nt">--keep-weekly</span><span class="o">=</span>4 <span class="nt">--keep-monthly</span><span class="o">=</span>12 <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+/usr/local/bin/borg prune <span class="nt">--stats</span> <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ <span class="nt">--prefix</span> <span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>- <span class="nt">--keep-daily</span><span class="o">=</span>7 <span class="nt">--keep-weekly</span><span class="o">=</span>4 <span class="nt">--keep-monthly</span><span class="o">=</span>12 <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -14419,13 +14564,52 @@ borg prune <span class="nt">--stats</span> <span class="nt">--progress</span> bo
 </div>
 </div>
 </li>
-</ol>
+<li>
+<p>Pour récupèrer l&#8217;espace libéré par la suppression des sauvegardes inutiles, créez le script suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">vi /usr/local/bin/borgcompact.sh</code></pre>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_automatisez_votre_sauvegarde">32.9. Automatisez votre sauvegarde</h3>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
+<li>
+<p>Insèrez dans le fichier le texte suivant:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
+
+<span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
+/usr/local/bin/borg compact <span class="nt">--progress</span>  borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mot_passe doit être remplacé par celui généré plus haut.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>changez les permissions du script. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">chmod </span>700 /usr/local/bin/borgcompact.sh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>vous pouvez maintenant effectuer du ménage:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">/usr/local/bin/borgcompact.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>=== Automatisez votre sauvegarde</p>
+</div>
+</li>
 <li>
 <p>Pour créer un script automatisé de backup. Tapez:</p>
 <div class="listingblock">
@@ -14449,7 +14633,8 @@ vi /usr/local/bin/borgcron.sh</code></pre>
 <span class="nv">LOG_PATH</span><span class="o">=</span>/var/log/borg/cron.log
 
 /usr/local/bin/borgbackup.sh <span class="o">&gt;&gt;</span> <span class="k">${</span><span class="nv">LOG_PATH</span><span class="k">}</span> 2&gt;&amp;1
-/usr/local/bin/borgprune.sh <span class="o">&gt;&gt;</span> <span class="k">${</span><span class="nv">LOG_PATH</span><span class="k">}</span> 2&gt;&amp;1</code></pre>
+/usr/local/bin/borgprune.sh <span class="o">&gt;&gt;</span> <span class="k">${</span><span class="nv">LOG_PATH</span><span class="k">}</span> 2&gt;&amp;1
+/usr/local/bin/borgcompact.sh <span class="o">&gt;&gt;</span> <span class="k">${</span><span class="nv">LOG_PATH</span><span class="k">}</span> 2&gt;&amp;1</code></pre>
 </div>
 </div>
 </li>
@@ -14482,7 +14667,7 @@ vi /usr/local/bin/borgcron.sh</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_restauration_durgence">32.10. Restauration d&#8217;urgence.</h3>
+<h3 id="_restauration_durgence">32.9. Restauration d&#8217;urgence.</h3>
 <div class="paragraph">
 <p>En cas de crash du serveur, l’intérêt du backup offsite est de pouvoir remonter la dernière sauvegarde sans souci.
 Pour cela il faut avoir un moyen de booter le serveur dans un mode rescue (boot du VPS en mode rescue, utilisation d&#8217;un clé USB bootable, boot réseau ou autre moyen).</p>
@@ -14602,7 +14787,7 @@ procédure</a>. Attention le fichier de swap doit être installé dans
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_borgweb">32.11. Installation de Borgweb</h3>
+<h3 id="_installation_de_borgweb">32.10. Installation de Borgweb</h3>
 <div class="paragraph">
 <p>Borgweb existe en version officielle. Cette version n&#8217;a pas trop d&#8217;intéret pour nous étant donnée qu&#8217;elle n&#8217;interroge pas le serveur de stockage pour obtenir les informations des backups réalisés. Il existe un clone de repository qui implémente une fonctionnalité qui liste tous les backups effectués sur le serveur de stockage</p>
 </div>
@@ -14771,7 +14956,7 @@ systemctl start borgweb.service</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_borgweb">32.12. Création du site web de Borgweb</h3>
+<h3 id="_création_du_site_web_de_borgweb">32.11. Création du site web de Borgweb</h3>
 <div class="paragraph">
 <p>Appliquez les opérations suivantes Dans ISPConfig de votre serveur de stockage &lt;storing_srv&gt;:</p>
 </div>
@@ -14811,10 +14996,16 @@ systemctl start borgweb.service</code></pre>
 <p>Le faire pointer vers le web folder <code>borgweb</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -14960,10 +15151,16 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 <p>Le faire pointer vers le web folder <code>pritunl</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -15518,10 +15715,16 @@ pritunl <span class="nb">set </span>app.redirect_server <span class="nb">false</
 <p>Le faire pointer vers le web folder <code>guacamole</code>.</p>
 </li>
 <li>
-<p>Activer let’s encrypt ssl</p>
+<p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
 </li>
 <li>
-<p>Activer <code>Fast CGI</code> pour PHP</p>
+<p>Activer <code>let’s encrypt SSL</code></p>
+</li>
+<li>
+<p>Activer <code>PHP-FPM</code> pour PHP</p>
+</li>
+<li>
+<p>Dans l&#8217;onglet Redirect Cochez la case <code>Rewrite HTTP to HTTPS</code></p>
 </li>
 <li>
 <p>Laisser le reste par défaut.</p>
@@ -16710,8 +16913,8 @@ EndSection</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.6<br>
-Last updated 2024-02-29 23:25:45 +0100
+Version 1.7<br>
+Last updated 2024-04-17 20:50:38 +0200
 </div>
 </div>
 </body>
