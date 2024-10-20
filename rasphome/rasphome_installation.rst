@@ -73,7 +73,7 @@ avez mis en place un compte sudo:
       le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net
       ou pour un raspberry: raspberrypi.local ) ou votre adresse IP.
 
-   ou utilisez putty si vous êtes sous Windows.
+      ou utilisez putty si vous êtes sous Windows.
 
 2. Tapez votre mot de passe s’il est demandé. Si vous avez installé une
    clé de connexion ce ne devrait pas être le cas.
@@ -97,7 +97,7 @@ avez mis en place un compte sudo:
 
       -  remplacer ici <example.com> par votre nom de domaine.
 
-      Tapez ensuite votre mot de passe root
+         Tapez ensuite votre mot de passe root
 
 .. _pass_gen:
 
@@ -1330,7 +1330,7 @@ Pour créer une clé et la déployer:
       -  remplacer ici <sudo_username> par votre login et <example.com>
          par votre nom de domaine
 
-      Entrez votre mot de passe
+         Entrez votre mot de passe
 
    b. Créer un répertoire ``~/.ssh`` s’il n’existe pas. tapez: :
 
@@ -1371,7 +1371,7 @@ Pour créer une clé et la déployer:
    -  remplacer ici <sudo_username> par votre login et <example.com> par
       votre nom de domaine
 
-   La session doit s’ouvrir sans demander de mot de passe.
+      La session doit s’ouvrir sans demander de mot de passe.
 
 .. _`_sudo_sans_mot_de_passe`:
 
@@ -2195,6 +2195,9 @@ Remarque: si vous utilisez VNC, il faut débloquer le port dans le
 firewall de ISPConfig. Appliquez la méthode de déblocage pour le port
 5900.
 
+Remarque: si vous avez besoin de débloquer un port UDP vous devez allez
+dans la rubrique Open UDP Ports.
+
 .. _`_déblocage_de_firewall_ufw`:
 
 Déblocage de Firewall UFW
@@ -2377,13 +2380,19 @@ l’installation est très simple, suivez la procédure suivante:
 
 1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-2. Tapez:
+2. Installez le client dhcp avancé. Tapez:
+
+   .. code:: bash
+
+      apt install dhcpcd
+
+3. Tapez:
 
    .. code:: bash
 
       vi /etc/dhcpcd.conf
 
-3. Ajoutez à la fin du fichier le texte suivant:
+4. Ajoutez à la fin du fichier le texte suivant:
 
    .. code:: ini
 
@@ -3203,6 +3212,7 @@ précise des fonctionnalités.
 
        curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
        sh setup-repos.sh
+       rm setup-repos.sh
 
 3.  Mise à jour. Tapez :
 
@@ -3719,12 +3729,10 @@ Il faut suivre les étapes suivantes:
 
    .. code:: bash
 
-      docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -p80:80 -p8080:8080 --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG 
+      docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -p80:80 -p8080:8080 traefik 
 
    -  Si votre serveur Traefik est disponible sur internet, il ne faudra
-      pas exposer le port 8080 et les api insecure. et de ce fait, dans
-      la ligne précédente, supprimez:
-      ``-p8080:8080 --api.insecure=true --api.dashboard=true``
+      pas exposer le port 8080
 
 .. _`_configuration_de_traefik_pour_une_utilisation_avec_pi_hole`:
 
@@ -3773,7 +3781,8 @@ Appliquer la procédure suivante:
 
     .. code:: yaml
 
-       logLevel: Debug
+       log:
+         level: DEBUG
 
        providers:
          docker:
@@ -3791,7 +3800,15 @@ Appliquer la procédure suivante:
          http:
            address: :80
 
+       api:
+         dashboard: true 
+         insecure: true 
+
     -  Remplacez example.com par le nom de domaine de votre serveur.
+
+    -  Si votre serveur Traefik est directement disponible sur internet,
+       il ne faut pas activer ces deux commandes pour garder une bonne
+       sécurité de vos services.
 
 8.  Editez le fichier de configuration dynamique. Tapez:
 
@@ -3832,14 +3849,17 @@ Appliquer la procédure suivante:
 
     .. code:: bash
 
-       docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG
+       docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik 
+
+    -  Si votre serveur Traefik est disponible sur internet, il ne
+       faudra pas exposer le port 8080
 
 12. Pihole est maintenant de nouveau accessible sur le port 80 et
     Traefik est actif en même temps pour servir tout un ensemble de
     sous-domaines virtuels associés à l’environnement Docker.
 
 13. Pour superviser vos routes et services Traefik, vous pouvez vous
-    connecter sur ``http:example.com:8080`` pour voir la configuration
+    connecter sur ``http://example.com:8080`` pour voir la configuration
     en cours. (example.com est à remplacer pour le nom de votre
     machine).
 
@@ -3866,10 +3886,10 @@ Sinon, effectuez les opérations suivantes:
       docker pull traefik
       docker stop traefik
       docker rm traefik
-      docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG 
+      docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik 
 
-   -  supprimez ``-v /etc/traefik:/etc/traefik`` si vous n’utilisez pas
-      Pi-Hole avec Treafik.
+   -  Si votre serveur Traefik est disponible sur internet, il ne faudra
+      pas exposer le port 8080
 
 .. _`_outils_web_de_gestion_des_containers`:
 
@@ -4216,7 +4236,7 @@ Suivez la procédure suivante:
 
    .. code:: bash
 
-      vi /etc/docker-mirror.yml
+      vi /etc/docker-mirror-1.yml
 
 4. Dans ce fichier, ajoutez les lignes suivantes :
 
@@ -4229,7 +4249,20 @@ Suivez la procédure suivante:
 
    .. code:: bash
 
-      docker run -d --restart=always -p 5000:5000 --name docker-registry-proxy -v /etc/docker-mirror.yml:/etc/docker/registry/config.yml registry:2
+      docker run -d --restart=always -p 5000:5000 --name docker-registry-proxy-1 -v /etc/docker-mirror-1.yml:/etc/docker/registry/config.yml registry:2
+
+Si vous avez plusieurs miroirs à configurer, il faut créer un proxy sur
+chaque. Ainsi si vous voulez créer un miroir pour ghcr.io il vous faudra
+créer une autre fichier docker-mirror-2.yml avec la deuxième adresse
+remote et lancer le tout par:
+
++
+
+.. code:: bash
+
+   docker run -d --restart=always -p 5001:5000 --name docker-registry-proxy-2 -v /etc/docker-mirror-2.yml:/etc/docker/registry/config.yml registry:2
+
+Et ainsi de suite pour chaque proxy que vous voulez mettre en place.
 
 Sur le poste client, soit passez l’option --registry-mirror lorsque vous
 lancez le démon ``dockerd`` ou sinon éditez le fichier
@@ -4249,11 +4282,13 @@ rendre le changement persistant:
    ::
 
       {
+        "insecure-registries" : ["docker.example.com:5000" ], 
         "registry-mirrors": ["http://docker.example.com:5000"] 
       }
 
    -  remplacer ``docker.example.com`` par le nom ou l’adresse ip de
-      votre cache docker.
+      votre cache docker. Si vous en avez plusieurs vous devez tous les
+      lister en les séparant par des virgules.
 
 4. Sauvegarder le fichier et redémarrez le démon docker. Tapez:
 
@@ -4647,7 +4682,7 @@ le serveur sauf les répertoires système:
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      cd / && /usr/local/bin/borg create --stats --progress --compress zstd borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp && cd 
+      cd / && /usr/bin/borg create --stats --progress --compress zstd borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp && cd 
 
    -  mot_passe doit être remplacé par celui généré plus haut
 
@@ -4688,7 +4723,7 @@ Nous allons créer un script de listage :
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      /usr/local/bin/borg list -v borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
+      /usr/bin/borg list -v borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -4725,7 +4760,7 @@ Nous allons créer un script de listage :
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      /usr/local/bin/borg info --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
+      /usr/bin/borg info --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -4762,7 +4797,7 @@ Nous allons créer un script de vérification :
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      /usr/local/bin/borg check --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
+      /usr/bin/borg check --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -4804,7 +4839,7 @@ Nous allons créer un script de montage sous forme de système de fichier
       #!/bin/sh
       mkdir -p /mnt/borgbackup
       export BORG_PASSPHRASE='mot_passe' 
-      /usr/local/bin/borg mount borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ /mnt/borgbackup
+      /usr/bin/borg mount borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ /mnt/borgbackup
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -4876,7 +4911,7 @@ Nous allons créer un script de ménage des backups :
 
 
        export BORG_PASSPHRASE='mot_passe' 
-       /usr/local/bin/borg prune --stats --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 
+       /usr/bin/borg prune --stats --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 
 
     -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -4909,7 +4944,7 @@ Nous allons créer un script de ménage des backups :
        #!/bin/sh
 
        export BORG_PASSPHRASE='mot_passe' 
-       /usr/local/bin/borg compact --progress  borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
+       /usr/bin/borg compact --progress  borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
 
     -  mot_passe doit être remplacé par celui généré plus haut.
 

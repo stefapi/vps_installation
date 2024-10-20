@@ -59,9 +59,9 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <calloutlist>
 <callout arearefs="CO1-1">
 <para>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine ou son adresse IP. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net ou pour un raspberry: raspberrypi.local ) ou votre adresse IP.</para>
+<simpara>ou utilisez putty si vous êtes sous Windows.</simpara>
 </callout>
 </calloutlist>
-<simpara>ou utilisez putty si vous êtes sous Windows.</simpara>
 </listitem>
 <listitem>
 <simpara>Tapez votre mot de passe s&#8217;il est demandé. Si vous avez installé une clé de connexion ce ne devrait pas être le cas.</simpara>
@@ -80,9 +80,9 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <calloutlist>
 <callout arearefs="CO2-1">
 <para>remplacer ici &lt;example.com&gt; par votre nom de domaine.</para>
+<simpara>Tapez ensuite votre mot de passe root</simpara>
 </callout>
 </calloutlist>
-<simpara>Tapez ensuite votre mot de passe root</simpara>
 </listitem>
 </orderedlist>
 </listitem>
@@ -1240,9 +1240,9 @@ chmod 700 ~/.ssh</programlisting>
 <calloutlist>
 <callout arearefs="CO21-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
+<simpara>Entrez votre mot de passe</simpara>
 </callout>
 </calloutlist>
-<simpara>Entrez votre mot de passe</simpara>
 </listitem>
 <listitem>
 <simpara>Créer un répertoire <literal>~/.ssh</literal> s&#8217;il n&#8217;existe pas. tapez: :</simpara>
@@ -1272,9 +1272,9 @@ chmod 700 ~/.ssh</programlisting>
 <calloutlist>
 <callout arearefs="CO22-1">
 <para>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</para>
+<simpara>La session doit s&#8217;ouvrir sans demander de mot de passe.</simpara>
 </callout>
 </calloutlist>
-<simpara>La session doit s&#8217;ouvrir sans demander de mot de passe.</simpara>
 </listitem>
 </orderedlist>
 </section>
@@ -1962,6 +1962,7 @@ hostname=&lt;serveurname&gt;.local <co xml:id="CO27-8"/></programlisting>
 </listitem>
 </orderedlist>
 <simpara>Remarque: si vous utilisez VNC, il faut débloquer le port dans le firewall de ISPConfig. Appliquez la méthode de déblocage pour le port 5900.</simpara>
+<simpara>Remarque: si vous avez besoin de débloquer un port UDP vous devez allez dans la rubrique Open UDP Ports.</simpara>
 </section>
 <section xml:id="_déblocage_de_firewall_ufw">
 <title>Déblocage de Firewall UFW</title>
@@ -2094,6 +2095,10 @@ Enfin dernier point, en configurant des DNS qui sont libres de censure et pas ce
 <orderedlist numeration="arabic">
 <listitem>
 <simpara><link linkend="root_login">Loguez vous comme root sur le serveur</link></simpara>
+</listitem>
+<listitem>
+<simpara>Installez le client dhcp avancé. Tapez:</simpara>
+<programlisting language="bash" linenumbering="unnumbered">apt install dhcpcd</programlisting>
 </listitem>
 <listitem>
 <simpara>Tapez:</simpara>
@@ -2850,7 +2855,8 @@ git pull</programlisting>
 <listitem>
 <simpara>Lancez le script de configuration de webmin:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
-sh setup-repos.sh</programlisting>
+sh setup-repos.sh
+rm setup-repos.sh</programlisting>
 </listitem>
 <listitem>
 <simpara>Mise à jour. Tapez :</simpara>
@@ -3210,10 +3216,10 @@ service apache stop</programlisting>
 </listitem>
 <listitem>
 <simpara>Ensuite installez Traefik. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -p80:80 -p8080:8080 --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG <co xml:id="CO49-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -p80:80 -p8080:8080 traefik <co xml:id="CO49-1"/></programlisting>
 <calloutlist>
 <callout arearefs="CO49-1">
-<para>Si votre serveur Traefik est disponible sur internet, il ne faudra pas exposer le port 8080 et les api insecure. et de ce fait, dans la ligne précédente, supprimez: <literal>-p8080:8080 --api.insecure=true --api.dashboard=true</literal></para>
+<para>Si votre serveur Traefik est disponible sur internet, il ne faudra pas exposer le port 8080</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -3249,7 +3255,8 @@ vi /etc/traefik/traefik.yml</programlisting>
 </listitem>
 <listitem>
 <simpara>Dans ce fichier, tapez le contenu suivant:</simpara>
-<programlisting language="yaml" linenumbering="unnumbered">logLevel: Debug
+<programlisting language="yaml" linenumbering="unnumbered">log:
+  level: DEBUG
 
 providers:
   docker:
@@ -3265,10 +3272,17 @@ defaultEntryPoints:
 
 entryPoints:
   http:
-    address: :80</programlisting>
+    address: :80
+
+api:
+  dashboard: true <co xml:id="CO50-2"/>
+  insecure: true <co xml:id="CO50-3"/></programlisting>
 <calloutlist>
 <callout arearefs="CO50-1">
 <para>Remplacez example.com par le nom de domaine de votre serveur.</para>
+</callout>
+<callout arearefs="CO50-2 CO50-3">
+<para>Si votre serveur Traefik est directement disponible sur internet, il ne faut pas activer ces deux commandes pour garder une bonne sécurité de vos services.</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -3306,13 +3320,18 @@ docker rm traefik</programlisting>
 </listitem>
 <listitem>
 <simpara>Relancez Traefik avec la nouvelle configuration:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik <co xml:id="CO52-1"/></programlisting>
+<calloutlist>
+<callout arearefs="CO52-1">
+<para>Si votre serveur Traefik est disponible sur internet, il ne faudra pas exposer le port 8080</para>
+</callout>
+</calloutlist>
 </listitem>
 <listitem>
 <simpara>Pihole est maintenant de nouveau accessible sur le port 80 et Traefik est actif en même temps pour servir tout un ensemble de sous-domaines virtuels associés à l&#8217;environnement Docker.</simpara>
 </listitem>
 <listitem>
-<simpara>Pour superviser vos routes et services Traefik, vous pouvez vous connecter sur <literal>http:example.com:8080</literal> pour voir la configuration en cours. (example.com est à remplacer pour le nom de votre machine).</simpara>
+<simpara>Pour superviser vos routes et services Traefik, vous pouvez vous connecter sur <literal><link xl:href="http://example.com:8080">http://example.com:8080</link></literal> pour voir la configuration en cours. (example.com est à remplacer pour le nom de votre machine).</simpara>
 </listitem>
 </orderedlist>
 </section>
@@ -3333,10 +3352,10 @@ Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8
 <programlisting language="bash" linenumbering="unnumbered">docker pull traefik
 docker stop traefik
 docker rm traefik
-docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik --api.insecure=true --api.dashboard=true --providers.docker --log.level=DEBUG <co xml:id="CO52-1"/></programlisting>
+docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik <co xml:id="CO53-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO52-1">
-<para>supprimez <literal>-v /etc/traefik:/etc/traefik</literal> si vous n&#8217;utilisez pas Pi-Hole avec Treafik.</para>
+<callout arearefs="CO53-1">
+<para>Si votre serveur Traefik est disponible sur internet, il ne faudra pas exposer le port 8080</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -3417,9 +3436,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:8061/
 ProxyPassReverse / http://localhost:8061/
 
-RedirectMatch ^/$ https://yacht.example.com <co xml:id="CO53-1"/></programlisting>
+RedirectMatch ^/$ https://yacht.example.com <co xml:id="CO54-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO53-1">
+<callout arearefs="CO54-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -3584,9 +3603,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:9050/
 ProxyPassReverse / http://localhost:9050/
 
-RedirectMatch ^/$ https://portainer.example.com <co xml:id="CO54-1"/></programlisting>
+RedirectMatch ^/$ https://portainer.example.com <co xml:id="CO55-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO54-1">
+<callout arearefs="CO55-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -3695,7 +3714,7 @@ docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.
 </listitem>
 <listitem>
 <simpara>Ajoutez ceci dans le fichier <literal>config.yml</literal>. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">vi /etc/docker-mirror.yml</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">vi /etc/docker-mirror-1.yml</programlisting>
 </listitem>
 <listitem>
 <simpara>Dans ce fichier, ajoutez les lignes suivantes :</simpara>
@@ -3704,9 +3723,13 @@ docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.
 </listitem>
 <listitem>
 <simpara>Démarrez ensuite le service docker. Tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">docker run -d --restart=always -p 5000:5000 --name docker-registry-proxy -v /etc/docker-mirror.yml:/etc/docker/registry/config.yml registry:2</programlisting>
+<programlisting language="bash" linenumbering="unnumbered">docker run -d --restart=always -p 5000:5000 --name docker-registry-proxy-1 -v /etc/docker-mirror-1.yml:/etc/docker/registry/config.yml registry:2</programlisting>
 </listitem>
 </orderedlist>
+<simpara>Si vous avez plusieurs miroirs à configurer, il faut créer un proxy sur chaque. Ainsi si vous voulez créer un miroir pour ghcr.io il vous faudra créer une autre fichier docker-mirror-2.yml avec la deuxième adresse remote et lancer le tout par:</simpara>
+<simpara>+</simpara>
+<programlisting language="bash" linenumbering="unnumbered">docker run -d --restart=always -p 5001:5000 --name docker-registry-proxy-2 -v /etc/docker-mirror-2.yml:/etc/docker/registry/config.yml registry:2</programlisting>
+<simpara>Et ainsi de suite pour chaque proxy que vous voulez mettre en place.</simpara>
 <simpara>Sur le poste client, soit passez l&#8217;option --registry-mirror lorsque vous lancez le démon <literal>dockerd</literal> ou sinon éditez le fichier <literal>/etc/docker/daemon.json</literal> et ajoutez la clé <literal>registry-mirrors</literal> pour rendre le changement persistant:</simpara>
 <orderedlist numeration="arabic">
 <listitem>
@@ -3719,11 +3742,12 @@ docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.
 <listitem>
 <simpara>Dans le fichier, ajoutez:</simpara>
 <screen linenumbering="unnumbered">{
-  "registry-mirrors": ["http://docker.example.com:5000"] <co xml:id="CO55-1"/>
+  "insecure-registries" : ["docker.example.com:5000" ], <co xml:id="CO56-1"/>
+  "registry-mirrors": ["http://docker.example.com:5000"] <co xml:id="CO56-2"/>
 }</screen>
 <calloutlist>
-<callout arearefs="CO55-1">
-<para>remplacer <literal>docker.example.com</literal> par le nom ou l&#8217;adresse ip de votre cache docker.</para>
+<callout arearefs="CO56-1 CO56-2">
+<para>remplacer <literal>docker.example.com</literal> par le nom ou l&#8217;adresse ip de votre cache docker. Si vous en avez plusieurs vous devez tous les lister en les séparant par des virgules.</para>
 </callout>
 </calloutlist>
 </listitem>
@@ -3833,9 +3857,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:8035/
 ProxyPassReverse / http://localhost:8035/
 
-RedirectMatch ^/$ https://statping.example.com <co xml:id="CO56-1"/></programlisting>
+RedirectMatch ^/$ https://statping.example.com <co xml:id="CO57-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO56-1">
+<callout arearefs="CO57-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>
@@ -4011,9 +4035,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Ajoutez en première ligne du fichier :</simpara>
-<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO57-1"/></screen>
+<screen>from="SERVERIPADDRESS",command="borg serve --restrict-to-path /home/borgbackup/borgbackup/",no-pty,no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc <co xml:id="CO58-1"/></screen>
 <calloutlist>
-<callout arearefs="CO57-1">
+<callout arearefs="CO58-1">
 <para>remplacez SERVERIPADDRESS par l&#8217;adresse IP affichée plus tôt.</para>
 </callout>
 </calloutlist>
@@ -4036,9 +4060,9 @@ chmod 700 borgbackup</programlisting>
 </listitem>
 <listitem>
 <simpara>Puis tapez:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO58-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">export BORG_PASSPHRASE='mot_passe' <co xml:id="CO59-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO58-1">
+<callout arearefs="CO59-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
 </calloutlist>
@@ -4071,13 +4095,13 @@ chmod 700 borgbackup</programlisting>
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO59-1"/>
-cd / &amp;&amp; /usr/local/bin/borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO59-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO60-1"/>
+cd / &amp;&amp; /usr/bin/borg create --stats --progress --compress zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp &amp;&amp; cd <co xml:id="CO60-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO59-1">
+<callout arearefs="CO60-1">
 <para>mot_passe doit être remplacé par celui généré plus haut</para>
 </callout>
-<callout arearefs="CO59-2">
+<callout arearefs="CO60-2">
 <para>en fonction de la puissance de votre machine, vous pouvez remplacer l&#8217;algorithme de compression zstd par un algorithme lz4 (rapide) ou  lzma (très lent mais performant en taille).</para>
 </callout>
 </calloutlist>
@@ -4106,10 +4130,10 @@ cd / &amp;&amp; /usr/local/bin/borg create --stats --progress --compress zstd bo
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO60-1"/>
-/usr/local/bin/borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO61-1"/>
+/usr/bin/borg list -v borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO60-1">
+<callout arearefs="CO61-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4138,10 +4162,10 @@ export BORG_PASSPHRASE='mot_passe' <co xml:id="CO60-1"/>
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO61-1"/>
-/usr/local/bin/borg info --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO62-1"/>
+/usr/bin/borg info --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
 <calloutlist>
-<callout arearefs="CO61-1">
+<callout arearefs="CO62-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4170,10 +4194,10 @@ export BORG_PASSPHRASE='mot_passe' <co xml:id="CO61-1"/>
 <listitem>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO62-1"/>
-/usr/local/bin/borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO63-1"/>
+/usr/bin/borg check --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::$1</programlisting>
 <calloutlist>
-<callout arearefs="CO62-1">
+<callout arearefs="CO63-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4184,9 +4208,9 @@ export BORG_PASSPHRASE='mot_passe' <co xml:id="CO62-1"/>
 </listitem>
 <listitem>
 <simpara>vous pouvez maintenant vérifier un de vos backup en tapant:</simpara>
-<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO63-1"/></programlisting>
+<programlisting language="bash" linenumbering="unnumbered">/usr/local/bin/borgcheck.sh &lt;nom_de_sauvegarde&gt; <co xml:id="CO64-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO63-1">
+<callout arearefs="CO64-1">
 <para>le nom de sauvegarde est récupéré en utilisant la commande borglist.sh</para>
 </callout>
 </calloutlist>
@@ -4208,10 +4232,10 @@ export BORG_PASSPHRASE='mot_passe' <co xml:id="CO62-1"/>
 <simpara>Insérez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO64-1"/>
-/usr/local/bin/borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO65-1"/>
+/usr/bin/borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</programlisting>
 <calloutlist>
-<callout arearefs="CO64-1">
+<callout arearefs="CO65-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4266,13 +4290,13 @@ rmdir /mnt/borgbackup</programlisting>
 # - une archive par mois pour les 6 derniers mois.
 
 
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO65-1"/>
-/usr/local/bin/borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO65-2"/></programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO66-1"/>
+/usr/bin/borg prune --stats --progress borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 <co xml:id="CO66-2"/></programlisting>
 <calloutlist>
-<callout arearefs="CO65-1">
+<callout arearefs="CO66-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
-<callout arearefs="CO65-2">
+<callout arearefs="CO66-2">
 <para>Le nettoyage des sauvegardes va conserver 7 sauvegardes journalières, 4 à la semaine et 12 au mois</para>
 </callout>
 </calloutlist>
@@ -4293,10 +4317,10 @@ export BORG_PASSPHRASE='mot_passe' <co xml:id="CO65-1"/>
 <simpara>Insèrez dans le fichier le texte suivant:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">#!/bin/sh
 
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO66-1"/>
-/usr/local/bin/borg compact --progress  borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO67-1"/>
+/usr/bin/borg compact --progress  borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO66-1">
+<callout arearefs="CO67-1">
 <para>mot_passe doit être remplacé par celui généré plus haut.</para>
 </callout>
 </calloutlist>
@@ -4372,10 +4396,10 @@ pip3 install borgbackup[llfuse]</programlisting>
 <listitem>
 <simpara>Munissez vous du mot de passe &lt;mot_passe&gt; des archives borg et tapez:</simpara>
 <programlisting language="bash" linenumbering="unnumbered">mkdir -p /mnt/borgbackup
-export BORG_PASSPHRASE='mot_passe' <co xml:id="CO67-1"/>
+export BORG_PASSPHRASE='mot_passe' <co xml:id="CO68-1"/>
 borg list borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</programlisting>
 <calloutlist>
-<callout arearefs="CO67-1">
+<callout arearefs="CO68-1">
 <para>remplacez mot_passe par votre mot de passe de borg</para>
 </callout>
 </calloutlist>
@@ -4404,13 +4428,13 @@ chroot . bash
 mkdir -p dev proc run sys tmp
 mount -t devtmpfs dev /dev
 mount -t proc proc /proc
-grub_install /dev/sda <co xml:id="CO68-1"/>
+grub_install /dev/sda <co xml:id="CO69-1"/>
 umount /proc
 umount /dev
 sync
 exit</programlisting>
 <calloutlist>
-<callout arearefs="CO68-1">
+<callout arearefs="CO69-1">
 <para>tapez ici le nom de device de votre disque de boot</para>
 </callout>
 </calloutlist>
@@ -4483,7 +4507,7 @@ vi config.py</programlisting>
 
     BACKUP_REPOS = {
         # Repo  name
-        "example.com": { <co xml:id="CO69-1"/>
+        "example.com": { <co xml:id="CO70-1"/>
             # Repo absolute path
             "repo_path": "/home/borgbackup/borgbackup",
 
@@ -4491,7 +4515,7 @@ vi config.py</programlisting>
             "log_path": "/var/log/borg/",
 
             # Repo password
-            "repo_pwd": "your_password", <co xml:id="CO69-2"/>
+            "repo_pwd": "your_password", <co xml:id="CO70-2"/>
 
             # Command/script to run to manually start a backup.
             # If left empty or not specified, the backup won't be
@@ -4503,10 +4527,10 @@ vi config.py</programlisting>
         }
     }</programlisting>
 <calloutlist>
-<callout arearefs="CO69-2">
+<callout arearefs="CO70-2">
 <para>Insérez ici le mot de passe du dépot Borg Backup</para>
 </callout>
-<callout arearefs="CO69-1">
+<callout arearefs="CO70-1">
 <para>Mettez ici le nom de votre domaine sauvegardé</para>
 </callout>
 </calloutlist>
@@ -4630,9 +4654,9 @@ ProxyPreserveHost    On
 ProxyPass / http://localhost:5000/
 ProxyPassReverse / http://localhost:5000/
 
-RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO70-1"/></programlisting>
+RedirectMatch ^/$ https://borgweb.example.com <co xml:id="CO71-1"/></programlisting>
 <calloutlist>
-<callout arearefs="CO70-1">
+<callout arearefs="CO71-1">
 <para>remplacer <literal>example.com</literal> par votre nom de domaine</para>
 </callout>
 </calloutlist>

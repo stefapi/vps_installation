@@ -108,7 +108,8 @@ Sont installés:
 -  un serveur de sauvegardes
    `BorgBackup <https://borgbackup.readthedocs.io/>`__,
 
--  un serveur de VPN `Pritunl <https://pritunl.com/>`__,
+-  un serveur de VPN `Wireguard
+   (wg-easy) <https://github.com/wg-easy/wg-easy>`__,
 
 -  un serveur de bureau à distance
    `Guacamole <https://guacamole.apache.org>`__
@@ -200,7 +201,7 @@ avez mis en place un compte sudo:
       le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net
       ou pour un raspberry: raspberrypi.local ) ou votre adresse IP.
 
-   ou utilisez putty si vous êtes sous Windows.
+      ou utilisez putty si vous êtes sous Windows.
 
 2. Tapez votre mot de passe s’il est demandé. Si vous avez installé une
    clé de connexion ce ne devrait pas être le cas.
@@ -224,7 +225,7 @@ avez mis en place un compte sudo:
 
       -  remplacer ici <example.com> par votre nom de domaine.
 
-      Tapez ensuite votre mot de passe root
+         Tapez ensuite votre mot de passe root
 
 .. _pass_gen:
 
@@ -1138,7 +1139,7 @@ Pour créer une clé et la déployer:
       -  remplacer ici <sudo_username> par votre login et <example.com>
          par votre nom de domaine
 
-      Entrez votre mot de passe
+         Entrez votre mot de passe
 
    b. Créer un répertoire ``~/.ssh`` s’il n’existe pas. tapez: :
 
@@ -1179,7 +1180,7 @@ Pour créer une clé et la déployer:
    -  remplacer ici <sudo_username> par votre login et <example.com> par
       votre nom de domaine
 
-   La session doit s’ouvrir sans demander de mot de passe.
+      La session doit s’ouvrir sans demander de mot de passe.
 
 .. _`_sudo_sans_mot_de_passe`:
 
@@ -2548,6 +2549,9 @@ Remarque: si vous utilisez VNC, il faut débloquer le port dans le
 firewall de ISPConfig. Appliquez la méthode de déblocage pour le port
 5900.
 
+Remarque: si vous avez besoin de débloquer un port UDP vous devez allez
+dans la rubrique Open UDP Ports.
+
 .. _`_déblocage_de_firewall_ufw`:
 
 Déblocage de Firewall UFW
@@ -2686,6 +2690,7 @@ précise des fonctionnalités.
 
        curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
        sh setup-repos.sh
+       rm setup-repos.sh
 
 3.  Mise à jour. Tapez :
 
@@ -3575,57 +3580,49 @@ services de base:
 
 6. Création d’un script de renouvellement automatique du fichier pem
 
-   a. Installez incron. Tapez :
+   a. Installez la cron. Tapez :
 
       .. code:: bash
 
-         apt install -y incron
+         crontab -e
 
-   b. Créez le fichier d’exécution périodique. Tapez :
+   b. Ajoutez la ligne suivante:
 
       .. code:: bash
 
-         vi /etc/init.d/le_ispc_pem.sh
+         00 02 1 * * /usr/local/bin/certif_update.sh
+
+   c. Créez le fichier d’exécution périodique. Tapez :
+
+      .. code:: bash
+
+         /usr/local/bin/certif_update.sh
 
       et coller dans le fichier le code suivant:
 
       .. code:: bash
 
-         #!/bin/sh
-         ### BEGIN INIT INFO
-         # Provides: LE ISPSERVER.PEM AUTO UPDATER
-         # Required-Start: $local_fs $network
-         # Required-Stop: $local_fs
-         # Default-Start: 2 3 4 5
-         # Default-Stop: 0 1 6
-         # Short-Description: LE ISPSERVER.PEM AUTO UPDATER
-         # Description: Update ispserver.pem automatically after ISPC LE SSL certs are renewed.
-         ### END INIT INFO
+         #!/bin/bash
+
          cd /usr/local/ispconfig/interface/ssl/
          mv ispserver.pem ispserver.pem-$(date +"%y%m%d%H%M%S").bak
          cat ispserver.{key,crt} > ispserver.pem
          chmod 600 ispserver.pem
          chmod 600 /etc/ssl/private/pure-ftpd.pem
+         cd /etc/postfix
+         cat smtpd.{key,cert} > smtpd.pem
+         chmod 600 smtpd.pem
          service pure-ftpd-mysql restart
          service monit restart
          service postfix restart
          service dovecot restart
          service apache2 restart
-         exit 1
 
-   c. Sauvez et quittez. Tapez ensuite:
-
-      .. code:: bash
-
-         chmod +x /etc/init.d/le_ispc_pem.sh
-         echo "root" >> /etc/incron.allow
-         incrontab -e
-
-      et ajoutez les lignes ci dessous dans le fichier:
+   d. Sauvez et quittez. Tapez ensuite:
 
       .. code:: bash
 
-         /usr/local/ispconfig/interface/ssl/ IN_MODIFY /etc/init.d/le_ispc_pem.sh
+         chmod +x /usr/local/bin/certif_update.sh
 
 .. _`_surveillance_du_serveur_avec_munin_et_monit`:
 
@@ -4965,12 +4962,13 @@ suivantes:
 
       ::
 
-         v=spf1 mx a a:mail.example.com a:mail.other.example.com  include:mail.toto.com +all 
+         v=spf1 mx a a:mail.example.com a:mail.other.example.com  include:mail.toto.com -all 
 
       -  remplacez example.com par votre nom de domaine. Vous pouvez
          rajouter autant d’entrée ``a:`` ou ``include:`` que nécessaires
          si vous avez des serveur de mail secondaires qui peuvent
-         relayer des mails pour ce domaine.
+         relayer des mails pour ce domaine. La valeur -all interdira
+         tout autre domaine ou addresse IP à envoyer des mails
 
 6. Vous pouvez le tester en allant sur le site
    `MxToolbox <https://mxtoolbox.com/diagnostic.aspx>`__.
@@ -5900,7 +5898,7 @@ Suivez la procédure suivante:
 
    .. code:: bash
 
-      vi /etc/docker-mirror.yml
+      vi /etc/docker-mirror-1.yml
 
 4. Dans ce fichier, ajoutez les lignes suivantes :
 
@@ -5913,7 +5911,20 @@ Suivez la procédure suivante:
 
    .. code:: bash
 
-      docker run -d --restart=always -p 5000:5000 --name docker-registry-proxy -v /etc/docker-mirror.yml:/etc/docker/registry/config.yml registry:2
+      docker run -d --restart=always -p 5000:5000 --name docker-registry-proxy-1 -v /etc/docker-mirror-1.yml:/etc/docker/registry/config.yml registry:2
+
+Si vous avez plusieurs miroirs à configurer, il faut créer un proxy sur
+chaque. Ainsi si vous voulez créer un miroir pour ghcr.io il vous faudra
+créer une autre fichier docker-mirror-2.yml avec la deuxième adresse
+remote et lancer le tout par:
+
++
+
+.. code:: bash
+
+   docker run -d --restart=always -p 5001:5000 --name docker-registry-proxy-2 -v /etc/docker-mirror-2.yml:/etc/docker/registry/config.yml registry:2
+
+Et ainsi de suite pour chaque proxy que vous voulez mettre en place.
 
 Sur le poste client, soit passez l’option --registry-mirror lorsque vous
 lancez le démon ``dockerd`` ou sinon éditez le fichier
@@ -5933,11 +5944,13 @@ rendre le changement persistant:
    ::
 
       {
+        "insecure-registries" : ["docker.example.com:5000" ], 
         "registry-mirrors": ["http://docker.example.com:5000"] 
       }
 
    -  remplacer ``docker.example.com`` par le nom ou l’adresse ip de
-      votre cache docker.
+      votre cache docker. Si vous en avez plusieurs vous devez tous les
+      lister en les séparant par des virgules.
 
 4. Sauvegarder le fichier et redémarrez le démon docker. Tapez:
 
@@ -9623,7 +9636,7 @@ le serveur sauf les répertoires système:
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      cd / && /usr/local/bin/borg create --stats --progress --compress zstd borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp && cd 
+      cd / && /usr/bin/borg create --stats --progress --compress zstd borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::`hostname`-`date +%Y-%m-%d-%H-%M-%S` ./ --exclude=dev --exclude=proc --exclude=run --exclude=root/.cache/ --exclude=mnt/borgmount --exclude=sys --exclude=swapfile --exclude=tmp && cd 
 
    -  mot_passe doit être remplacé par celui généré plus haut
 
@@ -9664,7 +9677,7 @@ Nous allons créer un script de listage :
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      /usr/local/bin/borg list -v borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
+      /usr/bin/borg list -v borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -9701,7 +9714,7 @@ Nous allons créer un script de listage :
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      /usr/local/bin/borg info --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
+      /usr/bin/borg info --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -9738,7 +9751,7 @@ Nous allons créer un script de vérification :
 
       #!/bin/sh
       export BORG_PASSPHRASE='mot_passe' 
-      /usr/local/bin/borg check --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
+      /usr/bin/borg check --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/::$1
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -9780,7 +9793,7 @@ Nous allons créer un script de montage sous forme de système de fichier
       #!/bin/sh
       mkdir -p /mnt/borgbackup
       export BORG_PASSPHRASE='mot_passe' 
-      /usr/local/bin/borg mount borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ /mnt/borgbackup
+      /usr/bin/borg mount borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ /mnt/borgbackup
 
    -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -9852,7 +9865,7 @@ Nous allons créer un script de ménage des backups :
 
 
        export BORG_PASSPHRASE='mot_passe' 
-       /usr/local/bin/borg prune --stats --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 
+       /usr/bin/borg prune --stats --progress borgbackup@<storing_srv>:/home/borgbackup/borgbackup/ --prefix `hostname`- --keep-daily=7 --keep-weekly=4 --keep-monthly=12 
 
     -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -9885,7 +9898,7 @@ Nous allons créer un script de ménage des backups :
        #!/bin/sh
 
        export BORG_PASSPHRASE='mot_passe' 
-       /usr/local/bin/borg compact --progress  borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
+       /usr/bin/borg compact --progress  borgbackup@<storing_srv>:/home/borgbackup/borgbackup/
 
     -  mot_passe doit être remplacé par celui généré plus haut.
 
@@ -10290,22 +10303,15 @@ stockage <storing_srv>:
    passe vous est demandé. Tapez ``admin`` pour le user et le password
    saisi. Vous accédez aux informations de sauvegarde de votre site.
 
-.. _`_installation_dun_serveur_de_vpn_pritunl`:
+.. _`_installation_dun_serveur_de_vpn_wireguard`:
 
-Installation d’un serveur de VPN Pritunl
-========================================
+Installation d’un serveur de VPN Wireguard
+==========================================
 
-Pritunl est un serveur VPN basé sur OpenVPN.
+.. _`_création_du_site_web_de_wireguard`:
 
-.. warning::
-
-   Printunl ne peut pas être installé sur une plateforme 32 bits et donc
-   sur une distribution Raspbian d’un raspberry pi
-
-.. _`_création_du_site_web_de_pritunl`:
-
-Création du site web de Pritunl
--------------------------------
+Création du site web de Wireguard
+---------------------------------
 
 Appliquez la procédure suivante:
 
@@ -10314,7 +10320,7 @@ Appliquez la procédure suivante:
 
    a. Cliquez sur ``A`` et saisissez:
 
-      -  ``Hostname:`` ← Tapez ``pritunl``
+      -  ``Hostname:`` ← Tapez ``wireguard``
 
       -  ``IP-Address:`` ← Double cliquez et sélectionnez l’adresse IP
          de votre serveur
@@ -10324,9 +10330,9 @@ Appliquez la procédure suivante:
 2. Créer un `sub-domain (vhost) <#subdomain-site>`__ dans le
    configurateur de sites.
 
-   a. Lui donner le nom ``pritunl``.
+   a. Lui donner le nom ``wireguard``.
 
-   b. Le faire pointer vers le web folder ``pritunl``.
+   b. Le faire pointer vers le web folder ``wireguard``.
 
    c. Sélectionnez ``None`` dans ``Auto-subdomain``
 
@@ -10353,378 +10359,98 @@ Appliquez la procédure suivante:
          ProxyPass /stats !
          ProxyPass /.well-known/acme-challenge !
 
-         # redirect from server
+         # wireguard httpserver
          #
 
          SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-         SSLProxyEngine On # Comment this out if no https required
          ProxyPreserveHost    On
-         SSLProxyVerify none
-         SSLProxyCheckPeerCN off
-         SSLProxyCheckPeerName off
-         SSLProxyCheckPeerExpire off
 
-         ProxyPass / https://localhost:8070/
-         ProxyPassReverse / https://localhost:8070/
+         ProxyPass / http://localhost:51821/
+         ProxyPassReverse / http://localhost:51821/
 
-         RedirectMatch ^/$ https://pritunl.example.com 
+         RedirectMatch ^/$ https://wireguard.example.com 
 
       -  remplacer ``example.com`` par votre nom de domaine
 
-.. _`_installation_de_pritunl_sur_un_vps`:
+.. _`_installation_de_wireguard`:
 
-Installation de Pritunl sur un VPS
-----------------------------------
+Installation de Wireguard
+-------------------------
 
-Veuillez suivre la procédure suivante si vous installer sur un serveur
-debian (pour le Raspberrypi voir le chapitre suivant):
-
-1. `Loguez vous comme root sur le serveur <#root_login>`__
-
-2. Ajoutez des repositories Debian. Tapez:
-
-   .. code:: bash
-
-      tee /etc/apt/sources.list.d/mongodb-org.list << EOF
-      deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main
-      EOF
-      tee /etc/apt/sources.list.d/pritunl.list << EOF
-      deb http://repo.pritunl.com/stable/apt buster main
-      EOF
-      apt-get install dirmngr
-      cd /etc/apt/trusted.gpg.d
-      wget -O mongodb.asc https://www.mongodb.org/static/pgp/server-5.0.asc
-      wget https://raw.githubusercontent.com/pritunl/pgp/master/pritunl_repo_pub.asc
-      apt-get update
-      apt-get --assume-yes install pritunl mongodb-org openvpn
-
-.. _`_installation_de_pritunl_sur_un_raspberrypi`:
-
-Installation de Pritunl sur un Raspberrypi
-------------------------------------------
-
-Pritunl n’est pas installable avec une distribution Raspbian qui est
-uniquement 32 bits. Veuillez suivre la procédure suivante si vous
-installer sur un Raspberrypi avec Ubuntu 64 bits:
+Nous allons installer wg-easy qui est un container qui implémente
+wireguard dans un docker.
 
 1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-2. Comme pritunl n’est pas nativement sur Ubuntu, il faut l’installer à
-   la main. Tapez:
+2. Installez Wireguard. Tapez:
 
    .. code:: bash
 
-      tee /etc/apt/sources.list.d/mongodb-org.list << EOF
-      deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse
-      EOF
-      apt install dirmngr openvpn python3-pip
-      cd /etc/apt/trusted.gpg.d
-      wget -O mongodb.asc https://www.mongodb.org/static/pgp/server-5.0.asc
-      apt update
-      apt install mongodb-org golang
-      mkdir -p /var/lib/pritunl
-      cd /var/lib/pritunl
-      export GOPATH=/var/lib/pritunl
-      go get -u github.com/pritunl/pritunl-dns
-      go get -u github.com/pritunl/pritunl-web
+      docker run -d \
+        --name=wg-easy \
+        -e LANG=fr \
+        -e WG_HOST=Public_IP \ 
+        -e PASSWORD=mot_de_passe \ 
+        -e PORT=51821 \
+        -e WG_PORT=51820 \
+        -v /etc/wg-easy:/etc/wireguard \
+        -p 51820:51820/udp \
+        -p 51821:51821/tcp \
+        --cap-add=NET_ADMIN \
+        --cap-add=SYS_MODULE \
+        --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
+        --sysctl="net.ipv4.ip_forward=1" \
+        --restart unless-stopped \
+        ghcr.io/wg-easy/wg-easy
 
-3. La compilation peut échouer, notamment si la version de go installée
-   sur votre système est une 1.11 ou antérieure.
+   -  saisir votre adresse IP publique donnée par exemple sur le site
+      https://www.showmyip.com/. Attention ce doit être une IP V4
 
-   a. tapez les commandes suivantes:
+   -  saisir `un mot de passe généré <#pass_gen>`__
 
-      .. code:: bash
+3. Configurez votre firewall pour ouvrir le port 51820 en mode UDP
 
-         cd /var/lib/pritunl/src/github.com/pritunl/pritunl-web
-         git checkout b6b07a4fa422d666385e951dd25e24ec527636d1
-         go install
-         cd /var/lib/pritunl/
+.. _`_update_de_wireguard`:
 
-4. Liez cette version dans ``/usr/local``. Tapez:
+Update de Wireguard
+-------------------
 
-   .. code:: bash
+Rien a faire pour la mise à jour si vous utilisez ``Watchtower``
 
-      ln -s /var/lib/pritunl/bin/pritunl-dns /usr/local/bin/pritunl-dns
-      ln -s /var/lib/pritunl/bin/pritunl-web /usr/local/bin/pritunl-web
+Sinon, effectuez les opérations suivantes:
 
-5. Installer le logiciel pour python3. Tapez:
+1. `Loguez vous comme root sur le serveur <#root_login>`__
 
-   .. code:: bash
+2. Allez dans le répertoire de root
 
-      git clone https://github.com/pritunl/pritunl.git
-      cd pritunl
-      python3 setup.py build
-      pip3 install -r requirements.txt
-      python3 setup.py install
-
-6. Printunl s’installe dans ``/usr/local/bin``. Il faut changer le
-   fichier service. Tapez:
+3. Mettez à jour le docker de wg-easy. Tapez:
 
    .. code:: bash
 
-      vi /etc/systemd/system/pritunl.service
-
-7. Changer ``ExecStart=/usr/bin/pritunl start`` par
-   ``ExecStart=/usr/local/bin/pritunl start``
-
-8. Rechargez les configs de systemd. Tapez:
-
-   .. code:: bash
-
-      systemctl daemon-reload
-
-.. _`_configuration_de_pritunl`:
-
-Configuration de Pritunl
-------------------------
-
-Votre service Pritunl est installé. Vous devez maintenant le configurer
-pour qu’il fonctionne:
-
-1.  Pritunl utilise en standard le port 80 et 443. Ces deux ports sont
-    utilisés dans notre configuration par le serveur apache
-
-2.  On commence par arrêter apache. Tapez:
-
-    .. warning::
-
-       Plus aucun site web ne sera servi. Danger donc.
-
-    .. code:: bash
-
-       systemctl stop monit apache2
-
-3.  Démarrez Mongodb ainsi que Pritunl. Tapez:
-
-    .. code:: bash
-
-       systemctl start mongod pritunl
-       systemctl enable mongod pritunl
-
-4.  pointez votre navigateur sur le site web de Pritunl:
-    https://pritunl.example.com
-
-5.  Accepter le certificat non sécurisé. La page de setup de Pritunl
-    s’affiche.
-
-6.  Obtenez la clé d’activation. Tapez:
-
-    .. code:: bash
-
-       pritunl setup-key
-
-7.  copier la clé dans la page web. Cliquez sur ``Save``
-
-8.  La page web peut s’affiche en erreur. Pas d’inquiétude à avoir.
-
-9.  Arrêtez le serveur Pritunl. Tapez:
-
-    .. code:: bash
-
-       systemctl stop pritunl
-
-10. Configurez le serveur pour qu’il n’utilise plus le port 80 et le
-    port 443
-
-    .. code:: bash
-
-       pritunl set app.server_port 8070
-       pritunl set app.redirect_server false
-
-11. Redémarrez apache et pritunl
-
-    .. code:: bash
-
-       systemctl start apache2
-       systemctl start monit
-       systemctl start pritunl
-
-12. Pointez maintenant votre navigateur sur le site
-    https://pritunl.example.com . La page de login de pritunl doit
-    s’afficher. Si ce n’est pas le cas, revérifier votre configuration
-    de site web dans ISPConfig et que le port 8070 est bien activé.
-
-13. Sur le serveur, tapez:
-
-    .. code:: bash
-
-       pritunl default-password
-
-14. Entrez dans la page web la valeur de ``username`` et de ``password``
-    affichés dans le terminal.
-
-15. Une boite de dialogue ``initial setup`` s’affiche. Ne changez rien
-    mais tapez votre mot de passe.
-
-16. Cliquez sur ``Save``
-
-17. Vous êtes maintenant connecté sur le site web.
-
-18. Cliquez sur l’onglet ``Users``
-
-    a. Cliquez sur ``Add Organization``
-
-    b. Entrez votre nom d’organisation. Par exemple ``Personnel``
-
-    c. Cliquez sur ``Add``
-
-    d. Cliquez sur ``Add User``
-
-    e. Remplissez les champs:
-
-       -  \`Name: \` ← Tapez votre nom de login (pas de caractère
-          accentué pas d’espace)
-
-       -  \`Select an organization: \` ← sélectionnez votre organisation
-
-       -  \`Email: \` ← Tapez votre adresse Email
-
-       -  ``Pin:`` ← entrez votre code Pin (que des nombres; au moins 6
-          chiffres)
-
-    f. Cliquez sur ``Add``
-
-19. Allez sur l’onglet ``Servers``
-
-    a. Cliquez sur ``Add Server``
-
-    b. Remplissez les champs:
-
-       -  ``Name:`` ← donnez un nom à votre serveur (pas de caractère
-          accentué pas d’espace)
-
-       -  laissez le reste tel quel mais notez bien le numéro de port
-          UDP indiqué
-
-    c. Cliquez sur ``Add``
-
-    d. Cliquez sur ``Attach Organization``
-
-    e. Sélectionnez le ``server`` et l' ``organization``.
-
-    f. Cliquez sur ``Attach``
-
-20. `Débloquez le port VPN que vous avez noté sur votre
-    firewall <#firewall>`__
-
-21. Retourner dans l’interface de Pritunl. retournez sur l’onglet
-    ``Servers``
-
-    a. Cliquez sur ``Start server``
-
-22. Votre serveur de VPN est opérationnel.
-
-.. _`_se_connecter_au_serveur_de_vpn`:
-
-Se connecter au serveur de VPN
-------------------------------
-
-Comme Pritunl est compatible OpenVPN n’importe quel logiciel compatible
-OpenVPN peut être utilisé. Pritunl founit un
-`client <https://client.pritunl.com/>`__ compatible pour Linux, macOS,
-and Windows.
-
-Pour se connecter à l’aide du client, vous devez charger un fichier de
-configuration qui est téléchargeable dans l’onglet utilisateur du
-serveur web. Ce fichier est à importer dans le logiciel client de
-Pritunl. Une fois fait, une compte apparaît dans le logiciel client.
-Vous pourrez vous connecter en cliquant sur le bouton ``Connect`` du
-compte utilisateur.
-
-.. _`_réparer_une_base_pritunl`:
-
-Réparer une base Pritunl
-------------------------
-
-Si jamais votre base est corrompue, vous pourrez la réparer en tapant:
-
-.. code:: bash
-
-   systemctl stop pritunl
-   pritunl repair-database
-   systemctl start pritunl
-
-.. _`_mot_de_passe_perdu`:
-
-Mot de passe perdu
-------------------
-
-Vous pouvez re-générer un mot de passe en tapant:
-
-.. code:: bash
-
-   pritunl reset-password
-
-.. _`_update_de_pritunl`:
-
-Update de Pritunl
------------------
-
-Pour une installation sur un système Intel, il n’y a rien à faire.
-
-En revanche sur un Raspberry, il est nécessaire de regénérer les
-logiciels avec les dernières versions.
-
-Appliquez la procédure suivante:
-
-1.  `Loguez vous comme root sur le serveur <#root_login>`__
-
-2.  Arrêtez le serveur pritunl
-
-    .. code:: bash
-
-       systemctl stop pritunl
-
-3.  Installez les paquets à jour. Tapez:
-
-    .. code:: bash
-
-       cd /var/lib/pritunl
-       export GOPATH=/var/lib/pritunl
-       go get -u github.com/pritunl/pritunl-dns
-       go get -u github.com/pritunl/pritunl-web
-
-4.  Mettez ensuite à jour le système client web. Tapez:
-
-    .. code:: bash
-
-       cd pritunl
-       git pull https://github.com/pritunl/pritunl.git
-       python3 setup.py build
-       pip3 install -r requirements.txt
-       python3 setup.py install
-
-5.  Printunl s’installe dans ``/usr/local/bin``. Il faut changer le
-    fichier service. Tapez:
-
-    .. code:: bash
-
-       vi /etc/systemd/system/pritunl.service
-
-6.  Changer ``ExecStart=/usr/bin/pritunl start`` par
-    ``ExecStart=/usr/local/bin/pritunl start``
-
-7.  Rechargez les configs de systemd. Tapez:
-
-    .. code:: bash
-
-       systemctl daemon-reload
-
-8.  Configurez le serveur pour qu’il n’utilise plus le port 80 et le
-    port 443 (c’est écrasé à la réinstallation) :
-
-    .. code:: bash
-
-       pritunl set app.server_port 8070
-       pritunl set app.redirect_server false
-
-9.  Redémarrez le serveur pritunl
-
-    .. code:: bash
-
-       systemctl stop pritunl
-
-10. Vérifiez que tout est correct
+      docker pull ghcr.io/wg-easy/wg-easy
+      docker stop wg-easy
+      docker rm wg-easy
+      docker run -d \
+        --name=wg-easy \
+        -e LANG=fr \
+        -e WG_HOST=Public_IP \ 
+        -e PASSWORD=mot_de_passe \ 
+        -e PORT=51821 \
+        -e WG_PORT=51820 \
+        -v /etc/wg-easy:/etc/wireguard \
+        -p 51820:51820/udp \
+        -p 51821:51821/tcp \
+        --cap-add=NET_ADMIN \
+        --cap-add=SYS_MODULE \
+        --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
+        --sysctl="net.ipv4.ip_forward=1" \
+        --restart unless-stopped \
+        ghcr.io/wg-easy/wg-easy
+
+   -  saisir votre adresse IP publique donnée par exemple sur le site
+      https://www.showmyip.com/. Attention ce doit être une IP V4
+
+   -  saisir `un mot de passe généré <#pass_gen>`__
 
 .. _`_installation_dun_serveur_de_bureau_à_distance_guacamole`:
 
@@ -10737,7 +10463,11 @@ le biais d’un navigateur web. Il s’agit d’une appli web html5 qui prend
 en charge des protocoles standard comme VNC, RDP et SSH. Vous n’avez pas
 besoin d’installer et d’utiliser des logiciels ou des plugins sur le
 serveur. Avec Guacamole, vous pouvez facilement passer d’un bureau d’une
-machine à l’autre avec le même navigateur
+machine à l’autre avec le même navigateur.
+
+Guacamole est assez ancien et d’un point de vue protocole, il ne saura
+pas se connecter avec des serveurs VNC utilisants les stack cryptos
+récentes. Il faut se mettre en version compatible 3.8 de serveur VNC.
 
 .. _`_création_du_site_web_de_guacamole`:
 
@@ -10859,44 +10589,58 @@ Suivez la procédure suivante:
 
 1.  `Loguez vous comme root sur le serveur <#root_login>`__
 
-2.  Tapez:
+2.  Guacamole n’est pas compatible aujourd’hui (version 1.5.5) de
+    Tomcat10. Or c’est la version présente dans la dernière version de
+    Debian. Je vous conseille donc d’installer tomcat9 de la version de
+    debian précédente.
+
+3.  Tapez:
 
     .. code:: bash
 
-       apt install gcc g++ libossp-uuid-dev libavcodec-dev libpango1.0-dev libssh2-1-dev libcairo2-dev libjpeg-dev libpng-dev libavutil-dev libavformat-dev libswscale-dev libvncserver-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev libtelnet-dev libswscale-dev libossp-uuid-dev libwebsockets-dev libpulse-dev  mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user
+       echo "deb http://deb.debian.org/debian/ bullseye main" > /etc/apt/sources.list.d/bullseye.list
+       apt update
+       apt install tomcat9 tomcat9-admin tomcat9-common tomcat9-user
+       sed -i 's/^/#/' /etc/apt/sources.list.d/bullseye.list
+       apt install gcc g++ libossp-uuid-dev libavcodec-dev libpango1.0-dev libssh2-1-dev libcairo2-dev libjpeg-dev libpng-dev libavutil-dev libavformat-dev libswscale-dev libvncserver-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev libtelnet-dev libswscale-dev libossp-uuid-dev libwebsockets-dev libpulse-dev  libmariadb-java
 
-3.  Sur Ubuntu, remplacer
-    ``mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user`` par
-    ``libmariadb-java tomcat9 tomcat9-admin tomcat9-common tomcat9-user``
+4.  Par ailleurs, Guacamole pose des problèmes de compatibilités avec IP
+    V6.
 
-4.  Téléchargez la dernière version de Guacamole en allant sur le site
+5.  Editez votre fichier ``/etc/hosts`` et commentez:
+
+    .. code:: bash
+
+       #::1            localhost ip6-localhost ip6-loopback
+
+6.  Téléchargez la dernière version de Guacamole en allant sur le site
     web et en récupérant le `lien de
     téléchargement <https://guacamole.apache.org/releases/>`__.
 
-5.  tapez:
+7.  tapez:
 
     .. code:: bash
 
        cd /tmp
-       curl -fSL -o guacamole-server.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz' 
+       curl -fSL -o guacamole-server.tar.gz 'https://apache.org/dyn/closer.lua/guacamole/1.5.5/source/guacamole-server-1.5.5.tar.gz?action=download' 
        tar xfz guacamole-server.tar.gz
        cd guacamole-server-*
 
     -  insérez ici l’adresse du package serveur à charger
 
-6.  Lancez la configuration. Tapez:
+8.  Lancez la configuration. Tapez:
 
     .. code:: bash
 
        ./configure --with-init-dir=/etc/init.d
 
-7.  Vous devez obtenir, à la fin de la configuration, une table de ce
+9.  Vous devez obtenir, à la fin de la configuration, une table de ce
     type:
 
     ::
 
        ------------------------------------------------
-       guacamole-server version 1.2.0
+       guacamole-server version 1.5.5
        ------------------------------------------------
 
           Library status:
@@ -10931,10 +10675,10 @@ Suivez la procédure suivante:
              guacenc .... yes
              guaclog .... yes
 
-8.  Si ce n’est pas le cas, c’est qu’une bibliothèque n’est pas
+10. Si ce n’est pas le cas, c’est qu’une bibliothèque n’est pas
     installée correctement.
 
-9.  Lancez la compilation et l’installation. Tapez:
+11. Lancez la compilation et l’installation. Tapez:
 
     .. code:: bash
 
@@ -10942,7 +10686,7 @@ Suivez la procédure suivante:
        make install
        ldconfig
 
-10. Activez le démon de gestion guacd. Tapez:
+12. Activez le démon de gestion guacd. Tapez:
 
     .. code:: bash
 
@@ -10950,7 +10694,7 @@ Suivez la procédure suivante:
        systemctl enable guacd
        systemctl start guacd
 
-11. Téléchargez le dernier client ``war`` de Guacamole en allant sur le
+13. Téléchargez le dernier client ``war`` de Guacamole en allant sur le
     site web et en récupérant le `lien de
     téléchargement <https://guacamole.apache.org/releases/>`__.
     Récupérez le lien puis tapez:
@@ -10959,61 +10703,57 @@ Suivez la procédure suivante:
 
        mkdir -p /usr/local/share/guacamole
        cd /usr/local/share/guacamole
-       curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' 
-       ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ 
-       systemctl restart tomcat8 
+       curl -fSL -o guacamole.war 'https://apache.org/dyn/closer.lua/guacamole/1.5.5/binary/guacamole-1.5.5.war?action=download' 
+       ln -s /usr/local/share/guacamole/guacamole.war /var/lib/tomcat9/webapps/
+       systemctl restart tomcat9
        systemctl restart guacd
 
     -  insérez ici l’adresse du war à charger
 
-    -  ou tomcat9 pour Ubuntu
-
-12. Editez le fichier server.xml. Tapez:
+14. Editez le fichier server.xml. Tapez:
 
     .. code:: bash
 
-       vi /etc/tomcat8/server.xml 
+       vi /etc/tomcat9/server.xml
 
-    -  ou tomcat9 pour Ubuntu
-
-13. Chercher ``Connector port="8080" protocol="HTTP/1.1`` et remplacer
+15. Chercher ``Connector port="8080" protocol="HTTP/1.1`` et remplacer
     partout le port ``8080`` par ``8085``
 
-14. Créez les répertoires de configuration de guacamole. Tapez:
+16. Créez les répertoires de configuration de guacamole. Tapez:
 
     .. code:: bash
 
        mkdir -p /etc/guacamole
        mkdir -p /etc/guacamole/{extensions,lib}
 
-15. Récupérez le driver mysql/mariadb pour java. Sur la plupart des
+17. Récupérez le driver mysql/mariadb pour java. Sur la plupart des
     Linux, il est présent dans ``/usr/share/java``. Pour le copier,
     tapez:
 
     .. code:: bash
 
-       ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/
+       ln -s /usr/share/java/mariadb-java-client.jar /etc/guacamole/lib/
 
-16. Il se peut que ce driver ne soit pas présent: allez sur le site
+18. Il se peut que ce driver ne soit pas présent: allez sur le site
     `Mysql <https://dev.mysql.com/downloads/connector/j/>`__ et
     téléchargez la version Platform independant. Tapez:
 
     .. code:: bash
 
-       curl -fSL -o mysql-java.tar.gz 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz' 
+       curl -fSL -o mysql-java.tar.gz 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j-8.3.0.tar.gz' 
        tar xfz mysql-java.tar.gz
        cd mysql-connector-java-*
        cp mysql-connector-java-*.jar /etc/guacamole/lib/mysql-connector-java.jar
 
     -  Collez ici le lien récupéré sur le site de Mysql.
 
-17. Editez le fichier guacamole.properties. Tapez:
+19. Editez le fichier guacamole.properties. Tapez:
 
     .. code:: bash
 
        vi /etc/guacamole/guacamole.properties
 
-18. Ajoutez dans le fichier:
+20. Ajoutez dans le fichier:
 
     ::
 
@@ -11027,7 +10767,7 @@ Suivez la procédure suivante:
        de la base et son mot_de_passe tels qu’ils ont été saisis dans le
        chapitre de création de la base de données.
 
-19. Vous devez maintenant télécharger les plugins mysql pour Guacamole.
+21. Vous devez maintenant télécharger les plugins mysql pour Guacamole.
     Allez sur le site web de guacamole et récupérez le `lien de
     téléchargement de
     guacamole-auth-jdbc <https://guacamole.apache.org/releases/>`__.
@@ -11036,7 +10776,7 @@ Suivez la procédure suivante:
     .. code:: bash
 
        cd /tmp
-       curl -fSL -o guacamole-auth-jdbc.tar.gz 'http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz' 
+       curl -fSL -o guacamole-auth-jdbc.tar.gz 'https://apache.org/dyn/closer.lua/guacamole/1.5.5/binary/guacamole-auth-jdbc-1.5.5.tar.gz?action=download' 
        tar xfz guacamole-auth-jdbc.tar.gz
        cd guacamole-auth-jdbc-*/mysql
        cp guacamole-auth-jdbc-mysql-*.jar /usr/local/share/guacamole/
@@ -11044,7 +10784,7 @@ Suivez la procédure suivante:
 
     -  insérez ici l’adresse du fichier guacamole-auth-jdbc à charger
 
-20. Créez les tables de la base:
+22. Créez les tables de la base:
 
     .. code:: bash
 
@@ -11055,20 +10795,18 @@ Suivez la procédure suivante:
        données et derrière le ``-p`` le nom de la base de données. Un
        mot de passe vous sera demandé.
 
-21. Redémarrez tomcat et guacd. Tapez:
+23. Redémarrez tomcat et guacd. Tapez:
 
     .. code:: bash
 
-       systemctl restart tomcat8 
+       systemctl restart tomcat9
        systemctl restart guacd
 
-    -  ou mettre tomcat9 pour Ubuntu
+24. Allez sur le site de ``guacamole.example.com/guacamole``
 
-22. Allez sur le site de ``guacamole.example.com/guacamole``
+25. Loguez vous avec le compte: ``guacadmin`` et password: ``guacadmin``
 
-23. Loguez vous avec le compte: ``guacadmin`` et password: ``guacadmin``
-
-24. Commencez par cliquez sur ``guacadmin`` → ``paramètres`` →
+26. Commencez par cliquez sur ``guacadmin`` → ``paramètres`` →
     ``utilisateurs``\ → ``Nouvel Utilisateur``
 
     -  ``Identifiant`` ← Tapez ``admin``
@@ -11080,14 +10818,14 @@ Suivez la procédure suivante:
 
     -  ``Permissions`` ← activer toutes les options
 
-25. Deconnectez vous et reconnectez vous avec le login ``admin``
+27. Deconnectez vous et reconnectez vous avec le login ``admin``
 
-26. cliquez sur ``admin`` → ``paramètres`` → ``utilisateurs`` →
+28. cliquez sur ``admin`` → ``paramètres`` → ``utilisateurs`` →
     ``guacadmin``
 
-27. Supprimez ce compte utilisateur
+29. Supprimez ce compte utilisateur
 
-28. Si vous avez activé VNC. Cliquez sur ``Admin`` → ``Paramètres`` →
+30. Si vous avez activé VNC. Cliquez sur ``Admin`` → ``Paramètres`` →
     ``Utilisateurs`` → ``Connexions`` → ``Nouvelle Connexion``
 
     -  ``Nom`` ← Tapez ``Local server VNC``
@@ -11108,7 +10846,7 @@ Suivez la procédure suivante:
     -  ``SFTP`` → ``Mot de passe`` ← Tapez un mot de passe sur votre
        Hôte
 
-29. Cliquez sur ``Admin`` → ``Paramètres`` → ``Utilisateurs`` →
+31. Cliquez sur ``Admin`` → ``Paramètres`` → ``Utilisateurs`` →
     ``Connexions`` → ``Nouvelle Connexion``
 
     -  ``Nom`` ← Tapez ``Local server SSH``
@@ -11128,10 +10866,10 @@ Suivez la procédure suivante:
 
     -  ``SFTP`` → ``File browser root directory`` ← Tapez ``/``
 
-30. Vous pouvez maintenant vérifier vos connexions en vous loguant avec
+32. Vous pouvez maintenant vérifier vos connexions en vous loguant avec
     l’un des deux profils.
 
-31. l’appui simultané sur ``SHIFT`` ``CTRL`` ``ALT`` fait apparaître un
+33. l’appui simultané sur ``SHIFT`` ``CTRL`` ``ALT`` fait apparaître un
     menu pour effectuer des chargements de fichiers ou contrôler votre
     connexion
 
@@ -11192,12 +10930,10 @@ Appliquez la procédure suivante:
       cd /usr/local/share/guacamole
       curl -fSL -o guacamole.war 'http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.2.0/binary/guacamole-1.2.0.war' 
       systemctl daemon-reload
-      systemctl restart tomcat8 
+      systemctl restart tomcat9 
       systemctl start guacd
 
    -  insérez ici l’adresse du war à charger
-
-   -  ou tomcat9 pour Ubuntu
 
 8. Allez sur le site de ``guacamole.example.com/guacamole``
 

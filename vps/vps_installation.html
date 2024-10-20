@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.23">
 <meta name="author" content="Stéphane Apiou">
 <title>Installation d&#8217;un VPS</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -141,7 +141,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #content::before{content:none}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
 #header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
-#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
 #header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
@@ -163,6 +163,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media screen and (min-width:768px){#toctitle{font-size:1.375em}
 body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
 #toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
 #toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
 #toc.toc2>ul{font-size:.9em;margin-bottom:0}
@@ -328,7 +329,7 @@ a.image{text-decoration:none;display:inline-block}
 a.image object{pointer-events:none}
 sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
 sup.footnote a,sup.footnoteref a{text-decoration:none}
-sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
 #footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
 #footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
 #footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
@@ -794,16 +795,11 @@ pre.rouge .gs {
 <li><a href="#_création_du_site_web_de_borgweb">31.11. Création du site web de Borgweb</a></li>
 </ul>
 </li>
-<li><a href="#_installation_dun_serveur_de_vpn_pritunl">32. Installation d&#8217;un serveur de VPN Pritunl</a>
+<li><a href="#_installation_dun_serveur_de_vpn_wireguard">32. Installation d&#8217;un serveur de VPN Wireguard</a>
 <ul class="sectlevel2">
-<li><a href="#_création_du_site_web_de_pritunl">32.1. Création du site web de Pritunl</a></li>
-<li><a href="#_installation_de_pritunl_sur_un_vps">32.2. Installation de Pritunl sur un VPS</a></li>
-<li><a href="#_installation_de_pritunl_sur_un_raspberrypi">32.3. Installation de Pritunl sur un Raspberrypi</a></li>
-<li><a href="#_configuration_de_pritunl">32.4. Configuration de Pritunl</a></li>
-<li><a href="#_se_connecter_au_serveur_de_vpn">32.5. Se connecter au serveur de VPN</a></li>
-<li><a href="#_réparer_une_base_pritunl">32.6. Réparer une base Pritunl</a></li>
-<li><a href="#_mot_de_passe_perdu">32.7. Mot de passe perdu</a></li>
-<li><a href="#_update_de_pritunl">32.8. Update de Pritunl</a></li>
+<li><a href="#_création_du_site_web_de_wireguard">32.1. Création du site web de Wireguard</a></li>
+<li><a href="#_installation_de_wireguard">32.2. Installation de Wireguard</a></li>
+<li><a href="#_update_de_wireguard">32.3. Update de Wireguard</a></li>
 </ul>
 </li>
 <li><a href="#_installation_dun_serveur_de_bureau_à_distance_guacamole">33. Installation d&#8217;un serveur de bureau à distance Guacamole</a>
@@ -936,7 +932,7 @@ En revanche si vous utilisez CentOS, il y aura des différences beaucoup plus im
 <p>un serveur de sauvegardes <a href="https://borgbackup.readthedocs.io/">BorgBackup</a>,</p>
 </li>
 <li>
-<p>un serveur de VPN <a href="https://pritunl.com/">Pritunl</a>,</p>
+<p>un serveur de VPN <a href="https://github.com/wg-easy/wg-easy">Wireguard (wg-easy)</a>,</p>
 </li>
 <li>
 <p>un serveur de bureau à distance <a href="https://guacamole.apache.org">Guacamole</a></p>
@@ -1026,12 +1022,12 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine ou son adresse IP. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net ou pour un raspberry: raspberrypi.local ) ou votre adresse IP.</td>
-</tr>
-</table>
-</div>
+<td>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine ou son adresse IP. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net ou pour un raspberry: raspberrypi.local ) ou votre adresse IP.
 <div class="paragraph">
 <p>ou utilisez putty si vous êtes sous Windows.</p>
+</div></td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -1063,12 +1059,12 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer ici &lt;example.com&gt; par votre nom de domaine.</td>
-</tr>
-</table>
-</div>
+<td>remplacer ici &lt;example.com&gt; par votre nom de domaine.
 <div class="paragraph">
 <p>Tapez ensuite votre mot de passe root</p>
+</div></td>
+</tr>
+</table>
 </div>
 </li>
 </ol>
@@ -2343,12 +2339,12 @@ Tout pendant que ces premières étapes ne donnent pas satisfaction ne passez pa
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</td>
-</tr>
-</table>
-</div>
+<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine
 <div class="paragraph">
 <p>Entrez votre mot de passe</p>
+</div></td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -2403,12 +2399,12 @@ Tout pendant que ces premières étapes ne donnent pas satisfaction ne passez pa
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</td>
-</tr>
-</table>
-</div>
+<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine
 <div class="paragraph">
 <p>La session doit s&#8217;ouvrir sans demander de mot de passe.</p>
+</div></td>
+</tr>
+</table>
 </div>
 </li>
 </ol>
@@ -4191,6 +4187,9 @@ systemctl restart apache2</code></pre>
 <div class="paragraph">
 <p>Remarque: si vous utilisez VNC, il faut débloquer le port dans le firewall de ISPConfig. Appliquez la méthode de déblocage pour le port 5900.</p>
 </div>
+<div class="paragraph">
+<p>Remarque: si vous avez besoin de débloquer un port UDP vous devez allez dans la rubrique Open UDP Ports.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_déblocage_de_firewall_ufw">9.1.2. Déblocage de Firewall UFW</h4>
@@ -4394,7 +4393,8 @@ git pull</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">curl <span class="nt">-o</span> setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
-sh setup-repos.sh</code></pre>
+sh setup-repos.sh
+<span class="nb">rm </span>setup-repos.sh</code></pre>
 </div>
 </div>
 </li>
@@ -5571,10 +5571,18 @@ service pure-ftpd-mysql restart</code></pre>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Installez incron. Tapez :</p>
+<p>Installez la cron. Tapez :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install</span> <span class="nt">-y</span> incron</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">crontab <span class="nt">-e</span></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ajoutez la ligne suivante:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">00 02 1 <span class="k">*</span> <span class="k">*</span> /usr/local/bin/certif_update.sh</code></pre>
 </div>
 </div>
 </li>
@@ -5582,7 +5590,7 @@ service pure-ftpd-mysql restart</code></pre>
 <p>Créez le fichier d&#8217;exécution périodique. Tapez :</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi /etc/init.d/le_ispc_pem.sh</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">/usr/local/bin/certif_update.sh</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5590,27 +5598,21 @@ service pure-ftpd-mysql restart</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
-<span class="c">### BEGIN INIT INFO</span>
-<span class="c"># Provides: LE ISPSERVER.PEM AUTO UPDATER</span>
-<span class="c"># Required-Start: $local_fs $network</span>
-<span class="c"># Required-Stop: $local_fs</span>
-<span class="c"># Default-Start: 2 3 4 5</span>
-<span class="c"># Default-Stop: 0 1 6</span>
-<span class="c"># Short-Description: LE ISPSERVER.PEM AUTO UPDATER</span>
-<span class="c"># Description: Update ispserver.pem automatically after ISPC LE SSL certs are renewed.</span>
-<span class="c">### END INIT INFO</span>
+<pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/bash</span>
+
 <span class="nb">cd</span> /usr/local/ispconfig/interface/ssl/
 <span class="nb">mv </span>ispserver.pem ispserver.pem-<span class="si">$(</span><span class="nb">date</span> +<span class="s2">"%y%m%d%H%M%S"</span><span class="si">)</span>.bak
 <span class="nb">cat </span>ispserver.<span class="o">{</span>key,crt<span class="o">}</span> <span class="o">&gt;</span> ispserver.pem
 <span class="nb">chmod </span>600 ispserver.pem
 <span class="nb">chmod </span>600 /etc/ssl/private/pure-ftpd.pem
+<span class="nb">cd</span> /etc/postfix
+<span class="nb">cat </span>smtpd.<span class="o">{</span>key,cert<span class="o">}</span> <span class="o">&gt;</span> smtpd.pem
+<span class="nb">chmod </span>600 smtpd.pem
 service pure-ftpd-mysql restart
 service monit restart
 service postfix restart
 service dovecot restart
-service apache2 restart
-<span class="nb">exit </span>1</code></pre>
+service apache2 restart</code></pre>
 </div>
 </div>
 </li>
@@ -5618,17 +5620,7 @@ service apache2 restart
 <p>Sauvez et quittez. Tapez ensuite:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">chmod</span> +x /etc/init.d/le_ispc_pem.sh
-<span class="nb">echo</span> <span class="s2">"root"</span> <span class="o">&gt;&gt;</span> /etc/incron.allow
-incrontab <span class="nt">-e</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>et ajoutez les lignes ci dessous dans le fichier:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">/usr/local/ispconfig/interface/ssl/ IN_MODIFY /etc/init.d/le_ispc_pem.sh</code></pre>
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">chmod</span> +x /usr/local/bin/certif_update.sh</code></pre>
 </div>
 </div>
 </li>
@@ -7273,14 +7265,18 @@ rspamadm dkim_keygen <span class="nt">-d</span> example.com <span class="nt">-s<
 <p>Ajouter si ce n&#8217;est pas le cas une entrée DNS pour le SPF:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>v=spf1 mx a a:mail.example.com a:mail.other.example.com  include:mail.toto.com +all <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="rouge highlight"><code>v=spf1 mx a a:mail.example.com a:mail.other.example.com  include:mail.toto.com -all <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacez example.com par votre nom de domaine. Vous pouvez rajouter autant d&#8217;entrée <code>a:</code> ou <code>include:</code> que nécessaires si vous avez des serveur de mail secondaires qui peuvent relayer des mails pour ce domaine.</td>
+<td>remplacez example.com par votre nom de domaine. Vous pouvez
+rajouter autant d&#8217;entrée <code>a:</code> ou <code>include:</code> que nécessaires si
+vous avez des serveur de mail secondaires qui peuvent relayer des
+mails pour ce domaine. La valeur -all interdira tout autre domaine
+ou addresse IP à envoyer des mails</td>
 </tr>
 </table>
 </div>
@@ -8467,7 +8463,7 @@ Dans tout ce qui suit nous omettrons d&#8217;utiliser cette adresse en 127.0.0.1
 <p>Ajoutez ceci dans le fichier <code>config.yml</code>. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi /etc/docker-mirror.yml</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">vi /etc/docker-mirror-1.yml</code></pre>
 </div>
 </div>
 </li>
@@ -8484,11 +8480,25 @@ Dans tout ce qui suit nous omettrons d&#8217;utiliser cette adresse en 127.0.0.1
 <p>Démarrez ensuite le service docker. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-p</span> 5000:5000 <span class="nt">--name</span> docker-registry-proxy <span class="nt">-v</span> /etc/docker-mirror.yml:/etc/docker/registry/config.yml registry:2</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-p</span> 5000:5000 <span class="nt">--name</span> docker-registry-proxy-1 <span class="nt">-v</span> /etc/docker-mirror-1.yml:/etc/docker/registry/config.yml registry:2</code></pre>
 </div>
 </div>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>Si vous avez plusieurs miroirs à configurer, il faut créer un proxy sur chaque. Ainsi si vous voulez créer un miroir pour ghcr.io il vous faudra créer une autre fichier docker-mirror-2.yml avec la deuxième adresse remote et lancer le tout par:</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-p</span> 5001:5000 <span class="nt">--name</span> docker-registry-proxy-2 <span class="nt">-v</span> /etc/docker-mirror-2.yml:/etc/docker/registry/config.yml registry:2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Et ainsi de suite pour chaque proxy que vous voulez mettre en place.</p>
 </div>
 <div class="paragraph">
 <p>Sur le poste client, soit passez l&#8217;option --registry-mirror lorsque vous lancez le démon <code>dockerd</code> ou sinon éditez le fichier <code>/etc/docker/daemon.json</code> et ajoutez la clé <code>registry-mirrors</code> pour rendre le changement persistant:</p>
@@ -8511,6 +8521,7 @@ Dans tout ce qui suit nous omettrons d&#8217;utiliser cette adresse en 127.0.0.1
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code>{
+  "insecure-registries" : ["docker.example.com:5000" ], <i class="conum" data-value="1"></i><b>(1)</b>
   "registry-mirrors": ["http://docker.example.com:5000"] <i class="conum" data-value="1"></i><b>(1)</b>
 }</code></pre>
 </div>
@@ -8519,7 +8530,7 @@ Dans tout ce qui suit nous omettrons d&#8217;utiliser cette adresse en 127.0.0.1
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer <code>docker.example.com</code> par le nom ou l&#8217;adresse ip de votre cache docker.</td>
+<td>remplacer <code>docker.example.com</code> par le nom ou l&#8217;adresse ip de votre cache docker. Si vous en avez plusieurs vous devez tous les lister en les séparant par des virgules.</td>
 </tr>
 </table>
 </div>
@@ -13475,7 +13486,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="nb">cd</span> / <span class="o">&amp;&amp;</span> /usr/local/bin/borg create <span class="nt">--stats</span> <span class="nt">--progress</span> <span class="nt">--compress</span> zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">date</span> +%Y-%m-%d-%H-%M-%S<span class="sb">`</span> ./ <span class="nt">--exclude</span><span class="o">=</span>dev <span class="nt">--exclude</span><span class="o">=</span>proc <span class="nt">--exclude</span><span class="o">=</span>run <span class="nt">--exclude</span><span class="o">=</span>root/.cache/ <span class="nt">--exclude</span><span class="o">=</span>mnt/borgmount <span class="nt">--exclude</span><span class="o">=</span>sys <span class="nt">--exclude</span><span class="o">=</span>swapfile <span class="nt">--exclude</span><span class="o">=</span>tmp <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<span class="nb">cd</span> / <span class="o">&amp;&amp;</span> /usr/bin/borg create <span class="nt">--stats</span> <span class="nt">--progress</span> <span class="nt">--compress</span> zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">date</span> +%Y-%m-%d-%H-%M-%S<span class="sb">`</span> ./ <span class="nt">--exclude</span><span class="o">=</span>dev <span class="nt">--exclude</span><span class="o">=</span>proc <span class="nt">--exclude</span><span class="o">=</span>run <span class="nt">--exclude</span><span class="o">=</span>root/.cache/ <span class="nt">--exclude</span><span class="o">=</span>mnt/borgmount <span class="nt">--exclude</span><span class="o">=</span>sys <span class="nt">--exclude</span><span class="o">=</span>swapfile <span class="nt">--exclude</span><span class="o">=</span>tmp <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -13534,7 +13545,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg list <span class="nt">-v</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
+/usr/bin/borg list <span class="nt">-v</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -13589,7 +13600,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg info <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="nv">$1</span></code></pre>
+/usr/bin/borg info <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="nv">$1</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -13644,7 +13655,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg check <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="nv">$1</span></code></pre>
+/usr/bin/borg check <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="nv">$1</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -13708,7 +13719,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">mkdir</span> <span class="nt">-p</span> /mnt/borgbackup
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</code></pre>
+/usr/bin/borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -13805,7 +13816,7 @@ umount /mnt/borgbackup
 
 
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg prune <span class="nt">--stats</span> <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ <span class="nt">--prefix</span> <span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>- <span class="nt">--keep-daily</span><span class="o">=</span>7 <span class="nt">--keep-weekly</span><span class="o">=</span>4 <span class="nt">--keep-monthly</span><span class="o">=</span>12 <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+/usr/bin/borg prune <span class="nt">--stats</span> <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ <span class="nt">--prefix</span> <span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>- <span class="nt">--keep-daily</span><span class="o">=</span>7 <span class="nt">--keep-weekly</span><span class="o">=</span>4 <span class="nt">--keep-monthly</span><span class="o">=</span>12 <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -13852,7 +13863,7 @@ umount /mnt/borgbackup
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg compact <span class="nt">--progress</span>  borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
+/usr/bin/borg compact <span class="nt">--progress</span>  borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -14366,25 +14377,10 @@ systemctl start borgweb.service</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation_dun_serveur_de_vpn_pritunl">32. Installation d&#8217;un serveur de VPN Pritunl</h2>
+<h2 id="_installation_dun_serveur_de_vpn_wireguard">32. Installation d&#8217;un serveur de VPN Wireguard</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Pritunl est un serveur VPN basé sur OpenVPN.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une distribution Raspbian d&#8217;un raspberry pi
-</td>
-</tr>
-</table>
-</div>
 <div class="sect2">
-<h3 id="_création_du_site_web_de_pritunl">32.1. Création du site web de Pritunl</h3>
+<h3 id="_création_du_site_web_de_wireguard">32.1. Création du site web de Wireguard</h3>
 <div class="paragraph">
 <p>Appliquez la procédure suivante:</p>
 </div>
@@ -14399,7 +14395,7 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 <div class="ulist">
 <ul>
 <li>
-<p><code>Hostname:</code> &#8592; Tapez <code>pritunl</code></p>
+<p><code>Hostname:</code> &#8592; Tapez <code>wireguard</code></p>
 </li>
 <li>
 <p><code>IP-Address:</code> &#8592; Double cliquez et sélectionnez l&#8217;adresse IP de votre serveur</p>
@@ -14418,10 +14414,10 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Lui donner le nom <code>pritunl</code>.</p>
+<p>Lui donner le nom <code>wireguard</code>.</p>
 </li>
 <li>
-<p>Le faire pointer vers le web folder <code>pritunl</code>.</p>
+<p>Le faire pointer vers le web folder <code>wireguard</code>.</p>
 </li>
 <li>
 <p>Sélectionnez <code>None</code> dans <code>Auto-subdomain</code></p>
@@ -14454,21 +14450,16 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 <span class="nc">ProxyPass</span> /stats !
 <span class="nc">ProxyPass</span> /.well-known/acme-challenge !
 
-<span class="c"># redirect from server</span>
+<span class="c"># wireguard httpserver</span>
 <span class="c">#</span>
 
 <span class="nc">SetEnvIf</span> Authorization "(.*)" HTTP_AUTHORIZATION=$1
-<span class="nc">SSLProxyEngine</span> <span class="ss">On</span> <span class="c"># Comment this out if no https required</span>
 <span class="nc">ProxyPreserveHost</span>    <span class="ss">On</span>
-<span class="nc">SSLProxyVerify</span> <span class="ss">none</span>
-<span class="nc">SSLProxyCheckPeerCN</span> <span class="ss">off</span>
-<span class="nc">SSLProxyCheckPeerName</span> <span class="ss">off</span>
-<span class="nc">SSLProxyCheckPeerExpire</span> <span class="ss">off</span>
 
-<span class="nc">ProxyPass</span> / https://localhost:8070/
-<span class="nc">ProxyPassReverse</span> / https://localhost:8070/
+<span class="nc">ProxyPass</span> / http://localhost:51821/
+<span class="nc">ProxyPassReverse</span> / http://localhost:51821/
 
-<span class="nc">RedirectMatch</span> ^/$ https://pritunl.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<span class="nc">RedirectMatch</span> ^/$ https://wireguard.example.com <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -14487,9 +14478,9 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation_de_pritunl_sur_un_vps">32.2. Installation de Pritunl sur un VPS</h3>
+<h3 id="_installation_de_wireguard">32.2. Installation de Wireguard</h3>
 <div class="paragraph">
-<p>Veuillez suivre la procédure suivante si vous installer sur un serveur debian (pour le Raspberrypi voir le chapitre suivant):</p>
+<p>Nous allons installer wg-easy qui est un container qui implémente wireguard dans un docker.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -14497,369 +14488,53 @@ Printunl ne peut pas être installé sur une plateforme 32 bits et donc sur une 
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
-<p>Ajoutez des repositories Debian. Tapez:</p>
+<p>Installez Wireguard. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">tee</span> /etc/apt/sources.list.d/mongodb-org.list <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh">
-deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main
-</span><span class="no">EOF
-</span><span class="nb">tee</span> /etc/apt/sources.list.d/pritunl.list <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh">
-deb http://repo.pritunl.com/stable/apt buster main
-</span><span class="no">EOF
-</span>apt-get <span class="nb">install </span>dirmngr
-<span class="nb">cd</span> /etc/apt/trusted.gpg.d
-wget <span class="nt">-O</span> mongodb.asc https://www.mongodb.org/static/pgp/server-5.0.asc
-wget https://raw.githubusercontent.com/pritunl/pgp/master/pritunl_repo_pub.asc
-apt-get update
-apt-get <span class="nt">--assume-yes</span> <span class="nb">install </span>pritunl mongodb-org openvpn</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">docker run <span class="nt">-d</span> <span class="se">\</span>
+  <span class="nt">--name</span><span class="o">=</span>wg-easy <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">LANG</span><span class="o">=</span>fr <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">WG_HOST</span><span class="o">=</span>Public_IP <span class="se">\ </span><i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="nt">-e</span> <span class="nv">PASSWORD</span><span class="o">=</span>mot_de_passe <span class="se">\ </span><i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="nt">-e</span> <span class="nv">PORT</span><span class="o">=</span>51821 <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">WG_PORT</span><span class="o">=</span>51820 <span class="se">\</span>
+  <span class="nt">-v</span> /etc/wg-easy:/etc/wireguard <span class="se">\</span>
+  <span class="nt">-p</span> 51820:51820/udp <span class="se">\</span>
+  <span class="nt">-p</span> 51821:51821/tcp <span class="se">\</span>
+  <span class="nt">--cap-add</span><span class="o">=</span>NET_ADMIN <span class="se">\</span>
+  <span class="nt">--cap-add</span><span class="o">=</span>SYS_MODULE <span class="se">\</span>
+  <span class="nt">--sysctl</span><span class="o">=</span><span class="s2">"net.ipv4.conf.all.src_valid_mark=1"</span> <span class="se">\</span>
+  <span class="nt">--sysctl</span><span class="o">=</span><span class="s2">"net.ipv4.ip_forward=1"</span> <span class="se">\</span>
+  <span class="nt">--restart</span> unless-stopped <span class="se">\</span>
+  ghcr.io/wg-easy/wg-easy</code></pre>
 </div>
 </div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_installation_de_pritunl_sur_un_raspberrypi">32.3. Installation de Pritunl sur un Raspberrypi</h3>
-<div class="paragraph">
-<p>Pritunl n&#8217;est pas installable avec une distribution Raspbian qui est uniquement 32 bits.
-Veuillez suivre la procédure suivante si vous installer sur un Raspberrypi avec Ubuntu 64 bits:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
-</li>
-<li>
-<p>Comme pritunl n&#8217;est pas nativement sur Ubuntu, il faut l&#8217;installer à la main. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">tee</span> /etc/apt/sources.list.d/mongodb-org.list <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh">
-deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse
-</span><span class="no">EOF
-</span>apt <span class="nb">install </span>dirmngr openvpn python3-pip
-<span class="nb">cd</span> /etc/apt/trusted.gpg.d
-wget <span class="nt">-O</span> mongodb.asc https://www.mongodb.org/static/pgp/server-5.0.asc
-apt update
-apt <span class="nb">install </span>mongodb-org golang
-<span class="nb">mkdir</span> <span class="nt">-p</span> /var/lib/pritunl
-<span class="nb">cd</span> /var/lib/pritunl
-<span class="nb">export </span><span class="nv">GOPATH</span><span class="o">=</span>/var/lib/pritunl
-go get <span class="nt">-u</span> github.com/pritunl/pritunl-dns
-go get <span class="nt">-u</span> github.com/pritunl/pritunl-web</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>La compilation peut échouer, notamment si la version de go installée sur votre système est une 1.11 ou antérieure.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>tapez les commandes suivantes:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /var/lib/pritunl/src/github.com/pritunl/pritunl-web
-git checkout b6b07a4fa422d666385e951dd25e24ec527636d1
-go <span class="nb">install
-cd</span> /var/lib/pritunl/</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Liez cette version dans <code>/usr/local</code>. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">ln</span> <span class="nt">-s</span> /var/lib/pritunl/bin/pritunl-dns /usr/local/bin/pritunl-dns
-<span class="nb">ln</span> <span class="nt">-s</span> /var/lib/pritunl/bin/pritunl-web /usr/local/bin/pritunl-web</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Installer le logiciel pour python3. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">git clone https://github.com/pritunl/pritunl.git
-<span class="nb">cd </span>pritunl
-python3 setup.py build
-pip3 <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
-python3 setup.py <span class="nb">install</span></code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Printunl s&#8217;installe dans <code>/usr/local/bin</code>. Il faut changer le fichier service. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi /etc/systemd/system/pritunl.service</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Changer <code>ExecStart=/usr/bin/pritunl start</code> par <code>ExecStart=/usr/local/bin/pritunl start</code></p>
-</li>
-<li>
-<p>Rechargez les configs de systemd. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">systemctl daemon-reload</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_configuration_de_pritunl">32.4. Configuration de Pritunl</h3>
-<div class="paragraph">
-<p>Votre service Pritunl est installé. Vous devez maintenant le configurer pour qu&#8217;il fonctionne:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Pritunl utilise en standard le port 80 et 443. Ces deux ports sont utilisés dans notre configuration par le serveur apache</p>
-</li>
-<li>
-<p>On commence par arrêter apache. Tapez:</p>
-<div class="admonitionblock warning">
+<div class="colist arabic">
 <table>
 <tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Plus aucun site web ne sera servi. Danger donc.
-</td>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>saisir votre adresse IP publique donnée par exemple sur le site <a href="https://www.showmyip.com/" class="bare">https://www.showmyip.com/</a>. Attention ce doit être une IP V4</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>saisir <a href="#pass_gen">un mot de passe généré</a></td>
 </tr>
 </table>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">systemctl stop monit apache2</code></pre>
-</div>
-</div>
 </li>
 <li>
-<p>Démarrez Mongodb ainsi que Pritunl. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">systemctl start mongod pritunl
-systemctl <span class="nb">enable </span>mongod pritunl</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>pointez votre navigateur sur le site web de Pritunl: <a href="https://pritunl.example.com" class="bare">https://pritunl.example.com</a></p>
-</li>
-<li>
-<p>Accepter le certificat non sécurisé. La page de setup de Pritunl s&#8217;affiche.</p>
-</li>
-<li>
-<p>Obtenez la clé d&#8217;activation. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">pritunl setup-key</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>copier la clé dans la page web. Cliquez sur <code>Save</code></p>
-</li>
-<li>
-<p>La page web peut s&#8217;affiche en erreur. Pas d&#8217;inquiétude à avoir.</p>
-</li>
-<li>
-<p>Arrêtez le serveur Pritunl. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">systemctl stop pritunl</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Configurez le serveur pour qu&#8217;il n&#8217;utilise plus le port 80 et le port 443</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">pritunl <span class="nb">set </span>app.server_port 8070
-pritunl <span class="nb">set </span>app.redirect_server <span class="nb">false</span></code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Redémarrez apache et pritunl</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">systemctl start apache2
-systemctl start monit
-systemctl start pritunl</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Pointez maintenant votre navigateur sur le site <a href="https://pritunl.example.com" class="bare">https://pritunl.example.com</a> . La page de login de pritunl doit s&#8217;afficher. Si ce n&#8217;est pas le cas, revérifier votre configuration de site web dans ISPConfig et que le port 8070 est bien activé.</p>
-</li>
-<li>
-<p>Sur le serveur, tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">pritunl default-password</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Entrez dans la page web la valeur de <code>username</code> et de <code>password</code> affichés dans le terminal.</p>
-</li>
-<li>
-<p>Une boite de dialogue <code>initial setup</code> s&#8217;affiche. Ne changez rien mais tapez votre mot de passe.</p>
-</li>
-<li>
-<p>Cliquez sur <code>Save</code></p>
-</li>
-<li>
-<p>Vous êtes maintenant connecté sur le site web.</p>
-</li>
-<li>
-<p>Cliquez sur l&#8217;onglet <code>Users</code></p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Cliquez sur <code>Add Organization</code></p>
-</li>
-<li>
-<p>Entrez votre nom d&#8217;organisation. Par exemple <code>Personnel</code></p>
-</li>
-<li>
-<p>Cliquez sur <code>Add</code></p>
-</li>
-<li>
-<p>Cliquez sur <code>Add User</code></p>
-</li>
-<li>
-<p>Remplissez les champs:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>`Name: ` &#8592; Tapez votre nom de login (pas de caractère accentué pas d&#8217;espace)</p>
-</li>
-<li>
-<p>`Select an organization: ` &#8592; sélectionnez votre organisation</p>
-</li>
-<li>
-<p>`Email: ` &#8592; Tapez votre adresse Email</p>
-</li>
-<li>
-<p><code>Pin:</code> &#8592; entrez votre code Pin (que des nombres; au moins 6 chiffres)</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Cliquez sur <code>Add</code></p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Allez sur l&#8217;onglet <code>Servers</code></p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Cliquez sur <code>Add Server</code></p>
-</li>
-<li>
-<p>Remplissez les champs:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>Name:</code> &#8592; donnez un nom à votre serveur (pas de caractère accentué pas d&#8217;espace)</p>
-</li>
-<li>
-<p>laissez le reste tel quel mais notez bien le numéro de port UDP indiqué</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Cliquez sur <code>Add</code></p>
-</li>
-<li>
-<p>Cliquez sur <code>Attach Organization</code></p>
-</li>
-<li>
-<p>Sélectionnez le <code>server</code> et l' <code>organization</code>.</p>
-</li>
-<li>
-<p>Cliquez sur <code>Attach</code></p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p><a href="#firewall">Débloquez le port VPN que vous avez noté sur votre firewall</a></p>
-</li>
-<li>
-<p>Retourner dans l&#8217;interface de Pritunl. retournez sur l&#8217;onglet <code>Servers</code></p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Cliquez sur <code>Start server</code></p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Votre serveur de VPN est opérationnel.</p>
+<p>Configurez votre firewall pour ouvrir le port 51820 en mode UDP</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_se_connecter_au_serveur_de_vpn">32.5. Se connecter au serveur de VPN</h3>
+<h3 id="_update_de_wireguard">32.3. Update de Wireguard</h3>
 <div class="paragraph">
-<p>Comme Pritunl est compatible OpenVPN n&#8217;importe quel logiciel compatible OpenVPN peut être utilisé.
-Pritunl founit un <a href="https://client.pritunl.com/">client</a> compatible pour Linux, macOS, and Windows.</p>
-</div>
-<div class="paragraph">
-<p>Pour se connecter à l&#8217;aide du client, vous devez charger un fichier de configuration qui est téléchargeable dans l&#8217;onglet utilisateur du serveur web.
-Ce fichier est à importer dans le logiciel client de Pritunl.
-Une fois fait, une compte apparaît dans le logiciel client. Vous pourrez vous connecter en cliquant sur le bouton <code>Connect</code> du compte utilisateur.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_réparer_une_base_pritunl">32.6. Réparer une base Pritunl</h3>
-<div class="paragraph">
-<p>Si jamais votre base est corrompue, vous pourrez la réparer en tapant:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">systemctl stop pritunl
-pritunl repair-database
-systemctl start pritunl</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_mot_de_passe_perdu">32.7. Mot de passe perdu</h3>
-<div class="paragraph">
-<p>Vous pouvez re-générer un mot de passe en tapant:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">pritunl reset-password</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_update_de_pritunl">32.8. Update de Pritunl</h3>
-<div class="paragraph">
-<p>Pour une installation sur un système Intel, il n&#8217;y a rien à faire.</p>
+<p>Rien a faire pour la mise à jour si vous utilisez <code>Watchtower</code></p>
 </div>
 <div class="paragraph">
-<p>En revanche sur un Raspberry, il est nécessaire de regénérer les logiciels avec les dernières versions.</p>
-</div>
-<div class="paragraph">
-<p>Appliquez la procédure suivante:</p>
+<p>Sinon, effectuez les opérations suivantes:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -14867,74 +14542,45 @@ systemctl start pritunl</code></pre>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
-<p>Arrêtez le serveur pritunl</p>
+<p>Allez dans le répertoire de root</p>
+</li>
+<li>
+<p>Mettez à jour le docker de wg-easy. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">systemctl stop pritunl</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">docker pull ghcr.io/wg-easy/wg-easy
+docker stop wg-easy
+docker <span class="nb">rm </span>wg-easy
+docker run <span class="nt">-d</span> <span class="se">\</span>
+  <span class="nt">--name</span><span class="o">=</span>wg-easy <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">LANG</span><span class="o">=</span>fr <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">WG_HOST</span><span class="o">=</span>Public_IP <span class="se">\ </span><i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="nt">-e</span> <span class="nv">PASSWORD</span><span class="o">=</span>mot_de_passe <span class="se">\ </span><i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="nt">-e</span> <span class="nv">PORT</span><span class="o">=</span>51821 <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">WG_PORT</span><span class="o">=</span>51820 <span class="se">\</span>
+  <span class="nt">-v</span> /etc/wg-easy:/etc/wireguard <span class="se">\</span>
+  <span class="nt">-p</span> 51820:51820/udp <span class="se">\</span>
+  <span class="nt">-p</span> 51821:51821/tcp <span class="se">\</span>
+  <span class="nt">--cap-add</span><span class="o">=</span>NET_ADMIN <span class="se">\</span>
+  <span class="nt">--cap-add</span><span class="o">=</span>SYS_MODULE <span class="se">\</span>
+  <span class="nt">--sysctl</span><span class="o">=</span><span class="s2">"net.ipv4.conf.all.src_valid_mark=1"</span> <span class="se">\</span>
+  <span class="nt">--sysctl</span><span class="o">=</span><span class="s2">"net.ipv4.ip_forward=1"</span> <span class="se">\</span>
+  <span class="nt">--restart</span> unless-stopped <span class="se">\</span>
+  ghcr.io/wg-easy/wg-easy</code></pre>
 </div>
 </div>
-</li>
-<li>
-<p>Installez les paquets à jour. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /var/lib/pritunl
-<span class="nb">export </span><span class="nv">GOPATH</span><span class="o">=</span>/var/lib/pritunl
-go get <span class="nt">-u</span> github.com/pritunl/pritunl-dns
-go get <span class="nt">-u</span> github.com/pritunl/pritunl-web</code></pre>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>saisir votre adresse IP publique donnée par exemple sur le site <a href="https://www.showmyip.com/" class="bare">https://www.showmyip.com/</a>. Attention ce doit être une IP V4</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>saisir <a href="#pass_gen">un mot de passe généré</a></td>
+</tr>
+</table>
 </div>
-</div>
-</li>
-<li>
-<p>Mettez ensuite à jour le système client web. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd </span>pritunl
-git pull https://github.com/pritunl/pritunl.git
-python3 setup.py build
-pip3 <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
-python3 setup.py <span class="nb">install</span></code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Printunl s&#8217;installe dans <code>/usr/local/bin</code>. Il faut changer le fichier service. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi /etc/systemd/system/pritunl.service</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Changer <code>ExecStart=/usr/bin/pritunl start</code> par <code>ExecStart=/usr/local/bin/pritunl start</code></p>
-</li>
-<li>
-<p>Rechargez les configs de systemd. Tapez:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">systemctl daemon-reload</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Configurez le serveur pour qu&#8217;il n&#8217;utilise plus le port 80 et le port 443 (c&#8217;est écrasé à la réinstallation) :</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">pritunl <span class="nb">set </span>app.server_port 8070
-pritunl <span class="nb">set </span>app.redirect_server <span class="nb">false</span></code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Redémarrez le serveur pritunl</p>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">systemctl stop pritunl</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Vérifiez que tout est correct</p>
 </li>
 </ol>
 </div>
@@ -14945,7 +14591,10 @@ pritunl <span class="nb">set </span>app.redirect_server <span class="nb">false</
 <h2 id="_installation_dun_serveur_de_bureau_à_distance_guacamole">33. Installation d&#8217;un serveur de bureau à distance Guacamole</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache Guacamole est un logiciel opensource et une application web de bureau à distance qui vous permet d&#8217;accéder à vos machines de bureau par le biais d&#8217;un navigateur web. Il s&#8217;agit d&#8217;une appli web html5 qui prend en charge des protocoles standard comme VNC, RDP et SSH. Vous n&#8217;avez pas besoin d&#8217;installer et d&#8217;utiliser des logiciels ou des plugins sur le serveur. Avec Guacamole, vous pouvez facilement passer d&#8217;un bureau d&#8217;une machine à l&#8217;autre avec le même navigateur</p>
+<p>Apache Guacamole est un logiciel opensource et une application web de bureau à distance qui vous permet d&#8217;accéder à vos machines de bureau par le biais d&#8217;un navigateur web. Il s&#8217;agit d&#8217;une appli web html5 qui prend en charge des protocoles standard comme VNC, RDP et SSH. Vous n&#8217;avez pas besoin d&#8217;installer et d&#8217;utiliser des logiciels ou des plugins sur le serveur. Avec Guacamole, vous pouvez facilement passer d&#8217;un bureau d&#8217;une machine à l&#8217;autre avec le même navigateur.</p>
+</div>
+<div class="paragraph">
+<p>Guacamole est assez ancien et d&#8217;un point de vue protocole, il ne saura pas se connecter avec des serveurs VNC utilisants les stack cryptos récentes. Il faut se mettre en version compatible 3.8 de serveur VNC.</p>
 </div>
 <div class="sect2">
 <h3 id="_création_du_site_web_de_guacamole">33.1. Création du site web de Guacamole</h3>
@@ -15130,15 +14779,30 @@ pritunl <span class="nb">set </span>app.redirect_server <span class="nb">false</
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
 </li>
 <li>
+<p>Guacamole n&#8217;est pas compatible aujourd&#8217;hui (version 1.5.5) de Tomcat10. Or c&#8217;est la version présente dans la dernière version de Debian. Je vous conseille donc d&#8217;installer tomcat9 de la version de debian précédente.</p>
+</li>
+<li>
 <p>Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>gcc g++ libossp-uuid-dev libavcodec-dev libpango1.0-dev libssh2-1-dev libcairo2-dev libjpeg-dev libpng-dev libavutil-dev libavformat-dev libswscale-dev libvncserver-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev libtelnet-dev libswscale-dev libossp-uuid-dev libwebsockets-dev libpulse-dev  mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user</code></pre>
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">echo</span> <span class="s2">"deb http://deb.debian.org/debian/ bullseye main"</span> <span class="o">&gt;</span> /etc/apt/sources.list.d/bullseye.list
+apt update
+apt <span class="nb">install </span>tomcat9 tomcat9-admin tomcat9-common tomcat9-user
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/^/#/'</span> /etc/apt/sources.list.d/bullseye.list
+apt <span class="nb">install </span>gcc g++ libossp-uuid-dev libavcodec-dev libpango1.0-dev libssh2-1-dev libcairo2-dev libjpeg-dev libpng-dev libavutil-dev libavformat-dev libswscale-dev libvncserver-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev libtelnet-dev libswscale-dev libossp-uuid-dev libwebsockets-dev libpulse-dev  libmariadb-java</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Sur Ubuntu, remplacer <code>mysql-java tomcat8 tomcat8-admin tomcat8-common tomcat8-user</code> par <code>libmariadb-java tomcat9 tomcat9-admin tomcat9-common tomcat9-user</code></p>
+<p>Par ailleurs, Guacamole pose des problèmes de compatibilités avec IP V6.</p>
+</li>
+<li>
+<p>Editez votre fichier <code>/etc/hosts</code> et commentez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="c">#::1            localhost ip6-localhost ip6-loopback</span></code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Téléchargez la dernière version de Guacamole en allant sur le site web et en récupérant le <a href="https://guacamole.apache.org/releases/">lien de téléchargement</a>.</p>
@@ -15148,7 +14812,7 @@ pritunl <span class="nb">set </span>app.redirect_server <span class="nb">false</
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /tmp
-curl <span class="nt">-fSL</span> <span class="nt">-o</span> guacamole-server.tar.gz <span class="s1">'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/source/guacamole-server-1.2.0.tar.gz'</span> <i class="conum" data-value="1"></i><b>(1)</b>
+curl <span class="nt">-fSL</span> <span class="nt">-o</span> guacamole-server.tar.gz <span class="s1">'https://apache.org/dyn/closer.lua/guacamole/1.5.5/source/guacamole-server-1.5.5.tar.gz?action=download'</span> <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="nb">tar </span>xfz guacamole-server.tar.gz
 <span class="nb">cd </span>guacamole-server-<span class="k">*</span></code></pre>
 </div>
@@ -15175,7 +14839,7 @@ curl <span class="nt">-fSL</span> <span class="nt">-o</span> guacamole-server.ta
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code>------------------------------------------------
-guacamole-server version 1.2.0
+guacamole-server version 1.5.5
 ------------------------------------------------
 
    Library status:
@@ -15241,9 +14905,9 @@ systemctl start guacd</code></pre>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nb">mkdir</span> <span class="nt">-p</span> /usr/local/share/guacamole
 <span class="nb">cd</span> /usr/local/share/guacamole
-curl <span class="nt">-fSL</span> <span class="nt">-o</span> guacamole.war <span class="s1">'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="nb">ln</span> <span class="nt">-s</span> /usr/local/share/guacamole/guacamole.war /var/lib/tomcat8/webapps/ <i class="conum" data-value="2"></i><b>(2)</b>
-systemctl restart tomcat8 <i class="conum" data-value="2"></i><b>(2)</b>
+curl <span class="nt">-fSL</span> <span class="nt">-o</span> guacamole.war <span class="s1">'https://apache.org/dyn/closer.lua/guacamole/1.5.5/binary/guacamole-1.5.5.war?action=download'</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="nb">ln</span> <span class="nt">-s</span> /usr/local/share/guacamole/guacamole.war /var/lib/tomcat9/webapps/
+systemctl restart tomcat9
 systemctl restart guacd</code></pre>
 </div>
 </div>
@@ -15253,10 +14917,6 @@ systemctl restart guacd</code></pre>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>insérez ici l&#8217;adresse du war à charger</td>
 </tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>ou tomcat9 pour Ubuntu</td>
-</tr>
 </table>
 </div>
 </li>
@@ -15264,16 +14924,8 @@ systemctl restart guacd</code></pre>
 <p>Editez le fichier server.xml. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi /etc/tomcat8/server.xml <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="rouge highlight"><code data-lang="bash">vi /etc/tomcat9/server.xml</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>ou tomcat9 pour Ubuntu</td>
-</tr>
-</table>
 </div>
 </li>
 <li>
@@ -15292,7 +14944,7 @@ systemctl restart guacd</code></pre>
 <p>Récupérez le driver mysql/mariadb pour java. Sur la plupart des Linux, il est présent dans <code>/usr/share/java</code>. Pour le copier, tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nb">ln</span> <span class="nt">-s</span> /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/</code></pre>
+<pre class="rouge highlight"><code data-lang="bash"><span class="nb">ln</span> <span class="nt">-s</span> /usr/share/java/mariadb-java-client.jar /etc/guacamole/lib/</code></pre>
 </div>
 </div>
 </li>
@@ -15300,7 +14952,7 @@ systemctl restart guacd</code></pre>
 <p>Il se peut que ce driver ne soit pas présent: allez sur le site <a href="https://dev.mysql.com/downloads/connector/j/">Mysql</a> et téléchargez la version Platform independant. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">curl <span class="nt">-fSL</span> <span class="nt">-o</span> mysql-java.tar.gz <span class="s1">'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.21.tar.gz'</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="rouge highlight"><code data-lang="bash">curl <span class="nt">-fSL</span> <span class="nt">-o</span> mysql-java.tar.gz <span class="s1">'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j-8.3.0.tar.gz'</span> <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="nb">tar </span>xfz mysql-java.tar.gz
 <span class="nb">cd </span>mysql-connector-java-<span class="k">*</span>
 <span class="nb">cp </span>mysql-connector-java-<span class="k">*</span>.jar /etc/guacamole/lib/mysql-connector-java.jar</code></pre>
@@ -15348,7 +15000,7 @@ mysql-password: &lt;mot_de_passe&gt; <i class="conum" data-value="1"></i><b>(1)<
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /tmp
-curl <span class="nt">-fSL</span> <span class="nt">-o</span> guacamole-auth-jdbc.tar.gz <span class="s1">'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-auth-jdbc-1.2.0.tar.gz'</span> <i class="conum" data-value="1"></i><b>(1)</b>
+curl <span class="nt">-fSL</span> <span class="nt">-o</span> guacamole-auth-jdbc.tar.gz <span class="s1">'https://apache.org/dyn/closer.lua/guacamole/1.5.5/binary/guacamole-auth-jdbc-1.5.5.tar.gz?action=download'</span> <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="nb">tar </span>xfz guacamole-auth-jdbc.tar.gz
 <span class="nb">cd </span>guacamole-auth-jdbc-<span class="k">*</span>/mysql
 <span class="nb">cp </span>guacamole-auth-jdbc-mysql-<span class="k">*</span>.jar /usr/local/share/guacamole/
@@ -15385,17 +15037,9 @@ curl <span class="nt">-fSL</span> <span class="nt">-o</span> guacamole-auth-jdbc
 <p>Redémarrez tomcat et guacd. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">systemctl restart tomcat8 <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="rouge highlight"><code data-lang="bash">systemctl restart tomcat9
 systemctl restart guacd</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>ou mettre tomcat9 pour Ubuntu</td>
-</tr>
-</table>
 </div>
 </li>
 <li>
@@ -15571,7 +15215,7 @@ make <span class="nb">install
 <pre class="rouge highlight"><code data-lang="bash"><span class="nb">cd</span> /usr/local/share/guacamole
 curl <span class="nt">-fSL</span> <span class="nt">-o</span> guacamole.war <span class="s1">'http://apache.org/dyn/closer.cgi?action=download&amp;filename=guacamole/1.2.0/binary/guacamole-1.2.0.war'</span> <i class="conum" data-value="1"></i><b>(1)</b>
 systemctl daemon-reload
-systemctl restart tomcat8 <i class="conum" data-value="2"></i><b>(2)</b>
+systemctl restart tomcat9 <i class="conum" data-value="2"></i><b>(2)</b>
 systemctl start guacd</code></pre>
 </div>
 </div>
@@ -15580,10 +15224,6 @@ systemctl start guacd</code></pre>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>insérez ici l&#8217;adresse du war à charger</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>ou tomcat9 pour Ubuntu</td>
 </tr>
 </table>
 </div>
@@ -15663,7 +15303,7 @@ La documentation est proposée ici: <a href="https://docs.hestiacp.com/" class="
 <div id="footer">
 <div id="footer-text">
 Version 1.7<br>
-Last updated 2024-04-17 20:49:52 +0200
+Last updated 2024-05-27 22:53:27 +0200
 </div>
 </div>
 </body>

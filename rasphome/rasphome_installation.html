@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.23">
 <meta name="author" content="Stéphane Apiou">
 <title>Installation d&#8217;un home serveur Linux sur un Raspberry</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -141,7 +141,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #content::before{content:none}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
 #header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
-#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
 #header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
@@ -163,6 +163,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media screen and (min-width:768px){#toctitle{font-size:1.375em}
 body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
 #toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
 #toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
 #toc.toc2>ul{font-size:.9em;margin-bottom:0}
@@ -328,7 +329,7 @@ a.image{text-decoration:none;display:inline-block}
 a.image object{pointer-events:none}
 sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
 sup.footnote a,sup.footnoteref a{text-decoration:none}
-sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
 #footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
 #footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
 #footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
@@ -732,12 +733,12 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine ou son adresse IP. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net ou pour un raspberry: raspberrypi.local ) ou votre adresse IP.</td>
-</tr>
-</table>
-</div>
+<td>Mettez ici &lt;sudo_username&gt; par votre nom de login et &lt;example.com&gt; par votre nom de domaine ou son adresse IP. Au début votre nom de domaine acheté n&#8217;est pas encore configuré. Il faut donc utiliser le nom de machine ( par exemple pour un VPS OVH: VPSxxxxxx.ovh.net ou pour un raspberry: raspberrypi.local ) ou votre adresse IP.
 <div class="paragraph">
 <p>ou utilisez putty si vous êtes sous Windows.</p>
+</div></td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -769,12 +770,12 @@ Pour se loguer root, et dans l’hypothèse que vous avez mis en place un compte
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer ici &lt;example.com&gt; par votre nom de domaine.</td>
-</tr>
-</table>
-</div>
+<td>remplacer ici &lt;example.com&gt; par votre nom de domaine.
 <div class="paragraph">
 <p>Tapez ensuite votre mot de passe root</p>
+</div></td>
+</tr>
+</table>
 </div>
 </li>
 </ol>
@@ -2522,12 +2523,12 @@ Tout pendant que ces premières étapes ne donnent pas satisfaction ne passez pa
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</td>
-</tr>
-</table>
-</div>
+<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine
 <div class="paragraph">
 <p>Entrez votre mot de passe</p>
+</div></td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -2582,12 +2583,12 @@ Tout pendant que ces premières étapes ne donnent pas satisfaction ne passez pa
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine</td>
-</tr>
-</table>
-</div>
+<td>remplacer ici &lt;sudo_username&gt; par votre login et &lt;example.com&gt; par votre nom de domaine
 <div class="paragraph">
 <p>La session doit s&#8217;ouvrir sans demander de mot de passe.</p>
+</div></td>
+</tr>
+</table>
 </div>
 </li>
 </ol>
@@ -3607,6 +3608,9 @@ Il est possible de changer ce caractère spécial en le modifiant dans le fichie
 <div class="paragraph">
 <p>Remarque: si vous utilisez VNC, il faut débloquer le port dans le firewall de ISPConfig. Appliquez la méthode de déblocage pour le port 5900.</p>
 </div>
+<div class="paragraph">
+<p>Remarque: si vous avez besoin de débloquer un port UDP vous devez allez dans la rubrique Open UDP Ports.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_déblocage_de_firewall_ufw">6.6.2. Déblocage de Firewall UFW</h4>
@@ -3831,6 +3835,14 @@ Enfin dernier point, en configurant des DNS qui sont libres de censure et pas ce
 <ol class="arabic">
 <li>
 <p><a href="#root_login">Loguez vous comme root sur le serveur</a></p>
+</li>
+<li>
+<p>Installez le client dhcp avancé. Tapez:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">apt <span class="nb">install </span>dhcpcd</code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Tapez:</p>
@@ -4951,7 +4963,8 @@ git pull</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">curl <span class="nt">-o</span> setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
-sh setup-repos.sh</code></pre>
+sh setup-repos.sh
+<span class="nb">rm </span>setup-repos.sh</code></pre>
 </div>
 </div>
 </li>
@@ -5533,14 +5546,14 @@ service apache stop</code></pre>
 <p>Ensuite installez Traefik. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">--name</span> traefik <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-p80</span>:80 <span class="nt">-p8080</span>:8080 <span class="nt">--api</span>.insecure<span class="o">=</span><span class="nb">true</span> <span class="nt">--api</span>.dashboard<span class="o">=</span><span class="nb">true</span> <span class="nt">--providers</span>.docker <span class="nt">--log</span>.level<span class="o">=</span>DEBUG <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="rouge highlight"><code data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">--name</span> traefik <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-p80</span>:80 <span class="nt">-p8080</span>:8080 traefik <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Si votre serveur Traefik est disponible sur internet, il ne faudra pas exposer le port 8080 et les api insecure. et de ce fait, dans la ligne précédente, supprimez: <code>-p8080:8080 --api.insecure=true --api.dashboard=true</code></td>
+<td>Si votre serveur Traefik est disponible sur internet, il ne faudra pas exposer le port 8080</td>
 </tr>
 </table>
 </div>
@@ -5601,7 +5614,8 @@ vi /etc/traefik/traefik.yml</code></pre>
 <p>Dans ce fichier, tapez le contenu suivant:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="yaml"><span class="na">logLevel</span><span class="pi">:</span> <span class="s">Debug</span>
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">log</span><span class="pi">:</span>
+  <span class="na">level</span><span class="pi">:</span> <span class="s">DEBUG</span>
 
 <span class="na">providers</span><span class="pi">:</span>
   <span class="na">docker</span><span class="pi">:</span>
@@ -5617,7 +5631,11 @@ vi /etc/traefik/traefik.yml</code></pre>
 
 <span class="na">entryPoints</span><span class="pi">:</span>
   <span class="na">http</span><span class="pi">:</span>
-    <span class="na">address</span><span class="pi">:</span> <span class="s">:80</span></code></pre>
+    <span class="na">address</span><span class="pi">:</span> <span class="s">:80</span>
+
+<span class="na">api</span><span class="pi">:</span>
+  <span class="na">dashboard</span><span class="pi">:</span> <span class="kc">true</span> <i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="na">insecure</span><span class="pi">:</span> <span class="kc">true</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -5625,6 +5643,10 @@ vi /etc/traefik/traefik.yml</code></pre>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>Remplacez example.com par le nom de domaine de votre serveur.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Si votre serveur Traefik est directement disponible sur internet, il ne faut pas activer ces deux commandes pour garder une bonne sécurité de vos services.</td>
 </tr>
 </table>
 </div>
@@ -5681,15 +5703,23 @@ docker <span class="nb">rm </span>traefik</code></pre>
 <p>Relancez Traefik avec la nouvelle configuration:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">--name</span> traefik <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-v</span> /etc/traefik:/etc/traefik <span class="nt">-p80</span>:80 <span class="nt">-p8080</span>:8080 traefik <span class="nt">--api</span>.insecure<span class="o">=</span><span class="nb">true</span> <span class="nt">--api</span>.dashboard<span class="o">=</span><span class="nb">true</span> <span class="nt">--providers</span>.docker <span class="nt">--log</span>.level<span class="o">=</span>DEBUG</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">--name</span> traefik <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-v</span> /etc/traefik:/etc/traefik <span class="nt">-p80</span>:80 <span class="nt">-p8080</span>:8080 traefik <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Si votre serveur Traefik est disponible sur internet, il ne faudra pas exposer le port 8080</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
 <p>Pihole est maintenant de nouveau accessible sur le port 80 et Traefik est actif en même temps pour servir tout un ensemble de sous-domaines virtuels associés à l&#8217;environnement Docker.</p>
 </li>
 <li>
-<p>Pour superviser vos routes et services Traefik, vous pouvez vous connecter sur <code>http:example.com:8080</code> pour voir la configuration en cours. (example.com est à remplacer pour le nom de votre machine).</p>
+<p>Pour superviser vos routes et services Traefik, vous pouvez vous connecter sur <code><a href="http://example.com:8080" class="bare">http://example.com:8080</a></code> pour voir la configuration en cours. (example.com est à remplacer pour le nom de votre machine).</p>
 </li>
 </ol>
 </div>
@@ -5718,14 +5748,14 @@ Vous pouvez aussi appliquer la procédure de mise à jour des containers à l&#8
 <pre class="rouge highlight"><code data-lang="bash">docker pull traefik
 docker stop traefik
 docker <span class="nb">rm </span>traefik
-docker run <span class="nt">-d</span> <span class="nt">--name</span> traefik <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-v</span> /etc/traefik:/etc/traefik <span class="nt">-p80</span>:80 <span class="nt">-p8080</span>:8080 traefik <span class="nt">--api</span>.insecure<span class="o">=</span><span class="nb">true</span> <span class="nt">--api</span>.dashboard<span class="o">=</span><span class="nb">true</span> <span class="nt">--providers</span>.docker <span class="nt">--log</span>.level<span class="o">=</span>DEBUG <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+docker run <span class="nt">-d</span> <span class="nt">--name</span> traefik <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-v</span> /etc/traefik:/etc/traefik <span class="nt">-p80</span>:80 <span class="nt">-p8080</span>:8080 traefik <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>supprimez <code>-v /etc/traefik:/etc/traefik</code> si vous n&#8217;utilisez pas Pi-Hole avec Treafik.</td>
+<td>Si votre serveur Traefik est disponible sur internet, il ne faudra pas exposer le port 8080</td>
 </tr>
 </table>
 </div>
@@ -6189,7 +6219,7 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 9050:9000 <span
 <p>Ajoutez ceci dans le fichier <code>config.yml</code>. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">vi /etc/docker-mirror.yml</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">vi /etc/docker-mirror-1.yml</code></pre>
 </div>
 </div>
 </li>
@@ -6206,11 +6236,25 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 9050:9000 <span
 <p>Démarrez ensuite le service docker. Tapez:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-p</span> 5000:5000 <span class="nt">--name</span> docker-registry-proxy <span class="nt">-v</span> /etc/docker-mirror.yml:/etc/docker/registry/config.yml registry:2</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-p</span> 5000:5000 <span class="nt">--name</span> docker-registry-proxy-1 <span class="nt">-v</span> /etc/docker-mirror-1.yml:/etc/docker/registry/config.yml registry:2</code></pre>
 </div>
 </div>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>Si vous avez plusieurs miroirs à configurer, il faut créer un proxy sur chaque. Ainsi si vous voulez créer un miroir pour ghcr.io il vous faudra créer une autre fichier docker-mirror-2.yml avec la deuxième adresse remote et lancer le tout par:</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-p</span> 5001:5000 <span class="nt">--name</span> docker-registry-proxy-2 <span class="nt">-v</span> /etc/docker-mirror-2.yml:/etc/docker/registry/config.yml registry:2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Et ainsi de suite pour chaque proxy que vous voulez mettre en place.</p>
 </div>
 <div class="paragraph">
 <p>Sur le poste client, soit passez l&#8217;option --registry-mirror lorsque vous lancez le démon <code>dockerd</code> ou sinon éditez le fichier <code>/etc/docker/daemon.json</code> et ajoutez la clé <code>registry-mirrors</code> pour rendre le changement persistant:</p>
@@ -6233,6 +6277,7 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 9050:9000 <span
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code>{
+  "insecure-registries" : ["docker.example.com:5000" ], <i class="conum" data-value="1"></i><b>(1)</b>
   "registry-mirrors": ["http://docker.example.com:5000"] <i class="conum" data-value="1"></i><b>(1)</b>
 }</code></pre>
 </div>
@@ -6241,7 +6286,7 @@ docker run <span class="nt">-d</span> <span class="nt">-p</span> 9050:9000 <span
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remplacer <code>docker.example.com</code> par le nom ou l&#8217;adresse ip de votre cache docker.</td>
+<td>remplacer <code>docker.example.com</code> par le nom ou l&#8217;adresse ip de votre cache docker. Si vous en avez plusieurs vous devez tous les lister en les séparant par des virgules.</td>
 </tr>
 </table>
 </div>
@@ -6764,7 +6809,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="nb">cd</span> / <span class="o">&amp;&amp;</span> /usr/local/bin/borg create <span class="nt">--stats</span> <span class="nt">--progress</span> <span class="nt">--compress</span> zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">date</span> +%Y-%m-%d-%H-%M-%S<span class="sb">`</span> ./ <span class="nt">--exclude</span><span class="o">=</span>dev <span class="nt">--exclude</span><span class="o">=</span>proc <span class="nt">--exclude</span><span class="o">=</span>run <span class="nt">--exclude</span><span class="o">=</span>root/.cache/ <span class="nt">--exclude</span><span class="o">=</span>mnt/borgmount <span class="nt">--exclude</span><span class="o">=</span>sys <span class="nt">--exclude</span><span class="o">=</span>swapfile <span class="nt">--exclude</span><span class="o">=</span>tmp <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<span class="nb">cd</span> / <span class="o">&amp;&amp;</span> /usr/bin/borg create <span class="nt">--stats</span> <span class="nt">--progress</span> <span class="nt">--compress</span> zstd borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">date</span> +%Y-%m-%d-%H-%M-%S<span class="sb">`</span> ./ <span class="nt">--exclude</span><span class="o">=</span>dev <span class="nt">--exclude</span><span class="o">=</span>proc <span class="nt">--exclude</span><span class="o">=</span>run <span class="nt">--exclude</span><span class="o">=</span>root/.cache/ <span class="nt">--exclude</span><span class="o">=</span>mnt/borgmount <span class="nt">--exclude</span><span class="o">=</span>sys <span class="nt">--exclude</span><span class="o">=</span>swapfile <span class="nt">--exclude</span><span class="o">=</span>tmp <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6823,7 +6868,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg list <span class="nt">-v</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
+/usr/bin/borg list <span class="nt">-v</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6878,7 +6923,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg info <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="nv">$1</span></code></pre>
+/usr/bin/borg info <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="nv">$1</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6933,7 +6978,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg check <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="nv">$1</span></code></pre>
+/usr/bin/borg check <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/::<span class="nv">$1</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -6997,7 +7042,7 @@ Sauvegardez précieusement ce mot de passe. Il vous sera indispensable pour réc
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 <span class="nb">mkdir</span> <span class="nt">-p</span> /mnt/borgbackup
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</code></pre>
+/usr/bin/borg mount borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ /mnt/borgbackup</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -7094,7 +7139,7 @@ umount /mnt/borgbackup
 
 
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg prune <span class="nt">--stats</span> <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ <span class="nt">--prefix</span> <span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>- <span class="nt">--keep-daily</span><span class="o">=</span>7 <span class="nt">--keep-weekly</span><span class="o">=</span>4 <span class="nt">--keep-monthly</span><span class="o">=</span>12 <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+/usr/bin/borg prune <span class="nt">--stats</span> <span class="nt">--progress</span> borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/ <span class="nt">--prefix</span> <span class="sb">`</span><span class="nb">hostname</span><span class="sb">`</span>- <span class="nt">--keep-daily</span><span class="o">=</span>7 <span class="nt">--keep-weekly</span><span class="o">=</span>4 <span class="nt">--keep-monthly</span><span class="o">=</span>12 <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -7141,7 +7186,7 @@ umount /mnt/borgbackup
 <pre class="rouge highlight"><code data-lang="bash"><span class="c">#!/bin/sh</span>
 
 <span class="nb">export </span><span class="nv">BORG_PASSPHRASE</span><span class="o">=</span><span class="s1">'mot_passe'</span> <i class="conum" data-value="1"></i><b>(1)</b>
-/usr/local/bin/borg compact <span class="nt">--progress</span>  borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
+/usr/bin/borg compact <span class="nt">--progress</span>  borgbackup@&lt;storing_srv&gt;:/home/borgbackup/borgbackup/</code></pre>
 </div>
 </div>
 <div class="colist arabic">
