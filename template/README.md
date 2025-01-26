@@ -40,9 +40,13 @@ Le fichier supporte un certain nombre de balises de templating. Elles sont pour 
 Les balises sont les suivantes:
 
 * `{{title}}`: affiche le titre du document
+* `{{subtitle}}`: affiche le sous-titre du document s'il existe
 * `{{revision}}`: affiche la version du document
 * `{{date}}`: affiche la date du document (soit stockée dans le fichier asciidoctor sinon la date du fichier asciidoctor)
 * `{{author}}`: l'auteur du document (Prénom et Nom)
+* `{{email}}`: l'email de l'auteur du document (s'ils est renseigné)
+* `{{authorfirstname}}`: Le prénom de l'auteur
+* `{{authorsurname}}`: Le nom de famille de l'auteur
 * `{{authorinitials}}`: les initiales de l'auteur
 * `{{reviewername}}`: le nom du relecteur (Prénom et Nom)
 * `{{reviewertitle}}`: le titre du relecteur ( exemple: Responsable infra )
@@ -61,7 +65,7 @@ Les balises suivantes sont celles généres nativement par asciidoctor:
 
 * `$title$`: titre du document (géré par asciidoctor)
 * `$subtitle$`: sous-titre du document (géré par asciidoctor)
-* `$author$`: auteur du document (inclut l'adresse mail (géré par asciidoctor)
+* `$author$`: auteur du document (inclut l'adresse mail (géré par asciidoctor))
 * `$date$`: date du document (géré par asciidoctor)
 
 Par défaut les tableaux n'ont pas de formatage et de bords. Il est possible de définir un tableau de référence qui sera nommé `ReferenceTable` les attributs de bord, remplissage et couleurs seront recopiés de ce tableau de référence vers tous les autres tableaux du document sauf ceux dont le nom commence par `__`.
