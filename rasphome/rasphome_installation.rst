@@ -15,8 +15,6 @@ Ce document est disponible sur le site
 .. figure:: diag-qrcode-md5-ca9d818d3232226fdda46fca34ff0de9.svg
    :alt: Diagram
 
-   Diagram
-
 et sur `Github <https://github.com/stefapi/vps_installation>`__. Sur
 Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et
 Asciidoc de ce document
@@ -1921,8 +1919,6 @@ réseau local lorsque l’on utilise l’adresse DNS:
 .. figure:: essai.png
    :alt: essai
 
-   essai
-
 Si vous avez configuré votre box pour que la machine 192.168.12.10 (sur
 votre réseau local) réponde aux requêtes venant d’internet au travers de
 la box, vous avez soit fait du port forwarding soit défini cette machine
@@ -3770,39 +3766,86 @@ Appliquer la procédure suivante:
 5.  Vérifier que lighttpd n’est plus accessible dans votre navigateur
     sur le port 80 mais sur le port 3080.
 
-6.  Editez un fichier de configuration statique Traefik. Tapez:
+6.  Nous allons utiliser docker compose pour lancer traefik avec sa
+    configuration
+
+7.  Editez un fichier de configuration compose.yml. Tapez:
 
     .. code:: bash
 
-       mkdir /etc/traefik
-       vi /etc/traefik/traefik.yml
+       mkdir /opt/traefik
+       vi /opt/traefik/compose.yml
 
-7.  Dans ce fichier, tapez le contenu suivant:
+8.  Dans ce fichier, tapez le contenu suivant:
 
     .. code:: yaml
 
-       log:
-         level: DEBUG
+       services:
+         traefik:
+           image: "traefik:latest"
+           container_name: "traefik"
+           restart: unless-stopped
+           ports:
+             - "80:80"
+           #  - "8080:8080"
+       # Note: when used in docker-compose.yml all dollar signs in the hash need to be doubled for escaping.
+       # To create a user:password pair, the following command can be used:
+       # echo $(htpasswd -nb admin password) | sed -e s/\\$/\\$\\$/g
+           labels:
+             - "traefik.enable=true"
+             - "traefik.http.routers.mydashboard.rule=Host(`traefik.example.com`)" 
+             - "traefik.http.routers.mydashboard.service=mydashboardsvc"
+             - "traefik.http.services.mydashboardsvc.loadbalancer.server.port=8080"
+             - "traefik.http.routers.mydashboard.service=api@internal" 
+             - "traefik.http.routers.mydashboard.middlewares=myauth" 
+             - "traefik.http.middlewares.myauth.basicauth.users=admin:$$apr1$$k1J8tnlH$$/b4Y7O.gk1OO/sOhIVlrr0" 
 
-       providers:
-         docker:
-           defaultRule: "Host(`{{ trimPrefix `/` .Name }}.example.com`)" 
-           watch: true
-         file:
-           filename: /etc/traefik/dynamic_conf.yml
-           watch: true
+           command:
+             - --configFile=/etc/traefik/traefik.yaml
+             - --log.level=ERROR
+           volumes:
+             - "./letsencrypt:/letsencrypt"
+             - "/var/run/docker.sock:/var/run/docker.sock:ro"
+           configs:
+             - source: traefik-config
+               target: /etc/traefik/traefik.yaml
+             - source: dynamic-yml
+               target: /etc/traefik/dynamic_conf.yaml
+           network_mode: bridge
 
-       defaultEntryPoints:
-         - https
-         - http
+       configs:
+         traefik-config:
+           content: |
+             log:
+               level: TRACE
+             api:
+               dashboard: true 
+               insecure: true 
+             entryPoints:
+               web:
+                 address: ":80"
+             providers:
+               docker:
+                 watch: true
+                 exposedbydefault: false
+               file:
+                 filename: /etc/traefik/dynamic_conf.yaml
+                 watch: true
+         dynamic-yml:
+           content: |
+             http:
+               routers:
+                 apache:
+                   rule: "Host(`example.com`)" 
+                   service: apache
+                   entrypoints:
+                     - web
 
-       entryPoints:
-         http:
-           address: :80
-
-       api:
-         dashboard: true 
-         insecure: true 
+               services:
+                 apache:
+                   loadBalancer:
+                     servers:
+                       - url: "http://example.com:3080" 
 
     -  Remplacez example.com par le nom de domaine de votre serveur.
 
@@ -3810,58 +3853,34 @@ Appliquer la procédure suivante:
        il ne faut pas activer ces deux commandes pour garder une bonne
        sécurité de vos services.
 
-8.  Editez le fichier de configuration dynamique. Tapez:
+    -  Ces trois lignes permettent d’activer une authentification
+       lorsque vous accéder au dashboard. Il faudra générer un mot de
+       passe selon la commande mise en commentaire.
+
+9.  Crééez une entrée DNS A pour le sous-domaine ``traefik``
+
+10. Relancez Traefik avec la nouvelle configuration:
 
     .. code:: bash
 
-       vi /etc/traefik/dynamic_conf.yml
+       docker compose up -d
 
-9.  Dans ce fichier, tapez le contenu suivant:
+11. Pour superviser vos routes et services Traefik, vous pouvez vous
+    connecter sur ``http://traefik.example.com`` pour voir la
+    configuration en cours. (example.com est à remplacer pour le nom de
+    votre machine).
 
-    .. code:: yaml
-
-       http:
-         routers:
-           lighttpd:
-             entrypoints:
-               - http
-             service: localserver
-             rule: host("example.com") 
-         services:
-           localserver:
-             loadBalancer:
-               servers:
-                 - url: "http://ip_address:3080" 
-
-    -  Remplacez example.com par le nom de domaine de votre serveur.
-
-    -  remplacez ip_address par l’adresse IP de votre serveur.
-
-10. Arrêtez votre ancienne instance Traefik, si Traefik a été lancé.
-    Tapez:
+12. Enfin pour tous les services que vous lancez avec docker, vous
+    pouvez ajouter sur la ligne de commande de lancement (juste après la
+    commande docker) les éléments suivants:
 
     .. code:: bash
 
-       docker stop traefik
-       docker rm traefik
+       -l 'traefik.http.routers.<route>.rule=Host(`<route>.rasphome.local`)' -l "traefik.enable=true" -l "traefik.http.routers.<route>.service=<service>" -l "traefik.http.services.<service>.loadbalancer.server.port=<port>" 
 
-11. Relancez Traefik avec la nouvelle configuration:
-
-    .. code:: bash
-
-       docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik 
-
-    -  Si votre serveur Traefik est disponible sur internet, il ne
-       faudra pas exposer le port 8080
-
-12. Pihole est maintenant de nouveau accessible sur le port 80 et
-    Traefik est actif en même temps pour servir tout un ensemble de
-    sous-domaines virtuels associés à l’environnement Docker.
-
-13. Pour superviser vos routes et services Traefik, vous pouvez vous
-    connecter sur ``http://example.com:8080`` pour voir la configuration
-    en cours. (example.com est à remplacer pour le nom de votre
-    machine).
+    -  remplacer <route> par le nom de votre container lancé (en un seul
+       mot) , <service> par le nom de votre service et enfin <port> par
+       le numéro de port dans le container.
 
 .. _`_upgrade_de_traefik`:
 
@@ -3883,13 +3902,9 @@ Sinon, effectuez les opérations suivantes:
 
    .. code:: bash
 
-      docker pull traefik
-      docker stop traefik
-      docker rm traefik
-      docker run -d --name traefik --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /etc/traefik:/etc/traefik -p80:80 -p8080:8080 traefik 
-
-   -  Si votre serveur Traefik est disponible sur internet, il ne faudra
-      pas exposer le port 8080
+      cd /opt/traefik
+      docker compose down
+      docker compose up -d
 
 .. _`_outils_web_de_gestion_des_containers`:
 
@@ -4132,15 +4147,24 @@ Pour la création du site web, il faut suivre les étapes suivantes:
    .. code:: bash
 
       docker volume create portainer_data
-      docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+      docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 
-5. Ouvrez un navigateur et pointez sur http://portainer.example.com
+5. Si vous utiliser traefik, il vous faut lancer docker avec la commande
+   suivante:
 
-6. Créez votre utilisateur de ``admin`` avec un mot de passe sécurisé.
+   .. code:: bash
 
-7. Ajoutez un endpoint ``Local``
+      docker run -d -p 9050:9000 --name=portainer --restart=always -l 'traefik.http.routers.portainer.rule=Host(`portainer.example.com`)' -l "traefik.enable=true" -l "traefik.http.routers.portainer.service=myportainersvc" -l "traefik.http.services.myportainersvc.loadbalancer.server.port=9000" -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest 
 
-8. Vous pouvez maintenant administrer vos machines docker. Référez vous
+   -  remplacez ``example.com`` par votre nom de domaine.
+
+6. Ouvrez un navigateur et pointez sur http://portainer.example.com
+
+7. Créez votre utilisateur de ``admin`` avec un mot de passe sécurisé.
+
+8. Ajoutez un endpoint ``Local``
+
+9. Vous pouvez maintenant administrer vos machines docker. Référez vous
    à la documentation de
    `portainer <https://documentation.portainer.io/v2.0/stacks/create/>`__
    pour installer de nouvelles machines docker
@@ -4210,6 +4234,56 @@ Sinon, effectuez les opérations suivantes:
       docker rm portainer
       docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 
+.. _`_configuration_dun_repository_local_docker`:
+
+Configuration d’un repository local Docker
+==========================================
+
+L’outil Registry est un système de dépot local pour Docker
+
+Si vous avez plusieurs machines utilisant docker sur votre réseau, les
+déploiements et les mises à jour seront considérablement accélérées par
+l’utilisation de ce système de cache. Ce cache évitera aussi d’atteindre
+la limite d’accès sur le repository principal de docker
+
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Créez un volume et lancer le repository. Tapez:
+
+   .. code:: bash
+
+      docker volume create registry
+      docker run -d -p 5000:5000 --restart always --name registry  --volume registry:/var/lib/registry registry:2
+
+3. `Loguez vous comme root sur le poste client <#root_login>`__
+
+4. Tapez:
+
+   .. code:: bash
+
+      vi /etc/docker/daemon.json
+
+5. Dans le fichier, ajoutez:
+
+   ::
+
+      {
+        "insecure-registries" : ["docker.example.com:5000" ], 
+      }
+
+   -  remplacer ``docker.example.com`` par le nom ou l’adresse ip de
+      votre cache docker. Si vous en avez plusieurs vous devez tous les
+      lister en les séparant par des virgules. Le numéro de port doit
+      correspondre à celui choisi au lancement du container.
+
+6. Sauvegarder le fichier et redémarrez le démon docker. Tapez:
+
+   .. code:: bash
+
+      systemctl restart docker
+
 .. _`_configuration_de_docker_mirror`:
 
 Configuration de Docker-mirror
@@ -4249,18 +4323,27 @@ Suivez la procédure suivante:
 
    .. code:: bash
 
-      docker run -d --restart=always -p 5000:5000 --name docker-registry-proxy-1 -v /etc/docker-mirror-1.yml:/etc/docker/registry/config.yml registry:2
+      docker volume create registry-proxy1
+      docker run -d --restart=always -p 5001:5000 --name docker-registry-proxy-1 -v registry-proxy1:/var/lib/registry -v /etc/docker-mirror-1.yml:/etc/docker/registry/config.yml registry:2
 
 Si vous avez plusieurs miroirs à configurer, il faut créer un proxy sur
-chaque. Ainsi si vous voulez créer un miroir pour ghcr.io il vous faudra
-créer une autre fichier docker-mirror-2.yml avec la deuxième adresse
-remote et lancer le tout par:
+chaque. Ainsi si vous voulez créer un miroir pour ``ghcr.io`` il vous
+faudra créer une autre fichier docker-mirror-2.yml avec la deuxième
+adresse remote.
 
 +
 
-.. code:: bash
+::
 
-   docker run -d --restart=always -p 5001:5000 --name docker-registry-proxy-2 -v /etc/docker-mirror-2.yml:/etc/docker/registry/config.yml registry:2
+   proxy:
+         remoteurl: https://ghcr.io
+
+1. Lancer le tout par:
+
+   .. code:: bash
+
+      docker volume create registry-proxy2
+      docker run -d --restart=always -p 5002:5000 --name docker-registry-proxy-2 -v registry-proxy2:/var/lib/registry -v /etc/docker-mirror-2.yml:/etc/docker/registry/config.yml registry:2
 
 Et ainsi de suite pour chaque proxy que vous voulez mettre en place.
 
@@ -4282,13 +4365,14 @@ rendre le changement persistant:
    ::
 
       {
-        "insecure-registries" : ["docker.example.com:5000" ], 
-        "registry-mirrors": ["http://docker.example.com:5000"] 
+        "insecure-registries" : ["docker.example.com:5001", "docker.example.com:5002" ], 
+        "registry-mirrors": ["http://docker.example.com:5001", "docker.example.com:5002"] 
       }
 
    -  remplacer ``docker.example.com`` par le nom ou l’adresse ip de
       votre cache docker. Si vous en avez plusieurs vous devez tous les
-      lister en les séparant par des virgules.
+      lister en les séparant par des virgules comme présenté dans
+      l’exemple
 
 4. Sauvegarder le fichier et redémarrez le démon docker. Tapez:
 

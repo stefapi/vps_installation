@@ -15,8 +15,6 @@ Ce document est disponible sur le site
 .. figure:: diag-qrcode-md5-b61d02ddbaa610df90fcf284c079d33c.svg
    :alt: Diagram
 
-   Diagram
-
 et sur `Github <https://github.com/stefapi/vps_installation>`__. Sur
 Github vous trouverez aussi les versions PDF, EPUB, HTML, Docbook et
 Asciidoc de ce document
@@ -6358,6 +6356,56 @@ Pour l’installer:
    les container à vérifier, il vous faut ajouter pour les container
    concernés l’otion ``-l autoheal=true``
 
+.. _`_configuration_dun_repository_local_docker`:
+
+Configuration d’un repository local Docker
+==========================================
+
+L’outil Registry est un système de dépot local pour Docker
+
+Si vous avez plusieurs machines utilisant docker sur votre réseau, les
+déploiements et les mises à jour seront considérablement accélérées par
+l’utilisation de ce système de cache. Ce cache évitera aussi d’atteindre
+la limite d’accès sur le repository principal de docker
+
+Suivez la procédure suivante:
+
+1. `Loguez vous comme root sur le serveur <#root_login>`__
+
+2. Créez un volume et lancer le repository. Tapez:
+
+   .. code:: bash
+
+      docker volume create registry
+      docker run -d -p 5000:5000 --restart always --name registry  --volume registry:/var/lib/registry registry:2
+
+3. `Loguez vous comme root sur le poste client <#root_login>`__
+
+4. Tapez:
+
+   .. code:: bash
+
+      vi /etc/docker/daemon.json
+
+5. Dans le fichier, ajoutez:
+
+   ::
+
+      {
+        "insecure-registries" : ["docker.example.com:5000" ], 
+      }
+
+   -  remplacer ``docker.example.com`` par le nom ou l’adresse ip de
+      votre cache docker. Si vous en avez plusieurs vous devez tous les
+      lister en les séparant par des virgules. Le numéro de port doit
+      correspondre à celui choisi au lancement du container.
+
+6. Sauvegarder le fichier et redémarrez le démon docker. Tapez:
+
+   .. code:: bash
+
+      systemctl restart docker
+
 .. _`_configuration_de_docker_mirror`:
 
 Configuration de Docker-mirror
@@ -6397,18 +6445,27 @@ Suivez la procédure suivante:
 
    .. code:: bash
 
-      docker run -d --restart=always -p 5000:5000 --name docker-registry-proxy-1 -v /etc/docker-mirror-1.yml:/etc/docker/registry/config.yml registry:2
+      docker volume create registry-proxy1
+      docker run -d --restart=always -p 5001:5000 --name docker-registry-proxy-1 -v registry-proxy1:/var/lib/registry -v /etc/docker-mirror-1.yml:/etc/docker/registry/config.yml registry:2
 
 Si vous avez plusieurs miroirs à configurer, il faut créer un proxy sur
-chaque. Ainsi si vous voulez créer un miroir pour ghcr.io il vous faudra
-créer une autre fichier docker-mirror-2.yml avec la deuxième adresse
-remote et lancer le tout par:
+chaque. Ainsi si vous voulez créer un miroir pour ``ghcr.io`` il vous
+faudra créer une autre fichier docker-mirror-2.yml avec la deuxième
+adresse remote.
 
 +
 
-.. code:: bash
+::
 
-   docker run -d --restart=always -p 5001:5000 --name docker-registry-proxy-2 -v /etc/docker-mirror-2.yml:/etc/docker/registry/config.yml registry:2
+   proxy:
+         remoteurl: https://ghcr.io
+
+1. Lancer le tout par:
+
+   .. code:: bash
+
+      docker volume create registry-proxy2
+      docker run -d --restart=always -p 5002:5000 --name docker-registry-proxy-2 -v registry-proxy2:/var/lib/registry -v /etc/docker-mirror-2.yml:/etc/docker/registry/config.yml registry:2
 
 Et ainsi de suite pour chaque proxy que vous voulez mettre en place.
 
@@ -6430,13 +6487,14 @@ rendre le changement persistant:
    ::
 
       {
-        "insecure-registries" : ["docker.example.com:5000" ], 
-        "registry-mirrors": ["http://docker.example.com:5000"] 
+        "insecure-registries" : ["docker.example.com:5001", "docker.example.com:5002" ], 
+        "registry-mirrors": ["http://docker.example.com:5001", "docker.example.com:5002"] 
       }
 
    -  remplacer ``docker.example.com`` par le nom ou l’adresse ip de
       votre cache docker. Si vous en avez plusieurs vous devez tous les
-      lister en les séparant par des virgules.
+      lister en les séparant par des virgules comme présenté dans
+      l’exemple
 
 4. Sauvegarder le fichier et redémarrez le démon docker. Tapez:
 
@@ -6685,15 +6743,24 @@ Pour la création du site web, il faut suivre les étapes suivantes:
    .. code:: bash
 
       docker volume create portainer_data
-      docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+      docker run -d -p 9050:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 
-5. Ouvrez un navigateur et pointez sur http://portainer.example.com
+5. Si vous utiliser traefik, il vous faut lancer docker avec la commande
+   suivante:
 
-6. Créez votre utilisateur de ``admin`` avec un mot de passe sécurisé.
+   .. code:: bash
 
-7. Ajoutez un endpoint ``Local``
+      docker run -d -p 9050:9000 --name=portainer --restart=always -l 'traefik.http.routers.portainer.rule=Host(`portainer.example.com`)' -l "traefik.enable=true" -l "traefik.http.routers.portainer.service=myportainersvc" -l "traefik.http.services.myportainersvc.loadbalancer.server.port=9000" -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest 
 
-8. Vous pouvez maintenant administrer vos machines docker. Référez vous
+   -  remplacez ``example.com`` par votre nom de domaine.
+
+6. Ouvrez un navigateur et pointez sur http://portainer.example.com
+
+7. Créez votre utilisateur de ``admin`` avec un mot de passe sécurisé.
+
+8. Ajoutez un endpoint ``Local``
+
+9. Vous pouvez maintenant administrer vos machines docker. Référez vous
    à la documentation de
    `portainer <https://documentation.portainer.io/v2.0/stacks/create/>`__
    pour installer de nouvelles machines docker
